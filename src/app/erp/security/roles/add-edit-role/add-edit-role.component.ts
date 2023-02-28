@@ -389,13 +389,13 @@ export class AddEditRoleComponent implements OnInit {
 
         var value = cell.getData();
         const ele = document.getElementById(value.id) as HTMLInputElement;
-        if (all.checked) {
+        if (ele!=null && all.checked) {
           ele.checked = true;
 
 
         }
 
-        else {
+        else if(ele!=null) {
           ele.checked = false;
 
 
@@ -413,12 +413,12 @@ export class AddEditRoleComponent implements OnInit {
 
 
         const ele = document.getElementById(cell.id) as HTMLInputElement;
-        if (ele.checked) {
+        if (ele!=null && ele.checked) {
           cell.isChecked = true;
 
         }
 
-        else {
+        else   if (ele!=null ){
           cell.isChecked = false;
 
 

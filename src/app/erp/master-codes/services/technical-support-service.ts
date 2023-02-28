@@ -6,12 +6,12 @@ import { environment } from '../../../../environment';
 @Injectable({
     providedIn: 'root',
   })
-export class TechnicalSupportService {
+export class UserLoginService {
   constructor(private _httpClient: HttpClient) { }
 
-  TechnicalSupportLogin(AuthenticateRequest: any):Observable<any>{
+  UserLoginLogin(AuthenticateRequest: any):Observable<any>{
 
-    return this._httpClient.post<any>(environment.apiIdentity + "/api/TechnicalSupport/Login", AuthenticateRequest);
+    return this._httpClient.post<any>(environment.apiIdentity + "/api/UserLogin/Login", AuthenticateRequest);
   }
 
 }

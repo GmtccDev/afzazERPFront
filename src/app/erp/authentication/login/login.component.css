@@ -21,50 +21,51 @@
   height: 100%;
 }
 
-.bg-login-admin {
-  background-image: linear-gradient(45deg, #180e00, rgba(255, 152, 0, 0.168627451)), url(../../../../assets/images/login/bg-login.jpg);
+.BG-IMG-WAVE {
+  background-image: linear-gradient(45deg, #1410239e, #29317694), url(../../../../assets/images/login/bg.gif);
   background-size: cover;
+  background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center;
-}
-
-footer {
-  background: rgba(225, 211, 186, 0.31);
-  padding: 5px;
-}
-footer .text-start {
-  text-align: start !important;
 }
 
 @-webkit-keyframes loader {
   15% {
-    transform: translateX(0);
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
   45% {
-    transform: translateX(230px);
+    -webkit-transform: translateX(230px);
+            transform: translateX(230px);
   }
   65% {
-    transform: translateX(230px);
+    -webkit-transform: translateX(230px);
+            transform: translateX(230px);
   }
   95% {
-    transform: translateX(0);
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
 }
 
 @keyframes loader {
   15% {
-    transform: translateX(0);
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
   45% {
-    transform: translateX(230px);
+    -webkit-transform: translateX(230px);
+            transform: translateX(230px);
   }
   65% {
-    transform: translateX(230px);
+    -webkit-transform: translateX(230px);
+            transform: translateX(230px);
   }
   95% {
-    transform: translateX(0);
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
 }
+
 @-webkit-keyframes loading-text {
   0% {
     content: "Loading";
@@ -79,6 +80,7 @@ footer .text-start {
     content: "Loading...";
   }
 }
+
 @keyframes loading-text {
   0% {
     content: "Loading";
@@ -92,4 +94,5 @@ footer .text-start {
   75% {
     content: "Loading...";
   }
-}/*# sourceMappingURL=login.component.css.map */
+}
+/*# sourceMappingURL=login.component.css.map */

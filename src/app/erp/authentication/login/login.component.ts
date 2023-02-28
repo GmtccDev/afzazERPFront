@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/shared/common-services/user.service';
-import { TechnicalSupportService } from '../services/technical-support-service'
+import { UserLoginService } from '../services/user-login-service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   public showLoader: boolean = false;
   currentSystemLanguage = 'en';
   // public authService: AuthService,
-  constructor(private fb: FormBuilder, public authService: TechnicalSupportService,
+  constructor(private fb: FormBuilder, public authService: UserLoginService,
     
      public router: Router,  private userService: UserService,private translate:TranslateService) {
       
@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.logout();
   }
 
   showPassword() {
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
 
     // }
 
-    this.authService.TechnicalSupportLogin(this.loginForm.value).subscribe(
+    this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
 
         

@@ -2985,7 +2985,7 @@
 // }
 
 // @Injectable()
-// export class TechnicalSupportServiceProxy {
+// export class UserLoginServiceProxy {
 //     private http: HttpClient;
 //     private baseUrl: string;
 //     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -3001,8 +3001,8 @@
 //      * @param body (optional) 
 //      * @return Success
 //      */
-//     register(api_version: string | undefined, language: any | undefined, body: TechnicalSupportCommand | undefined): Observable<TechnicalSupportDto> {
-//         let url_ = this.baseUrl + "/api/TechnicalSupport/Register?";
+//     register(api_version: string | undefined, language: any | undefined, body: UserLoginCommand | undefined): Observable<UserLoginDto> {
+//         let url_ = this.baseUrl + "/api/UserLogin/Register?";
 //         if (api_version === null)
 //             throw new Error("The parameter 'api_version' cannot be null.");
 //         else if (api_version !== undefined)
@@ -3029,14 +3029,14 @@
 //                 try {
 //                     return this.processRegister(<any>response_);
 //                 } catch (e) {
-//                     return <Observable<TechnicalSupportDto>><any>_observableThrow(e);
+//                     return <Observable<UserLoginDto>><any>_observableThrow(e);
 //                 }
 //             } else
-//                 return <Observable<TechnicalSupportDto>><any>_observableThrow(response_);
+//                 return <Observable<UserLoginDto>><any>_observableThrow(response_);
 //         }));
 //     }
 
-//     protected processRegister(response: HttpResponseBase): Observable<TechnicalSupportDto> {
+//     protected processRegister(response: HttpResponseBase): Observable<UserLoginDto> {
 //         const status = response.status;
 //         const responseBlob = 
 //             response instanceof HttpResponse ? response.body : 
@@ -3047,7 +3047,7 @@
 //             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
 //             let result200: any = null;
 //             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-//             result200 = TechnicalSupportDto.fromJS(resultData200);
+//             result200 = UserLoginDto.fromJS(resultData200);
 //             return _observableOf(result200);
 //             }));
 //         } else if (status !== 200 && status !== 204) {
@@ -3055,7 +3055,7 @@
 //             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
 //             }));
 //         }
-//         return _observableOf<TechnicalSupportDto>(<any>null);
+//         return _observableOf<UserLoginDto>(<any>null);
 //     }
 
 //     /**
@@ -3065,7 +3065,7 @@
 //      * @return Success
 //      */
 //     login(api_version: string | undefined, language: any | undefined, body: LoginCommand | undefined): Observable<AuthorizedUserDTO> {
-//         let url_ = this.baseUrl + "/api/TechnicalSupport/Login?";
+//         let url_ = this.baseUrl + "/api/UserLogin/Login?";
 //         if (api_version === null)
 //             throw new Error("The parameter 'api_version' cannot be null.");
 //         else if (api_version !== undefined)
@@ -3835,7 +3835,7 @@
 // }
 
 // export class AuthorizedUserDTO implements IAuthorizedUserDTO {
-//     user: TechnicalSupportDto;
+//     user: UserLoginDto;
 //     token: string | undefined;
 
 //     constructor(data?: IAuthorizedUserDTO) {
@@ -3849,7 +3849,7 @@
 
 //     init(_data?: any) {
 //         if (_data) {
-//             this.user = _data["user"] ? TechnicalSupportDto.fromJS(_data["user"]) : <any>undefined;
+//             this.user = _data["user"] ? UserLoginDto.fromJS(_data["user"]) : <any>undefined;
 //             this.token = _data["token"];
 //         }
 //     }
@@ -3877,7 +3877,7 @@
 // }
 
 // export interface IAuthorizedUserDTO {
-//     user: TechnicalSupportDto;
+//     user: UserLoginDto;
 //     token: string | undefined;
 // }
 
@@ -6513,7 +6513,7 @@
 //     items: RoleDto[] | undefined;
 // }
 
-// export class TechnicalSupportCommand implements ITechnicalSupportCommand {
+// export class UserLoginCommand implements IUserLoginCommand {
 //     userName: string | undefined;
 //     nameAr: string | undefined;
 //     nameEn: string | undefined;
@@ -6522,7 +6522,7 @@
 //     email: string | undefined;
 //     password: string | undefined;
 
-//     constructor(data?: ITechnicalSupportCommand) {
+//     constructor(data?: IUserLoginCommand) {
 //         if (data) {
 //             for (var property in data) {
 //                 if (data.hasOwnProperty(property))
@@ -6543,9 +6543,9 @@
 //         }
 //     }
 
-//     static fromJS(data: any): TechnicalSupportCommand {
+//     static fromJS(data: any): UserLoginCommand {
 //         data = typeof data === 'object' ? data : {};
-//         let result = new TechnicalSupportCommand();
+//         let result = new UserLoginCommand();
 //         result.init(data);
 //         return result;
 //     }
@@ -6562,15 +6562,15 @@
 //         return data; 
 //     }
 
-//     clone(): TechnicalSupportCommand {
+//     clone(): UserLoginCommand {
 //         const json = this.toJSON();
-//         let result = new TechnicalSupportCommand();
+//         let result = new UserLoginCommand();
 //         result.init(json);
 //         return result;
 //     }
 // }
 
-// export interface ITechnicalSupportCommand {
+// export interface IUserLoginCommand {
 //     userName: string | undefined;
 //     nameAr: string | undefined;
 //     nameEn: string | undefined;
@@ -6580,7 +6580,7 @@
 //     password: string | undefined;
 // }
 
-// export class TechnicalSupportDto implements ITechnicalSupportDto {
+// export class UserLoginDto implements IUserLoginDto {
 //     userName: string | undefined;
 //     nameAr: string | undefined;
 //     nameEn: string | undefined;
@@ -6588,7 +6588,7 @@
 //     phoneNumber: string | undefined;
 //     email: string | undefined;
 
-//     constructor(data?: ITechnicalSupportDto) {
+//     constructor(data?: IUserLoginDto) {
 //         if (data) {
 //             for (var property in data) {
 //                 if (data.hasOwnProperty(property))
@@ -6608,9 +6608,9 @@
 //         }
 //     }
 
-//     static fromJS(data: any): TechnicalSupportDto {
+//     static fromJS(data: any): UserLoginDto {
 //         data = typeof data === 'object' ? data : {};
-//         let result = new TechnicalSupportDto();
+//         let result = new UserLoginDto();
 //         result.init(data);
 //         return result;
 //     }
@@ -6626,15 +6626,15 @@
 //         return data; 
 //     }
 
-//     clone(): TechnicalSupportDto {
+//     clone(): UserLoginDto {
 //         const json = this.toJSON();
-//         let result = new TechnicalSupportDto();
+//         let result = new UserLoginDto();
 //         result.init(json);
 //         return result;
 //     }
 // }
 
-// export interface ITechnicalSupportDto {
+// export interface IUserLoginDto {
 //     userName: string | undefined;
 //     nameAr: string | undefined;
 //     nameEn: string | undefined;

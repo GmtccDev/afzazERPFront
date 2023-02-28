@@ -1,38 +1,37 @@
 <div class="container-fluid p-0">
-    <div class="row">
-       
+    <div class="row verification-code">
+
         <div class="col-xl-6 p-0">
             <div class="login-card">
                 <div>
 
                     <div class="Verification login-main">
-                        <form [formGroup]="verifyCodeForm"  class="theme-form">
+                        <form [formGroup]="verifyCodeForm" class="theme-form">
                             <div>
                                 <a class="logo" routerLink='/'>
                                     <img class="img-fluid for-light" src="assets/images/logo/logo-1.png" alt="looginpage" width="200">
                                     <img class="img-fluid for-dark" src="assets/images/logo/logo-1.png" alt="looginpage" width="200">
                                 </a>
                             </div>
-                            <h4 class="text-center">Verification</h4>
+                            <h4 class="text-center rania">Verification</h4>
                             <p class="text-center">You will receive an email with verification code, copy & paste the key in the text below
                             </p>
                             <div class="form-group">
                                 <!-- <label class="col-form-label">Verification Code</label> -->
                                 <!-- <input class="form-control" type="text" required="" formControlName="code" placeholder="Verification Code"> -->
-                                <input type="text" class="form-control" id="code" formControlName="code" name="code" placeholder="{{'login.code'|translate}}"
-                                [ngClass]="{'error' : (f.code.touched) && (f.code.errors)}">
-                              <small *ngIf="(f.code.touched) && (f.code.errors)" class="w-100 text-danger mt-1">
+                                <input type="text" class="form-control" id="code" formControlName="code" name="code" placeholder="{{'login.code'|translate}}" [ngClass]="{'error' : (f.code.touched) && (f.code.errors)}">
+                                <small *ngIf="(f.code.touched) && (f.code.errors)" class="w-100 text-danger mt-1">
                                 <span *ngIf="(f.code.errors?.required)">{{'validation.required'|translate}}</span>
                                 <span *ngIf="(f.code.errors.minlength)">{{'validation.invalid-code'|translate}}</span>
-                               
+
                               </small>
 
                             </div>
 
-                            <div class="form-group my-5">
+                            <div class="form-group my-3">
 
                                 <button class="btn btn-info mr-2" (click)="onSubmit()" type="submit">{{'buttons.save'|translate}}</button>
-							
+
                             </div>
 
                         </form>
@@ -40,8 +39,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 p-0 bg-imge-side">
-            <img class="bg-img-cover bg-center h-100vh" src="../assets/images/login/bg-v1.svg" alt="looginpage" width="100%">
+        <div class="bg-imge-side col-xl-6 d-md-block d-none m-auto p-0 text-center">
+            <img class="bg-img-cover bg-center h-100vh" src="../assets/images/login/bg-v1.svg" alt="looginpage" width="400px">
         </div>
     </div>
 </div>

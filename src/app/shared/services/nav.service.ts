@@ -112,13 +112,6 @@ export class NavService implements OnDestroy {
 
 
 			]
-		},
-		{
-			title:this.translate.instant("component-names.subscriptions") , type: 'sub', icon: 'MasterCode', active: false, children: [
-				{ path: '/security/customer', title: this.translate.instant("component-names.customer"), type: 'link' , active: true},
-
-
-			]
 		}
 
 

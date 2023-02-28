@@ -17,20 +17,12 @@
     max-height: 100vh;
     height: 100%;
 }
-.bg-login-admin{
-    background-image:linear-gradient(45deg, #180e00, #ff98002b),url(../../../../assets/images/login/bg-login.jpg);
+.BG-IMG-WAVE{
+    background-image:linear-gradient(45deg, #1410239e, #29317694), url(../../../../assets/images/login/bg.gif);
     background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed
 }
-footer{
-    background: rgb(225 211 186 / 31%);
-    padding: 5px;
-    .text-start {
-        text-align: start !important;
-    }
-}
-
 @keyframes loader {
     15% {
         transform: translateX(0);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserLoginService } from '../services/user-login-service'
+import { UserLoginService } from '../services/user-login-service';
 @Component({
 	selector: 'app-set-password',
 	templateUrl: './set-password.component.html',

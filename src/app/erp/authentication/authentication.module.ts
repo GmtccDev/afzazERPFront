@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { AuthenticationComponent } from './authentication.component';
 
-import { TechnicalSupportService } from './services/technical-support-service';
+import { UserLoginService } from './services/user-login-service';
 import { LoginComponent } from './login/login.component';
 import { VerificationCodeComponent } from './verification-code/verification-code.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -39,6 +39,6 @@ import { AddNewPasswordComponent } from './add-new-password/add-new-password.com
 		AngularMultiSelectModule,
 		SharedModule, AuthenticationRoutingModule,
 	],
-	providers: [TechnicalSupportService]
+	providers: [UserLoginService]
 })
 export class AuthenticationModule { }

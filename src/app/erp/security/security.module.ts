@@ -10,13 +10,12 @@ import { UsersListComponent } from './users/users-list/users-list.component';
 import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.component';
 import { UserServiceProxy } from './services/user-service';
 import { CustomerServiceProxy } from './services/customer-service';
-import { PermissionListComponent } from './permission-list/permission-list.component';
 import { PermissionServiceProxy } from './services/permission.servies';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 
 
 @NgModule({
-	declarations: [ RolesComponent, AddEditRoleComponent, UsersListComponent, AddEditUserComponent, PermissionListComponent],
+	declarations: [ RolesComponent, AddEditRoleComponent, UsersListComponent, AddEditUserComponent],
 	imports: [
 		CommonModule,
 		NgxSpinnerModule,
