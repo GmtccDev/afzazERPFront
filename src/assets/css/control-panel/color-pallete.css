@@ -1,0 +1,239 @@
+.blast-box {
+    position: fixed;
+    width: 300px;
+    height: 299px;
+/*    bottom: 588px;
+    left: 1536px;*/
+    top: 0;
+    bottom: 0;
+    right: -299px;
+    color: #3C8137;
+    z-index: 9999;
+    transition: 0.5s cubic-bezier(1, 1.48, 0.76, 0.95) left;
+}
+.appear-it {
+    /*left: 1276px!important;*/
+    left: auto;
+    right: -42px;
+}
+
+.blast-box .blast-frame {
+    position: absolute;
+    /*width: calc(120% - 88px);*/
+    height: 100vh;
+    top: 257px;
+    top: 0;
+    right: 300px;
+    width: calc(164% - 234px);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: -2px 2px 7px rgb(0 0 0 / 0.2);
+}
+.blast-box .blast-frame p { 
+    font-size: 20px;
+    font-weight: 400;
+    color: #323A46;
+    margin-top: 20px;
+}
+.blast-icon {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 30px;
+    right: 299px;
+    bottom: 0;
+    bottom: -240px;
+    bottom:0;
+    color: #ffffff;
+    background: #eaeaea;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    border: 3px solid #fff;
+    perspective: 1000px;
+    transition: 0.5s ease all;
+    transform-origin: right;
+    transition-delay: 0.5s;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+}
+
+
+
+
+
+.flip-it {
+    transform: rotateY(12deg);
+  }
+
+
+
+
+.blast-box .blast-color{
+    margin: 4px !important;
+    height: 40px !important;
+    width: 40px !important;
+    border: 0 !important;
+}
+
+.setcolor
+{
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  border: 1px solid #000;
+ border-radius: 7px;
+    padding: 7px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+
+.blast-box a
+{
+      font-size: 17px;
+      color: #000;
+}
+
+
+.blast-box a:hover
+{
+  text-decoration: none;
+}
+
+.blast-box img
+{
+  max-width: 100%;
+}
+
+
+/*000000000000000000000000000000000000000000000*/
+
+
+/* body.gray {
+  background: gray;
+  color: white;
+}
+body.white {
+  background: white;
+  color: black;
+}
+body.blue {
+  background: blue;
+  color: white;
+}
+body.yellow {
+  background: yellow;
+  color: black;
+} */
+
+#switcher {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+#switcher li {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin: 0 15px 15px 0;
+  border-radius: 30px;
+  border: 3px solid black;
+}
+
+#grayButton {
+  background: gray;
+}
+#whiteButton {
+  background: white;
+}
+#blueButton {
+  background: blue;
+}
+#yellowButton {
+  background: yellow;
+}
+
+
+/*--------------------------------*/
+
+
+  .button1{
+    background-color: #545aa5;
+    color: #fff!important;
+    padding: 3px 8px 3px 10px;
+    font-size: 12px!important;
+    border-radius: 5px;
+    display: block;
+    width: 36%;
+    text-align: center;
+    margin: 12px 5px 10px 5px;
+  }
+
+  .button2{
+    background-color: #fff;
+    color: #000!important;
+    padding: 3px 8px 3px 10px;
+    font-size: 12px!important;
+    border-radius: 5px;
+    display: block;
+    width: 35%;
+    text-align: center;
+    margin: 12px 5px 10px 5px;
+    border: 1px solid #545aa5;
+  }
+  .demo1{
+      position: relative;
+  }
+
+.style{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    /* top: 39px; */
+    width: 100%;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+}
+
+#switcher {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+#switcher li {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  border-radius: 0;
+  border: 1px solid transparent;
+  /* border: 3px solid black; */
+}
+
+#blueButton {
+  background: #3f51b5;
+}
+#lightblueButton {
+  background: #00bcd4;
+}
+#yellowButton {
+  background: #ffc107;
+}
+#orangeButton {
+  background: #ff5722;
+}
+#pinkButton{
+  background: #e91e63;
+}
+#skyblueButton{
+  background: #2196f3;
+}
+#purpleButton{
+  background: #673ab7;
+}
+#greenButton{
+  background: #4caf50;
+}

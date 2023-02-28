@@ -1,0 +1,16 @@
+svg.feather {
+  width: 15px;
+}
+
+button.k-button.k-button-md.k-button-solid-base.k-rounded-md {
+  color: #828587;
+}
+
+button.k-button.k-button-md.k-button-solid-base.k-rounded-md.btn-primary.router-link-active {
+  background: #f6a419 !important;
+  color: #fff;
+}
+
+.media.profile-media img {
+  width: 32px;
+}/*# sourceMappingURL=header.component.css.map */

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19.928" height="17.33" viewBox="0 0 19.928 17.33">
+  <defs>
+    <clipPath id="clip">
+      <use xlink:href="#fill"/>
+    </clipPath>
+    <clipPath id="clip-2">
+      <use xlink:href="#fill-2"/>
+    </clipPath>
+    <clipPath id="clip-3">
+      <use xlink:href="#fill-3"/>
+    </clipPath>
+    <clipPath id="clip-4">
+      <use xlink:href="#fill-4"/>
+    </clipPath>
+    <clipPath id="clip-5">
+      <use xlink:href="#fill-5"/>
+    </clipPath>
+    <clipPath id="clip-6">
+      <use xlink:href="#fill-6"/>
+    </clipPath>
+    <clipPath id="clip-7">
+      <use xlink:href="#fill-7"/>
+    </clipPath>
+  </defs>
+  <g id="integration-server-setting" transform="translate(8157.429 -13734.398)">
+    <g id="Group_936" data-name="Group 936" transform="translate(-8157.429 13734.398)">
+      <path id="Exclusion_6" data-name="Exclusion 6" d="M8.54,1.988H0V0H8.54V1.988ZM3.559.949v.712H4.27V.949Zm-1.423,0v.712h.712V.949ZM.712.949v.712h.712V.949Z" transform="translate(0 10.597)" fill="#282377"/>
+      <path id="Exclusion_7" data-name="Exclusion 7" d="M8.54,1.988H0V0H8.54V1.988ZM3.559.949v.712H4.27V.949Zm-1.423,0v.712h.712V.949ZM.712.949v.712h.712V.949Z" transform="translate(0 12.968)" fill="#282377"/>
+      <path id="Exclusion_8" data-name="Exclusion 8" d="M8.54,1.988H0V0H8.54V1.988ZM3.559.949v.712H4.27V.949Zm-1.423,0v.712h.712V.949ZM.712.949v.712h.712V.949Z" transform="translate(0 15.341)" fill="#282377"/>
+      <path id="Exclusion_6-2" data-name="Exclusion 6" d="M8.54,1.988H0V0H8.54V1.988ZM3.559.949v.712H4.27V.949Zm-1.423,0v.712h.712V.949ZM.712.949v.712h.712V.949Z" transform="translate(11.387 10.597)" fill="#282377"/>
+      <path id="Exclusion_7-2" data-name="Exclusion 7" d="M8.54,1.988H0V0H8.54V1.988ZM3.559.949v.712H4.27V.949Zm-1.423,0v.712h.712V.949ZM.712.949v.712h.712V.949Z" transform="translate(11.387 12.968)" fill="#282377"/>
+      <path id="Exclusion_8-2" data-name="Exclusion 8" d="M8.54,1.988H0V0H8.54V1.988ZM3.559.949v.712H4.27V.949Zm-1.423,0v.712h.712V.949ZM.712.949v.712h.712V.949Z" transform="translate(11.387 15.341)" fill="#282377"/>
+      <g id="Rectangle_1575" data-name="Rectangle 1575" transform="translate(4.674 8.853)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill" width="1.924" stroke="none"/>
+        <path d="M0,-0.49998075993789826h1.924005389213562M1.424005389213562,0v0.000019240062101744115M1.924005389213562,0.5h-1.924005389213562M0.5,0.000019240062101744115v-0.000019240062101744115" fill="none" clip-path="url(#clip)"/>
+      </g>
+      <g id="Rectangle_1578" data-name="Rectangle 1578" transform="translate(10.446 6.929)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill-2" height="1.924" stroke="none"/>
+        <path d="M0,0.5h0.000019240062101744115M0.5,0v1.924005389213562M0.000019240062101744115,1.424005389213562h-0.000019240062101744115M-0.49998075993789826,1.924005389213562v-1.924005389213562" fill="none" clip-path="url(#clip-2)"/>
+      </g>
+      <g id="Rectangle_1576" data-name="Rectangle 1576" transform="translate(12.37 8.853)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill-3" stroke="none"/>
+        <path d="M0,-0.49998075993789826h0.000019240062101744115M0.5,0v0.000019240062101744115M0.000019240062101744115,0.5h-0.000019240062101744115M-0.49998075993789826,0.000019240062101744115v-0.000019240062101744115" fill="none" clip-path="url(#clip-3)"/>
+      </g>
+      <g id="Rectangle_1577" data-name="Rectangle 1577" transform="translate(5.931 8.876) rotate(-90)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill-4" width="0.237" height="8.066" stroke="none"/>
+        <path d="M0,0.5h0.2372349351644516M0.5,0v8.065987586975098M0.2372349351644516,7.565987586975098h-0.2372349351644516M-0.2627650648355484,8.065987586975098v-8.065987586975098" fill="none" clip-path="url(#clip-4)"/>
+      </g>
+      <path id="Icon_ionic-ios-settings" data-name="Icon ionic-ios-settings" d="M12.152,8.67a1.073,1.073,0,0,1,.689-1,4.254,4.254,0,0,0-.515-1.24,1.088,1.088,0,0,1-.437.093,1.071,1.071,0,0,1-.98-1.507A4.242,4.242,0,0,0,9.672,4.5a1.072,1.072,0,0,1-2,0,4.254,4.254,0,0,0-1.24.515,1.071,1.071,0,0,1-.98,1.507,1.052,1.052,0,0,1-.437-.093A4.348,4.348,0,0,0,4.5,7.671a1.073,1.073,0,0,1,0,2,4.254,4.254,0,0,0,.515,1.24,1.071,1.071,0,0,1,1.414,1.414,4.279,4.279,0,0,0,1.24.515,1.07,1.07,0,0,1,2,0,4.254,4.254,0,0,0,1.24-.515,1.072,1.072,0,0,1,1.414-1.414,4.279,4.279,0,0,0,.515-1.24A1.078,1.078,0,0,1,12.152,8.67ZM8.69,10.406a1.738,1.738,0,1,1,1.738-1.738A1.737,1.737,0,0,1,8.69,10.406Z" transform="translate(1.412 -4.5)" fill="#282377"/>
+      <g id="Rectangle_1579" data-name="Rectangle 1579" transform="translate(5.931 8.673)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill-5" width="0.237" height="1.924" stroke="none"/>
+        <path d="M0,0.5h0.2372349351644516M0.5,0v1.924005389213562M0.2372349351644516,1.424005389213562h-0.2372349351644516M-0.2627650648355484,1.924005389213562v-1.924005389213562" fill="none" clip-path="url(#clip-5)"/>
+      </g>
+      <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(9.845 6.715)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill-6" width="0.237" height="1.924" stroke="none"/>
+        <path d="M0,0.5h0.2372349351644516M0.5,0v1.924005389213562M0.2372349351644516,1.424005389213562h-0.2372349351644516M-0.2627650648355484,1.924005389213562v-1.924005389213562" fill="none" clip-path="url(#clip-6)"/>
+      </g>
+      <g id="Rectangle_1580" data-name="Rectangle 1580" transform="translate(13.997 8.673)" fill="#282377" stroke="#282377" stroke-width="1">
+        <rect id="fill-7" width="0.237" height="1.924" stroke="none"/>
+        <path d="M0,0.5h0.2372349351644516M0.5,0v1.924005389213562M0.2372349351644516,1.424005389213562h-0.2372349351644516M-0.2627650648355484,1.924005389213562v-1.924005389213562" fill="none" clip-path="url(#clip-7)"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body mr-4">
+    {{message}}
+</div>
+<div class="modal-footer">
+
+    <button type="button" [hidden]="!isYesNo" [ngClass]="btnClass=='Add'||'Update'?'btn btn-primary':'btn btn-danger'"  (click)="confirm()">{{btnConfirmTxt}}</button>
+    <button type="button" [hidden]="!isYesNo" class="btn btn-outline-dark" (click)="close()">{{'toolbar.cancel'|translate}}</button>
+    <button type="button" [hidden]="isYesNo" class="btn btn-outline-dark" (click)="close()">Close</button>
+</div>

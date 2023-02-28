@@ -1,0 +1,95 @@
+.loader--text {
+  top: 200%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.loader--text:after {
+  content: "Loading";
+  font-weight: bold;
+  -webkit-animation-name: loading-text;
+          animation-name: loading-text;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.h-100vh {
+  max-height: 100vh;
+  height: 100%;
+}
+
+.bg-login-admin {
+  background-image: linear-gradient(45deg, #180e00, rgba(255, 152, 0, 0.168627451)), url(../../../../assets/images/login/bg-login.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+footer {
+  background: rgba(225, 211, 186, 0.31);
+  padding: 5px;
+}
+footer .text-start {
+  text-align: start !important;
+}
+
+@-webkit-keyframes loader {
+  15% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(230px);
+  }
+  65% {
+    transform: translateX(230px);
+  }
+  95% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes loader {
+  15% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(230px);
+  }
+  65% {
+    transform: translateX(230px);
+  }
+  95% {
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes loading-text {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}
+@keyframes loading-text {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}/*# sourceMappingURL=login.component.css.map */

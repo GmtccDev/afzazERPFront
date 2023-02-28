@@ -1,0 +1,8 @@
+
+<section class="inner-page-wrapper inner-page-auction">
+    <div class="container-fluid p-0">
+        <app-tabulator [idColName]="'id'" [childRowData]="currencies" [parentColName]="'groupId'" [divId]="'PeopleOfBenefits'" [columnSettings]="columnNames" [componentName]="'currencies'" (onEditItem)="onEdit($event)" (onCheckItem)="onCheck($event)" (onDeleteItem)="showConfirmDeleteMessage($event)" (onAddItem)="openCurrencies()" (onMenuActionSelected)="onMenuActionSelected($event)"
+            [showMenuOptions]="menuOptions" [direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1" [path]="'currencies'"></app-tabulator>
+    </div>
+  </section>
+  

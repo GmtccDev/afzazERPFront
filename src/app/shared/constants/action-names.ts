@@ -1,0 +1,12 @@
+export const INSERT:string = "InsertAction";
+export const INSERT_UNSHIFT:string= "InsertUnshiftAction";
+export const UPDATE:string = "UpdateAction";
+export const SET_LIST:string = "SetListAction";
+export const REFRESH_LIST:string = "RefreshListAction";
+export const CLEAR_LIST:string= "ClearListAction";
+export const SET_SELECTED:string = "SetSelectedAction";
+export const CLEAR_SELECTED:string = "ClearSelectedAction";
+export const SET_SELECTED_LIST:string = "SetSelectedListAction";
+export const CLEAR_SELECTED_LIST:string = "ClearSelectedListAction";
+export const DELET:string = "DeleteAction";
+export const INSERT_RANGE:string = "InsertRangeAction";

@@ -1,0 +1,87 @@
+<div class="setting-referesh-area">
+    
+    <div class="table_sorting_dropdown">
+        <div class="dropdown">
+            <button class="btn dropdown-toggle group_submenu" type="button"  data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <img src="../../../assets/sniper/images/settings.svg">
+            </button>
+            <ul class="dropdown-menu multi-level allow-focus " role="menu" aria-labelledby="dropdownMenu">
+                <!-- <li class="dropdown-item"><a href="#"><span><img
+                                src="../../../assets/sniper/images/sort-amount-up.svg"></span>Sort
+                        Ascending</a></li>
+                <li class="dropdown-item"><a href="#"><span><img
+                                src="../../../assets/sniper/images/sort-amount-down.svg"></span>Sort
+                        Descending</a></li> -->
+                <li class="dropdown-submenu">
+                    <a class="dropdown-item" tabindex="-1" href="#"><span><img
+                                src="../../../assets/sniper/images/columns.svg"></span>Columns</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <app-draggable-menu-items [containerId]="'columns'" (onSave)="saveColumnSetting($event)"
+                                [enableSort]="false" [enableGroup]="false"
+                                (onMenuItemChange)="columnItemsChange($event)" [componentName]="componentName"
+                                [menuItems]="colMenuItems">
+                            </app-draggable-menu-items>
+
+
+
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu">
+                    <a class="dropdown-item" tabindex="-1" href="#"><span><img
+                                src="../../../assets/sniper/images/sort-amount-up.svg"></span>Sort</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <app-draggable-menu-items [containerId]="'sort'" (onSave)="saveSortSetting($event)"
+                                [enableSort]="true" (onMenuItemChange)="sortItemChange($event)"
+                                [componentName]="componentName" [sortBy]="sorterList" [enableGroup]="false"
+                                [autoArrangeChecked]="true" [menuItems]="sortMenuItems">
+
+                            </app-draggable-menu-items>
+
+
+
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu">
+                    <a class="dropdown-item" tabindex="-1" href="#"><span><img
+                                src="../../../assets/sniper/images/circle-geofence-active.svg"></span>Group By</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <app-draggable-menu-items [containerId]="'groupby'" (onSave)="saveGroupbySetting($event)"
+                                (onMenuItemChange)="groupbyItemsChange($event)" [menuItems]="groupByMenuItems"
+                                [enableSort]="false" [enableGroup]="true" [groupBy]="groupByList"
+                                [componentName]="componentName" [autoArrangeChecked]="true">
+                            </app-draggable-menu-items>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li class="dropdown-submenu" hidden>
+                    <a class="dropdown-item" tabindex="-1" href="#"><span><img
+                                src="../../../assets/sniper/images/filter-table.svg"></span>Filter</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a tabindex="-1" href="#">
+                                <form class="filter_search" action="/action_page.php">
+                                    <input type="text" placeholder="Search.." name="search2">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </a></li>
+                    </ul>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <!-- &nbsp; -->
+    <!-- <div class="referesh-btn">
+        <span>
+            <img src="../../../assets/sniper/images/refresh.svg">
+        </span>
+    </div> -->
+</div>

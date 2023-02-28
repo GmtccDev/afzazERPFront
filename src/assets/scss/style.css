@@ -1,0 +1,436 @@
+/*! -----------------------------------------------------------------------------------
+
+    Template Name: afzaz Admin
+    Template URI: http://angular.pixelstrap.com/afzaz
+    Description: This is Admin theme
+    Author: Pixelstrap
+    Author URI: https://themeforest.net/user/pixelstrap
+
+-----------------------------------------------------------------------------------
+*/
+/* ---------------------
+	*** Utils ***
+-----------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap");
+:root {
+  --theme-deafult: #4bc2f1;
+  --theme-secondary: #293176;
+}
+
+/* ---------------------
+	*** Icons Scss ***
+-----------------------*/
+/* ---------------------
+	*** Base ***
+-----------------------*/
+/* ---------------------
+	*** Components ***
+-----------------------*/
+/* ---------------------
+	*** Pages ***
+-----------------------*/
+/* ---------------------
+	*** Themes ***
+-----------------------*/
+/* ---------------------
+	*** Layout ***
+-----------------------*/
+.bg-img-cover {
+  -o-object-fit: cover !important;
+     object-fit: cover !important;
+}
+
+.toolbar-wrapper {
+  border-top: 1px solid #e8e8e8;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.k-toolbar {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #424242 !important;
+  background-color: #f0f0f1 !important;
+}
+
+.k-input-solid {
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #424242;
+  background-color: #ffffff;
+}
+
+.k-input,
+.k-picker {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  outline: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4285714286;
+  font-weight: normal;
+  text-align: start;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-appearance: none;
+}
+
+.k-input-md .k-input-inner,
+.k-picker-md .k-input-inner {
+  padding: 4px 8px;
+  height: 34px;
+}
+
+.k-input-inner {
+  padding: 4px 8px;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  color: inherit;
+  background: none;
+  font: inherit;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-appearance: none;
+}
+
+.k-toolbar {
+  margin: 0;
+  padding: 8px 8px;
+  border-width: 1px;
+  border-style: solid;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  outline: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4285714286;
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  gap: 8px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.k-toolbar::before {
+  content: "";
+  height: calc(1.4285714286em + 10px);
+  -webkit-margin-start: -8px;
+  margin-inline-start: -8px;
+}
+
+.k-toolbar > * {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  vertical-align: middle;
+  gap: 5px;
+}
+
+.k-button-solid-base {
+  border-color: #534b4b67;
+  color: #424242;
+  background-color: #fff !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.02)));
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.02));
+}
+
+.k-button-md {
+  padding: 4px 8px;
+  font-size: 14px;
+  line-height: 1.4285714286;
+}
+
+.k-button {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  color: inherit;
+  background: none;
+  font-family: inherit;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 5px;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  position: relative;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+button.k-button.k-button-md.k-button-solid-base.k-rounded-md:hover {
+  background: var(--theme-deafult) !important;
+  color: #fff !important;
+  border-color: var(--theme-deafult);
+}
+
+button:focus {
+  outline: 4px auto var(--theme-deafult) !important;
+}
+
+button.k-button.k-button-md.k-button-solid-base.k-rounded-md.disabled {
+  background: #dfdbdb !important;
+  color: #c6bbbb !important;
+  border-color: #ccc !important;
+  cursor: initial;
+}
+
+.k-rounded-md {
+  border-radius: 4px;
+}
+
+.k-button-icon {
+  color: inherit;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  position: relative;
+}
+
+span.k-button-text {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.k-button .la,
+.k-button .las {
+  font-size: 16px;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.media.profile-media img {
+  width: 32px;
+}
+
+.font-white {
+  color: #ffffff !important;
+}
+
+.bg-imge-side {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.tabulator {
+  height: -webkit-max-content !important;
+  height: -moz-max-content !important;
+  height: max-content !important;
+  background-color: transparent !important;
+}
+
+div#my-tabular-tablePeopleOfBenefits {
+  position: initial !important;
+  padding: 0 !important;
+}
+
+app-tabulator > div {
+  position: initial !important;
+  overflow: hidden !important;
+}
+
+.btn-tabulator-secondary {
+  background-color: rgba(var(--theme-secondary), 0.1);
+  font-size: 12px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border: 1px solid #9a9999;
+  transition: .5s all ease;
+  -webkit-transition: .5s all ease;
+  -moz-transition: .5s all ease;
+  -ms-transition: .5s all ease;
+  -o-transition: .5s all ease;
+  text-transform: capitalize !important;
+}
+
+.btn-tabulator-secondary:hover {
+  background: #414040;
+  border-color: #353738;
+}
+
+.tabulator-row.tabulator-selected, .tabulator .tabulator-tableHolder .tabulator-table {
+  background-color: #f4aa2c !important;
+  transition: .5s all ease;
+  -webkit-transition: .5s all ease;
+  -moz-transition: .5s all ease;
+  -ms-transition: .5s all ease;
+  -o-transition: .5s all ease;
+}
+
+.tabulator-row {
+  transition: .5s all ease;
+  -webkit-transition: .5s all ease;
+  -moz-transition: .5s all ease;
+  -ms-transition: .5s all ease;
+  -o-transition: .5s all ease;
+}
+
+.tabulator-row .tabulator-cell, .tabulator .tabulator-header, .tabulator, .tabulator .tabulator-header .tabulator-col {
+  border: none !important;
+}
+
+.tabulator-row .tabulator-cell {
+  padding: 5px 25px !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+button.arabic.btn.font-secondary.p-0.ng-star-inserted {
+  font-family: 'Almarai', sans-serif;
+}
+
+.right-0 {
+  right: 0 !important;
+}
+
+.bottom-0 {
+  bottom: 0 !important;
+}
+
+.bg-login-admin .footer-copyright {
+  text-align: end !important;
+}
+
+.show-hide span, .show-hide span.show {
+  font: normal normal normal 14px/1 FontAwesome;
+}
+
+.show-hide span:before, .show-hide span.show:before {
+  content: "\f070";
+}
+
+.show-hide span.show:before {
+  content: "\f06e";
+}
+
+html[dir="rtl"] body, html[dir="rtl"] .btn {
+  font-family: 'Almarai', sans-serif;
+}
+
+html[dir="rtl"] .ml-auto {
+  margin-left: initial !important;
+  margin-right: auto !important;
+}
+
+html[dir="rtl"] .was-validated .form-control:invalid, html[dir="rtl"] .form-control.is-invalid {
+  padding-right: initial !important;
+  padding-left: calc(1.5em + 0.75rem);
+  background-position: left calc(0.375em + 0.1875rem) center;
+}
+
+html[dir="rtl"] .show-hide {
+  right: initial !important;
+  left: 20px;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  border-right: none;
+  background: #4bc2f14f !important;
+  text-align: start !important;
+  min-width: 155px !important;
+  min-height: 40px;
+  line-height: 32px;
+}
+
+.tabulator-headers {
+  /* border-radius: 10px; */
+  color: var(--theme-deafult) !important;
+}
+
+.tabulator {
+  border-radius: 5px;
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow, .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow, .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+  border-bottom: 4px solid #575656a1 !important;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.validation.alert-danger.position-absolute.ng-star-inserted {
+  bottom: 0;
+  right: 0;
+  padding: 4px;
+  height: 30px;
+  line-height: 21px;
+  border-radius: 5px;
+}
+
+.form-control {
+  max-height: 30px !important;
+}
+
+.input-group > .form-control, .input-group > .form-select {
+  font-size: 13px;
+}
+/*# sourceMappingURL=style.css.map */

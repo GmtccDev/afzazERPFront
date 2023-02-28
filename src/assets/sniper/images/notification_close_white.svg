@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34.667" height="34.667" viewBox="0 0 34.667 34.667">
+  <defs>
+    <filter id="Icon_awesome-plus" x="0" y="0" width="34.667" height="34.667" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_905" data-name="Group 905" transform="translate(-910.98 -109.98)">
+    <g transform="matrix(1, 0, 0, 1, 910.98, 109.98)" filter="url(#Icon_awesome-plus)">
+      <path id="Icon_awesome-plus-2" data-name="Icon awesome-plus" d="M10.944,6.88H7.156V3.092a.842.842,0,0,0-.842-.842H5.472a.842.842,0,0,0-.842.842V6.88H.842A.842.842,0,0,0,0,7.722v.842a.842.842,0,0,0,.842.842H4.63v3.788a.842.842,0,0,0,.842.842h.842a.842.842,0,0,0,.842-.842V9.406h3.788a.842.842,0,0,0,.842-.842V7.722A.842.842,0,0,0,10.944,6.88Z" transform="translate(18.92 4.41) rotate(45)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+.btn-tools {
+    svg {
+        width: 13px;
+    }
+}
+
+svg.feather.feather-search {
+    width: 16px;
+}
+.dropdown-toggle.k-button {
+    &::after {
+   
+    content: "\e6e2" !important;
+    border: none !important;
+    font-family: 'themify';
+    transform: rotate(90deg);
+    font-size: 13px;}
+}
+.dropdown-menu.show{
+    transform: translate(0, 36px) !important;
+    -webkit-transform: translate(0, 36px) !important;
+    -moz-transform: translate(0, 36px) !important;
+    -ms-transform: translate(0, 36px) !important;
+    -o-transform: translate(0, 36px) !important;
+}

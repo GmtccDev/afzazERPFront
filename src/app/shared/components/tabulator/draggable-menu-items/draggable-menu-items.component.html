@@ -1,0 +1,27 @@
+<button class="sniper-button" (click)="saveMenuOptions()" title="Save">
+    <i class="fa fa-save" style="color: blueviolet;"></i>
+</button>
+<button class="sniper-button" (click)="undoChanges()" title="Undo">
+    <i class="fa fa-undo" style="color: blue;"></i>
+</button>
+<button class="sniper-button" (click)="resetMenu()"title="Reset">
+  <i class="fa fa-refresh" style="color: cadetblue;"></i>
+</button>
+<hr style="margin: 1px;">
+<div class="dragableContainer{{containerId}}{{componentName}} dragableContainer">
+    <div class="draggable{{containerId}}{{componentName}} draggable" draggable="true" *ngFor="let item of menuItems; let i = index;" [id]="item.field">
+      <input type="checkbox" value="{{item.checked}}" [checked]="item.checked" id="chk{{item.field}}"
+        class="chk{{item.field}}" (change)="changeValue(i)"> <span class="spn{{item.field}}">{{item.title}}</span> &nbsp;
+      <button (click)="setSort(i, $event)" class="sniper-button" *ngIf="enableSort" style="position: absolute;right: 1px;">
+        <i class="sort-by-asc" *ngIf="item.sort == 'asc'"></i>
+        <i class="sort-by-desc" *ngIf="item.sort == 'desc'"></i>
+      </button>
+      <i class="fa fa-arrows"  style="color: cadetblue;position: absolute ;"
+      [ngStyle]="{'right': enableSort?'20px':'3px'}"
+      
+      
+      ></i> 
+      
+      <span hidden class="spnSort{{item.field}}" >{{item.sort}}</span>
+    </div>
+  </div>

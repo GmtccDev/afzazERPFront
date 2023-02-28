@@ -1,0 +1,12 @@
+<div class=" ">
+	<label [for]="inputName" class="label-name">{{labelName|translate}}<span
+		class="text-danger">*</span></label>
+	<div class="form-group input-group">
+
+	  <input type="{{type}}"  [formControl]="control" class="form-control" name="{{inputName}}" >
+
+	</div>
+  </div>
+
+  <!--Use Input -->
+  <!-- <app-input [type]="'text'"  [formControlName]="'nameAr'" [labelName]="'kandil nameAr'"[inputName]="'password'"></app-input> -->
