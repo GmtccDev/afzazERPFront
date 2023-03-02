@@ -29,7 +29,7 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: "component-names.roles-permissions",
+    componentList: this.translate.instant("component-names.roles-permissions"),
     componentAdd: '',
 
   };
@@ -99,7 +99,7 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
           //   return res;
           // });
-          this.toolbarPathData.componentList = "component-names.roles-permissions";
+          this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
           if (res.success) {
             this.role = res.response?.items;
           }

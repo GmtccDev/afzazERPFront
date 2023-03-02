@@ -158,13 +158,14 @@ export class AddEditRoleComponent implements OnInit {
 
         next: (res: any) => {
 
-          this.toolbarPathData.componentList = "component-names.roles-permissions";
+        
           this.roleForm.patchValue({
             code: res.response.code
           });
           this.drawTable();
           this.permission = res.response.permissions
           this.exTable?.setData(this.permission);
+          this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
         },
         error: (err: any) => {
           reject(err);
@@ -372,7 +373,7 @@ export class AddEditRoleComponent implements OnInit {
       paginationCounter: "rows",
     });
     //    this.exTable.setData(persons);
-    document.getElementById('ex-table-div').appendChild(this.tab);
+    document.getElementById('ex-table-div2').appendChild(this.tab);
   }
   onCheckItem(item) {
     debugger

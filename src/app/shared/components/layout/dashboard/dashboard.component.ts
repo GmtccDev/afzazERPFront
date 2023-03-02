@@ -5,7 +5,8 @@ import { LayoutService } from '../../../services/layout.service';
 import { NavService } from '../../../services/nav.service';
 import { fadeInAnimation } from '../../../data/router-animation/router-animation';
 import { DOCUMENT } from '@angular/common';
-
+import * as chartData from '../../../../shared/data/dashboard/default'
+import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,15 +16,44 @@ import { DOCUMENT } from '@angular/common';
 export class DashboardComponent implements OnInit, AfterViewInit {
   public elem: any;
   public dark: boolean = this.layout.config.settings.layout_version == 'dark-only' ? true : false;
-  constructor(private route: ActivatedRoute, public navServices: NavService, 
+  public greeting: string;
+  public time: any;
+  public today = new Date();
+  public currentHour = this.today.getHours();
+  public m = this.today.getMinutes();
+  public ampm = this.currentHour >= 12 ? 'PM' : 'AM';
+  public date: { year: number, month: number };
+
+  // Charts
+  public currentSales = chartData.currentSales;
+  public smallBarCharts = chartData.smallBarCharts;
+  public marketValue = chartData.marketValue;
+  public knob = chartData.knob;
+  public knobRight = chartData.knobRight;
+
+  model: NgbDateStruct;
+  disabled = true;
+
+  constructor(private route: ActivatedRoute, public navServices: NavService, calendar: NgbCalendar,
     @Inject(DOCUMENT) private document: any,
     public layout: LayoutService) {
+      this.model = calendar.getToday();
       this.elem = document.documentElement;
       this.route.queryParams.subscribe((params) => {
         this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
       })
   }
-    
+  startTime() {
+    this.currentHour = this.currentHour % 12;
+    this.currentHour = this.currentHour ? this.currentHour : 12;
+    this.m = this.checkTime(this.m);
+    this.time = this.currentHour + ":" + this.m + ' ' + this.ampm;
+  }
+  
+  checkTime(i) {
+    if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+    return i;
+  }
   ngAfterViewInit() {
     setTimeout(() => {
      // feather.replace();
@@ -64,7 +94,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit() {
-    
+    if (this.currentHour >= 0 && this.currentHour < 4) {
+      this.greeting = 'Good Night'
+    } else if (this.currentHour >= 4 && this.currentHour < 12) {
+      this.greeting = 'Good Morning'
+    } else if (this.currentHour >= 12 && this.currentHour < 16) {
+      this.greeting = 'Good Afternoon'
+    } else {
+      this.greeting = 'Good Evening'
+    }
+    this.startTime();
+    document.getElementById('knob').append(this.knob);
+    document.getElementById('knob-right').append(this.knobRight); 
   }
 
 

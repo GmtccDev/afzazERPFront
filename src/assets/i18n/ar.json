@@ -221,6 +221,7 @@
         "database-name": "قاعدة البيانات",
         "sub-domain": "الدومين",
         "contract-start-date": "تاريخ بداية العقد",
-        "contract-end-date": "تاريخ نهاية العقد"
+        "contract-end-date": "تاريخ نهاية العقد",
+        "newSubscription": "اشتراك جديد"
     }
 }
