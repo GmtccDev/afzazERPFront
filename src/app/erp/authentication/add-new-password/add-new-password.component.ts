@@ -36,7 +36,7 @@ export class AddNewPasswordComponent implements OnInit {
   
     
     this.passForm = this.fb.group({
-      email:this.route.snapshot .queryParams['email'],
+      email:this.route.snapshot.queryParams['email'],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]]
     },
