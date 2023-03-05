@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         console.log(next);
 
         if (next.success == true) {
-          debugger
+          
        //   this.translate.use("en");
           let jwt = next.response.token;
           let jwtData = jwt.split('.')[1]

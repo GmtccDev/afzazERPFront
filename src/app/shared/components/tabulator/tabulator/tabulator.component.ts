@@ -146,7 +146,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
       // paginationSizeSelector: [5, 10, 20, 50, 100, 500, 1000, 100000],
 
 
-      paginationCounter: "rows",
+      //paginationCounter: "rows",
 
 
       selectable: true,
