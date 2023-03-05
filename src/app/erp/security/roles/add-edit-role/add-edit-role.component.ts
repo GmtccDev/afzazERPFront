@@ -370,7 +370,7 @@ export class AddEditRoleComponent implements OnInit {
       paginationSize: 50,
       paginationSizeSelector: [5, 10, 20, 50, 100, 1000, 10000, 100000],
 
-      paginationCounter: "rows",
+     // paginationCounter: "rows",
     });
     //    this.exTable.setData(persons);
     document.getElementById('ex-table-div2').appendChild(this.tab);
