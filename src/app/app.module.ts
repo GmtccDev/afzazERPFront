@@ -1,3 +1,4 @@
+import { DashboardModule } from './erp/dashboard/dashboard.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -23,6 +24,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 
+import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { AppComponent } from './app.component';
@@ -43,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    
  
 
 
@@ -76,7 +79,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingBarRouterModule,
 //     // for Core use:
     LoadingBarModule,
-    SecurityModule
+    SecurityModule,
+    DashboardModule,
   ],
   providers: [ AdminGuard, SecureInnerPagesGuard, CookieService],
   bootstrap: [AppComponent]

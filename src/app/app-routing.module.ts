@@ -44,15 +44,15 @@ const routes: Routes = [
 
 	},
 	{
-		path: 'dashboard/default',
+		path: '',
 		component: DashboardComponent,
-		//canActivate: [AdminGuard],
-		// children: [
-		// 	{
-		// 		path: 'dashboard/default',
-		// 		loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
-		// 	}]
-	},
+	   //canActivate: [AdminGuard],
+	   children: [
+		   {
+			   path: 'dashboard',
+			   loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
+		   }]
+   },
 
 	{
 		path: '**',
