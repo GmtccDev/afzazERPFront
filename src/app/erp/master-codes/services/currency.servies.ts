@@ -76,8 +76,26 @@ export class CurrencyServiceProxy {
         return this.http.get<any>(environment.apiUrl + "/api/Currency/delete-currency", { params: params });
     }
 
+    deleteListCurrencyTransaction(customer: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/Currency/deleteListTransaction?",customer);
+    }
+    updateCurrencyTransaction(customer: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/Currency/editTransaction?",customer);
+    }
+    deleteCurrencyTransaction(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.get<any>(environment.apiUrl + "/api/Currency/deleteTransaction", { params: params });
+    }
+    getCurrencyTransaction(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.get<any>(this.baseUrl + "/api/Currency/getByIdTransaction", { params: params });
+    }
+    createCurrencyTransaction(customer: any): Observable<any> {
 
-
+        return this.http.post<any>(environment.apiUrl + "/api/Currency/addSTransaction?",customer);
+    }
 
 
 

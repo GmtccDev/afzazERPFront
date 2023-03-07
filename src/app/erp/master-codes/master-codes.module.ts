@@ -11,8 +11,9 @@ import { AddBusinessComponent } from './business/add-business/add-business.compo
 import { BusinessComponent } from './business/business.component';
 import { AddCurrencyComponent } from './currencies/add-currency/add-currency.component';
 import { CurrenciesComponent } from './currencies/currencies/currencies.component';
+import { AddEditCurrencyTransactionsComponent } from './currencies/add-edit-currency-transactions/add-edit-currency-transactions.component';
 @NgModule({
-  declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent],
+  declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent],
   imports: [
     CommonModule,
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule,

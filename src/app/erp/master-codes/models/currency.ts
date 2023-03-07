@@ -30,3 +30,18 @@ export interface ICurrencyDtoPageList {
 export class DeleteListCurrencyCommand{
     ids: number[] | undefined;
 }
+
+export class CurrencyTransactionDto {
+    id: number | undefined;
+    currencyMasterId: number;
+    currencyDetailId: any | undefined;
+    transactionDate: any | undefined;
+    transactionFactor: number | undefined;
+}
+export class CreateCurrencyTransactionCommand {
+    inputDto: CurrencyTransactionDto;
+}
+export class EditCurrencyTransactionCommand {
+    inputDto: CurrencyTransactionDto;
+    id: number | undefined;
+}

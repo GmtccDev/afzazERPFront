@@ -12,7 +12,11 @@ import { Subscription } from 'rxjs';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { navigateUrl } from 'src/app/shared/helper/helper-url';
-
+import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
+import format from 'date-fns/format';
+import { AddEditCurrencyTransactionsComponent } from '../add-edit-currency-transactions/add-edit-currency-transactions.component';
 @Component({
   selector: 'app-add-currency',
   templateUrl: './add-currency.component.html',
@@ -50,7 +54,8 @@ export class AddCurrencyComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private SharedServices: SharedService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modelService: NgbModal
   ) {
 
     this.defineCurrencyForm();
@@ -139,6 +144,8 @@ export class AddCurrencyComponent implements OnInit {
             isActive: res.response?.isActive,
             symbol:res.response?.symbol
           });
+          this.currencyTransactionsDto = res.response?.currencyTransactionsDto;
+          this.drawTable();
           console.log(
             'this.currenciesForm.value set value',
             this.currenciesForm.value
@@ -289,7 +296,151 @@ export class AddCurrencyComponent implements OnInit {
   }
 
   //#endregion
+  disabledSave = false;
+  disabledUpate = false;
+  disabledNew = false;
+  disabledDlete = false
 
+  doUpdateEvent(id) {
+    const modalRef = this.modelService.open(AddEditCurrencyTransactionsComponent, { size: 'lg' });
+    modalRef.componentInstance.name = 'AddEdit';
+    modalRef.componentInstance.currencyMasterId = this.id;
+    modalRef.componentInstance.id = id;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.getCurrencyById(result)
+      }
+    });
+  }
+
+  doNewEvent() {
+    const modalRef = this.modelService.open(AddEditCurrencyTransactionsComponent, { size: 'lg' });
+    modalRef.componentInstance.name = 'AddEdit';
+    modalRef.componentInstance.currencyMasterId = this.id;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.getCurrencyById(result)
+      }
+    });
+  }
+
+
+  showConfirmDeleteMessage(id) {
+    const modalRef = this.modelService.open(MessageModalComponent);
+    modalRef.result.then((rs) => {
+      console.log(rs);
+      if (rs == 'Confirm') {
+        let sub = this.currencyService.deleteCurrencyTransaction(id).subscribe(
+          () => {
+            //reloadPage()
+            this.getCurrencyById(this.id);
+
+          });
+        this.subsList.push(sub);
+      }
+    });
+  }
+  editFormatIcon() { //plain text value
+
+    return "<i class='fa fa-edit'></i>";
+  };
+  deleteFormatIcon() { //plain text value
+
+    return "<i class='fa fa-trash'></i>";
+  };
+  CheckBoxFormatIcon() { //plain text value
+
+    return "<input id='yourID' type='checkbox' />";
+  };
+  currencyTransactionsDto: any = [];
+  columnNames = [
+    this.lang == 'ar'
+      ? {
+        title: ' العملة ',width: 300,field: 'currencyDetailNameAr'
+      } : {
+        title: ' Currency ',width: 300,field: 'currencyDetailNameEn'
+      },
+    this.lang == 'ar'
+      ? {
+        title: '  تاريخ  ',width: 300,field: 'transactionDate', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      } : {
+        title: '   Date',width: 300,field: 'transactionDate', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      },
+      this.lang == 'ar'
+      ? {
+        title: ' معامل التحويل  ',width: 300,field: 'currencyFactor'
+      } : {
+        title: '  Currency Factor ',width: 300,field: 'currencyFactor'
+      },
+    this.lang == "ar" ? {
+      title: "حذف",
+
+      field: "id", formatter: this.deleteFormatIcon, cellClick: (e, cell) => {
+
+        this.showConfirmDeleteMessage(cell.getRow().getData().id);
+      },
+      //  visible: false,
+    } :
+      {
+        title: "Delete",
+        field: "id", formatter: this.deleteFormatIcon, cellClick: (e, cell) => {
+
+          this.showConfirmDeleteMessage(cell.getRow().getData().id);
+        },
+        //   visible: false,
+      }
+
+    ,
+
+    this.lang == "ar" ? {
+      title: "تعديل",
+      field: "id", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+
+        this.doUpdateEvent(cell.getRow().getData().id);
+      }
+    }
+      :
+
+      {
+        title: "Edit",
+        field: "id", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+
+          this.doUpdateEvent(cell.getRow().getData().id);
+        }
+      },
+
+
+
+  ];
+  exTable: any;
+  filterParam: string = '';
+  // subscriptionsData=[]
+  tab = document.createElement('div');
+  drawTable() {
+    this.exTable = new Tabulator(this.tab, {
+      height: 130,
+      layout: 'fitColumns',
+      columns: this.columnNames,
+      movableColumns: true,
+      data: this.currencyTransactionsDto,
+      //Local Pagination
+      pagination: "local",
+      paginationSize: 50,
+      paginationSizeSelector: [5, 10, 20, 50, 100, 1000, 10000, 100000],
+
+      paginationCounter: "rows",
+    });
+    //    this.exTable.setData(persons);
+    document.getElementById('ex-table-div').appendChild(this.tab);
+  }
 
 }
 
