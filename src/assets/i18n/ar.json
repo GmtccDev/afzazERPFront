@@ -211,17 +211,10 @@
         "status": "الحالة"
     },
     "menu": {},
-    "customer": {
-        "multi-companies": "متعدد الشركات",
-        "multi-branches": "متعدد الفروع",
-        "number-branches": "عدد الفروع",
-        "number-companies": "عدد الشركات",
-        "company-size": " حجم الشركة",
-        "server-name": "الخدوم",
-        "database-name": "قاعدة البيانات",
-        "sub-domain": "الدومين",
-        "contract-start-date": "تاريخ بداية العقد",
-        "contract-end-date": "تاريخ نهاية العقد",
-        "newSubscription": "اشتراك جديد"
+    "currency": {
+       
+        "transaction-date": "تاريخ المعامل ",
+        "transaction-factor": " معامل التحويل ",
+        "currency-transactions": " معاملات التحويل"
     }
 }

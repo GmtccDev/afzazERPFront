@@ -376,9 +376,9 @@ export class AddCurrencyComponent implements OnInit {
       },
       this.lang == 'ar'
       ? {
-        title: ' معامل التحويل  ',width: 300,field: 'currencyFactor'
+        title: ' معامل التحويل  ',width: 300,field: 'transactionFactor'
       } : {
-        title: '  Currency Factor ',width: 300,field: 'currencyFactor'
+        title: '  Currency Factor ',width: 300,field: 'transactionFactor'
       },
     this.lang == "ar" ? {
       title: "حذف",

@@ -121,7 +121,8 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.currenciesList = res.response;
+            debugger
+            this.currenciesList = res.response.filter( h => h.id !== this.currencyMasterId);;
 
           }
 

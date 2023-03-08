@@ -260,18 +260,11 @@
         "ENGLISH": "English"
     },
 
-    "customer": {
-        "multi-companies": "Multi Companies",
-        "multi-branches": "Multi Branches ",
-        "number-branches": "Number Branches ",
-        "number-companies": "Number Companies ",
-        "company-size": "Company Size",
-        "server-name": "Server Name",
-        "database-name": "Database Name",
-        "sub-domain": "Sub Domain",
-        "contract-start-date": "Contract Start Date",
-        "contract-end-date": "Contract End Date ",
-        "newSubscription": "New Subscription"
+    "currency": {
+    
+        "transaction-date": "Transaction Date",
+        "transaction-factor": "Transaction Factor",
+        "currency-transactions": "New Currency Transactions"
     }
 
 }

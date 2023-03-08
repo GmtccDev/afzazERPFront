@@ -94,7 +94,7 @@ export class CurrencyServiceProxy {
     }
     createCurrencyTransaction(customer: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Currency/addSTransaction?",customer);
+        return this.http.post<any>(environment.apiUrl + "/api/Currency/addTransaction?",customer);
     }
 
 
