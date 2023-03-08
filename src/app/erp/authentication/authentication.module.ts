@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { RouterModule } from '@angular/router';
 import { AddNewPasswordComponent } from './add-new-password/add-new-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 
 
@@ -24,6 +25,7 @@ import { AddNewPasswordComponent } from './add-new-password/add-new-password.com
 		LoginComponent,
 		VerificationCodeComponent,
 		AddNewPasswordComponent,
+		ForgetPasswordComponent,
 
 
 

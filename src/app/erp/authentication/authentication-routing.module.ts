@@ -4,6 +4,7 @@ import { AuthenticationComponent } from './authentication.component';
 import { LoginComponent } from './login/login.component';
 import { VerificationCodeComponent } from './verification-code/verification-code.component';
 import { AddNewPasswordComponent } from './add-new-password/add-new-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 
 
@@ -26,7 +27,11 @@ const routes: Routes = [
 				component: AddNewPasswordComponent,
 			
 			},
-
+			{
+				path: 'forget-password',
+				component: ForgetPasswordComponent,
+			
+			},
 
 		]
 	},

@@ -78,5 +78,7 @@ export class UserServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/User/delete", { params: params });
     }
-
+    forgetPassword(email: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/User/forget-password?", email);
+      }
 }

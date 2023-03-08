@@ -147,7 +147,7 @@ export class AuthService implements OnInit {
     });
   }
 
-  ForgotPassword(passwordResetEmail) {
+  forgetPassword(passwordResetEmail) {
     return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert('Password reset email sent, check your inbox.');

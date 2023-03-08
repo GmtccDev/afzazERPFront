@@ -2,45 +2,54 @@
     <div class="row bg-login-admin">
         <!-- <div class="col-xl-6 p-0"><img class="bg-img-cover bg-center h-100vh" src="../assets/images/login/bg-login.png" alt="looginpage" width="100%">
         </div> -->
-      
-      
+
+
         <div class="col-xl-6 p-0">
             <div class="login-card">
                 <div>
-                    
-                    
+
+
                     <div class="login-main ">
                         <form class="theme-form" [formGroup]="loginForm">
                             <div>
                                 <a class="logo" routerLink='/'>
-                                    <img class="img-fluid for-light w-50" src="assets/images/logo/logo-erp.png" alt="looginpage" width="200">
-                                    <img class="img-fluid for-dark w-50" src="assets/images/logo/logo-erp.png" alt="looginpage" width="200">
+                                    <img class="img-fluid for-light w-50" src="assets/images/logo/logo-erp.png"
+                                        alt="looginpage" width="200">
+                                    <img class="img-fluid for-dark w-50" src="assets/images/logo/logo-erp.png"
+                                        alt="looginpage" width="200">
                                 </a>
                             </div>
-                           
-                         
+
+
                             <div class="form-group">
                                 <label class="col-form-label">{{'login.user-name'|translate}}</label>
                                 <input class="form-control" type="input" required="" formControlName="userName">
-                                <div *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.errors?.required" class="text text-danger mt-1">
-                                    {{'error.required'|translate}} 
+                                <div *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.errors?.required"
+                                    class="text text-danger mt-1">
+                                    {{'error.required'|translate}}
                                 </div>
 
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">   {{'login.password'|translate}} </label>
-                                <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" required="" placeholder="*********">
-                                <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
-                                <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
-                                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required" class="text text-danger mt-1">
-                                    {{'error.required'|translate}} 
+                                <label class="col-form-label"> {{'login.password'|translate}} </label>
+                                <input class="form-control" [type]="show ? 'text' : 'password'"
+                                    formControlName="password" required="" placeholder="*********">
+                                <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span>
+                                </div>
+                                <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span>
+                                </div>
+                                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required"
+                                    class="text text-danger mt-1">
+                                    {{'error.required'|translate}}
                                 </div>
                             </div>
                             <div class="form-group my-5">
 
                                 <!-- <a [routerLink]="'/authentication/forgot-password'" class="link">Forgot password?</a> -->
-                                <button class="btn btn-block btn-primary w-100" [class.loader--text]="showLoader" [disabled]="!loginForm.valid || showLoader" (click)="login()" type="button"><span>{{'login.login'|translate}}</span>
-                  </button>
+                                <button class="btn btn-block btn-primary w-100" [class.loader--text]="showLoader"
+                                    [disabled]="!loginForm.valid || showLoader" (click)="login()"
+                                    type="button"><span>{{'login.login'|translate}}</span>
+                                </button>
                             </div>
                             <!-- <h6 class="text-muted mt-4 or">Or Sign in with</h6>
                 <div class="social mt-4">
@@ -59,12 +68,18 @@
                             <!-- <p class="mt-4 mb-0">Don't have account?
                   <a [routerLink]="'/authentication/register/simple'" class="ms-2">Create Account</a>
                 </p> -->
+              
                         </form>
+                        <p class="mb-2 text-muted btn-link">
+                            <a [routerLink]="'/authentication/forget-password'" class="f-w-400">
+                                {{'login.forget-password'|translate}}
+                              </a>
+                            </p>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- footer start-->
 
         <footer class="  m-0 position-absolute right-0 bottom-0 row">
@@ -82,11 +97,9 @@
 
             </app-footer>
         </footer>
-       
+
         <!-- footer End-->
     </div>
-       
-    
+
+
 </div>
-
-
