@@ -104,7 +104,8 @@
         "description": "Description",
         "meter-number": "Meter Number",
         "meter-type": "Meter Type",
-        "status": "Status"
+        "status": "Status",
+        "selectUnselect":"Select/Unselect"
     },
     "menu": {},
     "home": {

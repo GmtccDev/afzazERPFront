@@ -37,7 +37,7 @@ export class AddEditRoleComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: "component-names.users-permissions",
+    componentList:this.translate.instant("component-names.roles-permissions"),
     componentAdd: '',
 
   };
@@ -48,14 +48,10 @@ export class AddEditRoleComponent implements OnInit {
   constructor(
     private roleService: RoleServiceProxy,
     private router: Router,
-    private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
-    private modalService: NgbModal,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private SharedServices: SharedService, private translate: TranslateService,
-    private permissionService: PermissionServiceProxy,
   ) {
     this.defineRoleForm();
   }
@@ -139,8 +135,8 @@ export class AddEditRoleComponent implements OnInit {
           );
 
           this.permission = res.response?.permissions?.items;
-          this.drawTable();
-          this.exTable?.setData(this.permission);
+          this.screens=res.response?.screens;
+        
         },
         error: (err: any) => {
           reject(err);
@@ -153,28 +149,6 @@ export class AddEditRoleComponent implements OnInit {
     return promise;
   }
   getRoleCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.roleService.getLastCode().subscribe({
-
-        next: (res: any) => {
-
-        
-          this.roleForm.patchValue({
-            code: res.response.code
-          });
-          this.drawTable();
-          this.permission = res.response.permissions
-          this.exTable?.setData(this.permission);
-          this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-    });
 
   }
   //#endregion
@@ -219,7 +193,7 @@ export class AddEditRoleComponent implements OnInit {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    this.permissionSelectAll();
+ 
     if (this.roleForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
         this.roleForm.value.permissions = this.permission;
@@ -255,7 +229,7 @@ export class AddEditRoleComponent implements OnInit {
 
 
   onUpdate() {
-    this.permissionSelectAll();
+   
     if (this.roleForm.valid) {
 
       this.roleForm.value.id = this.id;
@@ -296,137 +270,39 @@ export class AddEditRoleComponent implements OnInit {
   //#endregion
   //Permission region
   permission: any = [];
+  screens:any=[];
   lang = localStorage.getItem("language");
-  columnNames = [
-    this.lang == 'ar'
-    ? { title: ' الشاشة', field: 'controllerNameAr',width:100} : { title: ' Name  Screen', field: 'controllerNameEn', width:100 },
+  masterSelected = false;
 
-    this.lang == 'ar'
-      ? { title: 'اسم العملية ', field: 'actionNameAr', width:100 } : { title: ' Name Action  ', field: 'actionNameEn', width:100 },
+  checkUncheckAll(evt) {
+    
+    this.screens.forEach(
+      item=>item.permissions.forEach(
+        (c) =>{
+          
+          c.isChecked = evt.target.checked;
+          let entity = this.permission.find(x => x.id == c.id);
+          entity.isChecked = evt.target.checked;
+        } 
+        )
+      
+    )
+   // this.permission.forEach((c) => c.isChecked = evt.target.checked)
+  }
+  
+  updateCheckedOptions(item,evt) {
+    
+     // this.permission[item.id].isChecked = evt.target.checked
+      let entity = this.permission.find(c => c.id == item.id);
+      entity.isChecked = evt.target.checked;
+    //  this.masterSelected = this.permission.every((item) => item.isChecked == true);
+  }
 
   
-    this.lang == "ar" ? {
+  
 
-      title: ' <input type="checkbox" class="select-all-row" aria-label="select all rows" />',
-
-      headerSort: false,
-      headerFilter: false,
-
-      frozen: true,
-      tooltips: false,
-      resizable: false,
-      field: "isChecked", formatter: function (cell, formatterParams) {
-
-        var value = cell.getRow().getData();
-          if (value.isChecked) {
-            return `<input id= ${value.id} type='checkbox' checked/>`;
-          } else {
-            return `<input id= ${value.id} type='checkbox'/>`;
-          }
-      }, cellClick: (e, cell) => {
-        debugger
-        this.onCheckItem(cell.getRow().getData());
-      }
-    }
-      :
-
-      {
-        title: '<input type="checkbox" id="all" class="select-all-row" aria-label="select all rows" />',
-
-        headerSort: false,
-        headerFilter: false,
-
-        field: "isChecked", formatter: function (cell, formatterParams) {
-
-          var value = cell.getRow().getData();
-          if (value.isChecked) {
-            return `<input id= ${value.id} type='checkbox' checked/>`;
-          } else {
-            return `<input id= ${value.id} type='checkbox'/>`;
-          }
-        }, cellClick: (e, cell) => {
-
-          debugger
-          this.onCheckItem(cell.getRow().getData());
-        },
-        headerClick: this.selectAll
-
-      },
-
-  ];
-  exTable: any;
-  filterParam: string = '';
-  // permissionData=[]
-  tab = document.createElement('div');
-  drawTable() {
-    this.exTable = new Tabulator(this.tab, {
-      height: 130,
-      layout: 'fitColumns',
-      columns: this.columnNames,
-      movableColumns: true,
-      data: this.permission,
-      //Local Pagination
-      pagination: "local",
-      paginationSize: 50,
-      paginationSizeSelector: [5, 10, 20, 50, 100, 1000, 10000, 100000],
-
-     // paginationCounter: "rows",
-    });
-    //    this.exTable.setData(persons);
-    document.getElementById('ex-table-div2').appendChild(this.tab);
-  }
-  onCheckItem(item) {
-    debugger
-    let entity = this.permission.find(c => c.id == item.id);
-    entity.isChecked = !entity.isChecked;
-  }
-  selectAll(e, column) {
-
-    const all = document.getElementById('all') as HTMLInputElement;
-    // all.onclick = (e) => this.onCheckItem(e);
-    //  this.selectAll(all.checked)
-    column.getCells().forEach(
-      cell => {
-
-        var value = cell.getData();
-        const ele = document.getElementById(value.id) as HTMLInputElement;
-        if (ele!=null && all.checked) {
-          ele.checked = true;
-
-
-        }
-
-        else if(ele!=null) {
-          ele.checked = false;
-
-
-        }
-
-      }
-    );
-
-
-  }
-  permissionSelectAll() {
-    debugger
-    this.permission.forEach(
-      cell => {
-
-
-        const ele = document.getElementById(cell.id) as HTMLInputElement;
-        if (ele!=null && ele.checked) {
-          cell.isChecked = true;
-
-        }
-
-        else   if (ele!=null ){
-          cell.isChecked = false;
-
-
-        }
-
-      })
-  }
+ 
+ 
 }
 
 
