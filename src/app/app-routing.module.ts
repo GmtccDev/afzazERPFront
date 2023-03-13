@@ -5,6 +5,7 @@ import { content } from "./shared/routes/routes";
 import { DashboardComponent } from "./shared/components/layout/dashboard/dashboard.component";
 import { AuthenticationComponent } from './erp/authentication/authentication.component';
 import { AuthenticationGuard } from './shared/gaurds/authentication.guard';
+import { SubscriptionComponent } from './shared/components/layout/subscription/subscription.component';
 
 const routes: Routes = [
 	{
@@ -44,16 +45,26 @@ const routes: Routes = [
 
 	},
 	{
-		path: '',
+		path: 'dashboard',
 		component: DashboardComponent,
 	   //canActivate: [AdminGuard],
 	   children: [
 		   {
-			   path: 'dashboard',
+			   path: '',
 			   loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
 		   }]
    },
-
+   {
+	path: 'Subscription',
+	component: SubscriptionComponent,
+   //canActivate: [AdminGuard],
+   children: [
+	   {
+		   path: '',
+		   loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
+	   }]
+},
+   
 	{
 		path: '**',
 		redirectTo: ''

@@ -71,7 +71,8 @@ export class LoginComponent implements OnInit {
             window.location.replace('authentication/add-password?email='+next.response.user.email);
           }
           else{
-            this.router.navigate(['/dashboard/default']);
+         //   this.router.navigate(['/dashboard/default']);
+         this.router.navigate(['/Subscription']);
           }
          
         }

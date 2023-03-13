@@ -50,6 +50,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { InputComponent } from './components/froms/input/input.component';
 import {  SwitchButtonComponent } from './components/froms/switch-button/switch-button.component';
 import { ChangePasswordComponent } from '../erp/authentication/change-password/change-password.component';
+import { SubscriptionComponent } from './components/layout/subscription/subscription.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -57,6 +58,7 @@ import { ChangePasswordComponent } from '../erp/authentication/change-password/c
     SidebarComponent,
     ContentComponent,
     DashboardComponent,
+    SubscriptionComponent,
     BreadcrumbComponent,
     CustomizerComponent,
     FeatherIconsComponent,
@@ -81,7 +83,7 @@ import { ChangePasswordComponent } from '../erp/authentication/change-password/c
     MessageModalComponent,
     InputComponent,
     SwitchButtonComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,

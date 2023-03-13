@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from '../../../../environment';
-
+import { environment } from "../../../../environments/environment"
 @Injectable({
     providedIn: 'root',
   })
@@ -11,7 +10,7 @@ export class UserLoginService {
 
   UserLoginLogin(AuthenticateRequest: any):Observable<any>{
 
-    return this._httpClient.post<any>(environment.apiIdentity + "/api/UserLogin/Login", AuthenticateRequest);
+    return this._httpClient.post<any>(environment.apiUrl + "/api/UserLogin/Login", AuthenticateRequest);
   }
 
 }

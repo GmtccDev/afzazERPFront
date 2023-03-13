@@ -35,9 +35,6 @@ import {AuthenticationModule} from './erp/authentication/authentication.module'
 import { MasterCodesModule } from './erp/master-codes/master-codes.module';
 import {SecurityModule} from './erp/security/security.module';
 
-
-
-
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
@@ -45,8 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    
- 
+  
 
 
    // LoginComponent

@@ -1,0 +1,70 @@
+
+<div [ngClass]="layout.config.settings.layout_type"
+     [class]="layout.config.settings.layout_version">
+  <div class="page-wrapper" 
+       id="canvas-bookmark"
+       [ngClass]="layoutClass">
+       <div class="page-header" [class.close_icon]="navServices.collapseSidebar">
+        <div class="header-wrapper row m-0">
+            <app-search></app-search>
+            <div class="header-logo-wrapper">
+                <div class="logo-wrapper">
+                    <a routerLink='/'>
+                        <!-- <img class="img-fluid for-light" src="assets/images/logo/logo.png" alt="">
+                        <img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt=""> -->
+                    </a>
+                </div>
+                <div class="toggle-sidebar" (click)="sidebarToggle()">
+                    <app-feather-icons [icon]="'align-center'" class="status_toggle middle"></app-feather-icons>
+                </div>
+            </div>
+            <div class="left-header col horizontal-wrapper ps-0">
+          <!-- <app-mega-menu></app-mega-menu> -->
+        </div>
+            <div class="nav-right col-12 pull-right right-header p-0">
+                <ul class=" margin-right: 0;">
+                    <li class="language-nav" (click)="languageToggle()">
+                        <app-languages></app-languages>
+                    </li>
+            
+                    <li class="profile-nav onhover-dropdown p-0">
+                        <app-my-account></app-my-account>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+  
+    
+        
+    </div>
+    <!-- <app-header></app-header> -->
+    <!-- Page Body Start-->
+    <div class="page-body-wrapper">
+     
+      <div class="page-body">
+    
+        <main>
+            <div  class="row" >
+
+                <div *ngFor="let option of applications;" class="col-md-4">
+                   
+                    <img class="img-fluid for-light" src="{{option.image}}" alt="" width="20%" height="30%">
+                    <p>
+                        {{lang=="ar"?option.descriptionAr:option.descriptionEn}}
+                    </p>
+                <br/>
+                </div>
+            </div>
+        
+        </main>
+      </div>
+      <!-- footer start-->
+      <footer class="footer">
+        <app-footer></app-footer>
+      </footer>
+      <!-- footer End-->
+    </div>
+    <!-- Page Body End-->
+  </div>
+</div>
