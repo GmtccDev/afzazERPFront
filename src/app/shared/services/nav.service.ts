@@ -91,24 +91,24 @@ export class NavService implements OnDestroy {
 		// 	]
 		// },
 		{
-			path: '/dashboard/default', title:this.translate.instant("component-names.dashboard") , type: 'link', icon: 'home', active: true,
+			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
 
 		{
-			title:this.translate.instant("component-names.users-permissions") , icon: 'users', type: 'sub', active: false, children: [
+			title: this.translate.instant("component-names.users-permissions"), icon: 'users', type: 'sub', active: false, children: [
 
-				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link' , active: true},
+				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link', active: true },
 				{ path: '/security/role/', title: this.translate.instant("component-names.roles-permissions"), type: 'link', active: true },
-			//	{ path: '/security/permission/', title: this.translate.instant("component-names.permissions"), type: 'link', active: true },
+				//	{ path: '/security/permission/', title: this.translate.instant("component-names.permissions"), type: 'link', active: true },
 
 			]
 		},
 
 		{
-			title:this.translate.instant("component-names.master-code") , type: 'sub', icon: 'MasterCode', active: false, children: [
-				{ path: '/master-codes/countries', title: this.translate.instant("component-names.countries"), type: 'link' , active: true},
+			     title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+				{ path: '/master-codes/countries', title: this.translate.instant("component-names.countries"), type: 'link', active: true },
 				{ path: '/master-codes/business/', title: this.translate.instant("component-names.business"), type: 'link', active: true },
-				{ path: '/master-codes/currencies/', title: this.translate.instant("component-names.currencies"), type: 'link' , active: true},
+				{ path: '/master-codes/currencies/', title: this.translate.instant("component-names.currencies"), type: 'link', active: true },
 
 
 			]
@@ -116,7 +116,7 @@ export class NavService implements OnDestroy {
 
 
 	];
-	
+
 	MEGAMENUITEMS: Menu[] = [
 		{
 			title: 'Error Pages', type: 'sub', active: true, children: [
