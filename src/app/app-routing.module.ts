@@ -47,24 +47,24 @@ const routes: Routes = [
 	{
 		path: 'dashboard',
 		component: DashboardComponent,
-	   //canActivate: [AdminGuard],
-	   children: [
-		   {
-			   path: '',
-			   loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
-		   }]
-   },
-   {
-	path: 'Subscription',
-	component: SubscriptionComponent,
-   //canActivate: [AdminGuard],
-   children: [
-	   {
-		   path: '',
-		   loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
-	   }]
-},
-   
+		//canActivate: [AdminGuard],
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
+			}]
+	},
+	{
+		path: 'Subscription',
+		component: SubscriptionComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
+			}]
+	},
+
 	{
 		path: '**',
 		redirectTo: ''

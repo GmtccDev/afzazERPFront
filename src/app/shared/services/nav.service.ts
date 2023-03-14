@@ -84,12 +84,7 @@ export class NavService implements OnDestroy {
 
 	MENUITEMS: Menu[] = [
 
-		// {
-		// 	title: 'Dashboards', icon: 'home', type: 'sub', badgeType: 'success', badgeValue: '2', active: true, children: [
-		// 		{ path: '/dashboard/default', title: 'Dashboard', type: 'link' },
 
-		// 	]
-		// },
 		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
@@ -105,7 +100,7 @@ export class NavService implements OnDestroy {
 		},
 
 		{
-			     title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
 				{ path: '/master-codes/countries', title: this.translate.instant("component-names.countries"), type: 'link', active: true },
 				{ path: '/master-codes/business/', title: this.translate.instant("component-names.business"), type: 'link', active: true },
 				{ path: '/master-codes/currencies/', title: this.translate.instant("component-names.currencies"), type: 'link', active: true },
@@ -117,58 +112,27 @@ export class NavService implements OnDestroy {
 
 	];
 
-	MEGAMENUITEMS: Menu[] = [
+	MENUITEMSAccount: Menu[] = [
+
+
 		{
-			title: 'Error Pages', type: 'sub', active: true, children: [
-				{ path: '/error-page/error-400', title: 'Error Page 400', type: 'link' },
-				{ path: '/error-page/error-401', title: 'Error Page 401', type: 'link' },
-				{ path: '/error-page/error-403', title: 'Error Page 403', type: 'link' },
-				{ path: '/error-page/error-404', title: 'Error Page 404', type: 'link' },
-				{ path: '/error-page/error-500', title: 'Error Page 500', type: 'link' },
-				{ path: '/error-page/error-503', title: 'Error Page 503', type: 'link' },
-			]
+			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
+
 		{
-			title: 'Authentication', type: 'sub', active: false, children: [
-				{ path: '/authentication/simple-login', title: 'Login Simple', type: 'link' },
-				{ path: '/authentication/login-with-background-image', title: 'Login BG Image', type: 'link' },
-				{ path: '/authentication/login-with-background-video', title: 'Login BG Video', type: 'link' },
-				{ path: '/authentication/simple-register', title: 'Simple Register', type: 'link' },
-				{ path: '/authentication/register-with-background-image', title: 'Register BG Image', type: 'link' },
-				{ path: '/authentication/register-with-background-video', title: 'Register BG Video', type: 'link' }
-			]
+			
+			
 		},
+
 		{
-			title: 'Usefull Pages', type: 'sub', active: false, children: [
-				{ path: '/search-pages', title: 'Search Pages', type: 'link' },
-				{ path: '/authentication/unlock-user', title: 'Unlock User', type: 'link' },
-				{ path: '/authentication/forgot-password', title: 'Forgot Password', type: 'link' },
-				{ path: '/authentication/reset-password', title: 'Reset Password', type: 'link' },
-				{ path: '/maintenance', title: 'Maintenance', type: 'link' }
-			]
-		},
+			
+		}
+
 
 	];
-
-	LEVELMENUITEMS: Menu[] = [
-		{
-			path: '/file-manager', title: 'File Manager', icon: 'git-pull-request', type: 'link'
-		},
-		// {
-		// 	title: 'Users', icon: 'users', type: 'sub', active: false, children: [
-		// 		{ path: '/user/team-details', title: 'All Users', icon: 'users', type: 'link' },
-		// 		{ path: '/user/profile', title: 'User Profile', icon: 'users', type: 'link' },
-		// 		{ path: '/user/edit-profile', title: 'Edit Profile', icon: 'users', type: 'link' },
-		// 	]
-		// },
-		{ path: '/bookmarks', title: 'Bookmarks', icon: 'heart', type: 'link' },
-		{ path: '/calender', title: 'Calender', icon: 'calendar', type: 'link' },
-		{ path: '/social-app', title: 'Social App', icon: 'zap', type: 'link' }
-	];
-
 	// Array
-	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
-	megaItems = new BehaviorSubject<Menu[]>(this.MEGAMENUITEMS);
-	levelmenuitems = new BehaviorSubject<Menu[]>(this.LEVELMENUITEMS);
+
+	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+    itemsAccount=  new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
 
 }

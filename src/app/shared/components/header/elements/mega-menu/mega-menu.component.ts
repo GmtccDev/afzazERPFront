@@ -12,8 +12,8 @@ export class MegaMenuComponent implements OnInit {
   public levelmenuitems: Menu[];
   
   constructor(public navServices: NavService) { 
-    this.navServices.megaItems.subscribe(megaItems => this.megaItems = megaItems);
-    this.navServices.levelmenuitems.subscribe(levelmenuitems => this.levelmenuitems = levelmenuitems);
+   // this.navServices.megaItems.subscribe(megaItems => this.megaItems = megaItems);
+   // this.navServices.levelmenuitems.subscribe(levelmenuitems => this.levelmenuitems = levelmenuitems);
   }
 
   ngOnInit() {

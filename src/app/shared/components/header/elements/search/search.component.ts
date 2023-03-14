@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
   public text: string;
 
   constructor(public navServices: NavService) {
-    this.navServices.items.subscribe(menuItems => this.items = menuItems);
+    this.navServices.itemsSettings.subscribe(menuItems => this.items = menuItems);
   }
 
   ngOnInit() {

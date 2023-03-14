@@ -14,7 +14,7 @@ import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './subscription.component.html',
   styleUrls: ['./subscription.component.scss']
 })
-export class SubscriptionComponent implements OnInit ,OnInit, AfterViewInit {
+export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
   public elem: any;
   public dark: boolean = this.layout.config.settings.layout_version == 'dark-only' ? true : false;
   public greeting: string;
@@ -34,69 +34,69 @@ export class SubscriptionComponent implements OnInit ,OnInit, AfterViewInit {
 
   model: NgbDateStruct;
   disabled = true;
-  applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; }[];
+  applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; link: string; }[];
   applicationsRoute: any[];
   lang = localStorage.getItem("language");
   constructor(private fb: FormBuilder, public service: SubscriptionService,
     private route: ActivatedRoute, public navServices: NavService, calendar: NgbCalendar,
     public layout: LayoutService,
     @Inject(DOCUMENT) private document: any,
-    public router: Router, private translate: TranslateService) { 
-      this.model = calendar.getToday();
-      this.elem = document.documentElement;
-      this.route.queryParams.subscribe((params) => {
-        this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
-      })
+    public router: Router, private translate: TranslateService) {
+    this.model = calendar.getToday();
+    this.elem = document.documentElement;
+    this.route.queryParams.subscribe((params) => {
+      this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
+    })
+  }
+  startTime() {
+    this.currentHour = this.currentHour % 12;
+    this.currentHour = this.currentHour ? this.currentHour : 12;
+    this.m = this.checkTime(this.m);
+    this.time = this.currentHour + ":" + this.m + ' ' + this.ampm;
+  }
+
+  checkTime(i) {
+    if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+    return i;
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      // feather.replace();
+    });
+  }
+
+  public getRouterOutletState(outlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
+  }
+
+  get layoutClass() {
+    switch (this.layout.config.settings.layout) {
+      case "Dubai":
+        return "compact-wrapper"
+      case "London":
+        return "only-body"
+      case "Seoul":
+        return "compact-wrapper modern-type"
+      case "LosAngeles":
+        return this.navServices.horizontal ? "horizontal-wrapper material-type" : "compact-wrapper material-type"
+      case "Paris":
+        return "compact-wrapper dark-sidebar"
+      case "Tokyo":
+        return "compact-sidebar"
+      case "Madrid":
+        return "compact-wrapper color-sidebar"
+      case "Moscow":
+        return "compact-sidebar compact-small"
+      case "NewYork":
+        return "compact-wrapper box-layout"
+      case "Singapore":
+        return this.navServices.horizontal ? "horizontal-wrapper enterprice-type" : "compact-wrapper enterprice-type"
+      case "Rome":
+        return "compact-sidebar compact-small material-icon"
+      case "Barcelona":
+        return this.navServices.horizontal ? "horizontal-wrapper enterprice-type advance-layout" : "compact-wrapper enterprice-type advance-layout"
     }
-    startTime() {
-      this.currentHour = this.currentHour % 12;
-      this.currentHour = this.currentHour ? this.currentHour : 12;
-      this.m = this.checkTime(this.m);
-      this.time = this.currentHour + ":" + this.m + ' ' + this.ampm;
-    }
-    
-    checkTime(i) {
-      if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-      return i;
-    }
-    ngAfterViewInit() {
-      setTimeout(() => {
-       // feather.replace();
-      });
-    }
-  
-    public getRouterOutletState(outlet) {
-      return outlet.isActivated ? outlet.activatedRoute : '';
-    }
-  
-    get layoutClass() {
-      switch(this.layout.config.settings.layout){
-        case "Dubai":
-          return "compact-wrapper"
-        case "London":
-          return "only-body"
-        case "Seoul":
-          return "compact-wrapper modern-type"
-        case "LosAngeles":
-          return this.navServices.horizontal ? "horizontal-wrapper material-type" : "compact-wrapper material-type"
-        case "Paris":
-          return "compact-wrapper dark-sidebar"
-        case "Tokyo":
-          return "compact-sidebar"
-        case "Madrid":
-          return "compact-wrapper color-sidebar"
-        case "Moscow":
-          return "compact-sidebar compact-small"
-        case "NewYork":
-          return "compact-wrapper box-layout"
-        case "Singapore":
-          return this.navServices.horizontal ? "horizontal-wrapper enterprice-type" : "compact-wrapper enterprice-type"
-        case "Rome":
-          return "compact-sidebar compact-small material-icon"
-        case "Barcelona":
-          return this.navServices.horizontal ? "horizontal-wrapper enterprice-type advance-layout" : "compact-wrapper enterprice-type advance-layout"
-      }
-    }
+  }
   ngOnInit(): void {
     if (this.currentHour >= 0 && this.currentHour < 4) {
       this.greeting = 'Good Night'
@@ -110,25 +110,31 @@ export class SubscriptionComponent implements OnInit ,OnInit, AfterViewInit {
     this.startTime();
     // document.getElementById('knob').append(this.knob);
     // document.getElementById('knob-right').append(this.knobRight); 
-    this. getApplications();
+    this.getApplications();
     this.getLastSubscription();
   }
   getApplications() {
     this.applications = [
-      { descriptionAr: 'اعددات', descriptionEn: 'settings', value: '0', check: true, image: 'assets/images/applications/settings.png' },
-      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/Sales.png' },
-      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/CRM.jpg' },
-      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/Payroll.png' },
-      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/Purchase.jpg' },
-      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png' }
+      { descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: true, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
+      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
+      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.jpg', link: '/dashboard/default' },
+      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
+      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.jpg', link: '/dashboard/default' },
+      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' }
     ];
+  }
+  openLink(object) {
+    
+    localStorage.setItem("Menu", object.value)
+    this.router.navigate([object.link]);
+
   }
   getLastSubscription() {
 
     this.service.getLastSubscription().subscribe(
       next => {
 
-        debugger
+
 
 
         if (next.success == true) {
@@ -161,7 +167,7 @@ export class SubscriptionComponent implements OnInit ,OnInit, AfterViewInit {
   }
   sidebarToggle() {
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
-    this.navServices.megaMenu  = false;
+    this.navServices.megaMenu = false;
     this.navServices.levelMenu = false;
   }
 
@@ -208,6 +214,6 @@ export class SubscriptionComponent implements OnInit ,OnInit, AfterViewInit {
       }
     }
   }
-  
+
 
 }

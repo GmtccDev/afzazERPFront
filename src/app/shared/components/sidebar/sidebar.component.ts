@@ -24,32 +24,65 @@ export class SidebarComponent {
 
   constructor(private router: Router, public navServices: NavService,
     public layout: LayoutService) {
-    this.navServices.items.subscribe(menuItems => {
-      this.menuItems = menuItems;
-		console.log("----menuItems----", menuItems);
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          ;
-          menuItems.filter(items => {
-            if (items.path === event.url) {
-              this.setNavActive(items);
-            }
-            if (!items.children) { return false; }
-            items.children.filter(subItems => {
-              if (subItems.path === event.url) {
-                this.setNavActive(subItems);
+    
+    let menu = localStorage.getItem("Menu");
+    if (menu == '0') {
+      this.navServices.itemsSettings.subscribe(menuItems => {
+        this.menuItems = menuItems;
+        console.log("----menuItems----", menuItems);
+        this.router.events.subscribe((event) => {
+          if (event instanceof NavigationEnd) {
+            ;
+            menuItems.filter(items => {
+              if (items.path === event.url) {
+                this.setNavActive(items);
               }
-              if (!subItems.children) { return false; }
-              subItems.children.filter(subSubItems => {
-                if (subSubItems.path === event.url) {
-                  this.setNavActive(subSubItems);
+              if (!items.children) { return false; }
+              items.children.filter(subItems => {
+                if (subItems.path === event.url) {
+                  this.setNavActive(subItems);
                 }
+                if (!subItems.children) { return false; }
+                subItems.children.filter(subSubItems => {
+                  if (subSubItems.path === event.url) {
+                    this.setNavActive(subSubItems);
+                  }
+                });
               });
             });
-          });
-        }
+          }
+        });
       });
-    });
+    }
+    else if (menu == '5') {
+      this.navServices.itemsAccount.subscribe(menuItems => {
+        this.menuItems = menuItems;
+        console.log("----menuItems----", menuItems);
+        this.router.events.subscribe((event) => {
+          if (event instanceof NavigationEnd) {
+            ;
+            menuItems.filter(items => {
+              if (items.path === event.url) {
+                this.setNavActive(items);
+              }
+              if (!items.children) { return false; }
+              items.children.filter(subItems => {
+                if (subItems.path === event.url) {
+                  this.setNavActive(subItems);
+                }
+                if (!subItems.children) { return false; }
+                subItems.children.filter(subSubItems => {
+                  if (subSubItems.path === event.url) {
+                    this.setNavActive(subSubItems);
+                  }
+                });
+              });
+            });
+          }
+        });
+      });
+    }
+
 
   }
 

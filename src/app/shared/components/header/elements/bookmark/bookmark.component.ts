@@ -24,7 +24,7 @@ export class BookmarkComponent implements OnInit {
   constructor(public navServices: NavService) { }
 
   ngOnInit() {
-    this.navServices.items.subscribe(menuItems => {
+    this.navServices.itemsSettings.subscribe(menuItems => {
       this.items = menuItems
       this.items.filter(items => {
         if (items.bookmark) {

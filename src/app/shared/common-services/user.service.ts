@@ -21,6 +21,7 @@ export class UserService {
         localStorage.setItem('language', language)
     }
     isLoggedIn(): boolean {
+        
         let token = localStorage.getItem('token');
         let refreshToken = localStorage.getItem('refreshToken');
         if (token) return true;
