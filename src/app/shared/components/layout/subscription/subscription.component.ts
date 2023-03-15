@@ -110,8 +110,9 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
     this.startTime();
     // document.getElementById('knob').append(this.knob);
     // document.getElementById('knob-right').append(this.knobRight); 
-    this.getApplications();
+ 
     this.getLastSubscription();
+   
   }
   getApplications() {
     this.applications = [
@@ -134,11 +135,8 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
     this.service.getLastSubscription().subscribe(
       next => {
 
-
-
-
         if (next.success == true) {
-
+          this.getApplications();
           //   this.router.navigate(['/dashboard/default']);
           this.applicationsRoute = [...next.response?.applications.split(",")]
           console.log(this.applicationsRoute);
