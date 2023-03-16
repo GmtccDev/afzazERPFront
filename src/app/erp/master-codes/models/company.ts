@@ -9,45 +9,19 @@ export class CompanyDto {
     email: string | undefined;
     isActive: boolean | undefined;
     countryId: number | undefined;
-    businessId: number | undefined;
-    companySize: string | undefined;
-    multiCompanies: boolean | undefined;
-    multiBranches: boolean | undefined;
-    numberOfCompany: number | undefined;
-    numberOfBranch: number | undefined;
+    currencyId: number | undefined;
+
+    motherCompany: boolean | undefined;
+    useHijri: boolean | undefined;
+    logo: string | undefined;
+    webSite: string | undefined;
 }
 export class CreateCompanyCommand {
-    id: number;
-    nameAr: string | undefined;
-    nameEn: string | undefined;
-    code: string | undefined;
-    phoneNumber: string | undefined;
-    email: string | undefined;
-    isActive: boolean | undefined;
-    countryId: number | undefined;
-    businessId: number | undefined;
-    companySize: string | undefined;
-    multiCompanies: boolean | undefined;
-    multiBranches: boolean | undefined;
-    numberOfCompany: number | undefined;
-    numberOfBranch: number | undefined;
+    inputDto:CompanyDto;
 }
 
 export class EditCompanyCommand {
-    id: number;
-    nameAr: string | undefined;
-    nameEn: string | undefined;
-    code: string | undefined;
-    phoneNumber: string | undefined;
-    email: string | undefined;
-    isActive: boolean | undefined;
-    countryId: number | undefined;
-    businessId: number | undefined;
-    companySize: string | undefined;
-    multiCompanies: boolean | undefined;
-    multiBranches: boolean | undefined;
-    numberOfCompany: number | undefined;
-    numberOfBranch: number | undefined;
+    inputDto:CompanyDto;
 }
 export class CompanyDtoPageList {
     metadata: IPagedListMetaData;

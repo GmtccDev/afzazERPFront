@@ -14,12 +14,13 @@ import { CurrenciesComponent } from './currencies/currencies/currencies.componen
 import { AddEditCurrencyTransactionsComponent } from './currencies/add-edit-currency-transactions/add-edit-currency-transactions.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
+import { CompanyServiceProxy } from './services/company.service';
 @NgModule({
   declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent, CompaniesComponent, AddCompanyComponent],
   imports: [
     CommonModule,
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule,
   ],
-  providers: [CountryServiceProxy]
+  providers: [CountryServiceProxy,CompanyServiceProxy]
 })
 export class MasterCodesModule { }

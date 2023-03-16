@@ -105,7 +105,7 @@ export class NavService implements OnDestroy {
 				{ path: '/master-codes/business/', title: this.translate.instant("component-names.business"), type: 'link', active: true },
 				{ path: '/master-codes/currencies/', title: this.translate.instant("component-names.currencies"), type: 'link', active: true },
 
-
+				{ path: '/master-codes/companies/', title: this.translate.instant("component-names.companies"), type: 'link', active: true },
 			]
 		}
 

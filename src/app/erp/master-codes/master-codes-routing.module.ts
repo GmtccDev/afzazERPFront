@@ -6,6 +6,8 @@ import { AddCountryComponent } from './countries/add-country/add-country.compone
 import { AddBusinessComponent } from './business/add-business/add-business.component'
 import { AddCurrencyComponent } from './currencies/add-currency/add-currency.component';
 import { CurrenciesComponent } from './currencies/currencies/currencies.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { AddCompanyComponent } from './companies/add-company/add-company.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -19,7 +21,9 @@ const routes: Routes = [
 			{ path: 'currencies/add-currency', component: AddCurrencyComponent },
 			{ path: 'currencies/update-currency/:id', component: AddCurrencyComponent },
 			{ path: 'currencies', component: CurrenciesComponent },
-
+			{ path: 'companies', component: CompaniesComponent },
+			{ path: 'companies/add-company', component: AddCompanyComponent },
+			{ path: 'companies/update-company/:id', component: AddCompanyComponent },
 
 		]
 	}
