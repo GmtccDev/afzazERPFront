@@ -167,7 +167,8 @@
         "customer-information": "معلومات العميل",
         "permissions": " الصلاحيات",
         "company":"الشركة",
-        "company-information": "بيانات العملة "
+        "companies-information": "بيانات الشركة ",
+        "companies":"الشركات"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -209,7 +210,8 @@
         "enter-valid-email": "من فضلك ادخل بريد اليكترونى صالح",
         "valid-email": "البريد الاليكترونى صالح",
         "status": "الحالة",
-        "selectUnselect": "تحديد الكل /عدم تحديد الكل"
+        "selectUnselect": "تحديد الكل /عدم تحديد الكل",
+        "logo":"صورة"
     },
     "menu": {},
     "currency": {
@@ -219,6 +221,7 @@
     },
     "company": {
         "motherCompany":"الشركة الام",
-        "useHijri":"استخم التاريخ الهجري"
+        "useHijri":"استخم التاريخ الهجري",
+        "web-site":"الموقع"
     }
 }

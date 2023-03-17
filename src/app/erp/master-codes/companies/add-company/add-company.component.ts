@@ -126,16 +126,17 @@ export class AddCompanyComponent implements OnInit {
     this.companyForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: NAME_REQUIRED_VALIDATORS,
+      nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      email: EMAIL_VALIDATORS,
+      email: null,
       phoneNumber: null,
-      countryId: REQUIRED_VALIDATORS,
+      countryId: null,
       currencyId: null,
       motherCompany: false,
       useHijri: false,
-      logoPath: null,
+      webSite:null
+     // logo: null,
 
       // applications: ""
     });
@@ -202,6 +203,7 @@ export class AddCompanyComponent implements OnInit {
     const promise = new Promise<void>((resolve, reject) => {
       this.companyService.getCompany(id).subscribe({
         next: (res: any) => {
+          if(res.response.logo)
           this.logoPath = environment.apiUrl + "/wwwroot/Uploads/Company/" + res.response.logo;
           console.log('result data getbyid', res);
           this.companyForm.setValue({
@@ -216,7 +218,8 @@ export class AddCompanyComponent implements OnInit {
             currencyId: res.response?.currencyId,
             motherCompany: res.response?.motherCompany,
             useHijri: res.response?.useHijri,
-            logo: res.response?.logo,
+            webSite:res.response?.webSite
+           // logo: res.response?.logo,
 
 
           });
@@ -307,7 +310,7 @@ export class AddCompanyComponent implements OnInit {
     if (this.companyForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
         entity.inputDto = this.companyForm.value;
-        entity.inputDto.logo == this.logo;
+        entity.inputDto.logo = this.logo;
         this.companyService.createCompany(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
@@ -346,7 +349,7 @@ export class AddCompanyComponent implements OnInit {
       this.companyForm.value.id = this.id;
       entity.inputDto = this.companyForm.value;
       entity.inputDto.id = this.id;
-      entity.inputDto.logo == this.logo;
+      entity.inputDto.logo = this.logo;
       console.log("this.VendorCommissionsForm.value", this.companyForm.value)
       const promise = new Promise<void>((resolve, reject) => {
 
@@ -380,7 +383,7 @@ export class AddCompanyComponent implements OnInit {
     }
   }
   onFileChange(event) {
-    debugger;
+    ;
     let reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
@@ -392,19 +395,7 @@ export class AddCompanyComponent implements OnInit {
       this.cd.markForCheck();
     }
   }
-  onFileChangeUpdate(event) {
-    debugger;
-    let reader = new FileReader();
-
-    if (event.target.files && event.target.files.length) {
-      this.files = event.target.files;
-      this.uploadUpdate(this.files);
-      reader.onload = () => {
-        this.cd.markForCheck();
-      };
-      this.cd.markForCheck();
-    }
-  }
+ 
   upload(files) {
     if (files != null) {
       if (files.length === 0)
@@ -415,8 +406,7 @@ export class AddCompanyComponent implements OnInit {
       }
 
       this.companyService.uploadFile(formData).subscribe((res: any) => {
-        console.log("res", res);
-        debugger;
+       
         this.logoPath = environment.apiUrl + "/wwwroot/Uploads/Company/" + res.response;
         this.logo = res.response;
       })
@@ -424,25 +414,7 @@ export class AddCompanyComponent implements OnInit {
     }
   }
 
-  uploadUpdate(files) {
-    if (files != null) {
-      if (files.length === 0)
-        return;
-      const formData = new FormData();
-      for (let file of files) {
-        formData.append(file.name, file);
-      }
-
-      this.companyService.uploadFile(formData).subscribe((res: any) => {
-        console.log("res", res);
-        debugger;
-    
-        this.logoPath = environment.apiUrl + "/wwwroot/Uploads/Company/" + res.response;
-        this.logo = res.response;
-      })
-
-    }
-  }
+ 
 
 }
 

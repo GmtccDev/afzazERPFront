@@ -105,7 +105,8 @@
         "meter-number": "Meter Number",
         "meter-type": "Meter Type",
         "status": "Status",
-        "selectUnselect":"Select/Unselect"
+        "selectUnselect":"Select/Unselect",
+        "logo":"Logo"
     },
     "menu": {},
     "home": {
@@ -256,7 +257,8 @@
         "customer-information": "Customer Information",
         "permissions": " Permissions",
         "company":"Company",
-        "company-information": "Company Information  "
+        "companies-information": "Companies Information  ",
+        "companies":"Companies"
     },
     "language": {
         "ARABIC": "Arabic",
@@ -271,6 +273,7 @@
     },
     "company": {
         "motherCompany":"Mother Company",
-        "useHijri":"Use Hijri"
+        "useHijri":"Use Hijri",
+        "web-site":"Web Site"
     }
 }
