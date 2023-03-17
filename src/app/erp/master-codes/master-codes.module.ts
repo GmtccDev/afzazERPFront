@@ -15,8 +15,10 @@ import { AddEditCurrencyTransactionsComponent } from './currencies/add-edit-curr
 import { CompaniesComponent } from './companies/companies.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
 import { CompanyServiceProxy } from './services/company.service';
+import { BranchesComponent } from './branches/branches.component';
+import { AddEditBranchComponent } from './branches/add-edit-branch/add-edit-branch.component';
 @NgModule({
-  declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent, CompaniesComponent, AddCompanyComponent],
+  declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent, CompaniesComponent, AddCompanyComponent, BranchesComponent, AddEditBranchComponent],
   imports: [
     CommonModule,
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule,

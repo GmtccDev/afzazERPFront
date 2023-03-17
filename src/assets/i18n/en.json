@@ -258,7 +258,9 @@
         "permissions": " Permissions",
         "company":"Company",
         "companies-information": "Companies Information  ",
-        "companies":"Companies"
+        "companies":"Companies",
+        "branch":"Branch",
+        "branches-information":"Branches information " 
     },
     "language": {
         "ARABIC": "Arabic",

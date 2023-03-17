@@ -8,6 +8,8 @@ import { AddCurrencyComponent } from './currencies/add-currency/add-currency.com
 import { CurrenciesComponent } from './currencies/currencies/currencies.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
+import { BranchesComponent } from './branches/branches.component';
+import { AddEditBranchComponent } from './branches/add-edit-branch/add-edit-branch.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -24,7 +26,9 @@ const routes: Routes = [
 			{ path: 'companies', component: CompaniesComponent },
 			{ path: 'companies/add-company', component: AddCompanyComponent },
 			{ path: 'companies/update-company/:id', component: AddCompanyComponent },
-
+			{ path: 'branches', component: BranchesComponent },
+			{ path: 'branches/add-branch', component: AddEditBranchComponent },
+			{ path: 'branches/update-branch/:id', component: AddEditBranchComponent },
 		]
 	}
 ];

@@ -167,8 +167,10 @@
         "customer-information": "معلومات العميل",
         "permissions": " الصلاحيات",
         "company":"الشركة",
-        "companies-information": "بيانات الشركة ",
-        "companies":"الشركات"
+        "companies-information": "معلومات الشركة ",
+        "companies":"الشركات",
+        "branch":"الفروع",
+        "branches-information":"معلومات الفروع" 
     },
     "general": {
         "nameAr": "الاسم العربي",
