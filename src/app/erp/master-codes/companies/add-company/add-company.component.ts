@@ -135,7 +135,8 @@ export class AddCompanyComponent implements OnInit {
       currencyId: null,
       motherCompany: false,
       useHijri: false,
-      webSite:null
+      webSite:null,
+      address:null
      // logo: null,
 
       // applications: ""
@@ -218,7 +219,8 @@ export class AddCompanyComponent implements OnInit {
             currencyId: res.response?.currencyId,
             motherCompany: res.response?.motherCompany,
             useHijri: res.response?.useHijri,
-            webSite:res.response?.webSite
+            webSite:res.response?.webSite,
+            address:res.response?.address
            // logo: res.response?.logo,
 
 

@@ -62,12 +62,14 @@
 
                                             <div class="form-group">
                                                 <label for="currencySymbol" class="label-name">{{'general.currencySymbol'|translate}}</label>
-                                                <ng-select style="width:100%" formControlName="symbol" name='symbol' class="" id="symbol">
+                                                <input type="text" class="form-control icon-user" name="symbol" formControlName="symbol">
+
+                                              <!--  <ng-select style="width:100%" formControlName="symbol" name='symbol' class="" id="symbol">
                                                     <ng-option *ngFor="let symbol of symbolList" [value]="symbol.value">
                                                         {{lang=="ar"?symbol.descriptionAr:symbol.descriptionEn}}
                                                     </ng-option>
                                                 </ng-select>
-                                                <!-- <select class="form-control digits form-select" id="currencySymbol">
+                                                 <select class="form-control digits form-select" id="currencySymbol">
                                                     <option>Dollar Symbol - $</option>
                                                     <option>Euro Symbol - €</option>
                                                     <option>Riyal Symbol – ﷼</option>

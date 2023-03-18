@@ -169,7 +169,8 @@
         "company":"الشركة",
         "companies-information": "معلومات الشركة ",
         "companies":"الشركات",
-        "branch":"الفروع",
+        "branch":"الفرع",
+        "branches":"الفروع",
         "branches-information":"معلومات الفروع" 
     },
     "general": {

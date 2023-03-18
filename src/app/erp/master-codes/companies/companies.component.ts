@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { NotificationsAlertsService } from '../../../shared/common-services/notifications-alerts.service';
-import {CompanyServiceProxy } from '../services/company.service';
+import { CompanyServiceProxy } from '../services/company.service';
 import { CompanyDto, DeleteListCompanyCommand } from '../models/company';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
@@ -35,6 +35,7 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   };
   listIds: any[] = [];
+  symbolList: { descriptionAr: string; descriptionEn: string; value: string; }[];
   //#endregion
 
   //#region Constructor
@@ -101,7 +102,7 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.companyService.allCompanies(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          
+
           console.log(res);
           //let data =
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
@@ -110,7 +111,7 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
             this.companies = res.response.items
-            ;
+              ;
 
           }
 
@@ -175,6 +176,15 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
   searchFilters: any;
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
+  getSymbol() {
+
+    this.symbolList = [
+      { descriptionAr: 'دولار - $', descriptionEn: 'Dollar - $', value: '1' },
+      { descriptionAr: 'يورو - €', descriptionEn: 'Euro - €', value: '2' },
+      { descriptionAr: 'ريال – ﷼', descriptionEn: 'Riyal – ﷼', value: '3' },
+      { descriptionAr: 'دينار – د.ك', descriptionEn: 'Dinar – د.ك', value: '4' }
+    ];
+  }
   columnNames = [
     this.lang == 'ar'
       ? { title: ' الاسم', field: 'nameAr' } :
@@ -183,8 +193,18 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
-    }
+    },
+    this.lang == 'ar'
+      ? { title: ' العنوان', field: 'address' } :
+      { title: ' Address  ', field: 'address' },
 
+    this.lang == 'ar'
+      ? { title: ' الدولة', field: 'countryNameAr' } :
+      { title: ' Country  ', field: 'countryNameEn' },
+
+    this.lang == 'ar'
+      ? { title: ' العملة', field: 'symbol' } :
+      { title: ' Currency  ', field: 'symbol' },
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -263,7 +283,7 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-        
+
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
@@ -280,10 +300,10 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    
+
     let item = new DeleteListCompanyCommand();
     item.ids = this.listIds;
-    let sub = this.companyService.deleteListCompany( item).subscribe(
+    let sub = this.companyService.deleteListCompany(item).subscribe(
       (resonse) => {
 
         //reloadPage()

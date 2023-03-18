@@ -131,7 +131,8 @@ export class AddEditBranchComponent implements OnInit {
       isActive: true,
       phoneNumber: null,
       countryId: null,
-      companyId: null
+      companyId: null,
+      address:null
     });
 
   }
@@ -205,8 +206,8 @@ export class AddEditBranchComponent implements OnInit {
             isActive: res.response?.isActive,
             phoneNumber: res.response?.phoneNumber,
             countryId: res.response?.countryId,
-            companyId: res.response?.companyId
-
+            companyId: res.response?.companyId,
+            address:res.response?.address
 
           });
 

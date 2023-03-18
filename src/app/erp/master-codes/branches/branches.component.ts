@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { NotificationsAlertsService } from '../../../shared/common-services/notifications-alerts.service';
-import {BranchServiceProxy } from '../services/branch.service';
+import { BranchServiceProxy } from '../services/branch.service';
 import { BranchDto, DeleteListBranchCommand } from '../models/branch';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
@@ -101,7 +101,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.branchService.allBranches(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          
+
           console.log(res);
           //let data =
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
@@ -110,7 +110,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
           this.toolbarPathData.componentList = this.translate.instant("component-names.branches");
           if (res.success) {
             this.branches = res.response.items
-            ;
+              ;
 
           }
 
@@ -183,8 +183,14 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
-    }
+    },
+    this.lang == 'ar'
+      ? { title: ' العنوان', field: 'address' } :
+      { title: ' Address  ', field: 'address' },
 
+    // this.lang == 'ar'
+    //   ? { title: ' الدولة', field: 'countryNameAr' } :
+    //   { title: ' Country  ', field: 'countryNameEn' },
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -263,7 +269,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-        
+
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
@@ -280,10 +286,10 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    
+
     let item = new DeleteListBranchCommand();
     item.ids = this.listIds;
-    let sub = this.branchService.deleteListBranch( item).subscribe(
+    let sub = this.branchService.deleteListBranch(item).subscribe(
       (resonse) => {
 
         //reloadPage()
