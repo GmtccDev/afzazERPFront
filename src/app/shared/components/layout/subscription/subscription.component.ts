@@ -138,19 +138,22 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
         if (next.success == true) {
           this.getApplications();
           //   this.router.navigate(['/dashboard/default']);
-          this.applicationsRoute = [...next.response?.applications.split(",")]
-          console.log(this.applicationsRoute);
-          for (var i = 0; i < this.applications.length; i++) {
-
-            var find = this.applicationsRoute.includes(this.applications[i].value);
-
-            if (find) {
-
-              this.applications[i].check = true;
-
+          if(next.response!=null){
+            this.applicationsRoute = [...next.response?.applications?.split(",")]
+            console.log(this.applicationsRoute);
+            for (var i = 0; i < this.applications.length; i++) {
+  
+              var find = this.applicationsRoute.includes(this.applications[i].value);
+  
+              if (find) {
+  
+                this.applications[i].check = true;
+  
+              }
+  
             }
-
           }
+          
           this.applications = this.applications.filter(c => c.check == true)
         }
       },
