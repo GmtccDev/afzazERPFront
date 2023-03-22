@@ -43,6 +43,14 @@ export class BranchServiceProxy {
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Branch/get-ddl?");
     }
+    getDdlWithCompanies( ids: Array<number>|undefined): Observable<any> {
+        let queryParams = new HttpParams();
+        if (ids != undefined)
+       // queryParams = queryParams.append("companies", ids.join(', '));
+        queryParams = queryParams.appendAll({'companies': ids});
+
+        return this.http.get<any>(this.baseUrl + "/api/Branch/get-ddlWithCompanies?", { params: queryParams });
+    }
     allBranches(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
         let queryParams = new HttpParams();
         if (pageIndex != undefined)

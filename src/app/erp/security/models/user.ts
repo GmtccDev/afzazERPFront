@@ -1,7 +1,7 @@
-import {IPagedListMetaData} from '../../../shared/interfaces/paged-list-meta-data';
+import { IPagedListMetaData } from '../../../shared/interfaces/paged-list-meta-data';
 export class UserDto {
     id: string | undefined;
-   //userName: string | undefined;
+    //userName: string | undefined;
     fullName: string | undefined;
     nameAr: string | undefined;
     nameEn: string | undefined;
@@ -9,12 +9,12 @@ export class UserDto {
     userType: string | undefined;
     phoneNumber: string | undefined;
     email: string | undefined;
-   // passWord: string | undefined;
+    // passWord: string | undefined;
     roles: string[] | undefined;
     isActive: boolean | undefined;
 }
 export class CreateUserCommand {
-   //userName: string | undefined;
+    //userName: string | undefined;
     fullName: string | undefined;
     nameAr: string | undefined;
     nameEn: string | undefined;
@@ -23,10 +23,11 @@ export class CreateUserCommand {
     email: string | undefined;
     code: string | undefined;
     roles: string[] | undefined;
-   // password: string | undefined;
+    // password: string | undefined;
+    companiesUserDto:CompaniesUserDto[]|undefined
 }
 export class EditUserCommand {
-   //userName: string | undefined;
+    //userName: string | undefined;
     fullName: string | undefined;
     nameAr: string | undefined;
     nameEn: string | undefined;
@@ -35,8 +36,9 @@ export class EditUserCommand {
     email: string | undefined;
     id: string | undefined;
     roles: string[] | undefined;
-   // password: string | undefined;
+    // password: string | undefined;
     code: string | undefined;
+    companiesUserDto:CompaniesUserDto[]|undefined
 
 }
 
@@ -44,7 +46,7 @@ export interface IUserDtoPageList {
     metadata: IPagedListMetaData;
     items: UserDto[] | undefined;
 }
-export class DeleteListUserCommand{
+export class DeleteListUserCommand {
     ids: number[] | undefined;
 }
 export interface IAddPasswordUserCommand {
@@ -56,4 +58,8 @@ export interface IChangePasswordCommand {
     oldPassword: string | undefined;
     newPassword: string | undefined;
     confirmNewPassword: string | undefined;
+}
+export class CompaniesUserDto {
+    companyId:number|undefined;
+    branches: number[] | undefined;
 }

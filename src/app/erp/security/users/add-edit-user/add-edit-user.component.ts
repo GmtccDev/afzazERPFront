@@ -10,10 +10,12 @@ import { map, Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../shared/helper/helper-url';
-import {UserServiceProxy} from '../../services/user-service'
+import { UserServiceProxy } from '../../services/user-service'
 import { RoleServiceProxy } from '../../services/role.servies';
 import { RoleDto } from '../../models/role';
 import { UserDto } from '../../models/User';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { BranchServiceProxy } from 'src/app/erp/master-codes/services/branch.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -28,8 +30,8 @@ export class AddEditUserComponent implements OnInit {
   id: any = 0;
   currnetUrl;
   public show: boolean = false;
-  lang=localStorage.getItem("language")
-  user:UserDto[] = [];
+  lang = localStorage.getItem("language")
+  user: UserDto[] = [];
   addUrl: string = '/security/user/add-user';
   updateUrl: string = '/security/user/update-user/';
   listUrl: string = '/security/user';
@@ -37,7 +39,7 @@ export class AddEditUserComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList:this.translate.instant("component-names.user"),
+    componentList: this.translate.instant("component-names.user"),
     componentAdd: '',
 
   };
@@ -45,7 +47,9 @@ export class AddEditUserComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  rolesList:RoleDto[] = [];
+  rolesList: RoleDto[] = [];
+  companiesList: any;
+  branchesList: any;
   constructor(
     private roleService: RoleServiceProxy,
     private userService: UserServiceProxy,
@@ -53,7 +57,10 @@ export class AddEditUserComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService,private translate:TranslateService
+    private SharedServices: SharedService,
+    private translate: TranslateService,
+    private companyService: CompanyServiceProxy,
+    private branchService: BranchServiceProxy,
   ) {
     this.defineuserForm();
   }
@@ -62,6 +69,8 @@ export class AddEditUserComponent implements OnInit {
   //#region ngOnInit
   ngOnInit(): void {
     this.getRoles();
+    this.getCompanies();
+    // this.getBranches();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
@@ -71,7 +80,7 @@ export class AddEditUserComponent implements OnInit {
     this.sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
-        
+
         if (this.id) {
           this.getuserById(this.id);
         }
@@ -111,22 +120,77 @@ export class AddEditUserComponent implements OnInit {
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
-      isActive:true,
-      fullName:NAME_REQUIRED_VALIDATORS,
-      email:EMAIL_VALIDATORS,
+      isActive: true,
+      fullName: NAME_REQUIRED_VALIDATORS,
+      email: EMAIL_VALIDATORS,
       //passWord:new FormControl(''),
-      phoneNumber:null,
-      roles:''
+      phoneNumber: null,
+      roles: '',
+      companies: undefined,
+      branches: undefined
     });
   }
   getRoles() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.allRoles(undefined, undefined, undefined,undefined,undefined).subscribe({
+      let sub = this.roleService.allRoles(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-        
+
           if (res) {
             this.rolesList = res.response.items;
-        
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCompanies() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.companyService.getDdl().subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.companiesList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  onChangeCompany(values) {
+    return new Promise<void>((resolve, reject) => {
+      debugger
+      let sub = this.branchService.getDdlWithCompanies(values).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+
+            this.branchesList = res.response;
           }
 
 
@@ -158,12 +222,12 @@ export class AddEditUserComponent implements OnInit {
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
-            isActive:res.response?.isActive,
-            fullName:res.response?.fullName,
-            email:res.response?.email,
+            isActive: res.response?.isActive,
+            fullName: res.response?.fullName,
+            email: res.response?.email,
             //passWord:'',
-             phoneNumber:res.response?.phoneNumber,
-            roles:res.response?.roles
+            phoneNumber: res.response?.phoneNumber,
+            roles: res.response?.roles
           });
           console.log(
             'this.userForm.value set value',
@@ -186,10 +250,10 @@ export class AddEditUserComponent implements OnInit {
   getuserCode() {
     const promise = new Promise<void>((resolve, reject) => {
       this.userService.getLastCode().subscribe({
-       
+
         next: (res: any) => {
-          
-          this.toolbarPathData.componentList=this.translate.instant("component-names.role");
+
+          this.toolbarPathData.componentList = this.translate.instant("component-names.role");
           this.userForm.patchValue({
             code: res.response
           });
@@ -212,7 +276,7 @@ export class AddEditUserComponent implements OnInit {
     return this.userForm.controls;
   }
 
-  
+
   //#endregion
   //#region Tabulator
   subsList: Subscription[] = [];
@@ -249,7 +313,7 @@ export class AddEditUserComponent implements OnInit {
     if (this.userForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
 
-        this.userService.createUser( this.userForm.value).subscribe({
+        this.userService.createUser(this.userForm.value).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
@@ -259,7 +323,7 @@ export class AddEditUserComponent implements OnInit {
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
-             
+
               navigateUrl(this.listUrl, this.router);
             }, 1000);
           },
@@ -274,20 +338,20 @@ export class AddEditUserComponent implements OnInit {
       return promise;
 
     } else {
-     
-    //  return this.userForm.markAllAsTouched();
+
+      //  return this.userForm.markAllAsTouched();
     }
   }
 
 
   onUpdate() {
-    
+
     if (this.userForm.valid) {
 
       this.userForm.value.id = this.id;
       console.log("this.VendorCommissionsForm.value", this.userForm.value)
       const promise = new Promise<void>((resolve, reject) => {
-        this.userService.updateUser( this.userForm.value).subscribe({
+        this.userService.updateUser(this.userForm.value).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result update ', result);
@@ -296,7 +360,7 @@ export class AddEditUserComponent implements OnInit {
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
-             
+
               navigateUrl(this.listUrl, this.router);
             }, 1000);
           },
@@ -312,8 +376,8 @@ export class AddEditUserComponent implements OnInit {
     }
 
     else {
-   
-     // return this.userForm.markAllAsTouched();
+
+      // return this.userForm.markAllAsTouched();
     }
   }
 
