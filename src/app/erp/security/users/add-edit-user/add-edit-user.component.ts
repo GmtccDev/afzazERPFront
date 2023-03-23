@@ -13,7 +13,7 @@ import { navigateUrl } from '../../../../shared/helper/helper-url';
 import { UserServiceProxy } from '../../services/user-service'
 import { RoleServiceProxy } from '../../services/role.servies';
 import { RoleDto } from '../../models/role';
-import { UserDto } from '../../models/User';
+import { CompaniesUserDto, UserDto } from '../../models/User';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { BranchServiceProxy } from 'src/app/erp/master-codes/services/branch.service';
 
@@ -50,6 +50,7 @@ export class AddEditUserComponent implements OnInit {
   rolesList: RoleDto[] = [];
   companiesList: any;
   branchesList: any;
+  companiesUserDto: CompaniesUserDto[] = [];
   constructor(
     private roleService: RoleServiceProxy,
     private userService: UserServiceProxy,
@@ -183,14 +184,25 @@ export class AddEditUserComponent implements OnInit {
 
   }
   onChangeCompany(values) {
+    this.companiesUserDto=[];
     return new Promise<void>((resolve, reject) => {
-      debugger
+
       let sub = this.branchService.getDdlWithCompanies(values).subscribe({
         next: (res) => {
 
           if (res.success) {
+            
 
             this.branchesList = res.response;
+            values.forEach(element => {
+              
+              let company = new CompaniesUserDto();
+              company.companyId = element;
+              company.branches = [];
+              this.companiesUserDto.push(company);
+            });
+
+
           }
 
 
@@ -206,6 +218,20 @@ export class AddEditUserComponent implements OnInit {
       });
 
       this.subsList.push(sub);
+    });
+
+  }
+  onChangeBranch(values) {
+    values.forEach(element => {
+      
+      var item = this.branchesList.find(c => c.id == element);
+      this.companiesUserDto.forEach(
+        company => {
+          
+          if (company.companyId == item.companyId) {
+            company.branches.push(element)
+          }
+        })
     });
 
   }
@@ -227,8 +253,11 @@ export class AddEditUserComponent implements OnInit {
             email: res.response?.email,
             //passWord:'',
             phoneNumber: res.response?.phoneNumber,
-            roles: res.response?.roles
+            roles: res.response?.roles,
+            companies: res.response?.companies,
+            branches: res.response?.branches
           });
+          this.onChangeCompany( res.response?.companies)
           console.log(
             'this.userForm.value set value',
             this.userForm.value
@@ -312,8 +341,10 @@ export class AddEditUserComponent implements OnInit {
   onSave() {
     if (this.userForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-
-        this.userService.createUser(this.userForm.value).subscribe({
+        
+        var user = this.userForm.value;
+        user.companiesUserDtos = this.companiesUserDto
+        this.userService.createUser(user).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
@@ -347,11 +378,14 @@ export class AddEditUserComponent implements OnInit {
   onUpdate() {
 
     if (this.userForm.valid) {
-
+      
       this.userForm.value.id = this.id;
+      var user=this.userForm.value;
+      user.companiesUserDtos = this.companiesUserDto
+     
       console.log("this.VendorCommissionsForm.value", this.userForm.value)
       const promise = new Promise<void>((resolve, reject) => {
-        this.userService.updateUser(this.userForm.value).subscribe({
+        this.userService.updateUser(user).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result update ', result);

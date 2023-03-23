@@ -129,8 +129,8 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="roles" class="label-name">
-                                                {{'component-names.role'|translate}}
-                                              <span class="text-danger">*</span>
+                                                {{'component-names.companies'|translate}}
+                                           
                                             </label>
                                         <div class="input-group  popup">
                                             <ng-select style="width:100%" [multiple]="true" (change)="onChangeCompany($event)" formControlName="companies" name='companies' class="" id="companies">
@@ -143,11 +143,11 @@
                                     </div>
                                         <div class="col-md-6 col-12">
                                             <label for="roles" class="label-name">
-                                                {{'component-names.role'|translate}}
-                                              <span class="text-danger">*</span>
+                                                {{'component-names.branches'|translate}}
+                                             
                                             </label>
                                         <div class="input-group  popup">
-                                            <ng-select style="width:100%" [multiple]="true" formControlName="branches" name='branches' class="" id="branches">
+                                            <ng-select style="width:100%" [multiple]="true" formControlName="branches" (change)="onChangeBranch($event)" name='branches' class="" id="branches">
                                                 <ng-option *ngFor="let branch of branchesList" [value]="branch.id">
                                                     {{lang=="ar"?branch.nameAr:branch.nameEn}}
                                                 </ng-option>

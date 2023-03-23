@@ -148,7 +148,30 @@ export class AddEditRoleComponent implements OnInit {
     });
     return promise;
   }
+  
   getRoleCode() {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.roleService.getLastCode().subscribe({
+
+        next: (res: any) => {
+
+          this.toolbarPathData.componentList =this.translate.instant("component-names.roles-permissions") ;
+          this.roleForm.patchValue({
+            code: res.response.code
+          });
+        
+          this.permission = res.response.permissions
+          this.screens=res.response.screens;
+       
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
 
   }
   //#endregion
@@ -273,7 +296,7 @@ export class AddEditRoleComponent implements OnInit {
   screens:any=[];
   lang = localStorage.getItem("language");
   masterSelected = false;
-
+  searchText: string;
   checkUncheckAll(evt) {
     
     this.screens.forEach(

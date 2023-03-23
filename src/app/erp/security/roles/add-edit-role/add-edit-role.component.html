@@ -98,10 +98,17 @@
 
     </div>
 </section>
+   <input
+   autocomplete="off" 
+      type="text"
+      placeholder=""
+      [(ngModel)]="searchText"
+    />
+<br/>
 <input type="checkbox" name="list_name" [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)"/> &nbsp;&nbsp;<strong> {{'general.selectUnselect'|translate}} </strong>
 <div  class="row" >
 
-    <div *ngFor="let option of screens;" class="col-md-4">
+    <div *ngFor="let option of screens| filter:searchText;" class="col-md-4">
         <h3>
             {{lang=="ar"?option.screenNameAr:option.screenNameEn}}
         </h3>

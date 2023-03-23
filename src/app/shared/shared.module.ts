@@ -17,7 +17,7 @@ import { FullComponent } from './components/layout/full/full.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TapToTopComponent } from './components/tap-to-top/tap-to-top.component';
-import {ToolbarComponent} from '../shared/components/toolbar/toolbar.component'
+import { ToolbarComponent } from '../shared/components/toolbar/toolbar.component'
 // Header Elements Components
 import { SearchComponent } from './components/header/elements/search/search.component';
 import { MegaMenuComponent } from './components/header/elements/mega-menu/mega-menu.component';
@@ -38,19 +38,20 @@ import { LayoutService } from './services/layout.service';
 import { NavService } from './services/nav.service';
 import { TableService } from './services/table.service';
 import { NgbdSortableHeader } from './directives/NgbdSortableHeader';
-import {DecimalPipe} from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {ResortHttpInterceptor} from './interceptors/http.interceptor';
-import {throwIfAlreadyLoaded} from '../shared/gaurds/module-import'
+import { ResortHttpInterceptor } from './interceptors/http.interceptor';
+import { throwIfAlreadyLoaded } from '../shared/gaurds/module-import'
 import { ModalComponent } from './modal/modal.component';
-import {TabulatorModule} from '../shared/components/tabulator/tabulator.module'
+import { TabulatorModule } from '../shared/components/tabulator/tabulator.module'
 import { MessageModalComponent } from './components/message-modal/message-modal.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InputComponent } from './components/froms/input/input.component';
-import {  SwitchButtonComponent } from './components/froms/switch-button/switch-button.component';
+import { SwitchButtonComponent } from './components/froms/switch-button/switch-button.component';
 import { ChangePasswordComponent } from '../erp/authentication/change-password/change-password.component';
 import { SubscriptionComponent } from './components/layout/subscription/subscription.component';
+import { FilterPipe } from "../shared/pipes/filter-pipe";
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -84,6 +85,7 @@ import { SubscriptionComponent } from './components/layout/subscription/subscrip
     InputComponent,
     SwitchButtonComponent,
     ChangePasswordComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,
@@ -101,7 +103,7 @@ import { SubscriptionComponent } from './components/layout/subscription/subscrip
     ChatService,
     LayoutService,
     TableService,
-    DecimalPipe,{
+    DecimalPipe, {
       provide: HTTP_INTERCEPTORS,
       useClass: ResortHttpInterceptor,
       multi: true
@@ -122,13 +124,14 @@ import { SubscriptionComponent } from './components/layout/subscription/subscrip
     DisableKeyPressDirective,
     OnlyAlphabetsDirective,
     OnlyNumbersDirective,
-    NgbdSortableHeader,TabulatorModule,NgSelectModule,
-	InputComponent,
-    SwitchButtonComponent
+    NgbdSortableHeader, TabulatorModule, NgSelectModule,
+    InputComponent,
+    SwitchButtonComponent,
+    FilterPipe
   ],
 })
 export class SharedModule {
   // constructor(@Optional() @SkipSelf() parentModule: SharedModule) {
   //   throwIfAlreadyLoaded(parentModule, 'SharedModule')
   // }
- }
+}
