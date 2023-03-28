@@ -6,6 +6,7 @@ import { DashboardComponent } from "./shared/components/layout/dashboard/dashboa
 import { AuthenticationComponent } from './erp/authentication/authentication.component';
 import { AuthenticationGuard } from './shared/gaurds/authentication.guard';
 import { SubscriptionComponent } from './shared/components/layout/subscription/subscription.component';
+import { AccountingConfigurationsComponent } from './erp/Accounting/configurations/accounting-configurations/accounting-configurations.component';
 
 const routes: Routes = [
 	{
@@ -30,7 +31,8 @@ const routes: Routes = [
 				loadChildren: () => import('./erp/security/security-routing.module').then(m => m.SecurityRoutingModule)
 			}
 		]
-	},
+	}
+	,
 	{
 		path: 'master-codes',
 		component: ContentComponent,
@@ -44,6 +46,21 @@ const routes: Routes = [
 		]
 
 	},
+	{
+		//{ path: 'accounting-configurations', component: AccountingConfigurationsComponent },
+		path: 'configurations',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('././erp/Accounting/configurations/configurations.module').then(m => m.ConfigurationsModule)
+			}
+		]
+
+	},
+	//ConfigurationsModule
 	{
 		path: 'dashboard',
 		component: DashboardComponent,
