@@ -62,14 +62,7 @@ export class AccountingConfigurationsComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.sharedServices.changeButton({
-      action: 'Update',
-      componentName: 'List',
-      submitMode: false
-    } as ToolbarData);
-
-    // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
-    this.sharedServices.changeToolbarPath(this.toolbarPathData);
+    
     this.getSerial();
     this.getCycle();
     this.getCurrencies()
@@ -94,6 +87,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   multiCurrency:any;
   serial:any;
   radioSelectedString: string;
+  accountId:any;
   lang = localStorage.getItem("language");
   getSerial() {
     this.serialList = [
@@ -180,7 +174,7 @@ export class AccountingConfigurationsComponent implements OnInit {
             debugger
             this.generalConfiguration = res.response.items
              this.currencyId=Number(this.generalConfiguration.find(c=>c.id==1).value) ;
-             this.multiCurrency=Boolean(this.generalConfiguration.find(c=>c.id==2).value);
+             this.multiCurrency= this.generalConfiguration.find(c=>c.id==2).value=="true"?true:false;
              this.serial=this.generalConfiguration.find(c=>c.id==3).value;
              this.cycleSelected=this.generalConfiguration.find(c=>c.id==4).value;
           }
@@ -214,20 +208,18 @@ export class AccountingConfigurationsComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
+    debugger
     let sub = this.SharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
 
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
-            this.SharedServices.changeToolbarPath({
-              listPath: this.listUrl,
-            } as ToolbarPath);
-            this.router.navigate([this.listUrl]);
+           currentBtn.action=this.updateUrl
           } else if (currentBtn.action == ToolbarActions.Save) {
-           ;
+            currentBtn.action=this.updateUrl
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add GeneralConfiguration';
+            currentBtn.action=this.updateUrl
             
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -275,7 +267,7 @@ export class AccountingConfigurationsComponent implements OnInit {
               this.spinner.show();
               console.log('result update ', result);
               this.Response = { ...result.response };
-              
+              this.getGeneralConfiguration() 
               this.submited = false;
               setTimeout(() => {
                 this.spinner.hide();

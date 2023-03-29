@@ -171,7 +171,8 @@
         "companies":"الشركات",
         "branch":"الفرع",
         "branches":"الفروع",
-        "branches-information":"معلومات الفروع" 
+        "branches-information":"معلومات الفروع" ,
+        "configurations":"الاعدادات"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -226,5 +227,13 @@
         "motherCompany":"الشركة الام",
         "useHijri":"استخم التاريخ الهجري",
         "web-site":"الموقع"
+    },
+    "accounting-configration":{
+        "multiCurrency":"عملات متعددة ",
+        "journalentries":"القيود المحاسبية",
+        "serial":"الترقيم",
+        "cycle":"دورة القيد المالي",
+        "account":"حساب اغلاق العام",
+        "endOfYear":"نهاية العام"
     }
 }

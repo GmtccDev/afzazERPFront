@@ -1,3 +1,5 @@
+<h3> {{'component-names.currencies'|translate}}</h3>
+<br/>
 <div class="row">
     <div class="col-md-6 col-6">
         <label for="currencyId" class="label-name">
@@ -25,11 +27,13 @@
         </div>
     </div>
 </div>
-
+<br/>
+<h3>{{'accounting-configration.journalentries'|translate}}</h3>
+<br/>
 <div class="row">
     <div class="col-md-6 col-6">
         <label for="serial" class="label-name">
-            {{'component-names.serials'|translate}}
+            {{'accounting-configration.serial'|translate}}
     
         </label>
         <div class="">
@@ -42,9 +46,15 @@
         </div>
     </div>
 </div>
+<br/>
 
-
-<div>
+<div class="row">
+    <div class="col-md-6 col-6">
+        <label for="cycle" class="label-name">
+            {{'accounting-configration.cycle'|translate}}
+    
+        </label>
+        <div class="">
     <ul class="list-group">
           <li class="list-group-item"  *ngFor="let item of cycleList">
             <input type="radio" [(ngModel)]="cycleSelected" name="cycleSelected" value="{{item.value}}" (change)="onItemChange(item)"/> 
@@ -53,3 +63,21 @@
           </li>
     </ul>
   </div>
+  <br/>
+  <h3>  {{'accounting-configration.endOfYear'|translate}}</h3>
+  <div class="row">
+    <div class="col-md-6 col-6">
+        <label for="account" class="label-name">
+            {{'accounting-configration.account'|translate}}
+    
+        </label>
+        <div class="">
+            <ng-select  style="width:100%"  [(ngModel)]="accountId" name="accountId">
+                <!-- <ng-option *ngFor="let serialObject of serialList"  [value]="serialObject.value">
+                    {{lang=="ar"?serialObject.nameAr:serialObject.nameEn}}
+                </ng-option> -->
+            </ng-select>
+    
+        </div>
+    </div>
+</div>

@@ -261,7 +261,8 @@
         "companies":"Companies",
         "branch":"Branch",
         "branches":"Branches",
-        "branches-information":"Branches information " 
+        "branches-information":"Branches information " ,
+        "configurations":"configurations"
     },
     "language": {
         "ARABIC": "Arabic",
@@ -278,5 +279,13 @@
         "motherCompany":"Mother Company",
         "useHijri":"Use Hijri",
         "web-site":"Web Site"
+    },
+    "accounting-configration":{
+        "multiCurrency":"Multi Currency",
+        "journalentries":" Journal Entries",
+        "serial":"Serial",
+        "cycle":"JE  Cycle ",
+        "account":"closing account  ",
+        "endOfYear":"End Of Year"
     }
 }
