@@ -172,7 +172,9 @@
         "branch":"الفرع",
         "branches":"الفروع",
         "branches-information":"معلومات الفروع" ,
-        "configurations":"الاعدادات"
+        "configurations":"الاعدادات",
+        "journal":"اليوميات",
+        "journal-information": "معلومات اليوميات "
     },
     "general": {
         "nameAr": "الاسم العربي",

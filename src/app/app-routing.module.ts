@@ -59,6 +59,18 @@ const routes: Routes = [
 			}
 		]
 
+	},{
+		path: 'accounting-master-codes',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('./erp/Accounting/master-codes/master-codes.module').then(m => m.MasterCodesModule)
+			}
+		]
+
 	},
 	//ConfigurationsModule
 	{

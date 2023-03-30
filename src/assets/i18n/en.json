@@ -262,7 +262,9 @@
         "branch":"Branch",
         "branches":"Branches",
         "branches-information":"Branches information " ,
-        "configurations":"configurations"
+        "configurations":"configurations",
+        "journal":"journal",
+        "journal-information":"journal information "
     },
     "language": {
         "ARABIC": "Arabic",
