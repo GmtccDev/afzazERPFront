@@ -62,57 +62,7 @@ export class PublicSearchModalComponent implements OnInit {
     });
 
   }
-  lang = localStorage.getItem("language")
-  editFormatIcon() { //plain text value
-
-    return "<i class='fa fa-edit'></i>";
-  };
-  deleteFormatIcon() { //plain text value
-
-    return "<i class='fa fa-trash'></i>";
-  };
-  CheckBoxFormatIcon() { //plain text value
-
-    return "<input id='yourID' type='checkbox' />";
-  };
-  resultSearch: any = [];
-  columnNames = [
-    this.lang == 'ar'
-      ? { title: ' الاسم', field: 'nameAr' } :
-      { title: ' Name  ', field: 'nameEn' },
-
-    {
-      title: this.lang == 'ar' ? ' الكود' : 'code ',
-      field: 'code',
-    },
-    // {
-    //   title: this.lang == 'ar' ? ' رمز العملة' : 'Symbol ',
-    //   field: 'symbol',
-    // }
-
-  ];
-  exTable: any;
-  filterParam: string = '';
-  // subscriptionsData=[]
-  tab = document.createElement('div');
-  drawTable() {
-    this.exTable = new Tabulator(this.tab, {
-      height: 130,
-      layout: 'fitColumns',
-      columns: this.columnNames,
-      movableColumns: true,
-      data: this.resultSearch,
-      //Local Pagination
-      pagination: "local",
-      paginationSize: 50,
-      paginationSizeSelector: [5, 10, 20, 50, 100, 1000, 10000, 100000],
-
-      paginationCounter: "rows",
-    });
-    //    this.exTable.setData(persons);
-    document.getElementById('ex-table-div').appendChild(this.tab);
-    
-  }
+ 
   OnSelected(res) {
   
     this.emitSearch.emit(res);
