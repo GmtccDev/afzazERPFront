@@ -1,6 +1,14 @@
-<nz-modal class="text-right" (nzOnCancel)="handleCancel()" nzWidth="400%"  [nzVisible]="isVisible" [nzFooter]="null">
+<nz-modal class="text-right" (nzOnCancel)="handleCancel()" nzWidth="400%"  [nzVisible]="isVisible" [nzFooter]="null" [nzClosable]="false">
   <div class="card-body" style="height: auto;">
     <div class="example-container mat-elevation-z8" style="padding: 10px;">
+     
+ 
+      <button class="ml-auto mr-1" nz-button nzType="danger" (click)="handleCancel()"
+        style="display: flex; align-items: center;">
+        <i nz-icon class="ml-2" nzType="close-circle" nzTheme="outline"></i>
+        {{ 'toolbar.cancel' | translate }}
+      </button>
+     
       <div class="example-header">
         <mat-form-field>
           <input dir="rtl" matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'search' | translate}}">
@@ -47,12 +55,5 @@
 
 
   </div>
-  <br>
  
-  <button class="ml-auto mr-1" nz-button nzType="danger" (click)="handleCancel()"
-    style="display: flex; align-items: center;">
-    <i nz-icon class="ml-2" nzType="close-circle" nzTheme="outline"></i>
-    {{ 'toolbar.cancel' | translate }}
-  </button>
-  <br>
 </nz-modal>

@@ -58,8 +58,10 @@ export class AddEditBranchComponent implements OnInit {
   fullPathUpdate: string;
   logo: any;
   showSearchModal = false;
+  showSearchModalCountry=false;
   companyId: any;
   routeApi='Company/get-ddl?'
+  routeApiCountry='Country/get-ddl?'
   constructor(
     private countryService: CountryServiceProxy,
     private companyService: CompanyServiceProxy,
@@ -105,6 +107,12 @@ debugger
     this.branchForm.controls.companyId.setValue(event.id);
     this.showSearchModal = false;
   }
+  onSelectCountry(event) {
+    debugger
+       
+        this.branchForm.controls.countryId.setValue(event.id);
+        this.showSearchModalCountry = false;
+      }
   //#endregion
 
   //#region ngOnDestroy
