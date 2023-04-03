@@ -17,11 +17,23 @@ import { AddCompanyComponent } from './companies/add-company/add-company.compone
 import { CompanyServiceProxy } from './services/company.service';
 import { BranchesComponent } from './branches/branches.component';
 import { AddEditBranchComponent } from './branches/add-edit-branch/add-edit-branch.component';
+import { PublicSearchModalComponent } from 'src/app/shared/components/public-search-modal/public-search-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
-  declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent, CompaniesComponent, AddCompanyComponent, BranchesComponent, AddEditBranchComponent],
+  declarations: [PublicSearchModalComponent, CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent, CompaniesComponent, AddCompanyComponent, BranchesComponent, AddEditBranchComponent],
   imports: [
     CommonModule,
-    MasterCodesRoutingModule, SharedModule, NgxSpinnerModule,
+    MasterCodesRoutingModule, SharedModule, NgxSpinnerModule,NzModalModule,NzTableModule, MatTableModule,MatPaginatorModule,
+  
+    MatButtonModule,MatInputModule,
+    MatFormFieldModule
+
   ],
   providers: [CountryServiceProxy,CompanyServiceProxy]
 })

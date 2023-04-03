@@ -105,7 +105,13 @@
                                                         {{lang=="ar"?company.nameAr:company.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
-
+                                                <button
+                                                  
+                                                class="btn btn-rounded btn-dark" (click)="showSearchModal=true"
+                                                type="button"><i class="fa fa-search"></i></button>
+                                            </div>
+                                            <div class="input-group-prepend">
+                                              
                                             </div>
                                         </div>
                                       
@@ -137,3 +143,6 @@
 
     </div>
 </section>
+<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
+    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectCompany($event)">
+</app-public-search-modal>

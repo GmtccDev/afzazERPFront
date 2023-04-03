@@ -52,6 +52,8 @@ import { SwitchButtonComponent } from './components/froms/switch-button/switch-b
 import { ChangePasswordComponent } from '../erp/authentication/change-password/change-password.component';
 import { SubscriptionComponent } from './components/layout/subscription/subscription.component';
 import { FilterPipe } from "../shared/pipes/filter-pipe";
+import { PublicSearchModalComponent } from './components/public-search-modal/public-search-modal.component';
+import { PublicService } from './services/public.service';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -85,7 +87,7 @@ import { FilterPipe } from "../shared/pipes/filter-pipe";
     InputComponent,
     SwitchButtonComponent,
     ChangePasswordComponent,
-    FilterPipe
+    FilterPipe,
   ],
   imports: [
     CommonModule,
@@ -96,7 +98,7 @@ import { FilterPipe } from "../shared/pipes/filter-pipe";
     TabulatorModule,
     DragulaModule.forRoot(),
     TranslateModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
   ],
   providers: [
     NavService,
@@ -107,7 +109,8 @@ import { FilterPipe } from "../shared/pipes/filter-pipe";
       provide: HTTP_INTERCEPTORS,
       useClass: ResortHttpInterceptor,
       multi: true
-    }
+    },
+    PublicService 
   ],
   exports: [
     NgbModule,
@@ -127,7 +130,8 @@ import { FilterPipe } from "../shared/pipes/filter-pipe";
     NgbdSortableHeader, TabulatorModule, NgSelectModule,
     InputComponent,
     SwitchButtonComponent,
-    FilterPipe
+    FilterPipe,
+    
   ],
 })
 export class SharedModule {

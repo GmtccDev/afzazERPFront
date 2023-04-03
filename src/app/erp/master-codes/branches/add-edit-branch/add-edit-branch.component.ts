@@ -57,6 +57,9 @@ export class AddEditBranchComponent implements OnInit {
   logoPath: string;
   fullPathUpdate: string;
   logo: any;
+  showSearchModal = false;
+  companyId: any;
+  routeApi='Company/get-ddl?'
   constructor(
     private countryService: CountryServiceProxy,
     private companyService: CompanyServiceProxy,
@@ -96,7 +99,12 @@ export class AddEditBranchComponent implements OnInit {
       }
     });
   }
-
+  onSelectCompany(event) {
+debugger
+    this.companyId = event.id;
+    this.branchForm.controls.companyId.setValue(event.id);
+    this.showSearchModal = false;
+  }
   //#endregion
 
   //#region ngOnDestroy

@@ -217,7 +217,8 @@
         "valid-email": "البريد الاليكترونى صالح",
         "status": "الحالة",
         "selectUnselect": "تحديد الكل /عدم تحديد الكل",
-        "logo":"صورة"
+        "logo":"صورة",
+        "select":"اختار"
     },
     "menu": {},
     "currency": {
