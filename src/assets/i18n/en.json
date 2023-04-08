@@ -105,8 +105,10 @@
         "meter-number": "Meter Number",
         "meter-type": "Meter Type",
         "status": "Status",
-        "selectUnselect":"Select/Unselect",
-        "logo":"Logo"
+        "selectUnselect": "Select/Unselect",
+        "logo": "Logo",
+        "toDate": "To Date",
+        "fromDate": "From Date"
     },
     "menu": {},
     "home": {
@@ -150,8 +152,6 @@
         "newPasswordMEdit": "Your new password must be different from your previous passwords",
         "newPasswordM": "Your new password must be at least 8 Letters, Numbers or Symbols",
         "newPassword": "Add New password"
-
-
     },
     "general-inputs": {
         "unified-number": "الرقم الموحد",
@@ -173,13 +173,13 @@
         "alert": "Alert",
         "info": "Info",
         "error": "Error"
-
     },
     "messageTitle": {
         "done": "Done",
         "delete": "Delete"
     },
     "error": {
+        "from-to-date": "The to date must be greater than the from date.",
         "phoneValidation": "The phone number is invalid",
         "faxValidation": "The fax number is incorrect",
         "postalCodeValidation": "The postal code is incorrect",
@@ -256,38 +256,46 @@
         "customer": "Customers",
         "customer-information": "Customer Information",
         "permissions": " Permissions",
-        "company":"Company",
+        "company": "Company",
         "companies-information": "Companies Information  ",
-        "companies":"Companies",
-        "branch":"Branch",
-        "branches":"Branches",
-        "branches-information":"Branches information " ,
-        "configurations":"configurations",
-        "journal":"journal",
-        "journal-information":"journal information "
+        "companies": "Companies",
+        "branch": "Branch",
+        "branches": "Branches",
+        "branches-information": "Branches information ",
+        "configurations": "configurations",
+        "journal": "journal",
+        "journal-information": "journal information ",
+        "fiscalPeriod-information": "Fiscal Period information",
+        "fiscalPeriod": "Fiscal Period"
     },
     "language": {
         "ARABIC": "Arabic",
         "ENGLISH": "English"
     },
-
     "currency": {
-    
         "transaction-date": "Transaction Date",
         "transaction-factor": "Transaction Factor",
         "currency-transactions": "New Currency Transactions"
     },
     "company": {
-        "motherCompany":"Mother Company",
-        "useHijri":"Use Hijri",
-        "web-site":"Web Site"
+        "motherCompany": "Mother Company",
+        "useHijri": "Use Hijri",
+        "web-site": "Web Site"
     },
-    "accounting-configration":{
-        "multiCurrency":"Multi Currency",
-        "journalentries":" Journal Entries",
-        "serial":"Serial",
-        "cycle":"JE  Cycle ",
-        "account":"closing account  ",
-        "endOfYear":"End Of Year"
+    "accounting-configration": {
+        "multiCurrency": "Multi Currency",
+        "journalentries": " Journal Entries",
+        "serial": "Serial",
+        "cycle": "JE  Cycle ",
+        "account": "closing account  ",
+        "endOfYear": "End Of Year"
+    },
+    "fiscal-period-status": {
+        "Opened": "Opened",
+        "Closed": "Closed",
+        "ClosedForRevision": "ClosedForRevision"
+    },
+    "fiscal-period": {
+        "fiscal-period-status": "status"
     }
 }

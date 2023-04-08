@@ -1,5 +1,7 @@
 // import {PipeTransform} from '@angular/core';
 
+import { FormGroup } from "@angular/forms";
+
 
 
 export function stringIsNullOrEmpty(item: string) {
@@ -66,5 +68,3 @@ export function searchName(text: string,  data): any[] {
       .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
   }
 
-
- 

@@ -86,6 +86,9 @@ export class NavService implements OnDestroy {
 
 
 		{
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
+		},
+		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
 
@@ -117,6 +120,9 @@ export class NavService implements OnDestroy {
 
 
 		{
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
+		},
+		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
 
@@ -131,7 +137,8 @@ export class NavService implements OnDestroy {
 		{
 			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
 				{ path: '/accounting-master-codes/journal', title: this.translate.instant("component-names.journal"), type: 'link', active: true },
-				
+				{ path: '/accounting-master-codes/fiscalPeriod', title: this.translate.instant("component-names.fiscalPeriod"), type: 'link', active: true },
+
 			]	
 		}
 

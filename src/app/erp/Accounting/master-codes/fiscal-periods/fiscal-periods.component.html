@@ -1,1 +1,8 @@
-<p>fiscal-periods works!</p>
+
+<section class="inner-page-wrapper inner-page-auction">
+    <div class="container-fluid p-0">
+        <app-tabulator [idColName]="'id'" [childRowData]="fiscalPeriods" [parentColName]="'groupId'" [divId]="'FiscalPeriods'" [columnSettings]="columnNames" [componentName]="'fiscalPeriod'" (onEditItem)="onEdit($event)" (onCheckItem)="onCheck($event)" (onDeleteItem)="showConfirmDeleteMessage($event)"  (onMenuActionSelected)="onMenuActionSelected($event)"
+            [showMenuOptions]="menuOptions" [direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1" [path]="'fiscalPeriod'"></app-tabulator>
+    </div>
+  </section>
+  

@@ -54,6 +54,7 @@ import { SubscriptionComponent } from './components/layout/subscription/subscrip
 import { FilterPipe } from "../shared/pipes/filter-pipe";
 import { PublicSearchModalComponent } from './components/public-search-modal/public-search-modal.component';
 import { PublicService } from './services/public.service';
+import {EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -88,6 +89,7 @@ import { PublicService } from './services/public.service';
     SwitchButtonComponent,
     ChangePasswordComponent,
     FilterPipe,
+    EnumKeyValueListPipe
   ],
   imports: [
     CommonModule,
@@ -131,7 +133,7 @@ import { PublicService } from './services/public.service';
     InputComponent,
     SwitchButtonComponent,
     FilterPipe,
-    
+    EnumKeyValueListPipe
   ],
 })
 export class SharedModule {
