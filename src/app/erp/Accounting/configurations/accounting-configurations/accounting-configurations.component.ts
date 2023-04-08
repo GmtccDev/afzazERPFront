@@ -171,7 +171,7 @@ export class AccountingConfigurationsComponent implements OnInit {
           // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
-            debugger
+            
             this.generalConfiguration = res.response.items
              this.currencyId=Number(this.generalConfiguration.find(c=>c.id==1).value) ;
              this.multiCurrency= this.generalConfiguration.find(c=>c.id==2).value=="true"?true:false;
@@ -208,7 +208,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
-    debugger
+    
     let sub = this.SharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
@@ -239,7 +239,7 @@ export class AccountingConfigurationsComponent implements OnInit {
 
    {
 
-    debugger
+    
     if( this.generalConfiguration.length>0){
       this.generalConfiguration.forEach((s) => {
         if (s) {
@@ -259,7 +259,7 @@ export class AccountingConfigurationsComponent implements OnInit {
       });
               
         const promise = new Promise<void>((resolve, reject) => {
-          debugger
+          
           let item=new EditGeneralConfigurationCommand();
           item.generalConfiguration=this.generalConfiguration;
           this.generalConfigurationService.updateGeneralConfiguration(item).subscribe({
