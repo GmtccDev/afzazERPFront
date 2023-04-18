@@ -108,7 +108,8 @@
         "selectUnselect": "Select/Unselect",
         "logo": "Logo",
         "toDate": "To Date",
-        "fromDate": "From Date"
+        "fromDate": "From Date",
+        "parent":"parent"
     },
     "menu": {},
     "home": {
@@ -266,7 +267,9 @@
         "journal": "journal",
         "journal-information": "journal information ",
         "fiscalPeriod-information": "Fiscal Period information",
-        "fiscalPeriod": "Fiscal Period"
+        "fiscalPeriod": "Fiscal Period",
+        "accountGroup":"Account Group",
+        "accountGroup-information":"Account Group Information"
     },
     "language": {
         "ARABIC": "Arabic",

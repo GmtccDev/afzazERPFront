@@ -99,7 +99,9 @@
                             {
                                 "glob": "**/*",
                                 "input": "src/assets/",
-                                "ignore": ["**/*.scss"],
+                                "ignore": [
+                                    "**/*.scss"
+                                ],
                                 "output": "/assets/"
                             },
                             "src/assets"
@@ -109,6 +111,9 @@
                             "node_modules/font-awesome/scss/font-awesome.scss",
                             "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
                             "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+                            "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
+                            "node_modules/ng-zorro-antd/resizable/style/index.min.css",
+                            "node_modules/ng-zorro-antd/code-editor/style/index.min.css",
                             "src/styles.scss",
                             "src/assets/css/feather-icon.css",
                             "node_modules/tabulator-tables/dist/css/tabulator.css"
@@ -123,10 +128,12 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.prod.ts"
-                            }],
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -134,7 +141,8 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
-                            "budgets": [{
+                            "budgets": [
+                                {
                                     "type": "initial",
                                     "maximumWarning": "9mb",
                                     "maximumError": "9mb"

@@ -9,14 +9,21 @@ import { JournalServiceProxy } from '../services/journal.service';
 import { AddEditFiscalPeriodsComponent } from './fiscal-periods/add-edit-fiscal-periods/add-edit-fiscal-periods.component';
 import { FiscalPeriodsComponent } from './fiscal-periods/fiscal-periods.component';
 import { FiscalPeriodServiceProxy } from '../services/fiscal-period.services';
-
+import { AccountGroupsComponent } from './account-groups/account-groups.component';
+import { AddEditAccountGroupsComponent } from './account-groups/add-edit-account-groups/add-edit-account-groups.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { PublicSearchModalComponent } from 'src/app/shared/components/public-search-modal/public-search-modal.component';
 @NgModule({
-  declarations: [ 
-    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent
+  declarations: [
+    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent
   ],
   imports: [
     CommonModule,
-    MasterCodesRoutingModule, SharedModule, NgxSpinnerModule,
+    MasterCodesRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
+    NzButtonModule,
+    NzIconModule
   ],
   providers: [JournalServiceProxy,FiscalPeriodServiceProxy]
 })

@@ -176,7 +176,9 @@
         "journal":"اليوميات",
         "journal-information": "معلومات اليوميات ",
         "fiscalPeriod-information":" معلومات الفترات المحاسبية",
-        "fiscalPeriod":"الفترات المحاسبية"
+        "fiscalPeriod":"الفترات المحاسبية",
+        "accountGroup":"مجموعة حساب",
+        "accountGroup-information":"معلومات مجموعة الحساب"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -222,7 +224,8 @@
         "logo":"صورة",
         "select":"اختار",
         "toDate":"الي تاريخ",
-        "fromDate":"من تاريخ"
+        "fromDate":"من تاريخ",
+        "parent":"الاب"
     },
     "menu": {},
     "currency": {
