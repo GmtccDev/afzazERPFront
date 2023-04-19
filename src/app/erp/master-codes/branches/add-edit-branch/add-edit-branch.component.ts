@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, EMAIL_VALIDATORS, NAME_REQUIRED_VALIDATORS, PHONE_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
@@ -15,12 +15,8 @@ import { BranchDto, CreateBranchCommand, EditBranchCommand } from '../../models/
 import { CountryServiceProxy } from '../../../master-codes/services/country.servies';
 import { CountryDto } from '../../../master-codes/models/country';
 import { CompanyServiceProxy } from '../../../master-codes/services/company.service';
-import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
-import format from 'date-fns/format';
 import { CompanyDto } from '../../models/company';
-import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-add-edit-branch',
   templateUrl: './add-edit-branch.component.html',

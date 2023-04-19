@@ -34,6 +34,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import {AuthenticationModule} from './erp/authentication/authentication.module'
 import { MasterCodesModule } from './erp/master-codes/master-codes.module';
 import {SecurityModule} from './erp/security/security.module';
+import { MasterCodesRoutingModule } from './erp/master-codes/master-codes-routing.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -61,7 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFirestoreModule,
     AngularFireAuthModule,
     AuthenticationModule,
-    MasterCodesModule,
+    
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

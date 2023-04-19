@@ -55,6 +55,13 @@ import { FilterPipe } from "../shared/pipes/filter-pipe";
 import { PublicSearchModalComponent } from './components/public-search-modal/public-search-modal.component';
 import { PublicService } from './services/public.service';
 import {EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -89,7 +96,8 @@ import {EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
     SwitchButtonComponent,
     ChangePasswordComponent,
     FilterPipe,
-    EnumKeyValueListPipe
+    EnumKeyValueListPipe,
+    PublicSearchModalComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +108,11 @@ import {EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
     TabulatorModule,
     DragulaModule.forRoot(),
     TranslateModule,
-    NgxSpinnerModule,
+    NgxSpinnerModule,NzModalModule,NzTableModule, MatTableModule,MatPaginatorModule,
+  
+    MatButtonModule,MatInputModule,
+    MatFormFieldModule,
+    
   ],
   providers: [
     NavService,
@@ -133,7 +145,7 @@ import {EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
     InputComponent,
     SwitchButtonComponent,
     FilterPipe,
-    EnumKeyValueListPipe
+    EnumKeyValueListPipe,PublicSearchModalComponent
   ],
 })
 export class SharedModule {

@@ -49,7 +49,6 @@ export class AddEditAccountGroupsComponent implements OnInit {
   fullPathUpdate: string;
   logo: any;
   showSearchModal = false;
-  showSearchModalCountry = false;
   parentId: any;
   routeApi = 'AccountGroup/get-ddl?'
   constructor(

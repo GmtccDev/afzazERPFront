@@ -14,7 +14,6 @@ import { AddEditAccountGroupsComponent } from './account-groups/add-edit-account
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { PublicSearchModalComponent } from 'src/app/shared/components/public-search-modal/public-search-modal.component';
 @NgModule({
   declarations: [
     JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent
