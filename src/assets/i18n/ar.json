@@ -178,7 +178,9 @@
         "fiscalPeriod-information":" معلومات الفترات المحاسبية",
         "fiscalPeriod":"الفترات المحاسبية",
         "accountGroup":"مجموعة حساب",
-        "accountGroup-information":"معلومات مجموعة الحساب"
+        "accountGroup-information":"معلومات مجموعة الحساب",
+        "costCenter":"مراكز الكلفة",
+        "costCenter-information":"معلومات مركز الكلفة"
     },
     "general": {
         "nameAr": "الاسم العربي",

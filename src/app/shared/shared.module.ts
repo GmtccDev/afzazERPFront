@@ -62,6 +62,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import {BidiModule} from '@angular/cdk/bidi';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -112,7 +113,7 @@ import { MatInputModule } from '@angular/material/input';
   
     MatButtonModule,MatInputModule,
     MatFormFieldModule,
-    
+    BidiModule
   ],
   providers: [
     NavService,

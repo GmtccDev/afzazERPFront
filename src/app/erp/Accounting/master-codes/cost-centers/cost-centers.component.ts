@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { DeleteListAccountGroupCommand, AccountGroupDto, TreeNodeInterface } from '../../models/account-group';
+import { DeleteListCostCenterCommand, CostCenterDto, TreeNodeInterface } from '../../models/cost-Center';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,26 +12,25 @@ import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabula
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
-import { AccountGroupServiceProxy } from '../../services/account-group.services';
-
+import { CostCenterServiceProxy } from '../../services/cost-Center.services';
 @Component({
-  selector: 'app-account-groups',
-  templateUrl: './account-groups.component.html',
-  styleUrls: ['./account-groups.component.scss']
+  selector: 'app-cost-centers',
+  templateUrl: './cost-centers.component.html',
+  styleUrls: ['./cost-centers.component.scss']
 })
-export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  accountGroup: AccountGroupDto[] = [];
+  costCenter: CostCenterDto[] = [];
   currnetUrl: any;
-  addUrl: string = '/accounting-master-codes/accountGroup/add-accountGroup';
-  updateUrl: string = '/accounting-master-codes/accountGroup/update-accountGroup/';
-  listUrl: string = '/accounting-master-codes/accountGroup';
+  addUrl: string = '/accounting-master-codes/costCenter/add-costCenter';
+  updateUrl: string = '/accounting-master-codes/costCenter/update-costCenter/';
+  listUrl: string = '/accounting-master-codes/costCenter';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.accountGroup"),
+    componentList: this.translate.instant("component-names.costCenter"),
     componentAdd: '',
 
   };
@@ -41,7 +40,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   //#region Constructor
   constructor(
-    private accountGroupService: AccountGroupServiceProxy,
+    private costCenterService: CostCenterServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
@@ -63,7 +62,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.listenToClickedButton();
 
-    this.getAccountGroupes();
+    this.getCostCenteres();
     setTimeout(() => {
 
       this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -100,15 +99,15 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
   //#region Basic Data
   ///Geting form dropdown list data
   filter: any = { id: null, name: null, selectedId: null };
-  getAccountGroupes() {
+  getCostCenteres() {
     return new Promise<void>((resolve, reject) => {
 
-      let sub = this.accountGroupService.getAllTree(this.filter).subscribe({
+      let sub = this.costCenterService.getAllTree(this.filter).subscribe({
         next: (res) => {
 
           console.log(res);
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.accountGroup");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.costCenter");
           if (res.success) {
 
             this.listOfMapData = res.response
@@ -148,11 +147,11 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.accountGroupService.deleteAccountGroup(id).subscribe(
+        let sub = this.costCenterService.deleteCostCenter(id).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getAccountGroupes();
+            this.getCostCenteres();
 
           });
         this.subsList.push(sub);
@@ -199,7 +198,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-master-codes/accountGroup/update-accountGroup/' + id])
+      this.router.navigate(['accounting-master-codes/costCenter/update-costCenter/' + id])
     }
 
   }
@@ -216,7 +215,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-master-codes/accountGroup/update-accountGroup/' + event.item.id])
+        this.router.navigate(['accounting-master-codes/costCenter/update-costCenter/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -235,7 +234,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-master-codes/accountGroup/add-accountGroup/' + parentId])
+      this.router.navigate(['accounting-master-codes/costCenter/add-costCenter/' + parentId])
     }
   }
   //#endregion
@@ -267,13 +266,13 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
   }
   onDelete() {
 
-    let item = new DeleteListAccountGroupCommand();
+    let item = new DeleteListCostCenterCommand();
     item.ids = this.listIds;
-    let sub = this.accountGroupService.deleteListAccountGroup(item).subscribe(
+    let sub = this.costCenterService.deleteListCostCenter(item).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getAccountGroupes();
+        this.getCostCenteres();
         this.listIds = [];
       });
     this.subsList.push(sub);

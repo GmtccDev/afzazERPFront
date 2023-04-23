@@ -14,9 +14,11 @@ import { AddEditAccountGroupsComponent } from './account-groups/add-edit-account
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { CostCentersComponent } from './cost-centers/cost-centers.component';
+import { AddEditCostCenterComponent } from './cost-centers/add-edit-cost-center/add-edit-cost-center.component';
 @NgModule({
   declarations: [
-    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent
+    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent, AddEditCostCenterComponent
   ],
   imports: [
     CommonModule,

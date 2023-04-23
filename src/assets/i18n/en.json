@@ -269,7 +269,9 @@
         "fiscalPeriod-information": "Fiscal Period information",
         "fiscalPeriod": "Fiscal Period",
         "accountGroup":"Account Group",
-        "accountGroup-information":"Account Group Information"
+        "accountGroup-information":"Account Group Information",
+        "costCenter":"Cost Center",
+        "costCenter-information":"Cost Center Information"
     },
     "language": {
         "ARABIC": "Arabic",

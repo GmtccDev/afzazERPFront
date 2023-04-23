@@ -128,10 +128,10 @@ export class NavService implements OnDestroy {
 
 		{
 			title: this.translate.instant("component-names.configurations"), type: 'sub', icon: 'MasterCode', active: false, children: [
-			
+
 				{ path: '/configurations/accounting-configurations/', title: this.translate.instant("component-names.configurations"), type: 'link', active: true },
 			]
-			
+
 		},
 
 		{
@@ -139,8 +139,9 @@ export class NavService implements OnDestroy {
 				{ path: '/accounting-master-codes/journal', title: this.translate.instant("component-names.journal"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/fiscalPeriod', title: this.translate.instant("component-names.fiscalPeriod"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountGroup', title: this.translate.instant("component-names.accountGroup"), type: 'link', active: true },
+				{ path: '/accounting-master-codes/costCenter', title: this.translate.instant("component-names.costCenter"), type: 'link', active: true },
 
-			]	
+			]
 		}
 
 
@@ -148,6 +149,6 @@ export class NavService implements OnDestroy {
 	// Array
 
 	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
-    itemsAccount=  new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
+	itemsAccount = new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
 
 }
