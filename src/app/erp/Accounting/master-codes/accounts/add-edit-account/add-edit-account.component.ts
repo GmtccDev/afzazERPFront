@@ -11,54 +11,66 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { CostCenterDto, CreateCostCenterCommand, EditCostCenterCommand } from '../../../models/cost-Center';
-import { CostCenterServiceProxy } from '../../../services/cost-Center.services';
+import { AccountDto, CreateAccountCommand, EditAccountCommand } from '../../../models/account';
+import { AccountServiceProxy } from '../../../services/account.services';
 import { CompanyDto } from 'src/app/erp/master-codes/models/company';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { CostCenterDto } from '../../../models/cost-Center';
+import { PublicService } from 'src/app/shared/services/public.service';
+
 @Component({
-  selector: 'app-add-edit-cost-center',
-  templateUrl: './add-edit-cost-center.component.html',
-  styleUrls: ['./add-edit-cost-center.component.scss']
+  selector: 'app-add-edit-account',
+  templateUrl: './add-edit-account.component.html',
+  styleUrls: ['./add-edit-account.component.scss']
 })
-export class AddEditCostCenterComponent implements OnInit {
+export class AddEditAccountComponent implements OnInit {
   //#region Main Declarations
-  costCenterForm!: FormGroup;
+  accountForm!: FormGroup;
   sub: any;
   url: any;
   id: any = 0;
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
-  addUrl: string = '/accounting-master-codes/costCenter/add-costCenter';
-  addParentUrl: string = '/accounting-master-codes/costCenter/add-costCenter/';
-  updateUrl: string = '/accounting-master-codes/costCenter/update-costCenter/';
-  listUrl: string = '/accounting-master-codes/costCenter';
+  addUrl: string = '/accounting-master-codes/account/add-account';
+  addParentUrl: string = '/accounting-master-codes/account/add-account/';
+  updateUrl: string = '/accounting-master-codes/account/update-account/';
+  listUrl: string = '/accounting-master-codes/account';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.costCenter"),
+    componentList: this.translate.instant("component-names.account"),
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  costCenterList: CostCenterDto[] = [];
-  files: any;
-  logoPath: string;
-  fullPathUpdate: string;
-  logo: any;
+  accountList: AccountDto[] = [];
   showSearchModal = false;
-  showSearchModalCompanyy=false;
+  showSearchModalCompany = false;
+  showSearchModalCostCenter = false;
+  showSearchModalCurrency = false;
+  showSearchModalAccountGroup = false;
+
   parentId: any;
+
   companyList: CompanyDto[] = [];
-  routeApi = 'CostCenter/get-ddl?'
-  companyId: any;
+  costCenterList: CostCenterDto[] = [];
+
+  routeApi = 'Account/get-ddl?'
   routeCompanyApi = 'Company/get-ddl?'
-  constructor(private companyService: CompanyServiceProxy,
-    private costCenterService: CostCenterServiceProxy,
+  routeCostCenterApi = 'CostCenter/get-dd?'
+  routeCurrencyApi = "Currency/get-ddl?"
+  routeAccountGroupApi = "AccountGroup/get-ddl?"
+  currencyList: any;
+  accountGroupList: any;
+
+  constructor(
+    private accountService: AccountServiceProxy,
+    private publicService: PublicService,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -68,19 +80,22 @@ export class AddEditCostCenterComponent implements OnInit {
     private cd: ChangeDetectorRef
 
   ) {
-    this.definecostCenterForm();
+    this.defineaccountForm();
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
     this.getCompanies();
+    this.getAccount();
+    this.getAccountGroup();
+    this.getCurrency();
     this.getCostCenter();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
     if (this.currnetUrl == this.addUrl) {
-      this.getcostCenterCode();
+      this.getaccountCode();
     }
 
     this.sub = this.route.params.subscribe((params) => {
@@ -88,50 +103,19 @@ export class AddEditCostCenterComponent implements OnInit {
         this.id = params['id'];
 
         if (this.id) {
-          this.getcostCenterById(this.id);
+          this.getaccountById(this.id);
         }
         this.url = this.router.url.split('/')[2];
       }
       if (params['parentId'] != null) {
         this.parentId = params['parentId'];
 
-        this.getcostCenterCode();
+        this.getaccountCode();
         this.url = this.router.url.split('/')[2];
       }
     });
   }
-  onSelectCostCenter(event) {
 
-    this.parentId = event.id;
-    this.costCenterForm.controls.parentId.setValue(event.id);
-    this.showSearchModal = false;
-  }
-  getCompanies() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.companyService.getDdl().subscribe({
-        next: (res) => {
-
-          if (res.success) {
-            this.companyList = res.response;
-
-          }
-
-
-          resolve();
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-
-      this.subsList.push(sub);
-    });
-
-  }
 
   //#endregion
 
@@ -158,30 +142,37 @@ export class AddEditCostCenterComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  definecostCenterForm() {
-    this.costCenterForm = this.fb.group({
+  defineaccountForm() {
+    this.accountForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       parentId: null,
-      companyId: null
+      companyId: null,
+      openBalanceDebit: null,
+      openBalanceCredit: null,
+      debitLimit: null,
+      creditLimit: null,
+      taxNumber: null,
+      currencyId: null,
+      costCenterId: null,
     });
 
   }
 
-  getCostCenter() {
+  getAccount() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.costCenterService.getDdl().subscribe({
+      let sub = this.accountService.getDdl().subscribe({
         next: (res) => {
 
           if (res.success) {
-            this.costCenterList = res.response;
+            this.accountList = res.response;
 
           }
           if (this.parentId != undefined || this.parentId != null) {
-            this.costCenterForm.controls.parentId.setValue(Number(this.parentId));
+            this.accountForm.controls.parentId.setValue(Number(this.parentId));
           }
 
           resolve();
@@ -199,30 +190,138 @@ export class AddEditCostCenterComponent implements OnInit {
     });
 
   }
+  getCompanies() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCompanyApi).subscribe({
+        next: (res) => {
 
+          if (res.success) {
+            this.companyList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCostCenter() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.costCenterList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCurrency() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.currencyList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getAccountGroup() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountGroupApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.accountGroupList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   //#endregion
 
   //#region CRUD Operations
-  getcostCenterById(id: any) {
+  getaccountById(id: any) {
 
     const promise = new Promise<void>((resolve, reject) => {
-      this.costCenterService.getCostCenter(id).subscribe({
+      this.accountService.getAccount(id).subscribe({
         next: (res: any) => {
 
-          this.costCenterForm.setValue({
+          this.accountForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
             isActive: res.response?.isActive,
             parentId: res.response?.parentId,
-            companyId: res.resonse?.companyId
+            companyId: res.resonse?.companyId,
+            openBalanceDebit: res.resonse?.openBalanceDebit,
+            openBalanceCredit: res.resonse?.openBalanceCredit,
+            debitLimit: res.resonse?.debitLimit,
+            creditLimit: res.resonse?.creditLimit,
+            taxNumber: res.resonse?.taxNumber,
+            currencyId: res.resonse?.currencyId,
+            costCenterId: res.resonse?.costCenterId,
 
           });
 
           console.log(
-            'this.costCenterForm.value set value',
-            this.costCenterForm.value
+            'this.accountForm.value set value',
+            this.accountForm.value
           );
         },
         error: (err: any) => {
@@ -235,17 +334,17 @@ export class AddEditCostCenterComponent implements OnInit {
     });
     return promise;
   }
- 
-  getcostCenterCode() {
+
+  getaccountCode() {
 
     const promise = new Promise<void>((resolve, reject) => {
 
-      this.costCenterService.getLastCode(this.parentId).subscribe({
+      this.accountService.getLastCode(this.parentId).subscribe({
 
         next: (res: any) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.costCenter");
-          this.costCenterForm.patchValue({
+          this.toolbarPathData.componentList = this.translate.instant("component-names.account");
+          this.accountForm.patchValue({
             code: res.response
           });
 
@@ -265,7 +364,7 @@ export class AddEditCostCenterComponent implements OnInit {
   //#region Helper Functions
 
   get f(): { [key: string]: AbstractControl } {
-    return this.costCenterForm.controls;
+    return this.accountForm.controls;
   }
 
 
@@ -287,8 +386,8 @@ export class AddEditCostCenterComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
-            this.toolbarPathData.componentAdd = 'Add costCenter';
-            this.definecostCenterForm();
+            this.toolbarPathData.componentAdd = 'Add account';
+            this.defineaccountForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -302,17 +401,17 @@ export class AddEditCostCenterComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    var entity = new CreateCostCenterCommand();
-    if (this.costCenterForm.valid) {
+    var entity = new CreateAccountCommand();
+    if (this.accountForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        entity.inputDto = this.costCenterForm.value;
+        entity.inputDto = this.accountForm.value;
 
-        this.costCenterService.createCostCenter(entity).subscribe({
+        this.accountService.createAccount(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.definecostCenterForm();
+            this.response = { ...result.response };
+            this.defineaccountForm();
 
             this.submited = false;
             setTimeout(() => {
@@ -333,28 +432,28 @@ export class AddEditCostCenterComponent implements OnInit {
 
     } else {
 
-      //  return this.costCenterForm.markAllAsTouched();
+      //  return this.accountForm.markAllAsTouched();
     }
   }
 
 
   onUpdate() {
-    var entity = new EditCostCenterCommand();
-    if (this.costCenterForm.valid) {
+    var entity = new EditAccountCommand();
+    if (this.accountForm.valid) {
 
-      this.costCenterForm.value.id = this.id;
-      entity.inputDto = this.costCenterForm.value;
+      this.accountForm.value.id = this.id;
+      entity.inputDto = this.accountForm.value;
       entity.inputDto.id = this.id;
 
-      console.log("this.VendorCommissionsForm.value", this.costCenterForm.value)
+      console.log("this.VendorCommissionsForm.value", this.accountForm.value)
       const promise = new Promise<void>((resolve, reject) => {
 
-        this.costCenterService.updateCostCenter(entity).subscribe({
+        this.accountService.updateAccount(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.definecostCenterForm();
+            this.response = { ...result.response };
+            this.defineaccountForm();
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
@@ -375,14 +474,29 @@ export class AddEditCostCenterComponent implements OnInit {
 
     else {
 
-      // return this.costCenterForm.markAllAsTouched();
+      // return this.accountForm.markAllAsTouched();
     }
   }
-  onSelectCompany(event) {
 
-    this.companyId = event.id;
-    this.costCenterForm.controls.companyId.setValue(event.id);
-    this.showSearchModalCompanyy = false;
+  onSelectCompany(event) {
+    this.accountForm.controls.companyId.setValue(event.id);
+    this.showSearchModalCompany = false;
+  }
+  onSelectAccount(event) {
+    this.accountForm.controls.parentId.setValue(event.id);
+    this.showSearchModal = false;
+  }
+  onSelectAccountGroup(event) {
+    this.accountForm.controls.accountGroupId.setValue(event.id);
+    this.showSearchModalAccountGroup = false;
+  }
+  onSelectCurrency(event) {
+    this.accountForm.controls.currencyId.setValue(event.id);
+    this.showSearchModalCurrency = false;
+  }
+  onSelectCostCenter(event) {
+    this.accountForm.controls.costCenterId.setValue(event.id);
+    this.showSearchModalCostCenter = false;
   }
 
 }

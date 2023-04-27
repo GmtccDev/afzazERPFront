@@ -16,8 +16,7 @@ export class PublicService {
 
   getOne(apiController: string): Observable<any> {
   
-       return this.http.get<any[]>(environment.apiUrl +"/" + apiController
-      );
+       return this.http.get<any[]>(environment.apiUrl +"/" + apiController  );
      
    }
   get(apiController: string): Observable<any[]> {
@@ -33,8 +32,7 @@ export class PublicService {
 
   getByAction(apiController: string, action: string): Observable<any[]> {
     return this.http.get<any[]>(
-      environment.apiUrl +  "/" + apiController + "/" + action,
-    );
+      environment.apiUrl +  "/" + apiController + "/" + action);
   }
 
  
@@ -57,8 +55,7 @@ export class PublicService {
   //edit
   put( apiController: string,data: any): Observable<any> {
  
-      return this.http.put<any>(environment.apiUrl + "/" + apiController, data
-     );
+      return this.http.put<any>(environment.apiUrl + "/" + apiController, data );
     
   }
   delete( apiController: string ,id: any): Observable<any> {

@@ -16,9 +16,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { AddEditCostCenterComponent } from './cost-centers/add-edit-cost-center/add-edit-cost-center.component';
+import { AccountsComponent } from './accounts/accounts.component';
+import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
 @NgModule({
   declarations: [
-    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent, AddEditCostCenterComponent
+    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent, AddEditCostCenterComponent, AccountsComponent, AddEditAccountComponent
   ],
   imports: [
     CommonModule,
