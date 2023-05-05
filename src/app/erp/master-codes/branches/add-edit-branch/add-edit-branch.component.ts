@@ -43,7 +43,6 @@ export class AddEditBranchComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -305,16 +304,16 @@ export class AddEditBranchComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    var entity = new CreateBranchCommand();
+  //  var entity = new CreateBranchCommand();
     if (this.branchForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        entity.inputDto = this.branchForm.value;
+        var entity= this.branchForm.value;
        
         this.branchService.createBranch(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
+           
             this.definebranchForm();
 
             this.submited = false;
@@ -348,15 +347,15 @@ export class AddEditBranchComponent implements OnInit {
       this.branchForm.value.id = this.id;
       entity.inputDto = this.branchForm.value;
       entity.inputDto.id = this.id;
-     
+     var entityDb=entity.inputDto;
       console.log("this.VendorCommissionsForm.value", this.branchForm.value)
       const promise = new Promise<void>((resolve, reject) => {
 
-        this.branchService.updateBranch(entity).subscribe({
+        this.branchService.updateBranch(entityDb).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result update ', result);
-            this.Response = { ...result.response };
+           
             this.definebranchForm();
             this.submited = false;
             setTimeout(() => {

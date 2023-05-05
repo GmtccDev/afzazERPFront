@@ -21,7 +21,7 @@ import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
 export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  branches: BranchDto[] = [];
+  branches: any[] = [];
   currnetUrl: any;
   addUrl: string = '/master-codes/branches/add-branch';
   updateUrl: string = '/master-codes/branches/update-branch/';
@@ -287,9 +287,9 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onDelete() {
 
-    let item = new DeleteListBranchCommand();
-    item.ids = this.listIds;
-    let sub = this.branchService.deleteListBranch(item).subscribe(
+
+  var ids = this.listIds;
+    let sub = this.branchService.deleteListBranch(ids).subscribe(
       (resonse) => {
 
         //reloadPage()

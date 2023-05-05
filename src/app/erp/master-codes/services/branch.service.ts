@@ -29,15 +29,15 @@ export class BranchServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createBranch(branch: CreateBranchCommand): Observable<BranchDto> {
-
+    createBranch(branch: any): Observable<BranchDto> {
+debugger
         return this.http.post<any>(environment.apiUrl + "/api/Branch/add?", branch);
     }
     // ids: number[] | undefined;
-    deleteListBranch(branch: DeleteListBranchCommand): Observable<number> {
+    deleteListBranch(branch: any): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/Branch/deleteList?", branch);
     }
-    updateBranch(branch: EditBranchCommand): Observable<BranchDto> {
+    updateBranch(branch: any): Observable<BranchDto> {
         return this.http.post<any>(environment.apiUrl + "/api/Branch/edit?", branch);
     }
     getDdl(): Observable<any> {
@@ -52,6 +52,7 @@ export class BranchServiceProxy {
         return this.http.get<any>(this.baseUrl + "/api/Branch/get-ddlWithCompanies?", { params: queryParams });
     }
     allBranches(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
+     debugger
         let queryParams = new HttpParams();
         if (pageIndex != undefined)
             queryParams = queryParams.append("pageIndex", pageIndex);
