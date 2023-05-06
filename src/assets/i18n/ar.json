@@ -180,7 +180,9 @@
         "accountGroup":"مجموعة حساب",
         "accountGroup-information":"معلومات مجموعة الحساب",
         "costCenter":"مراكز الكلفة",
-        "costCenter-information":"معلومات مركز الكلفة"
+        "costCenter-information":"معلومات مركز الكلفة",
+        "account":" الحساب",
+        "account-information":"معلومات  الحساب"
     },
     "general": {
         "nameAr": "الاسم العربي",

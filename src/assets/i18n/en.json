@@ -271,7 +271,9 @@
         "accountGroup":"Account Group",
         "accountGroup-information":"Account Group Information",
         "costCenter":"Cost Center",
-        "costCenter-information":"Cost Center Information"
+        "costCenter-information":"Cost Center Information",
+        "account":"Account",
+        "account-information":"Account Information"
     },
     "language": {
         "ARABIC": "Arabic",

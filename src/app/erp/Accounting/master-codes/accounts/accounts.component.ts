@@ -223,7 +223,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   addNode(parentId) {
-
+debugger
     if (parentId != undefined) {
       // this.edit(id);
       this.sharedServices.changeButton({

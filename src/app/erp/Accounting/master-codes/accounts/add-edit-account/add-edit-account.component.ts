@@ -62,7 +62,7 @@ export class AddEditAccountComponent implements OnInit {
 
   routeApi = 'Account/get-ddl?'
   routeCompanyApi = 'Company/get-ddl?'
-  routeCostCenterApi = 'CostCenter/get-dd?'
+  routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
   routeAccountGroupApi = "AccountGroup/get-ddl?"
   currencyList: any;
@@ -144,7 +144,7 @@ export class AddEditAccountComponent implements OnInit {
   ///Geting form dropdown list data
   defineaccountForm() {
     this.accountForm = this.fb.group({
-      id: 0,
+      id: null,
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
@@ -158,6 +158,7 @@ export class AddEditAccountComponent implements OnInit {
       taxNumber: null,
       currencyId: null,
       costCenterId: null,
+      accountGroupId:null
     });
 
   }
@@ -308,14 +309,15 @@ export class AddEditAccountComponent implements OnInit {
             code: res.response?.code,
             isActive: res.response?.isActive,
             parentId: res.response?.parentId,
-            companyId: res.resonse?.companyId,
-            openBalanceDebit: res.resonse?.openBalanceDebit,
-            openBalanceCredit: res.resonse?.openBalanceCredit,
-            debitLimit: res.resonse?.debitLimit,
-            creditLimit: res.resonse?.creditLimit,
-            taxNumber: res.resonse?.taxNumber,
-            currencyId: res.resonse?.currencyId,
-            costCenterId: res.resonse?.costCenterId,
+            companyId: res.response?.companyId,
+            openBalanceDebit: res.response?.openBalanceDebit,
+            openBalanceCredit: res.response?.openBalanceCredit,
+            debitLimit: res.response?.debitLimit,
+            creditLimit: res.response?.creditLimit,
+            taxNumber: res.response?.taxNumber,
+            currencyId: res.response?.currencyId,
+            costCenterId: res.response?.costCenterId,
+            accountGroupId: res.response?.accountGroupId
 
           });
 

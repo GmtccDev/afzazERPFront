@@ -8,6 +8,8 @@ import { AccountGroupsComponent } from './account-groups/account-groups.componen
 import { AddEditAccountGroupsComponent } from './account-groups/add-edit-account-groups/add-edit-account-groups.component';
 import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { AddEditCostCenterComponent } from './cost-centers/add-edit-cost-center/add-edit-cost-center.component';
+import { AccountsComponent } from './accounts/accounts.component';
+import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -26,6 +28,11 @@ const routes: Routes = [
 			{ path: 'costCenter/add-costCenter', component: AddEditCostCenterComponent },
 			{ path: 'costCenter/add-costCenter/:parentId', component: AddEditCostCenterComponent },
 			{ path: 'costCenter/update-costCenter/:id', component: AddEditCostCenterComponent },
+
+			{ path: 'account', component: AccountsComponent },
+			{ path: 'account/add-account', component: AddEditAccountComponent },
+			{ path: 'account/add-account/:parentId', component: AddEditAccountComponent },
+			{ path: 'account/update-account/:id', component: AddEditAccountComponent },
 		]
 	}
 ];
