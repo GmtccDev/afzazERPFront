@@ -18,9 +18,11 @@ import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { AddEditCostCenterComponent } from './cost-centers/add-edit-cost-center/add-edit-cost-center.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
+import { AccountClassificationComponent } from './account-classification/account-classification.component';
+import { AddEditAccountClassificationComponent } from './account-classification/add-edit-account-classification/add-edit-account-classification.component';
 @NgModule({
   declarations: [
-    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent, AddEditCostCenterComponent, AccountsComponent, AddEditAccountComponent
+    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent, AddEditCostCenterComponent, AccountsComponent, AddEditAccountComponent, AccountClassificationComponent, AddEditAccountClassificationComponent
   ],
   imports: [
     CommonModule,

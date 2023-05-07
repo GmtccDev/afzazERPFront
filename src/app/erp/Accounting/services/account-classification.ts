@@ -13,13 +13,12 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { BranchDto, CreateBranchCommand, DeleteListBranchCommand, EditBranchCommand } from "../models/branch";
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
     providedIn: 'root'
 })
-export class BranchServiceProxy {
+export class AccountClassificationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -29,29 +28,22 @@ export class BranchServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createBranch(branch: any): Observable<BranchDto> {
+    createAccountClassification(branch: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Branch/add?", branch);
+        return this.http.post<any>(environment.apiUrl + "/api/AccountClassification/add?", branch);
     }
     // ids: number[] | undefined;
-    deleteListBranch(branch: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/Branch/deleteList?", branch);
+    deleteListAccountClassification(branch: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/AccountClassification/deleteList?", branch);
     }
-    updateBranch(branch: any): Observable<BranchDto> {
-        return this.http.post<any>(environment.apiUrl + "/api/Branch/edit?", branch);
+    updateAccountClassification(branch: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/AccountClassification/edit?", branch);
     }
     getDdl(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Branch/get-ddl?");
+        return this.http.get<any>(this.baseUrl + "/api/AccountClassification/get-ddl?");
     }
-    getDdlWithCompanies( ids: Array<number>|undefined): Observable<any> {
-        let queryParams = new HttpParams();
-        if (ids != undefined)
-       // queryParams = queryParams.append("companies", ids.join(', '));
-        queryParams = queryParams.appendAll({'companies': ids});
-
-        return this.http.get<any>(this.baseUrl + "/api/Branch/get-ddlWithCompanies?", { params: queryParams });
-    }
-    allBranches(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
+  
+    allAccountClassificationes(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
      
         let queryParams = new HttpParams();
         if (pageIndex != undefined)
@@ -65,27 +57,25 @@ export class BranchServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/Branch/all?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/AccountClassification/all?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/Branch/GetBranchs");
+        // return this.http.get<any>(environment.apiUrl + "/api/AccountClassification/GetAccountClassifications");
     }
 
 
-    getBranch(id: any): Observable<any> {
+    getAccountClassification(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(this.baseUrl + "/api/Branch/getById", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/AccountClassification/getById", { params: params });
     }
     getLastCode(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Branch/getLastCode?");
+        return this.http.get<any>(this.baseUrl + "/api/AccountClassification/getLastCode?");
     }
-    deleteBranch(id: any): Observable<any> {
+    deleteAccountClassification(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Branch/delete", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/AccountClassification/delete", { params: params });
     }
-    uploadFile(formData ):Observable<any>{
-        return this.http.post<any>(environment.apiUrl + "/api/UploadFile/FileUpload", formData);
-      }
+
 }
 

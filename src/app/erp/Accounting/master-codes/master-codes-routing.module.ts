@@ -10,6 +10,8 @@ import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { AddEditCostCenterComponent } from './cost-centers/add-edit-cost-center/add-edit-cost-center.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
+import { AccountClassificationComponent } from './account-classification/account-classification.component';
+import { AddEditAccountClassificationComponent } from './account-classification/add-edit-account-classification/add-edit-account-classification.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -33,6 +35,10 @@ const routes: Routes = [
 			{ path: 'account/add-account', component: AddEditAccountComponent },
 			{ path: 'account/add-account/:parentId', component: AddEditAccountComponent },
 			{ path: 'account/update-account/:id', component: AddEditAccountComponent },
+
+			{ path: 'accountClassification', component: AccountClassificationComponent },
+			{ path: 'accountClassification/add-accountClassification', component: AddEditAccountClassificationComponent },
+			{ path: 'accountClassification/update-accountClassification/:id', component: AddEditAccountClassificationComponent },
 		]
 	}
 ];

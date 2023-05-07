@@ -4,32 +4,32 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../shared/common-services/notifications-alerts.service';
-import { BranchServiceProxy } from '../services/branch.service';
+import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import { ITabulatorActionsSelected } from '../../../shared/interfaces/ITabulator-action-selected';
-import { MessageModalComponent } from '../../../shared/components/message-modal/message-modal.component'
+import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
+import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
-import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
+import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
+import {AccountClassificationServiceProxy} from '../../services/account-classification'
 @Component({
-  selector: 'app-branches',
-  templateUrl: './branches.component.html',
-  styleUrls: ['./branches.component.scss']
+  selector: 'app-account-classification',
+  templateUrl: './account-classification.component.html',
+  styleUrls: ['./account-classification.component.scss']
 })
-export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AccountClassificationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  branches: any[] = [];
+  accountClassification: any[] = [];
   currnetUrl: any;
-  addUrl: string = '/master-codes/branches/add-branch';
-  updateUrl: string = '/master-codes/branches/update-branch/';
-  listUrl: string = '/master-codes/branches';
+  addUrl: string = '/master-codes/accountClassification/add-accountClassification';
+  updateUrl: string = '/master-codes/accountClassification/update-accountClassification/';
+  listUrl: string = '/master-codes/accountClassification';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.branches"),
+    componentList: this.translate.instant("component-names.accountClassification"),
     componentAdd: '',
 
   };
@@ -38,7 +38,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Constructor
   constructor(
-    private branchService: BranchServiceProxy,
+    private accountClassificationService: AccountClassificationServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
@@ -60,7 +60,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.listenToClickedButton();
 
-    this.getBranches();
+    this.getAccountClassificationes();
     setTimeout(() => {
 
       this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -96,9 +96,9 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getBranches() {
+  getAccountClassificationes() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.branchService.allBranches(undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.accountClassificationService.allAccountClassificationes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
           console.log(res);
@@ -106,9 +106,9 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
           //   return res;
           // });
-          this.toolbarPathData.componentList = this.translate.instant("component-names.branches");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.accountClassification");
           if (res.success) {
-            this.branches = res.response.items
+            this.accountClassification = res.response.items
               ;
 
           }
@@ -134,14 +134,14 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region CRUD Operations
   delete(id: any) {
-    this.branchService.deleteBranch(id).subscribe((resonse) => {
+    this.accountClassificationService.deleteAccountClassification(id).subscribe((resonse) => {
       console.log('delet response', resonse);
-      this.getBranches();
+      this.getAccountClassificationes();
     });
   }
   edit(id: string) {
     this.router.navigate([
-      '/master-codes/branches/update-branch',
+      '/master-codes/accountClassification/update-accountClassification',
       id,
     ]);
   }
@@ -155,11 +155,11 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.branchService.deleteBranch(id).subscribe(
+        let sub = this.accountClassificationService.deleteAccountClassification(id).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getBranches();
+            this.getAccountClassificationes();
 
           });
         this.subsList.push(sub);
@@ -210,7 +210,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     ];
   }
 
-  openBranches() { }
+  openAccountClassificationes() { }
   onCheck(id) {
 
     this.listIds.push(id);
@@ -232,7 +232,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['master-codes/branches/update-branch/' + id])
+      this.router.navigate(['master-codes/accountClassification/update-accountClassification/' + id])
     }
 
   }
@@ -249,7 +249,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['master-codes/branches/update-branch/' + event.item.id])
+        this.router.navigate(['master-codes/accountClassification/update-accountClassification/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -288,11 +288,11 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   var ids = this.listIds;
-    let sub = this.branchService.deleteListBranch(ids).subscribe(
+    let sub = this.accountClassificationService.deleteListAccountClassification(ids).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getBranches();
+        this.getAccountClassificationes();
         this.listIds = [];
       });
     this.subsList.push(sub);

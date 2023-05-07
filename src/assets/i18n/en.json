@@ -273,7 +273,9 @@
         "costCenter":"Cost Center",
         "costCenter-information":"Cost Center Information",
         "account":"Account",
-        "account-information":"Account Information"
+        "account-information":"Account Information",
+        "accountClassification":"Account Classification",
+        "accountClassification-information":"Account Classification Information"
     },
     "language": {
         "ARABIC": "Arabic",
