@@ -22,9 +22,9 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
   //#region Main Declarations
   accountClassification: any[] = [];
   currnetUrl: any;
-  addUrl: string = '/master-codes/accountClassification/add-accountClassification';
-  updateUrl: string = '/master-codes/accountClassification/update-accountClassification/';
-  listUrl: string = '/master-codes/accountClassification';
+  addUrl: string = '/accounting-master-codes/accountClassification/add-accountClassification';
+  updateUrl: string = '/accounting-master-codes/accountClassification/update-accountClassification/';
+  listUrl: string = '/accounting-master-codes/accountClassification';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -141,7 +141,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
   }
   edit(id: string) {
     this.router.navigate([
-      '/master-codes/accountClassification/update-accountClassification',
+      '/accounting-master-codes/accountClassification/update-accountClassification',
       id,
     ]);
   }
@@ -182,14 +182,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
-    },
-    this.lang == 'ar'
-      ? { title: ' العنوان', field: 'address' } :
-      { title: ' Address  ', field: 'address' },
-
-    // this.lang == 'ar'
-    //   ? { title: ' الدولة', field: 'countryNameAr' } :
-    //   { title: ' Country  ', field: 'countryNameEn' },
+    }
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -232,7 +225,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['master-codes/accountClassification/update-accountClassification/' + id])
+      this.router.navigate(['accounting-master-codes/accountClassification/update-accountClassification/' + id])
     }
 
   }
@@ -249,7 +242,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['master-codes/accountClassification/update-accountClassification/' + event.item.id])
+        this.router.navigate(['accounting-master-codes/accountClassification/update-accountClassification/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);

@@ -26,9 +26,9 @@ export class AddEditAccountClassificationComponent implements OnInit {
   public show: boolean = false;
   lang = localStorage.getItem("language")
   accountClassification: [] = [];
-  addUrl: string = '/master-codes/accountClassification/add-accountClassification';
-  updateUrl: string = '/master-codes/accountClassification/update-accountClassification/';
-  listUrl: string = '/master-codes/accountClassification';
+  addUrl: string = '/accounting-master-codes/accountClassification/add-accountClassification';
+  updateUrl: string = '/accounting-master-codes/accountClassification/update-accountClassification/';
+  listUrl: string = '/accounting-master-codes/accountClassification';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
