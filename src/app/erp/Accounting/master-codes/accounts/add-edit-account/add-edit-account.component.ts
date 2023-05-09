@@ -65,8 +65,12 @@ export class AddEditAccountComponent implements OnInit {
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
   routeAccountGroupApi = "AccountGroup/get-ddl?"
+  routeAccountClassificationApi = "AccountClassification/get-ddl?"
   currencyList: any;
   accountGroupList: any;
+  accountClassificationList: any;
+  accountTypeList: { nameAr: string; nameEn: string; value: any; }[];
+  trialBalanceList: { nameAr: string; nameEn: string; value: any; }[];
 
   constructor(
     private accountService: AccountServiceProxy,
@@ -91,8 +95,10 @@ export class AddEditAccountComponent implements OnInit {
     this.getAccountGroup();
     this.getCurrency();
     this.getCostCenter();
+    this.getAccountClassification();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
+    this.getAccountType();
     this.changePath();
     if (this.currnetUrl == this.addUrl) {
       this.getaccountCode();
@@ -158,7 +164,10 @@ export class AddEditAccountComponent implements OnInit {
       taxNumber: null,
       currencyId: null,
       costCenterId: null,
-      accountGroupId:null
+      accountGroupId: null,
+      accountType: null,
+      trialBalance: null,
+      accountClassificationId: null
     });
 
   }
@@ -293,6 +302,32 @@ export class AddEditAccountComponent implements OnInit {
     });
 
   }
+  getAccountClassification() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountClassificationApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.accountClassificationList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   //#endregion
 
   //#region CRUD Operations
@@ -317,7 +352,10 @@ export class AddEditAccountComponent implements OnInit {
             taxNumber: res.response?.taxNumber,
             currencyId: res.response?.currencyId,
             costCenterId: res.response?.costCenterId,
-            accountGroupId: res.response?.accountGroupId
+            accountGroupId: res.response?.accountGroupId,
+            accountType: res.response?.accountType,
+            trialBalance: res.response?.trialBalance,
+            accountClassificationId: res.response?.accountClassificationId,
 
           });
 
@@ -479,7 +517,16 @@ export class AddEditAccountComponent implements OnInit {
       // return this.accountForm.markAllAsTouched();
     }
   }
-
+  getAccountType() {
+    this.accountTypeList = [
+      { nameAr: 'قائمة دخل', nameEn: 'Income Statement', value: '1' },
+      { nameAr: 'ميزان المراجعة', nameEn: 'Trial Balance', value: '2' }
+    ];
+    this.trialBalanceList = [
+      { nameAr: ' الأصول ', nameEn: 'Assets', value: '1' },
+      { nameAr: 'الخصوم', nameEn: 'Liabilities', value: '2' }
+    ];
+  }
   onSelectCompany(event) {
     this.accountForm.controls.companyId.setValue(event.id);
     this.showSearchModalCompany = false;

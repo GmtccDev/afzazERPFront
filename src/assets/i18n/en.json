@@ -291,6 +291,14 @@
         "useHijri": "Use Hijri",
         "web-site": "Web Site"
     },
+    "account": {
+        "debitLimit": "debit Limit",
+        "creditLimit": "credit Limit",
+        "openBalanceCredit": "open Balance Credit  ",
+        "openBalanceDebit": "open Balance Debit  ",
+        "accountType":"account Type",
+        "trialBalance":"trial Balance"
+    },
     "accounting-configration": {
         "multiCurrency": "Multi Currency",
         "journalentries": " Journal Entries",
