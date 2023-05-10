@@ -10,8 +10,12 @@ import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { AddEditCostCenterComponent } from './cost-centers/add-edit-cost-center/add-edit-cost-center.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
+
 import { AccountClassificationComponent } from './account-classification/account-classification.component';
 import { AddEditAccountClassificationComponent } from './account-classification/add-edit-account-classification/add-edit-account-classification.component';
+import { VoucherTypeComponent } from './voucher-type/voucher-type.component';
+import { AddEditVoucherTypeComponent } from './voucher-type/add-edit-voucher-type/add-edit-voucher-type.component';
+
 const routes: Routes = [
 	{
 		path: '',
@@ -39,6 +43,10 @@ const routes: Routes = [
 			{ path: 'accountClassification', component: AccountClassificationComponent },
 			{ path: 'accountClassification/add-accountClassification', component: AddEditAccountClassificationComponent },
 			{ path: 'accountClassification/update-accountClassification/:id', component: AddEditAccountClassificationComponent },
+
+			{ path: 'voucherType', component: VoucherTypeComponent },
+			{ path: 'voucherType/add-voucher-type', component: AddEditVoucherTypeComponent },
+			{ path: 'voucherType/update-voucher-type/:id', component: AddEditVoucherTypeComponent },
 		]
 	}
 ];

@@ -1,8 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Subject, BehaviorSubject, fromEvent } from 'rxjs';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Subject, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
 
 // Menu
 export interface Menu {
@@ -23,8 +24,10 @@ export interface Menu {
 	providedIn: 'root'
 })
 
-export class NavService implements OnDestroy {
-
+export class NavService implements OnInit, OnDestroy {
+	voucherType: any[] = [];
+	subsList: Subscription[] = [];
+	voucherTypes:any=[];
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
@@ -48,7 +51,10 @@ export class NavService implements OnDestroy {
 	// Full screen
 	public fullScreen: boolean = false;
 
-	constructor(private router: Router, private translate: TranslateService) {
+	constructor(private router: Router, private translate: TranslateService,
+		private voucherTypeService: VoucherTypeServiceProxy) {
+			this.getVoucherTypes();
+
 		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
@@ -65,17 +71,66 @@ export class NavService implements OnDestroy {
 			}
 		});
 		if (window.innerWidth < 991) { // Detect Route change sidebar close
-			this.router.events.subscribe(event => {
+			this.router.events.subscribe(_event => {
 				this.collapseSidebar = true;
 				this.megaMenu = false;
 				this.levelMenu = false;
 			});
 		}
+		debugger;
+
 	}
+
+	//#region ngOnInit
+	ngOnInit(): void {
+		debugger;
+    // this.getVoucherTypes();
+	}
+	//#endregion
 
 	ngOnDestroy() {
 		// this.unsubscriber.next();
 		this.unsubscriber.complete();
+		this.subsList.forEach((s) => {
+			if (s) {
+				s.unsubscribe();
+			}
+		});
+	}
+
+	getVoucherTypes() {
+		debugger;
+		return new Promise<void>((resolve, reject) => {
+			debugger;
+
+			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+				next: (res) => {
+					debugger
+
+					console.log(res);
+					if (res.success) {
+						debugger
+						this.voucherType = res.response.items
+						this.voucherType.forEach(element => {
+							debugger;
+							this.voucherTypes+=	"{path: '/accounting-master-codes/voucherType', title: "+element.voucherNameEn+", type: 'link', active: true },"
+
+						});
+					}
+					resolve();
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					console.log('complete');
+				},
+			});
+
+			this.subsList.push(sub);
+
+		});
+
 	}
 
 	private setScreenWidth(width: number): void {
@@ -142,14 +197,26 @@ export class NavService implements OnDestroy {
 				{ path: '/accounting-master-codes/costCenter', title: this.translate.instant("component-names.costCenter"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountClassification', title: this.translate.instant("component-names.accountClassification"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/account', title: this.translate.instant("component-names.account"), type: 'link', active: true },
+				{ path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
 
 			]
+		},
+		{
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: [
+                    this.voucherTypes,			
+
+					
+			
+				//					{path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
+
+			]
+
 		}
 
 
 	];
 	// Array
-
+     
 	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 	itemsAccount = new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
 

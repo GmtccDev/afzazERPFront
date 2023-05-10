@@ -1,0 +1,288 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-units">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3 mt-3">
+                    <div class="card-body">
+                        <form [formGroup]="voucherTypeForm" id="voucherTypeSubmit" class="tabs-form">
+                            <div class="main-branch ranoo">
+                                <div class="wrapper-title">
+
+                                    <h3>{{'voucher-type.voucher-type-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row ">
+                                        <div class="col-md-4 col-4">
+                                            <label for="voucherNameAr" class="label-name">
+                                                {{'voucher-type.voucher-name-ar'|translate}}</label><span
+                                                class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch"
+                                                    [ngClass]="{'is-invalid':f['voucherNameAr'].errors || f['voucherNameAr'].invalid}"
+                                                    name="voucherNameAr" formControlName="voucherNameAr">
+                                                <div *ngIf="(f['voucherNameAr'].touched || f['voucherNameAr'].dirty ) && f['voucherNameAr'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['voucherNameAr'].errors && f['voucherNameAr'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-4">
+                                            <label for="voucherNameEn"
+                                                class="label-name">{{'voucher-type.voucher-name-en'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="text" class="form-control icon-branch" name="voucherNameEn"
+                                                    formControlName="voucherNameEn">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-3">
+                                            <label for="journalId" class="label-name">
+                                                {{'component-names.journal'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="journalId"
+                                                    name='journalId' class="" id="journalId">
+                                                    <ng-option *ngFor="let journal of journalList" [value]="journal.id">
+                                                        {{lang=="ar"?journal.nameAr:journal.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-1 col-1">
+                                            <button class="btn btn-rounded btn-dark"
+                                                (click)="showSearchJournalModal=true" type="button"><i
+                                                    class="fa fa-search"></i></button>
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="voucher-type"
+                                                class="label-name">{{'voucher-type.voucher-type'|translate}}
+                                                <span class="text-danger">*</span></label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="voucherTypeId"
+                                                    [items]="voucherTypes" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
+                                                <div *ngIf="(f['voucherTypeId'].touched || f['voucherTypeId'].dirty ) && f['voucherTypeId'].invalid"
+                                                    class="alert alert-danger">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['voucherTypeId'].errors && f['voucherTypeId'].errors['required']">
+                                                        {{'validation-messages.required-field'|translate}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="serialTypeId"
+                                                class="label-name">{{'voucher-type.serial-type'|translate}}
+                                                <span class="text-danger">*</span></label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="serialTypeId"
+                                                    [items]="serialType" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
+                                                <!-- <div *ngIf="(f['serialTypeId'].touched || f['serialTypeId'].dirty ) && f['serialTypeId'].invalid"
+                                                    class="alert alert-danger">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['serialTypeId'].errors && f['serialTypeId'].errors['required']">
+                                                        {{'validation-messages.required-field'|translate}}</span>
+                                                </div> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="serialId" class="label-name">
+                                                {{'accounting-configration.serial'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <!-- <ng-select style="width:100%" formControlName="fiscalPeriodId"
+                                                    name='fiscalPeriodId' class="" id="fiscalPeriodId">
+                                                    <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList"
+                                                        [value]="fiscalPeriod.id">
+                                                        {{lang=="ar"?fiscalPeriod.nameAr:fiscalPeriod.nameEn}}
+                                                    </ng-option>
+                                                </ng-select> -->
+                                                <ng-select style="width:100%" formControlName="serialId"
+                                                    name="serialId">
+                                                    <ng-option *ngFor="let serialObject of serialList"
+                                                        [value]="serialObject.value">
+                                                        {{lang=="ar"?serialObject.nameAr:serialObject.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <hr>
+                                    <!-- start tabs -->
+                                    <nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
+                                        <li ngbNavItem>
+                                            <a ngbNavLink>{{'general.accounts'|translate}}</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="row">
+
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="defaultAccountId"
+                                                            class="label-name">{{'general.default-account'|translate}}</label>
+                                                        <div class="input-group  popup">
+                                                            <ng-select style="width:100%"
+                                                                formControlName="defaultAccountId"
+                                                                name='defaultAccountId' class="" id="defaultAccountId">
+                                                                <ng-option *ngFor="let account of accountList"
+                                                                    [value]="account.id">
+                                                                    {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                                </ng-option>
+                                                            </ng-select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col gap-1 grid grid-cols-1">
+                                                        <button class="btn btn-rounded btn-dark"
+                                                            (click)="showSearchAccountModal=true" type="button"><i
+                                                                class="fa fa-search"></i></button>
+                                                    </div>
+
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="defaultCurrencyId"
+                                                            class="label-name">{{'general.default-currency'|translate}}</label>
+                                                        <div class="input-group  popup">
+                                                            <ng-select style="width:100%"
+                                                                formControlName="defaultCurrencyId"
+                                                                name='defaultCurrencyId' class=""
+                                                                id="defaultCurrencyId">
+                                                                <ng-option *ngFor="let currency of currenciesList"
+                                                                    [value]="currency.id">
+                                                                    {{lang=="ar"?currency.nameAr:currency.nameEn}}
+                                                                </ng-option>
+                                                            </ng-select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col gap-1 grid grid-cols-1">
+                                                        <button class="btn btn-rounded btn-dark"
+                                                            (click)="showSearchCurrencyModal=true" type="button"><i
+                                                                class="fa fa-search"></i></button>
+                                                    </div>
+
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="chooseAccountNature"
+                                                            class="label-name">{{'voucher-type.choose-account-nature'|translate}}</label>
+                                                        <div class="icon-state media-body mx-5">
+                                                            <label class="switch">
+                                                                <input type="checkbox" class="form-control"
+                                                                    name="chooseAccountNature"
+                                                                    formControlName="chooseAccountNature">
+                                                                <span class="switch-state"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="createFinancialEntryId"
+                                                            class="label-name">{{'voucher-type.create-financial-entry'|translate}}
+                                                        </label>
+                                                        <div class="input-group  popup">
+                                                            <ng-select class="custom"
+                                                                formControlName="createFinancialEntryId"
+                                                                [items]="createFinancialEntry" bindLabel="name"
+                                                                bindValue="id" style="width:100%"></ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="defaultBeneficiaryId"
+                                                            class="label-name">{{'voucher-type.default-beneficiary'|translate}}
+                                                        </label>
+                                                        <div class="input-group  popup">
+                                                            <ng-select class="custom"
+                                                                formControlName="defaultBeneficiaryId"
+                                                                [items]="defaultBeneficiaryType" bindLabel="name"
+                                                                bindValue="id" style="width:100%"></ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="needReview"
+                                                            class="label-name">{{'general.need-review'|translate}}</label>
+                                                        <div class="icon-state media-body mx-5">
+                                                            <label class="switch">
+                                                                <input type="checkbox" class="form-control"
+                                                                    name="needReview" formControlName="needReview">
+                                                                <span class="switch-state"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </li>
+                                        <li ngbNavItem>
+                                            <a ngbNavLink>{{'general.print-options'|translate}}</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="row">
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="defaultLayoutId"
+                                                            class="label-name">{{'general.default-layout'|translate}}</label>
+
+                                                    </div>
+                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                        <label for="printAfterSave"
+                                                            class="label-name">{{'general.print-after-save'|translate}}</label>
+                                                        <div class="icon-state media-body mx-5">
+                                                            <label class="switch">
+                                                                <input type="checkbox" class="form-control"
+                                                                    name="printAfterSave"
+                                                                    formControlName="printAfterSave">
+                                                                <span class="switch-state"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </ng-template>
+                                        </li>
+                                        <!-- 
+                                        <li ngbNavItem>
+                                            <a ngbNavLink>{{'general.audit-trail'|translate}}</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="row">
+
+
+                                                </div>
+                                            </ng-template>
+                                        </li> -->
+
+                                    </nav>
+                                    <div [ngbNavOutlet]="nav" class=""></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<app-public-search-modal [isVisible]="showSearchJournalModal" [routeApi]="routeJournalApi"
+    (emitClose)="showSearchJournalModal = false;" (emitSearch)="onSelectJournal($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchAccountModal" [routeApi]="routeAccountApi"
+    (emitClose)="showSearchAccountModal = false;" (emitSearch)="onSelectAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi"
+    (emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
+</app-public-search-modal>

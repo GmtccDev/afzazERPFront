@@ -3,8 +3,8 @@
     "passWordNotCorrect": "PassWord Not Correct",
     "userAreDeleted": "User Not Found",
     "createSuccessfully": "Created",
-    "editSuccessfully": "Edited",
-    "deleteSuccessfully": "Deleted",
+    "editSuccessfully": "Edited Successfully",
+    "deleteSuccessfully": "Deleted Successfully",
     "general": {
         "nameAr": "Name In Arabic",
         "nameEn": "Name In Latin",
@@ -109,7 +109,16 @@
         "logo": "Logo",
         "toDate": "To Date",
         "fromDate": "From Date",
-        "parent":"parent"
+        "parent": "parent",
+        "accounts": "Accounts",
+        "default-account": "Default Account",
+        "default-currency": "Default Currency",
+        "need-review": "Need Review",
+        "print-options": "Print Options",
+        "default-layout": "Default Layout",
+        "audit-trail": "Audit Trail",
+        "print-after-save": "Print After Save",
+        "operations":"Operations"
     },
     "menu": {},
     "home": {
@@ -209,7 +218,30 @@
         "phone-pattern": "Please enter valid number, at least 10 digits",
         "valid-number": "Valid Nubmer",
         "invalid-email": "Please, enter valid email",
-        "valid-email": "Email is valid"
+        "valid-email": "Email is valid",
+        "required-user-name": "UserName is required",
+        "required-name": "Name is required",
+        "required-email": "Email is required",
+        "required-mobile": "Mobile is required",
+        "max-code": "Should not be more than 10 character",
+        "max-name-char": "Should not be more than 25 character",
+        "min-name-char": "Should not be more than 2 character",
+        "max-expire-date": "The expired date can't be less than the issue date",
+        "valid-date": "Valid date",
+        "invalid-name": "Please, enter valid name",
+        "valid-user-name": " UserName is valid   ",
+        "invalid-phone": "Please, enter valid phone",
+        "valid-phone": "Phone is valid",
+        "invalid-mobile": "Please, enter valid phone",
+        "valid-mobile": " Mobile is valid",
+        "invalid-fax": "Please, enter valid fax",
+        "valid-fax": "Fax is valid",
+        "min-password": " Password must be at least 6 characters",
+        "required-password": "Password is required    ",
+        "text-siz-error": "The text size should not exceed 700 characters",
+        "unit-offer-repeated": "This unit has been selected before",
+        "faild-login": "Login credentials are not correct !",
+        "connection-error": "Connection error !"
     },
     "user-manager": {
         "add-user": "Add User",
@@ -268,14 +300,15 @@
         "journal-information": "journal information ",
         "fiscalPeriod-information": "Fiscal Period information",
         "fiscalPeriod": "Fiscal Period",
-        "accountGroup":"Account Group",
-        "accountGroup-information":"Account Group Information",
-        "costCenter":"Cost Center",
-        "costCenter-information":"Cost Center Information",
-        "account":"Account",
-        "account-information":"Account Information",
-        "accountClassification":"Account Classification",
-        "accountClassification-information":"Account Classification Information"
+        "accountGroup": "Account Group",
+        "accountGroup-information": "Account Group Information",
+        "costCenter": "Cost Center",
+        "costCenter-information": "Cost Center Information",
+        "account": "Account",
+        "account-information": "Account Information",
+        "accountClassification": "Account Classification",
+        "accountClassification-information": "Account Classification Information",
+        "voucher-types": "Voucher Types"
     },
     "language": {
         "ARABIC": "Arabic",
@@ -306,5 +339,22 @@
     },
     "fiscal-period": {
         "fiscal-period-status": "status"
+    },
+    "voucher-type": {
+        "voucher-type-information": "Voucher Type Information",
+        "voucher-name-ar": "Voucher Arabic Name",
+        "voucher-name-en": "Voucher English Name",
+        "voucher-type": "Voucher Type",
+        "serial-type": "Serial Type",
+        "serial-format": "Serial Format",
+        "choose-account-nature": "Choose Account Nature",
+        "create-financial-entry": "Create Financial Entry",
+        "default-beneficiary": "Default Beneficiary Type",
+        "add-voucher-type": "Add Voucher Type",
+        "update-voucher-type": "Update Voucher Type"
+    },
+    "message-title": {
+        "done": "Done",
+        "wrong": "Wrong"
     }
 }

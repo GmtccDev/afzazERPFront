@@ -3,8 +3,8 @@
     "passWordNotCorrect": "كلمة المرور خطأ",
     "userAreDeleted": "المستخدم غير موجود",
     "createSuccessfully": "تم الاضافة",
-    "editSuccessfully": "تم التعيل",
-    "deleteSuccessfully": "تم الحذف",
+    "editSuccessfully": "تم التعديل بنجاح",
+    "deleteSuccessfully":"تم الحذف بنجاح",
     "language": {
         "ARABIC": "العربية",
         "ENGLISH": "الانجليزية"
@@ -61,15 +61,15 @@
         "cancel": "إلغاء"
     },
     "validation-message": {
-        "invalid-data": "رجاء إخل البيانات بشكل صحيح!"
+        "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
     },
     "entryTypes": {
         "generateEntry": "توليد قيد",
         "entryTypeSettings": "إدارة انماط السندات",
-        "latinName": "الاسم اللاتيني"
+        "latinName": "الاسم الانجليزى"
     },
     "messages": {
-        "invalid-data": "رجاء إخل البيانات بشكل صحيح!",
+        "invalid-data": "رجاء إدخال البيانات بشكل صحيح!",
         "success": "تمت العملية بنجاح",
         "wrong": "خطأ",
         "confirm-delete": "هل انت متأكد من عملية الحذف؟",
@@ -116,9 +116,38 @@
         "userNameRequired": "الحقل مطلوب"
     },
     "validation-messages": {
-        "invalid-data": "رجاء إخل البيانات بشكل صحيح!",
+        "invalid-data": "رجاء إدخال البيانات بشكل صحيح!",
         "success": "تمت العملية بنجاح",
-        "wrong": "خطأ"
+        "wrong": "خطأ",
+        "required-field":"هذا الحقل مطلوب",
+        "required-user-name": "لايم ",
+        "required-email": "من فضلك ادخل البريد الالكتروني ",
+        "required-mobile": "من فضلك ادخل رقم الجوال ",
+        "required-name": "من فضل ادخل الاسم ",
+        "insert-success": "تمت الإضافة بنجاح",
+        "phone-pattern": "تأكد من إدخال 10 أرقام على الأقل",
+        "valid-number": "الرقم غير صحيح",
+        "invalid-email": "تأكد من إدخال البريد الإلكتروني بشكل صحيح",
+        "valid-email": "البريد الاليكترونى صالح",
+        "max-code": "لا يمكن إدخال أكثر من 10 أرقام",
+        "max-name-char": "لايمكن أن يحتوي الاسم على أكثر من 25 حرف",
+        "min-name-char": "لايمكن أن يحتوي الاسم على أقل من 2 حرف",
+        "invalid-name": "تأكد من إدخال الاسم  بشكل صحيح ",
+        "valid-user-name": " تم إدخال اسم المستخدم  بشكل صحيح ",
+        "invalid-phone": "تأكد من إدخال رقم الهاتف بشكل صحيح ",
+        "valid-phone": " رقم الهاتف صحيحاً ",
+        "invalid-mobile": "تأكد من إدخال رقم الجوال بشكل صحيح ",
+        "valid-mobile": " رقم الجوال صحيحاً ",
+        "invalid-fax": "تأكد من إدخال رقم الفاكس بشكل صحيح ",
+        "valid-fax": " رقم الفاكس صحيحاً ",
+        "max-expire-date": "يجب ان يكون تاريخ الانتهاء اكبر من تاريخ الاصدار",
+        "valid-date": "التاريخ صحيح ",
+        "min-password": "يحب أن تحتوي كلمة المرور من 6 أحرف على الأقل",
+        "required-password": "من فضلك أدخل كلمة المرور",
+        "text-size-error": " حجم  النص الموصى به لايتجاوز 700 حرف ",
+        "unit-offer-repeated":"هذا الوحدة تم اختيارها من قبل",
+        "faild-login":"بيانات اعتماد تسجيل الدخول غير صحيحة",
+        "connection-error":"خطأ في الخادم !"
     },
     "user-manager": {
         "add-user": "إضافة مستخدم",
@@ -128,7 +157,7 @@
         "user-type": "نوع المستخدم",
         "user-country": "البلد",
         "name-arabic": "الاسم باللغة العربية",
-        "name-latin": "الاسم باللغة اللاتينية",
+        "name-latin": "الاسم باللغة الانجليزية",
         "user-name": "اسم المستخدم",
         "user-email": "البريد الالكتروني",
         "user-mobile": "رقم الهاتف المحمول",
@@ -184,11 +213,12 @@
         "account":" الحساب",
         "account-information":"معلومات  الحساب",
         "accountClassification":"تصنيف الحساب",
-        "accountClassification-information":"معلومات تصنيف الحساب"
+        "accountClassification-information":"معلومات تصنيف الحساب",
+        "voucher-types":"أنماط السندات"
     },
     "general": {
         "nameAr": "الاسم العربي",
-        "nameEn": "الاسم اللاتينية",
+        "nameEn": "الاسم الانجليزى",
         "code": "التسلسل",
         "currencySymbol": "رمز العملة",
         "home": " الرئيسية",
@@ -231,7 +261,18 @@
         "select":"اختار",
         "toDate":"الي تاريخ",
         "fromDate":"من تاريخ",
-        "parent":"الاب"
+        "parent":"الاب",
+        "loading":"جارى التحميل",
+        "accounts":"الحسابات",
+        "default-account":"الحساب الافتراضى",
+        "default-currency":"العملة الافتراضية",
+        "need-review":"تحتاج للمراجعة",
+        "print-options":"خيارات الطباعة",
+        "default-layout":"التخطيط الافتراضى",
+        "audit-trail":"سجل التدقيق",
+        "print-after-save":"الطباعة بعد الحفظ",
+        "operations":"العمليات"
+
     },
     "menu": {},
     "currency": {
@@ -285,5 +326,26 @@
         "userNameRequired": "Failed Required",
         "required": "هذا الحقل مطلوب"
 
+    },
+    "voucher-type":{
+        "voucher-type-information":"بيانات نمط السند",
+        "voucher-name-ar":"أسم النمط عربي",
+        "voucher-name-en":"أسم النمط انجليزى",
+        "voucher-type":"نوع السند",
+        "serial-type":"نوع التسلسل",
+        "serial-format":"تنسيق التسلسل",
+        "choose-account-nature":"أختيار طبيعة الحساب",
+        "create-financial-entry":"انشاء قيد مالى",
+        "default-beneficiary":"نوع المستفيد الافتراضى",
+        "add-voucher-type":"اضافة نمط سند",
+        "update-voucher-type":"تحديث نمط السند"
+
+
+
+
+    },
+    "message-title": {
+        "done": "نجاح",
+        "wrong": "خطأ"
     }
 }

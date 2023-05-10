@@ -20,9 +20,16 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
 import { AccountClassificationComponent } from './account-classification/account-classification.component';
 import { AddEditAccountClassificationComponent } from './account-classification/add-edit-account-classification/add-edit-account-classification.component';
+import { VoucherTypeComponent } from './voucher-type/voucher-type.component';
+import { AddEditVoucherTypeComponent } from './voucher-type/add-edit-voucher-type/add-edit-voucher-type.component';
+
 @NgModule({
   declarations: [
-    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent, AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent, AddEditCostCenterComponent, AccountsComponent, AddEditAccountComponent, AccountClassificationComponent, AddEditAccountClassificationComponent
+    JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent,
+    AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent,
+    AddEditCostCenterComponent, AccountsComponent, AddEditAccountComponent,
+    AccountClassificationComponent, AddEditAccountClassificationComponent,
+    VoucherTypeComponent,AddEditVoucherTypeComponent
   ],
   imports: [
     CommonModule,
