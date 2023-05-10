@@ -651,31 +651,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
         "UnAssignSensorFromDevice", "../../../assets/sniper/images/delete_blue.svg"));
     }
 
-    if (menuOptions.showDetermineTheTechnician) {
-
-      menu.push(scope.getContextMenuItem(row, componentName,
-        "DetermineTheTechnician", "../../../assets/sniper/images/dropdown_edit.svg"));
-    }
-    if (menuOptions.showRequestDetails) {
-
-      menu.push(scope.getContextMenuItem(row, componentName,
-        "RequestDetails", "../../../assets/sniper/images/dropdown_edit.svg"));
-    }
-    if (menuOptions.showProductReceipt) {
-
-      menu.push(scope.getContextMenuItem(row, componentName,
-        "ProductReceipt", "../../../assets/sniper/images/dropdown_edit.svg"));
-    }
-    if (menuOptions.showPriceRequest) {
-
-      menu.push(scope.getContextMenuItem(row, componentName,
-        "PriceRequest", "../../../assets/sniper/images/dropdown_edit.svg"));
-    }
-    if (menuOptions.showCloseRequest) {
-
-      menu.push(scope.getContextMenuItem(row, componentName,
-        "Closerequest", "../../../assets/sniper/images/dropdown_edit.svg"));
-    }
+   
     return menu;
   }
 
@@ -1001,7 +977,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
   }
 
   getToolTip(cell: any): string | undefined {
-    return cell.getColumn().getField() + "\n - " + cell.getValue(); //return cells "field - value";
+    return cell.getColumn().getField() + "\n  " + cell.getValue(); //return cells "field  value";
   }
 
 

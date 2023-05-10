@@ -54,11 +54,7 @@ export class SettingMenuShowOptions
     showQueryDriver?:boolean;
     showUnAssignSensorFromDevice?:boolean;
     showActivate?:boolean;
-    showDetermineTheTechnician?:boolean;
-    showRequestDetails?:boolean;
-    showProductReceipt?:boolean;
-    showPriceRequest?:boolean;
-    showCloseRequest?:boolean;
+    
 
 
 }
