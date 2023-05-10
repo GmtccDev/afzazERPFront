@@ -155,6 +155,7 @@ export class AddEditAccountComponent implements OnInit {
       nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
+      isLeafAccount:true,
       parentId: null,
       companyId: null,
       openBalanceDebit: null,
@@ -167,7 +168,9 @@ export class AddEditAccountComponent implements OnInit {
       accountGroupId: null,
       accountType: null,
       trialBalance: null,
-      accountClassificationId: null
+      accountClassificationId: null,
+      noteNotActive:null
+      
     });
 
   }
@@ -182,7 +185,7 @@ export class AddEditAccountComponent implements OnInit {
 
           }
           if (this.parentId != undefined || this.parentId != null) {
-            this.accountForm.controls.parentId.setValue(Number(this.parentId));
+            this.accountForm.controls.parentId.setValue((this.parentId));
           }
 
           resolve();
@@ -343,6 +346,7 @@ export class AddEditAccountComponent implements OnInit {
             nameEn: res.response?.nameEn,
             code: res.response?.code,
             isActive: res.response?.isActive,
+            isLeafAccount: res.response?.isLeafAccount,
             parentId: res.response?.parentId,
             companyId: res.response?.companyId,
             openBalanceDebit: res.response?.openBalanceDebit,
@@ -356,6 +360,7 @@ export class AddEditAccountComponent implements OnInit {
             accountType: res.response?.accountType,
             trialBalance: res.response?.trialBalance,
             accountClassificationId: res.response?.accountClassificationId,
+            noteNotActive: res.response?.noteNotActive,
 
           });
 
@@ -519,12 +524,12 @@ export class AddEditAccountComponent implements OnInit {
   }
   getAccountType() {
     this.accountTypeList = [
-      { nameAr: 'قائمة دخل', nameEn: 'Income Statement', value: '1' },
-      { nameAr: 'ميزان المراجعة', nameEn: 'Trial Balance', value: '2' }
+      { nameAr: 'قائمة دخل', nameEn: 'Income Statement', value: 1 },
+      { nameAr: 'ميزان المراجعة', nameEn: 'Trial Balance', value: 2}
     ];
     this.trialBalanceList = [
-      { nameAr: ' الأصول ', nameEn: 'Assets', value: '1' },
-      { nameAr: 'الخصوم', nameEn: 'Liabilities', value: '2' }
+      { nameAr: ' الأصول ', nameEn: 'Assets', value: 1 },
+      { nameAr: 'الخصوم', nameEn: 'Liabilities', value: 2 }
     ];
   }
   onSelectCompany(event) {
@@ -532,6 +537,7 @@ export class AddEditAccountComponent implements OnInit {
     this.showSearchModalCompany = false;
   }
   onSelectAccount(event) {
+    debugger
     this.accountForm.controls.parentId.setValue(event.id);
     this.showSearchModal = false;
   }

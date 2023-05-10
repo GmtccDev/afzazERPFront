@@ -266,7 +266,10 @@
         "openBalanceCredit": "الرصيد الافتتاحي دائن",
         "openBalanceDebit": "الرصيد الافتتاحي مدين",
         "accountType":"نوع الحساب",
-        "trialBalance":"ميزانية الددخل"
+        "trialBalance":"ميزانية الددخل",
+        "isLeafAccount":"هل الحساب فرعي ",
+        "noteNotActive":"سبب عدم التفعيل",
+        "taxNumber":"الرقم الضريبي"
     },
     "error": {
         "phoneValidation": "The phone number is invalid",
