@@ -195,14 +195,14 @@
         "customer": "العملاء",
         "customer-information": "معلومات العميل",
         "permissions": " الصلاحيات",
-        "company":"الشركة",
+        "company": "الشركة",
         "companies-information": "معلومات الشركة ",
-        "companies":"الشركات",
-        "branch":"الفرع",
-        "branches":"الفروع",
-        "branches-information":"معلومات الفروع" ,
-        "configurations":"الاعدادات",
-        "journal":"اليوميات",
+        "companies": "الشركات",
+        "branch": "الفرع",
+        "branches": "الفروع",
+        "branches-information": "معلومات الفروع",
+        "configurations": "الاعدادات",
+        "journal": "اليوميات",
         "journal-information": "معلومات اليوميات ",
         "fiscalPeriod-information":" معلومات الفترات المحاسبية",
         "fiscalPeriod":"الفترات المحاسبية",
@@ -215,6 +215,7 @@
         "accountClassification":"تصنيف الحساب",
         "accountClassification-information":"معلومات تصنيف الحساب",
         "voucher-types":"أنماط السندات"
+       
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -273,6 +274,7 @@
         "print-after-save":"الطباعة بعد الحفظ",
         "operations":"العمليات"
 
+      
     },
     "menu": {},
     "currency": {
@@ -281,27 +283,36 @@
         "currency-transactions": " معاملات التحويل"
     },
     "company": {
-        "motherCompany":"الشركة الام",
-        "useHijri":"استخم التاريخ الهجري",
-        "web-site":"الموقع"
+        "motherCompany": "الشركة الام",
+        "useHijri": "استخم التاريخ الهجري",
+        "web-site": "الموقع"
     },
-    "fiscal-period":{
-"fiscal-period-status":"الحالة"
+    "fiscal-period": {
+        "fiscal-period-status": "الحالة"
     },
-    "accounting-configration":{
-        "multiCurrency":"عملات متعددة ",
-        "journalentries":"القيود المحاسبية",
-        "serial":"الترقيم",
-        "cycle":"دورة القيد المالي",
-        "account":"حساب اغلاق العام",
-        "endOfYear":"نهاية العام"
+    "accounting-configration": {
+        "multiCurrency": "عملات متعددة ",
+        "journalentries": "القيود المحاسبية",
+        "serial": "الترقيم",
+        "cycle": "دورة القيد المالي",
+        "account": "حساب اغلاق العام",
+        "endOfYear": "نهاية العام"
     },
-    "fiscal-period-status":
-    { 
-        "Opened":"مفتوحة",
-        "Closed":"مغلقة ",
-        "ClosedForRevision":"مغلقة للمراجعة "
-
+    "fiscal-period-status": {
+        "Opened": "مفتوحة",
+        "Closed": "مغلقة ",
+        "ClosedForRevision": "مغلقة للمراجعة "
+    },
+    "account": {
+        "debitLimit": "الحد الائتماني  مدين ",
+        "creditLimit": "الحد الائتماني  دائن",
+        "openBalanceCredit": "الرصيد الافتتاحي دائن",
+        "openBalanceDebit": "الرصيد الافتتاحي مدين",
+        "accountType":"نوع الحساب",
+        "trialBalance":"ميزانية الددخل",
+        "isLeafAccount":"هل الحساب فرعي ",
+        "noteNotActive":"سبب عدم التفعيل",
+        "taxNumber":"الرقم الضريبي"
     },
     "error": {
         "phoneValidation": "The phone number is invalid",
@@ -314,7 +325,6 @@
         "chequeIssued": "This check has already been issued",
         "sepratorError": "The numbers must be separated by a (,)",
         "from-to-date": "يجب ان يكون تاريخ الي اكبر من تاريخ من",
-
         "space": "It is not possible to add a space",
         "AllDataRequired": "Please enter all data",
         "amountiszero": "*The amount must be greater than zero !",

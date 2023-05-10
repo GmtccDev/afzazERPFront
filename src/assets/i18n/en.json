@@ -324,6 +324,17 @@
         "useHijri": "Use Hijri",
         "web-site": "Web Site"
     },
+    "account": {
+        "debitLimit": "Debit Limit",
+        "creditLimit": "Credit Limit",
+        "openBalanceCredit": "Open Balance Credit  ",
+        "openBalanceDebit": "Open Balance Debit  ",
+        "accountType":"Account Type",
+        "trialBalance":"Trial Balance",
+        "isLeafAccount":"Leaf Account",
+        "noteNotActive":"Note Not Active",
+        "taxNumber":"Tax Number"
+    },
     "accounting-configration": {
         "multiCurrency": "Multi Currency",
         "journalentries": " Journal Entries",

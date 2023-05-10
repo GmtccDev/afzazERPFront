@@ -12,7 +12,7 @@
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.accounts-information'|translate}}</h3>
+                                    <h3>{{'component-names.account-information'|translate}}</h3>
                                     <hr>
                                     <div class="row">
   
@@ -82,7 +82,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.openBalanceDebit'|translate}}</label>
+                                                {{'account.openBalanceDebit'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="number" class="form-control icon-branch" name="openBalanceDebit" formControlName="openBalanceDebit">
@@ -93,7 +93,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.openBalanceCredit'|translate}}</label>
+                                                {{'account.openBalanceCredit'|translate}}</label>
                                             <div class="form-group position-relative">
                                           
                                                 <input type="number" class="form-control icon-branch" name="openBalanceCredit" formControlName="openBalanceCredit">
@@ -104,7 +104,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.debitLimit'|translate}}</label>
+                                                {{'account.debitLimit'|translate}}</label>
                                             <div class="form-group position-relative">
                                           
                                                 <input type="number" class="form-control icon-branch" name="debitLimit" formControlName="debitLimit">
@@ -115,7 +115,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.creditLimit'|translate}}</label>
+                                                {{'account.creditLimit'|translate}}</label>
                                             <div class="form-group position-relative">
                                           
                                                 <input type="number" class="form-control icon-branch" name="creditLimit" formControlName="creditLimit">
@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.taxNumber'|translate}}</label>
+                                                {{'account.taxNumber'|translate}}</label>
                                             <div class="form-group position-relative">
                                           
                                                 <input type="number" class="form-control icon-branch" name="taxNumber" formControlName="taxNumber">
@@ -139,7 +139,14 @@
                                                 {{'component-names.companies'|translate}}
 
                                             </label>
-                                      
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="companyId" name='companyId' class="" id="companyId">
+                                                    <ng-option *ngFor="let company of companyList" [value]="company.id">
+                                                        {{lang=="ar"?company.nameAr:company.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                               
+                                            </div>
                                         </div>
                                       
                                         <div class="col-md-2 col-2">
@@ -175,7 +182,7 @@
                                        
                                         <div class="col-md-4 col-4">
                                             <label for="currencyId" class="label-name">
-                                                {{'component-names.currency'|translate}}
+                                                {{'component-names.currencies'|translate}}
 
                                             </label>
                                             <div class="input-group  popup">
@@ -219,6 +226,52 @@
                                             type="button"><i class="fa fa-search"></i>
                                         </button>
                                         </div>
+                                        <div class="col-md-4 col-4">
+                                            <label for="accountType" class="label-name">
+                                                {{'account.accountType'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="accountType" name='accountType' class="" id="accountType">
+                                                    <ng-option *ngFor="let accountType of accountTypeList" [value]="accountType.value">
+                                                        {{lang=="ar"?accountType.nameAr:accountType.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                               
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="col-md-4 col-4" *ngIf="accountForm.controls['accountType'].value==2;">
+                                            <label for="trialBalance" class="label-name">
+                                                {{'account.trialBalance'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="trialBalance" name='trialBalance' class="" id="trialBalance">
+                                                    <ng-option *ngFor="let trialBalance of trialBalanceList" [value]="trialBalance.value">
+                                                        {{lang=="ar"?trialBalance.nameAr:trialBalance.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                               
+                                            </div>
+                                          
+                                        </div>
+
+                                        <div class="col-md-4 col-4" *ngIf="accountForm.controls['accountType'].value==1;">
+                                            <label for="accountClassificationId" class="label-name">
+                                                {{'component-names.accountClassification'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="accountClassificationId" name='accountClassificationId' class="" id="accountClassificationId">
+                                                    <ng-option *ngFor="let accountClassification of accountClassificationList" [value]="accountClassification.id">
+                                                        {{lang=="ar"?accountClassification.nameAr:accountClassification.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                               
+                                            </div>
+                                          
+                                        </div>
 
                                         <hr class="mt-3 mb-3 p-0">
                                         <div class="col-12 col-md-6">
@@ -232,7 +285,27 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="media">
+                                                <label class="col-form-label m-r-10"> {{'account.isLeafAccount'|translate}} </label>
+                                                <div class="icon-state media-body mx-5">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="form-control" name="isLeafAccount" formControlName="isLeafAccount">
+                                                        <span class="switch-state"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="accountForm.controls['isActive'].value==false;">
+                                            <label for="code" class="label-name">
+                                                {{'account.noteNotActive'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                          
+                                                <input type="text" class="form-control icon-branch" name="noteNotActive" formControlName="noteNotActive">
+                                               
 
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
