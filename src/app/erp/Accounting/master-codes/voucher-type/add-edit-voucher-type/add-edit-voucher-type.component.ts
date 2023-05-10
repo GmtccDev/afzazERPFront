@@ -199,7 +199,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
             journalId: res.response?.journalId,
             voucherTypeId: res.response?.voucherTypeId,
             serialTypeId: res.response?.serialTypeId,
-            fiscalPeriodId: res.response?.fiscalPeriodId,
+            serialId: res.response?.serialId,
             defaultAccountId: res.response?.defaultAccountId,
             defaultCurrencyId: res.response?.defaultCurrencyId,
             chooseAccountNature: res.response?.chooseAccountNature,

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
 
+
 // Menu
 export interface Menu {
 	headTitle1?: string,
@@ -54,6 +55,7 @@ export class NavService implements OnInit, OnDestroy {
 	constructor(private router: Router, private translate: TranslateService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
 			this.getVoucherTypes();
+		
 
 		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
@@ -116,6 +118,7 @@ export class NavService implements OnInit, OnDestroy {
 							this.voucherTypes+=	"{path: '/accounting-master-codes/voucherType', title: "+element.voucherNameEn+", type: 'link', active: true },"
 
 						});
+					
 					}
 					resolve();
 				},
@@ -203,11 +206,8 @@ export class NavService implements OnInit, OnDestroy {
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: [
-                    this.voucherTypes,			
-
-					
-			
-				//					{path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
+                  this.voucherTypes,			
+			     //  {path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
 
 			]
 
