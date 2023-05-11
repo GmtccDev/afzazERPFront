@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +26,6 @@ import {
 
 import { PublicService } from 'src/app/shared/services/public.service';
 import { VoucherTypeServiceProxy } from '../../../services/voucher-type';
-import { AccountDto } from '../../../models/account';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 @Component({
   selector: 'app-add-edit-voucher-type',
@@ -45,7 +44,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   currenciesList: any;
 
   fiscalPeriodList: any;
-  accountList: any[] = [];
+  accountList: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
 
   sub: any;
@@ -121,6 +120,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
+ 
     this.changePath();
     if (this.currnetUrl == this.addUrl) {
     }
@@ -129,6 +129,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
         this.id = params['id'];
         if (this.id) {
           this.getVoucherTypeById(this.id);
+     
+
         }
       }
     });
