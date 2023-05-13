@@ -73,11 +73,23 @@
         </label>
         <div class="">
             <ng-select  style="width:100%"  [(ngModel)]="accountId" name="accountId">
-                <!-- <ng-option *ngFor="let serialObject of serialList"  [value]="serialObject.value">
-                    {{lang=="ar"?serialObject.nameAr:serialObject.nameEn}}
-                </ng-option> -->
+                <ng-option *ngFor="let account of accountList" [value]="account.id">
+                    {{lang=="ar"?account.nameAr:account.nameEn}}
+                </ng-option>
+                
             </ng-select>
     
         </div>
+          
+        <div class="col-md-2 col-2">
+            <button
+              
+            class="btn btn-rounded btn-dark" (click)="showSearchModal=true"
+            type="button"><i class="fa fa-search"></i></button>
+        </div>
+       
     </div>
 </div>
+<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
+    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccount($event)">
+</app-public-search-modal>

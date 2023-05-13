@@ -45,6 +45,8 @@ export class AddEditRoleComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  modulesType: {  }[];
+  screensList: any;
   constructor(
     private roleService: RoleServiceProxy,
     private router: Router,
@@ -59,7 +61,7 @@ export class AddEditRoleComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+this.getModulesType() 
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
@@ -136,6 +138,7 @@ export class AddEditRoleComponent implements OnInit {
 
           this.permission = res.response?.permissions?.items;
           this.screens=res.response?.screens;
+          this.screensList=res.response?.screens;
         
         },
         error: (err: any) => {
@@ -322,8 +325,20 @@ export class AddEditRoleComponent implements OnInit {
   }
 
   
-  
+  getModulesType() {
+    this.modulesType = [
+      { descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0' },
+      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1'},
+      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2' },
+      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3',  },
+      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4' },
+      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5' }
+    ];
+  }
+  onChange(event){
+this.screens=this.screensList.filter(x=>x.moduleType==Number(event));
 
+  }
  
  
 }

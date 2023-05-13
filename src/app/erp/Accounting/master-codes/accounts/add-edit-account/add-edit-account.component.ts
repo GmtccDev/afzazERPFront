@@ -17,6 +17,8 @@ import { CompanyDto } from 'src/app/erp/master-codes/models/company';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { CostCenterDto } from '../../../models/cost-Center';
 import { PublicService } from 'src/app/shared/services/public.service';
+import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
+import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -71,6 +73,8 @@ export class AddEditAccountComponent implements OnInit {
   accountClassificationList: any;
   accountTypeList: { nameAr: string; nameEn: string; value: any; }[];
   trialBalanceList: { nameAr: string; nameEn: string; value: any; }[];
+  isMultiCompanies = true;
+  isMultiCurrency = true;
 
   constructor(
     private accountService: AccountServiceProxy,
@@ -81,7 +85,9 @@ export class AddEditAccountComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
     private modelService: NgbModal,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public subscriptionService: SubscriptionService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
 
   ) {
     this.defineaccountForm();
@@ -90,10 +96,11 @@ export class AddEditAccountComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getCompanies();
+    this.getLastSubscription();
+    this.getGeneralConfiguration();
     this.getAccount();
     this.getAccountGroup();
-    this.getCurrency();
+ 
     this.getCostCenter();
     this.getAccountClassification();
     this.currnetUrl = this.router.url;
@@ -155,7 +162,7 @@ export class AddEditAccountComponent implements OnInit {
       nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      isLeafAccount:true,
+      isLeafAccount: true,
       parentId: null,
       companyId: null,
       openBalanceDebit: null,
@@ -169,12 +176,75 @@ export class AddEditAccountComponent implements OnInit {
       accountType: null,
       trialBalance: null,
       accountClassificationId: null,
-      noteNotActive:null
-      
+      noteNotActive: null
+
     });
 
   }
+  getLastSubscription() {
 
+    this.subscriptionService.getLastSubscription().subscribe(
+      next => {
+        debugger
+        if (next.success == true) {
+
+          if (next.response != null) {
+            this.isMultiCompanies = next.response.multiCompanies;
+            if (this.isMultiCompanies) {
+              this.getCompanies();
+            }
+            //MultiCompanies
+          }
+
+
+        }
+      },
+      error => {
+
+        //this.showLoader = false;
+        console.log(error)
+
+      }
+    )
+
+  }
+  getGeneralConfiguration() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+
+          console.log(res);
+          //let data =
+          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
+          //   return res;
+          // });
+          this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
+          if (res.success) {
+
+
+            this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
+            if (this.isMultiCurrency) {
+              this.getCurrency();
+            }
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountService.getDdl().subscribe({
@@ -525,7 +595,7 @@ export class AddEditAccountComponent implements OnInit {
   getAccountType() {
     this.accountTypeList = [
       { nameAr: 'قائمة دخل', nameEn: 'Income Statement', value: 1 },
-      { nameAr: 'ميزان المراجعة', nameEn: 'Trial Balance', value: 2}
+      { nameAr: 'ميزان المراجعة', nameEn: 'Trial Balance', value: 2 }
     ];
     this.trialBalanceList = [
       { nameAr: ' الأصول ', nameEn: 'Assets', value: 1 },

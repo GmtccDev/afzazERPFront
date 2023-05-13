@@ -15,6 +15,7 @@ import { GeneralConfigurationServiceProxy } from '../../services/general-configu
 import { EditGeneralConfigurationCommand, GeneralConfigurationDto } from '../../models/general-configurations';
 import { CurrencyDto } from '../../../master-codes/models/currency';
 import { CurrencyServiceProxy } from '../../../master-codes/services/currency.servies';
+import { PublicService } from 'src/app/shared/services/public.service';
 @Component({
   selector: 'app-accounting-configurations',
   templateUrl: './accounting-configurations.component.html',
@@ -45,14 +46,13 @@ export class AccountingConfigurationsComponent implements OnInit {
   submited: boolean = false;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   cycleList: { nameAr: string; nameEn: string; value: string; }[];
+  routeApi = 'Account/get-ddl?'
+  accountList: any;
+  showSearchModal: boolean;
   constructor(private currencyService: CurrencyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private router: Router,
-    private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
-    private modalService: NgbModal,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private publicService: PublicService,
     private spinner: NgxSpinnerService,
     private SharedServices: SharedService, private translate: TranslateService
   ) {
@@ -65,7 +65,8 @@ export class AccountingConfigurationsComponent implements OnInit {
     
     this.getSerial();
     this.getCycle();
-    this.getCurrencies()
+    this.getCurrencies();
+    this.getAccount();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
  //   this.changePath();
@@ -102,6 +103,32 @@ export class AccountingConfigurationsComponent implements OnInit {
       { nameAr: ' مسودة – مرحل', nameEn: 'Draft  - carried over', value: '2' },
       { nameAr: "  مرحل  ", nameEn: 'carried over', value: '3' }
     ];
+  }
+  getAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.accountList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
   //#endregion
 
@@ -177,6 +204,7 @@ export class AccountingConfigurationsComponent implements OnInit {
              this.multiCurrency= this.generalConfiguration.find(c=>c.id==2).value=="true"?true:false;
              this.serial=this.generalConfiguration.find(c=>c.id==3).value;
              this.cycleSelected=this.generalConfiguration.find(c=>c.id==4).value;
+             this.accountId=this.generalConfiguration.find(c=>c.id==5).value;
           }
 
 
@@ -255,6 +283,9 @@ export class AccountingConfigurationsComponent implements OnInit {
         else  if(s.id==4){
           s.value=this.cycleSelected+"";
         }
+        else  if(s.id==5){
+          s.value=this.accountId+"";
+        }
         }
       });
               
@@ -290,7 +321,11 @@ export class AccountingConfigurationsComponent implements OnInit {
    
    
   }
-
+  onSelectAccount(event) {
+    debugger
+    this.accountId=event.id;
+    this.showSearchModal = false;
+  }
   //#endregion
 }
 

@@ -97,7 +97,17 @@
         <div id="ex-table-div"></div> -->
 
     </div>
+   
 </section>
+<div class="input-group  popup">
+    <ng-select style="width:100%" (change)="onChange($event)">
+        <ng-option *ngFor="let module of modulesType" [value]="module.value">
+            {{lang=="ar"?module.descriptionAr:module.descriptionEn}}
+        </ng-option>
+    </ng-select>
+   
+</div>
+<br/>
    <input
    autocomplete="off" 
       type="text"

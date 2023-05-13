@@ -134,7 +134,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-4 col-4" *ngIf="isMultiCompanies">
                                             <label for="companyId" class="label-name">
                                                 {{'component-names.companies'|translate}}
 
@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                       
-                                        <div class="col-md-2 col-2">
+                                        <div class="col-md-2 col-2" *ngIf="isMultiCompanies">
                                             <button
                                               
                                             class="btn btn-rounded btn-dark" (click)="showSearchModalCompany=true"
@@ -180,7 +180,7 @@
                                         </button>
                                         </div>
                                        
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-4 col-4" *ngIf="isMultiCurrency">
                                             <label for="currencyId" class="label-name">
                                                 {{'component-names.currencies'|translate}}
 
@@ -196,7 +196,7 @@
                                           
                                         </div>
                                       
-                                        <div class="col-md-2 col-2">
+                                        <div class="col-md-2 col-2" *ngIf="isMultiCurrency">
                                             <button
                                               
                                             class="btn btn-rounded btn-dark" (click)="showSearchModalCurrency=true"
