@@ -12,5 +12,15 @@ export class UserLoginService {
 
     return this._httpClient.post<any>(environment.apiUrl + "/api/UserLogin/Login", AuthenticateRequest);
   }
+  getDdl(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiUrl  + "/api/UserLogin/get-ddl?");
+}
+getDdlWithCompanies( ids: Array<number>|undefined): Observable<any> {
+  let queryParams = new HttpParams();
+  if (ids != undefined)
+ // queryParams = queryParams.append("companies", ids.join(', '));
+  queryParams = queryParams.appendAll({'companies': ids});
 
+  return this._httpClient.get<any>(environment.apiUrl+ "/api/UserLogin/get-ddlWithCompanies?", { params: queryParams });
+}
 }
