@@ -78,13 +78,13 @@ export class NavService implements OnInit, OnDestroy {
 				this.levelMenu = false;
 			});
 		}
-		debugger;
+		
 
 	}
 
 	//#region ngOnInit
 	ngOnInit(): void {
-		debugger;
+		
     // this.getVoucherTypes();
 	}
 	//#endregion
