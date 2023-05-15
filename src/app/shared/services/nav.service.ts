@@ -54,7 +54,6 @@ export class NavService implements OnInit, OnDestroy {
 
 	constructor(private router: Router, private translate: TranslateService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
-			this.getVoucherTypes();
 		
 
 		this.setScreenWidth(window.innerWidth);
@@ -100,41 +99,7 @@ export class NavService implements OnInit, OnDestroy {
 		});
 	}
 
-	getVoucherTypes() {
-		debugger;
-		return new Promise<void>((resolve, reject) => {
-			debugger;
-
-			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-				next: (res) => {
-					debugger
-
-					console.log(res);
-					if (res.success) {
-						debugger
-						this.voucherType = res.response.items
-						this.voucherType.forEach(element => {
-							debugger;
-							this.voucherTypes+=	"{path: '/accounting-master-codes/voucherType', title: "+element.voucherNameEn+", type: 'link', active: true },"
-
-						});
-					
-					}
-					resolve();
-				},
-				error: (err: any) => {
-					reject(err);
-				},
-				complete: () => {
-					console.log('complete');
-				},
-			});
-
-			this.subsList.push(sub);
-
-		});
-
-	}
+	
 
 	private setScreenWidth(width: number): void {
 		this.screenWidth.next(width);
@@ -205,12 +170,7 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: [
-                  this.voucherTypes,			
-			     //  {path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
-
-			]
-
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: this.voucherTypes
 		}
 
 
