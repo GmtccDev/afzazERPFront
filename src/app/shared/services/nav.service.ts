@@ -115,7 +115,7 @@ export class NavService implements OnInit, OnDestroy {
 						this.voucherType = res.response.items
 						this.voucherType.forEach(element => {
 							debugger;
-							this.voucherTypes+=	"{path: '/accounting-master-codes/voucherType', title: "+element.voucherNameEn+", type: 'link', active: true },"
+							this.voucherTypes+=	"{path: '/accounting-operations/vouchers', title: "+element.voucherNameEn+", type: 'link', active: true },"
 
 						});
 					
@@ -206,8 +206,8 @@ export class NavService implements OnInit, OnDestroy {
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: [
-                  this.voucherTypes,			
-			     //  {path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
+                //   this.voucherTypes,			
+	            {path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
 
 			]
 

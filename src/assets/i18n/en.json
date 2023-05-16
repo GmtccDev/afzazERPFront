@@ -308,7 +308,8 @@
         "account-information": "Account Information",
         "accountClassification": "Account Classification",
         "accountClassification-information": "Account Classification Information",
-        "voucher-types": "Voucher Types"
+        "voucher-types": "Voucher Types",
+        "vouchers":"Vouchers"
     },
     "language": {
         "ARABIC": "Arabic",

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContentComponent } from "./shared/components/layout/content/content.component";
-import { content } from "./shared/routes/routes";
 import { DashboardComponent } from "./shared/components/layout/dashboard/dashboard.component";
 import { AuthenticationComponent } from './erp/authentication/authentication.component';
 import { AuthenticationGuard } from './shared/gaurds/authentication.guard';
 import { SubscriptionComponent } from './shared/components/layout/subscription/subscription.component';
-import { AccountingConfigurationsComponent } from './erp/Accounting/configurations/accounting-configurations/accounting-configurations.component';
 
 const routes: Routes = [
 	{
@@ -91,6 +89,16 @@ const routes: Routes = [
 			{
 				path: '',
 				loadChildren: () => import('./././erp/dashboard/dashboard.module').then(m => m.DashboardModule)
+			}]
+	},
+	{
+		path: 'accounting-operations',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./erp/Accounting/operations/operations.module').then(m => m.OperationsModule)
 			}]
 	},
 
