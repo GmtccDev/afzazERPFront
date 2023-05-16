@@ -446,8 +446,11 @@ export class AddEditVoucherTypeComponent implements OnInit {
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
+              this.router.navigate([this.listUrl])
+              .then(() => {
+                window.location.reload();
+              });
+            //  navigateUrl(this.listUrl, this.router);
             }, 1000);
           },
           error: (err: any) => {

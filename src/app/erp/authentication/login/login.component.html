@@ -42,6 +42,39 @@
                                     class="text text-danger mt-1">
                                     {{'error.required'|translate}}
                                 </div>
+
+                              
+                            </div>
+                            <div class="form-group">
+                                <label for="roles" class="label-name">
+                                    {{'component-names.companies'|translate}}
+
+                                </label>
+                                <div class="input-group  popup">
+                                    <ng-select style="width:100%" 
+                                        (change)="onChangeCompany($event)" formControlName="companyId"
+                                        name='companyId' class="" id="companyId">
+                                        <ng-option *ngFor="let company of companiesList" [value]="company.id">
+                                            {{lang=="ar"?company.nameAr:company.nameEn}}
+                                        </ng-option>
+                                    </ng-select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="roles" class="label-name">
+                                    {{'component-names.branches'|translate}}
+
+                                </label>
+                                <div class="input-group  popup">
+                                    <ng-select style="width:100%" formControlName="branchId"
+                                        name='branchId' class="" id="branchId">
+                                        <ng-option *ngFor="let branch of branchesList" [value]="branch.id">
+                                            {{lang=="ar"?branch.nameAr:branch.nameEn}}
+                                        </ng-option>
+                                    </ng-select>
+
+                                </div>
                             </div>
                             <div class="form-group my-5">
 
@@ -68,13 +101,13 @@
                             <!-- <p class="mt-4 mb-0">Don't have account?
                   <a [routerLink]="'/authentication/register/simple'" class="ms-2">Create Account</a>
                 </p> -->
-              
+
                         </form>
                         <p class="mb-2 text-muted btn-link">
                             <a [routerLink]="'/authentication/forget-password'" class="f-w-400">
                                 {{'login.forget-password'|translate}}
-                              </a>
-                            </p>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>

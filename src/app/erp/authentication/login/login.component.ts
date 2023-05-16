@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { UserLoginService } from '../services/user-login-service'
+import { CompanyServiceProxy } from '../../master-codes/services/company.service';
+import { BranchServiceProxy } from '../../master-codes/services/branch.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,14 +16,19 @@ export class LoginComponent implements OnInit {
   public show: boolean = false;
   public loginForm = this.fb.group({
     userName: ['', [Validators.required]],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    companyId: ['', [Validators.required]],
+    branchId:['', [Validators.required]],
   });
   public errorMessage: any;
   // authService: any;
   public showLoader: boolean = false;
   currentSystemLanguage = 'en';
+  companiesList: any;
+  branchesList: any;
   // public authService: AuthService,
   constructor(private fb: FormBuilder, public authService: UserLoginService,
+
     
      public router: Router,  private userService: UserService,private translate:TranslateService) {
       
@@ -37,11 +44,70 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCompanies();
     this.userService.logout();
   }
 
   showPassword() {
     this.show = !this.show;
+  }
+  getCompanies() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.authService.getDdl().subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.companiesList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+     
+    });
+
+  }
+  onChangeCompany(values) {
+   
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.authService.getDdlWithCompanies(values).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            
+
+            this.branchesList = res.response;
+           
+
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+    
+    });
+
   }
 
   // Simple Login
