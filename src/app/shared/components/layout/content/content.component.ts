@@ -40,8 +40,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
             debugger
 
             res.response.items.forEach(element => {
-
-              this.navServices.voucherTypes.push({ path: '/accounting-master-codes/journal', title: this.translate.instant("component-names.journal"), type: 'link', active: true },)
+debugger;debugger
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title: element.voucherNameAr, type: 'link', active: true },)
+             // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
 
             });
 
