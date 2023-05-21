@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AddEditVoucherComponent} from  'src/app/erp/Accounting/operations/vouchers/add-edit-voucher/add-edit-voucher.component';
 import {VouchersComponent} from  'src/app/erp/Accounting/operations/vouchers/vouchers.component';
+import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-entry/add-edit-journal-entry.component';
+import { JournalEntryComponent } from './journal-entry/journal-entry.component';
 
 
 const routes: Routes = [
@@ -11,6 +13,9 @@ const routes: Routes = [
 			{ path: 'vouchers', component: VouchersComponent },
 			{ path: 'vouchers/add-voucher', component: AddEditVoucherComponent },
 			{ path: 'vouchers/update-voucher/:id', component: AddEditVoucherComponent },
+			{ path: 'journalEntry', component: JournalEntryComponent },
+			{ path: 'journalEntry/add-journalEntry', component: AddEditJournalEntryComponent },
+			{ path: 'journalEntry/update-journalEntry/:id', component: AddEditJournalEntryComponent },
 		
 		]
 	}

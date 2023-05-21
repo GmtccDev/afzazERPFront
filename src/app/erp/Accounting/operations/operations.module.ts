@@ -8,12 +8,14 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { OperationsRoutingModule } from './opertations-routing.module';
 import { AddEditVoucherComponent } from './vouchers/add-edit-voucher/add-edit-voucher.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
+import { JournalEntryComponent } from './journal-entry/journal-entry.component';
+import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-entry/add-edit-journal-entry.component';
 
 
 
 @NgModule({
   declarations: [
-    AddEditVoucherComponent, VouchersComponent
+    AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent
 
     
   ],

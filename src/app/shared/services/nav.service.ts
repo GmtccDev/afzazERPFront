@@ -206,7 +206,9 @@ export class NavService implements OnInit, OnDestroy {
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: [
-                   this.voucherTypes,			
+                   this.voucherTypes,	
+		   { path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
+		
 	             // {path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
 
 			]
