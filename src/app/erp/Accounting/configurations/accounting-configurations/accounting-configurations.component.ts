@@ -322,7 +322,7 @@ export class AccountingConfigurationsComponent implements OnInit {
    
   }
   onSelectAccount(event) {
-    debugger
+    
     this.accountId=event.id;
     this.showSearchModal = false;
   }

@@ -56,8 +56,11 @@ export class NavService implements OnInit, OnDestroy {
 		private voucherTypeService: VoucherTypeServiceProxy) {
 		//	this.getVoucherTypes();
 		
+this.voucherTypes.push(
+	 { path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 
-		this.setScreenWidth(window.innerWidth);
+)  		
+this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
 			takeUntil(this.unsubscriber)
@@ -79,13 +82,13 @@ export class NavService implements OnInit, OnDestroy {
 				this.levelMenu = false;
 			});
 		}
-		debugger;
+		;
 
 	}
 
 	//#region ngOnInit
 	ngOnInit(): void {
-		debugger;
+		;
     // this.getVoucherTypes();
 	}
 	//#endregion
@@ -101,20 +104,20 @@ export class NavService implements OnInit, OnDestroy {
 	}
 
 	getVoucherTypes() {
-		debugger;
+		;
 		return new Promise<void>((resolve, reject) => {
-			debugger;
+			;
 
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					debugger
+					
 
 					console.log(res);
 					if (res.success) {
-						debugger
+						
 						this.voucherType = res.response.items
 						this.voucherType.forEach(element => {
-							debugger;
+							;
 							this.voucherTypes+=	"{path: '/accounting-operations/vouchers', title: "+element.voucherNameEn+", type: 'link', active: true },"
 
 						});
@@ -205,13 +208,11 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children: [
-                   this.voucherTypes,	
-		   { path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children:
+				this.voucherTypes,
 		
-	             // {path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
-
-			]
+		
+	          
 
 		}
 

@@ -431,7 +431,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    debugger;
+    ;
     if (this.voucherTypeForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
         var entity = this.voucherTypeForm.value;
@@ -493,7 +493,10 @@ export class AddEditVoucherTypeComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
 
-              navigateUrl(this.listUrl, this.router);
+              this.router.navigate([this.listUrl])
+              .then(() => {
+                window.location.reload();
+              });
             }, 1000);
           },
           error: (err: any) => {

@@ -129,11 +129,15 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   delete(id: any) {
     this.voucherTypeService.deleteVoucherType(id).subscribe((resonse) => {
       console.log('delet response', resonse);
-      this.getVoucherTypes();
+     // this.getVoucherTypes();
+      this.router.navigate([this.listUrl])
+      .then(() => {
+        window.location.reload();
+      });
     });
   }
   edit(id: string) {
-    debugger;
+    ;
     this.router.navigate([
       '/accounting-master-codes/voucherType/update-voucher-type',
       id,
@@ -151,8 +155,11 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       if (rs == 'Confirm') {
         let sub = this.voucherTypeService.deleteVoucherType(id).subscribe(
           (resonse) => {
-            this.getVoucherTypes();
-
+           // this.getVoucherTypes();
+           this.router.navigate([this.listUrl])
+           .then(() => {
+             window.location.reload();
+           });
           });
         this.subsList.push(sub);
       }
@@ -286,8 +293,11 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     var ids = this.listIds;
     let sub = this.voucherTypeService.deleteListVoucherType(ids).subscribe(
       (resonse) => {
-
-        this.getVoucherTypes();
+        this.router.navigate([this.listUrl])
+        .then(() => {
+          window.location.reload();
+        });
+       // this.getVoucherTypes();
         this.listIds = [];
       });
     this.subsList.push(sub);
