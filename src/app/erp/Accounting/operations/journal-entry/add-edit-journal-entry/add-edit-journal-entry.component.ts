@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -52,6 +52,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   costCenterList: any;
   currencyList: any;
   fiscalPeriodList: any;
+  counter: number;
   constructor(
     private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
@@ -136,11 +137,54 @@ export class AddEditJournalEntryComponent implements OnInit {
       notes:null,
       journalId:['', Validators.compose([ Validators.required])],
       fiscalPeriodId:['', Validators.compose([ Validators.required])],
+      journalEntriesDetailDTO: this.fb.array([])
     });
 
   }
+ get jEMasterStatusId() {
 
+    return this.journalEntryForm.controls['jEMasterStatusId'].value;
+  }
+  get accJournalEntriesDetailDTOList(): FormArray { return this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray; }
+  initGroup() {
 
+    this.counter += 1;
+    let accJournalEntriesDetailDTO = this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray;
+    accJournalEntriesDetailDTO.push(this.fb.group({
+      jEDetailId: [null],
+      jEMasterId: [null],
+      accountId: [null, Validators.required],
+      subAccountTypeId: [null],
+      subAccountId: [null],
+      jEDetailDescription: [''],
+      jEDetailCreditValue: [0.0],
+      JEDetailDebitValue: [0.0],
+      costCenterId: [''],
+      jEDetailSerial: [this.counter]
+    }, { validator: this.atLeastOne(Validators.required, ['jEDetailCreditValue', 'JEDetailDebitValue']) }
+    ));
+    console.log(accJournalEntriesDetailDTO.value)
+  }
+ onDeleteRow(rowIndex) {
+    debugger
+    let accJournalEntriesDetailDTO = this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray;
+    accJournalEntriesDetailDTO.removeAt(rowIndex);
+    this.counter -= 1;
+  }
+  atLeastOne = (validator: ValidatorFn, controls: string[]) => (
+    group: FormGroup,
+  ): ValidationErrors | 0 => {
+    if (!controls) {
+      controls = Object.keys(group.controls)
+    }
+
+    const hasAtLeastOne = group && group.controls && controls
+      .some(k => !validator(group.controls[k]));
+
+    return hasAtLeastOne ? 0 : {
+      atLeastOne: true,
+    };
+  };
   //#endregion
 
   //#region CRUD Operations
