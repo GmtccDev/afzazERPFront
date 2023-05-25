@@ -174,10 +174,10 @@ export class AddEditVoucherTypeComponent implements OnInit {
       serialId: null,
       defaultAccountId: null,
       defaultCurrencyId: null,
-      chooseAccountNature: false,
+      //chooseAccountNature: false,
       createFinancialEntryId: null,
       defaultBeneficiaryId: null,
-      needReview: false,
+     // needReview: false,
       defaultLayoutId:null,
       printAfterSave: false
     });
@@ -204,10 +204,10 @@ export class AddEditVoucherTypeComponent implements OnInit {
             serialId: res.response?.serialId,
             defaultAccountId: res.response?.defaultAccountId,
             defaultCurrencyId: res.response?.defaultCurrencyId,
-            chooseAccountNature: res.response?.chooseAccountNature,
+          //  chooseAccountNature: res.response?.chooseAccountNature,
             createFinancialEntryId: res.response?.createFinancialEntryId,
             defaultBeneficiaryId: res.response?.defaultBeneficiaryId,
-            needReview: res.response?.needReview,
+          //  needReview: res.response?.needReview,
             defaultLayoutId: res.response?.defaultLayoutId,
             printAfterSave: res.response?.printAfterSave
 

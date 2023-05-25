@@ -84,7 +84,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-4 col-4" >
                                             <label for="serialTypeId"
                                                 class="label-name">{{'voucher-type.serial-type'|translate}}
                                                 <span class="text-danger">*</span></label>
@@ -102,7 +102,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-4 col-4" *ngShow="false">
                                             <label for="serialId" class="label-name">
                                                 {{'accounting-configration.serial'|translate}}
                                             </label>
@@ -177,7 +177,7 @@
                                                                 class="fa fa-search"></i></button>
                                                     </div>
 
-                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                    <!-- <div class="col gap-3 grid grid-cols-3 ">
                                                         <label for="chooseAccountNature"
                                                             class="label-name">{{'voucher-type.choose-account-nature'|translate}}</label>
                                                         <div class="icon-state media-body mx-5">
@@ -188,7 +188,7 @@
                                                                 <span class="switch-state"></span>
                                                             </label>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
 
                                                     <div class="col gap-3 grid grid-cols-3 ">
                                                         <label for="createFinancialEntryId"
@@ -212,7 +212,7 @@
                                                                 bindValue="id" style="width:100%"></ng-select>
                                                         </div>
                                                     </div>
-                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                    <!-- <div class="col gap-3 grid grid-cols-3 ">
                                                         <label for="needReview"
                                                             class="label-name">{{'general.need-review'|translate}}</label>
                                                         <div class="icon-state media-body mx-5">
@@ -222,7 +222,7 @@
                                                                 <span class="switch-state"></span>
                                                             </label>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </ng-template>
                                         </li>
@@ -230,7 +230,7 @@
                                             <a ngbNavLink>{{'general.print-options'|translate}}</a>
                                             <ng-template ngbNavContent>
                                                 <div class="row">
-                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                    <div class="col gap-3 grid grid-cols-3 " *ngShow="false">
                                                         <label for="defaultLayoutId"
                                                             class="label-name">{{'general.default-layout'|translate}}</label>
 

@@ -31,14 +31,14 @@ export enum SerialTypeArEnum {
 }
 export enum CreateFinancialEntryEnum {
   'Not creating an entry'  = 1,
-  'Create an entry' = 2,
-  'Create a relay entry'=3
+  'Create the entry automatically' = 2,
+  'The entry is not created automatically'=3
 }
 
 export enum CreateFinancialEntryArEnum {
   'عدم انشاء قيد'  = 1,
-  'أنشاء قيد' = 2,
-  'انشاء قيد مرحل'=3
+  'انشاء القيد تلقائيًا' = 2,
+  'عدم انشاء القيد تلقائيا'=3
 }
 
 export enum BeneficiaryTypeEnum {
