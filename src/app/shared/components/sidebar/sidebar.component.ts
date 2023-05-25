@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, NavService } from '../../services/nav.service';
 import { LayoutService } from '../../services/layout.service';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,6 +24,7 @@ export class SidebarComponent {
   public rightArrowNone: boolean = false;
 
   constructor(private router: Router, public navServices: NavService,
+    private voucherTypeService: VoucherTypeServiceProxy,
     public layout: LayoutService) {
     
     let menu = localStorage.getItem("Menu");
@@ -56,6 +58,7 @@ export class SidebarComponent {
     }
     else if (menu == '5') {
       this.navServices.itemsAccount.subscribe(menuItems => {
+        
         this.menuItems = menuItems;
         console.log("----menuItems----", menuItems);
         this.router.events.subscribe((event) => {
@@ -97,7 +100,8 @@ export class SidebarComponent {
 
   // Active Nave state
   setNavActive(item) {
-    ;
+   debugger
+   this.getVoucherTypes();
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;
@@ -118,6 +122,8 @@ export class SidebarComponent {
 
   // Click Toggle menu
   toggletNavActive(item) {
+    debugger
+    this.getVoucherTypes();
     if (!item.active) {
       this.menuItems.forEach(a => {
         if (this.menuItems.includes(item)) {
@@ -158,5 +164,41 @@ export class SidebarComponent {
     }
   }
 
+  getVoucherTypes() {
 
+    return new Promise<void>((resolve, reject) => {
+
+
+      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+
+          
+          console.log(res);
+          if (res.success) {
+            
+            const voucherTypes = res.response.items.map(element => ({
+              path: '/accounting-operations/vouchers',
+              title: element.voucherNameAr,
+              type: 'link',
+              active: true
+            }));
+            this.navServices.voucherTypes=voucherTypes ;
+
+
+          }
+          resolve();
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      //	this.subsList.push(sub);
+
+    });
+
+  }
 }

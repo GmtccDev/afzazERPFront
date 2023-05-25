@@ -215,7 +215,9 @@
         "accountClassification":"تصنيف الحساب",
         "accountClassification-information":"معلومات تصنيف الحساب",
         "voucher-types":"أنماط السندات",
-        "vouchers":"السندات"
+        "vouchers":"السندات",
+        "journalEntry":"قيود محاسبية",
+        "journalEntry-information":"معلومات قيود محاسبية " 
 
        
     },

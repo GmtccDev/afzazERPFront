@@ -185,7 +185,7 @@ export class AddEditAccountComponent implements OnInit {
 
     this.subscriptionService.getLastSubscription().subscribe(
       next => {
-        debugger
+        
         if (next.success == true) {
 
           if (next.response != null) {
@@ -607,7 +607,7 @@ export class AddEditAccountComponent implements OnInit {
     this.showSearchModalCompany = false;
   }
   onSelectAccount(event) {
-    debugger
+    
     this.accountForm.controls.parentId.setValue(event.id);
     this.showSearchModal = false;
   }

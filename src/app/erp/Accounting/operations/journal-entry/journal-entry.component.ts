@@ -2,44 +2,43 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { SharedService } from 'src/app/shared/common-services/shared-service';
+import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
-import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import { VoucherTypeServiceProxy } from '../../services/voucher-type';
-import { SharedService } from '../../../../shared/common-services/shared-service';
-import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
-import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
+import {JournalEntryServiceProxy} from '../../services/journal-entry'
 @Component({
-  selector: 'app-voucher-type',
-  templateUrl: './voucher-type.component.html',
-  styleUrls: ['./voucher-type.component.scss']
+  selector: 'app-journal-entry',
+  templateUrl: './journal-entry.component.html',
+  styleUrls: ['./journal-entry.component.scss']
 })
-export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  voucherType: any[] = [];
+  journalEntry: any[] = [];
   currnetUrl: any;
-  addUrl: string = '/accounting-master-codes/voucherType/add-voucher-type';
-  updateUrl: string = '/accounting-master-codes/voucherType/update-voucher-type/';
-  listUrl: string = '/accounting-master-codes/voucherType';
+  addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
+  updateUrl: string = '/accounting-opertaions/journalEntry/update-journalEntry/';
+  listUrl: string = '/accounting-opertaions/journalEntry';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.voucher-types"),
+    componentList: this.translate.instant("component-names.journalEntry"),
     componentAdd: '',
 
   };
   listIds: any[] = [];
-
   //#endregion
 
   //#region Constructor
   constructor(
-    private voucherTypeService: VoucherTypeServiceProxy,
+    private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
@@ -61,7 +60,7 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.listenToClickedButton();
 
-    this.getVoucherTypes();
+    this.getJournalEntryes();
     setTimeout(() => {
 
       this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -97,16 +96,24 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getVoucherTypes() {
+  getJournalEntryes() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.journalEntryService.allJournalEntryes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
+
           console.log(res);
-          this.toolbarPathData.componentList = this.translate.instant("component-names.voucher-types");
+          //let data =
+          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
+          //   return res;
+          // });
+          this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-            this.voucherType = res.response.items
+            this.journalEntry = res.response.items
+              ;
 
           }
+
+
           resolve();
 
         },
@@ -127,19 +134,14 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region CRUD Operations
   delete(id: any) {
-    this.voucherTypeService.deleteVoucherType(id).subscribe((resonse) => {
+    this.journalEntryService.deleteJournalEntry(id).subscribe((resonse) => {
       console.log('delet response', resonse);
-     // this.getVoucherTypes();
-      this.router.navigate([this.listUrl])
-      .then(() => {
-        window.location.reload();
-      });
+      this.getJournalEntryes();
     });
   }
   edit(id: string) {
-    ;
     this.router.navigate([
-      '/accounting-master-codes/voucherType/update-voucher-type',
+      '/accounting-opertaions/journalEntry/update-journalEntry',
       id,
     ]);
   }
@@ -153,13 +155,12 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.voucherTypeService.deleteVoucherType(id).subscribe(
+        let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
           (resonse) => {
-           // this.getVoucherTypes();
-           this.router.navigate([this.listUrl])
-           .then(() => {
-             window.location.reload();
-           });
+
+            //reloadPage()
+            this.getJournalEntryes();
+
           });
         this.subsList.push(sub);
       }
@@ -174,30 +175,14 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
   columnNames = [
-    {
-      title: this.lang == 'ar' ? ' رقم' : 'id ',
-      field: 'id',
-    },
     this.lang == 'ar'
-      ? { title: ' الاسم', field: 'voucherNameAr' } :
-      { title: ' Name  ', field: 'voucherNameEn' },
-    {
-      title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-      field: 'createdAt',
-    },
-    // {
-    //   title: this.lang == 'ar' ? 'تم الانشاء بواسطة' : 'Created by',
-    //   field: 'createdBy',
-    // },
-    {
-      title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-      field: 'updatedAt',
-    },
-    // {
-    //   title: this.lang == 'ar' ? 'تم التعديل بواسطة' : 'Updated by',
-    //   field: 'updateBy',
-    // },
+      ? { title: ' الاسم', field: 'nameAr' } :
+      { title: ' Name  ', field: 'nameEn' },
 
+    {
+      title: this.lang == 'ar' ? ' الكود' : 'code ',
+      field: 'code',
+    }
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -210,15 +195,15 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
-        { field: 'voucherNameEn', type: 'like', value: searchTxt },
-        { field: 'voucherNameAr', type: 'like', value: searchTxt },
-        { field: 'id', type: 'like', value: searchTxt },
+        { field: 'nameEn', type: 'like', value: searchTxt },
+        { field: 'nameAr', type: 'like', value: searchTxt },
+        { field: 'code', type: 'like', value: searchTxt },
         ,
       ],
     ];
   }
 
-  openVoucherTypes() { }
+  openJournalEntryes() { }
   onCheck(id) {
 
     this.listIds.push(id);
@@ -229,6 +214,7 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     } as ToolbarData);
   }
   onEdit(id) {
+
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -237,8 +223,9 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
+      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-master-codes/voucherType/update-voucher-type/' + id])
+      this.router.navigate(['accounting-opertaions/journalEntry/update-journalEntry/' + id])
     }
 
   }
@@ -253,8 +240,9 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
+        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-master-codes/voucherType/update-voucher-type/' + event.item.id])
+        this.router.navigate(['accounting-opertaions/journalEntry/update-journalEntry/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -290,14 +278,14 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    var ids = this.listIds;
-    let sub = this.voucherTypeService.deleteListVoucherType(ids).subscribe(
+
+
+  var ids = this.listIds;
+    let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
-        this.router.navigate([this.listUrl])
-        .then(() => {
-          window.location.reload();
-        });
-       // this.getVoucherTypes();
+
+        //reloadPage()
+        this.getJournalEntryes();
         this.listIds = [];
       });
     this.subsList.push(sub);

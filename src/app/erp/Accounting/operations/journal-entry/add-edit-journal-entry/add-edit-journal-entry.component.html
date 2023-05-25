@@ -1,0 +1,110 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> Proccessing... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-units">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3 mt-3">
+                    <div class="card-body">
+                        <form [formGroup]="journalEntryForm" id="journalEntrySubmit" class="tabs-form">
+                            <div class="main-branch ranoo">
+                                <div class="wrapper-title">
+
+                                    <h3>{{'component-names.journalEntry-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row ">
+
+                                        <div class="col-12 col-md-6">
+                                            <label for="code" class="label-name">
+                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+                                                <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+                                                <input type="text" class="form-control icon-branch" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}} </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="col-12 col-md-6">
+                                            <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
+                                             
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <div class="media">
+                                                <label class="col-form-label m-r-10"> {{'journalEntry.openBalance'|translate}} </label>
+                                                <div class="icon-state media-body mx-5">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="form-control" name="openBalance" formControlName="openBalance">
+                                                        <span class="switch-state"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="mt-3 mb-3 p-0">
+                                        <div class="col-12 col-md-6">
+                                            <div class="media">
+                                                <label class="col-form-label m-r-10"> {{'general.status'|translate}} </label>
+                                                <div class="icon-state media-body mx-5">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="form-control" name="isActive" formControlName="isActive">
+                                                        <span class="switch-state"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-4">
+                                            <label for="journalId" class="label-name">
+                                                {{'component-names.journal'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="journalId" name='journalId' class="" id="journalId">
+                                                    <ng-option *ngFor="let journal of journalList" [value]="journal.id">
+                                                        {{lang=="ar"?journal.nameAr:journal.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                               
+                                            </div>
+                                          
+                                        </div>
+                                      
+                                      
+                                        <div class="col-md-4 col-4">
+                                            <label for="fiscalPeriodId" class="label-name">
+                                                {{'component-names.fiscalPeriod'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="fiscalPeriodId" name='fiscalPeriodId' class="" id="fiscalPeriodId">
+                                                    <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList" [value]="fiscalPeriod.id">
+                                                        {{lang=="ar"?fiscalPeriod.nameAr:fiscalPeriod.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                               
+                                            </div>
+                                          
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

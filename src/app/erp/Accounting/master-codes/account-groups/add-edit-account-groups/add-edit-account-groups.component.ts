@@ -142,7 +142,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountGroupService.getDdl().subscribe({
         next: (res) => {
-debugger
+
           if (res.success) {
             this.accountGroupList = res.response;
 

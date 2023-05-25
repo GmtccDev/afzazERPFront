@@ -37,13 +37,17 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
           console.log(res);
           if (res.success) {
-            debugger
+
 
             res.response.items.forEach(element => {
-debugger;debugger
+              ;
               this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title: element.voucherNameAr, type: 'link', active: true },)
-             // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
-
+              // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
+              this.navServices.voucherTypes.filter((value, index, self) => {
+                return index === self.findIndex(obj => (
+                  obj.path === value.path && obj.title === value.title
+                ));
+              });
             });
 
 
@@ -65,7 +69,7 @@ debugger;debugger
   }
   customizeLayoutType() {
 
-    debugger
+
     this.getVoucherTypes()
     // this.layout.config.settings.layout_type = "rtl";
     if (localStorage.getItem("language") == "ar") {

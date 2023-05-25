@@ -7,6 +7,7 @@ import { fadeInAnimation } from '../../../data/router-animation/router-animation
 import { DOCUMENT } from '@angular/common';
 import * as chartData from '../../../../shared/data/dashboard/default'
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -35,8 +36,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   disabled = true;
 
   constructor(private route: ActivatedRoute, public navServices: NavService, calendar: NgbCalendar,
+    private voucherTypeService: VoucherTypeServiceProxy,
     @Inject(DOCUMENT) private document: any,
     public layout: LayoutService) {
+     this.getVoucherTypes();
       this.model = calendar.getToday();
       this.elem = document.documentElement;
       this.route.queryParams.subscribe((params) => {
@@ -158,5 +161,45 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     }
   }
+  getVoucherTypes() {
 
+    return new Promise<void>((resolve, reject) => {
+
+
+      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+
+
+          console.log(res);
+          if (res.success) {
+            
+
+            res.response.items.forEach(element => {
+;
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title: element.voucherNameAr, type: 'link', active: true },)
+             // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
+             this.navServices.voucherTypes.filter((value, index, self) => {
+              return index === self.findIndex(obj => (
+                obj.path === value.path && obj.title === value.title
+              ));
+            });
+            });
+
+
+          }
+          resolve();
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      //	this.subsList.push(sub);
+
+    });
+
+  }
 }
