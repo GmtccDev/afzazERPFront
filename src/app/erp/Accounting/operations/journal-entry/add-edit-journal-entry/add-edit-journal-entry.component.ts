@@ -151,17 +151,21 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.counter += 1;
     let accJournalEntriesDetailDTO = this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray;
     accJournalEntriesDetailDTO.push(this.fb.group({
-      jEDetailId: [null],
-      jEMasterId: [null],
+      id: [null],
+      journalEntriesMasterId: [null],
       accountId: [null, Validators.required],
-      subAccountTypeId: [null],
-      subAccountId: [null],
-      jEDetailDescription: [''],
-      jEDetailCreditValue: [0.0],
-      JEDetailDebitValue: [0.0],
+      currencyId: [null],
+      transactionFactor: [null],
+      notes: [''],
+      jEDetailCredit: [0.0],
+      jEDetailDebit: [0.0],
       costCenterId: [''],
-      jEDetailSerial: [this.counter]
-    }, { validator: this.atLeastOne(Validators.required, ['jEDetailCreditValue', 'JEDetailDebitValue']) }
+      jEDetailCreditLocal: [0.0],
+      jEDetailDebitLocal: [0.0],
+    }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'jEDetailDebit']) ,
+    
+  },
+    
     ));
     console.log(accJournalEntriesDetailDTO.value)
   }
