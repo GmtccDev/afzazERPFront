@@ -58,6 +58,10 @@ export class AddEditJournalEntryComponent implements OnInit {
   counter: number;
   accountList: any;
   index: any;
+  totalCredit: number;
+  totalDebit: number;
+  totalDebitLocal: number;
+  totalCreditLocal: number;
   constructor(
     private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
@@ -83,9 +87,8 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
-    
-    if (this.currnetUrl == this.addUrl) 
-    {
+
+    if (this.currnetUrl == this.addUrl) {
       this.getjournalEntryCode();
     }
 
@@ -149,6 +152,44 @@ export class AddEditJournalEntryComponent implements OnInit {
       journalEntriesDetail: this.fb.array([])
     });
     this.initGroup();
+    this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      this.totalCredit = 0;
+      const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
+      ctrl.controls.forEach(x => {
+        let parsed = parseInt(x.get('jEDetailCredit').value)
+        this.totalCredit += parsed
+        this.cd.detectChanges()
+      });
+    })
+    this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      this.totalDebit = 0;
+      const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebit'];
+      ctrl.controls.forEach(x => {
+        let parsed = parseInt(x.get('jEDetailDebit').value)
+        this.totalDebit += parsed
+        this.cd.detectChanges()
+      });
+    })
+    this.totalDebitLocal = 0;
+   
+    this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      this.totalCreditLocal = 0;
+      const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
+      ctrl.controls.forEach(x => {
+        let parsed = parseInt(x.get('jEDetailCreditLocal').value)
+        this.totalCreditLocal += parsed
+        this.cd.detectChanges()
+      });
+    })
+    this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      this.totalDebitLocal = 0;
+      const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebitLocal'];
+      ctrl.controls.forEach(x => {
+        let parsed = parseInt(x.get('jEDetailDebitLocal').value)
+        this.totalDebitLocal += parsed
+        this.cd.detectChanges()
+      });
+    })
   }
   get jEMasterStatusId() {
 
@@ -181,7 +222,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     console.log(journalEntriesDetail.value)
   }
   onDeleteRow(rowIndex) {
-    
+
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     journalEntriesDetail.removeAt(rowIndex);
     this.counter -= 1;
@@ -210,7 +251,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
 
-          this.journalEntryForm=this.fb.group({
+          this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
             code: res.response?.code,
@@ -218,35 +259,100 @@ export class AddEditJournalEntryComponent implements OnInit {
             openBalance: res.response?.openBalance,
             notes: res.response?.notes,
             journalId: res.response?.journalId,
-            fiscalPeriodId: res.response?.fiscalPeriodId, 
+            fiscalPeriodId: res.response?.fiscalPeriodId,
             journalEntriesDetail: this.fb.array([])
-             
+
           });
           let ListDetail = res.response?.journalEntriesDetail;
-         
+
           this.journalEntriesDetailDTOList.clear();
           ListDetail.forEach(element => {
             debugger
             this.journalEntriesDetailDTOList.push(this.fb.group({
-              id:element.id,
+              id: element.id,
               journalEntriesMasterId: element.journalEntriesMasterId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
               notes: element.notes,
               jEDetailCredit: element.jeDetailCredit,
-              jEDetailDebit:element.jeDetailDebit,
+              jEDetailDebit: element.jeDetailDebit,
               costCenterId: element.costCenterId,
               jEDetailCreditLocal: element.jeDetailCreditLocal,
-              jEDetailDebitLocal:element.jeDetailDebitLocal,
+              jEDetailDebitLocal: element.jeDetailDebitLocal,
               jEDetailSerial: this.counter
             }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
             ));
-            
-          
+
+
             this.counter = element.jeDetailSerial;
           });
+          this.totalCredit = 0;
+          const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
+          ctrl.controls.forEach(x => {
+            let parsed = parseInt(x.get('jEDetailCredit').value)
+            this.totalCredit += parsed
+            this.cd.detectChanges()
+          });
 
+
+          this.totalDebit = 0;
+          ctrl.controls.forEach(x => {
+            let parsed = parseInt(x.get('jEDetailDebit').value)
+            this.totalDebit += parsed
+            this.cd.detectChanges()
+
+          })
+          this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            this.totalCredit = 0;
+            const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
+            ctrl.controls.forEach(x => {
+              let parsed = parseInt(x.get('jEDetailCredit').value)
+              this.totalCredit += parsed
+              this.cd.detectChanges()
+            });
+          })
+          this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            this.totalDebit = 0;
+            const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebit'];
+            ctrl.controls.forEach(x => {
+              let parsed = parseInt(x.get('jEDetailDebit').value)
+              this.totalDebit += parsed
+              this.cd.detectChanges()
+            });
+          })
+          this.totalDebitLocal = 0;
+          ctrl.controls.forEach(x => {
+            let parsed = parseInt(x.get('jEDetailDebitLocal').value)
+            this.totalDebitLocal += parsed
+            this.cd.detectChanges()
+
+          });
+          this.totalCreditLocal = 0;
+          ctrl.controls.forEach(x => {
+            let parsed = parseInt(x.get('jEDetailCreditLocal').value)
+            this.totalCreditLocal += parsed
+            this.cd.detectChanges()
+
+          })
+          this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            this.totalCreditLocal = 0;
+            const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
+            ctrl.controls.forEach(x => {
+              let parsed = parseInt(x.get('jEDetailCreditLocal').value)
+              this.totalCreditLocal += parsed
+              this.cd.detectChanges()
+            });
+          })
+          this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            this.totalDebitLocal = 0;
+            const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebitLocal'];
+            ctrl.controls.forEach(x => {
+              let parsed = parseInt(x.get('jEDetailDebitLocal').value)
+              this.totalDebitLocal += parsed
+              this.cd.detectChanges()
+            });
+          })
           console.log(
             'this.journalEntryForm.value set value',
             this.journalEntryForm.value
@@ -329,7 +435,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    
+
     //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
@@ -536,13 +642,13 @@ export class AddEditJournalEntryComponent implements OnInit {
     });
 
   }
- 
+
   ClickAccount(i) {
     this.showAccountsModalDebit = true;
     this.index = i;
 
   }
- 
+
   numberOnly(event, i, type): boolean {
 
     if (type == 'Credit') {
