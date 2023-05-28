@@ -83,7 +83,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
-    debugger
+    
     if (this.currnetUrl == this.addUrl) 
     {
       this.getjournalEntryCode();
@@ -209,8 +209,8 @@ export class AddEditJournalEntryComponent implements OnInit {
     const promise = new Promise<void>((resolve, reject) => {
       this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
-debugger
-          this.journalEntryForm.setValue({
+
+          this.journalEntryForm=this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
             code: res.response?.code,
@@ -226,6 +226,7 @@ debugger
          
           this.journalEntriesDetailDTOList.clear();
           ListDetail.forEach(element => {
+            debugger
             this.journalEntriesDetailDTOList.push(this.fb.group({
               id:element.id,
               journalEntriesMasterId: element.journalEntriesMasterId,
@@ -233,15 +234,15 @@ debugger
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
               notes: element.notes,
-              jEDetailCredit: element.jEDetailCredit,
-              jEDetailDebit:element.jEDetailDebit,
+              jEDetailCredit: element.jeDetailCredit,
+              jEDetailDebit:element.jeDetailDebit,
               costCenterId: element.costCenterId,
-              jEDetailCreditLocal: element.jEDetailCreditLocal,
-              jEDetailDebitLocal:element.jEDetailDebitLocal,
+              jEDetailCreditLocal: element.jeDetailCreditLocal,
+              jEDetailDebitLocal:element.jeDetailDebitLocal,
               jEDetailSerial: this.counter
             }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
             ));
-            debugger
+            
           
             this.counter = element.jeDetailSerial;
           });
@@ -328,7 +329,7 @@ debugger
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    debugger
+    
     //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
