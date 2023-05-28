@@ -23,8 +23,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   journalEntry: any[] = [];
   currnetUrl: any;
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
-  updateUrl: string = '/accounting-opertaions/journalEntry/update-journalEntry/';
-  listUrl: string = '/accounting-opertaions/journalEntry';
+  updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
+  listUrl: string = '/accounting-operations/journalEntry';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -132,7 +132,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#endregion
 
-  //#region CRUD Operations
+  //#region CRUD operations
   delete(id: any) {
     this.journalEntryService.deleteJournalEntry(id).subscribe((resonse) => {
       console.log('delet response', resonse);
@@ -141,7 +141,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   edit(id: string) {
     this.router.navigate([
-      '/accounting-opertaions/journalEntry/update-journalEntry',
+      '/accounting-operations/journalEntry/update-journalEntry',
       id,
     ]);
   }
@@ -225,7 +225,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-opertaions/journalEntry/update-journalEntry/' + id])
+      this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + id])
     }
 
   }
@@ -242,7 +242,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-opertaions/journalEntry/update-journalEntry/' + event.item.id])
+        this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);

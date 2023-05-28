@@ -27,9 +27,9 @@ export class AddEditJournalEntryComponent implements OnInit {
   public show: boolean = false;
   lang = localStorage.getItem("language")
   journalEntry: [] = [];
-  addUrl: string = '/accounting-opertaions/journalEntry/add-journalEntry';
-  updateUrl: string = '/accounting-opertaions/journalEntry/update-journalEntry/';
-  listUrl: string = '/accounting-opertaions/journalEntry';
+  addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
+  updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
+  listUrl: string = '/accounting-operations/journalEntry';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -42,17 +42,22 @@ export class AddEditJournalEntryComponent implements OnInit {
   errorClass = '';
   submited: boolean = false;
   showSearchModal = false;
-  showSearchModalCountry=false;
-  
+  showSearchModalCountry = false;
+  showAccountsModalDebit = false;
+  showAccountsModalCredit = false;
+  showCostCenterModal = false;
   routeFiscalPeriodApi = "FiscalPeriod/get-ddl?"
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
+  routeAccountApi = "Account/get-ddl?"
   journalList: any;
   costCenterList: any;
   currencyList: any;
   fiscalPeriodList: any;
   counter: number;
+  accountList: any;
+  index: any;
   constructor(
     private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
@@ -74,12 +79,16 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.getCurrency();
     this.getFiscalPeriod();
     this.getJournals();
+    this.getAccount();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
-    if (this.currnetUrl == this.addUrl) {
+    debugger
+    if (this.currnetUrl == this.addUrl) 
+    {
       this.getjournalEntryCode();
     }
+
     this.sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
@@ -97,11 +106,11 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.showSearchModal = false;
   }
   onSelectCountry(event) {
-    
-       
-        this.journalEntryForm.controls.countryId.setValue(event.id);
-        this.showSearchModalCountry = false;
-      }
+
+
+    this.journalEntryForm.controls.countryId.setValue(event.id);
+    this.showSearchModalCountry = false;
+  }
   //#endregion
 
   //#region ngOnDestroy
@@ -130,27 +139,27 @@ export class AddEditJournalEntryComponent implements OnInit {
   definejournalEntryForm() {
     this.journalEntryForm = this.fb.group({
       id: 0,
-      date:['', Validators.compose([ Validators.required])],
+      date: ['', Validators.compose([Validators.required])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      openBalance:true,
-      notes:null,
-      journalId:['', Validators.compose([ Validators.required])],
-      fiscalPeriodId:['', Validators.compose([ Validators.required])],
-      journalEntriesDetailDTO: this.fb.array([])
+      openBalance: true,
+      notes: null,
+      journalId: ['', Validators.compose([Validators.required])],
+      fiscalPeriodId: ['', Validators.compose([Validators.required])],
+      journalEntriesDetail: this.fb.array([])
     });
-
+    this.initGroup();
   }
- get jEMasterStatusId() {
+  get jEMasterStatusId() {
 
     return this.journalEntryForm.controls['jEMasterStatusId'].value;
   }
-  get accJournalEntriesDetailDTOList(): FormArray { return this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray; }
+  get journalEntriesDetailList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
   initGroup() {
 
     this.counter += 1;
-    let accJournalEntriesDetailDTO = this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray;
-    accJournalEntriesDetailDTO.push(this.fb.group({
+    let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+    journalEntriesDetail.push(this.fb.group({
       id: [null],
       journalEntriesMasterId: [null],
       accountId: [null, Validators.required],
@@ -159,20 +168,22 @@ export class AddEditJournalEntryComponent implements OnInit {
       notes: [''],
       jEDetailCredit: [0.0],
       jEDetailDebit: [0.0],
-      costCenterId: [''],
+      costCenterId: [null],
       jEDetailCreditLocal: [0.0],
       jEDetailDebitLocal: [0.0],
-    }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'jEDetailDebit']) ,
-    
-  },
-    
+      jEDetailSerial: [this.counter]
+    }, {
+      validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'jEDetailDebit']),
+
+    },
+
     ));
-    console.log(accJournalEntriesDetailDTO.value)
+    console.log(journalEntriesDetail.value)
   }
- onDeleteRow(rowIndex) {
-    debugger
-    let accJournalEntriesDetailDTO = this.journalEntryForm.get('accJournalEntriesDetailDTO') as FormArray;
-    accJournalEntriesDetailDTO.removeAt(rowIndex);
+  onDeleteRow(rowIndex) {
+    
+    let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+    journalEntriesDetail.removeAt(rowIndex);
     this.counter -= 1;
   }
   atLeastOne = (validator: ValidatorFn, controls: string[]) => (
@@ -190,25 +201,49 @@ export class AddEditJournalEntryComponent implements OnInit {
     };
   };
   //#endregion
+  get journalEntriesDetailDTOList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
 
-  //#region CRUD Operations
+  //#region CRUD operations
   getjournalEntryById(id: any) {
 
     const promise = new Promise<void>((resolve, reject) => {
       this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
-          
+debugger
           this.journalEntryForm.setValue({
             id: res.response?.id,
-            date:formatDate(Date.parse(res.response.date)),
+            date: formatDate(Date.parse(res.response.date)),
             code: res.response?.code,
             isActive: res.response?.isActive,
-            openBalance:res.response?.openBalance,
-            notes:res.response?.notes,
-            journalId:res.response?.journalId,
-            fiscalPeriodId:res.response?.fiscalPeriodId,
-           
-
+            openBalance: res.response?.openBalance,
+            notes: res.response?.notes,
+            journalId: res.response?.journalId,
+            fiscalPeriodId: res.response?.fiscalPeriodId, 
+            journalEntriesDetail: this.fb.array([])
+             
+          });
+          let ListDetail = res.response?.journalEntriesDetail;
+         
+          this.journalEntriesDetailDTOList.clear();
+          ListDetail.forEach(element => {
+            this.journalEntriesDetailDTOList.push(this.fb.group({
+              id:element.id,
+              journalEntriesMasterId: element.journalEntriesMasterId,
+              accountId: element.accountId,
+              currencyId: element.currencyId,
+              transactionFactor: element.transactionFactor,
+              notes: element.notes,
+              jEDetailCredit: element.jEDetailCredit,
+              jEDetailDebit:element.jEDetailDebit,
+              costCenterId: element.costCenterId,
+              jEDetailCreditLocal: element.jEDetailCreditLocal,
+              jEDetailDebitLocal:element.jEDetailDebitLocal,
+              jEDetailSerial: this.counter
+            }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
+            ));
+            debugger
+          
+            this.counter = element.jeDetailSerial;
           });
 
           console.log(
@@ -293,16 +328,17 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-  //  var entity = new CreateJournalEntryCommand();
+    debugger
+    //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        var entity= this.journalEntryForm.value;
-       
+        var entity = this.journalEntryForm.value;
+
         this.journalEntryService.createJournalEntry(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
-           
+
             this.definejournalEntryForm();
 
             this.submited = false;
@@ -330,13 +366,13 @@ export class AddEditJournalEntryComponent implements OnInit {
 
 
   onUpdate() {
-  
+
     if (this.journalEntryForm.valid) {
 
       this.journalEntryForm.value.id = this.id;
-   var   entityDb = this.journalEntryForm.value;
+      var entityDb = this.journalEntryForm.value;
       entityDb.id = this.id;
-   
+
       console.log("this.VendorCommissionsForm.value", this.journalEntryForm.value)
       const promise = new Promise<void>((resolve, reject) => {
 
@@ -344,7 +380,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           next: (result: any) => {
             this.spinner.show();
             console.log('result update ', result);
-           
+
             this.definejournalEntryForm();
             this.submited = false;
             setTimeout(() => {
@@ -369,110 +405,169 @@ export class AddEditJournalEntryComponent implements OnInit {
       // return this.journalEntryForm.markAllAsTouched();
     }
   }
+
+
+  getJournals() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.journalList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.accountList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCostCenter() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.costCenterList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCurrency() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.currencyList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeFiscalPeriodApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.fiscalPeriodList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
  
+  ClickAccount(i) {
+    this.showAccountsModalDebit = true;
+    this.index = i;
 
-getJournals() {
-  return new Promise<void>((resolve, reject) => {
-    let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
-      next: (res) => {
+  }
+ 
+  numberOnly(event, i, type): boolean {
 
-        if (res.success) {
-          this.journalList = res.response;
-
-        }
-
-
-        resolve();
-
-      },
-      error: (err: any) => {
-        reject(err);
-      },
-      complete: () => {
-        console.log('complete');
-      },
-    });
-
-    this.subsList.push(sub);
-  });
-
-}
-getCostCenter() {
-  return new Promise<void>((resolve, reject) => {
-    let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
-      next: (res) => {
-
-        if (res.success) {
-          this.costCenterList = res.response;
-
-        }
+    if (type == 'Credit') {
+      const faControl =
+        (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(i);
+      faControl['controls'].jEDetailDebit.setValue(0);
+    }
+    else if (type == 'Debit') {
+      const faControl =
+        (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(i);
+      faControl['controls'].jEDetailCredit.setValue(0);
+    }
 
 
-        resolve();
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
-      },
-      error: (err: any) => {
-        reject(err);
-      },
-      complete: () => {
-        console.log('complete');
-      },
-    });
+  }
+  ClickCostCenter(i) {
 
-    this.subsList.push(sub);
-  });
+    this.showCostCenterModal = true;
+    this.index = i;
 
-}
-getCurrency() {
-  return new Promise<void>((resolve, reject) => {
-    let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
-      next: (res) => {
-
-        if (res.success) {
-          this.currencyList = res.response;
-
-        }
-        resolve();
-
-      },
-      error: (err: any) => {
-        reject(err);
-      },
-      complete: () => {
-        console.log('complete');
-      },
-    });
-
-    this.subsList.push(sub);
-  });
-
-}
-getFiscalPeriod() {
-  return new Promise<void>((resolve, reject) => {
-    let sub = this.publicService.getDdl(this.routeFiscalPeriodApi).subscribe({
-      next: (res) => {
-
-        if (res.success) {
-          this.fiscalPeriodList = res.response;
-
-        }
-
-
-        resolve();
-
-      },
-      error: (err: any) => {
-        reject(err);
-      },
-      complete: () => {
-        console.log('complete');
-      },
-    });
-
-    this.subsList.push(sub);
-  });
-
-}
-
+  }
 }
 
