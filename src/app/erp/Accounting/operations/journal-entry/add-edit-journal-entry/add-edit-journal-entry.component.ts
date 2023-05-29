@@ -12,6 +12,7 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
 import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
+import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -62,6 +63,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   totalDebit: number;
   totalDebitLocal: number;
   totalCreditLocal: number;
+  checkPeriod: any;
   constructor(
     private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
@@ -71,6 +73,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     private sharedServices: SharedService, private translate: TranslateService,
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
+    private alertsService: NotificationsAlertsService,
 
   ) {
     this.definejournalEntryForm();
@@ -163,7 +166,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     })
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
       this.totalDebit = 0;
-      const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebit'];
+      const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
         let parsed = parseInt(x.get('jEDetailDebit').value)
         this.totalDebit += parsed
@@ -183,7 +186,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     })
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
       this.totalDebitLocal = 0;
-      const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebitLocal'];
+      const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
         let parsed = parseInt(x.get('jEDetailDebitLocal').value)
         this.totalDebitLocal += parsed
@@ -314,7 +317,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
             this.totalDebit = 0;
-            const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebit'];
+            const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
               let parsed = parseInt(x.get('jEDetailDebit').value)
               this.totalDebit += parsed
@@ -346,7 +349,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
             this.totalDebitLocal = 0;
-            const ctrl = <FormArray>this.journalEntryForm.controls['jEDetailDebitLocal'];
+            const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
               let parsed = parseInt(x.get('jEDetailDebitLocal').value)
               this.totalDebitLocal += parsed
@@ -435,7 +438,38 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
+    debugger
+    // if (this.checkPeriod == null) {
+    //   this.alertsService.showError(
+    //     'يجب أن يكون السنة المالية مفتوحة و الفترة المحاسبية مفتوحة',
+    //     "",
 
+    //   )
+    //   return;
+    // }
+    console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+    if (this.counter < 2) {
+      this.alertsService.showError(
+        'يجب أن يكون على الاقل اثنين من الصفوف',
+        ""
+
+      )
+      return;
+    }
+    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+      this.alertsService.showError(
+        'يجب ان يكون قيم في الدائن والمدين',
+        ""
+      )
+      return;
+    }
+    if ((this.totalCredit !== this.totalDebit)) {
+      this.alertsService.showError(
+        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
+        ""
+      )
+      return;
+    }
     //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
@@ -471,7 +505,10 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
   }
 
-
+  onChangeCurrency(event){
+    debugger
+    console.log('Name changed:', event.target.value);
+  }
   onUpdate() {
 
     if (this.journalEntryForm.valid) {
@@ -622,8 +659,9 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
+            
             this.fiscalPeriodList = res.response;
-
+            this.checkPeriod=res.response.fiscalPeriodStatus;
           }
 
 

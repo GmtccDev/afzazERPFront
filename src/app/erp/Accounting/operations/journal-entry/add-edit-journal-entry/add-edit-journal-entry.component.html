@@ -132,7 +132,7 @@
                                         <table class="table table-sm m-b-0 table-broder ">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th># </th>
+                                                    <!-- <th># </th> -->
                                                     <th style="width: 15%;">رقم الحساب</th>
                                                     <th style="width: 10%;">مدين</th>
                                                     <th style="width: 10%;">دائن</th>
@@ -148,12 +148,12 @@
                                             <tbody>
                                                 <tr *ngFor="let row of journalEntryForm.get('journalEntriesDetail')['controls']; let i = index"
                                                     [formGroupName]="i">
-                                                    <td>
-                                                        {{ i+1 }}
+                                                    <!-- <td> -->
+                                                        <!-- {{ i+1 }} -->
                                                         <!-- <input type="text"
                                                             style="border: none; border-color: transparent;" hidden
                                                             formControlName="jEDetailSerial" name="jEDetailSerial"> -->
-                                                    </td>
+                                                    <!-- </td> -->
                                                     <td>
                                                         <div class="form-group row">
                                                             <div class="col-sm-12">
@@ -172,12 +172,12 @@
 
                                                                         </select>
 
-                                                                        <div class="input-group-prepend">
+                                                                        <!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickAccount(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -218,7 +218,7 @@
                                                                 <div class="input-group form-group">
                                                                     <div class="input-group form-group">
 
-                                                                        <select class="form-control" name="currencyId"
+                                                                        <select class="form-control" name="currencyId" (change)="onChangeCurrency($event)"
                                                                             formControlName="currencyId"
                                                                             [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 
@@ -229,13 +229,13 @@
                                                                                 {{lang=="ar"?currency.nameAr:currency.nameEn}}
                                                                             </option>
                                                                         </select>
-
+<!-- 
                                                                         <div class="input-group-prepend">
                                                                             <button (click)="ClickCostCenter(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -260,7 +260,7 @@
                                                                 <div class="input-group form-group">
                                                                     <input type="number" required
                                                                         class="form-control required"
-                                                                        (keypress)="numberOnly($event,i,'Credit')"
+                                                                     
                                                                         formControlName="jEDetailCreditLocal"
                                                                         name="jEDetailCreditLocal" style="width: 70px;">
                                                                 </div>
@@ -274,7 +274,7 @@
                                                                 <div class="input-group form-group">
                                                                     <input type="number" required
                                                                         class="form-control required"
-                                                                        (keypress)="numberOnly($event,i,'Debit')"
+                                                                       
                                                                         formControlName="jEDetailDebitLocal"
                                                                         name="jEDetailDebitLocal" style="width: 70px;">
                                                                 </div>
@@ -299,12 +299,12 @@
 
                                                                         </select>
 
-                                                                        <div class="input-group-prepend">
+                                                                        <!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickCostCenter(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -338,6 +338,8 @@
                             <button type="button" (click)="initGroup()" class="btn btn-rounded btn-success">اضافة صف
                                 جديد</button>
                         </form>
+                      
+                         
                     </div>
                 </div>
             </div>
@@ -345,3 +347,23 @@
 
     </div>
 </section>
+<div class="col-md-2">
+    <div class="form-group">
+      <label class="control-label m-t-20"> اجمالي المدين </label>
+      <div class="input-group mb-12">
+
+        <label>{{totalCredit}}</label>
+
+
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-2">
+    <div class="form-group">
+      <label class="control-label m-t-20"> اجمالي الدائن </label>
+      <div class="input-group mb-12">
+
+        <label for="totalDebitValue">{{totalDebit}}</label>
+      </div>
+    </div>
