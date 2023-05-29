@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit {
         console.log(next);
 
         if (next.success == true) {
-          
+          debugger
        //   this.translate.use("en");
           let jwt = next.response.token;
           let jwtData = jwt.split('.')[1]
@@ -132,7 +132,11 @@ export class LoginComponent implements OnInit {
           let decodedJwtData = JSON.parse(decodedJwtJsonData)
           this.userService.setToken(jwt.toString());
           let Role = decodedJwtData.role;
+          debugger
           localStorage.setItem("userName",decodedJwtData.fullName)
+          localStorage.setItem("branchId",this.loginForm.value.branchId)
+          localStorage.setItem("companyId",this.loginForm.value.companyId)
+
           if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
             window.location.replace('authentication/add-password?email='+next.response.user.email);
           }

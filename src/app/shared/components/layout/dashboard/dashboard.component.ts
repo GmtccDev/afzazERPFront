@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public m = this.today.getMinutes();
   public ampm = this.currentHour >= 12 ? 'PM' : 'AM';
   public date: { year: number, month: number };
+  lang = localStorage.getItem("language")
 
   // Charts
   public currentSales = chartData.currentSales;
@@ -164,19 +165,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getVoucherTypes() {
 
     return new Promise<void>((resolve, reject) => {
-
-
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
-
           console.log(res);
           if (res.success) {
-            
-
             res.response.items.forEach(element => {
-;
-              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title: element.voucherNameAr, type: 'link', active: true },)
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title:  this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
+              { queryParams: { voucherTypeId: element.id } }
+              )
              // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
              this.navServices.voucherTypes.filter((value, index, self) => {
               return index === self.findIndex(obj => (

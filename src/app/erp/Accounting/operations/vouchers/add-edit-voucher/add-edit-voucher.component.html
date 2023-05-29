@@ -1,0 +1,195 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-vouchers">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3 mt-3">
+                    <div class="card-body">
+                        <form [formGroup]="voucherForm" id="voucherSubmit" class="tabs-form">
+                            <div class="main-branch ranoo">
+                                <div class="wrapper-title">
+
+                                    <h3>{{'voucher.voucher-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row ">
+                                        <div class="col-md-4 col-4">
+                                            <label for="voucherCode" class="label-name">
+                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch"
+                                                    [ngClass]="{'is-invalid':f['voucherCode'].errors || f['voucherCode'].invalid}"
+                                                    name="voucherCode" formControlName="voucherCode">
+                                                <div *ngIf="(f['voucherCode'].touched || f['voucherCode'].dirty ) && f['voucherCode'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['voucherCode'].errors && f['voucherCode'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="voucherDate" class="label-name">
+                                                {{'general.date'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="date" class="form-control " name="voucherDate"
+                                                    formControlName="voucherDate">
+                                                <div *ngIf="(f['voucherDate'].touched || f['voucherDate'].dirty ) && f['voucherDate'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['voucherDate'].errors && f['voucherDate'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="voucherTotal" class="label-name">
+                                                {{'voucher.voucher-total'|translate}}
+                                            </label>
+                                                <span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch"
+                                                    [ngClass]="{'is-invalid':f['voucherTotal'].errors || f['voucherTotal'].invalid}"
+                                                    name="voucherTotal" formControlName="voucherTotal">
+                                                <div *ngIf="(f['voucherTotal'].touched || f['voucherTotal'].dirty ) && f['voucherTotal'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['voucherTotal'].errors && f['voucherTotal'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="cashAccountId" class="label-name">
+                                                {{'general.cash-account'|translate}}
+
+                                            </label>
+                                            <span class="text-danger">*</span>
+
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="cashAccountId"
+                                                    name='cashAccountId' class="" id="cashAccountId">
+                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div *ngIf="(f['cashAccountId'].touched || f['cashAccountId'].dirty ) && f['cashAccountId'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['cashAccountId'].errors && f['cashAccountId'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="costCenterAccountId" class="label-name">
+                                                {{'general.cost-center-account'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="costCenterAccountId"
+                                                    name='costCenterAccountId' class="" id="costCenterAccountId">
+                                                    <ng-option *ngFor="let account of costCenterAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="currencyId" class="label-name">{{'general.currency'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="currencyId"
+                                                    name='currencyId' class="" id="currencyId">
+                                                    <ng-option *ngFor="let currency of currenciesList"
+                                                        [value]="currency.id">
+                                                        {{lang=="ar"?currency.nameAr:currency.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-4">
+                                            <label for="description" class="label-name">
+                                                {{'general.description'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <textarea class="form-control icon-branch" 
+                                                name="description" formControlName="description">
+                                                </textarea>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                      <div class="col gap-12 grid grid-cols-12 ">
+                                        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                                          <li ngbNavItem [destroyOnHide]="false">
+                                            <a ngbNavLink> {{'general.details' |translate}}</a>
+                                            <ng-template ngbNavContent>
+                                              <!-- <app-voucher-details (onVoucherDetailsChange)="onVoucherDetailsChange($event)"
+                                                [kindId]="entryType.kindId" [ownerId]="voucherForm.value.ownerId"></app-voucher-details> -->
+                                            </ng-template>
+                                          </li>
+                                         
+                  
+                                        </ul>
+                                        <div [ngbNavOutlet]="nav" class=""></div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

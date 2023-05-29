@@ -123,7 +123,7 @@ export class SidebarComponent {
   // Click Toggle menu
   toggletNavActive(item) {
     debugger
-    this.getVoucherTypes();
+   this.getVoucherTypes();
     if (!item.active) {
       this.menuItems.forEach(a => {
         if (this.menuItems.includes(item)) {
@@ -165,14 +165,9 @@ export class SidebarComponent {
   }
 
   getVoucherTypes() {
-
     return new Promise<void>((resolve, reject) => {
-
-
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
-          
           console.log(res);
           if (res.success) {
             

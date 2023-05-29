@@ -266,17 +266,25 @@
         "select":"اختار",
         "toDate":"الي تاريخ",
         "fromDate":"من تاريخ",
+        "date":"التاريخ",
         "parent":"الاب",
         "loading":"جارى التحميل",
         "accounts":"الحسابات",
         "default-account":"الحساب الافتراضى",
         "default-currency":"العملة الافتراضية",
+        "currency": "العملة",
         "need-review":"تحتاج للمراجعة",
         "print-options":"خيارات الطباعة",
         "default-layout":"التخطيط الافتراضى",
         "audit-trail":"سجل التدقيق",
         "print-after-save":"الطباعة بعد الحفظ",
-        "operations":"العمليات"
+        "operations":"العمليات",
+        "cash-account":"حساب النقدية",
+        "cost-center-account":"حساب مركز التكلفة",
+        "description": "الوصف",
+        "details":"التفاصيل"
+
+
 
       
     },
@@ -361,5 +369,11 @@
     "message-title": {
         "done": "نجاح",
         "wrong": "خطأ"
+    },
+     "voucher":{
+        "voucher-information":"بيانات السند",
+        "voucher-total":"أجمالى قيمة السند"
+
     }
+
 }

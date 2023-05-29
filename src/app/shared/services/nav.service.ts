@@ -56,10 +56,10 @@ export class NavService implements OnInit, OnDestroy {
 		private voucherTypeService: VoucherTypeServiceProxy) {
 		//	this.getVoucherTypes();
 		
-this.voucherTypes.push(
-	 { path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
+// this.voucherTypes.push(
+// 	 { path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
 
-)  		
+// )  		
 this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),

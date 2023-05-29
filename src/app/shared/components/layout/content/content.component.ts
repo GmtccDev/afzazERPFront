@@ -15,6 +15,7 @@ import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher
   animations: [fadeInAnimation]
 })
 export class ContentComponent implements OnInit, AfterViewInit {
+  lang = localStorage.getItem("language")
 
   constructor(private route: ActivatedRoute, private userService: UserService, private translate: TranslateService,
     public navServices: NavService, private router: Router,
@@ -27,21 +28,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
     // })
   }
   getVoucherTypes() {
-
     return new Promise<void>((resolve, reject) => {
-
-
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
-
           console.log(res);
           if (res.success) {
-
-
             res.response.items.forEach(element => {
-              ;
-              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title: element.voucherNameAr, type: 'link', active: true },)
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title:this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
+              { queryParams: { voucherTypeId: element.id } }
+              )
               // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
               this.navServices.voucherTypes.filter((value, index, self) => {
                 return index === self.findIndex(obj => (

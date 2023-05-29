@@ -109,16 +109,21 @@
         "logo": "Logo",
         "toDate": "To Date",
         "fromDate": "From Date",
+        "date":"Date",
         "parent": "parent",
         "accounts": "Accounts",
         "default-account": "Default Account",
         "default-currency": "Default Currency",
+        "currency": "Currency",
         "need-review": "Need Review",
         "print-options": "Print Options",
         "default-layout": "Default Layout",
         "audit-trail": "Audit Trail",
         "print-after-save": "Print After Save",
-        "operations":"Operations"
+        "operations":"Operations",
+        "cash-account":"Cash Account",
+        "cost-center-account":"Cost Center Account",
+        "details":"Details"
     },
     "menu": {},
     "home": {
@@ -370,5 +375,9 @@
     "message-title": {
         "done": "Done",
         "wrong": "Wrong"
+    },
+    "voucher":{
+        "voucher-information":"Voucher Information",
+        "voucher-total":"Voucher Total"
     }
 }

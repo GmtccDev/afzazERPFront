@@ -9,7 +9,6 @@ import { NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../sh
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
-import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import {
   BeneficiaryTypeArEnum,
@@ -50,7 +49,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
   sub: any;
   url: any;
   id: any = 0;
-  companyId: any;
 
   currnetUrl;
   public show: boolean = false;
@@ -79,6 +77,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   routefiscalPeriodApi = "fiscalPeriod/get-ddl?"
   routeAccountApi = "account/get-ddl?"
+  companyId:string= localStorage.getItem("companyId");
 
 
   constructor(
@@ -165,18 +164,18 @@ export class AddEditVoucherTypeComponent implements OnInit {
   defineVoucherTypeForm() {
     this.voucherTypeForm = this.fb.group({
       id: 0,
-      companyId:1,
+      companyId:this.companyId,
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
-      voucherNameEn: null,
+      voucherNameEn: NAME_REQUIRED_VALIDATORS,
       journalId: null,
       voucherTypeId: REQUIRED_VALIDATORS,
       serialTypeId: 1,
       serialId: null,
-      defaultAccountId: null,
-      defaultCurrencyId: null,
+      defaultAccountId: REQUIRED_VALIDATORS,
+      defaultCurrencyId: REQUIRED_VALIDATORS,
       //chooseAccountNature: false,
-      createFinancialEntryId: null,
-      defaultBeneficiaryId: null,
+      createFinancialEntryId: REQUIRED_VALIDATORS,
+      defaultBeneficiaryId: REQUIRED_VALIDATORS,
      // needReview: false,
       defaultLayoutId:null,
       printAfterSave: false
@@ -431,7 +430,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    ;
+    debugger
     if (this.voucherTypeForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
         var entity = this.voucherTypeForm.value;
