@@ -218,7 +218,7 @@
                                                                 <div class="input-group form-group">
                                                                     <div class="input-group form-group">
 
-                                                                        <select class="form-control" name="currencyId" (change)="onChangeCurrency($event)"
+                                                                        <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)"
                                                                             formControlName="currencyId"
                                                                             [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 

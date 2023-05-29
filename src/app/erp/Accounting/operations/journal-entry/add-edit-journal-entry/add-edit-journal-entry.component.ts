@@ -13,6 +13,8 @@ import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url
 import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -173,14 +175,16 @@ export class AddEditJournalEntryComponent implements OnInit {
         this.cd.detectChanges()
       });
     })
+  
     this.totalDebitLocal = 0;
-   
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+
       this.totalCreditLocal = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
         let parsed = parseInt(x.get('jEDetailCreditLocal').value)
-        this.totalCreditLocal += parsed
+        let transactionFactor = parseInt(x.get('transactionFactor').value)
+        this.totalCreditLocal += (parsed*transactionFactor)
         this.cd.detectChanges()
       });
     })
@@ -189,7 +193,8 @@ export class AddEditJournalEntryComponent implements OnInit {
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
         let parsed = parseInt(x.get('jEDetailDebitLocal').value)
-        this.totalDebitLocal += parsed
+        let transactionFactor = parseInt(x.get('transactionFactor').value)
+        this.totalDebitLocal += (parsed*transactionFactor)
         this.cd.detectChanges()
       });
     })
@@ -327,14 +332,16 @@ export class AddEditJournalEntryComponent implements OnInit {
           this.totalDebitLocal = 0;
           ctrl.controls.forEach(x => {
             let parsed = parseInt(x.get('jEDetailDebitLocal').value)
-            this.totalDebitLocal += parsed
+            let transactionFactor = parseInt(x.get('transactionFactor').value)
+            this.totalDebitLocal += (parsed*transactionFactor)
             this.cd.detectChanges()
 
           });
           this.totalCreditLocal = 0;
           ctrl.controls.forEach(x => {
             let parsed = parseInt(x.get('jEDetailCreditLocal').value)
-            this.totalCreditLocal += parsed
+            let transactionFactor = parseInt(x.get('transactionFactor').value)
+            this.totalCreditLocal += (parsed*transactionFactor)
             this.cd.detectChanges()
 
           })
@@ -343,7 +350,8 @@ export class AddEditJournalEntryComponent implements OnInit {
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
               let parsed = parseInt(x.get('jEDetailCreditLocal').value)
-              this.totalCreditLocal += parsed
+              let transactionFactor = parseInt(x.get('transactionFactor').value)
+              this.totalCreditLocal += (parsed*transactionFactor)
               this.cd.detectChanges()
             });
           })
@@ -352,7 +360,9 @@ export class AddEditJournalEntryComponent implements OnInit {
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
               let parsed = parseInt(x.get('jEDetailDebitLocal').value)
-              this.totalDebitLocal += parsed
+              let transactionFactor = parseInt(x.get('transactionFactor').value)
+              this.totalDebitLocal += (parsed*transactionFactor)
+             
               this.cd.detectChanges()
             });
           })
@@ -505,9 +515,15 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
   }
 
-  onChangeCurrency(event){
+  onChangeCurrency(event,index){
     debugger
     console.log('Name changed:', event.target.value);
+ 
+    let currencyModel=this.currencyList.find(x=>x.id==event.target.value);
+    const faControl = 
+    (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
+    faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
+    faControl['controls'].jEDetailSerial.setValue(index+1);
   }
   onUpdate() {
 
