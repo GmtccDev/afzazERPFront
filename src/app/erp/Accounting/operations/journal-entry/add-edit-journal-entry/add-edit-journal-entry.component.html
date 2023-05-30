@@ -245,7 +245,7 @@
                                                         <div class="form-group row">
                                                             <div class="col-sm-12">
                                                                 <div class="input-group form-group">
-                                                                    <input type="number" required
+                                                                    <input type="number" required   disabled="disabled"
                                                                         class="form-control required"
                                                                         formControlName="transactionFactor"
                                                                         name="transactionFactor" style="width: 70px;">
@@ -259,7 +259,7 @@
                                                             <div class="col-sm-12">
                                                                 <div class="input-group form-group">
                                                                     <input type="number" required
-                                                                        class="form-control required"
+                                                                        class="form-control required"   disabled="disabled"
                                                                      
                                                                         formControlName="jEDetailCreditLocal"
                                                                         name="jEDetailCreditLocal" style="width: 70px;">
@@ -274,7 +274,7 @@
                                                                 <div class="input-group form-group">
                                                                     <input type="number" required
                                                                         class="form-control required"
-                                                                       
+                                                                        disabled="disabled"
                                                                         formControlName="jEDetailDebitLocal"
                                                                         name="jEDetailDebitLocal" style="width: 70px;">
                                                                 </div>
@@ -357,13 +357,31 @@
 
       </div>
     </div>
-
+    <div class="form-group">
+        <label class="control-label m-t-20"> اجمالي الدائن </label>
+        <div class="input-group mb-12">
+  
+          <label for="totalDebitValue">{{totalDebit}}</label>
+        </div>
+      </div>
   </div>
   <div class="col-md-2">
     <div class="form-group">
-      <label class="control-label m-t-20"> اجمالي الدائن </label>
+      <label class="control-label m-t-20"> اجمالي المدين </label>
       <div class="input-group mb-12">
 
-        <label for="totalDebitValue">{{totalDebit}}</label>
+        <label>{{totalCreditLocal}}</label>
+
+
       </div>
     </div>
+    <div class="form-group">
+        <label class="control-label m-t-20"> اجمالي الدائن </label>
+        <div class="input-group mb-12">
+  
+          <label for="totalDebitValue">{{totalDebitLocal}}</label>
+        </div>
+      </div>
+  </div>
+
+  

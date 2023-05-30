@@ -158,6 +158,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     });
     this.initGroup();
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      debugger
       this.totalCredit = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
@@ -167,6 +168,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       });
     })
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      debugger
       this.totalDebit = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
@@ -178,7 +180,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   
     this.totalDebitLocal = 0;
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-
+debugger
       this.totalCreditLocal = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
@@ -189,6 +191,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       });
     })
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+      debugger
       this.totalDebitLocal = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
@@ -312,6 +315,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            debugger
             this.totalCredit = 0;
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
@@ -321,6 +325,7 @@ export class AddEditJournalEntryComponent implements OnInit {
             });
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            debugger
             this.totalDebit = 0;
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {

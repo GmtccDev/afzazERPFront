@@ -12,6 +12,7 @@ import { MessageModalComponent } from '../../../../shared/components/message-mod
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import {JournalEntryServiceProxy} from '../../services/journal-entry'
+import format from 'date-fns/format';
 @Component({
   selector: 'app-journal-entry',
   templateUrl: './journal-entry.component.html',
@@ -175,14 +176,25 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
   columnNames = [
-    this.lang == 'ar'
-      ? { title: ' الاسم', field: 'nameAr' } :
-      { title: ' Name  ', field: 'nameEn' },
-
+    
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
-    }
+    },
+    this.lang == 'ar'
+    ? {
+      title: '  تاريخ  ',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+    } : {
+      title: 'Date',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+    },
   ];
 
   menuOptions: SettingMenuShowOptions = {
