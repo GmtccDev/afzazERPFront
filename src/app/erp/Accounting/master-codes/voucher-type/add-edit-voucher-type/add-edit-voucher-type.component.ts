@@ -24,7 +24,7 @@ import {
 } from 'src/app/shared/constants/enumrators/enums';
 
 import { PublicService } from 'src/app/shared/services/public.service';
-import { VoucherTypeServiceProxy } from '../../../services/voucher-type';
+import { VoucherTypeServiceProxy } from '../../../services/voucher-type.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 @Component({
   selector: 'app-add-edit-voucher-type',
@@ -168,7 +168,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
       voucherNameEn: NAME_REQUIRED_VALIDATORS,
       journalId: null,
-      voucherTypeId: REQUIRED_VALIDATORS,
+      voucherKindId: REQUIRED_VALIDATORS,
       serialTypeId: 1,
       serialId: null,
       defaultAccountId: REQUIRED_VALIDATORS,
@@ -177,7 +177,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       createFinancialEntryId: REQUIRED_VALIDATORS,
       defaultBeneficiaryId: REQUIRED_VALIDATORS,
      // needReview: false,
-      defaultLayoutId:null,
+     // defaultLayoutId:null,
       printAfterSave: false
     });
 
@@ -198,7 +198,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
             voucherNameAr: res.response?.voucherNameAr,
             voucherNameEn: res.response?.voucherNameEn,
             journalId: res.response?.journalId,
-            voucherTypeId: res.response?.voucherTypeId,
+            voucherKindId: res.response?.voucherKindId,
             serialTypeId: res.response?.serialTypeId,
             serialId: res.response?.serialId,
             defaultAccountId: res.response?.defaultAccountId,
@@ -207,7 +207,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
             createFinancialEntryId: res.response?.createFinancialEntryId,
             defaultBeneficiaryId: res.response?.defaultBeneficiaryId,
           //  needReview: res.response?.needReview,
-            defaultLayoutId: res.response?.defaultLayoutId,
+           // defaultLayoutId: res.response?.defaultLayoutId,
             printAfterSave: res.response?.printAfterSave
 
 

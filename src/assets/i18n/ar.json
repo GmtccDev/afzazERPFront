@@ -282,7 +282,15 @@
         "cash-account":"حساب النقدية",
         "cost-center-account":"حساب مركز التكلفة",
         "description": "الوصف",
-        "details":"التفاصيل"
+        "details":"التفاصيل",
+        "debit":"مدين",
+        "credit":"دائن",
+        "currency-conversion-factor":"معامل التحويل ",
+        "debit-after-conversion":"مدين بعد التحويل",
+        "credit-after-conversion":"دائن بعد التحويل",
+        "beneficiary":"المستفيد",
+        "beneficiary-account":"حساب المستفيد"
+
 
 
 

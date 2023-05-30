@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, NavService } from '../../services/nav.service';
 import { LayoutService } from '../../services/layout.service';
-import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 
 @Component({
   selector: 'app-sidebar',

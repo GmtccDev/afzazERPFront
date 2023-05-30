@@ -6,7 +6,7 @@ import { NavService } from '../../../services/nav.service';
 import { fadeInAnimation } from '../../../data/router-animation/router-animation';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { TranslateService } from '@ngx-translate/core';
-import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 
 @Component({
   selector: 'app-content',
@@ -34,7 +34,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
           console.log(res);
           if (res.success) {
             res.response.items.forEach(element => {
-              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title:this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/'+element.id, title:this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
               { queryParams: { voucherTypeId: element.id } }
               )
               // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)

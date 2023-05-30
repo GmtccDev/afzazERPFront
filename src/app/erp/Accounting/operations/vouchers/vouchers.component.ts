@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import { VoucherServiceProxy } from '../../services/voucher';
+import { VoucherServiceProxy } from '../../services/voucher.service';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
@@ -21,11 +21,14 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
   vouchers: any[] = [];
-  currnetUrl: any;
-  queryParams: any;
+  voucherType: any[] = [];
   voucherTypeId: any;
 
-  addUrl: string = '/accounting-operations/vouchers/add-voucher';
+  currnetUrl: any;
+  queryParams: any;
+  sub: any;
+
+  addUrl: string = '/accounting-operations/vouchers/add-voucher/';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
   listUrl: string = '/accounting-operations/vouchers';
   toolbarPathData: ToolbarPath = {
@@ -58,12 +61,24 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.queryParams = this.route.queryParams.subscribe(params => {
-    debugger
+    this.sub = this.route.params.subscribe(params => {
+      debugger
       if (params['voucherTypeId'] != null) {
-        this.voucherTypeId = params['voucherTypeId'];
+        this.voucherTypeId = +params['voucherTypeId'];
+       //  this.getVoucherTypes(this.voucherTypeId);
+
+
       }
+
     })
+    // this.queryParams = this.route.queryParams.subscribe(params => {
+    // debugger
+    //   if (params['voucherTypeId'] != null) {
+    //     this.voucherTypeId = params['voucherTypeId'];
+    //   }
+    // })
+    this.subsList.push(this.sub);
+
 
   }
 
@@ -107,6 +122,31 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
+  getVoucherTypes(id) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.voucherService.getVoucher(id).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.success) {
+            debugger;
+            this.voucherType = res.response.items
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getVouchers() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -294,7 +334,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           if (currentBtn.action == ToolbarActions.List) {
 
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.router.navigate([this.addUrl]);
+            debugger
+            this.router.navigate([this.addUrl+this.voucherTypeId]);
+          //  this.router.navigate(['/control-panel/accounting/update-account', id]);
+
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
             this.onDelete();

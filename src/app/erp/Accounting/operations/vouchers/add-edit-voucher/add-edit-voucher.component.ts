@@ -8,6 +8,12 @@ import { REQUIRED_VALIDATORS } from 'src/app/shared/constants/input-validators';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { PublicService } from 'src/app/shared/services/public.service';
 import {Voucher, VoucherDetails} from 'src/app/erp/Accounting/models/voucher'
+import { VoucherServiceProxy } from '../../../services/voucher.service';
+import { VoucherTypeServiceProxy } from '../../../services/voucher-type.service';
+import {VoucherType} from 'src/app/erp/Accounting/models/voucher-type'
+import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
+import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 
 @Component({
   selector: 'app-add-edit-voucher',
@@ -20,10 +26,24 @@ export class AddEditVoucherComponent implements OnInit {
   companyId:string= localStorage.getItem("companyId");
   //voucherForm!: FormGroup;
   voucherForm: FormGroup = new FormGroup({});
+  currencyId:any;
+  cashAccountId:any;
+  voucherkindId:any;
+  showSearchCashAccountModal = false;
+  showSearchCostCenterAccountModal = false;
+  showSearchBeneficiaryAccountsModal = false;
+  showSearhBeneficiaryAccountsModal=false;
+  showSearchCurrencyModal=false;
+  showSearchCurrencyInDetailsModal=false;
+  showSearchCostCenterAccountsInDetailsModal=false;
+  enableMultiCurrencies:boolean=true
 
   voucher: Voucher = new Voucher();
   voucherDetails: VoucherDetails[] = [];
   _voucherDetails: VoucherDetails = new VoucherDetails();
+  selectedVoucherDetails: VoucherDetails = new VoucherDetails();
+  beneficiaryTypesEnum: ICustomEnum[] = [];
+
   sub: any;
   url: any;
   id: any = 0;
@@ -31,14 +51,20 @@ export class AddEditVoucherComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   lang = localStorage.getItem("language")
-  routeApi = 'Account/get-ddl?'
+  routeAccountApi = 'Account/get-ddl?'
   routeCurrencyApi = "currency/get-ddl?"
 
   cashAccountsList: any;
   costCenterAccountsList: any;
+  beneficiaryAccountsList: any;
+  costCenterAccountsInDetailsList:any;
   currenciesList:any;
+  currenciesListInDetails:any;
+
   queryParams: any;
   voucherTypeId: any;
+  voucherType: VoucherType[] = [];
+
 
   addUrl: string = '/accounting-operations/vouchers/add-voucher';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
@@ -60,6 +86,11 @@ export class AddEditVoucherComponent implements OnInit {
      private translate: TranslateService,
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
+    private voucherService: VoucherServiceProxy,
+    private voucherTypeService: VoucherTypeServiceProxy,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+
+
   
 
   ) {
@@ -70,13 +101,13 @@ export class AddEditVoucherComponent implements OnInit {
   //#region ngOnInit
   ngOnInit(): void {
     debugger
-    this.queryParams = this.route.queryParams.subscribe(params => {
-      debugger
-        if (params['voucherTypeId'] != null) {
-          this.voucherTypeId = params['voucherTypeId'];
-        }
-      })
-
+    // this.sub = this.route.params.subscribe(params => {
+    //   debugger
+    //     if (params['voucherTypeId'] != null) {
+    //       this.voucherTypeId = params['voucherTypeId'];
+    //     }
+    //   })
+    this.getBeneficiaryTypes();
     this.spinner.show();
     Promise.all([
       this.getAccounts(),
@@ -95,6 +126,14 @@ export class AddEditVoucherComponent implements OnInit {
      // this.getaccountClassificationCode();
     }
     this.sub = this.route.params.subscribe((params) => {
+      if (params['voucherTypeId'] != null) {
+        this.voucherTypeId = params['voucherTypeId'];
+        if(this.voucherTypeId)
+        {
+          this.getVoucherTypes(this.voucherTypeId);
+         // this.getGeneralConfigurations();
+        }
+      }
       if (params['id'] != null) {
         this.id = params['id'];
 
@@ -135,7 +174,7 @@ export class AddEditVoucherComponent implements OnInit {
     id: 0,
     companyId:this.companyId,
     branchId:this.branchId,
-    voucherTypeId:1,
+    voucherTypeId:this.voucherTypeId,
     voucherCode:REQUIRED_VALIDATORS,
     voucherDate:REQUIRED_VALIDATORS,
     cashAccountId:REQUIRED_VALIDATORS,
@@ -160,15 +199,65 @@ export class AddEditVoucherComponent implements OnInit {
 
 
   //#endregion
+  getVoucherTypes(id) {
 
+    const promise = new Promise<void>((resolve, reject) => {
+      this.voucherTypeService.getVoucherType(id).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+           this.cashAccountId=res.response.defaultAccountId;
+           this.currencyId= res.response.defaultCurrencyId;
+           this.voucherkindId=res.response.voucherKindId;
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
+  getGeneralConfigurations() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(2).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if(res.response.value='true')
+          {
+            this.enableMultiCurrencies=true;
+          }
+        
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
   getAccounts() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeApi).subscribe({
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
 
           if (res.success) {
             this.cashAccountsList = res.response;
             this.costCenterAccountsList = res.response;
+            this.beneficiaryAccountsList = res.response;
+            this.costCenterAccountsInDetailsList = res.response;
 
           }
 
@@ -194,6 +283,7 @@ export class AddEditVoucherComponent implements OnInit {
         next: (res) => {
           if (res.success) {
             this.currenciesList = res.response;
+            this.currenciesListInDetails = res.response;
 
           }
           resolve();
@@ -212,6 +302,96 @@ export class AddEditVoucherComponent implements OnInit {
 
   }
 
+  // openCurrencySearchDialog(i = -1) {
+  //   let searchTxt = '';
+  //   if (i == -1) {
+  //     searchTxt = this.selectedVoucherDetails?.currencyNameAr ?? '';
+  //   } else {
+  //     searchTxt = ''
+  //     // this.selectedRentContractUnits[i].unitNameAr!;
+  //   }
+
+  //   let data = this.currenciesList.filter((x) => {
+  //     return (
+  //       (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+  //       (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+  //     );
+  //   });
+
+  //   if (data.length == 1) {
+  //     if (i == -1) {
+  //       this.selectedVoucherDetails!.currencyNameAr = data[0].nameAr;
+  //       this.selectedVoucherDetails!.currencyId = data[0].id;
+  //     } else {
+  //       this.voucherDetails[i].currencyNameAr = data[0].nameAr;
+  //       this.voucherDetails[i].currencyId = data[0].id;
+  //     }
+  //   } else {
+  //     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+  //     let names = ['code', 'nameAr', 'nameEn'];
+  //     let title = 'بحث عن العملة';
+  //     let sub = this.searchDialog
+  //       .showDialog(lables, names, this.currenciesList, title, searchTxt)
+  //       .subscribe((d) => {
+  //         if (d) {
+  //           if (i == -1) {
+  //             this.selectedVoucherDetails!.currencyNameAr = d.nameAr;
+  //       this.selectedVoucherDetails!.currencyId = d.id;
+  //           } else {
+  //             this.voucherDetails[i].currencyNameAr = d.nameAr;
+  //             this.voucherDetails[i].currencyId = d.id;
+  //           }
+  //         }
+  //       });
+  //     this.subsList.push(sub);
+  //   }
+
+  // }
+  onSelectCashAccount(event) {
+    this.voucherForm.controls.cashAccountId.setValue(event.id);
+    this.showSearchCashAccountModal = false;
+  }
+  onSelectCostCenterAccount(event) {
+    this.voucherForm.controls.costCenterAccountId.setValue(event.id);
+    this.showSearchCostCenterAccountModal = false;
+  }
+  onSelectCurrency(event) {
+    this.voucherForm.controls.currencyId.setValue(event.id);
+    this.showSearchCurrencyModal = false;
+  }
+  onSelectCurrencyInDetails(event) {
+     this.selectedVoucherDetails.currencyId=(event.id);
+    // this.showSearchCurrencyModal = false;
+  }
+  onSelectBeneficiaryAccounts(event) {
+    this.selectedVoucherDetails.beneficiaryAccountId=(event.id);
+   // this.showSearchCurrencyModal = false;
+ }
+  onSelectBeneficiaryAccount(event) {
+  //  this.selectedVoucherDetails.currencyId=(event.id);
+   // this.showSearchCurrencyModal = false;
+ }
+ onSelectCostCenterAccountsInDetails(event)
+ {
+  
+ }
+  getBeneficiaryTypes() {
+    if (this.lang == 'en') {
+      this.beneficiaryTypesEnum = convertEnumToArray(BeneficiaryTypeEnum);
+    }
+    else {
+      this.beneficiaryTypesEnum = convertEnumToArray(BeneficiaryTypeArEnum);
+
+    }
+  }
+  addItem()
+  {
+
+  }
+  calculateTotal(a)
+  {
+
+  }
   //#region Tabulator
   subsList: Subscription[] = [];
   currentBtnResult;

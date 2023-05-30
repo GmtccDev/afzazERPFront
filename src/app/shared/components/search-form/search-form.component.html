@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<!-- <mat-dialog-content class="mat-typography"> -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <input type="search" class="form-control" [(ngModel)]="searchText" (change)="Search()"> -->
+        </div>
+    </div>
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                #
+            </th>
+            <th *ngFor="let lable of colomnLables">
+                {{lable}}
+            </th>
+
+            <th> </th>
+        </tr>
+        <tr *ngFor="let a of dataList; let i= index;">
+            <td>{{i+1}}</td>
+            <td *ngFor="let name of colomnNames">{{a[name]}}</td>
+            <td>
+                <button class="btn btn-secondary" (click)="OnDataSelect(a)">اختر </button>
+            </td>
+        </tr>
+    </table>
+<!-- </mat-dialog-content> -->
+
+<!-- <mat-dialog-actions align="end"> -->
+    <button mat-button mat-dialog-close>إغلاق</button>
+    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+<!-- </mat-dialog-actions> -->

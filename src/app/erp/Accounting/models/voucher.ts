@@ -23,10 +23,11 @@ export class VoucherDetails {
     currencyConversionFactor: number|undefined;
     debitAfterConversion: number|undefined;
     creditAfterConversion: number | undefined;
-    beneficiaryId: number;
+    beneficiaryTypeId: number;
     beneficiaryAccountId: number;
     description: string;
     costCenterAccountId:number|undefined;
+    currencyNameAr:string;
 
   
 

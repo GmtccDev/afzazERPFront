@@ -7,7 +7,7 @@ import { fadeInAnimation } from '../../../data/router-animation/router-animation
 import { DOCUMENT } from '@angular/common';
 import * as chartData from '../../../../shared/data/dashboard/default'
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -163,14 +163,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
   getVoucherTypes() {
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           console.log(res);
           if (res.success) {
             res.response.items.forEach(element => {
-              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', title:  this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/'+element.id, title:  this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
               { queryParams: { voucherTypeId: element.id } }
               )
              // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
@@ -180,8 +179,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               ));
             });
             });
-
-
           }
           resolve();
         },

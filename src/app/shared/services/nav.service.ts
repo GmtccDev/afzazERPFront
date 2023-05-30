@@ -3,7 +3,7 @@ import { Subject, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 
 
 // Menu

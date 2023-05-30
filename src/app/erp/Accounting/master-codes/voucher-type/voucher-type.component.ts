@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import { VoucherTypeServiceProxy } from '../../services/voucher-type';
+import { VoucherTypeServiceProxy } from '../../services/voucher-type.service';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';

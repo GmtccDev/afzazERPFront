@@ -64,6 +64,7 @@ export class VoucherServiceProxy {
 
 
     getVoucher(id: any): Observable<any> {
+        debugger
         let params = new HttpParams();
         params = params.append('id', id);
         return this.http.get<any>(this.baseUrl + "/api/Voucher/getById", { params: params });

@@ -7,7 +7,7 @@
     "deleteSuccessfully": "Deleted Successfully",
     "general": {
         "nameAr": "Name In Arabic",
-        "nameEn": "Name In Latin",
+        "nameEn": "Name In English",
         "code": "Code",
         "home": "Home",
         "about-us": "About Us",
@@ -123,7 +123,15 @@
         "operations":"Operations",
         "cash-account":"Cash Account",
         "cost-center-account":"Cost Center Account",
-        "details":"Details"
+        "details":"Details",
+        "debit":"Debit",
+        "credit":"Credit",
+        "currency-conversion-factor":"Currency Conversion",
+        "debit-after-conversion":"Debit After Conversion",
+    "credit-after-conversion":"Credit After Conversion",
+        "beneficiary":"Beneficiary",
+        "beneficiary-account":"Beneficiary Account"
+
     },
     "menu": {},
     "home": {
