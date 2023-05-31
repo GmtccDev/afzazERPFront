@@ -1,0 +1,70 @@
+<div>
+
+
+    <div class="login-main ">
+        <form class="theme-form" [formGroup]="loginForm">
+           
+
+
+          
+            <div class="form-group">
+                <label for="roles" class="label-name">
+                    {{'component-names.companies'|translate}}
+
+                </label>
+                <div class="input-group  popup">
+                    <ng-select style="width:100%" 
+                        (change)="onChangeCompany($event)" formControlName="companyId"
+                        name='companyId' class="" id="companyId">
+                        <ng-option *ngFor="let company of companiesList" [value]="company.id">
+                            {{lang=="ar"?company.nameAr:company.nameEn}}
+                        </ng-option>
+                    </ng-select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="roles" class="label-name">
+                    {{'component-names.branches'|translate}}
+
+                </label>
+                <div class="input-group  popup">
+                    <ng-select style="width:100%" formControlName="branchId"
+                        name='branchId' class="" id="branchId">
+                        <ng-option *ngFor="let branch of branchesList" [value]="branch.id">
+                            {{lang=="ar"?branch.nameAr:branch.nameEn}}
+                        </ng-option>
+                    </ng-select>
+
+                </div>
+            </div>
+            <div class="form-group my-5">
+
+                <!-- <a [routerLink]="'/authentication/forgot-password'" class="link">Forgot password?</a> -->
+                <button class="btn btn-block btn-primary w-100" [class.loader--text]="showLoader"
+                    [disabled]="!loginForm.valid || showLoader" (click)="login()"
+                    type="button"><span>{{'login.login'|translate}}</span>
+                </button>
+            </div>
+            <!-- <h6 class="text-muted mt-4 or">Or Sign in with</h6>
+<div class="social mt-4">
+  <div class="btn-showcase">
+    <a class="btn btn-light" (click)="loginGoogle()" target="_blank">
+      <app-feather-icons [icon]="'log-in'" class="txt-google"></app-feather-icons>Google +
+    </a>
+    <a class="btn btn-light" (click)="loginFacebook()" target="_blank">
+      <app-feather-icons [icon]="'facebook'" class="txt-fb"></app-feather-icons>Facebook
+    </a>
+    <a class="btn btn-light" (click)="loginTwitter()" target="_blank">
+      <app-feather-icons [icon]="'twitter'" class="txt-twitter"></app-feather-icons>twitter
+    </a>
+  </div>
+</div> -->
+            <!-- <p class="mt-4 mb-0">Don't have account?
+  <a [routerLink]="'/authentication/register/simple'" class="ms-2">Create Account</a>
+</p> -->
+
+        </form>
+       
+    </div>
+</div>

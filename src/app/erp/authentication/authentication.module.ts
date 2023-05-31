@@ -14,6 +14,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { RouterModule } from '@angular/router';
 import { AddNewPasswordComponent } from './add-new-password/add-new-password.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { LoginCompanyComponent } from './login/login-company/login-company.component';
 
 
 
@@ -26,6 +27,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 		VerificationCodeComponent,
 		AddNewPasswordComponent,
 		ForgetPasswordComponent,
+  LoginCompanyComponent,
 
 
 

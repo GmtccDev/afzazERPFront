@@ -12,6 +12,11 @@ export class UserLoginService {
 
     return this._httpClient.post<any>(environment.apiUrl + "/api/UserLogin/Login", AuthenticateRequest);
   }
+
+  UserLoginCompany(AuthenticateRequest: any):Observable<any>{
+
+    return this._httpClient.post<any>(environment.apiUrl + "/api/UserLogin/LoginCompany", AuthenticateRequest);
+  }
   getDdl(): Observable<any> {
     return this._httpClient.get<any>(environment.apiUrl  + "/api/UserLogin/get-ddl?");
 }
