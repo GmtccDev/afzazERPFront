@@ -2,9 +2,9 @@ export class Voucher {
     id: number;
     companyId: number; 
     branchId: number;
-    VoucherTypeId: number;
-    VoucherCode: string;
-    VoucherDate: Date;
+    voucherTypeId: number;
+    voucherCode: string;
+    voucherDate: any;
     cashAccountId: number;
     costCenterAccountId: number | undefined;
     currencyId: number;
@@ -28,6 +28,12 @@ export class VoucherDetails {
     description: string;
     costCenterAccountId:number|undefined;
     currencyNameAr:string;
+    currencyNameEn:string;
+    beneficiaryAccountNameAr:string;
+    beneficiaryAccountNameEn:string;
+    costCenterAccountNameAr:string;
+    costCenterAccountNameEn:string;
+
 
   
 

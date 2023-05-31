@@ -62,7 +62,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region ngOnInit
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
-      debugger
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
        //  this.getVoucherTypes(this.voucherTypeId);
@@ -72,7 +71,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     })
     // this.queryParams = this.route.queryParams.subscribe(params => {
-    // debugger
     //   if (params['voucherTypeId'] != null) {
     //     this.voucherTypeId = params['voucherTypeId'];
     //   }
@@ -128,7 +126,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (res) => {
           console.log(res);
           if (res.success) {
-            debugger;
             this.voucherType = res.response.items
 
           }
@@ -154,7 +151,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
           if (res.success) {
-            this.vouchers = res.response.items
+            debugger
+            this.vouchers = res.response.items.filter(x=>x.voucherTypeId==this.voucherTypeId && x.branchId==this.branchId&&x.companyId==this.companyId)
 
           }
           resolve();
@@ -334,7 +332,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           if (currentBtn.action == ToolbarActions.List) {
 
           } else if (currentBtn.action == ToolbarActions.New) {
-            debugger
+            
             this.router.navigate([this.addUrl+this.voucherTypeId]);
           //  this.router.navigate(['/control-panel/accounting/update-account', id]);
 

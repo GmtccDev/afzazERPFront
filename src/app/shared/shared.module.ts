@@ -63,6 +63,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import {BidiModule} from '@angular/cdk/bidi';
+import {SearchFormModule} from 'src/app/shared/components/search-form/search-form.module'
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -146,7 +147,9 @@ import {BidiModule} from '@angular/cdk/bidi';
     InputComponent,
     SwitchButtonComponent,
     FilterPipe,
-    EnumKeyValueListPipe,PublicSearchModalComponent
+    EnumKeyValueListPipe,PublicSearchModalComponent,
+    SearchFormModule
+    
   ],
 })
 export class SharedModule {

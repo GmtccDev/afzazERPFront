@@ -35,6 +35,7 @@ import {AuthenticationModule} from './erp/authentication/authentication.module'
 import { MasterCodesModule } from './erp/master-codes/master-codes.module';
 import {SecurityModule} from './erp/security/security.module';
 import { MasterCodesRoutingModule } from './erp/master-codes/master-codes-routing.module';
+import { SearchDialogService } from './shared/services/search-dialog.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -62,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFirestoreModule,
     AngularFireAuthModule,
     AuthenticationModule,
+
     
     TranslateModule.forRoot({
       loader: {
@@ -79,7 +81,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SecurityModule,
     DashboardModule,
   ],
-  providers: [ AdminGuard, SecureInnerPagesGuard, CookieService],
+  providers: [ AdminGuard, SecureInnerPagesGuard, CookieService,SearchDialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

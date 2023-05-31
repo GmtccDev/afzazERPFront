@@ -32,6 +32,10 @@ export class VoucherServiceProxy {
 
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/add?", branch);
     }
+    createVoucherAndDetails(voucher: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/addVoucherAndDetails?", voucher);
+    }
     // ids: number[] | undefined;
     deleteListVoucher(branch: any): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/deleteList?", branch);

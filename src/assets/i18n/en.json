@@ -109,7 +109,7 @@
         "logo": "Logo",
         "toDate": "To Date",
         "fromDate": "From Date",
-        "date":"Date",
+        "date": "Date",
         "parent": "parent",
         "accounts": "Accounts",
         "default-account": "Default Account",
@@ -120,18 +120,17 @@
         "default-layout": "Default Layout",
         "audit-trail": "Audit Trail",
         "print-after-save": "Print After Save",
-        "operations":"Operations",
-        "cash-account":"Cash Account",
-        "cost-center-account":"Cost Center Account",
-        "details":"Details",
-        "debit":"Debit",
-        "credit":"Credit",
-        "currency-conversion-factor":"Currency Conversion",
-        "debit-after-conversion":"Debit After Conversion",
-    "credit-after-conversion":"Credit After Conversion",
-        "beneficiary":"Beneficiary",
-        "beneficiary-account":"Beneficiary Account"
-
+        "operations": "Operations",
+        "cash-account": "Cash Account",
+        "cost-center-account": "Cost Center Account",
+        "details": "Details",
+        "debit": "Debit",
+        "credit": "Credit",
+        "currency-conversion-factor": "Currency Conversion",
+        "debit-after-conversion": "Debit After Conversion",
+        "credit-after-conversion": "Credit After Conversion",
+        "beneficiary": "Beneficiary",
+        "beneficiary-account": "Beneficiary Account"
     },
     "menu": {},
     "home": {
@@ -322,9 +321,9 @@
         "accountClassification": "Account Classification",
         "accountClassification-information": "Account Classification Information",
         "voucher-types": "Voucher Types",
-        "vouchers":"Vouchers",
-        "journalEntry":"Journal Entry",
-        "journalEntry-information":"Journal Entry information"
+        "vouchers": "Vouchers",
+        "journalEntry": "Journal Entry",
+        "journalEntry-information": "Journal Entry information"
     },
     "language": {
         "ARABIC": "Arabic",
@@ -345,11 +344,11 @@
         "creditLimit": "Credit Limit",
         "openBalanceCredit": "Open Balance Credit  ",
         "openBalanceDebit": "Open Balance Debit  ",
-        "accountType":"Account Type",
-        "trialBalance":"Trial Balance",
-        "isLeafAccount":"Leaf Account",
-        "noteNotActive":"Note Not Active",
-        "taxNumber":"Tax Number"
+        "accountType": "Account Type",
+        "trialBalance": "Trial Balance",
+        "isLeafAccount": "Leaf Account",
+        "noteNotActive": "Note Not Active",
+        "taxNumber": "Tax Number"
     },
     "accounting-configration": {
         "multiCurrency": "Multi Currency",
@@ -384,8 +383,9 @@
         "done": "Done",
         "wrong": "Wrong"
     },
-    "voucher":{
-        "voucher-information":"Voucher Information",
-        "voucher-total":"Voucher Total"
+    "voucher": {
+        "voucher-information": "Voucher Information",
+        "voucher-total": "Voucher Total",
+        "voucher-details-required":"Voucher Details is required"
     }
 }

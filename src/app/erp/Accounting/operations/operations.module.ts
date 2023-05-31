@@ -10,6 +10,8 @@ import { AddEditVoucherComponent } from './vouchers/add-edit-voucher/add-edit-vo
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { JournalEntryComponent } from './journal-entry/journal-entry.component';
 import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-entry/add-edit-journal-entry.component';
+import { SearchDialogService } from 'src/app/shared/services/search-dialog.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -23,8 +25,10 @@ import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-e
     CommonModule,
     OperationsRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
     NzButtonModule,
-    NzIconModule
+    NzIconModule,
+    MatDialogModule
+    
   ],
-  providers: []
+  providers: [SearchDialogService]
 })
 export class OperationsModule { }
