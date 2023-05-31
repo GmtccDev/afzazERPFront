@@ -100,7 +100,7 @@ export class SidebarComponent {
 
   // Active Nave state
   setNavActive(item) {
-   debugger
+   
    this.getVoucherTypes();
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
@@ -122,8 +122,7 @@ export class SidebarComponent {
 
   // Click Toggle menu
   toggletNavActive(item) {
-    debugger
-   this.getVoucherTypes();
+  
     if (!item.active) {
       this.menuItems.forEach(a => {
         if (this.menuItems.includes(item)) {

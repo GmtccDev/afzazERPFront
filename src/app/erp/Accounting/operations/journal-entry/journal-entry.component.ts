@@ -12,6 +12,7 @@ import { MessageModalComponent } from '../../../../shared/components/message-mod
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import {JournalEntryServiceProxy} from '../../services/journal-entry'
+import format from 'date-fns/format';
 @Component({
   selector: 'app-journal-entry',
   templateUrl: './journal-entry.component.html',
@@ -23,8 +24,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   journalEntry: any[] = [];
   currnetUrl: any;
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
-  updateUrl: string = '/accounting-opertaions/journalEntry/update-journalEntry/';
-  listUrl: string = '/accounting-opertaions/journalEntry';
+  updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
+  listUrl: string = '/accounting-operations/journalEntry';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -132,7 +133,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#endregion
 
-  //#region CRUD Operations
+  //#region CRUD operations
   delete(id: any) {
     this.journalEntryService.deleteJournalEntry(id).subscribe((resonse) => {
       console.log('delet response', resonse);
@@ -141,7 +142,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   edit(id: string) {
     this.router.navigate([
-      '/accounting-opertaions/journalEntry/update-journalEntry',
+      '/accounting-operations/journalEntry/update-journalEntry',
       id,
     ]);
   }
@@ -175,14 +176,25 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
   columnNames = [
-    this.lang == 'ar'
-      ? { title: ' الاسم', field: 'nameAr' } :
-      { title: ' Name  ', field: 'nameEn' },
-
+    
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
-    }
+    },
+    this.lang == 'ar'
+    ? {
+      title: '  تاريخ  ',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+    } : {
+      title: 'Date',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+    },
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -225,7 +237,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-opertaions/journalEntry/update-journalEntry/' + id])
+      this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + id])
     }
 
   }
@@ -242,7 +254,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-opertaions/journalEntry/update-journalEntry/' + event.item.id])
+        this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
