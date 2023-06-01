@@ -158,7 +158,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     });
     this.initGroup();
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-      debugger
+      
       this.totalCredit = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
@@ -168,7 +168,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       });
     })
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-      debugger
+      
       this.totalDebit = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
@@ -180,24 +180,24 @@ export class AddEditJournalEntryComponent implements OnInit {
   
     this.totalDebitLocal = 0;
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-debugger
+
       this.totalCreditLocal = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
         let parsed = parseInt(x.get('jEDetailCreditLocal').value)
         let transactionFactor = parseInt(x.get('transactionFactor').value)
-        this.totalCreditLocal += (parsed*transactionFactor)
+        this.totalCreditLocal += (parsed)
         this.cd.detectChanges()
       });
     })
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-      debugger
+      
       this.totalDebitLocal = 0;
       const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
       ctrl.controls.forEach(x => {
         let parsed = parseInt(x.get('jEDetailDebitLocal').value)
         let transactionFactor = parseInt(x.get('transactionFactor').value)
-        this.totalDebitLocal += (parsed*transactionFactor)
+        this.totalDebitLocal += (parsed)
         this.cd.detectChanges()
       });
     })
@@ -278,7 +278,7 @@ debugger
 
           this.journalEntriesDetailDTOList.clear();
           ListDetail.forEach(element => {
-            debugger
+            
             this.journalEntriesDetailDTOList.push(this.fb.group({
               id: element.id,
               journalEntriesMasterId: element.journalEntriesMasterId,
@@ -315,7 +315,7 @@ debugger
 
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-            debugger
+            
             this.totalCredit = 0;
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
@@ -325,7 +325,7 @@ debugger
             });
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-            debugger
+            
             this.totalDebit = 0;
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
@@ -338,7 +338,7 @@ debugger
           ctrl.controls.forEach(x => {
             let parsed = parseInt(x.get('jEDetailDebitLocal').value)
             let transactionFactor = parseInt(x.get('transactionFactor').value)
-            this.totalDebitLocal += (parsed*transactionFactor)
+            this.totalDebitLocal += (parsed)
             this.cd.detectChanges()
 
           });
@@ -346,17 +346,18 @@ debugger
           ctrl.controls.forEach(x => {
             let parsed = parseInt(x.get('jEDetailCreditLocal').value)
             let transactionFactor = parseInt(x.get('transactionFactor').value)
-            this.totalCreditLocal += (parsed*transactionFactor)
+            this.totalCreditLocal += (parsed)
             this.cd.detectChanges()
 
           })
           this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
+            debugger
             this.totalCreditLocal = 0;
             const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
             ctrl.controls.forEach(x => {
               let parsed = parseInt(x.get('jEDetailCreditLocal').value)
               let transactionFactor = parseInt(x.get('transactionFactor').value)
-              this.totalCreditLocal += (parsed*transactionFactor)
+              this.totalCreditLocal += (parsed)
               this.cd.detectChanges()
             });
           })
@@ -366,7 +367,7 @@ debugger
             ctrl.controls.forEach(x => {
               let parsed = parseInt(x.get('jEDetailDebitLocal').value)
               let transactionFactor = parseInt(x.get('transactionFactor').value)
-              this.totalDebitLocal += (parsed*transactionFactor)
+              this.totalDebitLocal += (parsed)
              
               this.cd.detectChanges()
             });
@@ -453,7 +454,7 @@ debugger
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    debugger
+    
     // if (this.checkPeriod == null) {
     //   this.alertsService.showError(
     //     'يجب أن يكون السنة المالية مفتوحة و الفترة المحاسبية مفتوحة',
@@ -521,13 +522,15 @@ debugger
   }
 
   onChangeCurrency(event,index){
-    debugger
+    
     console.log('Name changed:', event.target.value);
- 
+    debugger
     let currencyModel=this.currencyList.find(x=>x.id==event.target.value);
     const faControl = 
     (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
     faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
+    faControl['controls'].jEDetailCreditLocal.setValue(currencyModel.transactionFactor* faControl['controls'].jEDetailCredit.value);
+    faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor* faControl['controls'].jEDetailDebit.value);
     faControl['controls'].jEDetailSerial.setValue(index+1);
   }
   onUpdate() {
