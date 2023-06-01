@@ -388,4 +388,9 @@
         "voucher-total": "Voucher Total",
         "voucher-details-required":"Voucher Details is required"
     }
+,
+"journalEntry":{
+       
+    "Open Balance": "Open Balance"
+}
 }
