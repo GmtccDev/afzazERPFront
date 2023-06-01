@@ -390,4 +390,9 @@
         "add-voucher":"Add Voucher",
         "update-voucher":"Update Voucher"
     }
+,
+"journalEntry":{
+       
+    "Open Balance": "Open Balance"
+}
 }
