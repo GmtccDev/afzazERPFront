@@ -381,7 +381,9 @@
      "voucher":{
         "voucher-information":"بيانات السند",
         "voucher-total":"أجمالى قيمة السند",
-        "voucher-details-required":"من فضلك أدخل تفاصيل السند"
+        "voucher-details-required":"من فضلك أدخل تفاصيل السند",
+        "add-voucher":"اضافة سند",
+        "update-voucher":"تحديث السند"
 
 
     }

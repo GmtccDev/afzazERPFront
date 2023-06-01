@@ -386,6 +386,8 @@
     "voucher": {
         "voucher-information": "Voucher Information",
         "voucher-total": "Voucher Total",
-        "voucher-details-required":"Voucher Details is required"
+        "voucher-details-required":"Voucher Details is required",
+        "add-voucher":"Add Voucher",
+        "update-voucher":"Update Voucher"
     }
 }

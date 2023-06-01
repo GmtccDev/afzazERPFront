@@ -30,7 +30,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addUrl: string = '/accounting-operations/vouchers/add-voucher/';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
-  listUrl: string = '/accounting-operations/vouchers';
+  listUrl: string = '/accounting-operations/vouchers/';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -176,18 +176,19 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.voucherService.deleteVoucher(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
+      console.log('delete response', resonse);
       this.getVouchers();
-      this.router.navigate([this.listUrl])
+      this.router.navigate([this.listUrl+this.voucherTypeId])
       .then(() => {
         window.location.reload();
       });
     });
   }
   edit(id: string) {
+    debugger
     this.router.navigate([
-      '/accounting-operations/vouchers/update-voucher',
-      id,
+      '/accounting-operations/vouchers/update-voucher/',
+      this.voucherTypeId,id,
     ]);
   }
 
@@ -200,12 +201,13 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        debugger
         let sub = this.voucherService.deleteVoucher(id).subscribe(
           (resonse) => {
             this.getVouchers();
-           this.router.navigate([this.listUrl])
+           this.router.navigate([this.listUrl+this.voucherTypeId])
            .then(() => {
-             window.location.reload();
+          //   window.location.reload();
            });
           });
         this.subsList.push(sub);
@@ -226,7 +228,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   columnNames = [
     {
       title: this.lang == 'ar' ? ' كود' : 'Code ',
-      field: 'voucherCode',
+      field: 'code',
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
@@ -264,7 +266,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
-        { field: 'voucherCode', type: 'like', value: searchTxt },
+        { field: 'code', type: 'like', value: searchTxt },
         { field: 'voucherTotal', type: 'like', value: searchTxt },
         ,
       ],
@@ -291,7 +293,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-operations/vouchers/update-voucher/' + id])
+     // this.router.navigate(['accounting-operations/vouchers/update-voucher/' + id])
     }
 
   }
@@ -299,6 +301,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
+        debugger
         this.edit(event.item.id);
         this.sharedServices.changeButton({
           action: 'Update',
@@ -307,7 +310,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-opertions/vouchers/update-voucher/' + event.item.id])
+      //  this.router.navigate(['accounting-opertions/vouchers/update-voucher/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -349,7 +352,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     var ids = this.listIds;
     let sub = this.voucherService.deleteListVoucher(ids).subscribe(
       (resonse) => {
-        this.router.navigate([this.listUrl])
+        this.router.navigate([this.listUrl+this.voucherTypeId])
         .then(() => {
           window.location.reload();
         });

@@ -3,18 +3,18 @@ export class Voucher {
     companyId: number; 
     branchId: number;
     voucherTypeId: number;
-    voucherCode: string;
+    code: string;
     voucherDate: any;
     cashAccountId: number;
     costCenterAccountId: number | undefined;
     currencyId: number;
     description: string;
     voucherTotal: number;
-    voucherDetails:VoucherDetails[]=[];
+    voucherDetail:VoucherDetail[]=[];
 
 
 }
-export class VoucherDetails {
+export class VoucherDetail {
     id: number;
     voucherId: number; 
     debit: number;

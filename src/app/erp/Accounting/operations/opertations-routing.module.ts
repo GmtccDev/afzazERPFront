@@ -12,7 +12,7 @@ const routes: Routes = [
 		children: [
 			{ path: 'vouchers/:voucherTypeId', component: VouchersComponent },
 			{ path: 'vouchers/add-voucher/:voucherTypeId', component: AddEditVoucherComponent },
-			{ path: 'vouchers/update-voucher/:id', component: AddEditVoucherComponent },
+			{ path: 'vouchers/update-voucher/:voucherTypeId/:id', component: AddEditVoucherComponent },
 			{ path: 'journalEntry', component: JournalEntryComponent },
 			{ path: 'journalEntry/add-journalEntry', component: AddEditJournalEntryComponent },
 			{ path: 'journalEntry/update-journalEntry/:id', component: AddEditJournalEntryComponent },

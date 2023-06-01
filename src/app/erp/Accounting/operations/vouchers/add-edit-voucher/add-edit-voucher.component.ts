@@ -7,12 +7,14 @@ import { Subscription } from 'rxjs';
 import { REQUIRED_VALIDATORS } from 'src/app/shared/constants/input-validators';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { PublicService } from 'src/app/shared/services/public.service';
-import { Voucher, VoucherDetails } from 'src/app/erp/Accounting/models/voucher'
+import { Voucher, VoucherDetail } from 'src/app/erp/Accounting/models/voucher'
 import { VoucherServiceProxy } from '../../../services/voucher.service';
+import { VoucherDetailsServiceProxy } from '../../../services/voucher-details.service';
+
 import { VoucherTypeServiceProxy } from '../../../services/voucher-type.service';
 import { VoucherType } from 'src/app/erp/Accounting/models/voucher-type'
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, SerialTypeArEnum, SerialTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { SearchDialogService } from 'src/app/shared/services/search-dialog.service'
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
@@ -35,20 +37,20 @@ export class AddEditVoucherComponent implements OnInit {
   currencyId: any;
   cashAccountId: any;
   voucherkindId: any;
+  serialTypeId: any;
   showSearchCashAccountModal = false;
   showSearchCostCenterAccountModal = false;
   showSearchBeneficiaryAccountsModal = false;
   showSearhBeneficiaryAccountsModal = false;
   showSearchCurrencyModal = false;
-  showSearchCurrencyInDetailsModal = false;
-  showSearchCostCenterAccountsInDetailsModal = false;
-  enableMultiCurrencies: boolean = true
-  totalDebit:number = 0;
-  totalCredit:number = 0;
+
+  enableMultiCurrencies: boolean = false;
+  totalDebit: number = 0;
+  totalCredit: number = 0;
   voucher: Voucher = new Voucher();
-  voucherDetails: VoucherDetails[] = [];
-  _voucherDetails: VoucherDetails = new VoucherDetails();
-  selectedVoucherDetails: VoucherDetails = new VoucherDetails();
+  voucherDetail: VoucherDetail[] = [];
+  _voucherDetail: VoucherDetail = new VoucherDetail();
+  selectedVoucherDetail: VoucherDetail = new VoucherDetail();
   beneficiaryTypesEnum: ICustomEnum[] = [];
 
   sub: any;
@@ -64,9 +66,9 @@ export class AddEditVoucherComponent implements OnInit {
   cashAccountsList: any;
   costCenterAccountsList: any;
   beneficiaryAccountsList: any;
-  costCenterAccountsInDetailsList: any;
+  costCenterAccountsInDetailList: any;
   currenciesList: any;
-  currenciesListInDetails: any;
+  currenciesListInDetail: any;
 
   queryParams: any;
   voucherTypeId: any;
@@ -75,7 +77,7 @@ export class AddEditVoucherComponent implements OnInit {
 
   addUrl: string = '/accounting-operations/vouchers/add-voucher';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
-  listUrl: string = '/accounting-operations/vouchers';
+  listUrl: string = '/accounting-operations/vouchers/';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -94,18 +96,21 @@ export class AddEditVoucherComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
     private voucherService: VoucherServiceProxy,
+    private voucherDetailsService: VoucherDetailsServiceProxy,
+
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private searchDialog: SearchDialogService,
     private sharedServices: SharedService,
-    private alertsService:NotificationsAlertsService,
+    private alertsService: NotificationsAlertsService,
     private spinnerService: NgxSpinnerService,
-
-
 
 
   ) {
     this.defineVoucherForm();
+    this.clearSelectedItemData();
+    this.voucherDetail = [];
+
   }
   //#endregion
 
@@ -119,6 +124,7 @@ export class AddEditVoucherComponent implements OnInit {
     //     }
     //   })
     this.listenToClickedButton();
+    this.getGeneralConfigurations();
 
     this.getBeneficiaryTypes();
     this.spinner.show();
@@ -132,28 +138,36 @@ export class AddEditVoucherComponent implements OnInit {
 
       this.spinner.hide();
     })
-    this.currnetUrl = this.router.url;
-    //this.listenToClickedButton();
-    //this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      // this.getaccountClassificationCode();
-    }
+    debugger
     this.sub = this.route.params.subscribe((params) => {
+      debugger
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = params['voucherTypeId'];
         if (this.voucherTypeId) {
           this.getVoucherTypes(this.voucherTypeId);
-          // this.getGeneralConfigurations();
+        
         }
       }
       if (params['id'] != null) {
         this.id = params['id'];
 
         if (this.id) {
-          //  this.getaccountClassificationById(this.id);
+          this.getVoucherById(this.id);
+          this.getVoucherDetailsById(this.id);
         }
       }
+      else {
+
+      }
     });
+    //this.currnetUrl = this.router.url;
+    //this.listenToClickedButton();
+    //this.changePath();
+    // if (this.currnetUrl == this.addUrl) {
+    //   debugger
+    //    this.getVoucherCode();
+    // }
+
   }
 
   //#endregion
@@ -187,7 +201,7 @@ export class AddEditVoucherComponent implements OnInit {
       companyId: this.companyId,
       branchId: this.branchId,
       voucherTypeId: this.voucherTypeId,
-      voucherCode: REQUIRED_VALIDATORS,
+      code: REQUIRED_VALIDATORS,
       voucherDate: ['', Validators.compose([Validators.required])],
       cashAccountId: REQUIRED_VALIDATORS,
       costCenterAccountId: '',
@@ -221,6 +235,14 @@ export class AddEditVoucherComponent implements OnInit {
           this.cashAccountId = res.response.defaultAccountId;
           this.currencyId = res.response.defaultCurrencyId;
           this.voucherkindId = res.response.voucherKindId;
+          this.serialTypeId = res.response.serialTypeId;
+
+          debugger
+          if (this.id == 0) {
+            if (this.serialTypeId == SerialTypeEnum.Automatic) {
+              this.getVoucherCode();
+            }
+          }
 
         },
         error: (err: any) => {
@@ -233,6 +255,101 @@ export class AddEditVoucherComponent implements OnInit {
     });
     return promise;
 
+  }
+  getVoucherById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.voucherService.getVoucher(id).subscribe({
+        next: (res: any) => {
+          debugger
+          this.voucherForm.setValue({
+            id: res.response?.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
+            voucherTypeId: res.response?.voucherTypeId,
+            code: res.response?.code,
+            voucherDate: formatDate(res.response?.voucherDate),
+            cashAccountId: res.response?.cashAccountId,
+            costCenterAccountId: res.response?.costCenterAccountId,
+            currencyId: res.response?.currencyId,
+            description: res.response?.description,
+            voucherTotal: res.response?.voucherTotal,
+
+          });
+
+          console.log(
+            'this.voucherForm.value set value',
+            this.voucherForm.value
+          );
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+  }
+  getVoucherDetailsById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.voucherDetailsService.allVoucherDetails(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res: any) => {
+
+          res = res.response.items.filter(x => x.voucherId == id)
+
+          res.forEach(element => {
+            debugger
+            var currencyName;
+            var beneficiaryAccountName;
+            var costCenterAccountName;
+            if (element.currencyId > 0) {
+
+              currencyName = this.currenciesListInDetail.find(x => x.id == element.currencyId);
+            }
+            if (element.beneficiaryAccountId > 0) {
+              beneficiaryAccountName = this.beneficiaryAccountsList.find(x => x.id == element.beneficiaryAccountId);
+            }
+            if (element.costCenterAccountId > 0) {
+              costCenterAccountName = this.costCenterAccountsInDetailList.find(x => x.id == element.costCenterAccountId);
+            }
+            this.voucherDetail.push(
+              {
+                id: element.id,
+                voucherId: element.voucherId,
+                debit: element.debit,
+                credit: element.credit,
+                currencyId: element.currencyId,
+                currencyConversionFactor: element.currencyConversionFactor,
+                debitAfterConversion: element.debitAfterConversion,
+                creditAfterConversion: element.creditAfterConversion,
+                beneficiaryTypeId: element.beneficiaryTypeId,
+                beneficiaryAccountId: element.beneficiaryAccountId,
+                description: element.description,
+                costCenterAccountId: element.costCenterAccountId,
+                currencyNameAr: currencyName?.nameAr ?? '',
+                currencyNameEn: currencyName?.nameEn ?? '',
+                beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
+                beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
+                costCenterAccountNameAr: costCenterAccountName?.nameAr ?? '',
+                costCenterAccountNameEn: costCenterAccountName?.nameEn ?? ''
+              }
+            )
+          });
+
+          //this.voucherDetail=res
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
   }
   getGeneralConfigurations() {
     debugger
@@ -259,6 +376,27 @@ export class AddEditVoucherComponent implements OnInit {
     return promise;
 
   }
+  getVoucherCode() {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.voucherService.getLastCode().subscribe({
+        next: (res: any) => {
+          debugger
+          // this.toolbarPathData.componentList = this.translate.instant("component-names.currencies");
+          this.voucherForm.patchValue({
+            code: res.response
+          });
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+
+  }
   getAccounts() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
@@ -268,7 +406,7 @@ export class AddEditVoucherComponent implements OnInit {
             this.cashAccountsList = res.response;
             this.costCenterAccountsList = res.response;
             this.beneficiaryAccountsList = res.response;
-            this.costCenterAccountsInDetailsList = res.response;
+            this.costCenterAccountsInDetailList = res.response;
 
           }
 
@@ -294,7 +432,7 @@ export class AddEditVoucherComponent implements OnInit {
         next: (res) => {
           if (res.success) {
             this.currenciesList = res.response;
-            this.currenciesListInDetails = res.response;
+            this.currenciesListInDetail = res.response;
 
           }
           resolve();
@@ -317,13 +455,13 @@ export class AddEditVoucherComponent implements OnInit {
     debugger
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedVoucherDetails?.currencyNameAr ?? '';
+      searchTxt = this.selectedVoucherDetail?.currencyNameAr ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
-    let data = this.currenciesListInDetails.filter((x) => {
+    let data = this.currenciesListInDetail.filter((x) => {
       return (
         (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
@@ -332,26 +470,26 @@ export class AddEditVoucherComponent implements OnInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetails!.currencyNameAr = data[0].nameAr;
-        this.selectedVoucherDetails!.currencyId = data[0].id;
+        this.selectedVoucherDetail!.currencyNameAr = data[0].nameAr;
+        this.selectedVoucherDetail!.currencyId = data[0].id;
       } else {
-        this.voucherDetails[i].currencyNameAr = data[0].nameAr;
-        this.voucherDetails[i].currencyId = data[0].id;
+        this.voucherDetail[i].currencyNameAr = data[0].nameAr;
+        this.voucherDetail[i].currencyId = data[0].id;
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
       let title = 'بحث عن العملة';
       let sub = this.searchDialog
-        .showDialog(lables, names, this.currenciesListInDetails, title, searchTxt)
+        .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetails!.currencyNameAr = d.nameAr;
-              this.selectedVoucherDetails!.currencyId = d.id;
+              this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
+              this.selectedVoucherDetail!.currencyId = d.id;
             } else {
-              this.voucherDetails[i].currencyNameAr = d.nameAr;
-              this.voucherDetails[i].currencyId = d.id;
+              this.voucherDetail[i].currencyNameAr = d.nameAr;
+              this.voucherDetail[i].currencyId = d.id;
             }
           }
         });
@@ -363,7 +501,7 @@ export class AddEditVoucherComponent implements OnInit {
     debugger
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedVoucherDetails?.beneficiaryAccountNameAr ?? '';
+      searchTxt = this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -378,11 +516,11 @@ export class AddEditVoucherComponent implements OnInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetails!.beneficiaryAccountNameAr = data[0].nameAr;
-        this.selectedVoucherDetails!.beneficiaryAccountId = data[0].id;
+        this.selectedVoucherDetail!.beneficiaryAccountNameAr = data[0].nameAr;
+        this.selectedVoucherDetail!.beneficiaryAccountId = data[0].id;
       } else {
-        this.voucherDetails[i].beneficiaryAccountNameAr = data[0].nameAr;
-        this.voucherDetails[i].beneficiaryAccountId = data[0].id;
+        this.voucherDetail[i].beneficiaryAccountNameAr = data[0].nameAr;
+        this.voucherDetail[i].beneficiaryAccountId = data[0].id;
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
@@ -393,11 +531,11 @@ export class AddEditVoucherComponent implements OnInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetails!.beneficiaryAccountNameAr = d.nameAr;
-              this.selectedVoucherDetails!.beneficiaryAccountId = d.id;
+              this.selectedVoucherDetail!.beneficiaryAccountNameAr = d.nameAr;
+              this.selectedVoucherDetail!.beneficiaryAccountId = d.id;
             } else {
-              this.voucherDetails[i].beneficiaryAccountNameAr = d.nameAr;
-              this.voucherDetails[i].beneficiaryAccountId = d.id;
+              this.voucherDetail[i].beneficiaryAccountNameAr = d.nameAr;
+              this.voucherDetail[i].beneficiaryAccountId = d.id;
             }
           }
         });
@@ -409,13 +547,13 @@ export class AddEditVoucherComponent implements OnInit {
     debugger
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedVoucherDetails?.costCenterAccountNameAr ?? '';
+      searchTxt = this.selectedVoucherDetail?.costCenterAccountNameAr ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
-    let data = this.costCenterAccountsInDetailsList.filter((x) => {
+    let data = this.costCenterAccountsInDetailList.filter((x) => {
       return (
         (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
@@ -424,26 +562,26 @@ export class AddEditVoucherComponent implements OnInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetails!.costCenterAccountNameAr = data[0].nameAr;
-        this.selectedVoucherDetails!.costCenterAccountId = data[0].id;
+        this.selectedVoucherDetail!.costCenterAccountNameAr = data[0].nameAr;
+        this.selectedVoucherDetail!.costCenterAccountId = data[0].id;
       } else {
-        this.voucherDetails[i].costCenterAccountNameAr = data[0].nameAr;
-        this.voucherDetails[i].costCenterAccountId = data[0].id;
+        this.voucherDetail[i].costCenterAccountNameAr = data[0].nameAr;
+        this.voucherDetail[i].costCenterAccountId = data[0].id;
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
       let title = 'بحث عن الحساب';
       let sub = this.searchDialog
-        .showDialog(lables, names, this.costCenterAccountsInDetailsList, title, searchTxt)
+        .showDialog(lables, names, this.costCenterAccountsInDetailList, title, searchTxt)
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetails!.costCenterAccountNameAr = d.nameAr;
-              this.selectedVoucherDetails!.costCenterAccountId = d.id;
+              this.selectedVoucherDetail!.costCenterAccountNameAr = d.nameAr;
+              this.selectedVoucherDetail!.costCenterAccountId = d.id;
             } else {
-              this.voucherDetails[i].costCenterAccountNameAr = d.nameAr;
-              this.voucherDetails[i].costCenterAccountId = d.id;
+              this.voucherDetail[i].costCenterAccountNameAr = d.nameAr;
+              this.voucherDetail[i].costCenterAccountId = d.id;
             }
           }
         });
@@ -463,8 +601,8 @@ export class AddEditVoucherComponent implements OnInit {
     this.voucherForm.controls.currencyId.setValue(event.id);
     this.showSearchCurrencyModal = false;
   }
- 
- 
+
+
   getBeneficiaryTypes() {
     if (this.lang == 'en') {
       this.beneficiaryTypesEnum = convertEnumToArray(BeneficiaryTypeEnum);
@@ -476,38 +614,36 @@ export class AddEditVoucherComponent implements OnInit {
   }
   addItem() {
     debugger
-    this.voucherDetails.push({
+    this.voucherDetail.push({
       id: 0,
-      voucherId: this.selectedVoucherDetails?.voucherId ?? 0,
-      debit: this.selectedVoucherDetails?.debit ?? 0,
-      credit: this.selectedVoucherDetails?.credit ?? 0,
-      currencyId: this.selectedVoucherDetails?.currencyId ?? 0,
-      currencyConversionFactor: this.selectedVoucherDetails?.currencyConversionFactor ?? 0,
-      debitAfterConversion: this.selectedVoucherDetails?.debitAfterConversion ?? 0,
-      creditAfterConversion: this.selectedVoucherDetails?.creditAfterConversion ?? 0,
-      beneficiaryTypeId: this.selectedVoucherDetails?.beneficiaryTypeId ?? 0,
-      beneficiaryAccountId: this.selectedVoucherDetails?.beneficiaryAccountId ?? 0,
-      description: this.selectedVoucherDetails?.description ?? '',
-      costCenterAccountId: this.selectedVoucherDetails?.costCenterAccountId ?? 0,
-      currencyNameAr:this.selectedVoucherDetails?.currencyNameAr ?? '',
-      currencyNameEn: this.selectedVoucherDetails?.currencyNameEn ?? '',
-      beneficiaryAccountNameAr:this.selectedVoucherDetails?.beneficiaryAccountNameAr ?? '',
-      beneficiaryAccountNameEn: this.selectedVoucherDetails?.beneficiaryAccountNameEn ?? '',
-      costCenterAccountNameAr:  this.selectedVoucherDetails?.costCenterAccountNameAr ?? '',
-      costCenterAccountNameEn:  this.selectedVoucherDetails?.costCenterAccountNameEn ?? ''
+      voucherId: this.selectedVoucherDetail?.voucherId ?? 0,
+      debit: this.selectedVoucherDetail?.debit ?? 0,
+      credit: this.selectedVoucherDetail?.credit ?? 0,
+      currencyId: this.selectedVoucherDetail?.currencyId ?? 0,
+      currencyConversionFactor: this.selectedVoucherDetail?.currencyConversionFactor ?? 0,
+      debitAfterConversion: this.selectedVoucherDetail?.debitAfterConversion ?? 0,
+      creditAfterConversion: this.selectedVoucherDetail?.creditAfterConversion ?? 0,
+      beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
+      beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
+      description: this.selectedVoucherDetail?.description ?? '',
+      costCenterAccountId: this.selectedVoucherDetail?.costCenterAccountId ?? 0,
+      currencyNameAr: this.selectedVoucherDetail?.currencyNameAr ?? '',
+      currencyNameEn: this.selectedVoucherDetail?.currencyNameEn ?? '',
+      beneficiaryAccountNameAr: this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '',
+      beneficiaryAccountNameEn: this.selectedVoucherDetail?.beneficiaryAccountNameEn ?? '',
+      costCenterAccountNameAr: this.selectedVoucherDetail?.costCenterAccountNameAr ?? '',
+      costCenterAccountNameEn: this.selectedVoucherDetail?.costCenterAccountNameEn ?? ''
     });
-    this.voucher!.voucherDetails = this.voucherDetails;
-    
+    this.voucher!.voucherDetail = this.voucherDetail;
 
-    this.totalDebit += this.selectedVoucherDetails?.debit ?? 0;
-    this.totalCredit += this.selectedVoucherDetails?.credit ?? 0;
-    if(this.voucherkindId==1)
-    {
-    this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
+
+    this.totalDebit += this.selectedVoucherDetail?.debit ?? 0;
+    this.totalCredit += this.selectedVoucherDetail?.credit ?? 0;
+    if (this.voucherkindId == 1) {
+      this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
     }
-    if(this.voucherkindId==2)
-    {
-    this.voucherForm.controls["voucherTotal"].setValue(this.totalCredit)
+    if (this.voucherkindId == 2) {
+      this.voucherForm.controls["voucherTotal"].setValue(this.totalCredit)
     }
 
     this.clearSelectedItemData();
@@ -515,29 +651,29 @@ export class AddEditVoucherComponent implements OnInit {
   }
   deleteItem(index) {
     debugger
-    if (this.voucherDetails.length) {
-      if (this.voucherDetails.length == 1) {
-        this.voucherDetails = [];
+    this.totalDebit = this.totalDebit - this.voucherDetail[index]?.debit ?? 0;
+    this.totalCredit = this.totalDebit - this.voucherDetail[index]?.credit ?? 0;
+    if (this.voucherkindId == 1) {
+      this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
+    }
+    if (this.voucherkindId == 2) {
+      this.voucherForm.controls["voucherTotal"].setValue(this.totalCredit)
+    }
+
+    if (this.voucherDetail.length) {
+      if (this.voucherDetail.length == 1) {
+        this.voucherDetail = [];
       } else {
-        this.voucherDetails.splice(index, 1);
+        this.voucherDetail.splice(index, 1);
       }
     }
     debugger
-    this.voucher.voucherDetails=this.voucherDetails;
+    this.voucher.voucherDetail = this.voucherDetail;
 
-    this.totalDebit =this.totalDebit- this.voucherDetails[index]?.debit ?? 0;
-    this.totalCredit =this.totalDebit- this.voucherDetails[index]?.credit ?? 0;
-    if(this.voucherkindId==1)
-    {
-    this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
-    }
-    if(this.voucherkindId==2)
-    {
-    this.voucherForm.controls["voucherTotal"].setValue(this.totalCredit)
-    }
+   
   }
   clearSelectedItemData() {
-    this.selectedVoucherDetails = {
+    this.selectedVoucherDetail = {
       id: 0,
       voucherId: 0,
       debit: 0,
@@ -552,8 +688,8 @@ export class AddEditVoucherComponent implements OnInit {
       costCenterAccountId: 0,
       currencyNameAr: '',
       currencyNameEn: '',
-      beneficiaryAccountNameAr:'',
-      beneficiaryAccountNameEn:'',
+      beneficiaryAccountNameAr: '',
+      beneficiaryAccountNameEn: '',
       costCenterAccountNameAr: '',
       costCenterAccountNameEn: ''
     }
@@ -567,54 +703,47 @@ export class AddEditVoucherComponent implements OnInit {
       id: this.voucherForm.controls["id"].value,
       companyId: this.voucherForm.controls["companyId"].value,
       branchId: this.voucherForm.controls["branchId"].value,
-      voucherTypeId: this.voucherForm.controls["voucherTypeId"].value,
-      voucherCode: this.voucherForm.controls["voucherCode"].value,
+      voucherTypeId: this.voucherTypeId,
+      code: this.voucherForm.controls["code"].value,
       voucherDate: formatDate(Date.parse(this.voucherForm.controls["voucherDate"].value)),
       cashAccountId: this.voucherForm.controls["cashAccountId"].value,
-      costCenterAccountId :this.voucherForm.controls["costCenterAccountId"].value,
+      costCenterAccountId: this.voucherForm.controls["costCenterAccountId"].value,
       currencyId: this.voucherForm.controls["currencyId"].value,
-      description:  this.voucherForm.controls["description"].value,
-      voucherTotal:  this.voucherForm.controls["voucherTotal"].value,
-      voucherDetails: this.voucher.voucherDetails ?? [],
-     
+      description: this.voucherForm.controls["description"].value,
+      voucherTotal: this.voucherForm.controls["voucherTotal"].value,
+      voucherDetail: this.voucher.voucherDetail ?? [],
 
     };
 
 
   }
   onSave() {
-    if(this.voucher.voucherDetails.length==0)
-    {
+    if (this.voucher.voucherDetail.length == 0) {
       this.errorMessage = this.translate.instant("voucher.voucher-details-required");
       this.errorClass = 'errorMessage';
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
-    debugger
+
     if (this.voucherForm.valid) {
       this.spinnerService.show();
-     // this.setInputData();
-
-      this.voucherForm.controls.voucherTypeId.setValue(this.voucherTypeId);
-     // this.voucherForm.controls.voucherDate.setValue(this.voucherTypeId);
+      this.setInputData();
 
       const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.voucherForm.value;
-        console.log('voucherForm ', this.voucherForm.value);
 
-        this.voucherService.createVoucher(entity).subscribe({
+        this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
           next: (result: any) => {
             debugger
-            console.log('result dataaddData ', result);
-          var c=  result.data.id
+            console.log('result addData ', result);
 
             this.defineVoucherForm();
-
-           // this.submited = false;
+            this.clearSelectedItemData();
+            this.voucherDetail = [];
+            // this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
 
-              navigateUrl(this.listUrl, this.router);
+              navigateUrl(this.listUrl + this.voucherTypeId, this.router);
             }, 1000);
           },
           error: (err: any) => {
@@ -626,30 +755,60 @@ export class AddEditVoucherComponent implements OnInit {
         });
       });
       return promise;
-      // let sub = this.voucherServices.addWithResponse<Voucher>("AddVoucher?uniques=Code&uniques=TypeId&checkAll=true", this.voucher).subscribe({
-      //   next: (res) => {
-      //     debugger
-      //     this.spinnerService.hide();
-      //     if (res.success) {
-      //       this.showResponseMessage(
-      //         res.success,
-      //         AlertTypes.success,
-      //         this.translate.transform('messages.add-success')
-      //       );
-      //       this.router.navigate([this.listUrl], {
-      //         queryParams: {
-      //           "typeId": this.typeId
-      //         }
-      //       })
-      //     }
-      //   },
-      //   error: (err: any) => {
-      //     this.spinnerService.hide();
-      //   }
 
-      // });
 
-     // this.subsList.push(sub);
+
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.voucherForm.markAllAsTouched();
+
+    }
+  }
+  onUpdate() {
+    if (this.voucher.voucherDetail.length == 0) {
+      this.errorMessage = this.translate.instant("voucher.voucher-details-required");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+    }
+
+    if (this.voucherForm.valid) {
+      this.spinnerService.show();
+      this.setInputData();
+
+      const promise = new Promise<void>((resolve, reject) => {
+
+        this.voucherService.updateVoucherAndRelations(this.voucher).subscribe({
+          next: (result: any) => {
+            debugger
+            console.log('result addData ', result);
+
+            this.defineVoucherForm();
+            this.clearSelectedItemData();
+            this.voucherDetail = [];
+
+            // this.submited = false;
+            setTimeout(() => {
+              this.spinner.hide();
+
+              navigateUrl(this.listUrl + this.voucherTypeId, this.router);
+            }, 1000);
+          },
+          error: (err: any) => {
+            reject(err);
+          },
+          complete: () => {
+            console.log('complete');
+          },
+        });
+      });
+      return promise;
+
+
+
     }
     else {
       this.errorMessage = this.translate.instant("validation-messages.invalid-data");
@@ -670,17 +829,20 @@ export class AddEditVoucherComponent implements OnInit {
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.sharedServices.changeToolbarPath({
-              listPath: this.listUrl,
+              listPath: this.listUrl + this.voucherTypeId,
             } as ToolbarPath);
-            this.router.navigate([this.listUrl]);
+            this.router.navigate([this.listUrl + this.voucherTypeId]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add Voucher';
+            this.toolbarPathData.componentAdd = this.translate.instant("voucher.add-voucher");
             this.defineVoucherForm();
+            this.clearSelectedItemData();
+            this.voucherDetail = [];
+
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
-           // this.onUpdate();
+            this.onUpdate();
           }
         }
       },

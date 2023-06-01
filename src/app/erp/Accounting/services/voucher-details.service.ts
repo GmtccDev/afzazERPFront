@@ -18,7 +18,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 @Injectable({
     providedIn: 'root'
 })
-export class VoucherServiceProxy {
+export class VoucherDetailsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -28,30 +28,23 @@ export class VoucherServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createVoucher(branch: any): Observable<any> {
+    createVoucherDetails(branch: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/add?", branch);
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherDetails/add?", branch);
     }
-    createVoucherAndRelations(voucher: any): Observable<any> {
-
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/addVoucher?", voucher);
-    }
-    updateVoucherAndRelations(voucher: any): Observable<any> {
-
-        return this.http.put<any>(environment.apiUrl + "/api/Voucher/updateVoucher?", voucher);
-    }
+    
     // ids: number[] | undefined;
-    deleteListVoucher(branch: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/deleteList?", branch);
+    deleteListVoucherDetails(branch: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherDetails/deleteList?", branch);
     }
-    updateVoucher(branch: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/edit?", branch);
+    updateVoucherDetails(branch: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherDetails/edit?", branch);
     }
     getDdl(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Voucher/get-ddl?");
+        return this.http.get<any>(this.baseUrl + "/api/VoucherDetails/get-ddl?");
     }
   
-    allVouchers(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
+    allVoucherDetails(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
      
         let queryParams = new HttpParams();
         if (pageIndex != undefined)
@@ -65,31 +58,27 @@ export class VoucherServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/Voucher/all?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/VoucherDetails/all?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/Voucher/GetVouchers");
+        // return this.http.get<any>(environment.apiUrl + "/api/VoucherDetails/GetVoucherDetailss");
     }
 
 
-    getVoucher(id: any): Observable<any> {
+    getVoucherDetails(id: any): Observable<any> {
         debugger
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(this.baseUrl + "/api/Voucher/getById", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/VoucherDetails/getById", { params: params });
     }
     getLastCode(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Voucher/getLastCode?");
+        return this.http.get<any>(this.baseUrl + "/api/VoucherDetails/getLastCode?");
     }
-    deleteVoucher(id: any): Observable<any> {
+    deleteVoucherDetails(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Voucher/delete", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/VoucherDetails/delete", { params: params });
     }
-    deleteVoucherAndRelations(id: any): Observable<any> {
-        let params = new HttpParams();
-        params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Voucher/deleteVoucherAndRelation", { params: params });
-    }
+   
 
 }
 
