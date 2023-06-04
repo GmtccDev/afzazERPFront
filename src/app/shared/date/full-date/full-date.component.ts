@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DateModel } from '../../model/date-model';
-
-
 @Component({
   selector: 'app-full-date',
   templateUrl: './full-date.component.html',

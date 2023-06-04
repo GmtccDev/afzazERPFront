@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -22,13 +22,14 @@ import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { formatDate, navigateUrl } from 'src/app/shared/helper/helper-url';
+import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 
 @Component({
   selector: 'app-add-edit-voucher',
   templateUrl: './add-edit-voucher.component.html',
   styleUrls: ['./add-edit-voucher.component.scss']
 })
-export class AddEditVoucherComponent implements OnInit {
+export class AddEditVoucherComponent implements OnInit,AfterViewInit {
   //#region Main Declarations
   branchId: string = localStorage.getItem("branchId");
   companyId: string = localStorage.getItem("companyId");
@@ -38,6 +39,8 @@ export class AddEditVoucherComponent implements OnInit {
   cashAccountId: any;
   voucherkindId: any;
   serialTypeId: any;
+  voucherDate!: DateModel;
+
   showSearchCashAccountModal = false;
   showSearchCostCenterAccountModal = false;
   showSearchBeneficiaryAccountsModal = false;
@@ -97,6 +100,7 @@ export class AddEditVoucherComponent implements OnInit {
     private publicService: PublicService,
     private voucherService: VoucherServiceProxy,
     private voucherDetailsService: VoucherDetailsServiceProxy,
+    private dateService: DateCalculation,
 
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
@@ -124,7 +128,6 @@ export class AddEditVoucherComponent implements OnInit {
     //     }
     //   })
     this.listenToClickedButton();
-    this.getGeneralConfigurations();
 
     this.getBeneficiaryTypes();
     this.spinner.show();
@@ -171,7 +174,10 @@ export class AddEditVoucherComponent implements OnInit {
   }
 
   //#endregion
+  ngAfterViewInit(): void {
+    this.getGeneralConfigurations();
 
+  }
   //#region ngOnDestroy
   ngOnDestroy() {
     this.subsList.forEach((s) => {
@@ -202,7 +208,7 @@ export class AddEditVoucherComponent implements OnInit {
       branchId: this.branchId,
       voucherTypeId: this.voucherTypeId,
       code: REQUIRED_VALIDATORS,
-      voucherDate: ['', Validators.compose([Validators.required])],
+      voucherDate: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       cashAccountId: REQUIRED_VALIDATORS,
       costCenterAccountId: '',
       currencyId: REQUIRED_VALIDATORS,
@@ -359,8 +365,9 @@ export class AddEditVoucherComponent implements OnInit {
         next: (res: any) => {
           debugger
           console.log('result data getbyid', res);
-          if (res.response.value = 'true') {
+          if (res.response.value == 'true') {
             this.enableMultiCurrencies = true;
+            // this.selectedVoucherDetail.currencyId=this.voucherForm.controls["currencyId"].value;
           }
 
 
@@ -637,8 +644,8 @@ export class AddEditVoucherComponent implements OnInit {
     this.voucher!.voucherDetail = this.voucherDetail;
 
 
-    this.totalDebit += this.selectedVoucherDetail?.debit ?? 0;
-    this.totalCredit += this.selectedVoucherDetail?.credit ?? 0;
+    this.totalDebit += this.selectedVoucherDetail?.debitAfterConversion ?? 0;
+    this.totalCredit += this.selectedVoucherDetail?.creditAfterConversion ?? 0;
     if (this.voucherkindId == 1) {
       this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
     }
@@ -651,8 +658,8 @@ export class AddEditVoucherComponent implements OnInit {
   }
   deleteItem(index) {
     debugger
-    this.totalDebit = this.totalDebit - this.voucherDetail[index]?.debit ?? 0;
-    this.totalCredit = this.totalDebit - this.voucherDetail[index]?.credit ?? 0;
+    this.totalDebit = this.totalDebit - this.voucherDetail[index]?.debitAfterConversion ?? 0;
+    this.totalCredit = this.totalDebit - this.voucherDetail[index]?.creditAfterConversion ?? 0;
     if (this.voucherkindId == 1) {
       this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
     }
@@ -679,7 +686,7 @@ export class AddEditVoucherComponent implements OnInit {
       debit: 0,
       credit: 0,
       currencyId: 0,
-      currencyConversionFactor: 0,
+      currencyConversionFactor: 1,
       debitAfterConversion: 0,
       creditAfterConversion: 0,
       beneficiaryTypeId: 0,
@@ -852,7 +859,21 @@ export class AddEditVoucherComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  getVoucherDate(selectedDate: DateModel) {
+    this.voucherDate = selectedDate;
+  }
+  getValueAfterConversion()
+  {
+    this.selectedVoucherDetail.debitAfterConversion=Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor); 
+    this.selectedVoucherDetail.creditAfterConversion=Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor); 
 
+  
+  }
+  getAddedValueAfterConversion(i:any)
+  {
+    this.voucherDetail[i].debitAfterConversion=Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor); 
+    this.voucherDetail[i].creditAfterConversion=Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor); 
 
+  }
 }
 

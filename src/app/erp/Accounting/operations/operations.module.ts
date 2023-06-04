@@ -12,6 +12,8 @@ import { JournalEntryComponent } from './journal-entry/journal-entry.component';
 import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-entry/add-edit-journal-entry.component';
 import { SearchDialogService } from 'src/app/shared/services/search-dialog.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -29,6 +31,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule
     
   ],
-  providers: [SearchDialogService]
+  providers: [SearchDialogService,DateCalculation,NgbCalendarIslamicUmalqura]
 })
 export class OperationsModule { }
