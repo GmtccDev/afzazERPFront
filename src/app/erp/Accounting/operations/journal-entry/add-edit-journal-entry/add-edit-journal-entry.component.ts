@@ -545,21 +545,41 @@ debugger
   }
   onUpdate() {
 
+    console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+    if (this.counter < 2) {
+      this.alertsService.showError(
+        'يجب أن يكون على الاقل اثنين من الصفوف',
+        ""
+
+      )
+      return;
+    }
+    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+      this.alertsService.showError(
+        'يجب ان يكون قيم في الدائن والمدين',
+        ""
+      )
+      return;
+    }
+    if ((this.totalCredit !== this.totalDebit)) {
+      this.alertsService.showError(
+        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
+        ""
+      )
+      return;
+    }
+    //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
-
-      this.journalEntryForm.value.id = this.id;
-      var entityDb = this.journalEntryForm.value;
-      entityDb.id = this.id;
-
-      console.log("this.VendorCommissionsForm.value", this.journalEntryForm.value)
       const promise = new Promise<void>((resolve, reject) => {
+        var entity = this.journalEntryForm.value;
 
-        this.journalEntryService.updateJournalEntry(entityDb).subscribe({
+        this.journalEntryService.updateJournalEntry(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
-            console.log('result update ', result);
+            console.log('result dataaddData ', result);
 
-            this.definejournalEntryForm();
+          //  this.definejournalEntryForm();
+
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
@@ -576,11 +596,10 @@ debugger
         });
       });
       return promise;
-    }
 
-    else {
+    } else {
 
-      // return this.journalEntryForm.markAllAsTouched();
+      //  return this.journalEntryForm.markAllAsTouched();
     }
   }
 
