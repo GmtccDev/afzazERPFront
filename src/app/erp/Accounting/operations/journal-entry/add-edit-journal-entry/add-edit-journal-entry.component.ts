@@ -70,6 +70,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   isMultiCurrency: boolean;
   serial: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
+  fiscalPeriod: any;
   constructor(
     private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
@@ -89,7 +90,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getGeneralConfiguration() 
+    this.getGeneralConfiguration()
     this.getCostCenter();
     this.getCurrency();
     this.getFiscalPeriod();
@@ -157,18 +158,41 @@ export class AddEditJournalEntryComponent implements OnInit {
       { nameAr: "اليومية / الفترة المحاسبي / رقم   ", nameEn: 'Daily/Period Accounting/Number', value: '3' }
     ];
   }
+  codeSerial='';
+  journal='';
+  onChangeJournal(event) {
+   debugger
+   //this.journalEntryForm.controls['jEMasterStatusId'].value
+   let journalModel = this.journalList.find(x => x.id == event);
+   this.journal= this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
+   if(this.serial=='2'){
+   
+    this.codeSerial= this.journal+"/"+this.journalEntryForm.controls['code'].value
+   }
+    
+  }
+  onChangefiscalPeriod(event) {
+    debugger
+     let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
+     this.fiscalPeriod= this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
+     if(this.serial=='3'){
+   
+      this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
+     }
+    
+   }
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
           console.log(res);
-      
+
           if (res.success) {
 
-debugger
+
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
-            this.serial=res.response.items.find(c=>c.id==3).value;
+            this.serial = res.response.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
             //   this.getCurrency();
             // }
@@ -205,7 +229,7 @@ debugger
     });
     this.initGroup();
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-    
+
       this.totalCredit = 0;
       this.totalDebit = 0;
       this.totalDebitLocal = 0;
@@ -411,7 +435,7 @@ debugger
           this.journalEntryForm.patchValue({
             code: res.response
           });
-
+          this.codeSerial=res.response;
         },
         error: (err: any) => {
           reject(err);
@@ -534,7 +558,7 @@ debugger
   onChangeCurrency(event, index) {
 
     console.log('Name changed:', event.target.value);
-    debugger
+
     let currencyModel = this.currencyList.find(x => x.id == event.target.value);
     const faControl =
       (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
@@ -578,7 +602,7 @@ debugger
             this.spinner.show();
             console.log('result dataaddData ', result);
 
-          //  this.definejournalEntryForm();
+            //  this.definejournalEntryForm();
 
             this.submited = false;
             setTimeout(() => {
@@ -747,7 +771,7 @@ debugger
         (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(i);
       faControl['controls'].jEDetailDebit.setValue(0);
 
-      
+
     }
     else if (type == 'Debit') {
       const faControl =
@@ -764,7 +788,7 @@ debugger
 
   }
   onInput(event, i, type): boolean {
-    
+
     this.index = i;
     if (type == 'Credit') {
       const faControl =
@@ -774,25 +798,25 @@ debugger
       let jEDetailCredit = faControl['controls'].jEDetailCredit.value;
       let jEDetailDebit = faControl['controls'].jEDetailDebit.value;
       let transactionFactor = faControl['controls'].transactionFactor.value;
-     if ( transactionFactor != null) {
-       faControl['controls'].jEDetailCreditLocal.setValue(jEDetailCredit * transactionFactor);
-      faControl['controls'].jEDetailDebitLocal.setValue(jEDetailDebit * transactionFactor);
-     }
-      
-  
+      if (transactionFactor != null) {
+        faControl['controls'].jEDetailCreditLocal.setValue(jEDetailCredit * transactionFactor);
+        faControl['controls'].jEDetailDebitLocal.setValue(jEDetailDebit * transactionFactor);
+      }
+
+
     }
     else if (type == 'Debit') {
       const faControl =
         (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(i);
       faControl['controls'].jEDetailCredit.setValue(0);
-      debugger
+
       let jEDetailCredit = faControl['controls'].jEDetailCredit.value;
       let jEDetailDebit = faControl['controls'].jEDetailDebit.value;
       let transactionFactor = faControl['controls'].transactionFactor.value;
-     if ( transactionFactor != null) {
-       faControl['controls'].jEDetailCreditLocal.setValue(jEDetailCredit * transactionFactor);
-      faControl['controls'].jEDetailDebitLocal.setValue(jEDetailDebit * transactionFactor);
-     }
+      if (transactionFactor != null) {
+        faControl['controls'].jEDetailCreditLocal.setValue(jEDetailCredit * transactionFactor);
+        faControl['controls'].jEDetailDebitLocal.setValue(jEDetailDebit * transactionFactor);
+      }
     }
 
 

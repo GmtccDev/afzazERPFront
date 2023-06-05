@@ -8,6 +8,15 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
+                        <div class="col-md-6 col-12">
+                        
+                            <div class="form-group position-relative">
+
+                               {{codeSerial}}
+                               
+
+                            </div>
+                        </div>
                         <form [formGroup]="journalEntryForm" id="journalEntrySubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
@@ -21,7 +30,7 @@
 
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="journalId"
+                                                <ng-select style="width:100%" formControlName="journalId" (change)="onChangeJournal($event)"
                                                     name='journalId' class="" id="journalId">
                                                     <ng-option *ngFor="let journal of journalList" [value]="journal.id">
                                                         {{lang=="ar"?journal.nameAr:journal.nameEn}}
@@ -40,6 +49,7 @@
                                             </label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="fiscalPeriodId"
+                                                (change)="onChangefiscalPeriod($event)"
                                                     name='fiscalPeriodId' class="" id="fiscalPeriodId">
                                                     <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList"
                                                         [value]="fiscalPeriod.id">
@@ -50,7 +60,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-4 col-md-4">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
