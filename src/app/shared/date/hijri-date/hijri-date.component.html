@@ -4,7 +4,7 @@
             <input class="form-control" style="text-align: center; padding-left: 0px;padding-right: 0px;" placeholder="yyyy/mm/dd" name="d" #c="ngModel" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)" (keydown)="onKeyDown($event)"
                 (change)="dateChange(c, d)" #inputHDate>
 
-            <button class="btn btn-outline-secondary calendar" (click)="ChangeType()" type="button">{{'general.hijriData'|translate}}</button>
+            <button class="btn btn-outline-secondary calendar" (click)="ChangeType()" type="button">{{'general.hijri'|translate}}</button>
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
           class="fa fa-calendar"></i></button>
 

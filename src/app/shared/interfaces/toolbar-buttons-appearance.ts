@@ -9,4 +9,6 @@ export interface ToolbarButtonsAppearance{
   showExport:boolean,
   showReset:boolean,
   showCancel:boolean,
+  showView:boolean,
+  showCancelDefaultReport:boolean
 }

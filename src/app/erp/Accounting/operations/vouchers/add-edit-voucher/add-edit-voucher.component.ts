@@ -216,6 +216,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
       voucherTotal: REQUIRED_VALIDATORS
 
     });
+    this.voucherDate = this.dateService.getCurrentDate();
 
   }
 
@@ -273,7 +274,8 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
             branchId: res.response?.branchId,
             voucherTypeId: res.response?.voucherTypeId,
             code: res.response?.code,
-            voucherDate: formatDate(res.response?.voucherDate),
+            // voucherDate: formatDate(res.response?.voucherDate),
+            voucherDate: this.dateService.getDateForCalender(res.response?.voucherDate),
             cashAccountId: res.response?.cashAccountId,
             costCenterAccountId: res.response?.costCenterAccountId,
             currencyId: res.response?.currencyId,
@@ -735,7 +737,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     if (this.voucherForm.valid) {
       this.spinnerService.show();
       this.setInputData();
-
+       this.voucher.voucherDate=this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
       const promise = new Promise<void>((resolve, reject) => {
 
         this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
@@ -785,6 +787,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     if (this.voucherForm.valid) {
       this.spinnerService.show();
       this.setInputData();
+      this.voucher.voucherDate=this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
 
       const promise = new Promise<void>((resolve, reject) => {
 

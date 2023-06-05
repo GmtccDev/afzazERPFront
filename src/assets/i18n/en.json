@@ -130,7 +130,11 @@
         "debit-after-conversion": "Debit After Conversion",
         "credit-after-conversion": "Credit After Conversion",
         "beneficiary": "Beneficiary",
-        "beneficiary-account": "Beneficiary Account"
+        "beneficiary-account": "Beneficiary Account",
+        "choose-template":"Choose Template",
+        "template-name":"Template Name",
+        "gregorian":"Gregorian",
+        "hijri":"Hijri"
     },
     "menu": {},
     "home": {
@@ -184,7 +188,11 @@
         "edit": "Edit",
         "save": "Save",
         "delete": "Delete",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "show":"Show",
+        "design":"Design",
+        "default":"Default",
+        "close":"Close"
     },
     "messages": {
         "invalid-data": "Please Enter Valid Data!",
@@ -280,7 +288,9 @@
         "copy": "Copy",
         "export": "Export",
         "print": "Print",
-        "update": "Update"
+        "update": "Update",
+        "view":"View",
+        "cancelDefaultReport":"Cancel Default Report"
     },
     "component-names": {
         "country-information": "Country information",
@@ -323,7 +333,9 @@
         "voucher-types": "Voucher Types",
         "vouchers": "Vouchers",
         "journalEntry": "Journal Entry",
-        "journalEntry-information": "Journal Entry information"
+        "journalEntry-information": "Journal Entry information",
+        "reports":"Reports",
+        "budget-report":"Budget Report"
     },
     "language": {
         "ARABIC": "Arabic",

@@ -100,7 +100,19 @@ const routes: Routes = [
 				path: '',
 				loadChildren: () => import('./erp/Accounting/operations/operations.module').then(m => m.OperationsModule)
 			}]
-	},
+	}
+	,
+	{
+		path: 'accounting-reports',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./erp/Accounting/reports/reports.module').then(m => m.ReportsModule)
+			}]
+	}
+	,
 
 	{
 		path: '**',

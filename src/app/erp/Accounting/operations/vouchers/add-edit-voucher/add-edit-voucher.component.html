@@ -27,8 +27,7 @@
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['code'].errors && f['code'].errors['required']"
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
@@ -43,16 +42,13 @@
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                              
-                                                    
-                                                     <!-- <app-gregorian-date name="voucherDate"
-                                                    
-                                                    formControlName="voucherDate" [(ngModel)]="voucherDate"
-                                                    ngDefaultControl 
-                                                    (OnDateSelect)="getVoucherDate($event)"></app-gregorian-date>  -->
-                                                
-                                                    <input type="date" class="form-control " name="voucherDate"
-                                                    formControlName="voucherDate"> 
+                                                <app-full-date name="voucherDate" formControlName="voucherDate"
+                                                    [(ngModel)]="voucherDate" ngDefaultControl
+                                                    [selectedDate]="voucherDate"
+                                                    (OnDateSelect)="getVoucherDate($event)"></app-full-date>
+
+                                                <!-- <input type="date" class="form-control " name="voucherDate"
+                                                    formControlName="voucherDate">  -->
                                                 <div *ngIf="(f['voucherDate'].touched || f['voucherDate'].dirty ) && f['voucherDate'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -228,14 +224,16 @@
                                                                         [(ngModel)]="voucherDetail[i].debit"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (change)="calculateTotal(i)" min="0"
-                                                                        class="form-control" (change)="getAddedValueAfterConversion()">
+                                                                        class="form-control"
+                                                                        (change)="getAddedValueAfterConversion()">
                                                                 </td>
                                                                 <td *ngIf="voucherkindId==2">
                                                                     <input type="number"
                                                                         [(ngModel)]="voucherDetail[i].credit"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (change)="calculateTotal(i)" min="0"
-                                                                        class="form-control" (change)="getAddedValueAfterConversion()">
+                                                                        class="form-control"
+                                                                        (change)="getAddedValueAfterConversion()">
                                                                 </td>
                                                                 <td style="width:100px;" *ngIf="enableMultiCurrencies">
                                                                     <input type="text" class="form-control"
@@ -250,7 +248,8 @@
                                                                     <input type="number"
                                                                         [(ngModel)]="voucherDetail[i].currencyConversionFactor"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control" (change)="getAddedValueAfterConversion(i)">
+                                                                        class="form-control"
+                                                                        (change)="getAddedValueAfterConversion(i)">
 
                                                                 </td>
 
@@ -310,14 +309,16 @@
                                                                         [(ngModel)]="selectedVoucherDetail.debit"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (change)="calculateTotal(-1)" min="0"
-                                                                        class="form-control" (change)="getValueAfterConversion()">
+                                                                        class="form-control"
+                                                                        (change)="getValueAfterConversion()">
                                                                 </td>
                                                                 <td *ngIf="voucherkindId==2">
                                                                     <input type="number"
                                                                         [(ngModel)]="selectedVoucherDetail.credit"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (change)="calculateTotal(-1)" min="0"
-                                                                        class="form-control" (change)="getCreditAfterConversion()">
+                                                                        class="form-control"
+                                                                        (change)="getCreditAfterConversion()">
                                                                 </td>
                                                                 <td style="width:100px;" *ngIf="enableMultiCurrencies">
                                                                     <input type="text" class="form-control"
@@ -332,7 +333,8 @@
                                                                     <input type="number"
                                                                         [(ngModel)]="selectedVoucherDetail.currencyConversionFactor"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control" (change)="getValueAfterConversion()">
+                                                                        class="form-control"
+                                                                        (change)="getValueAfterConversion()">
 
                                                                 </td>
 

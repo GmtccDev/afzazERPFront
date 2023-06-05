@@ -64,6 +64,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import {BidiModule} from '@angular/cdk/bidi';
 import {SearchFormModule} from 'src/app/shared/components/search-form/search-form.module'
+import {FiltersComponent} from 'src/app/shared/components/filters/filters.component'
+import {FullDateComponent} from 'src/app/shared/date/full-date/full-date.component'
+import {HijriDateComponent} from 'src/app/shared/date/hijri-date/hijri-date.component'
+import {GregorianDateComponent} from 'src/app/shared/date/gregorian-date/gregorian-date.component'
+
+
+import { filter } from 'rxjs';
+import { NgbdModalContent } from './components/modal/modal-component';
  
 @NgModule({
   declarations: [
@@ -74,9 +82,11 @@ import {SearchFormModule} from 'src/app/shared/components/search-form/search-for
     DashboardComponent,
     SubscriptionComponent,
     BreadcrumbComponent,
+    
     CustomizerComponent,
     FeatherIconsComponent,
     FullComponent,
+    FullDateComponent,
     ShowOptionsDirective,
     DisableKeyPressDirective,
     OnlyAlphabetsDirective,
@@ -100,9 +110,12 @@ import {SearchFormModule} from 'src/app/shared/components/search-form/search-for
     ChangePasswordComponent,
     FilterPipe,
     EnumKeyValueListPipe,
-    PublicSearchModalComponent
-
-  ],
+    PublicSearchModalComponent,
+    FiltersComponent,
+    NgbdModalContent,
+    HijriDateComponent,
+    GregorianDateComponent
+    ],
   imports: [
     CommonModule,
     RouterModule,
@@ -138,9 +151,11 @@ import {SearchFormModule} from 'src/app/shared/components/search-form/search-for
     LoaderComponent,
     BreadcrumbComponent,
     FooterComponent,
+    FullDateComponent,
     FeatherIconsComponent,
     ModalComponent,
     ChangePasswordComponent,
+    FiltersComponent,
     TapToTopComponent,
     DisableKeyPressDirective,
     OnlyAlphabetsDirective,
@@ -150,7 +165,9 @@ import {SearchFormModule} from 'src/app/shared/components/search-form/search-for
     SwitchButtonComponent,
     FilterPipe,
     EnumKeyValueListPipe,PublicSearchModalComponent,
-    SearchFormModule
+    SearchFormModule,
+    HijriDateComponent,
+    GregorianDateComponent
     
   ],
 })

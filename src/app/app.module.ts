@@ -63,7 +63,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFirestoreModule,
     AngularFireAuthModule,
     AuthenticationModule,
-
     
     TranslateModule.forRoot({
       loader: {

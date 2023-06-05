@@ -58,7 +58,11 @@
         "edit": "تعديل",
         "save": "حفظ",
         "delete": "حذف",
-        "cancel": "إلغاء"
+        "cancel": "إلغاء",
+        "show":"عرض",
+        "design":"تصميم",
+        "default":"الافتراضى",
+        "close":"اغلاق"
     },
     "validation-message": {
         "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
@@ -174,7 +178,9 @@
         "copy": "نسخ",
         "export": "تصدير",
         "update": "تعديل",
-        "print": "طباعة"
+        "print": "طباعة",
+        "view":"عرض",
+        "cancelDefaultReport":"الغاء التقرير الافتراضى"
     },
     "component-names": {
         "country-information": "معلومات الدولة",
@@ -217,7 +223,13 @@
         "voucher-types": "أنماط السندات",
         "vouchers": "السندات",
         "journalEntry": "قيود محاسبية",
-        "journalEntry-information": "معلومات قيود محاسبية "
+        "journalEntry-information": "معلومات قيود محاسبية ",
+        "reports":"التقارير",
+        "budget-report":"تقرير الميزانية",
+        "choose-template":"أختر النموذج",
+        "template-name":"أسم النموذج"
+
+
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -288,7 +300,9 @@
         "credit-after-conversion": "دائن بعد التحويل",
         "beneficiary": "المستفيد",
         "beneficiary-account": "حساب المستفيد",
-        "notes": "ملاحظات"
+        "notes": "ملاحظات",
+        "gregorian":"ميلادى",
+        "hijri":"هجرى"
     },
     "menu": {},
     "currency": {

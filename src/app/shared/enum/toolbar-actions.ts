@@ -9,5 +9,6 @@ export enum ToolbarActions {
     Expory = "Expory",
     Reset = "Reset",
     Cancel = "Cancel",
-    DeleteCheckList = "DeleteCheckList"
+    DeleteCheckList = "DeleteCheckList",
+    CancelDefaultReport="DeleteCheckList"
   }

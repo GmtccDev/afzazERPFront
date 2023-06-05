@@ -1,0 +1,21 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.9)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">{{'general.loading'|translate}}...</p>
+ </ngx-spinner> 
+<div class="row">
+  <div class="col-xl-3 col-lg-4 col-md-6" [hidden]="!ShowOptions.ShowFromDate">
+    <div class="form-group">
+      <app-full-date (OnDateSelect)="onSelectFromDate($event)" [selectedDate]="selectedFromDate"></app-full-date>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-lg-4 col-md-6" [hidden]="!ShowOptions.ShowToDate">
+    <div class="form-group">
+      <app-full-date (OnDateSelect)="onSelectToDate($event)" [selectedDate]="selectedToDate"></app-full-date>
+    </div>
+  </div>
+
+  <div class="col-md-6 pull-right" style="padding-top: 10px;">
+    <button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch"
+      (click)="FireSearch()"></button>
+  </div>
+</div>

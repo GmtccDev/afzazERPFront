@@ -212,12 +212,18 @@ this.setScreenWidth(window.innerWidth);
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'MasterCode', active: false, children:
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'Operations', active: false, children:
 				this.voucherTypes,
 		
 		
 	          
 
+		},
+		{
+			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'Reports', active: false, children: [
+				{ path: '/accounting-reports/budgetReport', title: this.translate.instant("component-names.budget-report"), type: 'link', active: true },
+			
+			]
 		}
 
 
