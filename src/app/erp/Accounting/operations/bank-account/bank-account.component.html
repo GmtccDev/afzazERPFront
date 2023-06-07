@@ -1,0 +1,8 @@
+  
+<section class="inner-page-wrapper inner-page-auction">
+    <div class="container-fluid p-0">
+        <app-tabulator  [idColName]="'id'" [childRowData]="bankAccount" (onCheckItem)="onCheck($event)" (onEditItem)="onEdit($event)" (onDeleteItem)="showConfirmDeleteMessage($event)" [parentColName]="'groupId'" [divId]="'bankAccount'" [columnSettings]="columnNames" [componentName]="'bankAccount'" (onMenuActionSelected)="onMenuActionSelected($event)"
+            [showMenuOptions]="menuOptions" [direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1"></app-tabulator>
+    </div>
+  </section>
+  
