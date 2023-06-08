@@ -227,7 +227,9 @@
         "reports":"التقارير",
         "budget-report":"تقرير الميزانية",
         "choose-template":"أختر النموذج",
-        "template-name":"أسم النموذج"
+        "template-name":"أسم النموذج",
+        "income-statement-report":"تقرير قائمة الدخل"
+
 
 
     },
@@ -302,7 +304,9 @@
         "beneficiary-account": "حساب المستفيد",
         "notes": "ملاحظات",
         "gregorian":"ميلادى",
-        "hijri":"هجرى"
+        "hijri":"هجرى",
+        "filterSearch": "فلتر البحث في التقارير"
+
     },
     "menu": {},
     "currency": {

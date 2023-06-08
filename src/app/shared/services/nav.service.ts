@@ -222,7 +222,8 @@ this.setScreenWidth(window.innerWidth);
 		{
 			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'Reports', active: false, children: [
 				{ path: '/accounting-reports/budgetReport', title: this.translate.instant("component-names.budget-report"), type: 'link', active: true },
-			
+				{ path: '/accounting-reports/incomeStatementReport', title: this.translate.instant("component-names.income-statement-report"), type: 'link', active: true },
+
 			]
 		}
 

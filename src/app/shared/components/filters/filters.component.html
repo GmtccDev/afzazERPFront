@@ -1,21 +1,63 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.9)" size="medium" color="#fff" type="ball-scale-multiple">
   <p style="font-size: 20px; color: white">{{'general.loading'|translate}}...</p>
- </ngx-spinner> 
+</ngx-spinner>
 <div class="row">
-  <div class="col-xl-3 col-lg-4 col-md-6" [hidden]="!ShowOptions.ShowFromDate">
+  <div class="wrapper-title">
+
+    <h3>{{'general.filterSearch'|translate}}</h3>
+  </div>
+</div>
+<div class="row mt-3 filter-search">
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowFromDate">
     <div class="form-group">
       <app-full-date (OnDateSelect)="onSelectFromDate($event)" [selectedDate]="selectedFromDate"></app-full-date>
     </div>
   </div>
 
-  <div class="col-xl-3 col-lg-4 col-md-6" [hidden]="!ShowOptions.ShowToDate">
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowToDate">
     <div class="form-group">
       <app-full-date (OnDateSelect)="onSelectToDate($event)" [selectedDate]="selectedToDate"></app-full-date>
     </div>
   </div>
 
-  <div class="col-md-6 pull-right" style="padding-top: 10px;">
-    <button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch"
-      (click)="FireSearch()"></button>
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowAccountGroup">
+    <div class="input-group  popup">
+      <label for="0" class="label-name"> {{'component-names.accountGroup'|translate}}</label>
+      <ng-select style="width:100%" placeholder="{{'component-names.accountGroup'|translate}}" [(ngModel)]='selectedAccountGroupId'
+        name='accountGroupId' class="" id="accountGroupId" (change)="getAccount()" (ngModelChange)="onSelectAccountGroup()">
+        <ng-option *ngFor="let accountGroup of accountGroupList" [value]="accountGroup.id">
+          {{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
+        </ng-option>
+      </ng-select>
+
+    </div>
+  </div>
+
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowAccount">
+    <div class="input-group  popup">
+      <label for="0" class="label-name"> {{'component-names.account'|translate}}</label>
+      <ng-select style="width:100%" placeholder="{{'component-names.account'|translate}}" [(ngModel)]='selectedAccountId'
+        name='accountId' class="" id="accountId" (ngModelChange)="onSelectAccount()">
+        <ng-option *ngFor="let account of accountList" [value]="account.id">
+          {{lang=="ar"?account.nameAr:account.nameEn}}
+        </ng-option>
+      </ng-select>
+
+    </div>
+  </div>
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowCostCenter">
+    <div class="input-group  popup">
+      <label for="0" class="label-name"> {{'component-names.costCenter'|translate}}</label>
+      <ng-select style="width:100%" placeholder="{{'component-names.costCenter'|translate}}" [(ngModel)]='selectedCostCenterId'
+        name='costCenterId' class="" id="costCenterId" (ngModelChange)="onSelectCostCenter()">
+        <ng-option *ngFor="let costCenter of costCenterList" [value]="costCenter.id">
+          {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
+        </ng-option>
+      </ng-select>
+
+    </div>
+  </div>
+  <div class="col-md-4 col-12 pull-right" style="padding-top: 10px;">
+    <button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch" (click)="FireSearch()"></button>
   </div>
 </div>

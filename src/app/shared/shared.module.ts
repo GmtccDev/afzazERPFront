@@ -4,7 +4,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DragulaModule } from 'ng2-dragula';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 // Components
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CustomizerComponent } from './components/customizer/customizer.component';
@@ -126,10 +126,10 @@ import { NgbdModalContent } from './components/modal/modal-component';
     DragulaModule.forRoot(),
     TranslateModule,
     NgxSpinnerModule,NzModalModule,NzTableModule, MatTableModule,MatPaginatorModule,
-  
     MatButtonModule,MatInputModule,
     MatFormFieldModule,
-    BidiModule
+    BidiModule,
+    NgSelectModule
   ],
   providers: [
     NavService,
@@ -141,7 +141,8 @@ import { NgbdModalContent } from './components/modal/modal-component';
       useClass: ResortHttpInterceptor,
       multi: true
     },
-    PublicService 
+    PublicService,
+    TranslatePipe 
   ],
   exports: [
     NgbModule,

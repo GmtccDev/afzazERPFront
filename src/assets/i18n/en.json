@@ -134,7 +134,9 @@
         "choose-template":"Choose Template",
         "template-name":"Template Name",
         "gregorian":"Gregorian",
-        "hijri":"Hijri"
+        "hijri":"Hijri",
+        "filterSearch": "Search filter in reports"
+
     },
     "menu": {},
     "home": {
@@ -335,7 +337,8 @@
         "journalEntry": "Journal Entry",
         "journalEntry-information": "Journal Entry information",
         "reports":"Reports",
-        "budget-report":"Budget Report"
+        "budget-report":"Budget Report",
+        "income-statement-report":"Income Statement Report"
     },
     "language": {
         "ARABIC": "Arabic",

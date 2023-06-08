@@ -9,12 +9,15 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { BudgetReportComponent } from './budget-report/budget-report.component';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
+import { IncomeStatementReportComponent } from './income-statement-report/income-statement-report.component';
+
 
 
 
 @NgModule({
   declarations: [
-    BudgetReportComponent
+    BudgetReportComponent,
+    IncomeStatementReportComponent
     
   ],
   imports: [

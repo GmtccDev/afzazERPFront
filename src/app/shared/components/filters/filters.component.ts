@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DateModel } from '../../model/date-model';
 import { SharedService } from '../../common-services/shared-service';
 import { DateConverterService} from 'src/app/shared/services/date-services/date-converter.service';
+import { PublicService } from '../../services/public.service';
 
 
 @Component({
@@ -17,22 +18,38 @@ export class FiltersComponent implements OnInit,AfterViewInit, OnDestroy {
   selectedToDate!: DateModel;
   dateType: number = 1;
   enableFilters: boolean = false;
-  lang
+  lang = localStorage.getItem("language")
+  selectedAccountGroupId: any;
+
+  accountGroupList: any;
+  routeAccountGroupApi = "AccountGroup/get-ddl?"
+
+  selectedAccountId: any;
+  accountList: any;
+  routeAccountApi = "Account/get-ddl?"
+
+
+  selectedCostCenterId: any;
+  costCenterList: any;
+  routeCostCenterApi = "CostCenter/get-ddl?"
 
   @Output() OnFilter: EventEmitter<{
     
-     fromDate, toDate
+     fromDate, toDate,accountGroupId,accountId
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
-    ShowToDate: boolean, ShowSearch:boolean
+    ShowToDate: boolean, ShowSearch:boolean,ShowAccountGroup:boolean,ShowAccount:boolean,
+    ShowCostCenter:boolean
   } = {
     
       ShowFromDate: false,
       ShowToDate: false,
-      ShowSearch:true
-     
+      ShowSearch:true,
+      ShowAccountGroup:false,
+      ShowAccount:false,
+      ShowCostCenter:false
     }
 
   subsList: Subscription[] = [];
@@ -43,6 +60,8 @@ export class FiltersComponent implements OnInit,AfterViewInit, OnDestroy {
   constructor(
     private sharedServices:SharedService,
     private dateConverterService: DateConverterService,
+    private publicService: PublicService,
+
     private spinner: NgxSpinnerService) {
     this.GetData();
   }
@@ -54,15 +73,20 @@ export class FiltersComponent implements OnInit,AfterViewInit, OnDestroy {
   }
   ngOnInit() {
     this.getLanguage();
-    
-    //
-    // this.GetData();
+    //this.GetData();
 
   }
   ngAfterViewInit(): void {
     debugger;
-   // this.selectedFromDate = this.dateConverterService.getCurrentDate();
-   // this.selectedToDate = this.dateConverterService.getCurrentDate();
+   this.selectedFromDate = this.dateConverterService.getCurrentDate();
+   this.selectedToDate = this.dateConverterService.getCurrentDate();
+  }
+  ngOnDestroy() {
+    this.subsList.forEach(s => {
+      if (s) {
+        s.unsubscribe();
+      }
+    })
   }
   onSelectFromDate(e: DateModel) {
     debugger
@@ -81,7 +105,9 @@ export class FiltersComponent implements OnInit,AfterViewInit, OnDestroy {
     this.spinner.show();
     
     Promise.all([
-     
+      this.getAccountGroup(),
+      this.getAccount(),
+      this.getCostCenter()
     ]).then(a => {
       ////(("All Data have been loaded. Enable Filters")
       this.enableFilters = true;
@@ -92,17 +118,92 @@ export class FiltersComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
 
+  getAccountGroup() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountGroupApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            debugger
+            this.accountGroupList = res.response;
+
+          }
 
 
+          resolve();
 
-  ngOnDestroy() {
-    this.subsList.forEach(s => {
-      if (s) {
-        s.unsubscribe();
-      }
-    })
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
 
+  getAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            if(this.selectedAccountGroupId!=null && this.selectedAccountGroupId!=undefined)
+            {
+            this.accountList = res.response.filter(x=>x.accountGroupId==this.selectedAccountGroupId);
+            }
+            else
+            {
+              this.accountList = res.response;
+
+            }
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+ 
+  getCostCenter() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+          
+              this.costCenterList = res.response;
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
 
 
 
@@ -120,9 +221,23 @@ export class FiltersComponent implements OnInit,AfterViewInit, OnDestroy {
      
       fromDate: this.selectedFromDate,
       toDate: this.selectedToDate,
+      accountGroupId: this.selectedAccountGroupId,
+      accountId: this.selectedAccountId
+
      
 
     })
   }
+  onSelectAccountGroup() {
+    this.FireSearch()
 
+  }
+  onSelectAccount() {
+    this.FireSearch()
+
+  }
+  onSelectCostCenter() {
+    this.FireSearch()
+
+  }
 }

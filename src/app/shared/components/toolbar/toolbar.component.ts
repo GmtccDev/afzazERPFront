@@ -37,7 +37,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   disabledCancel = false;
   disabledExport = false;
   disabledPrint = false;
- // disabledView = false;
+  disabledView = false;
   disableCancelDefaultReport=false;
 
   toolbarPathData!: ToolbarPath;
@@ -101,6 +101,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   listenClickedButton() {
+     
     let sub = this.SharedService.getClickedbutton().subscribe({
       next: (toolbarCompnentData: ToolbarData) => {
         toolbarCompnentData;
@@ -119,7 +120,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           if (this.toolbarCompnentData.action == 'Delete') {
             this.checkButtonClicked('Delete');
           }
-
+          if (this.toolbarCompnentData.action == 'Report') {
+            this.checkButtonClicked('Report');
+          }
+          if (this.toolbarCompnentData.action == 'Print') {
+            this.checkButtonClicked('Print');
+          }
+          if (this.toolbarCompnentData.action == 'CancelDefaultReport') {
+            this.checkButtonClicked('CancelDefaultReport');
+          }
+          if (this.toolbarCompnentData.action == 'View') {
+            this.checkButtonClicked('View');
+          }
 
           console.log('toolbarCompnentData', toolbarCompnentData);
         }
@@ -190,6 +202,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.SharedService.changeButton(this.toolbarData);
   }
   doPrintEvent() {
+     
     this.checkButtonClicked('Print');
     (this.toolbarData.action = 'Print'),
       this.SharedService.changeButton(this.toolbarData);
@@ -201,12 +214,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.SharedService.changeButton(this.toolbarData);
       this.disabledDlete=true;
   }
-  // doViewEvent() {
+  doViewEvent() {
 
-  //   this.checkButtonClicked('View');
-  //   (this.toolbarData.action = 'View'),
-  //     this.SharedService.changeButton(this.toolbarData);
-  // }
+    this.checkButtonClicked('View');
+    (this.toolbarData.action = 'View'),
+      this.SharedService.changeButton(this.toolbarData);
+  }
   doCancelDefaultReportEvent() {
     this.checkButtonClicked('CancelDefaultReport');
     (this.toolbarData.action = 'CancelDefaultReport'),
@@ -219,7 +232,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   checkButtonClicked(button: string) {
-
+ 
     this.resetCLickedButtons();
     if (button == 'List') {
       this.disabledSave = true;
@@ -258,8 +271,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledExport = true;
 
     } else if (button == 'Cancel') {
-    } else if (button == 'Print') {
-    }
+    } 
+    // else if (button == 'Print') {
+    // }
     else if(button=='Delete'){
       this.disabledUpate = true;
       this.disabledCopy = true;
@@ -269,16 +283,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledDlete=false;
     } 
     else if (button == 'Report') {
-      debugger
+       
+      this.disabledList=true;
       this.disabledSave = true;
       this.disabledNew = true;
       this.disabledCopy = true;
       this.disabledList = true;
       this.disabledExport = true;
-      this.disabledPrint = false;
       this.disabledUpate = true;
       this.disabledCancel = true;
-      //this.disabledView = false;
+      this.disabledDlete=true;
+      this.disabledPrint = false;
       this.disableCancelDefaultReport = false;
 
     }
@@ -293,8 +308,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.disabledExport = false;
     this.disabledPrint = false;
     this.disabledUpate = false;
-    //this.disabledView = false;
     this.disableCancelDefaultReport = false;
+    this.disabledView = false;
 
   }
   resetShowButtons() {
@@ -308,7 +323,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.showToolbarButtonsObj.showPrint = true;
     this.showToolbarButtonsObj.showReset = true;
     this.showToolbarButtonsObj.showUpdate = true;
-   // this.showToolbarButtonsObj.showView = true;
+    this.showToolbarButtonsObj.showView = true;
     this.showToolbarButtonsObj.showCancelDefaultReport = true;
 
     this.SharedService.changeButtonApperance(this.showToolbarButtonsObj);

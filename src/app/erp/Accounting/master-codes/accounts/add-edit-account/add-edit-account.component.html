@@ -204,11 +204,12 @@
                                         </button>
                                         </div>
                                         <div class="col-md-4 col-4">
+                                            <div class="input-group  popup">
                                             <label for="accountGroupId" class="label-name">
                                                 {{'component-names.accountGroup'|translate}}
 
                                             </label>
-                                            <div class="input-group  popup">
+                                            
                                                 <ng-select style="width:100%" formControlName="accountGroupId" name='accountGroupId' class="" id="accountGroupId">
                                                     <ng-option *ngFor="let accountGroup of accountGroupList" [value]="accountGroup.id">
                                                         {{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}

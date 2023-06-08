@@ -54,7 +54,7 @@ export class ReportServiceProxy {
           reportType: reportType,
           reportTypeID: reportTypeID
         }
-        return this.http.get<ReportFile[]>(this.baseUrl + '/Report/getReportList', { params: params } );
+        return this.http.get<ReportFile[]>(this.baseUrl + '/api/Report/getReportList', { params: params } );
     }
     setReportList(reportType, reportTypeID): Promise<boolean> {
         return new Promise((acc, rej) => {
@@ -76,23 +76,23 @@ export class ReportServiceProxy {
       getReportGeneric(reportParameters): Observable<string> {
 
     
-        return this.http.get<string>(this.baseUrl + '/Report/getReportGeneric?' + reportParameters );
+        return this.http.get<string>(this.baseUrl + '/api/Report/getReportGeneric?' + reportParameters );
       }
     
       setDefaultReport(reportID, reportType, reportTypeID): Observable<boolean> {
-        return this.http.get<boolean>(this.baseUrl + "/Report/setDefaultReport?reportId="+reportID+
+        return this.http.get<boolean>(this.baseUrl + "/api/Report/setDefaultReport?reportId="+reportID+
         "&reportType="+reportType+"&reportTypeId="+reportTypeID );
       }
     
       cancelDefaultReport(reportType, reportTypeId): Observable<string> {
-    
-        return this.http.get<string>(this.baseUrl + "/Report/cancelDefaultReport?reportType="+reportType+
+        debugger
+        return this.http.get<string>(this.baseUrl + "/api/Report/cancelDefaultReport?reportType="+reportType+
           "&reportTypeId="+reportTypeId );
       }
     
       deleteReport(reportID):Observable<boolean>
       {
-        return this.http.get<boolean>(this.baseUrl + "/Report/reportDelete?reportID="+reportID );
+        return this.http.get<boolean>(this.baseUrl + "/api/Report/reportDelete?reportID="+reportID );
       }
     
     

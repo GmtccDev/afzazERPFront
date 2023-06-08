@@ -25,9 +25,14 @@ export class NgbdModalContent implements OnInit, OnDestroy {
     private rptSrv: ReportServiceProxy,
     private router:Router) { }
     ngOnInit() {
+        debugger
         this.rptSrv.setReportList(this.reportType, this.reportTypeID).then(a=>{
-             this.rptSrv.getReportList().subscribe(r=>{
-                 this.reportList = r;
+            debugger
+            this.rptSrv.getReportList().subscribe(r=>{
+                debugger
+               
+                 this.reportList=r["response"] 
+               
                  if(this.reportList.length>0)
                  {
                     this.reportList.forEach(element => {
@@ -62,7 +67,7 @@ export class NgbdModalContent implements OnInit, OnDestroy {
         //var newUrl= window.location.href.replace(this.oldUrl, "ReportViewer")+"?reportType="+this.reportType+"--reportTypeID="+this.reportTypeID+"--id="+selectedRpt.reportNameAr+"&"+this.reportParams;
         let params:string= "";
 
-        var newUrl = this.apiurl?.replace('api','')+"Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + this.reportType + "&reportParameter=reportTypeID!" +this.reportTypeID + "&"+this.reportParams;
+        var newUrl = this.apiurl?.replace('api','')+"/Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + this.reportType + "&reportParameter=reportTypeID!" +this.reportTypeID + "&"+this.reportParams;
         //this.router.navigate(['ReportViewer', {params:reportData}]);
         //window.location.href = newUrl;
         window.open(newUrl, "_blank");
@@ -85,7 +90,7 @@ export class NgbdModalContent implements OnInit, OnDestroy {
         };
         //((reportData);
         //var newUrl= window.location.href.replace(this.oldUrl, "ReportDesigner")+"?reportType="+this.reportType+"--reportTypeID="+this.reportTypeID+"--id="+selectedRpt.reportNameAr+"&"+this.reportParams;
-        var newUrl = this.apiurl?.replace('api','')+"Designer/Reports?id=" + selectedRpt.id+ "&"+this.reportParams;
+        var newUrl = this.apiurl?.replace('api','')+"/Designer/Reports?id=" + selectedRpt.id+ "&"+this.reportParams;
         //this.router.navigate(['ReportViewer', {params:reportData}]);
         //window.location.href = newUrl;
         window.open(newUrl, "_blank");
