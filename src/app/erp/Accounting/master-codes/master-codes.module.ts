@@ -22,14 +22,15 @@ import { AccountClassificationComponent } from './account-classification/account
 import { AddEditAccountClassificationComponent } from './account-classification/add-edit-account-classification/add-edit-account-classification.component';
 import { VoucherTypeComponent } from './voucher-type/voucher-type.component';
 import { AddEditVoucherTypeComponent } from './voucher-type/add-edit-voucher-type/add-edit-voucher-type.component';
-
+import { BankAccountComponent } from './bank-account/bank-account.component';
+import { AddEditBankAccountComponent } from './bank-account/add-edit-bank-account/add-edit-bank-account.component';
 @NgModule({
   declarations: [
     JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent,
     AccountGroupsComponent, AddEditAccountGroupsComponent, CostCentersComponent,
     AddEditCostCenterComponent, AccountsComponent, AddEditAccountComponent,
     AccountClassificationComponent, AddEditAccountClassificationComponent,
-    VoucherTypeComponent,AddEditVoucherTypeComponent
+    VoucherTypeComponent,AddEditVoucherTypeComponent,BankAccountComponent, AddEditBankAccountComponent
   ],
   imports: [
     CommonModule,

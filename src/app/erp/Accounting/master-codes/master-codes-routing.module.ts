@@ -15,7 +15,8 @@ import { AccountClassificationComponent } from './account-classification/account
 import { AddEditAccountClassificationComponent } from './account-classification/add-edit-account-classification/add-edit-account-classification.component';
 import { VoucherTypeComponent } from './voucher-type/voucher-type.component';
 import { AddEditVoucherTypeComponent } from './voucher-type/add-edit-voucher-type/add-edit-voucher-type.component';
-
+import { BankAccountComponent } from './bank-account/bank-account.component';
+import { AddEditBankAccountComponent } from './bank-account/add-edit-bank-account/add-edit-bank-account.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -47,6 +48,10 @@ const routes: Routes = [
 			{ path: 'voucherType', component: VoucherTypeComponent },
 			{ path: 'voucherType/add-voucher-type', component: AddEditVoucherTypeComponent },
 			{ path: 'voucherType/update-voucher-type/:id', component: AddEditVoucherTypeComponent },
+
+			{ path: 'bankAccount', component: BankAccountComponent },
+			{ path: 'bankAccount/add-bankAccount', component: AddEditBankAccountComponent },
+			{ path: 'bankAccount/update-bankAccount/:id', component: AddEditBankAccountComponent },
 		]
 	}
 ];

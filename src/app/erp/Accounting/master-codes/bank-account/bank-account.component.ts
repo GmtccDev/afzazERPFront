@@ -2,16 +2,16 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { SharedService } from 'src/app/shared/common-services/shared-service';
-import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
+import { BankAccountServiceProxy } from '../../services/bank-account-services'
+import { SharedService } from '../../../../shared/common-services/shared-service';
+import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
-import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
+import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
-import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import {BankAccountServiceProxy} from '../../services/bank-account-services'
 @Component({
   selector: 'app-bank-account',
   templateUrl: './bank-account.component.html',
@@ -22,9 +22,9 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region Main Declarations
   bankAccount: any[] = [];
   currnetUrl: any;
-  addUrl: string = '/accounting-operations/bankAccount/add-bankAccount';
-  updateUrl: string = '/accounting-operations/bankAccount/update-bankAccount/';
-  listUrl: string = '/accounting-operations/bankAccount';
+  addUrl: string = '/accounting-master-codes/bankAccount/add-bankAccount';
+  updateUrl: string = '/accounting-master-codes/bankAccount/update-bankAccount/';
+  listUrl: string = '/accounting-master-codes/bankAccount';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -132,7 +132,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#endregion
 
-  //#region CRUD Operations
+  //#region CRUD master-codes
   delete(id: any) {
     this.bankAccountService.deleteBankAccount(id).subscribe((resonse) => {
       console.log('delet response', resonse);
@@ -141,7 +141,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   edit(id: string) {
     this.router.navigate([
-      '/accounting-operations/bankAccount/update-bankAccount',
+      '/accounting-master-codes/bankAccount/update-bankAccount',
       id,
     ]);
   }
@@ -173,11 +173,15 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   sortByCols: any[] = [];
   searchFilters: any;
   groupByCols: string[] = [];
-  lang: string = localStorage.getItem("language");
+  lang = localStorage.getItem("language");
   columnNames = [
     this.lang == 'ar'
       ? { title: ' الاسم', field: 'nameAr' } :
       { title: ' Name  ', field: 'nameEn' },
+    
+    this.lang == 'ar'
+      ? { title: ' الاسم', field: 'accountNameAr' } :
+      { title: ' Name  ', field: 'accountNameEn' },
 
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
@@ -225,7 +229,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-operations/bankAccount/update-bankAccount/' + id])
+      this.router.navigate(['accounting-master-codes/bankAccount/update-bankAccount/' + id])
     }
 
   }
@@ -242,7 +246,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-operations/bankAccount/update-bankAccount/' + event.item.id])
+        this.router.navigate(['accounting-master-codes/bankAccount/update-bankAccount/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -280,7 +284,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
 
-  var ids = this.listIds;
+    var ids = this.listIds;
     let sub = this.bankAccountService.deleteListBankAccount(ids).subscribe(
       (resonse) => {
 

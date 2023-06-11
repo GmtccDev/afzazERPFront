@@ -11,6 +11,7 @@ import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { BankAccountServiceProxy } from '../../../services/bank-account-services';
+import { PublicService } from '../../../../../shared/services/public.service';
 @Component({
   selector: 'app-add-edit-bank-account',
   templateUrl: './add-edit-bank-account.component.html',
@@ -26,9 +27,9 @@ export class AddEditBankAccountComponent implements OnInit {
   public show: boolean = false;
   lang = localStorage.getItem("language")
   bankAccount: [] = [];
-  addUrl: string = '/accounting-operations/bankAccount/add-bankAccount';
-  updateUrl: string = '/accounting-operations/bankAccount/update-bankAccount/';
-  listUrl: string = '/accounting-operations/bankAccount';
+  addUrl: string = '/accounting-master-codes/bankAccount/add-bankAccount';
+  updateUrl: string = '/accounting-master-codes/bankAccount/update-bankAccount/';
+  listUrl: string = '/accounting-master-codes/bankAccount';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -45,6 +46,8 @@ export class AddEditBankAccountComponent implements OnInit {
   companyId: any;
   routeApi='Company/get-ddl?'
   routeApiCountry='Country/get-ddl?'
+  accountList: any;
+  routeAccountApi = "account/get-ddl?"
   constructor(
     private bankAccountService: BankAccountServiceProxy,
     private router: Router,
@@ -52,7 +55,7 @@ export class AddEditBankAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,private publicService:PublicService
 
   ) {
     this.definebankAccountForm();
@@ -61,6 +64,7 @@ export class AddEditBankAccountComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.getAccount();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
@@ -84,11 +88,11 @@ export class AddEditBankAccountComponent implements OnInit {
     this.bankAccountForm.controls.companyId.setValue(event.id);
     this.showSearchModal = false;
   }
-  onSelectCountry(event) {
+  onSelectAccount(event) {
     
        
-        this.bankAccountForm.controls.countryId.setValue(event.id);
-        this.showSearchModalCountry = false;
+        this.bankAccountForm.controls.accountId.setValue(event.id);
+        this.showSearchModal = false;
       }
   //#endregion
 
@@ -127,10 +131,36 @@ export class AddEditBankAccountComponent implements OnInit {
 
   }
 
+  getAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+        next: (res) => {
 
+          if (res.success) {
+            this.accountList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  
   //#endregion
 
-  //#region CRUD Operations
+  //#region CRUD master-codes
   getbankAccountById(id: any) {
 
     const promise = new Promise<void>((resolve, reject) => {
