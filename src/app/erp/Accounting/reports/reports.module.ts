@@ -10,14 +10,16 @@ import { BudgetReportComponent } from './budget-report/budget-report.component';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { IncomeStatementReportComponent } from './income-statement-report/income-statement-report.component';
-
+import { VouchersTransactionsReportComponent } from './vouchers-transactions-report/vouchers-trasnactions-report.component'
 
 
 
 @NgModule({
   declarations: [
     BudgetReportComponent,
-    IncomeStatementReportComponent
+    IncomeStatementReportComponent,
+    VouchersTransactionsReportComponent
+
     
   ],
   imports: [

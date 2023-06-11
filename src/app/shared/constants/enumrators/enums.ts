@@ -53,3 +53,13 @@ export enum BeneficiaryTypeArEnum {
   مؤظف=3,
   حساب=4
 }
+export enum EntriesStatusEnum {
+  CarriedOver=1,
+  NotCarriedOver=2,
+  All=3
+}
+export enum EntriesStatusArEnum {
+  مرحل=1,
+  'غير مرحل'=2,
+  الكل=3
+}

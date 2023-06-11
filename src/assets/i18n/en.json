@@ -123,6 +123,7 @@
         "operations": "Operations",
         "cash-account": "Cash Account",
         "cost-center-account": "Cost Center Account",
+        "cost-center": "Cost Center",
         "details": "Details",
         "debit": "Debit",
         "credit": "Credit",
@@ -135,7 +136,13 @@
         "template-name":"Template Name",
         "gregorian":"Gregorian",
         "hijri":"Hijri",
-        "filterSearch": "Search filter in reports"
+        "filterSearch": "Search filter in reports",
+        "entries-status":"Entries Status",
+        "number":"Number",
+        "type-id":"Type Id",
+        "main-account":"Main Account",
+        "leaf-account":"Leaf Account"
+
 
     },
     "menu": {},
@@ -334,11 +341,13 @@
         "accountClassification-information": "Account Classification Information",
         "voucher-types": "Voucher Types",
         "vouchers": "Vouchers",
+        "voucher": "Voucher",
         "journalEntry": "Journal Entry",
         "journalEntry-information": "Journal Entry information",
         "reports":"Reports",
         "budget-report":"Budget Report",
-        "income-statement-report":"Income Statement Report"
+        "income-statement-report":"Income Statement Report",
+        "vouchers-transactions-report":"Vouchers Transactions Report"
     },
     "language": {
         "ARABIC": "Arabic",
@@ -403,7 +412,9 @@
         "voucher-total": "Voucher Total",
         "voucher-details-required":"Voucher Details is required",
         "add-voucher":"Add Voucher",
-        "update-voucher":"Update Voucher"
+        "update-voucher":"Update Voucher",
+        "voucher": "Voucher"
+
     }
 ,
 "journalEntry":{

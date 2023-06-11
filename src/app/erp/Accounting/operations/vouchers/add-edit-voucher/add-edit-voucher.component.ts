@@ -42,7 +42,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
   voucherDate!: DateModel;
 
   showSearchCashAccountModal = false;
-  showSearchCostCenterAccountModal = false;
+  showSearchCostCenterModal = false;
   showSearchBeneficiaryAccountsModal = false;
   showSearhBeneficiaryAccountsModal = false;
   showSearchCurrencyModal = false;
@@ -65,13 +65,16 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
   lang = localStorage.getItem("language")
   routeAccountApi = 'Account/get-ddl?'
   routeCurrencyApi = "currency/get-ddl?"
+  routeCostCenterApi = 'CostCenter/get-ddl?'
 
   cashAccountsList: any;
-  costCenterAccountsList: any;
+//  costCenterAccountsList: any;
   beneficiaryAccountsList: any;
-  costCenterAccountsInDetailList: any;
+  //costCenterAccountsInDetailList: any;
   currenciesList: any;
   currenciesListInDetail: any;
+  costCentersList: any;
+  costCentersInDetailsList: any;
 
   queryParams: any;
   voucherTypeId: any;
@@ -128,12 +131,12 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     //     }
     //   })
     this.listenToClickedButton();
-
     this.getBeneficiaryTypes();
     this.spinner.show();
     Promise.all([
       this.getAccounts(),
-      this.getCurrencies()
+      this.getCurrencies(),
+      this.getCostCenters()
 
     ]).then(a => {
       this.spinner.hide();
@@ -210,7 +213,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
       code: REQUIRED_VALIDATORS,
       voucherDate: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       cashAccountId: REQUIRED_VALIDATORS,
-      costCenterAccountId: '',
+      costCenterId: '',
       currencyId: REQUIRED_VALIDATORS,
       description: '',
       voucherTotal: REQUIRED_VALIDATORS
@@ -277,7 +280,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
             // voucherDate: formatDate(res.response?.voucherDate),
             voucherDate: this.dateService.getDateForCalender(res.response?.voucherDate),
             cashAccountId: res.response?.cashAccountId,
-            costCenterAccountId: res.response?.costCenterAccountId,
+            costCenterId: res.response?.costCenterId,
             currencyId: res.response?.currencyId,
             description: res.response?.description,
             voucherTotal: res.response?.voucherTotal,
@@ -310,7 +313,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
             debugger
             var currencyName;
             var beneficiaryAccountName;
-            var costCenterAccountName;
+            var costCenterName;
             if (element.currencyId > 0) {
 
               currencyName = this.currenciesListInDetail.find(x => x.id == element.currencyId);
@@ -318,8 +321,8 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
             if (element.beneficiaryAccountId > 0) {
               beneficiaryAccountName = this.beneficiaryAccountsList.find(x => x.id == element.beneficiaryAccountId);
             }
-            if (element.costCenterAccountId > 0) {
-              costCenterAccountName = this.costCenterAccountsInDetailList.find(x => x.id == element.costCenterAccountId);
+            if (element.costCenterId > 0) {
+              costCenterName = this.costCentersInDetailsList.find(x => x.id == element.costCenterId);
             }
             this.voucherDetail.push(
               {
@@ -334,13 +337,13 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
                 beneficiaryTypeId: element.beneficiaryTypeId,
                 beneficiaryAccountId: element.beneficiaryAccountId,
                 description: element.description,
-                costCenterAccountId: element.costCenterAccountId,
+                costCenterId: element.costCenterId,
                 currencyNameAr: currencyName?.nameAr ?? '',
                 currencyNameEn: currencyName?.nameEn ?? '',
                 beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
                 beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
-                costCenterAccountNameAr: costCenterAccountName?.nameAr ?? '',
-                costCenterAccountNameEn: costCenterAccountName?.nameEn ?? ''
+                costCenterNameAr: costCenterName?.nameAr ?? '',
+                costCenterNameEn: costCenterName?.nameEn ?? ''
               }
             )
           });
@@ -413,9 +416,9 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
 
           if (res.success) {
             this.cashAccountsList = res.response;
-            this.costCenterAccountsList = res.response;
+            //this.costCenterAccountsList = res.response;
             this.beneficiaryAccountsList = res.response;
-            this.costCenterAccountsInDetailList = res.response;
+            //this.costCenterAccountsInDetailList = res.response;
 
           }
 
@@ -459,7 +462,28 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     });
 
   }
+  getCostCenters() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.costCentersList = res.response;
+          }
+          resolve();
 
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   openCurrencySearchDialog(i = -1) {
     debugger
     let searchTxt = '';
@@ -552,17 +576,17 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     }
 
   }
-  openCostCenterAccountSearchDialog(i = -1) {
+  openCostCenterSearchDialog(i = -1) {
     debugger
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedVoucherDetail?.costCenterAccountNameAr ?? '';
+      searchTxt = this.selectedVoucherDetail?.costCenterNameAr ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
-    let data = this.costCenterAccountsInDetailList.filter((x) => {
+    let data = this.costCentersInDetailsList.filter((x) => {
       return (
         (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
@@ -571,26 +595,26 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetail!.costCenterAccountNameAr = data[0].nameAr;
-        this.selectedVoucherDetail!.costCenterAccountId = data[0].id;
+        this.selectedVoucherDetail!.costCenterNameAr = data[0].nameAr;
+        this.selectedVoucherDetail!.costCenterId = data[0].id;
       } else {
-        this.voucherDetail[i].costCenterAccountNameAr = data[0].nameAr;
-        this.voucherDetail[i].costCenterAccountId = data[0].id;
+        this.voucherDetail[i].costCenterNameAr = data[0].nameAr;
+        this.voucherDetail[i].costCenterId = data[0].id;
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
       let title = 'بحث عن الحساب';
       let sub = this.searchDialog
-        .showDialog(lables, names, this.costCenterAccountsInDetailList, title, searchTxt)
+        .showDialog(lables, names, this.costCentersInDetailsList, title, searchTxt)
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetail!.costCenterAccountNameAr = d.nameAr;
-              this.selectedVoucherDetail!.costCenterAccountId = d.id;
+              this.selectedVoucherDetail!.costCenterNameAr = d.nameAr;
+              this.selectedVoucherDetail!.costCenterId = d.id;
             } else {
-              this.voucherDetail[i].costCenterAccountNameAr = d.nameAr;
-              this.voucherDetail[i].costCenterAccountId = d.id;
+              this.voucherDetail[i].costCenterNameAr = d.nameAr;
+              this.voucherDetail[i].costCenterId = d.id;
             }
           }
         });
@@ -602,9 +626,9 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     this.voucherForm.controls.cashAccountId.setValue(event.id);
     this.showSearchCashAccountModal = false;
   }
-  onSelectCostCenterAccount(event) {
-    this.voucherForm.controls.costCenterAccountId.setValue(event.id);
-    this.showSearchCostCenterAccountModal = false;
+  onSelectCostCenter(event) {
+    this.voucherForm.controls.costCenterId.setValue(event.id);
+    this.showSearchCostCenterModal = false;
   }
   onSelectCurrency(event) {
     this.voucherForm.controls.currencyId.setValue(event.id);
@@ -635,13 +659,13 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
       beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
       beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       description: this.selectedVoucherDetail?.description ?? '',
-      costCenterAccountId: this.selectedVoucherDetail?.costCenterAccountId ?? 0,
+      costCenterId: this.selectedVoucherDetail?.costCenterId ?? 0,
       currencyNameAr: this.selectedVoucherDetail?.currencyNameAr ?? '',
       currencyNameEn: this.selectedVoucherDetail?.currencyNameEn ?? '',
       beneficiaryAccountNameAr: this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '',
       beneficiaryAccountNameEn: this.selectedVoucherDetail?.beneficiaryAccountNameEn ?? '',
-      costCenterAccountNameAr: this.selectedVoucherDetail?.costCenterAccountNameAr ?? '',
-      costCenterAccountNameEn: this.selectedVoucherDetail?.costCenterAccountNameEn ?? ''
+      costCenterNameAr: this.selectedVoucherDetail?.costCenterNameAr ?? '',
+      costCenterNameEn: this.selectedVoucherDetail?.costCenterNameEn ?? ''
     });
     this.voucher!.voucherDetail = this.voucherDetail;
 
@@ -694,13 +718,13 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
       beneficiaryTypeId: 0,
       beneficiaryAccountId: 0,
       description: '',
-      costCenterAccountId: 0,
+      costCenterId: 0,
       currencyNameAr: '',
       currencyNameEn: '',
       beneficiaryAccountNameAr: '',
       beneficiaryAccountNameEn: '',
-      costCenterAccountNameAr: '',
-      costCenterAccountNameEn: ''
+      costCenterNameAr: '',
+      costCenterNameEn: ''
     }
   }
   calculateTotal(a) {
@@ -716,7 +740,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
       code: this.voucherForm.controls["code"].value,
       voucherDate: formatDate(Date.parse(this.voucherForm.controls["voucherDate"].value)),
       cashAccountId: this.voucherForm.controls["cashAccountId"].value,
-      costCenterAccountId: this.voucherForm.controls["costCenterAccountId"].value,
+      costCenterId: this.voucherForm.controls["costCenterId"].value,
       currencyId: this.voucherForm.controls["currencyId"].value,
       description: this.voucherForm.controls["description"].value,
       voucherTotal: this.voucherForm.controls["voucherTotal"].value,

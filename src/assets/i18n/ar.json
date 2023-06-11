@@ -222,13 +222,16 @@
         "accountClassification-information": "معلومات تصنيف الحساب",
         "voucher-types": "أنماط السندات",
         "vouchers": "السندات",
+        "voucher": "السند",
         "journalEntry": "قيود محاسبية",
         "journalEntry-information": "معلومات قيود محاسبية ",
         "reports":"التقارير",
         "budget-report":"تقرير الميزانية",
         "choose-template":"أختر النموذج",
         "template-name":"أسم النموذج",
-        "income-statement-report":"تقرير قائمة الدخل"
+        "income-statement-report":"تقرير قائمة الدخل",
+        "vouchers-transactions-report":"تقرير حركة السندات"
+
 
 
 
@@ -293,6 +296,7 @@
         "operations": "العمليات",
         "cash-account": "حساب النقدية",
         "cost-center-account": "حساب مركز التكلفة",
+        "cost-center": " مركز التكلفة",
         "description": "الوصف",
         "details": "التفاصيل",
         "debit": "مدين",
@@ -305,7 +309,12 @@
         "notes": "ملاحظات",
         "gregorian":"ميلادى",
         "hijri":"هجرى",
-        "filterSearch": "فلتر البحث في التقارير"
+        "filterSearch": "فلتر البحث في التقارير",
+        "entries-status":"حالة القيود",
+        "number":"رقم",
+        "type-id":"رقم النمط",
+        "main-account":"الحساب الرئيسي",
+        "leaf-account":"الحساب الفرعى"
 
     },
     "menu": {},
@@ -390,7 +399,9 @@
         "voucher-total":"أجمالى قيمة السند",
         "voucher-details-required":"من فضلك أدخل تفاصيل السند",
         "add-voucher":"اضافة سند",
-        "update-voucher":"تحديث السند"
+        "update-voucher":"تحديث السند",
+        "voucher": "السند"
+
 
      }
     ,

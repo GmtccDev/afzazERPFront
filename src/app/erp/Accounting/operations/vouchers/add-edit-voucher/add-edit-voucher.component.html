@@ -117,15 +117,15 @@
                                         </div>
 
                                         <div class="col-md-3 col-3">
-                                            <label for="costCenterAccountId" class="label-name">
-                                                {{'general.cost-center-account'|translate}}
+                                            <label for="costCenterId" class="label-name">
+                                                {{'general.cost-center'|translate}}
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="costCenterAccountId"
-                                                    name='costCenterAccountId' class="" id="costCenterAccountId">
-                                                    <ng-option *ngFor="let account of costCenterAccountsList"
-                                                        [value]="account.id">
-                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                <ng-select style="width:100%" formControlName="costCenterId"
+                                                    name='costCenterId' class="" id="costCenterId">
+                                                    <ng-option *ngFor="let costCenter of costCentersList"
+                                                        [value]="costCenter.id">
+                                                        {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
 
@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="col-md-1 col-md-1">
                                             <button class="btn btn-rounded btn-dark"
-                                                (click)="showSearchCostCenterAccountModal=true" type="button"><i
+                                                (click)="showSearchCostCenterModal=true" type="button"><i
                                                     class="fa fa-search"></i></button>
                                         </div>
 
@@ -287,7 +287,7 @@
                                                                         placeholder="{{'general.search'|translate}}"
                                                                         [(ngModel)]="voucherDetail[i].costCenterAccountNameAr"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCostCenterAccountSearchDialog(-1)">
+                                                                        (keydown.Enter)="openCostCenterSearchDialog(-1)">
 
 
                                                                 </td>
@@ -372,7 +372,7 @@
                                                                         placeholder="{{'general.search'|translate}}"
                                                                         [(ngModel)]="selectedVoucherDetail.costCenterAccountNameAr"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCostCenterAccountSearchDialog(-1)">
+                                                                        (keydown.Enter)="openCostCenterSearchDialog(-1)">
 
 
                                                                 </td>
@@ -409,8 +409,8 @@
 <app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeAccountApi"
     (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
 </app-public-search-modal>
-<app-public-search-modal [isVisible]="showSearchCostCenterAccountModal" [routeApi]="routeAccountApi"
-    (emitClose)="showSearchCostCenterAccountModal = false;" (emitSearch)="onSelectCostCenterAccount($event)">
+<app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi"
+    (emitClose)="showSearchCostCenterModal = false;" (emitSearch)="onSelectCostCenter($event)">
 </app-public-search-modal>
 
 
