@@ -11,28 +11,27 @@ import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-income-statement-report',
-  templateUrl: './income-statement-report.component.html',
-  styleUrls: ['./income-statement-report.component.scss']
+  selector: 'app-vouchers-trasnactions-report',
+  templateUrl: './vouchers-trasnactions-report.component.html',
+  styleUrls: ['./vouchers-trasnactions-report.component.scss']
 })
-export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
-  accountGroupId:any;
   mainAccountId:any;
   leafAccountId:any;
 
-  costCenterId:any;
-  entriesStatusId:any;
+  currencyId:any;
+  branchId:any;
 
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
     updatePath: '',
-    componentList:this.translate.instant("component-names.income-statement-report"),
+    componentList:this.translate.instant("component-names.vouchers-transactions-report"),
     componentAdd: ''
   };
   // this.toolbarPathData={
@@ -123,40 +122,39 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
     modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 2;
+    modalRef.componentInstance.reportTypeID = 3;
 
   }
   cancelDefaultReportStatus() {
-    this.reportService.cancelDefaultReport(1,2).subscribe(resonse => {
+    this.reportService.cancelDefaultReport(1,3).subscribe(resonse => {
 
     });
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean,ShowAccountGroup:boolean,ShowMainAccount:boolean,ShowLeafAccount:boolean,ShowCostCenter,ShowEntriesStatus
+    ShowSearch: boolean,ShowMainAccount:boolean,ShowLeafAccount:boolean,ShowCurrency,ShowBranch,ShowVoucher
   } = {
     ShowFromDate: true, ShowToDate: true,
     ShowSearch: false,
-    ShowAccountGroup: true,
     ShowMainAccount:true,
-    ShowLeafAccount:true,
-    ShowCostCenter:true,
-    ShowEntriesStatus:true
+    ShowCurrency:true,
+    ShowBranch:true,
+    ShowVoucher:true,
+    ShowLeafAccount:true
   }
 
   OnFilter(e: {
-    fromDate, toDate,accountGroupId,mainAccountId,leafAccountId,costCenterId,entriesStatusId
+    fromDate, toDate,mainAccountId,leafAccountId,currencyId,branchId
   }) {
-  
+    debugger
     
       this.fromDate = e.fromDate,
       this.toDate = e.toDate,
-      this.accountGroupId=e.accountGroupId
-      this.mainAccountId=e.mainAccountId
-      this.leafAccountId=e.leafAccountId
+      this.mainAccountId=e.mainAccountId,
+      this.leafAccountId=e.leafAccountId,
+      this.currencyId=e.currencyId
+      this.branchId=e.branchId
 
-      this.costCenterId=e.costCenterId
-      this.entriesStatusId=e.entriesStatusId
   }
 
   listenToClickedButton() {

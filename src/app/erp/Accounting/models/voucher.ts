@@ -6,7 +6,7 @@ export class Voucher {
     code: string;
     voucherDate: any;
     cashAccountId: number;
-    costCenterAccountId: number | undefined;
+    costCenterId: number | undefined;
     currencyId: number;
     description: string;
     voucherTotal: number;
@@ -26,13 +26,13 @@ export class VoucherDetail {
     beneficiaryTypeId: number;
     beneficiaryAccountId: number;
     description: string;
-    costCenterAccountId:number|undefined;
+    costCenterId:number|undefined;
     currencyNameAr:string;
     currencyNameEn:string;
     beneficiaryAccountNameAr:string;
     beneficiaryAccountNameEn:string;
-    costCenterAccountNameAr:string;
-    costCenterAccountNameEn:string;
+    costCenterNameAr:string;
+    costCenterNameEn:string;
 
 
   
