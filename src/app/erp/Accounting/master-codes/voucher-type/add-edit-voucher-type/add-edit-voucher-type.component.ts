@@ -287,7 +287,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.accountList = res.response;
+            this.accountList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
 
           }
           resolve();

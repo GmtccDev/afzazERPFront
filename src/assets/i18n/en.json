@@ -201,7 +201,8 @@
         "show":"Show",
         "design":"Design",
         "default":"Default",
-        "close":"Close"
+        "close":"Close",
+        "add":"Add"
     },
     "messages": {
         "invalid-data": "Please Enter Valid Data!",

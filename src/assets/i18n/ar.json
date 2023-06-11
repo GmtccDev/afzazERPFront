@@ -62,7 +62,8 @@
         "show":"عرض",
         "design":"تصميم",
         "default":"الافتراضى",
-        "close":"اغلاق"
+        "close":"اغلاق",
+        "add":"اضافة"
     },
     "validation-message": {
         "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
