@@ -16,7 +16,6 @@ import { DateCalculation } from 'src/app/shared/services/date-services/date-calc
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 
 
-
 @NgModule({
   declarations: [
     AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent
