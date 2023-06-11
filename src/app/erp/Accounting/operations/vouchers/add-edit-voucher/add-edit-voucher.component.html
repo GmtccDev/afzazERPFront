@@ -211,7 +211,7 @@
                                                                 <th>{{'general.beneficiary'|translate}}</th>
                                                                 <th>{{'general.beneficiary-account'|translate}}</th>
                                                                 <!-- <th>{{'general.description'|translate}}</th> -->
-                                                                <th>{{'general.cost-center-account'|translate}}</th>
+                                                                <th>{{'general.cost-center'|translate}}</th>
 
 
 
@@ -285,7 +285,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="voucherDetail[i].costCenterAccountNameAr"
+                                                                        [(ngModel)]="voucherDetail[i].costCenterNameAr"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openCostCenterSearchDialog(-1)">
 
@@ -298,7 +298,7 @@
                                                                     </button> -->
 
                                                                     <input type="button" class="btn btn-warning px-3"
-                                                                        value="Delete" (click)="deleteItem(i)">
+                                                                        value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
                                                                 </td>
                                                             </tr>
 
@@ -370,7 +370,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedVoucherDetail.costCenterAccountNameAr"
+                                                                        [(ngModel)]="selectedVoucherDetail.costCenterNameAr"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openCostCenterSearchDialog(-1)">
 
@@ -383,7 +383,8 @@
                                                                         <i class="las la-plus"></i>
                                                                     </button> -->
                                                                     <input type="button" class="btn btn-primary px-3"
-                                                                        (click)="addItem()" value="add">
+                                                                        (click)="addItem()" value="{{'buttons.add'|translate}}">
+
                                                                 </td>
                                                             </tr>
                                                         </table>

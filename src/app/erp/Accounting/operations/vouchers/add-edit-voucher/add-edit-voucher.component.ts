@@ -415,10 +415,8 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
         next: (res) => {
 
           if (res.success) {
-            this.cashAccountsList = res.response;
-            //this.costCenterAccountsList = res.response;
-            this.beneficiaryAccountsList = res.response;
-            //this.costCenterAccountsInDetailList = res.response;
+            this.cashAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
+            this.beneficiaryAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
 
           }
 
@@ -468,6 +466,8 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
         next: (res) => {
           if (res.success) {
             this.costCentersList = res.response;
+            this.costCentersInDetailsList = res.response;
+
           }
           resolve();
 
