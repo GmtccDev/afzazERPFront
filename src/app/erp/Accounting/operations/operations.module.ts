@@ -14,11 +14,13 @@ import { SearchDialogService } from 'src/app/shared/services/search-dialog.servi
 import { MatDialogModule } from '@angular/material/dialog';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
+import { IncomingChequeComponent } from './incoming-cheque/incoming-cheque.component';
+import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incoming-cheque/add-edit-incoming-cheque.component';
 
 
 @NgModule({
   declarations: [
-    AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent
+    AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent, IncomingChequeComponent, AddEditIncomingChequeComponent
 
     
   ],
