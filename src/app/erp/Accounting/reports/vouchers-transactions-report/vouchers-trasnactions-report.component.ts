@@ -26,7 +26,7 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
 
   currencyId:any;
   branchId:any;
-
+  voucherId:any;
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
@@ -114,11 +114,28 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
+    if (this.leafAccountId == null || this.leafAccountId == undefined) {
+      this.leafAccountId = 0;
+    }
+    if (this.voucherId == null || this.voucherId == undefined) {
+      this.voucherId = 0;
+    }
 
+    if (this.currencyId == null || this.currencyId == undefined) {
+      this.currencyId = 0;
+    }
+
+    if (this.branchId == null || this.branchId == undefined) {
+      this.branchId = 0;
+    }
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
-      "&reportParameter=toDate!" + this.toDate
-    debugger
+      "&reportParameter=toDate!" + this.toDate + 
+      "&reportParameter=leafAccountId!" + this.leafAccountId + 
+      "&reportParameter=voucherId!" + this.voucherId + 
+      "&reportParameter=currencyId!" + this.currencyId + 
+      "&reportParameter=branchId!" + this.branchId; 
+
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
     modalRef.componentInstance.reportType = 1;
@@ -144,16 +161,16 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
   }
 
   OnFilter(e: {
-    fromDate, toDate,mainAccountId,leafAccountId,currencyId,branchId
+    fromDate, toDate,mainAccountId,leafAccountId,currencyId,branchId,voucherId
   }) {
     debugger
-    
-      this.fromDate = e.fromDate,
-      this.toDate = e.toDate,
-      this.mainAccountId=e.mainAccountId,
-      this.leafAccountId=e.leafAccountId,
+      this.fromDate = e.fromDate
+      this.toDate = e.toDate
+      this.mainAccountId=e.mainAccountId
+      this.leafAccountId=e.leafAccountId
       this.currencyId=e.currencyId
       this.branchId=e.branchId
+      this.voucherId=e.voucherId
 
   }
 

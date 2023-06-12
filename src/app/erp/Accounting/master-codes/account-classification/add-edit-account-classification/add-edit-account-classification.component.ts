@@ -1,16 +1,18 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { AccountClassificationServiceProxy } from '../../../services/account-classification';
+import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
+import { AccountClassificationsForIncomeStatementArEnum, AccountClassificationsForIncomeStatementEnum, VoucherTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 @Component({
   selector: 'app-add-edit-account-classification',
   templateUrl: './add-edit-account-classification.component.html',
@@ -19,6 +21,8 @@ import { AccountClassificationServiceProxy } from '../../../services/account-cla
 export class AddEditAccountClassificationComponent implements OnInit {
   //#region Main Declarations
   accountClassificationForm!: FormGroup;
+  accountClassificationsTypes: ICustomEnum[] = [];
+
   sub: any;
   url: any;
   id: any = 0;
@@ -64,6 +68,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
+    this.getAccountClassificationsTypes();
     if (this.currnetUrl == this.addUrl) {
       this.getaccountClassificationCode();
     }
@@ -119,8 +124,9 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.accountClassificationForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: null,
+      nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
+      type:REQUIRED_VALIDATORS,
       isActive: true
     });
 
@@ -141,6 +147,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
+            type: res.response?.type,
             isActive: res.response?.isActive
 
           });
@@ -159,6 +166,15 @@ export class AddEditAccountClassificationComponent implements OnInit {
       });
     });
     return promise;
+  }
+  getAccountClassificationsTypes() {
+    if (this.lang == 'en') {
+      this.accountClassificationsTypes = convertEnumToArray(AccountClassificationsForIncomeStatementEnum);
+    }
+    else {
+      this.accountClassificationsTypes = convertEnumToArray(AccountClassificationsForIncomeStatementArEnum);
+
+    }
   }
   showPassword() {
     this.show = !this.show;
@@ -212,7 +228,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add accountClassification';
+            this.toolbarPathData.componentAdd = this.translate.instant("account-classification.add-account-classification");
             this.defineaccountClassificationForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -258,7 +274,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
     } else {
 
-      //  return this.accountClassificationForm.markAllAsTouched();
+       return this.accountClassificationForm.markAllAsTouched();
     }
   }
 
@@ -300,7 +316,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
     else {
 
-      // return this.accountClassificationForm.markAllAsTouched();
+       return this.accountClassificationForm.markAllAsTouched();
     }
   }
  

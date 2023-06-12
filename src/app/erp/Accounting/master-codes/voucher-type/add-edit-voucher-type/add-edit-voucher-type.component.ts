@@ -11,6 +11,7 @@ import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import {
+  AccountClassificationsEnum,
   BeneficiaryTypeArEnum,
   BeneficiaryTypeEnum,
   convertEnumToArray,
@@ -43,7 +44,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   currenciesList: any;
 
   fiscalPeriodList: any;
-  accountList: any;
+  cashAccountList: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
 
   sub: any;
@@ -287,7 +288,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.accountList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
+            this.cashAccountList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true && x.accountClassificationId==AccountClassificationsEnum.Cash);
 
           }
           resolve();

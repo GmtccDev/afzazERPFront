@@ -181,19 +181,19 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (res) => {
           if (res.success) {
             if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
-              this.mainAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount != true);
+              this.mainAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount != true && x.isActive==true);
               if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
-                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.parentId == this.selectedMainAccountId);
+                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive==true);
               }
               else {
-                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true);
+                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.isActive==true);
 
               }
             }
              else {
               this.mainAccountsList = res.response.filter(x => x.isLeafAccount != true && x.isActive==true);
                if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
-                 this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.parentId == this.selectedMainAccountId);
+                 this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive==true);
 
                }
                else {
