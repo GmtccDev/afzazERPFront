@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -14,11 +14,12 @@ import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { AccountDto, CreateAccountCommand, EditAccountCommand } from '../../../models/account';
 import { AccountServiceProxy } from '../../../services/account.services';
 import { CompanyDto } from 'src/app/erp/master-codes/models/company';
-import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { CostCenterDto } from '../../../models/cost-Center';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
+import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
+import { AccountClassificationsArEnum, AccountClassificationsEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -28,6 +29,8 @@ import { GeneralConfigurationServiceProxy } from '../../../services/general-conf
 export class AddEditAccountComponent implements OnInit {
   //#region Main Declarations
   accountForm!: FormGroup;
+  accountClassificationsEnum: ICustomEnum[] = [];
+
   sub: any;
   url: any;
   id: any = 0;
@@ -70,7 +73,7 @@ export class AddEditAccountComponent implements OnInit {
   routeAccountClassificationApi = "AccountClassification/get-ddl?"
   currencyList: any;
   accountGroupList: any;
-  accountClassificationList: any;
+  accountClassificationListOfIncomeStatement: any;
   accountTypeList: { nameAr: string; nameEn: string; value: any; }[];
   trialBalanceList: { nameAr: string; nameEn: string; value: any; }[];
   isMultiCompanies = true;
@@ -100,9 +103,9 @@ export class AddEditAccountComponent implements OnInit {
     this.getGeneralConfiguration();
     this.getAccount();
     this.getAccountGroup();
- 
     this.getCostCenter();
-    this.getAccountClassification();
+    this.getAccountClassifications();
+    this.getAccountClassificationsForIncomeStatement();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.getAccountType();
@@ -159,7 +162,7 @@ export class AddEditAccountComponent implements OnInit {
     this.accountForm = this.fb.group({
       id: null,
       nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: null,
+      nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       isLeafAccount: true,
@@ -175,7 +178,9 @@ export class AddEditAccountComponent implements OnInit {
       accountGroupId: null,
       accountType: null,
       trialBalance: null,
-      accountClassificationId: null,
+      accountClassificationId: REQUIRED_VALIDATORS,
+      accountClassificationIdOfIncomeStatement: null,
+
       noteNotActive: null
 
     });
@@ -375,13 +380,13 @@ export class AddEditAccountComponent implements OnInit {
     });
 
   }
-  getAccountClassification() {
+  getAccountClassificationsForIncomeStatement() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountClassificationApi).subscribe({
         next: (res) => {
 
           if (res.success) {
-            this.accountClassificationList = res.response;
+            this.accountClassificationListOfIncomeStatement = res.response;
 
           }
 
@@ -400,6 +405,15 @@ export class AddEditAccountComponent implements OnInit {
       this.subsList.push(sub);
     });
 
+  }
+  getAccountClassifications() {
+    if (this.lang == 'en') {
+      this.accountClassificationsEnum = convertEnumToArray(AccountClassificationsEnum);
+    }
+    else {
+      this.accountClassificationsEnum = convertEnumToArray(AccountClassificationsArEnum);
+
+    }
   }
   //#endregion
 
@@ -430,6 +444,7 @@ export class AddEditAccountComponent implements OnInit {
             accountType: res.response?.accountType,
             trialBalance: res.response?.trialBalance,
             accountClassificationId: res.response?.accountClassificationId,
+            accountClassificationIdOfIncomeStatement: res.response?.accountClassificationIdOfIncomeStatement,
             noteNotActive: res.response?.noteNotActive,
 
           });
@@ -547,7 +562,7 @@ export class AddEditAccountComponent implements OnInit {
 
     } else {
 
-      //  return this.accountForm.markAllAsTouched();
+        return this.accountForm.markAllAsTouched();
     }
   }
 
@@ -589,7 +604,7 @@ export class AddEditAccountComponent implements OnInit {
 
     else {
 
-      // return this.accountForm.markAllAsTouched();
+       return this.accountForm.markAllAsTouched();
     }
   }
   getAccountType() {

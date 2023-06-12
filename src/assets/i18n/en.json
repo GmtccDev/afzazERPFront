@@ -141,7 +141,8 @@
         "number":"Number",
         "type-id":"Type Id",
         "main-account":"Main Account",
-        "leaf-account":"Leaf Account"
+        "leaf-account":"Leaf Account",
+        "type":"Type"
 
 
     },
@@ -373,7 +374,9 @@
         "trialBalance": "Trial Balance",
         "isLeafAccount": "Leaf Account",
         "noteNotActive": "Note Not Active",
-        "taxNumber": "Tax Number"
+        "taxNumber": "Tax Number",
+        "account-classification":"Account Classification",
+        "account-classification-income-statement":"Account Classification (Income Statement)"
     },
     "accounting-configration": {
         "multiCurrency": "Multi Currency",
@@ -421,5 +424,11 @@
 "journalEntry":{
        
     "Open Balance": "Open Balance"
+},
+"account-classification":{
+    "add-account-classification":"Add Account Classification",
+    "update-account-classification":"Add Account Classification"
+
 }
+
 }

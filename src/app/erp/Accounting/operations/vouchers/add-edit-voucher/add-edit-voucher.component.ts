@@ -14,7 +14,7 @@ import { VoucherDetailsServiceProxy } from '../../../services/voucher-details.se
 import { VoucherTypeServiceProxy } from '../../../services/voucher-type.service';
 import { VoucherType } from 'src/app/erp/Accounting/models/voucher-type'
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, SerialTypeArEnum, SerialTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, SerialTypeArEnum, SerialTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { SearchDialogService } from 'src/app/shared/services/search-dialog.service'
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
@@ -415,7 +415,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
         next: (res) => {
 
           if (res.success) {
-            this.cashAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
+            this.cashAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true && x.accountClassificationId==AccountClassificationsEnum.Cash);
             this.beneficiaryAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
 
           }
