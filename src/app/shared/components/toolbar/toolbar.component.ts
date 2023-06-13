@@ -244,6 +244,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledUpate = true;
       this.disabledCancel = true;
       this.disabledDlete=true;
+      this.disabledView=true;
       this.disableCancelDefaultReport=true;
 
     } else if (button == 'Save') {
@@ -253,6 +254,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledExport = true;
       this.disabledPrint = true;
       this.disabledDlete=true;
+      this.disabledView=true;
       this.disableCancelDefaultReport=true;
 
     } else if (button == 'New') {
@@ -261,12 +263,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledExport = true;
       this.disabledPrint = true;
       this.disabledDlete=true;
+      this.disabledView=true;
       this.disableCancelDefaultReport=true;
 
     } else if (button == 'Copy') {
     } else if (button == 'Update') {
       this.disabledSave = true;
       this.disabledPrint = true;
+      this.disabledView=true;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;
 
@@ -293,7 +297,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledUpate = true;
       this.disabledCancel = true;
       this.disabledDlete=true;
-      this.disabledPrint = false;
+      this.disabledPrint = true;
+      this.disabledView=false;
       this.disableCancelDefaultReport = false;
 
     }

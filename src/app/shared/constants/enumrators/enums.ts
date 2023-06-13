@@ -17,8 +17,8 @@ export enum VoucherTypeEnum {
   Withdrawal = 2
 }
 export enum VoucherTypeArEnum {
-  إيداع  = 1,
-  سحب = 2
+  قبض  = 1,
+  صرف = 2
 }
 
 export enum SerialTypeEnum {
@@ -62,4 +62,28 @@ export enum EntriesStatusArEnum {
   مرحل=1,
   'غير مرحل'=2,
   الكل=3
+}
+export enum AccountClassificationsForIncomeStatementEnum {
+  Revenue=1,
+  Expense=2
+}
+export enum AccountClassificationsForIncomeStatementArEnum {
+  ايراد=1,
+  مصروف=2
+}
+export enum AccountClassificationsEnum {
+  Cash=1,
+  Supplier=2,
+  Client=3,
+  Double=4,
+  Employee=5,
+  Other=6
+}
+export enum AccountClassificationsArEnum {
+  نقدية=1,
+  مورد=2,
+  عميل=3,
+  مزدوج=4,
+  موظف=5,
+  أخرى=6
 }

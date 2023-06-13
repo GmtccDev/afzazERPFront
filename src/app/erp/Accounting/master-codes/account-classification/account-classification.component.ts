@@ -223,7 +223,6 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/accountClassification/update-accountClassification/' + id])
     }
@@ -240,7 +239,6 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/accountClassification/update-accountClassification/' + event.item.id])
 

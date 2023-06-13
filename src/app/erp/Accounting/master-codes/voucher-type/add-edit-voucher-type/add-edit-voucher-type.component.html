@@ -151,7 +151,7 @@
                                                             <ng-select style="width:100%"
                                                                 formControlName="defaultAccountId"
                                                                 name='defaultAccountId' class="" id="defaultAccountId">
-                                                                <ng-option *ngFor="let account of accountList"
+                                                                <ng-option *ngFor="let account of cashAccountList"
                                                                     [value]="account.id">
                                                                     {{lang=="ar"?account.nameAr:account.nameEn}}
                                                                 </ng-option>

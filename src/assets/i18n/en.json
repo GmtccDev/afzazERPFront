@@ -141,7 +141,9 @@
         "number":"Number",
         "type-id":"Type Id",
         "main-account":"Main Account",
-        "leaf-account":"Leaf Account"
+        "leaf-account":"Leaf Account",
+        "type":"Type",
+        "level":"Level"
 
 
     },
@@ -347,6 +349,7 @@
         "journalEntry-information": "Journal Entry information",
         "reports":"Reports",
         "budget-report":"Budget Report",
+        "analytical-budget-report":"Analytical Budget Report",
         "income-statement-report":"Income Statement Report",
         "vouchers-transactions-report":"Vouchers Transactions Report"
     },
@@ -373,7 +376,9 @@
         "trialBalance": "Trial Balance",
         "isLeafAccount": "Leaf Account",
         "noteNotActive": "Note Not Active",
-        "taxNumber": "Tax Number"
+        "taxNumber": "Tax Number",
+        "account-classification":"Account Classification",
+        "account-classification-income-statement":"Account Classification (Income Statement)"
     },
     "accounting-configration": {
         "multiCurrency": "Multi Currency",
@@ -421,5 +426,11 @@
 "journalEntry":{
        
     "Open Balance": "Open Balance"
+},
+"account-classification":{
+    "add-account-classification":"Add Account Classification",
+    "update-account-classification":"Add Account Classification"
+
 }
+
 }

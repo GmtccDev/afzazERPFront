@@ -11,31 +11,23 @@ import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-income-statement-report',
-  templateUrl: './income-statement-report.component.html',
-  styleUrls: ['./income-statement-report.component.scss']
+  selector: 'app-analytical-budget-report',
+  templateUrl: './analytical-budget-report.component.html',
+  styleUrls: ['./analytical-budget-report.component.scss']
 })
-export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AnalyticalBudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
-  accountGroupId:any;
-  mainAccountId:any;
-  leafAccountId:any;
-  costCenterId:any;
-  entriesStatusId:any;
-  level:any;
-
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
     updatePath: '',
-    componentList:this.translate.instant("component-names.income-statement-report"),
-    componentAdd: ''
+    componentList: this.translate.instant("component-names.analytical-budget-report"),
+    componentAdd: '',
   };
- 
   //#region Constructor
   constructor(
     private modalService: NgbModal,
@@ -44,8 +36,9 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     private dateConverterService: DateConverterService,
     private translate: TranslateService
 
+
   ) {
-   
+
   }
 
 
@@ -53,22 +46,22 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
 
   //#region ngOnInit
   ngOnInit(): void {
+   debugger
    
    this.sharedServices.changeButton({ action: 'Report' } as ToolbarData);
    this.listenToClickedButton();
    this.sharedServices.changeToolbarPath(this.toolbarPathData);
-  
+
   }
 
-  //#endregion
- //#region ngAfterViewInit
   ngAfterViewInit(): void {
 
-    
+   
 
   }
-  //#endregion
 
+
+  //#endregion
 
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -109,87 +102,53 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-    if (this.accountGroupId == null || this.accountGroupId == undefined) {
-      this.accountGroupId = 0;
-    }
-    if (this.mainAccountId == null || this.mainAccountId == undefined) {
-      this.mainAccountId = 0;
-    }
-    if (this.leafAccountId == null || this.leafAccountId == undefined) {
-      this.leafAccountId = 0;
-    }
-    if (this.costCenterId == null || this.costCenterId == undefined) {
-      this.costCenterId = 0;
-    }
-    if (this.entriesStatusId == null || this.entriesStatusId == undefined) {
-      this.entriesStatusId = 0;
-    }
-    if (this.level == null || this.level == undefined) {
-      this.level = 0;
-    }
+
     let reportParams: string =
-      "reportParameter=STARTDATE!" + this.fromDate +
-      "&reportParameter=ENDDATE!" + this.toDate +
-      "&reportParameter=accountGroupId!" + this.accountGroupId +
-      "&reportParameter=mainAccountId!" + this.mainAccountId +
-      "&reportParameter=leafAccountId!" + this.leafAccountId +
-      "&reportParameter=costCenterId!" + this.costCenterId +
-      "&reportParameter=entriesStatusId!" + this.entriesStatusId +
-      "&reportParameter=Level!" + this.level 
-    debugger
+      "reportParameter=fromDate!" + this.fromDate +
+      "&reportParameter=toDate!" + this.toDate
+
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
     modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 2;
+    modalRef.componentInstance.reportTypeID = 1;
 
   }
   cancelDefaultReportStatus() {
-    this.reportService.cancelDefaultReport(1,2).subscribe(resonse => {
+    this.reportService.cancelDefaultReport(1,1).subscribe(resonse => {
 
     });
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean,ShowAccountGroup:boolean,ShowMainAccount:boolean,ShowLeafAccount:boolean,ShowCostCenter,ShowEntriesStatus,ShowLevel
+    ShowSearch: boolean
   } = {
-    ShowFromDate: true, ShowToDate: true,
-    ShowSearch: false,
-    ShowAccountGroup: true,
-    ShowMainAccount:true,
-    ShowLeafAccount:true,
-    ShowCostCenter:true,
-    ShowEntriesStatus:true,
-    ShowLevel:true
-  }
+      
+      ShowFromDate: true, ShowToDate: true
+      , ShowSearch: false
+      
+    }
 
   OnFilter(e: {
-    fromDate, toDate,accountGroupId,mainAccountId,leafAccountId,costCenterId,entriesStatusId,level
+    fromDate, toDate
   }) {
-  
+    debugger
     
       this.fromDate = e.fromDate,
-      this.toDate = e.toDate,
-      this.accountGroupId=e.accountGroupId
-      this.mainAccountId=e.mainAccountId
-      this.leafAccountId=e.leafAccountId
-      this.costCenterId=e.costCenterId
-      this.entriesStatusId=e.entriesStatusId
-      this.level=e.level
+      this.toDate = e.toDate
+
   }
 
   listenToClickedButton() {
-    
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
         if (currentBtn != null) {
-          
+          debugger
           if (currentBtn.action == ToolbarActions.View) {
             this.gotoViewer();
 
           }
           else if (currentBtn.action == ToolbarActions.CancelDefaultReport) {
-            debugger
             this.cancelDefaultReportStatus();
           }
           this.sharedServices.changeButton({ action: 'Report' } as ToolbarData);
