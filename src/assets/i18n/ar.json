@@ -227,14 +227,12 @@
         "journalEntry": "قيود محاسبية",
         "journalEntry-information": "معلومات قيود محاسبية ",
         "reports":"التقارير",
-        "budget-report":"تقرير الميزانية",
+        "budget-report":"تقرير قائمة المركز المالى",
+        "analytical-budget-report":"تقرير قائمة المركز المالى التوزيعى",
         "choose-template":"أختر النموذج",
         "template-name":"أسم النموذج",
         "income-statement-report":"تقرير قائمة الدخل",
         "vouchers-transactions-report":"تقرير حركة السندات"
-
-
-
 
     },
     "general": {
@@ -316,7 +314,8 @@
         "type-id":"رقم النمط",
         "main-account":"الحساب الرئيسي",
         "leaf-account":"الحساب الفرعى",
-        "type":"النوع"
+        "type":"النوع",
+        "level":"المستوى"
 
     },
     "menu": {},

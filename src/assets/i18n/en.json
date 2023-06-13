@@ -142,7 +142,8 @@
         "type-id":"Type Id",
         "main-account":"Main Account",
         "leaf-account":"Leaf Account",
-        "type":"Type"
+        "type":"Type",
+        "level":"Level"
 
 
     },
@@ -348,6 +349,7 @@
         "journalEntry-information": "Journal Entry information",
         "reports":"Reports",
         "budget-report":"Budget Report",
+        "analytical-budget-report":"Analytical Budget Report",
         "income-statement-report":"Income Statement Report",
         "vouchers-transactions-report":"Vouchers Transactions Report"
     },
