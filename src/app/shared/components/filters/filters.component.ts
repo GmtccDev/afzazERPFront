@@ -22,7 +22,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   enableFilters: boolean = false;
   lang = localStorage.getItem("language")
   selectedAccountGroupId: any;
-
+  level:any;
   accountGroupList: any;
   routeAccountGroupApi = "AccountGroup/get-ddl?"
 
@@ -54,13 +54,13 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId, voucherId
+    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId, voucherId,level
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
     ShowToDate: boolean, ShowSearch: boolean, ShowAccountGroup: boolean, ShowMainAccount: boolean, ShowLeafAccount: boolean,
-    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucher: boolean
+    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucher: boolean,ShowLevel:boolean
   } = {
 
       ShowFromDate: false,
@@ -73,7 +73,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       ShowEntriesStatus: false,
       ShowCurrency: false,
       ShowBranch: false,
-      ShowVoucher: false
+      ShowVoucher: false,
+      ShowLevel:false
     }
 
   subsList: Subscription[] = [];
@@ -372,6 +373,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       currencyId: this.selectedCurrencyId,
       branchId: this.selectedBranchId,
       voucherId: this.selectedVoucherId,
+      level:this.level
 
 
 
@@ -406,6 +408,10 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectVoucher() {
+    this.FireSearch()
+
+  }
+  onChangeLevel() {
     this.FireSearch()
 
   }
