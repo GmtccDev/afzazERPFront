@@ -284,16 +284,16 @@
                                         </div>
                                         <div class="col-md-4 col-4"
                                             *ngIf="accountForm.controls['accountType'].value==2;">
-                                            <label for="trialBalance" class="label-name">
-                                                {{'account.trialBalance'|translate}}
+                                            <label for="budget" class="label-name">
+                                                {{'account.budget'|translate}}
 
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="trialBalance"
-                                                    name='trialBalance' class="" id="trialBalance">
-                                                    <ng-option *ngFor="let trialBalance of trialBalanceList"
-                                                        [value]="trialBalance.value">
-                                                        {{lang=="ar"?trialBalance.nameAr:trialBalance.nameEn}}
+                                                <ng-select style="width:100%" formControlName="budget"
+                                                    name='budget' class="" id="budget">
+                                                    <ng-option *ngFor="let budget of budgetList"
+                                                        [value]="budget.value">
+                                                        {{lang=="ar"?budget.nameAr:budget.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
 

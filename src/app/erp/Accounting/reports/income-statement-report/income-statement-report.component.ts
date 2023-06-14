@@ -128,14 +128,14 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
       this.level = 0;
     }
     let reportParams: string =
-      "reportParameter=STARTDATE!" + this.fromDate +
-      "&reportParameter=ENDDATE!" + this.toDate +
+      "reportParameter=fromDate!" + this.fromDate +
+      "&reportParameter=toDate!" + this.toDate +
       "&reportParameter=accountGroupId!" + this.accountGroupId +
       "&reportParameter=mainAccountId!" + this.mainAccountId +
       "&reportParameter=leafAccountId!" + this.leafAccountId +
       "&reportParameter=costCenterId!" + this.costCenterId +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
-      "&reportParameter=Level!" + this.level 
+      "&reportParameter=level!" + this.level 
     debugger
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;

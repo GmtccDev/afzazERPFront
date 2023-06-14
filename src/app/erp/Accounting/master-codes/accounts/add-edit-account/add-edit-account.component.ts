@@ -75,7 +75,7 @@ export class AddEditAccountComponent implements OnInit {
   accountGroupList: any;
   accountClassificationListOfIncomeStatement: any;
   accountTypeList: { nameAr: string; nameEn: string; value: any; }[];
-  trialBalanceList: { nameAr: string; nameEn: string; value: any; }[];
+  budgetList: { nameAr: string; nameEn: string; value: any; }[];
   isMultiCompanies = true;
   isMultiCurrency = true;
 
@@ -177,7 +177,7 @@ export class AddEditAccountComponent implements OnInit {
       costCenterId: null,
       accountGroupId: null,
       accountType: null,
-      trialBalance: null,
+      budget: null,
       accountClassificationId: REQUIRED_VALIDATORS,
       accountClassificationIdOfIncomeStatement: null,
 
@@ -442,7 +442,7 @@ export class AddEditAccountComponent implements OnInit {
             costCenterId: res.response?.costCenterId,
             accountGroupId: res.response?.accountGroupId,
             accountType: res.response?.accountType,
-            trialBalance: res.response?.trialBalance,
+            budget: res.response?.budget,
             accountClassificationId: res.response?.accountClassificationId,
             accountClassificationIdOfIncomeStatement: res.response?.accountClassificationIdOfIncomeStatement,
             noteNotActive: res.response?.noteNotActive,
@@ -609,10 +609,10 @@ export class AddEditAccountComponent implements OnInit {
   }
   getAccountType() {
     this.accountTypeList = [
-      { nameAr: 'قائمة دخل', nameEn: 'Income Statement', value: 1 },
-      { nameAr: 'ميزان المراجعة', nameEn: 'Trial Balance', value: 2 }
+      { nameAr: 'قائمة الدخل', nameEn: 'Income Statement', value: 1 },
+      { nameAr: 'قائمة المركز المالى', nameEn: 'Budget', value: 2 }
     ];
-    this.trialBalanceList = [
+    this.budgetList = [
       { nameAr: ' الأصول ', nameEn: 'Assets', value: 1 },
       { nameAr: 'الخصوم', nameEn: 'Liabilities', value: 2 }
     ];

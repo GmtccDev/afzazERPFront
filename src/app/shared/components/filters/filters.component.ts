@@ -367,7 +367,6 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       toDate: this.selectedToDate,
       accountGroupId: this.selectedAccountGroupId,
       mainAccountId: this.selectedMainAccountId,
-
       leafAccountId: this.selectedLeafAccountId,
       entriesStatusId: this.selectedEntriesStatusId,
       currencyId: this.selectedCurrencyId,
