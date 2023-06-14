@@ -21,6 +21,8 @@ export class AnalyticalBudgetReportComponent implements OnInit, OnDestroy, After
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
+  entriesStatusId:any;
+  level:any;
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
@@ -102,10 +104,17 @@ export class AnalyticalBudgetReportComponent implements OnInit, OnDestroy, After
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-
+    if (this.entriesStatusId == null || this.entriesStatusId == undefined) {
+      this.entriesStatusId = 0;
+    }
+    if (this.level == null || this.level == undefined) {
+      this.level = 0;
+    }
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
-      "&reportParameter=toDate!" + this.toDate
+      "&reportParameter=toDate!" + this.toDate+
+      "&reportParameter=entriesStatusId!" + this.entriesStatusId +
+      "&reportParameter=level!" + this.level 
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -120,21 +129,23 @@ export class AnalyticalBudgetReportComponent implements OnInit, OnDestroy, After
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean
+    ShowSearch: boolean,ShowEntriesStatus:boolean,ShowLevel:boolean
   } = {
       
       ShowFromDate: true, ShowToDate: true
-      , ShowSearch: false
+      , ShowSearch: false,ShowEntriesStatus:true,ShowLevel:true
       
     }
 
   OnFilter(e: {
-    fromDate, toDate
+    fromDate, toDate,entriesStatusId,level
   }) {
     debugger
     
       this.fromDate = e.fromDate,
-      this.toDate = e.toDate
+      this.toDate = e.toDate,
+      this.entriesStatusId=e.entriesStatusId,
+      this.level=e.level 
 
   }
 

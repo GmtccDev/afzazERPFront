@@ -315,7 +315,9 @@
         "main-account":"الحساب الرئيسي",
         "leaf-account":"الحساب الفرعى",
         "type":"النوع",
-        "level":"المستوى"
+        "level":"المستوى",
+        "setting":"نمط"
+
 
     },
     "menu": {},
@@ -356,7 +358,8 @@
         "noteNotActive": "سبب عدم التفعيل",
         "taxNumber": "الرقم الضريبي",
         "account-classification":"تصنيف الحساب",
-        "account-classification-income-statement":"تصنيف الحساب (قائمة الدخل)"
+        "account-classification-income-statement":"تصنيف الحساب (قائمة الدخل)",
+        "budget":"قائمة المركز المالى"
     },
     "error": {
         "phoneValidation": "The phone number is invalid",
