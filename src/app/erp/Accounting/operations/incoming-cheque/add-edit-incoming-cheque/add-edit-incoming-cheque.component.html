@@ -17,7 +17,7 @@
 
                             </div>
                         </div>
-                        <form [formGroup]="journalEntryForm" id="journalEntrySubmit" class="tabs-form">
+                        <form [formGroup]="incomingChequeForm" id="journalEntrySubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
@@ -139,7 +139,7 @@
 
                                 </div>
 
-                                <div formArrayName="journalEntriesDetail" style="width: 100% ; overflow-x: scroll;">
+                                <div formArrayName="incomingChequeDetail" style="width: 100% ; overflow-x: scroll;">
                                     <div style="width: 1500px;">
                                         <table class="table table-sm m-b-0 table-broder ">
                                             <thead class="thead-light">
@@ -158,7 +158,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let row of journalEntryForm.get('journalEntriesDetail')['controls']; let i = index"
+                                                <tr *ngFor="let row of incomingChequeForm.get('incomingChequeDetail')['controls']; let i = index"
                                                     [formGroupName]="i">
                                                     <!-- <td> -->
                                                         <!-- {{ i+1 }} -->
