@@ -119,11 +119,11 @@ export class AnalyticalBudgetReportComponent implements OnInit, OnDestroy, After
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
     modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 1;
+    modalRef.componentInstance.reportTypeID = 4;
 
   }
   cancelDefaultReportStatus() {
-    this.reportService.cancelDefaultReport(1,1).subscribe(resonse => {
+    this.reportService.cancelDefaultReport(1,4).subscribe(resonse => {
 
     });
   }
