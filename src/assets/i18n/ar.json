@@ -229,8 +229,6 @@
         "reports":"التقارير",
         "budget-report":"تقرير قائمة المركز المالى",
         "analytical-budget-report":"تقرير قائمة المركز المالى التوزيعى",
-        "choose-template":"أختر النموذج",
-        "template-name":"أسم النموذج",
         "income-statement-report":"تقرير قائمة الدخل",
         "vouchers-transactions-report":"تقرير حركة السندات"
 
@@ -316,7 +314,9 @@
         "leaf-account":"الحساب الفرعى",
         "type":"النوع",
         "level":"المستوى",
-        "setting":"نمط"
+        "setting":"نمط",
+        "choose-template":"أختر النموذج",
+        "template-name":"أسم النموذج"
 
 
     },
