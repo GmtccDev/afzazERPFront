@@ -226,11 +226,11 @@
         "voucher": "السند",
         "journalEntry": "قيود محاسبية",
         "journalEntry-information": "معلومات قيود محاسبية ",
-        "reports":"التقارير",
+        "reports":"التقارير", 
         "budget-report":"تقرير قائمة المركز المالى",
         "analytical-budget-report":"تقرير قائمة المركز المالى التوزيعى",
         "income-statement-report":"تقرير قائمة الدخل",
-        "vouchers-transactions-report":"تقرير حركة السندات"
+        "vouchers-transactions-report":"تقرير حركة السندات" 
 
     },
     "general": {
