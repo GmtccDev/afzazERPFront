@@ -227,6 +227,8 @@
         "journalEntry": "قيود محاسبية",
         "journalEntryPost":" قيود محاسبية مرحلة" ,
         "journalEntry-information": "معلومات قيود محاسبية ",
+        "journalEntryPost-information": "معلومات قيود محاسبية ",
+
         "reports":"التقارير",
         "budget-report":"تقرير قائمة المركز المالى",
         "analytical-budget-report":"تقرير قائمة المركز المالى التوزيعى",

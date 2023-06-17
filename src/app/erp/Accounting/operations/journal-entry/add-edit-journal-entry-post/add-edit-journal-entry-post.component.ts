@@ -18,11 +18,11 @@ import { map } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { EntriesStatusArEnum, EntriesStatusEnum, EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 @Component({
-  selector: 'app-add-edit-journal-entry',
-  templateUrl: './add-edit-journal-entry.component.html',
-  styleUrls: ['./add-edit-journal-entry.component.scss']
+  selector: 'app-add-edit-journal-entry-post',
+  templateUrl: './add-edit-journal-entry-post.component.html',
+  styleUrls: ['./add-edit-journal-entry-post.component.scss']
 })
-export class AddEditJournalEntryComponent implements OnInit {
+export class AddEditJournalEntryPostComponent implements OnInit {
   //#region Main Declarations
   journalEntryForm!: FormGroup;
   sub: any;
@@ -32,14 +32,14 @@ export class AddEditJournalEntryComponent implements OnInit {
   public show: boolean = false;
   lang = localStorage.getItem("language")
   journalEntry: [] = [];
-  addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
-  updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
-  listUrl: string = '/accounting-operations/journalEntry';
+  addUrl: string = '/accounting-operations/journalEntryPost/add-journalEntryPost';
+  updateUrl: string = '/accounting-operations/journalEntryPost/update-journalEntryPost/';
+  listUrl: string = '/accounting-operations/journalEntryPost';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
-    addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.journalEntry"),
+    addPath: '',
+    componentList: this.translate.instant("component-names.journalEntryPost"),
     componentAdd: '',
 
   };
@@ -245,7 +245,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       notes: null,
       journalId: ['', Validators.compose([Validators.required])],
       fiscalPeriodId: ['', Validators.compose([Validators.required])],
-    //  postType:2,
+      postType:2,
       journalEntriesDetail: this.fb.array([])
     });
     this.initGroup();
@@ -334,7 +334,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     const promise = new Promise<void>((resolve, reject) => {
       this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
-        
+         
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
@@ -344,7 +344,7 @@ export class AddEditJournalEntryComponent implements OnInit {
             notes: res.response?.notes,
             journalId: res.response?.journalId,
             fiscalPeriodId: res.response?.fiscalPeriodId,
-           // postType:res.response?.postType,
+            postType:res.response?.postType,
             journalEntriesDetail: this.fb.array([])
 
           });
@@ -432,10 +432,8 @@ export class AddEditJournalEntryComponent implements OnInit {
               this.cd.detectChanges()
             });
           })
-          
-          if(res.response?.postType==1){
           this.journalEntryForm.disable();
-          }
+          this.journalEntryForm.get('postType').enable();
           console.log(
             'this.journalEntryForm.value set value',
             this.journalEntryForm.value
@@ -460,7 +458,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
         next: (res: any) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntryPost");
           this.journalEntryForm.patchValue({
             code: res.response
           });
@@ -500,11 +498,11 @@ export class AddEditJournalEntryComponent implements OnInit {
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
-            this.onSave();
+            //this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add journalEntry';
-            this.definejournalEntryForm();
-            this.sharedServices.changeToolbarPath(this.toolbarPathData);
+         //   this.toolbarPathData.componentAdd = 'Add journalEntry';
+          //  this.definejournalEntryForm();
+         //   this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
@@ -552,7 +550,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.journalEntryForm.value;
+        var entity = this.journalEntryForm.getRawValue();
 
         this.journalEntryService.createJournalEntry(entity).subscribe({
           next: (result: any) => {
