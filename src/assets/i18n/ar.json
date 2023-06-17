@@ -225,6 +225,7 @@
         "vouchers": "السندات",
         "voucher": "السند",
         "journalEntry": "قيود محاسبية",
+        "journalEntryPost":" قيود محاسبية مرحلة" ,
         "journalEntry-information": "معلومات قيود محاسبية ",
         "reports":"التقارير",
         "budget-report":"تقرير قائمة المركز المالى",

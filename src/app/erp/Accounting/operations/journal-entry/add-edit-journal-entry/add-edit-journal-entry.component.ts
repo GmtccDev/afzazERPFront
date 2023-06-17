@@ -16,6 +16,7 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
+import { EntriesStatusArEnum, EntriesStatusEnum, EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -71,6 +72,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   serial: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
+  entriesStatusEnum: any;
   constructor(
     private journalEntryService: JournalEntryServiceProxy,
     private router: Router,
@@ -99,7 +101,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
-
+    this.getEntriesStatusEnum();
     if (this.currnetUrl == this.addUrl) {
       this.getjournalEntryCode();
     }
@@ -160,19 +162,37 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   codeSerial='';
   journal='';
+  onChangeCode(event)
+  {
+    if(this.serial=='2'){
+   
+      this.codeSerial= this.journal+"/"+this.journalEntryForm.controls['code'].value
+     }
+     if(this.serial=='3'){
+   
+      this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
+     }
+  }
   onChangeJournal(event) {
-   debugger
+   
    //this.journalEntryForm.controls['jEMasterStatusId'].value
    let journalModel = this.journalList.find(x => x.id == event);
    this.journal= this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
+   if(this.serial=='1'){
+   
+    this.codeSerial=this.journalEntryForm.controls['code'].value
+   }
    if(this.serial=='2'){
    
     this.codeSerial= this.journal+"/"+this.journalEntryForm.controls['code'].value
    }
-    
+   if(this.serial=='3'){
+   
+    this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
+   }
   }
   onChangefiscalPeriod(event) {
-    debugger
+    
      let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
      this.fiscalPeriod= this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
      if(this.serial=='3'){
@@ -225,6 +245,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       notes: null,
       journalId: ['', Validators.compose([Validators.required])],
       fiscalPeriodId: ['', Validators.compose([Validators.required])],
+      postType:null,
       journalEntriesDetail: this.fb.array([])
     });
     this.initGroup();
@@ -313,7 +334,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     const promise = new Promise<void>((resolve, reject) => {
       this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
-
+         
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
@@ -323,6 +344,7 @@ export class AddEditJournalEntryComponent implements OnInit {
             notes: res.response?.notes,
             journalId: res.response?.journalId,
             fiscalPeriodId: res.response?.fiscalPeriodId,
+            postType:res.response?.postType,
             journalEntriesDetail: this.fb.array([])
 
           });
@@ -347,7 +369,9 @@ export class AddEditJournalEntryComponent implements OnInit {
             }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
             ));
 
-
+            this.onChangeJournal(res.response?.journalId);
+            this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
+            this.onChangeCode(null);
             this.counter = element.jeDetailSerial;
           });
           this.totalCredit = 0;
@@ -420,6 +444,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           console.log('complete');
         },
       });
+      
     });
     return promise;
   }
@@ -832,6 +857,15 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.showCostCenterModal = true;
     this.index = i;
 
+  }
+  getEntriesStatusEnum() {
+    if (this.lang == 'en') {
+      this.entriesStatusEnum = convertEnumToArray(EntryStatusEnum);
+    }
+    else {
+      this.entriesStatusEnum = convertEnumToArray(EntryStatusArEnum);
+
+    }
   }
 }
 

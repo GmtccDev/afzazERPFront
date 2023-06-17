@@ -4,21 +4,21 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
-import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
+import { ITabulatorActionsSelected } from '../../../../../shared/interfaces/ITabulator-action-selected';
+import { MessageModalComponent } from '../../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
-import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import {JournalEntryServiceProxy} from '../../services/journal-entry'
+import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
+import {JournalEntryServiceProxy} from '../../../services/journal-entry'
 import format from 'date-fns/format';
 @Component({
-  selector: 'app-journal-entry',
-  templateUrl: './journal-entry.component.html',
-  styleUrls: ['./journal-entry.component.scss']
+  selector: 'app-journal-entry-post',
+  templateUrl: './journal-entry-post.component.html',
+  styleUrls: ['./journal-entry-post.component.scss']
 })
-export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
+export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
   journalEntry: any[] = [];

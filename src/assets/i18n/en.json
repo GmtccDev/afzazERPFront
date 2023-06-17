@@ -347,6 +347,7 @@
         "vouchers": "Vouchers",
         "voucher": "Voucher",
         "journalEntry": "Journal Entry",
+        "journalEntryPost": "Journal Entry Post",
         "journalEntry-information": "Journal Entry information",
         "reports":"Reports",
         "budget-report":"Budget Report",
@@ -427,7 +428,7 @@
 ,
 "journalEntry":{
        
-    "Open Balance": "Open Balance"
+    "openBalance": "Open Balance"
 },
 "account-classification":{
     "add-account-classification":"Add Account Classification",
