@@ -98,7 +98,9 @@ export class CurrencyServiceProxy {
     }
 
 
-
+    getCurrenciesTransactions(): Observable<any> {
+        return this.http.get<any>(this.baseUrl + "/api/Currency/get-ddl-currencies-transactions?");
+    }
 
 
 
