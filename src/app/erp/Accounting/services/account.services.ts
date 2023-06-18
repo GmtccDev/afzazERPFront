@@ -93,6 +93,10 @@ export class AccountServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/Account/delete", { params: params });
     }
-
+    checkAccount(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.get<any>(environment.apiUrl + "/api/Account/check", { params: params });
+    }
 }
 

@@ -20,6 +20,7 @@ import { SubscriptionService } from 'src/app/shared/components/layout/subscripti
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { AccountClassificationsArEnum, AccountClassificationsEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -87,10 +88,10 @@ export class AddEditAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private modelService: NgbModal,
     private cd: ChangeDetectorRef,
     public subscriptionService: SubscriptionService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private modalService: NgbModal,
 
   ) {
     this.defineaccountForm();
@@ -638,6 +639,14 @@ export class AddEditAccountComponent implements OnInit {
     this.accountForm.controls.costCenterId.setValue(event.id);
     this.showSearchModalCostCenter = false;
   }
+  showConfirmDeleteMessage(id) {
+    let sub = this.accountService.checkAccount(id).subscribe(
+      (resonse) => {
 
+        //reloadPage()
+       // this.getAccountes();
+
+      });
+  }
 }
 
