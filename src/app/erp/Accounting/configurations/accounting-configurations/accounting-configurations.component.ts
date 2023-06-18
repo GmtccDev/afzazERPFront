@@ -47,8 +47,12 @@ export class AccountingConfigurationsComponent implements OnInit {
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   cycleList: { nameAr: string; nameEn: string; value: string; }[];
   routeApi = 'Account/get-ddl?'
+  routeApiPeriod = 'FiscalPeriod/get-ddl?'
   accountList: any;
   showSearchModal: boolean;
+  accountingPeriodId: any;
+  showSearchModalAccountReceivables: boolean;
+  ListPeriod: any;
   constructor(private currencyService: CurrencyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private router: Router,
@@ -67,6 +71,7 @@ export class AccountingConfigurationsComponent implements OnInit {
     this.getCycle();
     this.getCurrencies();
     this.getAccount();
+    this.getAccountPeriod();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
  //   this.changePath();
@@ -86,6 +91,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   cycleSelected: string;
   currencyId:any;
   multiCurrency:any;
+  accountReceivablesId:any;
   serial:any;
   radioSelectedString: string;
   accountId:any;
@@ -103,6 +109,43 @@ export class AccountingConfigurationsComponent implements OnInit {
       { nameAr: ' مسودة – مرحل', nameEn: 'Draft  - carried over', value: '2' },
       { nameAr: "  مرحل  ", nameEn: 'carried over', value: '3' }
     ];
+  }
+ 
+  //#endregion
+
+  //#region ngOnDestroy
+  ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  getCurrencies() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.currencyService.getDdl().subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.currencyList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
@@ -130,23 +173,13 @@ export class AccountingConfigurationsComponent implements OnInit {
     });
 
   }
-  //#endregion
-
-  //#region ngOnDestroy
-  ngOnDestroy() {
-    this.subsList.forEach((s) => {
-      if (s) {
-        s.unsubscribe();
-      }
-    });
-  }
-  getCurrencies() {
+  getAccountPeriod() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.currencyService.getDdl().subscribe({
+      let sub = this.publicService.getDdl(this.routeApiPeriod).subscribe({
         next: (res) => {
 
           if (res.success) {
-            this.currencyList = res.response;
+            this.ListPeriod = res.response;
 
           }
 
@@ -188,9 +221,9 @@ export class AccountingConfigurationsComponent implements OnInit {
   //#region CRUD Operations
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(1,undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(5,undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
+debugger
           console.log(res);
           //let data =
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
@@ -205,6 +238,8 @@ export class AccountingConfigurationsComponent implements OnInit {
              this.serial=this.generalConfiguration.find(c=>c.id==3).value;
              this.cycleSelected=this.generalConfiguration.find(c=>c.id==4).value;
              this.accountId=this.generalConfiguration.find(c=>c.id==5).value;
+             this.accountReceivablesId=this.generalConfiguration.find(c=>c.id==6).value;
+             this.accountingPeriodId=Number(this.generalConfiguration.find(c=>c.id==7).value);
           }
 
 
@@ -286,11 +321,17 @@ export class AccountingConfigurationsComponent implements OnInit {
         else  if(s.id==5){
           s.value=this.accountId+"";
         }
+        else  if(s.id==6){
+          s.value=this.accountReceivablesId+"";
+        }
+        else  if(s.id==7){
+          s.value=this.accountingPeriodId+"";
+        }
         }
       });
               
         const promise = new Promise<void>((resolve, reject) => {
-          
+          debugger
           let item=new EditGeneralConfigurationCommand();
           item.generalConfiguration=this.generalConfiguration;
           this.generalConfigurationService.updateGeneralConfiguration(item).subscribe({
@@ -325,6 +366,11 @@ export class AccountingConfigurationsComponent implements OnInit {
     
     this.accountId=event.id;
     this.showSearchModal = false;
+  }
+  onSelectAccountReceivables(event) {
+    
+    this.accountReceivablesId=event.id;
+    this.showSearchModalAccountReceivables = false;
   }
   //#endregion
 }

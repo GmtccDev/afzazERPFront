@@ -4,6 +4,8 @@ import {AddEditVoucherComponent} from  'src/app/erp/Accounting/operations/vouche
 import {VouchersComponent} from  'src/app/erp/Accounting/operations/vouchers/vouchers.component';
 import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-entry/add-edit-journal-entry.component';
 import { JournalEntryComponent } from './journal-entry/journal-entry.component';
+import { JournalEntryPostComponent } from './journal-entry/journal-entry-post/journal-entry-post.component';
+import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journal-entry-post/add-edit-journal-entry-post.component';
 
 
 const routes: Routes = [
@@ -14,8 +16,11 @@ const routes: Routes = [
 			{ path: 'vouchers/add-voucher/:voucherTypeId', component: AddEditVoucherComponent },
 			{ path: 'vouchers/update-voucher/:voucherTypeId/:id', component: AddEditVoucherComponent },
 			{ path: 'journalEntry', component: JournalEntryComponent },
+			{ path: 'journalEntryPost', component: JournalEntryPostComponent },
 			{ path: 'journalEntry/add-journalEntry', component: AddEditJournalEntryComponent },
 			{ path: 'journalEntry/update-journalEntry/:id', component: AddEditJournalEntryComponent },
+			{ path: 'journalEntryPost/add-journalEntryPost', component: AddEditJournalEntryPostComponent },
+			{ path: 'journalEntryPost/update-journalEntryPost/:id', component: AddEditJournalEntryPostComponent },
 		
 		]
 	}

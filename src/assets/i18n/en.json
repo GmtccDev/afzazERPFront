@@ -347,12 +347,17 @@
         "vouchers": "Vouchers",
         "voucher": "Voucher",
         "journalEntry": "Journal Entry",
+        "journalEntryPost": "Journal Entry Post",
         "journalEntry-information": "Journal Entry information",
+        "journalEntryPost-information": "Journal Entry Post information",
         "reports":"Reports",
         "budget-report":"Budget Report",
         "analytical-budget-report":"Analytical Budget Report",
         "income-statement-report":"Income Statement Report",
-        "vouchers-transactions-report":"Vouchers Transactions Report"
+        "vouchers-transactions-report":"Vouchers Transactions Report",
+        "bankAccount":" Bank Account",
+        "bankAccount-information":"  Bank Account Information"
+
     },
     "language": {
         "ARABIC": "Arabic",
@@ -388,7 +393,8 @@
         "serial": "Serial",
         "cycle": "JE  Cycle ",
         "account": "closing account  ",
-        "endOfYear": "End Of Year"
+        "endOfYear": "End Of Year",
+        "accountReceivables":"Account Receivables"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -427,7 +433,7 @@
 ,
 "journalEntry":{
        
-    "Open Balance": "Open Balance"
+    "openBalance": "Open Balance"
 },
 "account-classification":{
     "add-account-classification":"Add Account Classification",

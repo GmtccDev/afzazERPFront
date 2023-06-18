@@ -90,6 +90,60 @@
        
     </div>
 </div>
+
+<br/>
+
+<div class="row">
+  <div class="col-md-6 col-6">
+      <label for="account" class="label-name">
+          {{'accounting-configration.accountReceivables'|translate}}
+  
+      </label>
+      <div class="">
+          <ng-select  style="width:100%"  [(ngModel)]="accountReceivablesId" name="accountReceivablesId">
+              <ng-option *ngFor="let account of accountList" [value]="account.id">
+                  {{lang=="ar"?account.nameAr:account.nameEn}}
+              </ng-option>
+              
+          </ng-select>
+  
+      </div>
+        
+      <div class="col-md-2 col-2">
+          <button
+            
+          class="btn btn-rounded btn-dark" (click)="showSearchModalAccountReceivables=true"
+          type="button"><i class="fa fa-search"></i></button>
+      </div>
+     
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6 col-6">
+      <label for="account" class="label-name">
+          {{'component-names.fiscalPeriod'|translate}}
+  
+      </label>
+      <div class="">
+          <ng-select  style="width:100%"  [(ngModel)]="accountingPeriodId" name="accountingPeriodId">
+              <ng-option *ngFor="let period of ListPeriod" [value]="period.id">
+                  {{lang=="ar"?period.nameAr:period.nameEn}}
+              </ng-option>
+              
+          </ng-select>
+  
+      </div>
+        
+     
+     
+  </div>
+</div>
 <app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
     (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchModalAccountReceivables" [routeApi]="routeApi"
+    (emitClose)="showSearchModalAccountReceivables = false;" (emitSearch)="onSelectAccountReceivables($event)">
 </app-public-search-modal>

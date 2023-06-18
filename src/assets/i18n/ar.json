@@ -225,12 +225,13 @@
         "vouchers": "السندات",
         "voucher": "السند",
         "journalEntry": "قيود محاسبية",
+        "journalEntryPost":" قيود محاسبية مرحلة" ,
         "journalEntry-information": "معلومات قيود محاسبية ",
-        "reports":"التقارير", 
+        "reports":"التقارير",
         "budget-report":"تقرير قائمة المركز المالى",
         "analytical-budget-report":"تقرير قائمة المركز المالى التوزيعى",
         "income-statement-report":"تقرير قائمة الدخل",
-        "vouchers-transactions-report":"تقرير حركة السندات" 
+        "vouchers-transactions-report":"تقرير حركة السندات"
 
     },
     "general": {
@@ -340,7 +341,9 @@
         "serial": "الترقيم",
         "cycle": "دورة القيد المالي",
         "account": "حساب اغلاق العام",
-        "endOfYear": "نهاية العام"
+        "endOfYear": "نهاية العام",
+        "accountReceivables":"حساب أوراق القبض"
+     
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",

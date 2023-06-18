@@ -4,33 +4,33 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
-import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
+import { ITabulatorActionsSelected } from '../../../../../shared/interfaces/ITabulator-action-selected';
+import { MessageModalComponent } from '../../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
-import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import {JournalEntryServiceProxy} from '../../services/journal-entry'
+import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
+import {JournalEntryServiceProxy} from '../../../services/journal-entry'
 import format from 'date-fns/format';
 @Component({
-  selector: 'app-journal-entry',
-  templateUrl: './journal-entry.component.html',
-  styleUrls: ['./journal-entry.component.scss']
+  selector: 'app-journal-entry-post',
+  templateUrl: './journal-entry-post.component.html',
+  styleUrls: ['./journal-entry-post.component.scss']
 })
-export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
+export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
   journalEntry: any[] = [];
   currnetUrl: any;
-  addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
-  updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
-  listUrl: string = '/accounting-operations/journalEntry';
+  addUrl: string = '/accounting-operations/journalEntryPost/add-journalEntryPost';
+  updateUrl: string = '/accounting-operations/journalEntryPost/update-journalEntryPost/';
+  listUrl: string = '/accounting-operations/journalEntryPost';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
-    addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.journalEntry"),
+    addPath: '',
+    componentList: this.translate.instant("component-names.journalEntryPost"),
     componentAdd: '',
 
   };
@@ -107,7 +107,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
           //   return res;
           // });
-          this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntryPost");
           if (res.success) {
             this.journalEntry = res.response.items
               ;
@@ -142,7 +142,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   edit(id: string) {
     this.router.navigate([
-      '/accounting-operations/journalEntry/update-journalEntry',
+      '/accounting-operations/journalEntryPost/update-journalEntryPost',
       id,
     ]);
   }
@@ -152,20 +152,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   showConfirmDeleteMessage(id) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.result.then((rs) => {
-      console.log(rs);
-      if (rs == 'Confirm') {
-        let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
-          (resonse) => {
-
-            //reloadPage()
-            this.getJournalEntryes();
-
-          });
-        this.subsList.push(sub);
-      }
-    });
+  
   }
   //#endregion
   //#region Tabulator
@@ -204,7 +191,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   menuOptions: SettingMenuShowOptions = {
-    showDelete: true,
+    showDelete: false,
     showEdit: true,
   };
 
@@ -224,12 +211,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   openJournalEntryes() { }
   onCheck(id) {
 
-    this.listIds.push(id);
-    this.sharedServices.changeButton({
-      action: 'Delete',
-      componentName: 'List',
-      submitMode: false
-    } as ToolbarData);
+   
   }
   onEdit(id) {
 
@@ -243,7 +225,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + id])
+      this.router.navigate(['accounting-operations/journalEntryPost/update-journalEntryPost/' + id])
     }
 
   }
@@ -260,10 +242,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + event.item.id])
+        this.router.navigate(['accounting-operations/journalEntryPost/update-journalEntryPost/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
-        this.showConfirmDeleteMessage(event.item.id);
+       // this.showConfirmDeleteMessage(event.item.id);
       }
     }
   }
@@ -285,10 +267,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           if (currentBtn.action == ToolbarActions.List) {
 
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.router.navigate([this.addUrl]);
+          //  this.router.navigate([this.addUrl]);
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
-            this.onDelete();
+           // this.onDelete();
           }
         }
       },

@@ -16,11 +16,13 @@ import { DateCalculation } from 'src/app/shared/services/date-services/date-calc
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { IncomingChequeComponent } from './incoming-cheque/incoming-cheque.component';
 import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incoming-cheque/add-edit-incoming-cheque.component';
+import { JournalEntryPostComponent } from './journal-entry/journal-entry-post/journal-entry-post.component';
+import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journal-entry-post/add-edit-journal-entry-post.component';
 
 
 @NgModule({
   declarations: [
-    AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent, IncomingChequeComponent, AddEditIncomingChequeComponent
+    AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent, IncomingChequeComponent, AddEditIncomingChequeComponent, JournalEntryPostComponent, AddEditJournalEntryPostComponent
 
     
   ],
