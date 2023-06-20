@@ -191,7 +191,7 @@ export class AddEditAccountComponent implements OnInit {
 
     this.subscriptionService.getLastSubscription().subscribe(
       next => {
-        
+
         if (next.success == true) {
 
           if (next.response != null) {
@@ -216,7 +216,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
           console.log(res);
@@ -227,11 +227,13 @@ export class AddEditAccountComponent implements OnInit {
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
 
-
-            this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
-            if (this.isMultiCurrency) {
-              this.getCurrency();
+            if (res.response.items.length>0) {
+              this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
+              if (this.isMultiCurrency) {
+                this.getCurrency();
+              }
             }
+
 
           }
 
@@ -563,7 +565,7 @@ export class AddEditAccountComponent implements OnInit {
 
     } else {
 
-        return this.accountForm.markAllAsTouched();
+      return this.accountForm.markAllAsTouched();
     }
   }
 
@@ -605,7 +607,7 @@ export class AddEditAccountComponent implements OnInit {
 
     else {
 
-       return this.accountForm.markAllAsTouched();
+      return this.accountForm.markAllAsTouched();
     }
   }
   getAccountType() {
@@ -623,7 +625,7 @@ export class AddEditAccountComponent implements OnInit {
     this.showSearchModalCompany = false;
   }
   onSelectAccount(event) {
-    
+
     this.accountForm.controls.parentId.setValue(event.id);
     this.showSearchModal = false;
   }
@@ -639,14 +641,20 @@ export class AddEditAccountComponent implements OnInit {
     this.accountForm.controls.costCenterId.setValue(event.id);
     this.showSearchModalCostCenter = false;
   }
-  showConfirmDeleteMessage(id) {
+  checkAccount(id) {
     let sub = this.accountService.checkAccount(id).subscribe(
       (resonse) => {
 
         //reloadPage()
-       // this.getAccountes();
+        // this.getAccountes();
 
       });
+  }
+  onChangeLeaf(event) {
+    
+    if (!event.target.checked && this.id) {
+      this.checkAccount(this.id);
+    }
   }
 }
 
