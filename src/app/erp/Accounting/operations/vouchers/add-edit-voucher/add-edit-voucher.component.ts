@@ -23,13 +23,14 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { formatDate, navigateUrl } from 'src/app/shared/helper/helper-url';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
+import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
 
 @Component({
   selector: 'app-add-edit-voucher',
   templateUrl: './add-edit-voucher.component.html',
   styleUrls: ['./add-edit-voucher.component.scss']
 })
-export class AddEditVoucherComponent implements OnInit,AfterViewInit {
+export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   //#region Main Declarations
   branchId: string = localStorage.getItem("branchId");
   companyId: string = localStorage.getItem("companyId");
@@ -48,6 +49,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
   showSearchCurrencyModal = false;
 
   enableMultiCurrencies: boolean = false;
+  mainCurrencyId: number;
   totalDebit: number = 0;
   totalCredit: number = 0;
   voucher: Voucher = new Voucher();
@@ -68,13 +70,15 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
   routeCostCenterApi = 'CostCenter/get-ddl?'
 
   cashAccountsList: any;
-//  costCenterAccountsList: any;
+  //  costCenterAccountsList: any;
   beneficiaryAccountsList: any;
   //costCenterAccountsInDetailList: any;
   currenciesList: any;
   currenciesListInDetail: any;
   costCentersList: any;
   costCentersInDetailsList: any;
+  currencyTransactionList: any;
+  filterCurrencyTransactionList: any;
 
   queryParams: any;
   voucherTypeId: any;
@@ -104,6 +108,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     private voucherService: VoucherServiceProxy,
     private voucherDetailsService: VoucherDetailsServiceProxy,
     private dateService: DateCalculation,
+    private currencyService: CurrencyServiceProxy,
 
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
@@ -134,9 +139,11 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     this.getBeneficiaryTypes();
     this.spinner.show();
     Promise.all([
-      this.getAccounts(),
+
       this.getCurrencies(),
-      this.getCostCenters()
+      this.getCurrenciesTransactions(),
+      this.getAccounts(),
+      this.getCostCenters(),
 
     ]).then(a => {
       this.spinner.hide();
@@ -151,7 +158,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
         this.voucherTypeId = params['voucherTypeId'];
         if (this.voucherTypeId) {
           this.getVoucherTypes(this.voucherTypeId);
-        
+
         }
       }
       if (params['id'] != null) {
@@ -178,8 +185,8 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
 
   //#endregion
   ngAfterViewInit(): void {
-    this.getGeneralConfigurations();
-
+    this.getGeneralConfigurationsOfMainCurrency();
+    this.getGeneralConfigurationsOfMultiCurrency();
   }
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -362,7 +369,32 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     });
     return promise;
   }
-  getGeneralConfigurations() {
+  getGeneralConfigurationsOfMainCurrency() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(1).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if (res.response.value > 0) {
+            this.mainCurrencyId = res.response.value;
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
+  getGeneralConfigurationsOfMultiCurrency() {
     debugger
     const promise = new Promise<void>((resolve, reject) => {
       debugger
@@ -370,9 +402,9 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
         next: (res: any) => {
           debugger
           console.log('result data getbyid', res);
+
           if (res.response.value == 'true') {
             this.enableMultiCurrencies = true;
-            // this.selectedVoucherDetail.currencyId=this.voucherForm.controls["currencyId"].value;
           }
 
 
@@ -415,8 +447,8 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
         next: (res) => {
 
           if (res.success) {
-            this.cashAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true && x.accountClassificationId==AccountClassificationsEnum.Cash);
-            this.beneficiaryAccountsList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true);
+            this.cashAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true && x.accountClassificationId == AccountClassificationsEnum.Cash);
+            this.beneficiaryAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
 
           }
 
@@ -436,6 +468,11 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     });
 
   }
+  getBeneficiaryAccountByType()
+  {
+    debugger
+    this.beneficiaryAccountsList=this.beneficiaryAccountsList.find(x=>x.accountClassificationId==this.selectedVoucherDetail.beneficiaryTypeId)
+  }
   getCurrencies() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
@@ -443,6 +480,31 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
           if (res.success) {
             this.currenciesList = res.response;
             this.currenciesListInDetail = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCurrenciesTransactions() {
+    debugger
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.currencyService.getCurrenciesTransactions().subscribe({
+        next: (res) => {
+          if (res.success) {
+            debugger
+            this.currencyTransactionList = res.response;
 
           }
           resolve();
@@ -484,7 +546,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     });
 
   }
-  openCurrencySearchDialog(i = -1) {
+  openCurrencySearchDialog(i) {
     debugger
     let searchTxt = '';
     if (i == -1) {
@@ -505,9 +567,22 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
       if (i == -1) {
         this.selectedVoucherDetail!.currencyNameAr = data[0].nameAr;
         this.selectedVoucherDetail!.currencyId = data[0].id;
+        debugger
+        if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
+          debugger
+          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
+          this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+          this.getValueAfterConversion();
+        }
       } else {
         this.voucherDetail[i].currencyNameAr = data[0].nameAr;
         this.voucherDetail[i].currencyId = data[0].id;
+        if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
+          debugger
+          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
+          this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+          this.getAddedValueAfterConversion(i);
+        }
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
@@ -520,9 +595,23 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
             if (i == -1) {
               this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
               this.selectedVoucherDetail!.currencyId = d.id;
+              if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
+                debugger
+                this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
+                this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+                this.getValueAfterConversion();
+
+              }
             } else {
+              debugger
               this.voucherDetail[i].currencyNameAr = d.nameAr;
               this.voucherDetail[i].currencyId = d.id;
+              if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
+                debugger
+                this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
+                this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+                this.getAddedValueAfterConversion(i);
+              }
             }
           }
         });
@@ -530,7 +619,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     }
 
   }
-  openBeneficiaryAccountSearchDialog(i = -1) {
+  openBeneficiaryAccountSearchDialog(i) {
     debugger
     let searchTxt = '';
     if (i == -1) {
@@ -576,7 +665,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     }
 
   }
-  openCostCenterSearchDialog(i = -1) {
+  openCostCenterSearchDialog(i) {
     debugger
     let searchTxt = '';
     if (i == -1) {
@@ -703,7 +792,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     debugger
     this.voucher.voucherDetail = this.voucherDetail;
 
-   
+
   }
   clearSelectedItemData() {
     this.selectedVoucherDetail = {
@@ -761,7 +850,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     if (this.voucherForm.valid) {
       this.spinnerService.show();
       this.setInputData();
-       this.voucher.voucherDate=this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
+      this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
       const promise = new Promise<void>((resolve, reject) => {
 
         this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
@@ -811,7 +900,7 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
     if (this.voucherForm.valid) {
       this.spinnerService.show();
       this.setInputData();
-      this.voucher.voucherDate=this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
+      this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
 
       const promise = new Promise<void>((resolve, reject) => {
 
@@ -889,17 +978,15 @@ export class AddEditVoucherComponent implements OnInit,AfterViewInit {
   getVoucherDate(selectedDate: DateModel) {
     this.voucherDate = selectedDate;
   }
-  getValueAfterConversion()
-  {
-    this.selectedVoucherDetail.debitAfterConversion=Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor); 
-    this.selectedVoucherDetail.creditAfterConversion=Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor); 
+  getValueAfterConversion() {
+    this.selectedVoucherDetail.debitAfterConversion = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
+    this.selectedVoucherDetail.creditAfterConversion = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
 
-  
+
   }
-  getAddedValueAfterConversion(i:any)
-  {
-    this.voucherDetail[i].debitAfterConversion=Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor); 
-    this.voucherDetail[i].creditAfterConversion=Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor); 
+  getAddedValueAfterConversion(i: any) {
+    this.voucherDetail[i].debitAfterConversion = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
+    this.voucherDetail[i].creditAfterConversion = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
   }
 }
