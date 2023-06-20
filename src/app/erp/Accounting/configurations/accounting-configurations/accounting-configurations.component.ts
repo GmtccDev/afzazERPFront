@@ -53,6 +53,8 @@ export class AccountingConfigurationsComponent implements OnInit {
   accountingPeriodId: any;
   showSearchModalAccountReceivables: boolean;
   ListPeriod: any;
+  accountExchangeId: any;
+  showSearchModalAccountExchange: boolean;
   constructor(private currencyService: CurrencyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private router: Router,
@@ -240,6 +242,7 @@ debugger
              this.accountId=this.generalConfiguration.find(c=>c.id==5).value;
              this.accountReceivablesId=this.generalConfiguration.find(c=>c.id==6).value;
              this.accountingPeriodId=Number(this.generalConfiguration.find(c=>c.id==7).value);
+             this.accountExchangeId=this.generalConfiguration.find(c=>c.id==8).value;
           }
 
 
@@ -327,6 +330,9 @@ debugger
         else  if(s.id==7){
           s.value=this.accountingPeriodId+"";
         }
+        else  if(s.id==8){
+          s.value=this.accountExchangeId+"";
+        }
         }
       });
               
@@ -371,6 +377,11 @@ debugger
     
     this.accountReceivablesId=event.id;
     this.showSearchModalAccountReceivables = false;
+  }
+  onSelectAccountExchange(event) {
+    
+    this.accountExchangeId=event.id;
+    this.showSearchModalAccountExchange = false;
   }
   //#endregion
 }
