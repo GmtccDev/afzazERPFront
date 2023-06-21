@@ -611,7 +611,7 @@ export class AddEditAccountComponent implements OnInit {
   getAccountType() {
     this.accountTypeList = [
       { nameAr: 'قائمة الدخل', nameEn: 'Income Statement', value: 1 },
-      { nameAr: 'قائمة المركز المالى', nameEn: 'Budget', value: 2 }
+      { nameAr: 'الميزانية', nameEn: 'Budget', value: 2 }
     ];
     this.budgetList = [
       { nameAr: ' الأصول ', nameEn: 'Assets', value: 1 },

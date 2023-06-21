@@ -7,6 +7,9 @@ import { UserLoginService } from '../../services/user-login-service'
 import { CompanyServiceProxy } from '../../../master-codes/services/company.service';
 import { BranchServiceProxy } from '../../../master-codes/services/branch.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 
 @Component({
   selector: 'app-login-company',
@@ -30,10 +33,15 @@ export class LoginCompanyComponent implements OnInit {
   currentSystemLanguage = 'en';
   companiesList: any;
   branchesList: any;
+  facialPeriodId:any;
+  fromDateOfFacialPeriod: any;
+  toDateOfFacialPeriod: any;
   // public authService: AuthService,
   constructor(private fb: FormBuilder, public authService: UserLoginService,
     private modelService: NgbModal,
-    
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private dateConverterService: DateConverterService,
      public router: Router,  private userService: UserService,private translate:TranslateService) {
       
       this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
@@ -142,6 +150,7 @@ this.loginForm.value.password=this.password;
           localStorage.setItem("userName",decodedJwtData.fullName)
           localStorage.setItem("branchId",this.loginForm.value.branchId)
           localStorage.setItem("companyId",this.loginForm.value.companyId)
+         // this.getGeneralConfigurationsOfAccountingPeriod()
           this.modelService.dismissAll();
           if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
             window.location.replace('authentication/add-password?email='+next.response.user.email);
@@ -171,5 +180,58 @@ this.loginForm.value.password=this.password;
   changeLanguage(language: string) {
     this.userService.setLanguage(language);
     window.location.reload();
+  }
+  getGeneralConfigurationsOfAccountingPeriod() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if (res.response.value > 0) {
+            debugger
+            this.facialPeriodId = res.response.value;
+            this.getfiscalPeriodById(this.facialPeriodId);
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
+  getfiscalPeriodById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          this.fromDateOfFacialPeriod=this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.toDateOfFacialPeriod=this.dateConverterService.getDateForCalender(res.response.toDate);
+          localStorage.setItem("fromDateOfFacialPeriod",this.fromDateOfFacialPeriod)
+          localStorage.setItem("toDateOfFacialPeriod",this.toDateOfFacialPeriod)
+
+          //formatDate(Date.parse(res.response.fromDate)),
+         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+
+        
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
   }
 }

@@ -9,6 +9,8 @@ import { DateConverterService } from 'src/app/shared/services/date-services/date
 import {NgbdModalContent} from 'src/app/shared/components/modal/modal-component'
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 
 @Component({
   selector: 'app-income-statement-report',
@@ -18,6 +20,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+  facialPeriodId:any;
+
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
@@ -42,8 +46,9 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     private reportService: ReportServiceProxy,
     private sharedServices: SharedService,
     private dateConverterService: DateConverterService,
-    private translate: TranslateService
-
+    private translate: TranslateService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
   ) {
    
   }
@@ -64,7 +69,8 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
  //#region ngAfterViewInit
   ngAfterViewInit(): void {
 
-    
+    this.getGeneralConfigurationsOfAccountingPeriod()
+
 
   }
   //#endregion
@@ -87,7 +93,7 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     let monthTo;
 
     if (this.fromDate == undefined || this.fromDate == null) {
-      this.fromDate = this.dateConverterService.getCurrentDate();
+    //  this.fromDate = this.dateConverterService.getCurrentDate();
       monthFrom = Number(this.fromDate.month + 1)
       this.fromDate = (this.fromDate.year+'-'+ monthFrom + "-" + this.fromDate.day).toString();
     }
@@ -99,7 +105,7 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     }
 
     if (this.toDate == undefined || this.toDate == null) {
-      this.toDate = this.dateConverterService.getCurrentDate();
+    //  this.toDate = this.dateConverterService.getCurrentDate();
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo+ "-" + this.toDate.day).toString();
 
@@ -109,31 +115,31 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-    if (this.accountGroupId == null || this.accountGroupId == undefined) {
-      this.accountGroupId = 0;
-    }
-    if (this.mainAccountId == null || this.mainAccountId == undefined) {
-      this.mainAccountId = 0;
-    }
-    if (this.leafAccountId == null || this.leafAccountId == undefined) {
-      this.leafAccountId = 0;
-    }
-    if (this.costCenterId == null || this.costCenterId == undefined) {
-      this.costCenterId = 0;
-    }
+    // if (this.accountGroupId == null || this.accountGroupId == undefined) {
+    //   this.accountGroupId = 0;
+    // }
+    // if (this.mainAccountId == null || this.mainAccountId == undefined) {
+    //   this.mainAccountId = 0;
+    // }
+    // if (this.leafAccountId == null || this.leafAccountId == undefined) {
+    //   this.leafAccountId = 0;
+    // }
+    // if (this.costCenterId == null || this.costCenterId == undefined) {
+    //   this.costCenterId = 0;
+    // }
     if (this.entriesStatusId == null || this.entriesStatusId == undefined) {
       this.entriesStatusId = 0;
     }
     if (this.level == null || this.level == undefined) {
-      this.level = 0;
+      this.level = 1;
     }
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate +
-      "&reportParameter=accountGroupId!" + this.accountGroupId +
-      "&reportParameter=mainAccountId!" + this.mainAccountId +
-      "&reportParameter=leafAccountId!" + this.leafAccountId +
-      "&reportParameter=costCenterId!" + this.costCenterId +
+      // "&reportParameter=accountGroupId!" + this.accountGroupId +
+      // "&reportParameter=mainAccountId!" + this.mainAccountId +
+      // "&reportParameter=leafAccountId!" + this.leafAccountId +
+      // "&reportParameter=costCenterId!" + this.costCenterId +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
       "&reportParameter=level!" + this.level 
     debugger
@@ -150,29 +156,21 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean,ShowAccountGroup:boolean,ShowMainAccount:boolean,ShowLeafAccount:boolean,ShowCostCenter,ShowEntriesStatus,ShowLevel
+    ShowSearch: boolean,ShowEntriesStatus,ShowLevel
   } = {
     ShowFromDate: true, ShowToDate: true,
     ShowSearch: false,
-    ShowAccountGroup: true,
-    ShowMainAccount:true,
-    ShowLeafAccount:true,
-    ShowCostCenter:true,
     ShowEntriesStatus:true,
     ShowLevel:true
   }
 
   OnFilter(e: {
-    fromDate, toDate,accountGroupId,mainAccountId,leafAccountId,costCenterId,entriesStatusId,level
+    fromDate, toDate,entriesStatusId,level
   }) {
   
     
       this.fromDate = e.fromDate,
       this.toDate = e.toDate,
-      this.accountGroupId=e.accountGroupId
-      this.mainAccountId=e.mainAccountId
-      this.leafAccountId=e.leafAccountId
-      this.costCenterId=e.costCenterId
       this.entriesStatusId=e.entriesStatusId
       this.level=e.level
   }
@@ -198,5 +196,55 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     });
     this.subsList.push(sub);
   }
+  getGeneralConfigurationsOfAccountingPeriod() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if (res.response.value > 0) {
+            debugger
+            this.facialPeriodId = res.response.value;
+            this.getfiscalPeriodById(this.facialPeriodId);
+          }
 
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
+  getfiscalPeriodById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          this.fromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.toDate=this.dateConverterService.getDateForCalender(res.response.toDate);
+
+          //formatDate(Date.parse(res.response.fromDate)),
+         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+
+        
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+  }
 }

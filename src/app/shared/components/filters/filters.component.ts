@@ -7,6 +7,8 @@ import { DateConverterService } from 'src/app/shared/services/date-services/date
 import { PublicService } from '../../services/public.service';
 import { ICustomEnum } from '../../interfaces/ICustom-enum';
 import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray } from '../../constants/enumrators/enums';
+import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 
 
 @Component({
@@ -22,7 +24,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   enableFilters: boolean = false;
   lang = localStorage.getItem("language")
   selectedAccountGroupId: any;
-  level:any;
+  level:any=1;
   accountGroupList: any;
   routeAccountGroupApi = "AccountGroup/get-ddl?"
 
@@ -51,7 +53,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedVoucherId: any;
   vouchersList: any;
   routeVoucherApi = "Voucher/get-ddl?"
-
+  facialPeriodId:any;
   @Output() OnFilter: EventEmitter<{
 
     fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId, voucherId,level
@@ -86,6 +88,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     private sharedServices: SharedService,
     private dateConverterService: DateConverterService,
     private publicService: PublicService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 
     private spinner: NgxSpinnerService) {
     this.GetData();
@@ -99,12 +103,19 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.getLanguage();
     //this.GetData();
+    this.getGeneralConfigurationsOfAccountingPeriod()
+    debugger
+  
+
 
   }
   ngAfterViewInit(): void {
-    debugger;
-    this.selectedFromDate = this.dateConverterService.getCurrentDate();
-    this.selectedToDate = this.dateConverterService.getCurrentDate();
+    debugger
+    //this.selectedFromDate=this.dateConverterService.getDateForCalender(localStorage.getItem("fromDateOfFacialPeriod"))
+    debugger
+   // this.selectedToDate=this.dateConverterService.getDateForCalender(localStorage.getItem("toDateOfFacialPeriod"))
+   // this.selectedFromDate = this.dateConverterService.getCurrentDate();
+   // this.selectedToDate = this.dateConverterService.getCurrentDate();
   }
   ngOnDestroy() {
     this.subsList.forEach(s => {
@@ -154,7 +165,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (res) => {
 
           if (res.success) {
-            debugger
+            
             this.accountGroupList = res.response;
 
           }
@@ -224,7 +235,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getAccountsByAccountGroup()
   {
-    debugger
+    
     if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
         this.mainAccountsList = this.mainAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
         this.leafAccountsList = this.leafAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
@@ -239,7 +250,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
  }
  getLeafAccountsByMainAccount()
  {
-   debugger
+   
    if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
        this.leafAccountsList = this.leafAccountsList.filter(x => x.parentId == this.selectedMainAccountId);
 
@@ -353,13 +364,64 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
+  getGeneralConfigurationsOfAccountingPeriod() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if (res.response.value > 0) {
+            debugger
+            this.facialPeriodId = res.response.value;
+            this.getfiscalPeriodById(this.facialPeriodId);
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
+  getfiscalPeriodById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          this.selectedFromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.selectedToDate=this.dateConverterService.getDateForCalender(res.response.toDate);
+
+          //formatDate(Date.parse(res.response.fromDate)),
+         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+
+        
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+  }
   FireSearch() {
     debugger
     if (!this.selectedFromDate) {
-      this.selectedFromDate = this.dateConverterService.getCurrentDate();
+    //  this.selectedFromDate = this.dateConverterService.getCurrentDate();
     }
     if (!this.selectedToDate) {
-      this.selectedToDate = this.dateConverterService.getCurrentDate();
+    //  this.selectedToDate = this.dateConverterService.getCurrentDate();
     }
     this.OnFilter.emit({
 

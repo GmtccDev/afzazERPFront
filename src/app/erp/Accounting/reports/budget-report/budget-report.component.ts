@@ -9,7 +9,8 @@ import { DateConverterService } from 'src/app/shared/services/date-services/date
 import {NgbdModalContent} from 'src/app/shared/components/modal/modal-component'
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
-
+import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 @Component({
   selector: 'app-budget-report',
   templateUrl: './budget-report.component.html',
@@ -18,9 +19,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+
+  facialPeriodId:any;
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
+  entriesStatusId:any;
+  level:any;
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
@@ -34,7 +39,9 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
     private reportService: ReportServiceProxy,
     private sharedServices: SharedService,
     private dateConverterService: DateConverterService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 
 
   ) {
@@ -46,7 +53,6 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-   debugger
    
    this.sharedServices.changeButton({ action: 'Report' } as ToolbarData);
    this.listenToClickedButton();
@@ -55,11 +61,64 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+debugger
+    this.getGeneralConfigurationsOfAccountingPeriod()
+   //this.fromDate=this.dateConverterService.getDateForCalender(localStorage.getItem("fromDateOfFacialPeriod"));
+   debugger
+   //this.toDate=this.dateConverterService.getDateForCalender(localStorage.getItem("toDateOfFacialPeriod"));
+  
+  }
+  getGeneralConfigurationsOfAccountingPeriod() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if (res.response.value > 0) {
+            debugger
+            this.facialPeriodId = res.response.value;
+            this.getfiscalPeriodById(this.facialPeriodId);
+          }
 
-   
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
 
   }
+  getfiscalPeriodById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          this.fromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.toDate=this.dateConverterService.getDateForCalender(res.response.toDate);
 
+          //formatDate(Date.parse(res.response.fromDate)),
+         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+
+        
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+  }
 
   //#endregion
 
@@ -75,12 +134,12 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   gotoViewer() {
  
-    debugger
+    
     let monthFrom;
     let monthTo;
 
     if (this.fromDate == undefined || this.fromDate == null) {
-      this.fromDate = this.dateConverterService.getCurrentDate();
+      // this.fromDate = this.dateConverterService.getCurrentDate();
       monthFrom = Number(this.fromDate.month + 1)
       this.fromDate = (this.fromDate.year+'-'+ monthFrom + "-" + this.fromDate.day).toString();
     }
@@ -92,7 +151,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (this.toDate == undefined || this.toDate == null) {
-      this.toDate = this.dateConverterService.getCurrentDate();
+      // this.toDate = this.dateConverterService.getCurrentDate();
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo+ "-" + this.toDate.day).toString();
 
@@ -102,10 +161,17 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-
+    if (this.entriesStatusId == null || this.entriesStatusId == undefined) {
+      this.entriesStatusId = 0;
+    }
+    if (this.level == null || this.level == undefined) {
+      this.level = 1;
+    }
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
-      "&reportParameter=toDate!" + this.toDate
+      "&reportParameter=toDate!" + this.toDate+
+      "&reportParameter=entriesStatusId!" + this.entriesStatusId +
+      "&reportParameter=level!" + this.level 
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -120,21 +186,23 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean
+    ShowSearch: boolean,ShowEntriesStatus:boolean,ShowLevel:boolean
   } = {
       
       ShowFromDate: true, ShowToDate: true
-      , ShowSearch: false
+      , ShowSearch: false,ShowEntriesStatus:true,ShowLevel:true
       
     }
 
   OnFilter(e: {
-    fromDate, toDate
+    fromDate, toDate,entriesStatusId,level
   }) {
-    debugger
+    
     
       this.fromDate = e.fromDate,
-      this.toDate = e.toDate
+      this.toDate = e.toDate,
+      this.entriesStatusId=e.entriesStatusId,
+      this.level=e.level 
 
   }
 
@@ -143,7 +211,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       next: (currentBtn: ToolbarData) => {
         currentBtn;
         if (currentBtn != null) {
-          debugger
+          
           if (currentBtn.action == ToolbarActions.View) {
             this.gotoViewer();
 
