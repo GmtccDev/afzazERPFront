@@ -424,6 +424,7 @@
     "voucher": {
         "voucher-information": "Voucher Information",
         "voucher-total": "Voucher Total",
+        "voucher-total-local": "Voucher Total Local",
         "voucher-details-required":"Voucher Details is required",
         "add-voucher":"Add Voucher",
         "update-voucher":"Update Voucher",

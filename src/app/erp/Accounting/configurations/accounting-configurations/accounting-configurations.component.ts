@@ -221,7 +221,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   //#region CRUD Operations
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5,undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(undefined,undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 debugger
           console.log(res);
@@ -238,8 +238,8 @@ debugger
              this.serial=this.generalConfiguration.find(c=>c.id==3).value;
              this.cycleSelected=this.generalConfiguration.find(c=>c.id==4).value;
              this.accountId=this.generalConfiguration.find(c=>c.id==5).value;
-             this.accountReceivablesId=this.generalConfiguration.find(c=>c.id==6).value;
-             this.accountingPeriodId=Number(this.generalConfiguration.find(c=>c.id==7).value);
+             this.accountingPeriodId=Number(this.generalConfiguration.find(c=>c.id==6).value);
+             this.accountReceivablesId=this.generalConfiguration.find(c=>c.id==7).value;
           }
 
 
@@ -322,10 +322,10 @@ debugger
           s.value=this.accountId+"";
         }
         else  if(s.id==6){
-          s.value=this.accountReceivablesId+"";
+          s.value=this.accountingPeriodId+"";
         }
         else  if(s.id==7){
-          s.value=this.accountingPeriodId+"";
+          s.value=this.accountReceivablesId+"";
         }
         }
       });

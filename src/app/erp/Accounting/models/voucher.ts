@@ -10,6 +10,7 @@ export class Voucher {
     currencyId: number;
     description: string;
     voucherTotal: number;
+    voucherTotalLocal: number;
     voucherDetail:VoucherDetail[]=[];
 
 
@@ -21,8 +22,8 @@ export class VoucherDetail {
     credit: number;
     currencyId: number;
     currencyConversionFactor: number|undefined;
-    debitAfterConversion: number|undefined;
-    creditAfterConversion: number | undefined;
+    debitLocal: number|undefined;
+    creditLocal: number | undefined;
     beneficiaryTypeId: number;
     beneficiaryAccountId: number;
     description: string;
