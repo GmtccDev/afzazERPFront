@@ -47,8 +47,6 @@
                                                     [selectedDate]="voucherDate"
                                                     (OnDateSelect)="getVoucherDate($event)"></app-full-date>
 
-                                                <!-- <input type="date" class="form-control " name="voucherDate"
-                                                    formControlName="voucherDate">  -->
                                                 <div *ngIf="(f['voucherDate'].touched || f['voucherDate'].dirty ) && f['voucherDate'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
