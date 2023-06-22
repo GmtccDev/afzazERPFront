@@ -231,7 +231,8 @@
         "budget-report":"تقرير الميزانية",
         "analytical-budget-report":"تقرير الميزانية التوزيعى",
         "income-statement-report":"تقرير قائمة الدخل",
-        "vouchers-transactions-report":"تقرير حركة السندات"
+        "vouchers-transactions-report":"تقرير حركة السندات",
+        "close-fiscal-period":"اغلاق الفترة المحاسبية"
 
     },
     "general": {

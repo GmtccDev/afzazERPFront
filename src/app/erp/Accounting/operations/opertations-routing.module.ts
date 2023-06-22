@@ -6,6 +6,7 @@ import { AddEditJournalEntryComponent } from './journal-entry/add-edit-journal-e
 import { JournalEntryComponent } from './journal-entry/journal-entry.component';
 import { JournalEntryPostComponent } from './journal-entry/journal-entry-post/journal-entry-post.component';
 import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journal-entry-post/add-edit-journal-entry-post.component';
+import { CloseFiscalPeriodComponent } from './close-fiscal-period/close-fiscal-period.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,8 @@ const routes: Routes = [
 			{ path: 'journalEntry/update-journalEntry/:id', component: AddEditJournalEntryComponent },
 			{ path: 'journalEntryPost/add-journalEntryPost', component: AddEditJournalEntryPostComponent },
 			{ path: 'journalEntryPost/update-journalEntryPost/:id', component: AddEditJournalEntryPostComponent },
+			{ path: 'closeFiscalPeriod', component: CloseFiscalPeriodComponent },
+
 		
 		]
 	}
