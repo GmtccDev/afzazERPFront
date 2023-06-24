@@ -63,6 +63,7 @@ export class NavService implements OnInit, OnDestroy {
 this.voucherTypes.push(
 	{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 	{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
+	{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
 
 ) 
 this.setScreenWidth(window.innerWidth);
@@ -215,8 +216,10 @@ this.setScreenWidth(window.innerWidth);
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'Operations', active: false, children:
-				this.voucherTypes,
-		
+			    this.voucherTypes,
+				// [
+				// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
+				// ]		
 		
 	          
 
@@ -224,7 +227,6 @@ this.setScreenWidth(window.innerWidth);
 		{
 			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'Reports', active: false, children: [
 				{ path: '/accounting-reports/budgetReport', title: this.translate.instant("component-names.budget-report"), type: 'link', active: true },
-				{ path: '/accounting-reports/analyticalBudgetReport', title: this.translate.instant("component-names.analytical-budget-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/incomeStatementReport', title: this.translate.instant("component-names.income-statement-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/vouchersTransactionsReport', title: this.translate.instant("component-names.vouchers-transactions-report"), type: 'link', active: true },
 

@@ -18,12 +18,13 @@ import { IncomingChequeComponent } from './incoming-cheque/incoming-cheque.compo
 import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incoming-cheque/add-edit-incoming-cheque.component';
 import { JournalEntryPostComponent } from './journal-entry/journal-entry-post/journal-entry-post.component';
 import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journal-entry-post/add-edit-journal-entry-post.component';
+import { CloseFiscalPeriodComponent } from './close-fiscal-period/close-fiscal-period.component';
 
 
 @NgModule({
   declarations: [
     AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent, IncomingChequeComponent, AddEditIncomingChequeComponent, JournalEntryPostComponent, AddEditJournalEntryPostComponent
-
+    ,CloseFiscalPeriodComponent
     
   ],
   imports: [

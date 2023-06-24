@@ -228,10 +228,11 @@
         "journalEntryPost":" قيود محاسبية مرحلة" ,
         "journalEntry-information": "معلومات قيود محاسبية ",
         "reports":"التقارير",
-        "budget-report":"تقرير قائمة المركز المالى",
-        "analytical-budget-report":"تقرير قائمة المركز المالى التوزيعى",
+        "budget-report":"تقرير الميزانية",
+        "analytical-budget-report":"تقرير الميزانية التوزيعى",
         "income-statement-report":"تقرير قائمة الدخل",
-        "vouchers-transactions-report":"تقرير حركة السندات"
+        "vouchers-transactions-report":"تقرير حركة السندات",
+        "close-fiscal-period":"اغلاق الفترة المحاسبية"
 
     },
     "general": {
@@ -362,7 +363,7 @@
         "taxNumber": "الرقم الضريبي",
         "account-classification":"تصنيف الحساب",
         "account-classification-income-statement":"تصنيف الحساب (قائمة الدخل)",
-        "budget":"قائمة المركز المالى"
+        "budget":"الميزانية"
     },
     "error": {
         "phoneValidation": "The phone number is invalid",
@@ -406,6 +407,7 @@
      "voucher":{
         "voucher-information":"بيانات السند",
         "voucher-total":"أجمالى قيمة السند",
+        "voucher-total-local":"أجمالى قيمة السند محلى",
         "voucher-details-required":"من فضلك أدخل تفاصيل السند",
         "add-voucher":"اضافة سند",
         "update-voucher":"تحديث السند",

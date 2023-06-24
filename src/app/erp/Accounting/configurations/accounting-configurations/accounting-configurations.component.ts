@@ -223,7 +223,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   //#region CRUD Operations
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5,undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(undefined,undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 debugger
           console.log(res);
@@ -325,10 +325,10 @@ debugger
           s.value=this.accountId+"";
         }
         else  if(s.id==6){
-          s.value=this.accountReceivablesId+"";
+          s.value=this.accountingPeriodId+"";
         }
         else  if(s.id==7){
-          s.value=this.accountingPeriodId+"";
+          s.value=this.accountReceivablesId+"";
         }
         else  if(s.id==8){
           s.value=this.accountExchangeId+"";

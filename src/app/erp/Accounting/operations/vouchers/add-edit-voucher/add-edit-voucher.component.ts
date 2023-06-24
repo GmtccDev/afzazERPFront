@@ -50,8 +50,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   enableMultiCurrencies: boolean = false;
   mainCurrencyId: number;
-  totalDebit: number = 0;
-  totalCredit: number = 0;
+  totalDebitLocal: number = 0;
+  totalCreditLocal: number = 0;
   voucher: Voucher = new Voucher();
   voucherDetail: VoucherDetail[] = [];
   _voucherDetail: VoucherDetail = new VoucherDetail();
@@ -223,7 +223,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       costCenterId: '',
       currencyId: REQUIRED_VALIDATORS,
       description: '',
-      voucherTotal: REQUIRED_VALIDATORS
+      voucherTotal: REQUIRED_VALIDATORS,
+      voucherTotalLocal: REQUIRED_VALIDATORS
+
 
     });
     this.voucherDate = this.dateService.getCurrentDate();
@@ -291,6 +293,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
             currencyId: res.response?.currencyId,
             description: res.response?.description,
             voucherTotal: res.response?.voucherTotal,
+            voucherTotalLocal: res.response?.voucherTotalLocal,
 
           });
 
@@ -339,8 +342,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
                 credit: element.credit,
                 currencyId: element.currencyId,
                 currencyConversionFactor: element.currencyConversionFactor,
-                debitAfterConversion: element.debitAfterConversion,
-                creditAfterConversion: element.creditAfterConversion,
+                debitLocal: element.debitLocal,
+                creditLocal: element.creditLocal,
                 beneficiaryTypeId: element.beneficiaryTypeId,
                 beneficiaryAccountId: element.beneficiaryAccountId,
                 description: element.description,
@@ -743,8 +746,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       credit: this.selectedVoucherDetail?.credit ?? 0,
       currencyId: this.selectedVoucherDetail?.currencyId ?? 0,
       currencyConversionFactor: this.selectedVoucherDetail?.currencyConversionFactor ?? 0,
-      debitAfterConversion: this.selectedVoucherDetail?.debitAfterConversion ?? 0,
-      creditAfterConversion: this.selectedVoucherDetail?.creditAfterConversion ?? 0,
+      debitLocal: this.selectedVoucherDetail?.debitLocal ?? 0,
+      creditLocal: this.selectedVoucherDetail?.creditLocal ?? 0,
       beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
       beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       description: this.selectedVoucherDetail?.description ?? '',
@@ -759,13 +762,37 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucher!.voucherDetail = this.voucherDetail;
 
 
-    this.totalDebit += this.selectedVoucherDetail?.debitAfterConversion ?? 0;
-    this.totalCredit += this.selectedVoucherDetail?.creditAfterConversion ?? 0;
+    this.totalDebitLocal += this.selectedVoucherDetail?.debitLocal ?? 0;
+    this.totalCreditLocal += this.selectedVoucherDetail?.creditLocal ?? 0;
+    let currencyConversionFactor;
     if (this.voucherkindId == 1) {
-      this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
+      //here
+      this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
+      if (this.currencyId != this.mainCurrencyId) {
+        debugger
+        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
+       
+        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+       this.voucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal * currencyConversionFactor)
+      }
+      else
+      {
+        this.voucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal)
+      }
     }
     if (this.voucherkindId == 2) {
-      this.voucherForm.controls["voucherTotal"].setValue(this.totalCredit)
+      this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
+      if (this.currencyId != this.mainCurrencyId) {
+        debugger
+        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
+       
+        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+       this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal * currencyConversionFactor)
+      }
+      else
+      {
+        this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
+      }
     }
 
     this.clearSelectedItemData();
@@ -773,13 +800,36 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   }
   deleteItem(index) {
     debugger
-    this.totalDebit = this.totalDebit - this.voucherDetail[index]?.debitAfterConversion ?? 0;
-    this.totalCredit = this.totalDebit - this.voucherDetail[index]?.creditAfterConversion ?? 0;
+    this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
+    this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
+    let currencyConversionFactor;
     if (this.voucherkindId == 1) {
-      this.voucherForm.controls["voucherTotal"].setValue(this.totalDebit)
+      this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
+      if (this.currencyId != this.mainCurrencyId) {
+        debugger
+        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
+       
+        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+       this.voucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal * currencyConversionFactor)
+      }
+      else
+      {
+        this.voucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal)
+      }
     }
     if (this.voucherkindId == 2) {
-      this.voucherForm.controls["voucherTotal"].setValue(this.totalCredit)
+      this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
+      if (this.currencyId != this.mainCurrencyId) {
+        debugger
+        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
+       
+        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+       this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal * currencyConversionFactor)
+      }
+      else
+      {
+        this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
+      }
     }
 
     if (this.voucherDetail.length) {
@@ -802,8 +852,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       credit: 0,
       currencyId: 0,
       currencyConversionFactor: 1,
-      debitAfterConversion: 0,
-      creditAfterConversion: 0,
+      debitLocal: 0,
+      creditLocal: 0,
       beneficiaryTypeId: 0,
       beneficiaryAccountId: 0,
       description: '',
@@ -833,6 +883,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       currencyId: this.voucherForm.controls["currencyId"].value,
       description: this.voucherForm.controls["description"].value,
       voucherTotal: this.voucherForm.controls["voucherTotal"].value,
+      voucherTotalLocal: this.voucherForm.controls["voucherTotalLocal"].value,
+
       voucherDetail: this.voucher.voucherDetail ?? [],
 
     };
@@ -979,14 +1031,14 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucherDate = selectedDate;
   }
   getValueAfterConversion() {
-    this.selectedVoucherDetail.debitAfterConversion = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
-    this.selectedVoucherDetail.creditAfterConversion = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
+    this.selectedVoucherDetail.debitLocal = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
+    this.selectedVoucherDetail.creditLocal = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
 
 
   }
   getAddedValueAfterConversion(i: any) {
-    this.voucherDetail[i].debitAfterConversion = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
-    this.voucherDetail[i].creditAfterConversion = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
+    this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
+    this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
   }
 }

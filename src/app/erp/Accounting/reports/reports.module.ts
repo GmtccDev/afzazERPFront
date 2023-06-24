@@ -11,7 +11,6 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { IncomeStatementReportComponent } from './income-statement-report/income-statement-report.component';
 import { VouchersTransactionsReportComponent } from './vouchers-transactions-report/vouchers-trasnactions-report.component'
-import { AnalyticalBudgetReportComponent } from './analytical-budget-report/analytical-budget-report.component';
 
 
 
@@ -19,9 +18,7 @@ import { AnalyticalBudgetReportComponent } from './analytical-budget-report/anal
   declarations: [
     BudgetReportComponent,
     IncomeStatementReportComponent,
-    VouchersTransactionsReportComponent,
-    AnalyticalBudgetReportComponent
-    
+    VouchersTransactionsReportComponent    
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,8 @@ import { DateConverterService } from 'src/app/shared/services/date-services/date
 import {NgbdModalContent} from 'src/app/shared/components/modal/modal-component'
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 
 @Component({
   selector: 'app-vouchers-trasnactions-report',
@@ -18,6 +20,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+  facialPeriodId:any;
+
+  companyId: string = localStorage.getItem("companyId");
+  lang = localStorage.getItem("language");
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
@@ -47,7 +53,9 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
     private reportService: ReportServiceProxy,
     private sharedServices: SharedService,
     private dateConverterService: DateConverterService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 
   ) {
    
@@ -69,7 +77,8 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
  //#region ngAfterViewInit
   ngAfterViewInit(): void {
 
-    
+    this.getGeneralConfigurationsOfAccountingPeriod()
+
 
   }
   //#endregion
@@ -135,6 +144,8 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       "&reportParameter=voucherId!" + this.voucherId + 
       "&reportParameter=currencyId!" + this.currencyId + 
       "&reportParameter=branchId!" + this.branchId; 
+      "&reportParameter=companyId!" + this.companyId; 
+      "&reportParameter=lang!" + this.lang; 
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -194,6 +205,57 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       },
     });
     this.subsList.push(sub);
+  }
+  getGeneralConfigurationsOfAccountingPeriod() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          if (res.response.value > 0) {
+            debugger
+            this.facialPeriodId = res.response.value;
+            this.getfiscalPeriodById(this.facialPeriodId);
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
+  }
+  getfiscalPeriodById(id: any) {
+    const promise = new Promise<void>((resolve, reject) => {
+      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+          this.fromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.toDate=this.dateConverterService.getDateForCalender(res.response.toDate);
+
+          //formatDate(Date.parse(res.response.fromDate)),
+         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+
+        
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
   }
 
 }
