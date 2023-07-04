@@ -76,7 +76,7 @@ export class FiscalPeriodServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/FiscalPeriod/delete", { params: params });
     }
-    closeFiscalPeriod(companyId:any,branchId:any,fiscalPeriodId:any,closeDate:any,fromDateFisCalPeriod:any,toDateFisCalPeriod:any): Observable<any> {
+    closeFiscalPeriod(companyId:any,branchId:any,fiscalPeriodId:any,closeDate:any,fromDateFisCalPeriod:any,toDateFisCalPeriod:any,closeAccountId:any): Observable<any> {
         debugger
         let params = new HttpParams();
 
@@ -85,10 +85,10 @@ export class FiscalPeriodServiceProxy {
         params = params.append('fiscalPeriodId', fiscalPeriodId);
 
         params = params.append('closeDate', closeDate);
-        //params = params.append('fiscalPeriodId', fiscalPeriodId);
         params = params.append('fromDateFisCalPeriod', fromDateFisCalPeriod);
 
         params = params.append('toDateFisCalPeriod', toDateFisCalPeriod);
+        params = params.append('closeAccountId', closeAccountId);
 
         return this.http.get<any>(environment.apiUrl + "/api/FiscalPeriod/close", { params: params });
     }

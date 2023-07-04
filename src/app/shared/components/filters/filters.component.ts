@@ -6,9 +6,10 @@ import { SharedService } from '../../common-services/shared-service';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { PublicService } from '../../services/public.service';
 import { ICustomEnum } from '../../interfaces/ICustom-enum';
-import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray } from '../../constants/enumrators/enums';
+import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray, VoucherTypeEnum, VoucherTypeArEnum } from '../../constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
+import { BranchDto } from 'src/app/erp/master-codes/models/branch';
 
 
 @Component({
@@ -20,6 +21,9 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectedFromDate!: DateModel;
   selectedToDate!: DateModel;
+  voucherTypes: ICustomEnum[] = [];
+  branchIds: any = '';
+
   dateType: number = 1;
   enableFilters: boolean = false;
   lang = localStorage.getItem("language")
@@ -47,27 +51,31 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   routeCurrencyApi = "Currency/get-ddl?"
   currenciesList: any;
 
-  selectedBranchId: any;
+ // selectedBranchId: any;
+  selectedBranchId: BranchDto[];
+
   branchesList: any;
   routeBranchApi = "Branch/get-ddl?"
   selectedVoucherId: any;
+  selectedVoucherKindId: any;
+
   vouchersList: any;
   routeVoucherApi = "Voucher/get-ddl?"
   facialPeriodId:any;
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId, voucherId,level
+    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,voucherKindId, voucherId,level
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
     ShowToDate: boolean, ShowSearch: boolean, ShowAccountGroup: boolean, ShowMainAccount: boolean, ShowLeafAccount: boolean,
-    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucher: boolean,ShowLevel:boolean
+    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean,ShowLevel:boolean
   } = {
 
       ShowFromDate: false,
       ShowToDate: false,
-      ShowSearch: true,
+      ShowSearch: false,
       ShowAccountGroup: false,
       ShowMainAccount: false,
       ShowLeafAccount: false,
@@ -75,6 +83,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       ShowEntriesStatus: false,
       ShowCurrency: false,
       ShowBranch: false,
+      ShowVoucherKind:false,
       ShowVoucher: false,
       ShowLevel:false
     }
@@ -124,21 +133,14 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
-  onSelectFromDate(e: DateModel) {
-    debugger
-    this.selectedFromDate = e
-    this.FireSearch()
-  }
-
-  onSelectToDate(e: DateModel) {
-    this.selectedToDate = e;
-    this.FireSearch()
-  }
+ 
 
 
 
   GetData() {
     this.spinner.show();
+    this.getVoucherType();
+
     this.getEntriesStatusEnum();
     Promise.all([
       this.getAccountGroup(),
@@ -157,7 +159,15 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.spinner.hide();
     })
   }
+  getVoucherType() {
+    if (this.lang == 'en') {
+      this.voucherTypes = convertEnumToArray(VoucherTypeEnum);
+    }
+    else {
+      this.voucherTypes = convertEnumToArray(VoucherTypeArEnum);
 
+    }
+  }
 
   getAccountGroup() {
     return new Promise<void>((resolve, reject) => {
@@ -432,13 +442,30 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       leafAccountId: this.selectedLeafAccountId,
       entriesStatusId: this.selectedEntriesStatusId,
       currencyId: this.selectedCurrencyId,
-      branchId: this.selectedBranchId,
+      branchId: this.branchIds,
+      voucherKindId: this.selectedVoucherKindId,
+
       voucherId: this.selectedVoucherId,
       level:this.level
 
 
 
     })
+  }
+  onSelectFromDate(e: DateModel) {
+    debugger
+    this.selectedFromDate = e
+    this.FireSearch()
+  }
+
+  onSelectToDate(e: DateModel) {
+    this.selectedToDate = e;
+    this.FireSearch()
+  }
+  onSelectVoucherKind()
+  {
+    this.FireSearch()
+
   }
   onSelectAccountGroup() {
     this.FireSearch()
@@ -465,8 +492,16 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectBranch() {
-    this.FireSearch()
+    debugger
+    this.branchIds=''
+    this.selectedBranchId?.forEach(c => {
+      this.branchIds += c.id + ",";
+    })
 
+    this.branchIds = this.branchIds.substring(0, this.branchIds.length - 1);
+
+    this.FireSearch()
+   
   }
   onSelectVoucher() {
     this.FireSearch()

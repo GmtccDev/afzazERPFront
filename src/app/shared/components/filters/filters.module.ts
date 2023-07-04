@@ -11,6 +11,8 @@ import { SharedService } from '../../common-services/shared-service';
 import { Subscription } from 'rxjs';
 import {stringIsNullOrEmpty} from  '../../helper/helper'
 import {FullDateModule} from '../../date/full-date/full-date.module'
+import { MultiSelectModule } from 'primeng/multiselect';
+
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import {FullDateModule} from '../../date/full-date/full-date.module'
         //NgSelectModule,
        // NgbNavModule,
         TranslateModule,
+        MultiSelectModule,
+
 
         CommonModule, TranslateModule.forChild({
         loader: {
