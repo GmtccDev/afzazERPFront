@@ -27,12 +27,9 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
-  mainAccountId:any;
-  leafAccountId:any;
-
   currencyId:any;
   branchId:any;
-  voucherId:any;
+  voucherKindId:any;
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
@@ -123,28 +120,26 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-    if (this.leafAccountId == null || this.leafAccountId == undefined) {
-      this.leafAccountId = 0;
-    }
-    if (this.voucherId == null || this.voucherId == undefined) {
-      this.voucherId = 0;
+   
+    if (this.voucherKindId == null || this.voucherKindId == undefined) {
+      this.voucherKindId = 0;
     }
 
-    if (this.currencyId == null || this.currencyId == undefined) {
+    if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
       this.currencyId = 0;
     }
 
-    if (this.branchId == null || this.branchId == undefined) {
+    if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
       this.branchId = 0;
     }
+    debugger
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate + 
-      "&reportParameter=leafAccountId!" + this.leafAccountId + 
-      "&reportParameter=voucherId!" + this.voucherId + 
+      "&reportParameter=voucherKindId!" + this.voucherKindId + 
       "&reportParameter=currencyId!" + this.currencyId + 
-      "&reportParameter=branchId!" + this.branchId; 
-      "&reportParameter=companyId!" + this.companyId; 
+      "&reportParameter=branchId!" + this.branchId+
+      "&reportParameter=companyId!" + this.companyId+
       "&reportParameter=lang!" + this.lang; 
 
     const modalRef = this.modalService.open(NgbdModalContent);
@@ -160,28 +155,24 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean,ShowMainAccount:boolean,ShowLeafAccount:boolean,ShowCurrency,ShowBranch,ShowVoucher
+    ShowSearch: boolean,ShowCurrency,ShowBranch,ShowVoucherKind
   } = {
     ShowFromDate: true, ShowToDate: true,
     ShowSearch: false,
-    ShowMainAccount:true,
     ShowCurrency:true,
     ShowBranch:true,
-    ShowVoucher:true,
-    ShowLeafAccount:true
+    ShowVoucherKind:true
   }
 
   OnFilter(e: {
-    fromDate, toDate,mainAccountId,leafAccountId,currencyId,branchId,voucherId
+    fromDate, toDate,currencyId,branchId,voucherKindId
   }) {
     debugger
       this.fromDate = e.fromDate
       this.toDate = e.toDate
-      this.mainAccountId=e.mainAccountId
-      this.leafAccountId=e.leafAccountId
       this.currencyId=e.currencyId
       this.branchId=e.branchId
-      this.voucherId=e.voucherId
+      this.voucherKindId=e.voucherKindId
 
   }
 
