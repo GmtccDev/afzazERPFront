@@ -18,7 +18,7 @@
                                         <div class="col-md-4 col-4">
                                             <label for="voucherNameAr" class="label-name">
                                                 {{'voucher-type.voucher-name-ar'|translate}}</label>
-                                                <span class="text-danger">*</span>
+                                            <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch"
@@ -38,7 +38,7 @@
                                         <div class="col-md-4 col-4">
                                             <label for="voucherNameEn"
                                                 class="label-name">{{'voucher-type.voucher-name-en'|translate}}</label>
-                                                <span class="text-danger">*</span>
+                                            <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control icon-branch" name="voucherNameEn"
                                                     formControlName="voucherNameEn">
@@ -143,10 +143,10 @@
                                             <ng-template ngbNavContent>
                                                 <div class="row">
 
-                                                    <div class="col gap-3 grid grid-cols-3 ">
+                                                    <div class="col gap-4 grid grid-cols-4 ">
                                                         <label for="defaultAccountId"
-                                                            class="label-name">{{'general.default-account'|translate}}</label>
-                                                            <span class="text-danger">*</span>
+                                                            class="label-name">{{'general.default-cash-account'|translate}}</label>
+                                                        <span class="text-danger">*</span>
                                                         <div class="input-group  popup">
                                                             <ng-select style="width:100%"
                                                                 formControlName="defaultAccountId"
@@ -177,7 +177,7 @@
                                                     <div class="col gap-3 grid grid-cols-3 ">
                                                         <label for="defaultCurrencyId"
                                                             class="label-name">{{'general.default-currency'|translate}}</label>
-                                                            <span class="text-danger">*</span>
+                                                        <span class="text-danger">*</span>
                                                         <div class="input-group  popup">
                                                             <ng-select style="width:100%"
                                                                 formControlName="defaultCurrencyId"
@@ -248,16 +248,16 @@
                                                                 formControlName="defaultBeneficiaryId"
                                                                 [items]="defaultBeneficiaryType" bindLabel="name"
                                                                 bindValue="id" style="width:100%"></ng-select>
-                                                          
+
                                                         </div>
                                                         <div *ngIf="(f['defaultBeneficiaryId'].touched || f['defaultBeneficiaryId'].dirty ) && f['defaultBeneficiaryId'].invalid"
-                                                        class="validation alert-danger position-absolute">
-                                                        <i class="fa fa-close "></i>
-                                                        <span
-                                                            *ngIf="f['defaultBeneficiaryId'].errors && f['defaultBeneficiaryId'].errors['required']"
-                                                            class="f-12 ng-star-inserted text-white">
-                                                            {{'error.required'|translate}}</span>
-                                                    </div>
+                                                            class="validation alert-danger position-absolute">
+                                                            <i class="fa fa-close "></i>
+                                                            <span
+                                                                *ngIf="f['defaultBeneficiaryId'].errors && f['defaultBeneficiaryId'].errors['required']"
+                                                                class="f-12 ng-star-inserted text-white">
+                                                                {{'error.required'|translate}}</span>
+                                                        </div>
                                                     </div>
                                                     <!-- <div class="col gap-3 grid grid-cols-3 ">
                                                         <label for="needReview"

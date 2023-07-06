@@ -144,7 +144,9 @@
         "leaf-account":"Leaf Account",
         "type":"Type",
         "level":"Level",
-        "setting":"Type"
+        "setting":"Type",
+        "report-options":"Report Options",
+        "default-cash-account":"Default Cash Account"
 
 
     },
