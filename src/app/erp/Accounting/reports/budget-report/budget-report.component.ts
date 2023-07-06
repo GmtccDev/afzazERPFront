@@ -19,12 +19,16 @@ import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal
 export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+  lang = localStorage.getItem("language");
+  companyId: string = localStorage.getItem("companyId");
 
   facialPeriodId:any;
   subsList: Subscription[] = [];
   fromDate: any;
   toDate: any;
   entriesStatusId:any;
+  reportOptionId:any;
+
   level:any;
   toolbarPathData: ToolbarPath = {
     listPath: '',
@@ -42,8 +46,6 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
-
-
   ) {
 
   }
@@ -171,7 +173,10 @@ debugger
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate+
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
-      "&reportParameter=level!" + this.level 
+      "&reportParameter=level!" + this.level+ 
+      "&reportParameter=reportOptionId!" + this.reportOptionId+
+      "&reportParameter=lang!" + this.lang+
+      "&reportParameter=companyId!" + this.companyId;
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -186,23 +191,22 @@ debugger
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean,ShowEntriesStatus:boolean,ShowLevel:boolean
+    ShowSearch: boolean,ShowEntriesStatus:boolean,ShowLevel:boolean,ShowReportOptions:boolean
   } = {
       
       ShowFromDate: true, ShowToDate: true
-      , ShowSearch: false,ShowEntriesStatus:true,ShowLevel:true
+      , ShowSearch: false,ShowEntriesStatus:true,ShowLevel:true,ShowReportOptions:true
       
     }
 
   OnFilter(e: {
-    fromDate, toDate,entriesStatusId,level
+    fromDate, toDate,entriesStatusId,level,reportOptionId
   }) {
-    
-    
       this.fromDate = e.fromDate,
       this.toDate = e.toDate,
       this.entriesStatusId=e.entriesStatusId,
-      this.level=e.level 
+      this.level=e.level,
+      this.reportOptionId=e.reportOptionId
 
   }
 
@@ -212,7 +216,7 @@ debugger
         currentBtn;
         if (currentBtn != null) {
           
-          if (currentBtn.action == ToolbarActions.View) {
+          if (currentBtn.action == ToolbarActions.Print) {
             this.gotoViewer();
 
           }

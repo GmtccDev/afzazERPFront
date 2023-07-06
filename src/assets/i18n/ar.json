@@ -318,7 +318,11 @@
         "level":"المستوى",
         "setting":"نمط",
         "choose-template":"أختر النموذج",
-        "template-name":"أسم النموذج"
+        "template-name":"أسم النموذج",
+        "report-options":"خيارات التقرير",
+        "default-cash-account":"حساب النقدية الافتراضى"
+
+
 
 
     },

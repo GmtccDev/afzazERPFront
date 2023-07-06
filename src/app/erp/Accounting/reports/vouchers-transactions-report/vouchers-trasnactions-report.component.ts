@@ -183,7 +183,8 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
         currentBtn;
         if (currentBtn != null) {
           
-          if (currentBtn.action == ToolbarActions.View) {
+          if (currentBtn.action == ToolbarActions.Print) {
+            debugger
             this.gotoViewer();
 
           }

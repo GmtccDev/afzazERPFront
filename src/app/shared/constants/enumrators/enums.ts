@@ -54,8 +54,8 @@ export enum BeneficiaryTypeArEnum {
   حساب = 4
 }
 export enum EntriesStatusEnum {
-  CarriedOver = 1,
-  NotCarriedOver = 2,
+  'Carried Over' = 1,
+  'Not Carried Over' = 2,
   All = 3
 }
 export enum EntriesStatusArEnum {
@@ -96,4 +96,18 @@ export enum AccountClassificationsArEnum {
   مزدوج = 4,
   موظف = 5,
   أخرى = 6
+}
+export enum  ReportOptionsEnum {
+  Quarterly = 1,
+  Monthly = 2,
+  'Semi Monthly' = 3,
+  Weekly = 4,
+  Daily = 5,
+}
+export enum  ReportOptionsArEnum {
+  'ربع سنوى' = 1,
+  شهرى = 2,
+  'نصف شهرى' = 3,
+  أسبوعى = 4,
+  يومى = 5,
 }

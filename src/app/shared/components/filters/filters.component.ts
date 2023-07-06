@@ -6,7 +6,7 @@ import { SharedService } from '../../common-services/shared-service';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { PublicService } from '../../services/public.service';
 import { ICustomEnum } from '../../interfaces/ICustom-enum';
-import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray, VoucherTypeEnum, VoucherTypeArEnum } from '../../constants/enumrators/enums';
+import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray, VoucherTypeEnum, VoucherTypeArEnum, ReportOptionsEnum, ReportOptionsArEnum } from '../../constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { BranchDto } from 'src/app/erp/master-codes/models/branch';
@@ -44,7 +44,10 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   routeCostCenterApi = "CostCenter/get-ddl?"
   selectedEntriesStatusId: any;
+  selectedReportOptionId: any;
+
   entriesStatusEnum: ICustomEnum[] = [];
+  reportOptionsEnum: ICustomEnum[] = [];
 
   selectedCurrencyId: any;
 
@@ -64,13 +67,14 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   facialPeriodId:any;
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,voucherKindId, voucherId,level
+    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,voucherKindId, voucherId,level,reportOptionId
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
     ShowToDate: boolean, ShowSearch: boolean, ShowAccountGroup: boolean, ShowMainAccount: boolean, ShowLeafAccount: boolean,
-    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean,ShowLevel:boolean
+    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean,ShowLevel:boolean,
+    ShowReportOptions:boolean
   } = {
 
       ShowFromDate: false,
@@ -85,7 +89,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       ShowBranch: false,
       ShowVoucherKind:false,
       ShowVoucher: false,
-      ShowLevel:false
+      ShowLevel:false,
+      ShowReportOptions:false
     }
 
   subsList: Subscription[] = [];
@@ -104,13 +109,13 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.GetData();
   }
 
-  getLanguage() {
-    this.sharedServices.getLanguage().subscribe(res => {
-      this.lang = res
-    })
-  }
+  // getLanguage() {
+  //   this.sharedServices.getLanguage().subscribe(res => {
+  //     this.lang = res
+  //   })
+  // }
   ngOnInit() {
-    this.getLanguage();
+   // this.getLanguage();
     //this.GetData();
     this.getGeneralConfigurationsOfAccountingPeriod()
     debugger
@@ -140,8 +145,9 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   GetData() {
     this.spinner.show();
     this.getVoucherType();
-
     this.getEntriesStatusEnum();
+    this.getReportOptionsEnum();
+
     Promise.all([
       this.getAccountGroup(),
       this.getAccounts(),
@@ -305,6 +311,15 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
   }
+  getReportOptionsEnum() {
+    if (this.lang == 'en') {
+      this.reportOptionsEnum = convertEnumToArray(ReportOptionsEnum);
+    }
+    else {
+      this.reportOptionsEnum = convertEnumToArray(ReportOptionsArEnum);
+
+    }
+  }
   getCurrencies() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
@@ -444,9 +459,10 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       currencyId: this.selectedCurrencyId,
       branchId: this.branchIds,
       voucherKindId: this.selectedVoucherKindId,
-
       voucherId: this.selectedVoucherId,
-      level:this.level
+      level:this.level,
+      reportOptionId: this.selectedReportOptionId,
+
 
 
 
@@ -484,6 +500,10 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectEntriesStatus() {
+    this.FireSearch()
+
+  }
+  onSelectReportOption() {
     this.FireSearch()
 
   }
