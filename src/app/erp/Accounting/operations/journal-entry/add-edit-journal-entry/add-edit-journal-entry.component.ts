@@ -174,10 +174,17 @@ export class AddEditJournalEntryComponent implements OnInit {
      }
   }
   onChangeJournal(event) {
-   
+   debugger
    //this.journalEntryForm.controls['jEMasterStatusId'].value
-   let journalModel = this.journalList.find(x => x.id == event);
+   let journalModel;
+   if(event!=null)
+   {
+    journalModel = this.journalList.find(x => x.id == event.id);
+   }
+   if(journalModel!=null)
+   {
    this.journal= this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
+   }
    if(this.serial=='1'){
    
     this.codeSerial=this.journalEntryForm.controls['code'].value
@@ -194,7 +201,10 @@ export class AddEditJournalEntryComponent implements OnInit {
   onChangefiscalPeriod(event) {
     
      let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
+     if(fiscalPeriodModel!=null)
+     {
      this.fiscalPeriod= this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
+     }
      if(this.serial=='3'){
    
       this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
