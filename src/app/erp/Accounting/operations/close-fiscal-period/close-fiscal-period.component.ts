@@ -128,7 +128,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.fiscalPeriodList = res.response;
+            this.fiscalPeriodList = res.response.filter(x=>x.fiscalPeriodStatus==1);
 
           }
 
@@ -209,21 +209,16 @@ export class CloseFiscalPeriodComponent implements OnInit {
         debugger
         this.closeDate=formatDate(Date.parse(this.closeFiscalPeriodForm.value.closeDate))
         this.fiscalPeriodService.closeFiscalPeriod(this.companyId,this.branchId,this.fiscalPeriodId,this.closeDate,this.fromDate,this.toDate,this.closeAccountId).subscribe({
-          
           next: (result: any) => {
             debugger
-
-            // this.spinner.show();
             console.log('result dataaddData ', result);
             this.response = { ...result.response };
-            alert(this.response)
-           // this.definefiscalPeriodForm();
-
+           this.defineCloseFiscalPeriodForm();
+            this.getFiscalPeriods();
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
 
-             // navigateUrl(this.listUrl, this.router);
             }, 1000);
           },
           error: (err: any) => {
