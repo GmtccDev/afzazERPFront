@@ -16,6 +16,7 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
+import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 @Component({
   selector: 'app-add-edit-incoming-cheque',
   templateUrl: './add-edit-incoming-cheque.component.html',
@@ -62,15 +63,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
   counter: number;
   accountList: any;
   index: any;
-  totalCredit: number;
+  totalamount: number;
   totalDebit: number;
   totalDebitLocal: number;
-  totalCreditLocal: number;
+  //totalamountLocal: number;
   checkPeriod: any;
   isMultiCurrency: boolean;
   serial: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
+  beneficiaryTypesEnum: import("d:/المتكامل/afzazERPFront/src/app/shared/interfaces/ICustom-enum").ICustomEnum[];
   constructor(
     private incomingChequeService: IncomingChequeServiceProxy,
     private router: Router,
@@ -93,12 +95,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.getGeneralConfiguration()
     this.getCostCenter();
     this.getCurrency();
-    this.getFiscalPeriod();
-    this.getJournals();
     this.getAccount();
     this.currnetUrl = this.router.url;
     this.listenToClickedButton();
     this.changePath();
+    this.getBeneficiaryTypes();
 
     if (this.currnetUrl == this.addUrl) {
       this.getincomingChequeCode();
@@ -117,7 +118,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   onSelectJournal(event) {
 
-    this.incomingChequeForm.controls.bankAccountId.setValue(event.id);
+    this.incomingChequeForm.controls.accountId.setValue(event.id);
     this.showSearchModal = false;
   }
   onSelectCountry(event) {
@@ -136,6 +137,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
       }
     });
   }
+  getBeneficiaryTypes() {
+    
+    if (this.lang == 'en') {
+      this.beneficiaryTypesEnum = convertEnumToArray(BeneficiaryTypeEnum);
+    }
+    else {
+      this.beneficiaryTypesEnum = convertEnumToArray(BeneficiaryTypeArEnum);
+
+    }
+  }
   //#endregion
 
   //#region Authentications
@@ -151,36 +162,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getSerial() {
-    this.serialList = [
-      { nameAr: 'رقم ', nameEn: 'Number', value: '1' },
-      { nameAr: 'اليومية / رقم', nameEn: 'Daily/Number', value: '2' },
-      { nameAr: "اليومية / الفترة المحاسبي / رقم   ", nameEn: 'Daily/Period Accounting/Number', value: '3' }
-    ];
-  }
-  codeSerial='';
-  journal='';
-  onChangeJournal(event) {
-   debugger
-   //this.incomingChequeForm.controls['jEMasterStatusId'].value
-   let journalModel = this.journalList.find(x => x.id == event);
-   this.journal= this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
-   if(this.serial=='2'){
-   
-    this.codeSerial= this.journal+"/"+this.incomingChequeForm.controls['code'].value
-   }
-    
-  }
-  onChangefiscalPeriod(event) {
-    debugger
-     let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
-     this.fiscalPeriod= this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
-     if(this.serial=='3'){
-   
-      this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.incomingChequeForm.controls['code'].value
-     }
-    
-   }
+
+
+
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -188,7 +172,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
           console.log(res);
 
-          if (res.success) {
+          if (res.success && res.response.items.length>0)  {
 
 
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
@@ -221,73 +205,62 @@ export class AddEditIncomingChequeComponent implements OnInit {
       date: ['', Validators.compose([Validators.required])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      dueDate: true,
+      dueDate:['', Validators.compose([Validators.required])],
       notes: null,
-      bankAccountId: ['', Validators.compose([Validators.required])],
-      receiptAccountId: ['', Validators.compose([Validators.required])],
-      journalEntriesDetail: this.fb.array([])
+      accountId: ['', Validators.compose([Validators.required])],
+      amount: ['', Validators.compose([Validators.required])],
+      currencyId: [null, Validators.compose([Validators.required])],
+      incomingChequeDetail: this.fb.array([])
     });
     this.initGroup();
-    this.incomingChequeForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-
-      this.totalCredit = 0;
-      this.totalDebit = 0;
-      this.totalDebitLocal = 0;
-      this.totalCreditLocal = 0;
-      const ctrl = <FormArray>this.incomingChequeForm.controls['journalEntriesDetail'];
-      ctrl.controls.forEach(x => {
-        let parsed = parseInt(x.get('jEDetailCredit').value)
-        this.totalCredit += parsed
-        let parsedjEDetailDebit = parseInt(x.get('jEDetailDebit').value)
-        this.totalDebit += parsedjEDetailDebit
-
-        let parsedjEDetailDebitLocal = parseInt(x.get('jEDetailDebitLocal').value)
-
-        this.totalDebitLocal += (parsedjEDetailDebitLocal)
-
-        let parsedjEDetailCreditLocal = parseInt(x.get('jEDetailCreditLocal').value)
-
-        this.totalCreditLocal += (parsedjEDetailCreditLocal)
-
-
-        this.cd.detectChanges()
-      });
+   
+    
+    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+   
+    this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
+      debugger
+      // this.totalamount = 0;
+      // const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+      // ctrl.controls.forEach(x => {
+      //   let parsed = parseInt(x.get('amount').value)
+      //   this.totalamount += parsed
+      
+      //   this.cd.detectChanges()
+      // });
     })
   }
   get jEMasterStatusId() {
 
     return this.incomingChequeForm.controls['jEMasterStatusId'].value;
   }
-  get journalEntriesDetailList(): FormArray { return this.incomingChequeForm.get('journalEntriesDetail') as FormArray; }
+  get incomingChequeDetailList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
   initGroup() {
 
     this.counter += 1;
-    let journalEntriesDetail = this.incomingChequeForm.get('journalEntriesDetail') as FormArray;
-    journalEntriesDetail.push(this.fb.group({
+    let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
+    incomingChequeDetail.push(this.fb.group({
       id: [null],
-      journalEntriesMasterId: [null],
+      incomingChequeId: [null],
       accountId: [null, Validators.required],
+      beneficiaryTypeId:[null],
       currencyId: [null],
       transactionFactor: [null],
       notes: [''],
-      jEDetailCredit: [0.0],
-      jEDetailDebit: [0.0],
-      costCenterId: [null],
-      jEDetailCreditLocal: [0.0],
-      jEDetailDebitLocal: [0.0],
-      jEDetailSerial: [this.counter]
+      amount: [0.0],
+      currencyLocal:[null],
+      iCDetailSerial: [this.counter]
     }, {
-      validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'jEDetailDebit']),
+      validator: this.atLeastOne(Validators.required, ['amount', 'amount']),
 
     },
 
     ));
-    console.log(journalEntriesDetail.value)
+    console.log(incomingChequeDetail.value)
   }
   onDeleteRow(rowIndex) {
 
-    let journalEntriesDetail = this.incomingChequeForm.get('journalEntriesDetail') as FormArray;
-    journalEntriesDetail.removeAt(rowIndex);
+    let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
+    incomingChequeDetail.removeAt(rowIndex);
     this.counter -= 1;
   }
   atLeastOne = (validator: ValidatorFn, controls: string[]) => (
@@ -305,7 +278,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     };
   };
   //#endregion
-  get journalEntriesDetailDTOList(): FormArray { return this.incomingChequeForm.get('journalEntriesDetail') as FormArray; }
+  get incomingChequeDetailDTOList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
 
   //#region CRUD operations
   getincomingChequeById(id: any) {
@@ -319,94 +292,53 @@ export class AddEditIncomingChequeComponent implements OnInit {
             date: formatDate(Date.parse(res.response.date)),
             code: res.response?.code,
             isActive: res.response?.isActive,
-            dueDate: res.response?.dueDate,
+            dueDate: formatDate(Date.parse(res.response.dueDate)),
             notes: res.response?.notes,
-            bankAccountId: res.response?.bankAccountId,
-            receiptAccountId: res.response?.receiptAccountId,
-            journalEntriesDetail: this.fb.array([])
+            accountId: res.response?.accountId,
+            amount: res.response?.amount,
+            currencyId: res.response?.currencyId,
+            incomingChequeDetail: this.fb.array([])
 
           });
-          let ListDetail = res.response?.journalEntriesDetail;
+          let ListDetail = res.response?.incomingChequeDetail;
 
-          this.journalEntriesDetailDTOList.clear();
+          this.incomingChequeDetailDTOList.clear();
           ListDetail.forEach(element => {
 
-            this.journalEntriesDetailDTOList.push(this.fb.group({
+            this.incomingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
-              journalEntriesMasterId: element.journalEntriesMasterId,
+              incomingChequeId: element.incomingChequeId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
               notes: element.notes,
-              jEDetailCredit: element.jeDetailCredit,
-              jEDetailDebit: element.jeDetailDebit,
-              costCenterId: element.costCenterId,
-              jEDetailCreditLocal: element.jeDetailCreditLocal,
-              jEDetailDebitLocal: element.jeDetailDebitLocal,
-              jEDetailSerial: this.counter
-            }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
+              amount: element.amount,
+              beneficiaryTypeId:element.beneficiaryTypeId,
+              beneficiaryAccountId:element.beneficiaryAccountId,
+              // amount: element.amount,
+              // costCenterId: element.costCenterId,
+              currencyLocal: element.currencyLocal,
+              // amountLocal: element.amountLocal,
+              iCDetailSerial: this.counter
+            }, { validator: this.atLeastOne(Validators.required, ['amount', 'amount']) }
             ));
 
 
             this.counter = element.jeDetailSerial;
           });
-          this.totalCredit = 0;
-          const ctrl = <FormArray>this.incomingChequeForm.controls['journalEntriesDetail'];
-          ctrl.controls.forEach(x => {
-            let parsed = parseInt(x.get('jEDetailCredit').value)
-            this.totalCredit += parsed
-            this.cd.detectChanges()
-          });
-
-
-          this.totalDebit = 0;
-          ctrl.controls.forEach(x => {
-            let parsed = parseInt(x.get('jEDetailDebit').value)
-            this.totalDebit += parsed
-            this.cd.detectChanges()
-
-          })
-
-
-          this.totalDebitLocal = 0;
-          ctrl.controls.forEach(x => {
-            let parsed = parseInt(x.get('jEDetailDebitLocal').value)
-            let transactionFactor = parseInt(x.get('transactionFactor').value)
-            this.totalDebitLocal += (parsed)
-            this.cd.detectChanges()
-
-          });
-          this.totalCreditLocal = 0;
-          ctrl.controls.forEach(x => {
-            let parsed = parseInt(x.get('jEDetailCreditLocal').value)
-            let transactionFactor = parseInt(x.get('transactionFactor').value)
-            this.totalCreditLocal += (parsed)
-            this.cd.detectChanges()
-
-          })
-          this.incomingChequeForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
-
-            this.totalCredit = 0;
-            this.totalDebit = 0;
-            this.totalDebitLocal = 0;
-            this.totalCreditLocal = 0;
-            const ctrl = <FormArray>this.incomingChequeForm.controls['journalEntriesDetail'];
-            ctrl.controls.forEach(x => {
-              let parsed = parseInt(x.get('jEDetailCredit').value)
-              this.totalCredit += parsed
-              let parsedjEDetailDebit = parseInt(x.get('jEDetailDebit').value)
-              this.totalDebit += parsedjEDetailDebit
-
-              let parsedjEDetailDebitLocal = parseInt(x.get('jEDetailDebitLocal').value)
-
-              this.totalDebitLocal += (parsedjEDetailDebitLocal)
-
-              let parsedjEDetailCreditLocal = parseInt(x.get('jEDetailCreditLocal').value)
-
-              this.totalCreditLocal += (parsedjEDetailCreditLocal)
-
-              this.cd.detectChanges()
-            });
+      
+          
+          const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+       
+          this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
+            // this.totalamount = 0;
+            // const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+            // ctrl.controls.forEach(x => {
+            //   let parsed = parseInt(x.get('amount').value)
+            //   this.totalamount += parsed
+            
+            //   this.cd.detectChanges()
+            // });
           })
           console.log(
             'this.incomingChequeForm.value set value',
@@ -435,7 +367,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
           this.incomingChequeForm.patchValue({
             code: res.response
           });
-          this.codeSerial=res.response;
+         
         },
         error: (err: any) => {
           reject(err);
@@ -498,24 +430,24 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   return;
     // }
     console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
-    if (this.counter < 2) {
+    this.totalamount = 0;
+    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+    ctrl.controls.forEach(x => {
+      let parsed = parseInt(x.get('amount').value)
+      this.totalamount += parsed
+    
+      this.cd.detectChanges()
+    });
+    if ((this.totalamount == 0 )) {
       this.alertsService.showError(
-        'يجب أن يكون على الاقل اثنين من الصفوف',
+        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
         ""
-
       )
       return;
     }
-    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+    if ((this.totalamount !== this.incomingChequeForm.value.amount)) {
       this.alertsService.showError(
-        'يجب ان يكون قيم في الدائن والمدين',
-        ""
-      )
-      return;
-    }
-    if ((this.totalCredit !== this.totalDebit)) {
-      this.alertsService.showError(
-        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
+        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
         ""
       )
       return;
@@ -561,34 +493,28 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
     let currencyModel = this.currencyList.find(x => x.id == event.target.value);
     const faControl =
-      (<FormArray>this.incomingChequeForm.controls['journalEntriesDetail']).at(index);
+      (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(index);
     faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
-    faControl['controls'].jEDetailCreditLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailCredit.value);
-    faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailDebit.value);
-    faControl['controls'].jEDetailSerial.setValue(index + 1);
+    faControl['controls'].currencyLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
+  //  faControl['controls'].amountLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
+    faControl['controls'].iCDetailSerial.setValue(index + 1);
   }
   onUpdate() {
 
     console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
-    if (this.counter < 2) {
+    this.totalamount = 0;
+    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+    ctrl.controls.forEach(x => {
+      let parsed = parseInt(x.get('amount').value)
+      this.totalamount += parsed
+    
+      this.cd.detectChanges()
+    });
+   
+    if ((this.totalamount!= this.incomingChequeForm.value.amount)) {
       this.alertsService.showError(
-        'يجب أن يكون على الاقل اثنين من الصفوف',
-        ""
-
-      )
-      return;
-    }
-    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
-      this.alertsService.showError(
-        'يجب ان يكون قيم في الدائن والمدين',
-        ""
-      )
-      return;
-    }
-    if ((this.totalCredit !== this.totalDebit)) {
-      this.alertsService.showError(
-        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
-        ""
+        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+                ""
       )
       return;
     }
@@ -628,32 +554,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
 
 
-  getJournals() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
-        next: (res) => {
-
-          if (res.success) {
-            this.journalList = res.response;
-
-          }
-
-
-          resolve();
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-
-      this.subsList.push(sub);
-    });
-
-  }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
@@ -730,33 +630,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
 
   }
-  getFiscalPeriod() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeFiscalPeriodApi).subscribe({
-        next: (res) => {
-
-          if (res.success) {
-
-            this.fiscalPeriodList = res.response;
-            this.checkPeriod = res.response.fiscalPeriodStatus;
-          }
-
-
-          resolve();
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-
-      this.subsList.push(sub);
-    });
-
-  }
+ 
 
   ClickAccount(i) {
     this.showAccountsModalDebit = true;
@@ -766,18 +640,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   numberOnly(event, i, type): boolean {
     this.index = i;
-    if (type == 'Credit') {
-      const faControl =
-        (<FormArray>this.incomingChequeForm.controls['journalEntriesDetail']).at(i);
-      faControl['controls'].jEDetailDebit.setValue(0);
-
-
-    }
-    else if (type == 'Debit') {
-      const faControl =
-        (<FormArray>this.incomingChequeForm.controls['journalEntriesDetail']).at(i);
-      faControl['controls'].jEDetailCredit.setValue(0);
-    }
+  
 
 
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -787,37 +650,23 @@ export class AddEditIncomingChequeComponent implements OnInit {
     return true;
 
   }
-  onInput(event, i, type): boolean {
+  onInput(event, i): boolean {
 
     this.index = i;
-    if (type == 'Credit') {
+   // if (type == 'Credit') {
       const faControl =
-        (<FormArray>this.incomingChequeForm.controls['journalEntriesDetail']).at(i);
-      faControl['controls'].jEDetailDebit.setValue(0);
+        (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
+   //   faControl['controls'].amount.setValue(0);
 
-      let jEDetailCredit = faControl['controls'].jEDetailCredit.value;
-      let jEDetailDebit = faControl['controls'].jEDetailDebit.value;
+      let amount = faControl['controls'].amount.value;
+     // let amount = faControl['controls'].amount.value;
       let transactionFactor = faControl['controls'].transactionFactor.value;
       if (transactionFactor != null) {
-        faControl['controls'].jEDetailCreditLocal.setValue(jEDetailCredit * transactionFactor);
-        faControl['controls'].jEDetailDebitLocal.setValue(jEDetailDebit * transactionFactor);
+        faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
+       // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
       }
-
-
-    }
-    else if (type == 'Debit') {
-      const faControl =
-        (<FormArray>this.incomingChequeForm.controls['journalEntriesDetail']).at(i);
-      faControl['controls'].jEDetailCredit.setValue(0);
-
-      let jEDetailCredit = faControl['controls'].jEDetailCredit.value;
-      let jEDetailDebit = faControl['controls'].jEDetailDebit.value;
-      let transactionFactor = faControl['controls'].transactionFactor.value;
-      if (transactionFactor != null) {
-        faControl['controls'].jEDetailCreditLocal.setValue(jEDetailCredit * transactionFactor);
-        faControl['controls'].jEDetailDebitLocal.setValue(jEDetailDebit * transactionFactor);
-      }
-    }
+    
+    
 
 
     const charCode = (event.which) ? event.which : event.keyCode;

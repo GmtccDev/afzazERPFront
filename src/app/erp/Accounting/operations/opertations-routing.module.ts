@@ -7,6 +7,8 @@ import { JournalEntryComponent } from './journal-entry/journal-entry.component';
 import { JournalEntryPostComponent } from './journal-entry/journal-entry-post/journal-entry-post.component';
 import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journal-entry-post/add-edit-journal-entry-post.component';
 import { CloseFiscalPeriodComponent } from './close-fiscal-period/close-fiscal-period.component';
+import { IncomingChequeComponent } from './incoming-cheque/incoming-cheque.component';
+import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incoming-cheque/add-edit-incoming-cheque.component';
 
 
 const routes: Routes = [
@@ -23,8 +25,10 @@ const routes: Routes = [
 			{ path: 'journalEntryPost/add-journalEntryPost', component: AddEditJournalEntryPostComponent },
 			{ path: 'journalEntryPost/update-journalEntryPost/:id', component: AddEditJournalEntryPostComponent },
 			{ path: 'closeFiscalPeriod', component: CloseFiscalPeriodComponent },
+			{ path: 'incomingCheque', component: IncomingChequeComponent },
+			{ path: 'incomingCheque/add-incomingCheque', component: AddEditIncomingChequeComponent },
+			{ path: 'incomingCheque/update-incomingCheque/:id', component: AddEditIncomingChequeComponent },
 
-		
 		]
 	}
 ];

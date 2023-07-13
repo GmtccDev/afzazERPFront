@@ -232,7 +232,9 @@
         "analytical-budget-report":"تقرير الميزانية التوزيعى",
         "income-statement-report":"تقرير قائمة الدخل",
         "vouchers-transactions-report":"تقرير حركة السندات",
-        "close-fiscal-period":"اغلاق الفترة المحاسبية"
+        "close-fiscal-period":"اغلاق الفترة المحاسبية",
+        "incomingCheque":"الشيك الوراد",
+        "incomingCheque-information":"معلومات الشيك الوراد"
 
     },
     "general": {
@@ -320,9 +322,10 @@
         "choose-template":"أختر النموذج",
         "template-name":"أسم النموذج",
         "report-options":"خيارات التقرير",
-        "default-cash-account":"حساب النقدية الافتراضى"
+        "default-cash-account":"حساب النقدية الافتراضى",
 
-
+        "amount":"الكمية",
+        "dueDate":"تاريخ الاستحقاق"
 
 
     },

@@ -146,8 +146,9 @@
         "level":"Level",
         "setting":"Type",
         "report-options":"Report Options",
-        "default-cash-account":"Default Cash Account"
-
+        "default-cash-account":"Default Cash Account",
+        "amount":"amount",
+        "dueDate":"Due date"
 
     },
     "menu": {},
@@ -359,7 +360,9 @@
         "vouchers-transactions-report":"Vouchers Transactions Report",
         "bankAccount":" Bank Account",
         "bankAccount-information":"  Bank Account Information",
-        "close-fiscal-period":"Close Fiscal Period"
+        "close-fiscal-period":"Close Fiscal Period",
+        "incomingCheque":" Incoming Cheque",
+        "incomingCheque-information":"Incoming Cheque Information "
 
     },
     "language": {
