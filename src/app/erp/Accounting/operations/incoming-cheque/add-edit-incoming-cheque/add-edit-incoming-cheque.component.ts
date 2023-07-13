@@ -248,6 +248,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       notes: [''],
       amount: [0.0],
       currencyLocal:[null],
+      beneficiaryAccountId:[null],
       iCDetailSerial: [this.counter]
     }, {
       validator: this.atLeastOne(Validators.required, ['amount', 'amount']),
