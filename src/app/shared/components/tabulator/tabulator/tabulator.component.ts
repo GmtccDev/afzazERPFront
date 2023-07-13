@@ -303,7 +303,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
       {
         title: "Edit",
         field: "id", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-
+debugger
           this.onEditItem.emit(cell.getRow().getData().id);
         }
       }

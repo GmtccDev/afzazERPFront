@@ -7,7 +7,6 @@ import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { formatDate } from '../../../../shared/helper/helper-url';
-
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { DateModel } from 'src/app/shared/model/date-model';
@@ -16,6 +15,7 @@ import { REQUIRED_VALIDATORS } from 'src/app/shared/constants/input-validators';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 
 
 @Component({
@@ -26,9 +26,11 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 export class CloseFiscalPeriodComponent implements OnInit {
   //#region Main Declarations
   closeFiscalPeriodForm!: FormGroup;
+  response:any;
   closeDate: any;
   fromDate:any;
   toDate:any;
+  closeAccountId:any;
   lang = localStorage.getItem("language")
   companyId = localStorage.getItem("companyId")
   branchId = localStorage.getItem("branchId")
@@ -63,7 +65,9 @@ export class CloseFiscalPeriodComponent implements OnInit {
     private dateService: DateCalculation,
     private spinnerService: NgxSpinnerService,
     private alertsService: NotificationsAlertsService,
-    private fiscalPeriodService: FiscalPeriodServiceProxy
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+
 
 
 
@@ -76,7 +80,8 @@ export class CloseFiscalPeriodComponent implements OnInit {
   ngOnInit(): void {
     this.listenToClickedButton();
 
-    this.getFiscalPeriods()
+    this.getFiscalPeriods();
+    this.getGeneralConfigurationsOfCloseAccount();
   }
 
 
@@ -123,7 +128,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.fiscalPeriodList = res.response;
+            this.fiscalPeriodList = res.response.filter(x=>x.fiscalPeriodStatus==1);
 
           }
 
@@ -203,18 +208,17 @@ export class CloseFiscalPeriodComponent implements OnInit {
       const promise = new Promise<void>((resolve, reject) => {
         debugger
         this.closeDate=formatDate(Date.parse(this.closeFiscalPeriodForm.value.closeDate))
-        this.fiscalPeriodService.closeFiscalPeriod(this.companyId,this.branchId,this.fiscalPeriodId,this.closeDate,this.fromDate,this.toDate).subscribe({
+        this.fiscalPeriodService.closeFiscalPeriod(this.companyId,this.branchId,this.fiscalPeriodId,this.closeDate,this.fromDate,this.toDate,this.closeAccountId).subscribe({
           next: (result: any) => {
-            this.spinner.show();
+            debugger
             console.log('result dataaddData ', result);
-           // this.Response = { ...result.response };
-           // this.definefiscalPeriodForm();
-
+            this.response = { ...result.response };
+           this.defineCloseFiscalPeriodForm();
+            this.getFiscalPeriods();
             this.submited = false;
             setTimeout(() => {
               this.spinner.hide();
 
-             // navigateUrl(this.listUrl, this.router);
             }, 1000);
           },
           error: (err: any) => {
@@ -255,6 +259,32 @@ export class CloseFiscalPeriodComponent implements OnInit {
       });
     });
     return promise;
+  }
+  getGeneralConfigurationsOfCloseAccount() {
+    debugger
+    const promise = new Promise<void>((resolve, reject) => {
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(5).subscribe({
+        next: (res: any) => {
+          debugger
+          console.log('result data getbyid', res);
+
+          if (res.response.value >0) {
+            this.closeAccountId = res.response.value ;
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+    return promise;
+
   }
 
  

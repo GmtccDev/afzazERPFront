@@ -3,7 +3,6 @@
 </ngx-spinner>
 <div class="row">
   <div class="wrapper-title">
-
     <h3>{{'general.filterSearch'|translate}}</h3>
   </div>
 </div>
@@ -29,7 +28,6 @@
           {{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
         </ng-option>
       </ng-select>
-
     </div>
   </div>
   <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowMainAccount">
@@ -52,7 +50,6 @@
           {{lang=="ar"?account.nameAr:account.nameEn}}
         </ng-option>
       </ng-select>
-
     </div>
   </div>
   <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowCostCenter">
@@ -64,7 +61,6 @@
           {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
         </ng-option>
       </ng-select>
-
     </div>
   </div>
   <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowEntriesStatus">
@@ -90,12 +86,24 @@
   <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowBranch">
     <div class="input-group  popup">
       <label for="0" class="label-name"> {{'component-names.branch'|translate}}</label>
-      <ng-select style="width:100%" [(ngModel)]='selectedBranchId' name='branchId' class="" id="branchId"
+      <!-- <ng-select style="width:100%" [(ngModel)]='selectedBranchId' name='branchId' class="" id="branchId"
         (ngModelChange)="onSelectBranch()">
         <ng-option *ngFor="let branch of branchesList" [value]="branch.id">
           {{lang=="ar"?branch.nameAr:branch.nameEn}}
         </ng-option>
-      </ng-select>
+      </ng-select> -->
+      <p-multiSelect [options]="branchesList" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedBranchId"
+        [virtualScroll]="true" optionLabel="{{lang=='en'?'nameEn':'nameAr'}}" id="branches" name="branchIds"
+        class="w-100" defaultLabel="{{'general.select'|translate}}" (ngModelChange)="onSelectBranch()"></p-multiSelect>
+
+    </div>
+  </div>
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowVoucherKind">
+    <div class="input-group  popup">
+      <label for="0" class="label-name">{{'voucher-type.voucher-type'|translate}} </label>
+
+      <ng-select class="custom" [(ngModel)]='selectedVoucherKindId' [items]="voucherTypes" bindLabel="name"
+        bindValue="id" style="width:100%" (ngModelChange)="onSelectVoucherKind()"></ng-select>
 
     </div>
   </div>
@@ -118,11 +126,18 @@
     <div class="input-group  popup">
       <label for="0" class="label-name"> {{'general.level'|translate}}</label>
       <div class="form-group position-relative">
-        <input type="number" class="form-control icon-branch" [(ngModel)]='level' name='level'  id="level" (ngModelChange)="onChangeLevel()">
+        <input type="number" class="form-control icon-branch" [(ngModel)]='level' name='level' id="level"
+          (ngModelChange)="onChangeLevel()">
       </div>
     </div>
   </div>
-
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowReportOptions">
+    <div class="input-group  popup">
+      <label for="0" class="label-name"> {{'general.report-options'|translate}}</label>
+      <ng-select class="custom" [(ngModel)]='selectedReportOptionId' (ngModelChange)="onSelectReportOption()"
+        [items]="reportOptionsEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+    </div>
+  </div>
   <div class="col-md-4 col-12 pull-right" style="padding-top: 10px;">
     <button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch" (click)="FireSearch()"></button>
   </div>

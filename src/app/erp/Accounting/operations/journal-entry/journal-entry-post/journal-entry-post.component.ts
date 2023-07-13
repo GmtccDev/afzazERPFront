@@ -109,8 +109,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
           // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntryPost");
           if (res.success) {
-            this.journalEntry = res.response.items
-              ;
+            this.journalEntry = res.response.items.filter(x=>x.isCloseFiscalPeriod!=true);
+              
 
           }
 

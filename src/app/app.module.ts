@@ -37,8 +37,10 @@ import {SecurityModule} from './erp/security/security.module';
 import { MasterCodesRoutingModule } from './erp/master-codes/master-codes-routing.module';
 import { SearchDialogService } from './shared/services/search-dialog.service';
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+  
 }
 
 @NgModule({
@@ -55,8 +57,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     OverlayModule,
+
     SharedModule,
     AppRoutingModule,
+    
     HttpClientModule,
     NgbModule,
     ToastrModule.forRoot(),

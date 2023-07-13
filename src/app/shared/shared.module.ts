@@ -72,7 +72,7 @@ import {GregorianDateComponent} from 'src/app/shared/date/gregorian-date/gregori
 
 import { filter } from 'rxjs';
 import { NgbdModalContent } from './components/modal/modal-component';
- 
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -129,7 +129,8 @@ import { NgbdModalContent } from './components/modal/modal-component';
     MatButtonModule,MatInputModule,
     MatFormFieldModule,
     BidiModule,
-    NgSelectModule
+    NgSelectModule,
+    MultiSelectModule
   ],
   providers: [
     NavService,

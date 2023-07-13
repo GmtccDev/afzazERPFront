@@ -8,58 +8,16 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
-                        <div class="col-md-6 col-12">
-                        
-                            <div class="form-group position-relative">
-
-                               {{codeSerial}}
-                               
-
-                            </div>
-                        </div>
-                        <form [formGroup]="incomingChequeForm" id="journalEntrySubmit" class="tabs-form">
+                      
+                        <form [formGroup]="incomingChequeForm" id="incomingChequeSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.journalEntry-information'|translate}}</h3>
+                                    <h3>{{'component-names.incomingCheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-4 col-4">
-                                            <label for="bankAccountId" class="label-name">
-                                                {{'component-names.journal'|translate}}
-
-                                            </label>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="bankAccountId" (change)="onChangeJournal($event)"
-                                                    name='bankAccountId' class="" id="bankAccountId">
-                                                    <ng-option *ngFor="let journal of journalList" [value]="journal.id">
-                                                        {{lang=="ar"?journal.nameAr:journal.nameEn}}
-                                                    </ng-option>
-                                                </ng-select>
-
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="col-md-4 col-4">
-                                            <label for="receiptAccountId" class="label-name">
-                                                {{'component-names.fiscalPeriod'|translate}}
-
-                                            </label>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="receiptAccountId"
-                                                (change)="onChangefiscalPeriod($event)"
-                                                    name='receiptAccountId' class="" id="receiptAccountId">
-                                                    <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList"
-                                                        [value]="fiscalPeriod.id">
-                                                        {{lang=="ar"?fiscalPeriod.nameAr:fiscalPeriod.nameEn}}
-                                                    </ng-option>
-                                                </ng-select>
-
-                                            </div>
-
-                                        </div>
+                                
+                                     
                                         <div class="col-4 col-md-4">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
@@ -77,7 +35,36 @@
 
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label for="code" class="label-name">
+                                                {{'component-names.account'|translate}}
+                                            </label><span class="text-danger">*</span>
+                                            <div class="col-sm-6">
+                                                <div class="input-group form-group">
+                                                    <div class="input-group form-group">
 
+                                                        <select required class="form-control required"
+                                                            name="accountId"
+                                                            formControlName="accountId">
+
+                                                            <option dir="ltr"
+                                                                *ngFor="let account of accountList"
+                                                                [value]="account.id">
+                                                                {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                            </option>
+
+                                                        </select>
+
+                                                        <!-- <div class="input-group-prepend">
+                                                            <button (click)="ClickAccount(i)"
+                                                                class="btn btn-rounded btn-dark"
+                                                                type="button"><i
+                                                                    class="fa fa-search"></i></button>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 col-12">
                                             <label for="date" class="label-name">
                                                 {{'general.date'|translate}}</label><span class="text-danger">*</span>
@@ -95,7 +82,23 @@
 
                                             </div>
                                         </div>
-                                      
+                                        <div class="col-md-4 col-4">
+                                            <label for="currencyId" class="label-name">
+                                                {{'component-names.currencies'|translate}}
+
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="currencyId"
+                                                    name='currencyId' class="" id="currencyId">
+                                                    <ng-option *ngFor="let currency of currencyList"
+                                                        [value]="currency.id">
+                                                        {{lang=="ar"?currency.nameAr:currency.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                            </div>
+
+                                        </div>
                                         <div class="col-12 col-md-6">
                                             <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
                                             <div class="form-group position-relative">
@@ -106,17 +109,32 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6">
-                                            <div class="media">
-                                                <label class="col-form-label m-r-10">
-                                                    {{'journalEntry.openBalance'|translate}} </label>
-                                                <div class="icon-state media-body mx-5">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="openBalance"
-                                                            formControlName="openBalance">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+                                        <div class="col-md-6 col-12">
+                                            <label for="date" class="label-name">
+                                                {{'general.dueDate'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="date" class="form-control " name="dueDate"
+                                                    formControlName="dueDate">
+                                                <div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['dueDate'].errors && f['dueDate'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
                                                 </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="date" class="label-name">
+                                                {{'general.amount'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="input-group form-group">
+                                                <input type="number" required
+                                                    class="form-control required"
+                                                   
+                                                    formControlName="amount"
+                                                    name="amount" style="width: 70px;">
                                             </div>
                                         </div>
                                         <hr class="mt-3 mb-3 p-0">
@@ -146,13 +164,13 @@
                                                 <tr>
                                                     <!-- <th># </th> -->
                                                     <th style="width: 15%;">رقم الحساب</th>
-                                                    <th style="width: 10%;">مدين</th>
-                                                    <th style="width: 10%;">دائن</th>
+                                                    <th style="width: 10%;">كمية</th>
+                                                    <th style="width: 10%;">نوع المستفيد</th>
+                                                    <th style="width: 10%;"> المستفيد</th>
+                           
                                                     <th style="width: 15%;">العملة</th>
                                                     <th style="width: 10%;">التعادل</th>
-                                                    <th style="width: 10%;">مدين محلي</th>
-                                                    <th style="width: 10%;">دائن محلي</th>
-                                                    <th style="width: 15%;">مركز التكلفة</th>
+                                                   
                                                     <th style="width: 15%;">الوصف</th>
                                                     <th style="width: 1%;">الاجراءات</th>
                                                 </tr>
@@ -164,7 +182,7 @@
                                                         <!-- {{ i+1 }} -->
                                                         <!-- <input type="text"
                                                             style="border: none; border-color: transparent;" hidden
-                                                            formControlName="jEDetailSerial" name="jEDetailSerial"> -->
+                                                            formControlName="iCDetailSerial" name="iCDetailSerial"> -->
                                                     <!-- </td> -->
                                                     <td>
                                                         <div class="form-group row">
@@ -202,29 +220,38 @@
                                                                 <div class="input-group form-group">
                                                                     <input type="number" required
                                                                         class="form-control required"
-                                                                        (keypress)="numberOnly($event,i,'Credit')"
-                                                                        (input)="onInput($event.target.value,i,'Credit')"
-                                                                        formControlName="jEDetailCredit"
-                                                                        name="jEDetailCredit" style="width: 70px;">
+                                                                        (keypress)="numberOnly($event,i)"
+                                                                        (input)="onInput($event.target.value,i)"
+                                                                        formControlName="amount"
+                                                                        name="amount" style="width: 70px;">
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                     </td>
+                                                 
                                                     <td>
                                                         <div class="form-group row">
                                                             <div class="col-sm-12">
                                                                 <div class="input-group form-group">
-                                                                    <input type="number" required
-                                                                        class="form-control required"
-                                                                        (keypress)="numberOnly($event,i,'Debit')"
-                                                                        (input)="onInput($event.target.value,i,'Debit')"
-                                                                        formControlName="jEDetailDebit"
-                                                                        name="jEDetailDebit" style="width: 70px;">
+                                                                    <div class="input-group form-group">
+
+                                                                        <select class="form-control" name="beneficiaryTypeId" 
+                                                                            formControlName="beneficiaryTypeId"
+                                                                            [ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}">
+
+
+                                                                            <option
+                                                                                *ngFor="let  beneficiary of beneficiaryTypesEnum"
+                                                                                [value]="beneficiary.id">
+                                                                                {{beneficiary.name}}
+                                                                            </option>
+                                                                        </select>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </td>
                                                     <td>
                                                         <div class="form-group row">
@@ -232,20 +259,20 @@
                                                                 <div class="input-group form-group">
                                                                     <div class="input-group form-group">
 
-                                                                        <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)"
-                                                                            formControlName="currencyId"
-                                                                            [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+                                                                        <select required class="form-control required"
+                                                                            name="beneficiaryAccountId"
+                                                                            formControlName="beneficiaryAccountId">
 
-
-                                                                            <option
-                                                                                *ngFor="let currency of currencyList"
-                                                                                [value]="currency.id">
-                                                                                {{lang=="ar"?currency.nameAr:currency.nameEn}}
+                                                                            <option dir="ltr"
+                                                                                *ngFor="let account of accountList"
+                                                                                [value]="account.id">
+                                                                                {{lang=="ar"?account.nameAr:account.nameEn}}
                                                                             </option>
+
                                                                         </select>
-<!-- 
-                                                                        <div class="input-group-prepend">
-                                                                            <button (click)="ClickCostCenter(i)"
+
+                                                                        <!-- <div class="input-group-prepend">
+                                                                            <button (click)="ClickAccount(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
@@ -257,12 +284,25 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <input type="number" required   disabled="disabled"
-                                                                        class="form-control required"
-                                                                        formControlName="transactionFactor"
-                                                                        name="transactionFactor" style="width: 70px;">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="input-group form-group">
+                                                                        <div class="input-group form-group">
+    
+                                                                            <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)"
+                                                                                formControlName="currencyId"
+                                                                                [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+    
+    
+                                                                                <option
+                                                                                    *ngFor="let currency of currencyList"
+                                                                                    [value]="currency.id">
+                                                                                    {{lang=="ar"?currency.nameAr:currency.nameEn}}
+                                                                                </option>
+                                                                            </select>
+    
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -275,55 +315,14 @@
                                                                     <input type="number" required
                                                                         class="form-control required"   disabled="disabled"
                                                                      
-                                                                        formControlName="jEDetailCreditLocal"
-                                                                        name="jEDetailCreditLocal" style="width: 70px;">
+                                                                        formControlName="currencyLocal"
+                                                                        name="currencyLocal" style="width: 70px;">
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                     </td>
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <input type="number" required
-                                                                        class="form-control required"
-                                                                        disabled="disabled"
-                                                                        formControlName="jEDetailDebitLocal"
-                                                                        name="jEDetailDebitLocal" style="width: 70px;">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <div class="input-group form-group">
-
-                                                                        <select class="form-control" name="costCenterId"
-                                                                            formControlName="costCenterId"
-                                                                            [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}">
-
-                                                                            <option dir="ltr"
-                                                                                *ngFor="let costCenter of costCenterList"
-                                                                                [value]="costCenter.id">
-                                                                                {{costCenter.nameAr}}</option>
-
-                                                                        </select>
-
-                                                                        <!-- <div class="input-group-prepend">
-                                                                            <button (click)="ClickCostCenter(i)"
-                                                                                class="btn btn-rounded btn-dark"
-                                                                                type="button"><i
-                                                                                    class="fa fa-search"></i></button>
-                                                                        </div> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                                 
                                                     <td>
 
                                                         <textarea style="width: 100%;" formControlName="notes"
@@ -361,41 +360,5 @@
 
     </div>
 </section>
-<div class="col-md-2">
-    <div class="form-group">
-      <label class="control-label m-t-20"> اجمالي المدين </label>
-      <div class="input-group mb-12">
-
-        <label>{{totalCredit}}</label>
-
-
-      </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label m-t-20"> اجمالي الدائن </label>
-        <div class="input-group mb-12">
-  
-          <label for="totalDebitValue">{{totalDebit}}</label>
-        </div>
-      </div>
-  </div>
-  <div class="col-md-2">
-    <div class="form-group">
-      <label class="control-label m-t-20"> اجمالي المدين محلي</label>
-      <div class="input-group mb-12">
-
-        <label>{{totalCreditLocal}}</label>
-
-
-      </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label m-t-20">  اجمالي الدائن محلي</label>
-        <div class="input-group mb-12">
-  
-          <label for="totalDebitValue">{{totalDebitLocal}}</label>
-        </div>
-      </div>
-  </div>
 
   

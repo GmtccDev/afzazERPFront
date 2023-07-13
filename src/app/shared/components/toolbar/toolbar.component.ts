@@ -297,7 +297,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledUpate = true;
       this.disabledCancel = true;
       this.disabledDlete=true;
-      this.disabledPrint = true;
+      this.disabledPrint = false;
       this.disabledView=false;
       this.disableCancelDefaultReport = false;
 

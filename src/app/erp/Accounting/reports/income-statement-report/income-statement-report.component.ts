@@ -20,6 +20,9 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+  lang = localStorage.getItem("language");
+  companyId: string = localStorage.getItem("companyId");
+
   facialPeriodId:any;
 
   subsList: Subscription[] = [];
@@ -141,7 +144,11 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
       // "&reportParameter=leafAccountId!" + this.leafAccountId +
       // "&reportParameter=costCenterId!" + this.costCenterId +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
-      "&reportParameter=level!" + this.level 
+      "&reportParameter=level!" + this.level +
+      "&reportParameter=lang!" + this.lang+
+      "&reportParameter=companyId!" + this.companyId
+ 
+
     debugger
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -182,7 +189,7 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
         currentBtn;
         if (currentBtn != null) {
           
-          if (currentBtn.action == ToolbarActions.View) {
+          if (currentBtn.action == ToolbarActions.Print) {
             this.gotoViewer();
 
           }
