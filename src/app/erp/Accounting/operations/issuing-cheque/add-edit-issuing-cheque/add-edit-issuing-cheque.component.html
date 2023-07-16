@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> Proccessing... </p>
+    <p style="color: white ;font-size: 20px;">  {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
@@ -9,11 +9,11 @@
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
 
-                        <form [formGroup]="incomingChequeForm" id="incomingChequeSubmit" class="tabs-form">
+                        <form [formGroup]="IssuingChequeForm" id="issuingChequeSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.incomingCheque-information'|translate}}</h3>
+                                    <h3>{{'component-names.issuing-cheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
 
@@ -153,7 +153,7 @@
 
                                 </div>
 
-                                <div formArrayName="incomingChequeDetail" style="width: 100% ; overflow-x: scroll;">
+                                <div formArrayName="IssuingChequeDetail" style="width: 100% ; overflow-x: scroll;">
                                     <div style="width: 1500px;">
                                         <table class="table table-sm m-b-0 table-broder ">
                                             <thead class="thead-light">
@@ -172,7 +172,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let row of incomingChequeForm.get('incomingChequeDetail')['controls']; let i = index"
+                                                <tr *ngFor="let row of IssuingChequeForm.get('IssuingChequeDetail')['controls']; let i = index"
                                                     [formGroupName]="i">
                                                     <!-- <td> -->
                                                     <!-- {{ i+1 }} -->
