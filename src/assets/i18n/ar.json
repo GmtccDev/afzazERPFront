@@ -234,7 +234,9 @@
         "vouchers-transactions-report":"تقرير حركة السندات",
         "close-fiscal-period":"اغلاق الفترة المحاسبية",
         "incomingCheque":"الشيك الوراد",
-        "incomingCheque-information":"معلومات الشيك الوراد"
+        "incomingCheque-information":"معلومات الشيك الوراد",
+        "issuing-cheque":"الشيك الصادر",
+        "issuing-cheque-information":"معلومات الشيك الصادر"
 
     },
     "general": {

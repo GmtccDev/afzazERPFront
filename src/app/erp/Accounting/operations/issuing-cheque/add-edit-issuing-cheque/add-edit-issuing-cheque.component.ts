@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
-import { IncomingChequeServiceProxy } from '../../../services/incoming-cheque.services';
+import { IssuingChequeServiceProxy } from '../../../services/issuing-cheque.services';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { combineLatest } from 'rxjs';
@@ -19,28 +19,28 @@ import { GeneralConfigurationServiceProxy } from '../../../services/general-conf
 import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 @Component({
-  selector: 'app-add-edit-incoming-cheque',
-  templateUrl: './add-edit-incoming-cheque.component.html',
-  styleUrls: ['./add-edit-incoming-cheque.component.scss']
+  selector: 'app-add-edit-issuing-cheque',
+  templateUrl: './add-edit-issuing-cheque.component.html',
+  styleUrls: ['./add-edit-issuing-cheque.component.scss']
 })
-export class AddEditIncomingChequeComponent implements OnInit {
+export class AddEditIssuingChequeComponent implements OnInit {
   //#region Main Declarations
-  incomingChequeForm!: FormGroup;
+  IssuingChequeForm!: FormGroup;
   sub: any;
   url: any;
   id: any = 0;
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
-  incomingCheque: [] = [];
-  addUrl: string = '/accounting-operations/incomingCheque/add-incomingCheque';
-  updateUrl: string = '/accounting-operations/incomingCheque/update-incomingCheque/';
-  listUrl: string = '/accounting-operations/incomingCheque';
+  IssuingCheque: [] = [];
+  addUrl: string = '/accounting-operations/issuingCheque/add-issuingCheque';
+  updateUrl: string = '/accounting-operations/issuingCheque/update-issuingCheque/';
+  listUrl: string = '/accounting-operations/issuingCheque';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.incomingCheque"),
+    componentList: this.translate.instant("component-names.issuing-cheque"),
     componentAdd: '',
 
   };
@@ -75,7 +75,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   fiscalPeriod: any;
   beneficiaryTypesEnum: ICustomEnum[]=[];
   constructor(
-    private incomingChequeService: IncomingChequeServiceProxy,
+    private IssuingChequeService: IssuingChequeServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -87,7 +87,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
 
   ) {
-    this.defineincomingChequeForm();
+    this.defineIssuingChequeForm();
   }
   //#endregion
 
@@ -103,7 +103,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.getBeneficiaryTypes();
 
     if (this.currnetUrl == this.addUrl) {
-      this.getincomingChequeCode();
+      this.getIssuingChequeCode();
     }
 
     this.sub = this.route.params.subscribe((params) => {
@@ -111,7 +111,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         this.id = params['id'];
 
         if (this.id) {
-          this.getincomingChequeById(this.id);
+          this.getIssuingChequeById(this.id);
         }
         this.url = this.router.url.split('/')[2];
       }
@@ -119,13 +119,13 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   onSelectJournal(event) {
 
-    this.incomingChequeForm.controls.accountId.setValue(event.id);
+    this.IssuingChequeForm.controls.accountId.setValue(event.id);
     this.showSearchModal = false;
   }
   onSelectCountry(event) {
 
 
-    this.incomingChequeForm.controls.countryId.setValue(event.id);
+    this.IssuingChequeForm.controls.countryId.setValue(event.id);
     this.showSearchModalCountry = false;
   }
   //#endregion
@@ -200,8 +200,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
 
   }
-  defineincomingChequeForm() {
-    this.incomingChequeForm = this.fb.group({
+  defineIssuingChequeForm() {
+    this.IssuingChequeForm = this.fb.group({
       id: 0,
       date: ['', Validators.compose([Validators.required])],
       code: CODE_REQUIRED_VALIDATORS,
@@ -211,17 +211,17 @@ export class AddEditIncomingChequeComponent implements OnInit {
       accountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       currencyId: [null, Validators.compose([Validators.required])],
-      incomingChequeDetail: this.fb.array([])
+      IssuingChequeDetail: this.fb.array([])
     });
     this.initGroup();
    
     
-    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+    const ctrl = <FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail'];
    
-    this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
+    this.IssuingChequeForm.get('IssuingChequeDetail').valueChanges.subscribe(values => {
       debugger
       // this.totalamount = 0;
-      // const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+      // const ctrl = <FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail'];
       // ctrl.controls.forEach(x => {
       //   let parsed = parseInt(x.get('amount').value)
       //   this.totalamount += parsed
@@ -232,16 +232,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   get jEMasterStatusId() {
 
-    return this.incomingChequeForm.controls['jEMasterStatusId'].value;
+    return this.IssuingChequeForm.controls['jEMasterStatusId'].value;
   }
-  get incomingChequeDetailList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
+  get IssuingChequeDetailList(): FormArray { return this.IssuingChequeForm.get('IssuingChequeDetail') as FormArray; }
   initGroup() {
     debugger
     this.counter += 1;
-    let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
-    incomingChequeDetail.push(this.fb.group({
+    let IssuingChequeDetail = this.IssuingChequeForm.get('IssuingChequeDetail') as FormArray;
+    IssuingChequeDetail.push(this.fb.group({
       id: [null],
-      incomingChequeId: [null],
+      IssuingChequeId: [null],
       accountId: [null, Validators.required],
       beneficiaryTypeId:[null],
       currencyId: [null],
@@ -257,12 +257,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
     },
 
     ));
-    console.log(incomingChequeDetail.value)
+    console.log(IssuingChequeDetail.value)
   }
   onDeleteRow(rowIndex) {
 
-    let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
-    incomingChequeDetail.removeAt(rowIndex);
+    let IssuingChequeDetail = this.IssuingChequeForm.get('IssuingChequeDetail') as FormArray;
+    IssuingChequeDetail.removeAt(rowIndex);
     this.counter -= 1;
   }
   atLeastOne = (validator: ValidatorFn, controls: string[]) => (
@@ -280,16 +280,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
     };
   };
   //#endregion
-  get incomingChequeDetailDTOList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
+  get IssuingChequeDetailDTOList(): FormArray { return this.IssuingChequeForm.get('IssuingChequeDetail') as FormArray; }
 
   //#region CRUD operations
-  getincomingChequeById(id: any) {
+  getIssuingChequeById(id: any) {
 
     const promise = new Promise<void>((resolve, reject) => {
-      this.incomingChequeService.getIncomingCheque(id).subscribe({
+      this.IssuingChequeService.getIssuingCheque(id).subscribe({
         next: (res: any) => {
 
-          this.incomingChequeForm = this.fb.group({
+          this.IssuingChequeForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
             code: res.response?.code,
@@ -299,17 +299,17 @@ export class AddEditIncomingChequeComponent implements OnInit {
             accountId: res.response?.accountId,
             amount: res.response?.amount,
             currencyId: res.response?.currencyId,
-            incomingChequeDetail: this.fb.array([])
+            IssuingChequeDetail: this.fb.array([])
 
           });
-          let ListDetail = res.response?.incomingChequeDetail;
+          let ListDetail = res.response?.IssuingChequeDetail;
 
-          this.incomingChequeDetailDTOList.clear();
+          this.IssuingChequeDetailDTOList.clear();
           ListDetail.forEach(element => {
 
-            this.incomingChequeDetailDTOList.push(this.fb.group({
+            this.IssuingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
-              incomingChequeId: element.incomingChequeId,
+              IssuingChequeId: element.IssuingChequeId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
@@ -330,11 +330,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
           });
       
           
-          const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+          const ctrl = <FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail'];
        
-          this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
+          this.IssuingChequeForm.get('IssuingChequeDetail').valueChanges.subscribe(values => {
             // this.totalamount = 0;
-            // const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+            // const ctrl = <FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail'];
             // ctrl.controls.forEach(x => {
             //   let parsed = parseInt(x.get('amount').value)
             //   this.totalamount += parsed
@@ -343,8 +343,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
             // });
           })
           console.log(
-            'this.incomingChequeForm.value set value',
-            this.incomingChequeForm.value
+            'this.IssuingChequeForm.value set value',
+            this.IssuingChequeForm.value
           );
         },
         error: (err: any) => {
@@ -358,15 +358,15 @@ export class AddEditIncomingChequeComponent implements OnInit {
     return promise;
   }
 
-  getincomingChequeCode() {
+  getIssuingChequeCode() {
     const promise = new Promise<void>((resolve, reject) => {
 
-      this.incomingChequeService.getLastCode().subscribe({
+      this.IssuingChequeService.getLastCode().subscribe({
 
         next: (res: any) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.incomingCheque");
-          this.incomingChequeForm.patchValue({
+          this.toolbarPathData.componentList = this.translate.instant("component-names.IssuingCheque");
+          this.IssuingChequeForm.patchValue({
             code: res.response
           });
          
@@ -385,7 +385,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   //#region Helper Functions
 
   get f(): { [key: string]: AbstractControl } {
-    return this.incomingChequeForm.controls;
+    return this.IssuingChequeForm.controls;
   }
 
 
@@ -407,8 +407,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add incomingCheque';
-            this.defineincomingChequeForm();
+            this.toolbarPathData.componentAdd = 'Add IssuingCheque';
+            this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -432,9 +432,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   return;
     // }
     debugger
-    console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
+    console.log("getRawValue=>", this.IssuingChequeForm.getRawValue());
     this.totalamount = 0;
-    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+    const ctrl = <FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail'];
   
     ctrl.controls.forEach(x => {
       let parsed = parseInt(x.get('amount').value)
@@ -449,7 +449,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       )
       return;
     }
-    if ((this.totalamount !== this.incomingChequeForm.value.amount)) {
+    if ((this.totalamount !== this.IssuingChequeForm.value.amount)) {
       this.alertsService.showError(
         ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
         ""
@@ -457,17 +457,17 @@ export class AddEditIncomingChequeComponent implements OnInit {
       return;
     }
     debugger
-    //  var entity = new CreateIncomingChequeCommand();
-    if (this.incomingChequeForm.valid) {
+    //  var entity = new CreateIssuingChequeCommand();
+    if (this.IssuingChequeForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.incomingChequeForm.value;
+        var entity = this.IssuingChequeForm.value;
 
-        this.incomingChequeService.createIncomingCheque(entity).subscribe({
+        this.IssuingChequeService.createIssuingCheque(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
 
-            this.defineincomingChequeForm();
+            this.defineIssuingChequeForm();
 
             this.submited = false;
             setTimeout(() => {
@@ -488,7 +488,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
     } else {
 
-      //  return this.incomingChequeForm.markAllAsTouched();
+      //  return this.IssuingChequeForm.markAllAsTouched();
     }
   }
 
@@ -498,7 +498,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
     let currencyModel = this.currencyList.find(x => x.id == event.target.value);
     const faControl =
-      (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(index);
+      (<FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail']).at(index);
     faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
     faControl['controls'].currencyLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
   //  faControl['controls'].amountLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
@@ -506,9 +506,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   onUpdate() {
 
-    console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
+    console.log("getRawValue=>", this.IssuingChequeForm.getRawValue());
     this.totalamount = 0;
-    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+    const ctrl = <FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail'];
     ctrl.controls.forEach(x => {
       let parsed = parseInt(x.get('amount').value)
       this.totalamount += parsed
@@ -516,24 +516,24 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.cd.detectChanges()
     });
    
-    if ((this.totalamount!= this.incomingChequeForm.value.amount)) {
+    if ((this.totalamount!= this.IssuingChequeForm.value.amount)) {
       this.alertsService.showError(
         ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
                 ""
       )
       return;
     }
-    //  var entity = new CreateIncomingChequeCommand();
-    if (this.incomingChequeForm.valid) {
+    //  var entity = new CreateIssuingChequeCommand();
+    if (this.IssuingChequeForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.incomingChequeForm.value;
+        var entity = this.IssuingChequeForm.value;
 
-        this.incomingChequeService.updateIncomingCheque(entity).subscribe({
+        this.IssuingChequeService.updateIssuingCheque(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result dataaddData ', result);
 
-            //  this.defineincomingChequeForm();
+            //  this.defineIssuingChequeForm();
 
             this.submited = false;
             setTimeout(() => {
@@ -554,7 +554,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
     } else {
 
-      //  return this.incomingChequeForm.markAllAsTouched();
+      //  return this.IssuingChequeForm.markAllAsTouched();
     }
   }
 
@@ -660,7 +660,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.index = i;
    // if (type == 'Credit') {
       const faControl =
-        (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
+        (<FormArray>this.IssuingChequeForm.controls['IssuingChequeDetail']).at(i);
    //   faControl['controls'].amount.setValue(0);
 
       let amount = faControl['controls'].amount.value;

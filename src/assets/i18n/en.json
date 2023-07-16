@@ -362,7 +362,9 @@
         "bankAccount-information":"  Bank Account Information",
         "close-fiscal-period":"Close Fiscal Period",
         "incomingCheque":" Incoming Cheque",
-        "incomingCheque-information":"Incoming Cheque Information "
+        "incomingCheque-information":"Incoming Cheque Information ",
+        "issuing-cheque":" Issuing Cheque",
+        "issuing-cheque-information":"Issuing Cheque Information "
 
     },
     "language": {

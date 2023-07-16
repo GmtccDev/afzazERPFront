@@ -9,6 +9,8 @@ import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journ
 import { CloseFiscalPeriodComponent } from './close-fiscal-period/close-fiscal-period.component';
 import { IncomingChequeComponent } from './incoming-cheque/incoming-cheque.component';
 import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incoming-cheque/add-edit-incoming-cheque.component';
+import { IssuingChequeComponent } from './issuing-cheque/issuing-cheque.component';
+import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing-cheque/add-edit-issuing-cheque.component';
 
 
 const routes: Routes = [
@@ -28,7 +30,9 @@ const routes: Routes = [
 			{ path: 'incomingCheque', component: IncomingChequeComponent },
 			{ path: 'incomingCheque/add-incomingCheque', component: AddEditIncomingChequeComponent },
 			{ path: 'incomingCheque/update-incomingCheque/:id', component: AddEditIncomingChequeComponent },
-
+			{ path: 'issuingCheque', component: IssuingChequeComponent },
+			{ path: 'issuingCheque/add-issuingCheque', component: AddEditIssuingChequeComponent },
+			{ path: 'issuingCheque/update-issuingCheque/:id', component: AddEditIssuingChequeComponent },
 		]
 	}
 ];
