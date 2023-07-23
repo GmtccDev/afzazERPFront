@@ -28,9 +28,9 @@ export class IssuingChequeServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createIssuingCheque(branch: any): Observable<any> {
+    createIssuingCheque(issuingCheque: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/addIssuingCheque?", branch);
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/add?", issuingCheque);
     }
     // ids: number[] | undefined;
     deleteListIssuingCheque(branch: any): Observable<number> {

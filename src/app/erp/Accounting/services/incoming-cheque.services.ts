@@ -29,9 +29,11 @@ export class IncomingChequeServiceProxy {
     }
 
     createIncomingCheque(branch: any): Observable<any> {
-
+        debugger
         return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/add?", branch);
+       
     }
+   
     // ids: number[] | undefined;
     deleteListIncomingCheque(branch: any): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteList?", branch);

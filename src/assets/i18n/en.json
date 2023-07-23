@@ -102,6 +102,7 @@
         "subscription-number": "Subscription Number",
         "capacity": "Capacity",
         "description": "Description",
+        "procedures":"Procedures",
         "meter-number": "Meter Number",
         "meter-type": "Meter Type",
         "status": "Status",
@@ -115,6 +116,7 @@
         "default-account": "Default Account",
         "default-currency": "Default Currency",
         "currency": "Currency",
+        "balance":"Balance",
         "need-review": "Need Review",
         "print-options": "Print Options",
         "default-layout": "Default Layout",
@@ -131,6 +133,7 @@
         "debit-after-conversion": "Debit After Conversion",
         "credit-after-conversion": "Credit After Conversion",
         "beneficiary": "Beneficiary",
+        "beneficiary-type": "Beneficiary Type",
         "beneficiary-account": "Beneficiary Account",
         "choose-template":"Choose Template",
         "template-name":"Template Name",
@@ -148,7 +151,8 @@
         "report-options":"Report Options",
         "default-cash-account":"Default Cash Account",
         "amount":"amount",
-        "dueDate":"Due date"
+        "dueDate":"Due date",
+        "add-new-row":"Add New Row"
 
     },
     "menu": {},
@@ -447,6 +451,11 @@
 "account-classification":{
     "add-account-classification":"Add Account Classification",
     "update-account-classification":"Add Account Classification"
+},
+"incoming-cheque":{
+    "add-incoming-cheque":"Add Incoming Cheque",
+    "sum-values-equal-to-cheque-details":"Sum of values is equal to cheque details"
+   
 
 }
 

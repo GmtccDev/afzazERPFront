@@ -13,8 +13,6 @@ import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url
 import { IssuingChequeServiceProxy } from '../../../services/issuing-cheque.services';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
@@ -25,6 +23,8 @@ import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 })
 export class AddEditIssuingChequeComponent implements OnInit {
   //#region Main Declarations
+  branchId: string = localStorage.getItem("branchId");
+  companyId: string = localStorage.getItem("companyId");
   IssuingChequeForm!: FormGroup;
   sub: any;
   url: any;
@@ -211,6 +211,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
       accountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       currencyId: [null, Validators.compose([Validators.required])],
+      companyId:this.companyId,
+      branchId:this.branchId,
       IssuingChequeDetail: this.fb.array([])
     });
     this.initGroup();
@@ -309,7 +311,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
             this.IssuingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
-              IssuingChequeId: element.IssuingChequeId,
+              issuingChequeId: element.issuingChequeId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
@@ -365,7 +367,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
         next: (res: any) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.IssuingCheque");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.issuing-cheque");
           this.IssuingChequeForm.patchValue({
             code: res.response
           });
@@ -407,7 +409,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add IssuingCheque';
+            this.toolbarPathData.componentAdd = this.translate.instant("issuing-cheque.add-issuing-cheque");
             this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -444,14 +446,14 @@ export class AddEditIssuingChequeComponent implements OnInit {
     });
     if ((this.totalamount == 0 )) {
       this.alertsService.showError(
-        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
         ""
       )
       return;
     }
     if ((this.totalamount !== this.IssuingChequeForm.value.amount)) {
       this.alertsService.showError(
-        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
         ""
       )
       return;
@@ -461,9 +463,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
     if (this.IssuingChequeForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
         var entity = this.IssuingChequeForm.value;
-
+        debugger
         this.IssuingChequeService.createIssuingCheque(entity).subscribe({
           next: (result: any) => {
+            debugger
             this.spinner.show();
             console.log('result dataaddData ', result);
 
@@ -518,7 +521,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
    
     if ((this.totalamount!= this.IssuingChequeForm.value.amount)) {
       this.alertsService.showError(
-        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
                 ""
       )
       return;
@@ -594,8 +597,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
             this.costCenterList = res.response;
 
           }
-
-
           resolve();
 
         },
@@ -670,9 +671,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
         faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
        // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
       }
-    
-    
-
 
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -682,7 +680,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
   }
   ClickCostCenter(i) {
-
     this.showCostCenterModal = true;
     this.index = i;
 

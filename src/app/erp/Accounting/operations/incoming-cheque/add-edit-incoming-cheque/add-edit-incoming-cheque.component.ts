@@ -13,8 +13,6 @@ import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url
 import { IncomingChequeServiceProxy } from '../../../services/incoming-cheque.services';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
@@ -25,6 +23,9 @@ import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 })
 export class AddEditIncomingChequeComponent implements OnInit {
   //#region Main Declarations
+
+  branchId: string = localStorage.getItem("branchId");
+  companyId: string = localStorage.getItem("companyId");
   incomingChequeForm!: FormGroup;
   sub: any;
   url: any;
@@ -170,12 +171,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
           console.log(res);
-
           if (res.success && res.response.items.length>0)  {
-
-
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
@@ -211,6 +208,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
       accountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       currencyId: [null, Validators.compose([Validators.required])],
+      companyId:this.companyId,
+      branchId:this.branchId,
+      status:0,
       incomingChequeDetail: this.fb.array([])
     });
     this.initGroup();
@@ -260,7 +260,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
     console.log(incomingChequeDetail.value)
   }
   onDeleteRow(rowIndex) {
-
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
     incomingChequeDetail.removeAt(rowIndex);
     this.counter -= 1;
@@ -284,7 +283,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   //#region CRUD operations
   getincomingChequeById(id: any) {
-
     const promise = new Promise<void>((resolve, reject) => {
       this.incomingChequeService.getIncomingCheque(id).subscribe({
         next: (res: any) => {
@@ -407,7 +405,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add incomingCheque';
+            this.toolbarPathData.componentAdd =  this.translate.instant("incoming-cheque.add-incoming-cheque");
             this.defineincomingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -444,14 +442,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
     if ((this.totalamount == 0 )) {
       this.alertsService.showError(
-        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
         ""
       )
       return;
     }
     if ((this.totalamount !== this.incomingChequeForm.value.amount)) {
       this.alertsService.showError(
-        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
         ""
       )
       return;
@@ -465,8 +463,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
         this.incomingChequeService.createIncomingCheque(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
+            debugger
             console.log('result dataaddData ', result);
-
             this.defineincomingChequeForm();
 
             this.submited = false;
@@ -518,7 +516,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
    
     if ((this.totalamount!= this.incomingChequeForm.value.amount)) {
       this.alertsService.showError(
-        ' مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك',
+        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
                 ""
       )
       return;
