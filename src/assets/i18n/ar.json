@@ -301,6 +301,7 @@
         "cost-center-account": "حساب مركز التكلفة",
         "cost-center": " مركز التكلفة",
         "description": "الوصف",
+        "procedures":"الأجراءات",
         "details": "التفاصيل",
         "debit": "مدين",
         "credit": "دائن",
@@ -308,7 +309,9 @@
         "debit-after-conversion": "مدين بعد التحويل",
         "credit-after-conversion": "دائن بعد التحويل",
         "beneficiary": "المستفيد",
+        "beneficiary-type": "نوع المستفيد",
         "beneficiary-account": "حساب المستفيد",
+        "balance":"التعادل",
         "notes": "ملاحظات",
         "gregorian":"ميلادى",
         "hijri":"هجرى",
@@ -325,9 +328,11 @@
         "template-name":"أسم النموذج",
         "report-options":"خيارات التقرير",
         "default-cash-account":"حساب النقدية الافتراضى",
-
         "amount":"الكمية",
-        "dueDate":"تاريخ الاستحقاق"
+        "dueDate":"تاريخ الاستحقاق",
+        "account-number":"رقم الحساب",
+        "add-new-row":"اضافة صف جديد"
+
 
 
     },
@@ -431,6 +436,13 @@
     "account-classification":{
         "add-account-classification":"اضافة تصنيف الحساب",
         "update-account-classification":"تحديث تصنيف الحساب"
+    
+    },
+    "incoming-cheque":{
+        "add-incoming-cheque":"اضافة شيك وارد",
+        "sum-values-equal-to-cheque-details":"مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك"
+
+       
     
     }
 }

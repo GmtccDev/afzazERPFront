@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;">  {{'general.loading'|translate}}... </p>
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
@@ -8,16 +8,12 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
-
                         <form [formGroup]="IssuingChequeForm" id="issuingChequeSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
-
                                     <h3>{{'component-names.issuing-cheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-
-
                                         <div class="col-4 col-md-4">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
@@ -85,6 +81,7 @@
                                                 {{'component-names.currencies'|translate}}
 
                                             </label>
+                                            <span class="text-danger">*</span>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="currencyId"
                                                     name='currencyId' class="" id="currencyId">
@@ -93,6 +90,14 @@
                                                         {{lang=="ar"?currency.nameAr:currency.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
+                                                <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
 
                                             </div>
 
@@ -159,16 +164,15 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <!-- <th># </th> -->
-                                                    <th style="width: 15%;">رقم الحساب</th>
-                                                    <th style="width: 10%;">كمية</th>
-                                                    <th style="width: 10%;">نوع المستفيد</th>
-                                                    <th style="width: 10%;"> المستفيد</th>
-
-                                                    <th style="width: 15%;">العملة</th>
-                                                    <th style="width: 10%;">التعادل</th>
-
-                                                    <th style="width: 15%;">الوصف</th>
-                                                    <th style="width: 1%;">الاجراءات</th>
+                                                    <th style="width: 15%;">{{'general.account-number'|translate}}</th>
+                                                    <th style="width: 10%;">{{'general.amount'|translate}}</th>
+                                                    <th style="width: 10%;">{{'general.beneficiary-type'|translate}}
+                                                    </th>
+                                                    <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
+                                                    <th style="width: 15%;">{{'general.currency'|translate}}</th>
+                                                    <th style="width: 10%;">{{'general.balance'|translate}}</th>
+                                                    <th style="width: 15%;">{{'general.description'|translate}}</th>
+                                                    <th style="width: 1%;">{{'general.procedures'|translate}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -223,9 +227,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </td>
-
                                                     <td>
                                                         <div class="form-group row">
                                                             <div class="col-sm-12">
@@ -291,14 +293,13 @@
                                                                                 (change)="onChangeCurrency($event,i)"
                                                                                 formControlName="currencyId"
                                                                                 [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
-
-
                                                                                 <option
                                                                                     *ngFor="let currency of currencyList"
                                                                                     [value]="currency.id">
                                                                                     {{lang=="ar"?currency.nameAr:currency.nameEn}}
                                                                                 </option>
                                                                             </select>
+
 
                                                                         </div>
                                                                     </div>
@@ -334,21 +335,20 @@
                                                         <button type="button"
                                                             class="btn btn-square btn-danger btn-sm waves-effect waves-light"
                                                             (click)="onDeleteRow(i)"> <i
-                                                                class="icofont icofont-ui-delete"></i> حذف</button>
+                                                                class="icofont icofont-ui-delete"></i>
+                                                            {{'buttons.delete'|translate}}</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-
-
-
                                 </div>
                             </div>
                             <br>
 
-                            <button type="button" (click)="initGroup()" class="btn btn-rounded btn-success">اضافة صف
-                                جديد</button>
+                            <button type="button" (click)="initGroup()"
+                                class="btn btn-rounded btn-success">{{'general.add-new-row'|translate}}
+                            </button>
                         </form>
 
 
