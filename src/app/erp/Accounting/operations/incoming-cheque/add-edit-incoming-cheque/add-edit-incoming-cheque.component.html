@@ -134,11 +134,19 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="date" class="label-name">
+                                            <label for="amount" class="label-name">
                                                 {{'general.amount'|translate}}</label><span class="text-danger">*</span>
                                             <div class="input-group form-group">
                                                 <input type="number" required class="form-control required"
                                                     formControlName="amount" name="amount" style="width: 70px;">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="amountLocal" class="label-name">
+                                                {{'general.amount-local'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="input-group form-group">
+                                                <input type="number" required class="form-control required"
+                                                    formControlName="amountLocal" name="amountLocal" style="width: 70px;">
                                             </div>
                                         </div>
                                         <hr class="mt-3 mb-3 p-0">
@@ -173,6 +181,8 @@
                                                     </th>
                                                     <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
                                                     <th style="width: 15%;">{{'general.currency'|translate}}</th>
+                                                    <th style="width: 10%;">{{'general.currency-conversion-factor'|translate}}</th>
+
                                                     <th style="width: 10%;">{{'general.balance'|translate}}</th>
                                                     <th style="width: 15%;">{{'general.description'|translate}}</th>
                                                     <th style="width: 1%;">{{'general.procedures'|translate}}</th>
@@ -321,6 +331,20 @@
                                                                     <input type="number" required
                                                                         class="form-control required"
                                                                         disabled="disabled"
+                                                                        formControlName="transactionFactor"
+                                                                        name="transactionFactor" style="width: 70px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group form-group">
+                                                                    <input type="number" required
+                                                                        class="form-control required"
+                                                                        disabled="disabled"
                                                                         formControlName="currencyLocal"
                                                                         name="currencyLocal" style="width: 70px;">
                                                                 </div>
@@ -344,12 +368,46 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                
                             </div>
                             <br>
 
                             <button type="button" (click)="initGroup()"
                                 class="btn btn-rounded btn-success">{{'general.add-new-row'|translate}}
                             </button>
+                            <div formArrayName="incomingChequeStatusDetail" style="width: 100% ; overflow-x: scroll;">
+                                <div style="width: 1500px;">
+                                    <table class="table table-sm m-b-0 table-broder ">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <!-- <th># </th> -->
+                                                <th style="width: 15%;">Date</th>
+                                                <th style="width: 10%;">Status</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of incomingChequeForm.get('incomingChequeStatusDetail')['controls']; let i = index"
+                                                [formGroupName]="i">
+                                           
+                                                <td>
+                                                    {{row.date}
+                                                   
+                                                </td>
+
+                                                <td>
+                                                  
+
+                                                </td>
+
+                                          
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </form>
 
 

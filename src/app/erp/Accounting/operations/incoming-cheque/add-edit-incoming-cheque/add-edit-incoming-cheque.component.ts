@@ -30,6 +30,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   sub: any;
   url: any;
   id: any = 0;
+  mainCurrencyId: number;
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
@@ -74,7 +75,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   serial: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
-  beneficiaryTypesEnum: ICustomEnum[]=[];
+  beneficiaryTypesEnum: ICustomEnum[] = [];
   constructor(
     private incomingChequeService: IncomingChequeServiceProxy,
     private router: Router,
@@ -140,7 +141,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
   }
   getBeneficiaryTypes() {
-    
+
     if (this.lang == 'en') {
       this.beneficiaryTypesEnum = convertEnumToArray(BeneficiaryTypeEnum);
     }
@@ -172,9 +173,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           console.log(res);
-          if (res.success && res.response.items.length>0)  {
+          if (res.success && res.response.items.length > 0) {
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.items.find(c => c.id == 3).value;
+            this.mainCurrencyId = res.response.items.find(c => c.id == 1).value;
+
             // if (this.isMultiCurrency) {
             //   this.getCurrency();
             // }
@@ -203,21 +206,24 @@ export class AddEditIncomingChequeComponent implements OnInit {
       date: ['', Validators.compose([Validators.required])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      dueDate:['', Validators.compose([Validators.required])],
+      dueDate: ['', Validators.compose([Validators.required])],
       notes: null,
       accountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
+      amountLocal: ['', Validators.compose([Validators.required])],
       currencyId: [null, Validators.compose([Validators.required])],
-      companyId:this.companyId,
-      branchId:this.branchId,
-      status:0,
-      incomingChequeDetail: this.fb.array([])
+      companyId: this.companyId,
+      branchId: this.branchId,
+      status: 0,
+      incomingChequeDetail: this.fb.array([]),
+      incomingChequeStatusDetail: this.fb.array([])
+
     });
     this.initGroup();
-   
-    
+
+
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
-   
+
     this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
       debugger
       // this.totalamount = 0;
@@ -225,7 +231,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       // ctrl.controls.forEach(x => {
       //   let parsed = parseInt(x.get('amount').value)
       //   this.totalamount += parsed
-      
+
       //   this.cd.detectChanges()
       // });
     })
@@ -239,17 +245,24 @@ export class AddEditIncomingChequeComponent implements OnInit {
     debugger
     this.counter += 1;
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
+    debugger
+    // if(incomingChequeDetail!=undefined)
+    // {
+    //  this.incomingChequeForm.value.amount=this.incomingChequeForm.get('incomingChequeDetail').value[0].amount;
+    //  this.incomingChequeForm.value.amountLocal=this.incomingChequeForm.get('incomingChequeDetail').value[0].currencyLocal;
+    // }
+
     incomingChequeDetail.push(this.fb.group({
       id: [null],
       incomingChequeId: [null],
       accountId: [null, Validators.required],
-      beneficiaryTypeId:[null],
+      beneficiaryTypeId: [null],
       currencyId: [null],
       transactionFactor: [null],
       notes: [''],
       amount: [0.0],
-      currencyLocal:[null],
-      beneficiaryAccountId:[null],
+      currencyLocal: [null],
+      beneficiaryAccountId: [null],
       iCDetailSerial: [this.counter]
     }, {
       validator: this.atLeastOne(Validators.required, ['amount', 'amount']),
@@ -280,6 +293,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   };
   //#endregion
   get incomingChequeDetailDTOList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
+  get incomingChequeDetail2DTOList(): FormArray { return this.incomingChequeForm.get('incomingChequeStatusDetail') as FormArray; }
 
   //#region CRUD operations
   getincomingChequeById(id: any) {
@@ -296,8 +310,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
             notes: res.response?.notes,
             accountId: res.response?.accountId,
             amount: res.response?.amount,
+            amountLocal: res.response?.amountLocal,
+
             currencyId: res.response?.currencyId,
-            incomingChequeDetail: this.fb.array([])
+            incomingChequeDetail: this.fb.array([]),
+            incomingChequeStatusDetail: this.fb.array([])
+
 
           });
           let ListDetail = res.response?.incomingChequeDetail;
@@ -313,12 +331,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
               transactionFactor: element.transactionFactor,
               notes: element.notes,
               amount: element.amount,
-              beneficiaryTypeId:element.beneficiaryTypeId,
-              beneficiaryAccountId:element.beneficiaryAccountId,
+              beneficiaryTypeId: element.beneficiaryTypeId,
+              beneficiaryAccountId: element.beneficiaryAccountId,
               // amount: element.amount,
               // costCenterId: element.costCenterId,
               currencyLocal: element.currencyLocal,
-              // amountLocal: element.amountLocal,
               iCDetailSerial: this.counter
             }, { validator: this.atLeastOne(Validators.required, ['amount', 'amount']) }
             ));
@@ -326,24 +343,29 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
             this.counter = element.jeDetailSerial;
           });
-      
-          
-          const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
-       
-          this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
-            // this.totalamount = 0;
-            // const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
-            // ctrl.controls.forEach(x => {
-            //   let parsed = parseInt(x.get('amount').value)
-            //   this.totalamount += parsed
+          debugger
+          let ListDetail2 = res.response?.incomingChequeStatusDetail;
+
+          this.incomingChequeDetail2DTOList.clear();
+          ListDetail2.forEach(element => {
+
+            this.incomingChequeDetail2DTOList.push(this.fb.group({
+              date: element.date,
+              status: element.status
             
-            //   this.cd.detectChanges()
-            // });
+            
+            }
+            ));
+
+
+          });
+
+          const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeStatusDetail'];
+
+          this.incomingChequeForm.get('incomingChequeStatusDetail').valueChanges.subscribe(values => {
+            
           })
-          console.log(
-            'this.incomingChequeForm.value set value',
-            this.incomingChequeForm.value
-          );
+        
         },
         error: (err: any) => {
           reject(err);
@@ -367,7 +389,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
           this.incomingChequeForm.patchValue({
             code: res.response
           });
-         
+
         },
         error: (err: any) => {
           reject(err);
@@ -405,7 +427,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd =  this.translate.instant("incoming-cheque.add-incoming-cheque");
+            this.toolbarPathData.componentAdd = this.translate.instant("incoming-cheque.add-incoming-cheque");
             this.defineincomingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -433,14 +455,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
     console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
-  
+
     ctrl.controls.forEach(x => {
       let parsed = parseInt(x.get('amount').value)
       this.totalamount += parsed
-    
+
       this.cd.detectChanges()
     });
-    if ((this.totalamount == 0 )) {
+    if ((this.totalamount == 0)) {
       this.alertsService.showError(
         this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
         ""
@@ -459,7 +481,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     if (this.incomingChequeForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
         var entity = this.incomingChequeForm.value;
-
+debugger
         this.incomingChequeService.createIncomingCheque(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
@@ -491,17 +513,27 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
 
   onChangeCurrency(event, index) {
-
     console.log('Name changed:', event.target.value);
+     debugger
+    if (event.target.value == this.mainCurrencyId) {
+      const faControl =
+        (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(index);
+      faControl['controls'].transactionFactor.setValue(1);
+      faControl['controls'].currencyLocal.setValue(1 * faControl['controls'].amount.value);
+      faControl['controls'].iCDetailSerial.setValue(index + 1);
+    }
+    else {
+      let currencyModel = this.currencyList.find(x => x.id == event.target.value);
+      const faControl =
+        (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(index);
+      faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
+      faControl['controls'].currencyLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
+      //  faControl['controls'].amountLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
+      faControl['controls'].iCDetailSerial.setValue(index + 1);
+    }
 
-    let currencyModel = this.currencyList.find(x => x.id == event.target.value);
-    const faControl =
-      (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(index);
-    faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
-    faControl['controls'].currencyLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
-  //  faControl['controls'].amountLocal.setValue(currencyModel.transactionFactor * faControl['controls'].amount.value);
-    faControl['controls'].iCDetailSerial.setValue(index + 1);
   }
+
   onUpdate() {
 
     console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
@@ -510,14 +542,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
     ctrl.controls.forEach(x => {
       let parsed = parseInt(x.get('amount').value)
       this.totalamount += parsed
-    
+
       this.cd.detectChanges()
     });
-   
-    if ((this.totalamount!= this.incomingChequeForm.value.amount)) {
+
+    if ((this.totalamount != this.incomingChequeForm.value.amount)) {
       this.alertsService.showError(
         this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
-                ""
+        ""
       )
       return;
     }
@@ -633,7 +665,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
 
   }
- 
+
 
   ClickAccount(i) {
     this.showAccountsModalDebit = true;
@@ -643,7 +675,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   numberOnly(event, i, type): boolean {
     this.index = i;
-  
+
 
 
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -656,20 +688,20 @@ export class AddEditIncomingChequeComponent implements OnInit {
   onInput(event, i): boolean {
 
     this.index = i;
-   // if (type == 'Credit') {
-      const faControl =
-        (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
-   //   faControl['controls'].amount.setValue(0);
+    // if (type == 'Credit') {
+    const faControl =
+      (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
+    //   faControl['controls'].amount.setValue(0);
 
-      let amount = faControl['controls'].amount.value;
-     // let amount = faControl['controls'].amount.value;
-      let transactionFactor = faControl['controls'].transactionFactor.value;
-      if (transactionFactor != null) {
-        faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
-       // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
-      }
-    
-    
+    let amount = faControl['controls'].amount.value;
+    // let amount = faControl['controls'].amount.value;
+    let transactionFactor = faControl['controls'].transactionFactor.value;
+    if (transactionFactor != null) {
+      faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
+      // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
+    }
+
+
 
 
     const charCode = (event.which) ? event.which : event.keyCode;

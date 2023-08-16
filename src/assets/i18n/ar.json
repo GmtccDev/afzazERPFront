@@ -331,7 +331,11 @@
         "amount":"الكمية",
         "dueDate":"تاريخ الاستحقاق",
         "account-number":"رقم الحساب",
-        "add-new-row":"اضافة صف جديد"
+        "add-new-row":"اضافة صف جديد",
+        "confirm":"تأكيد",
+        "amount-local":"الأجمالى محلى"
+
+
 
 
 
@@ -440,7 +444,13 @@
     },
     "incoming-cheque":{
         "add-incoming-cheque":"اضافة شيك وارد",
-        "sum-values-equal-to-cheque-details":"مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك"
+        "sum-values-equal-to-cheque-details":"مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك",
+        "confirm-register":"هل أنت متأكد من تسجيل هذا الشيك؟",
+        "register":"تسجيل",
+        "collect-cheque-done":"تم تحصيل الشيك بنجاح",
+        "reject-cheque-done":"تم رفض الشيك بنجاح"
+
+
 
        
     
