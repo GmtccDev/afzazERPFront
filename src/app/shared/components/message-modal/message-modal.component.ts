@@ -12,7 +12,7 @@ export class MessageModalComponent implements OnInit, OnDestroy {
     @Input() isYesNo;
     @Input() functionName;
     @Input() title;
-    @Input() btnConfirmTxt: string = "حذف";
+    @Input() btnConfirmTxt: string = this.translate.instant('buttons.delete');
     @Input() btnClass: string = "";
 
 
@@ -21,10 +21,10 @@ export class MessageModalComponent implements OnInit, OnDestroy {
     constructor(public activeModal: NgbActiveModal, private translate: TranslateService) { }
     ngOnInit() {
 
-        this.message = this.translate.instant('messages.confirm-delete');
-        this.title = this.translate.instant('messageTitle.delete');
-        this.btnConfirmTxt = this.translate.instant('messageTitle.delete');
-        this.isYesNo = true;
+        // this.message = this.translate.instant('messages.confirm-delete');
+        // this.title = this.translate.instant('messageTitle.delete');
+        // this.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+        // this.isYesNo = true;
     }
 
     ngOnDestroy() { }
