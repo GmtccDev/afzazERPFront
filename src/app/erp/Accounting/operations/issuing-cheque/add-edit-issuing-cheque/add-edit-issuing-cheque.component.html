@@ -8,12 +8,16 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
-                        <form [formGroup]="IssuingChequeForm" id="issuingChequeSubmit" class="tabs-form">
+
+                        <form [formGroup]="IssuingChequeForm" id="IssuingChequeFormSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
-                                    <h3>{{'component-names.issuing-cheque-information'|translate}}</h3>
+
+                                    <h3>{{'component-names.issuingCheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
+
+
                                         <div class="col-4 col-md-4">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
@@ -63,9 +67,12 @@
                                             <label for="date" class="label-name">
                                                 {{'general.date'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
-
-                                                <input type="date" class="form-control " name="date"
-                                                    formControlName="date">
+                                                <app-full-date name="date" formControlName="date"
+                                                [(ngModel)]="date" ngDefaultControl
+                                                [selectedDate]="date"
+                                                (OnDateSelect)="getDate($event)"></app-full-date>
+                                                <!-- <input type="date" [(ngModel)]="date" class="form-control " name="date"
+                                                    formControlName="date"  ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"> -->
                                                 <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -76,14 +83,69 @@
 
                                             </div>
                                         </div>
+                                     
+                                        <div class="col-12 col-md-6">
+                                            <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="notes"
+                                                    formControlName="notes">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="dueDate" class="label-name">
+                                                {{'general.dueDate'|translate}}</label><span
+                                                class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+                                                <app-full-date name="dueDate" formControlName="dueDate"
+                                                [(ngModel)]="dueDate" ngDefaultControl
+                                                [selectedDate]="dueDate"
+                                                (OnDateSelect)="getDueDate($event)"></app-full-date>
+                                                <!-- <input type="date" [(ngModel)]="dueDate" class="form-control " name="dueDate"
+                                                    formControlName="dueDate"  ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"> -->
+                                                <div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['dueDate'].errors && f['dueDate'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="amountLocal" class="label-name">
+                                                {{'general.amount-local'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="input-group form-group">
+                                                <input type="number" [(ngModel)]="amountLocal"  required class="form-control required"
+                                                    formControlName="amountLocal" name="amountLocal" style="width: 70px;" disabled="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="currencyFactor" class="label-name">
+                                                {{'currency.transaction-factor'|translate}}</label>
+                                            <div class="input-group form-group">
+                                                <input type="number"  [(ngModel)]="currencyFactor" required class="form-control required"
+                                                    formControlName="currencyFactor" name="currencyFactor" style="width: 70px;" disabled="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="amount" class="label-name">
+                                                {{'general.amount'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="input-group form-group">
+                                                <input type="number"  [(ngModel)]="amount" required class="form-control required"
+                                                    formControlName="amount" name="amount" style="width: 70px;" disabled="true">
+                                            </div>
+                                        </div>
                                         <div class="col-md-4 col-4">
                                             <label for="currencyId" class="label-name">
                                                 {{'component-names.currencies'|translate}}
-
                                             </label>
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="currencyId"
+                                                <ng-select style="width:100%" formControlName="currencyId" (change)="getAmount()"
                                                     name='currencyId' class="" id="currencyId">
                                                     <ng-option *ngFor="let currency of currencyList"
                                                         [value]="currency.id">
@@ -102,42 +164,8 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-12 col-md-6">
-                                            <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
-                                            <div class="form-group position-relative">
-
-                                                <input type="text" class="form-control icon-branch" name="notes"
-                                                    formControlName="notes">
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <label for="date" class="label-name">
-                                                {{'general.dueDate'|translate}}</label><span
-                                                class="text-danger">*</span>
-                                            <div class="form-group position-relative">
-
-                                                <input type="date" class="form-control " name="dueDate"
-                                                    formControlName="dueDate">
-                                                <div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid"
-                                                    class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['dueDate'].errors && f['dueDate'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="date" class="label-name">
-                                                {{'general.amount'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="input-group form-group">
-                                                <input type="number" required class="form-control required"
-                                                    formControlName="amount" name="amount" style="width: 70px;">
-                                            </div>
-                                        </div>
+                                        
+                                      
                                         <hr class="mt-3 mb-3 p-0">
                                         <div class="col-12 col-md-6">
                                             <div class="media">
@@ -170,6 +198,8 @@
                                                     </th>
                                                     <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
                                                     <th style="width: 15%;">{{'general.currency'|translate}}</th>
+                                                    <th style="width: 10%;">{{'general.currency-conversion-factor'|translate}}</th>
+
                                                     <th style="width: 10%;">{{'general.balance'|translate}}</th>
                                                     <th style="width: 15%;">{{'general.description'|translate}}</th>
                                                     <th style="width: 1%;">{{'general.procedures'|translate}}</th>
@@ -227,7 +257,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </td>
+
                                                     <td>
                                                         <div class="form-group row">
                                                             <div class="col-sm-12">
@@ -293,6 +325,8 @@
                                                                                 (change)="onChangeCurrency($event,i)"
                                                                                 formControlName="currencyId"
                                                                                 [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+
+
                                                                                 <option
                                                                                     *ngFor="let currency of currencyList"
                                                                                     [value]="currency.id">
@@ -300,9 +334,22 @@
                                                                                 </option>
                                                                             </select>
 
-
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group form-group">
+                                                                    <input type="number" required
+                                                                        class="form-control required"
+                                                                        disabled="disabled"
+                                                                        formControlName="transactionFactor"
+                                                                        name="transactionFactor" style="width: 70px;">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -322,40 +369,84 @@
                                                         </div>
 
                                                     </td>
-
                                                     <td>
-
                                                         <textarea style="width: 100%;" formControlName="notes"
                                                             name='notes'></textarea>
-
                                                     </td>
-
-
                                                     <td>
                                                         <button type="button"
                                                             class="btn btn-square btn-danger btn-sm waves-effect waves-light"
                                                             (click)="onDeleteRow(i)"> <i
-                                                                class="icofont icofont-ui-delete"></i>
-                                                            {{'buttons.delete'|translate}}</button>
+                                                                class="icofont icofont-ui-delete"></i>{{'buttons.delete'|translate}}
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                              
+                                
                             </div>
                             <br>
 
                             <button type="button" (click)="initGroup()"
                                 class="btn btn-rounded btn-success">{{'general.add-new-row'|translate}}
                             </button>
+                            <div class="row" *ngIf="IssuingChequeForm.value.id>0">
+                                <h1>{{'incoming-cheque.cheque-details-status'|translate}}</h1>
+                                <div formArrayName="IssuingChequeStatusDetail" style="width: 100% ; overflow-x: scroll;">
+                                    <div>
+                                        <table class="table table-sm m-b-0 table-broder ">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>{{'general.date'|translate}}</th>
+                                                    <th>{{'general.status'|translate}}</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of IssuingChequeForm.get('IssuingChequeStatusDetail')['controls']; let i = index"
+                                                    [formGroupName]="i">
+                                                    <td>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="input-group form-group">
+                                                                    <input type="text" 
+                                                                        class="form-control "
+                                                                        disabled="disabled"
+                                                                        formControlName="date"
+                                                                        name="date">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                    </td>
+                                                    <td >
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="input-group form-group">
+                                                                    <input type="text" 
+                                                                        class="form-control "
+                                                                        disabled="disabled"
+                                                                        formControlName="status"
+                                                                        name="status">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                   
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                          
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>

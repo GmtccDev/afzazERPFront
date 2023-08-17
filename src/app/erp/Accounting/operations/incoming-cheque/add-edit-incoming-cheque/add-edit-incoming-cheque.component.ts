@@ -185,10 +185,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.serial = res.response.items.find(c => c.id == 3).value;
             this.mainCurrencyId = res.response.items.find(c => c.id == 1).value;
 
-            // if (this.isMultiCurrency) {
-            //   this.getCurrency();
-            // }
-
           }
 
 
@@ -313,10 +309,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   onDeleteRow(rowIndex) {
     debugger
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
-
-
     incomingChequeDetail.removeAt(rowIndex);
-    //  this.amountLocal=this.amountLocal-currencyLocal;
     this.counter -= 1;
     debugger
 
@@ -392,9 +385,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.counter = element.jeDetailSerial;
           });
           debugger
-          let ListDetail2 = res.response?.incomingChequeStatusDetail;
+          let ListDetailStatus = res.response?.incomingChequeStatusDetail;
           this.incomingChequeDetailStatusDTOList.clear();
-          ListDetail2.forEach(element => {
+          ListDetailStatus.forEach(element => {
             debugger
             if (element.status == 0) {
               element.status = this.translate.instant("incoming-cheque.registered");

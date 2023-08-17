@@ -76,6 +76,16 @@ export class IssuingChequeServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/IssuingCheque/delete", { params: params });
     }
+    generateEntryActions(id: any,action:any): Observable<any> {
+        debugger
+        let params = new HttpParams();
+        params = params.append('Id', id);
+        params = params.append('action', action);
+
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/GenerateEntryActions?Id="+id+"&action="+action
+        , { params: params }
+        );
+    }
 
 }
 

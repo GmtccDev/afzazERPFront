@@ -21,6 +21,9 @@ import { IssuingChequeServiceProxy } from '../../services/issuing-cheque.service
 export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+  editFormatIcon() { //plain text value
+    return "<i class=' fa fa-edit'></i>";
+  };
   issuingCheque: any[] = [];
   lang: string = localStorage.getItem("language");
 
@@ -46,7 +49,8 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+
   ) {
 
   }
@@ -195,6 +199,30 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         return value;
       }
     },
+    this.lang == "ar" ? {
+      title: "تحصيل",
+      field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        this.showConfirmCollectMessage(cell.getRow().getData().id);
+      }
+    } :
+      {
+        title: "Collect",
+        field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+          this.showConfirmCollectMessage(cell.getRow().getData().id);
+        },
+      },
+    this.lang == "ar" ? {
+      title: "رفض",
+      field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        this.showConfirmRejectMessage(cell.getRow().getData().id);
+      }
+    } :
+      {
+        title: "Reject",
+        field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+          this.showConfirmRejectMessage(cell.getRow().getData().id);
+        },
+      }
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -303,4 +331,60 @@ debugger
     this.subsList.push(sub);
   }
   //#endregion
+  showConfirmCollectMessage(id: any) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-collect');
+    modalRef.componentInstance.title = this.translate.instant('general.confirm');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.collect');
+
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      if (rs == 'Confirm') {
+        debugger
+        this.issuingChequeService.generateEntryActions(id, 2).subscribe({
+          next: (result: any) => {
+            this.alertsService.showError(
+              this.translate.instant("incoming-cheque.collect-cheque-done"),
+              ""
+            )
+            return;
+
+          },
+          error: (err: any) => {
+          },
+          complete: () => {
+            console.log('complete');
+          },
+        });
+
+      }
+    });
+  }
+  showConfirmRejectMessage(id: any) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-reject');
+    modalRef.componentInstance.title = this.translate.instant('general.confirm');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.reject');
+
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      if (rs == 'Confirm') {
+        this.issuingChequeService.generateEntryActions(id, 3).subscribe({
+          next: (result: any) => {
+            this.alertsService.showError(
+              this.translate.instant("incoming-cheque.reject-cheque-done"),
+              ""
+            )
+            return;
+
+          },
+          error: (err: any) => {
+          },
+          complete: () => {
+            console.log('complete');
+          },
+        });
+      }
+    });
+  }
 }
