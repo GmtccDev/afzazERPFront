@@ -11,7 +11,7 @@ import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabula
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import { IncomingChequeServiceProxy} from '../../services/incoming-cheque.services'
+import { IncomingChequeServiceProxy } from '../../services/incoming-cheque.services'
 import format from 'date-fns/format';
 @Component({
   selector: 'app-incoming-cheque',
@@ -104,7 +104,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     return new Promise<void>((resolve, reject) => {
       let sub = this.incomingChequeService.allIncomingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-debugger
+          debugger
           console.log(res);
           //let data =
           //   res.data.map((res: PeopleOfBenefitsVM[]) => {
@@ -154,8 +154,12 @@ debugger
 
 
 
-  showConfirmDeleteMessage(id) {
+  showConfirmDeleteMessage(id: any) {
     const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
@@ -179,49 +183,49 @@ debugger
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
   columnNames = [
-    
+
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
     },
     this.lang == 'ar'
-    ? {
-      title: '  تاريخ  ',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
-      }
-    } : {
-      title: 'Date',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
-      }
-    },
+      ? {
+        title: '  تاريخ  ', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      } : {
+        title: 'Date', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      },
     this.lang == "ar" ? {
       title: "تحصيل",
       field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-        this.showConfirmCollectMessage(cell.getRow().getData());
+        this.showConfirmCollectMessage(cell.getRow().getData().id);
       }
     } :
-    {
-      title: "Collect",
-      field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-        this.showConfirmCollectMessage(cell.getRow().getData());
+      {
+        title: "Collect",
+        field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+          this.showConfirmCollectMessage(cell.getRow().getData().id);
+        },
       },
-    },
     this.lang == "ar" ? {
       title: "رفض",
       field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
         this.showConfirmRejectMessage(cell.getRow().getData().id);
       }
     } :
-    {
-      title: "Reject",
-      field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-        this.showConfirmRejectMessage(cell.getRow().getData().id);
-      },
-    }
+      {
+        title: "Reject",
+        field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+          this.showConfirmRejectMessage(cell.getRow().getData().id);
+        },
+      }
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -253,7 +257,7 @@ debugger
     } as ToolbarData);
   }
   onEdit(id) {
-debugger
+    debugger
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -269,7 +273,7 @@ debugger
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-debugger
+    debugger
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);
@@ -319,7 +323,7 @@ debugger
   onDelete() {
 
 
-  var ids = this.listIds;
+    var ids = this.listIds;
     let sub = this.incomingChequeService.deleteListIncomingCheque(ids).subscribe(
       (resonse) => {
 
@@ -330,7 +334,7 @@ debugger
     this.subsList.push(sub);
   }
   //#endregion
-  showConfirmCollectMessage(incomingCheque: any) {
+  showConfirmCollectMessage(id: any) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-collect');
     modalRef.componentInstance.title = this.translate.instant('general.confirm');
@@ -340,14 +344,14 @@ debugger
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
         debugger
-        this.incomingChequeService.generateEntryActions(incomingCheque,1).subscribe({
+        this.incomingChequeService.generateEntryActions(id, 2).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
               ""
             )
             return;
-           
+
           },
           error: (err: any) => {
           },
@@ -355,11 +359,11 @@ debugger
             console.log('complete');
           },
         });
-    
+
       }
     });
   }
-  showConfirmRejectMessage(id: number) {
+  showConfirmRejectMessage(id: any) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-reject');
     modalRef.componentInstance.title = this.translate.instant('general.confirm');
@@ -368,14 +372,14 @@ debugger
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
-        this.incomingChequeService.generateEntryActions(id,2).subscribe({
+        this.incomingChequeService.generateEntryActions(id, 3).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
               ""
             )
             return;
-           
+
           },
           error: (err: any) => {
           },

@@ -459,7 +459,14 @@
         "confirm-reject":"Are you sure to reject this check?",
         "reject":"Reject",
         "collect-cheque-done":"The cheque is collected successfully.",
-        "reject-cheque-done":"The cheque is rejected successfully."
+        "reject-cheque-done":"The cheque is rejected successfully.",
+        "cannot-edit":"You can not update this cheque",
+        "registered":"Registered",
+        "edit-registered":"Edited the registeration",
+        "collected":"Collected",
+        "rejected":"Rejected",
+        "cheque-details-status":"Cheque Details Status"
+
 
      }
 }
