@@ -78,13 +78,13 @@ export class IncomingChequeServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/IncomingCheque/delete", { params: params });
     }
-    generateEntryActions(incomingCheque: any,action:any): Observable<any> {
+    generateEntryActions(id: any,action:any): Observable<any> {
         debugger
         let params = new HttpParams();
-        params = params.append('id', incomingCheque);
+        params = params.append('Id', id);
         params = params.append('action', action);
 
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/GenerateEntryActions?Id="+incomingCheque.id+"&Amount="+incomingCheque.amount+"&AmountLocal="+incomingCheque.amountLocal+"&CurrencyId="+incomingCheque.currencyId+"&AccountId="+incomingCheque.accountId+"&action="+action
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/GenerateEntryActions?Id="+id+"&action="+action
         , { params: params }
         );
     }

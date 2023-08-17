@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {SharedModule} from '../../../shared/shared.module'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -21,6 +21,8 @@ import { AddEditJournalEntryPostComponent } from './journal-entry/add-edit-journ
 import { CloseFiscalPeriodComponent } from './close-fiscal-period/close-fiscal-period.component';
 import { IssuingChequeComponent } from './issuing-cheque/issuing-cheque.component';
 import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing-cheque/add-edit-issuing-cheque.component';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -33,9 +35,11 @@ import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing
     OperationsRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
     NzButtonModule,
     NzIconModule,
-    MatDialogModule
+    MatDialogModule,
+    NgSelectModule
+
     
   ],
-  providers: [SearchDialogService,DateCalculation,NgbCalendarIslamicUmalqura]
+  providers: [SearchDialogService,DateCalculation,DatePipe,DateConverterService,NgbCalendarIslamicUmalqura]
 })
 export class OperationsModule { }

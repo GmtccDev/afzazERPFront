@@ -448,7 +448,14 @@
         "confirm-register":"هل أنت متأكد من تسجيل هذا الشيك؟",
         "register":"تسجيل",
         "collect-cheque-done":"تم تحصيل الشيك بنجاح",
-        "reject-cheque-done":"تم رفض الشيك بنجاح"
+        "reject-cheque-done":"تم رفض الشيك بنجاح",
+        "cannot-edit":"لا يمكنك تعديل الشيك",
+        "registered":"تم التسجيل",
+        "edit-registered":"تم تعديل التسجيل",
+        "collected":"تم التحصيل",
+        "rejected":"تم الرفض",
+        "cheque-details-status":"تقاصيل حالة الشيك"
+
 
 
 
