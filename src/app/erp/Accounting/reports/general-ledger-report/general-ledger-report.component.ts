@@ -153,7 +153,6 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
       "&reportParameter=leafAccountId!" + this.leafAccountId+
       "&reportParameter=fromEntryNo!" + this.fromEntryNo+
       "&reportParameter=toEntryNo!" + this.toEntryNo+
-
       "&reportParameter=lang!" + this.lang; 
 
     const modalRef = this.modalService.open(NgbdModalContent);
