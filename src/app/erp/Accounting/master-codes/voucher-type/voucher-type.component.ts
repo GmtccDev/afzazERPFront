@@ -185,18 +185,18 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.lang == 'ar'
       ? { title: ' الاسم', field: 'voucherNameAr' } :
       { title: ' Name  ', field: 'voucherNameEn' },
-    {
-      title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-      field: 'createdAt',
-    },
+    // {
+    //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
+    //   field: 'createdAt',
+    // },
     // {
     //   title: this.lang == 'ar' ? 'تم الانشاء بواسطة' : 'Created by',
     //   field: 'createdBy',
     // },
-    {
-      title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-      field: 'updatedAt',
-    },
+    // {
+    //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
+    //   field: 'updatedAt',
+    // },
     // {
     //   title: this.lang == 'ar' ? 'تم التعديل بواسطة' : 'Updated by',
     //   field: 'updateBy',
