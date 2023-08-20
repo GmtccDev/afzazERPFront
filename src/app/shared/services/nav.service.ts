@@ -231,6 +231,7 @@ this.setScreenWidth(window.innerWidth);
 				{ path: '/accounting-reports/budgetReport', title: this.translate.instant("component-names.budget-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/incomeStatementReport', title: this.translate.instant("component-names.income-statement-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/vouchersTransactionsReport', title: this.translate.instant("component-names.vouchers-transactions-report"), type: 'link', active: true },
+				{ path: '/accounting-reports/generalLedgerReport', title: this.translate.instant("component-names.general-ledger-report"), type: 'link', active: true },
 
 			]
 		}

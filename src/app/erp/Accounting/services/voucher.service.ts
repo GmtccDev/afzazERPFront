@@ -34,11 +34,11 @@ export class VoucherServiceProxy {
     }
     createVoucherAndRelations(voucher: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/addVoucher?", voucher);
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/add?", voucher);
     }
     updateVoucherAndRelations(voucher: any): Observable<any> {
 
-        return this.http.put<any>(environment.apiUrl + "/api/Voucher/updateVoucher?", voucher);
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/edit?", voucher);
     }
     // ids: number[] | undefined;
     deleteListVoucher(branch: any): Observable<number> {

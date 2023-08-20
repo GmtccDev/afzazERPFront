@@ -236,7 +236,9 @@
         "incomingCheque":"الشيك الوراد",
         "incomingCheque-information":"معلومات الشيك الوراد",
         "issuing-cheque":"الشيك الصادر",
-        "issuing-cheque-information":"معلومات الشيك الصادر"
+        "issuing-cheque-information":"معلومات الشيك الصادر",
+        "general-ledger-report":"تقرير دفتر الاستاذ العام"
+
 
     },
     "general": {
@@ -333,7 +335,9 @@
         "account-number":"رقم الحساب",
         "add-new-row":"اضافة صف جديد",
         "confirm":"تأكيد",
-        "amount-local":"الأجمالى محلى"
+        "amount-local":"الأجمالى محلى",
+        "from-entry-no":"من رقم القيد",
+        "to-entry-no":"الى رقم القيد"
 
 
 

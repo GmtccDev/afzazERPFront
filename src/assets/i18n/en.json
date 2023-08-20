@@ -154,7 +154,9 @@
         "dueDate": "Due date",
         "add-new-row": "Add New Row",
         "confirm":"Confirm",
-        "amount-local":"Amount Local"
+        "amount-local":"Amount Local",
+        "from-entry-no":"From Entry No",
+        "to-entry-no":"To Entry No"
     },
     "menu": {},
     "home": {
@@ -369,7 +371,8 @@
         "incomingCheque": " Incoming Cheque",
         "incomingCheque-information": "Incoming Cheque Information ",
         "issuing-cheque": " Issuing Cheque",
-        "issuing-cheque-information": "Issuing Cheque Information "
+        "issuing-cheque-information": "Issuing Cheque Information ",
+        "general-ledger-report":"General Ledger Report"
     },
     "language": {
         "ARABIC": "Arabic",

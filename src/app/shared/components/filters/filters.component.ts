@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateModel } from '../../model/date-model';
@@ -65,16 +65,19 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   vouchersList: any;
   routeVoucherApi = "Voucher/get-ddl?"
   facialPeriodId:any;
+  fromEntryNo:any;
+  toEntryNo:any;
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,voucherKindId, voucherId,level,reportOptionId
+    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,
+    voucherKindId, voucherId,level,reportOptionId,fromEntryNo,toEntryNo
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
     ShowToDate: boolean, ShowSearch: boolean, ShowAccountGroup: boolean, ShowMainAccount: boolean, ShowLeafAccount: boolean,
     ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean,ShowLevel:boolean,
-    ShowReportOptions:boolean
+    ShowReportOptions:boolean,ShowFromEntryNo:boolean,ShowToEntryNo:boolean
   } = {
 
       ShowFromDate: false,
@@ -90,7 +93,9 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       ShowVoucherKind:false,
       ShowVoucher: false,
       ShowLevel:false,
-      ShowReportOptions:false
+      ShowReportOptions:false,
+      ShowFromEntryNo:false,
+      ShowToEntryNo:false
     }
 
   subsList: Subscription[] = [];
@@ -109,11 +114,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.GetData();
   }
 
-  // getLanguage() {
-  //   this.sharedServices.getLanguage().subscribe(res => {
-  //     this.lang = res
-  //   })
-  // }
+
   ngOnInit() {
    // this.getLanguage();
     //this.GetData();
@@ -124,12 +125,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit(): void {
-    debugger
-    //this.selectedFromDate=this.dateConverterService.getDateForCalender(localStorage.getItem("fromDateOfFacialPeriod"))
-    debugger
-   // this.selectedToDate=this.dateConverterService.getDateForCalender(localStorage.getItem("toDateOfFacialPeriod"))
-   // this.selectedFromDate = this.dateConverterService.getCurrentDate();
-   // this.selectedToDate = this.dateConverterService.getCurrentDate();
+
   }
   ngOnDestroy() {
     this.subsList.forEach(s => {
@@ -158,7 +154,6 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     ]).then(a => {
-      ////(("All Data have been loaded. Enable Filters")
       this.enableFilters = true;
       this.spinner.hide();
     }).catch((err) => {
@@ -425,8 +420,6 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           this.selectedFromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.selectedToDate=this.dateConverterService.getDateForCalender(res.response.toDate);
 
-          //formatDate(Date.parse(res.response.fromDate)),
-         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
 
         
         },
@@ -461,6 +454,9 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       voucherKindId: this.selectedVoucherKindId,
       voucherId: this.selectedVoucherId,
       level:this.level,
+      fromEntryNo:this.fromEntryNo,
+      toEntryNo:this.toEntryNo,
+
       reportOptionId: this.selectedReportOptionId,
 
 
@@ -527,7 +523,16 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.FireSearch()
 
   }
-  onChangeLevel() {
+  onChangeLevel()
+  {
+    this.FireSearch()
+
+  }
+  onChangeFromEntryNo() {
+    this.FireSearch()
+
+  }
+  onChangeToEntryNo() {
     this.FireSearch()
 
   }
