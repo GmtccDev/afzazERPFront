@@ -237,7 +237,10 @@
         "incomingCheque-information":"معلومات الشيك الوراد",
         "issuing-cheque":"الشيك الصادر",
         "issuing-cheque-information":"معلومات الشيك الصادر",
-        "general-ledger-report":"تقرير دفتر الاستاذ العام"
+        "general-ledger-report":"تقرير دفتر الاستاذ العام",
+        "cost-centers-report":"تقرير مراكز التكلفة"
+
+        
 
 
     },
