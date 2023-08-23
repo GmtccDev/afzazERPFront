@@ -120,15 +120,13 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-   
-    
 
     if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
       this.currencyId = 0;
     }
 
     if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
-      this.branchId = 0;
+      this.branchId = "";
     }
     if (this.entriesStatusId == null || this.entriesStatusId == undefined || this.entriesStatusId == "") {
       this.entriesStatusId = 0;
