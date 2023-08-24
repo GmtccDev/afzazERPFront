@@ -373,8 +373,9 @@
         "issuing-cheque": " Issuing Cheque",
         "issuing-cheque-information": "Issuing Cheque Information ",
         "general-ledger-report":"General Ledger Report",
-		"journal-entries-report":"Journal Entries Report  "
+		"journal-entries-report":"Journal Entries Report  ",
 
+        "cost-centers-report":"Cost Centers Reports"
     },
     "language": {
         "ARABIC": "Arabic",

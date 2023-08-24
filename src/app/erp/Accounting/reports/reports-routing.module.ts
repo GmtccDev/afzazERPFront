@@ -5,6 +5,7 @@ import { IncomeStatementReportComponent } from './income-statement-report/income
 import { VouchersTransactionsReportComponent } from './vouchers-transactions-report/vouchers-trasnactions-report.component';
 import { GeneralLedgerReportComponent } from './general-ledger-report/general-ledger-report.component';
 import { JournalEntriesReportComponent } from './journal-entries-report/journal-entries-report.component';
+import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component';
 
 
 
@@ -18,6 +19,7 @@ const routes: Routes = [
 			{ path: 'generalLedgerReport', component: GeneralLedgerReportComponent },
 			{ path: 'journalEntriesReport', component: JournalEntriesReportComponent },
 
+			{ path: 'costCentersReport', component: CostCentersReportComponent },
 
 
 		]

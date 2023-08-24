@@ -21,6 +21,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectedFromDate!: DateModel;
   selectedToDate!: DateModel;
+
   voucherTypes: ICustomEnum[] = [];
   branchIds: any = '';
 
@@ -67,10 +68,11 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   facialPeriodId:any;
   fromEntryNo:any;
   toEntryNo:any;
+  costCenterId:any;
   @Output() OnFilter: EventEmitter<{
 
     fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,
-    voucherKindId, voucherId,level,reportOptionId,fromEntryNo,toEntryNo
+    voucherKindId, voucherId,level,reportOptionId,fromEntryNo,toEntryNo,costCenterId
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
@@ -458,6 +460,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       toEntryNo:this.toEntryNo,
 
       reportOptionId: this.selectedReportOptionId,
+      costCenterId:this.selectedCostCenterId
 
 
 

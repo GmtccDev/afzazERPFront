@@ -238,7 +238,10 @@
         "issuing-cheque":"الشيك الصادر",
         "issuing-cheque-information":"معلومات الشيك الصادر",
         "general-ledger-report":"تقرير دفتر الاستاذ العام",
-		"journal-entries-report":"تقرير القيود اليومية"
+		"journal-entries-report":"تقرير القيود اليومية",
+        "cost-centers-report":"تقرير مراكز التكلفة"
+
+
 
 
     },
