@@ -237,7 +237,8 @@
         "incomingCheque-information":"معلومات الشيك الوراد",
         "issuing-cheque":"الشيك الصادر",
         "issuing-cheque-information":"معلومات الشيك الصادر",
-        "general-ledger-report":"تقرير دفتر الاستاذ العام"
+        "general-ledger-report":"تقرير دفتر الاستاذ العام",
+		"journal-entries-report":"تقرير القيود اليومية"
 
 
     },
@@ -366,7 +367,7 @@
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
         "accountReceivables":"حساب أوراق القبض"
-     
+
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",
@@ -444,7 +445,7 @@
     "account-classification":{
         "add-account-classification":"اضافة تصنيف الحساب",
         "update-account-classification":"تحديث تصنيف الحساب"
-    
+
     },
     "incoming-cheque":{
         "add-incoming-cheque":"اضافة شيك وارد",
@@ -463,7 +464,7 @@
 
 
 
-       
-    
+
+
     }
 }

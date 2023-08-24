@@ -372,7 +372,9 @@
         "incomingCheque-information": "Incoming Cheque Information ",
         "issuing-cheque": " Issuing Cheque",
         "issuing-cheque-information": "Issuing Cheque Information ",
-        "general-ledger-report":"General Ledger Report"
+        "general-ledger-report":"General Ledger Report",
+		"journal-entries-report":"Journal Entries Report  "
+
     },
     "language": {
         "ARABIC": "Arabic",
@@ -458,7 +460,7 @@
         "confirm-register":"Are you sure to register this check?",
         "register":"Register",
         "confirm-collect":"Are you sure to collect this check?",
-        "collect":"Collect",  
+        "collect":"Collect",
         "confirm-reject":"Are you sure to reject this check?",
         "reject":"Reject",
         "collect-cheque-done":"The cheque is collected successfully.",
