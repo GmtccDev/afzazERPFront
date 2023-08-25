@@ -198,6 +198,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showConfirmDeleteMessage(id) {
     const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
@@ -243,15 +247,15 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'description',
     },
 
-    {
-      title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-      field: 'createdAt',
-    },
+    // {
+    //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
+    //   field: 'createdAt',
+    // },
   
-    {
-      title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-      field: 'updatedAt',
-    },
+    // {
+    //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
+    //   field: 'updatedAt',
+    // },
    
 
   ];

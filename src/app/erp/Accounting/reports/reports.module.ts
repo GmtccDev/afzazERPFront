@@ -11,6 +11,9 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { IncomeStatementReportComponent } from './income-statement-report/income-statement-report.component';
 import { VouchersTransactionsReportComponent } from './vouchers-transactions-report/vouchers-trasnactions-report.component'
+import { GeneralLedgerReportComponent } from './general-ledger-report/general-ledger-report.component';
+import { JournalEntriesReportComponent } from './journal-entries-report/journal-entries-report.component'
+import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component'
 
 
 
@@ -18,16 +21,20 @@ import { VouchersTransactionsReportComponent } from './vouchers-transactions-rep
   declarations: [
     BudgetReportComponent,
     IncomeStatementReportComponent,
-    VouchersTransactionsReportComponent    
+    VouchersTransactionsReportComponent,
+    GeneralLedgerReportComponent, JournalEntriesReportComponent,
+    CostCentersReportComponent,
+
+
   ],
   imports: [
     CommonModule,
     ReportsRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
     NzButtonModule,
     NzIconModule
-    
-    
-    
+
+
+
   ],
   providers: [NgbCalendarIslamicUmalqura]
 })

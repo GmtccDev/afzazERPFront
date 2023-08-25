@@ -13,11 +13,11 @@ import { GeneralConfigurationServiceProxy } from '../../services/general-configu
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 
 @Component({
-  selector: 'app-vouchers-trasnactions-report',
-  templateUrl: './vouchers-trasnactions-report.component.html',
-  styleUrls: ['./vouchers-trasnactions-report.component.scss']
+  selector: 'app-general-ledger-report',
+  templateUrl: './general-ledger-report.component.html',
+  styleUrls: ['./general-ledger-report.component.scss']
 })
-export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, AfterViewInit {
+export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
   facialPeriodId:any;
@@ -29,21 +29,21 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
   toDate: any;
   currencyId:any;
   branchId:any;
-  voucherKindId:any;
+  accountGroupId:any;
+  mainAccountId:any;
+  leafAccountId:any;
+  entriesStatusId:any;
+  fromEntryNo:any;
+  toEntryNo:any;
+
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
     updatePath: '',
-    componentList:this.translate.instant("component-names.vouchers-transactions-report"),
+    componentList:this.translate.instant("component-names.general-ledger-report"),
     componentAdd: ''
   };
-  // this.toolbarPathData={
-  //   listPath: '',
-  //   addPath: '',
-  //   updatePath: '',
-  //   componentList:this.translate.instant("component-names.income-statement-report"),
-  //   componentAdd: ''
-  // }
+
   //#region Constructor
   constructor(
     private modalService: NgbModal,
@@ -120,10 +120,6 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year+'-'+monthTo + "-" + this.toDate.day).toString();
     }
-   
-    if (this.voucherKindId == null || this.voucherKindId == undefined) {
-      this.voucherKindId = 0;
-    }
 
     if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
       this.currencyId = 0;
@@ -132,47 +128,69 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
     if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
       this.branchId = "";
     }
+    if (this.entriesStatusId == null || this.entriesStatusId == undefined || this.entriesStatusId == "") {
+      this.entriesStatusId = 0;
+    }
+    if (this.leafAccountId == null || this.leafAccountId == undefined || this.leafAccountId == "") {
+      this.leafAccountId = 0;
+    }
+    if (this.fromEntryNo == null || this.fromEntryNo == undefined || this.fromEntryNo == "") {
+      this.fromEntryNo = 0;
+    }
+    if (this.toEntryNo == null || this.toEntryNo == undefined || this.toEntryNo == "") {
+      this.toEntryNo = 0;
+    }
     debugger
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate + 
-      "&reportParameter=voucherKindId!" + this.voucherKindId + 
       "&reportParameter=currencyId!" + this.currencyId + 
       "&reportParameter=branchId!" + this.branchId+
       "&reportParameter=companyId!" + this.companyId+
+      "&reportParameter=entriesStatusId!" + this.entriesStatusId+
+      "&reportParameter=leafAccountId!" + this.leafAccountId+
+      "&reportParameter=fromEntryNo!" + this.fromEntryNo+
+      "&reportParameter=toEntryNo!" + this.toEntryNo+
       "&reportParameter=lang!" + this.lang; 
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
     modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 3;
+    modalRef.componentInstance.reportTypeID = 4;
 
   }
   cancelDefaultReportStatus() {
-    this.reportService.cancelDefaultReport(1,3).subscribe(resonse => {
+    this.reportService.cancelDefaultReport(1,4).subscribe(resonse => {
 
     });
   }
   ShowOptions: {
      ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean,ShowCurrency,ShowBranch,ShowVoucherKind
+    ShowSearch: boolean,ShowCurrency:boolean,ShowBranch:boolean
+     , ShowLeafAccount: boolean, ShowEntriesStatus: boolean,ShowFromEntryNo:boolean,ShowToEntryNo:boolean
   } = {
     ShowFromDate: true, ShowToDate: true,
     ShowSearch: false,
     ShowCurrency:true,
     ShowBranch:true,
-    ShowVoucherKind:true
+    ShowLeafAccount:true,
+    ShowEntriesStatus:true,
+    ShowFromEntryNo:true,
+    ShowToEntryNo:true
   }
 
   OnFilter(e: {
-    fromDate, toDate,currencyId,branchId,voucherKindId
+    fromDate, toDate,currencyId,branchId,fromEntryNo,toEntryNo,leafAccountId,entriesStatusId
   }) {
     debugger
       this.fromDate = e.fromDate
       this.toDate = e.toDate
+      this.fromEntryNo=e.fromEntryNo
+      this.toEntryNo=e.toEntryNo
       this.currencyId=e.currencyId
       this.branchId=e.branchId
-      this.voucherKindId=e.voucherKindId
+      this.leafAccountId=e.leafAccountId
+      this.entriesStatusId=e.entriesStatusId
 
   }
 
@@ -234,8 +252,7 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
           this.fromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDate=this.dateConverterService.getDateForCalender(res.response.toDate);
 
-          //formatDate(Date.parse(res.response.fromDate)),
-         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+      
 
         
         },

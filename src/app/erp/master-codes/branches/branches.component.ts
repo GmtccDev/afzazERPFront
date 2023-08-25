@@ -152,6 +152,10 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showConfirmDeleteMessage(id) {
     const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {

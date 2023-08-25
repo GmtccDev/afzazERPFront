@@ -102,6 +102,7 @@
         "subscription-number": "Subscription Number",
         "capacity": "Capacity",
         "description": "Description",
+        "procedures": "Procedures",
         "meter-number": "Meter Number",
         "meter-type": "Meter Type",
         "status": "Status",
@@ -115,6 +116,7 @@
         "default-account": "Default Account",
         "default-currency": "Default Currency",
         "currency": "Currency",
+        "balance": "Balance",
         "need-review": "Need Review",
         "print-options": "Print Options",
         "default-layout": "Default Layout",
@@ -131,25 +133,30 @@
         "debit-after-conversion": "Debit After Conversion",
         "credit-after-conversion": "Credit After Conversion",
         "beneficiary": "Beneficiary",
+        "beneficiary-type": "Beneficiary Type",
         "beneficiary-account": "Beneficiary Account",
-        "choose-template":"Choose Template",
-        "template-name":"Template Name",
-        "gregorian":"Gregorian",
-        "hijri":"Hijri",
+        "choose-template": "Choose Template",
+        "template-name": "Template Name",
+        "gregorian": "Gregorian",
+        "hijri": "Hijri",
         "filterSearch": "Search filter in reports",
-        "entries-status":"Entries Status",
-        "number":"Number",
-        "type-id":"Type Id",
-        "main-account":"Main Account",
-        "leaf-account":"Leaf Account",
-        "type":"Type",
-        "level":"Level",
-        "setting":"Type",
-        "report-options":"Report Options",
-        "default-cash-account":"Default Cash Account",
-        "amount":"amount",
-        "dueDate":"Due date"
-
+        "entries-status": "Entries Status",
+        "number": "Number",
+        "type-id": "Type Id",
+        "main-account": "Main Account",
+        "leaf-account": "Leaf Account",
+        "type": "Type",
+        "level": "Level",
+        "setting": "Type",
+        "report-options": "Report Options",
+        "default-cash-account": "Default Cash Account",
+        "amount": "amount",
+        "dueDate": "Due date",
+        "add-new-row": "Add New Row",
+        "confirm":"Confirm",
+        "amount-local":"Amount Local",
+        "from-entry-no":"From Entry No",
+        "to-entry-no":"To Entry No"
     },
     "menu": {},
     "home": {
@@ -204,11 +211,11 @@
         "save": "Save",
         "delete": "Delete",
         "cancel": "Cancel",
-        "show":"Show",
-        "design":"Design",
-        "default":"Default",
-        "close":"Close",
-        "add":"Add"
+        "show": "Show",
+        "design": "Design",
+        "default": "Default",
+        "close": "Close",
+        "add": "Add"
     },
     "messages": {
         "invalid-data": "Please Enter Valid Data!",
@@ -305,8 +312,8 @@
         "export": "Export",
         "print": "Print",
         "update": "Update",
-        "view":"View",
-        "cancelDefaultReport":"Cancel Default Report"
+        "view": "View",
+        "cancelDefaultReport": "Cancel Default Report"
     },
     "component-names": {
         "country-information": "Country information",
@@ -353,17 +360,22 @@
         "journalEntryPost": "Journal Entry Post",
         "journalEntry-information": "Journal Entry information",
         "journalEntryPost-information": "Journal Entry Post information",
-        "reports":"Reports",
-        "budget-report":"Budget Report",
-        "analytical-budget-report":"Analytical Budget Report",
-        "income-statement-report":"Income Statement Report",
-        "vouchers-transactions-report":"Vouchers Transactions Report",
-        "bankAccount":" Bank Account",
-        "bankAccount-information":"  Bank Account Information",
-        "close-fiscal-period":"Close Fiscal Period",
-        "incomingCheque":" Incoming Cheque",
-        "incomingCheque-information":"Incoming Cheque Information "
+        "reports": "Reports",
+        "budget-report": "Budget Report",
+        "analytical-budget-report": "Analytical Budget Report",
+        "income-statement-report": "Income Statement Report",
+        "vouchers-transactions-report": "Vouchers Transactions Report",
+        "bankAccount": " Bank Account",
+        "bankAccount-information": "  Bank Account Information",
+        "close-fiscal-period": "Close Fiscal Period",
+        "incomingCheque": " Incoming Cheque",
+        "incomingCheque-information": "Incoming Cheque Information ",
+        "issuing-cheque": " Issuing Cheque",
+        "issuing-cheque-information": "Issuing Cheque Information ",
+        "general-ledger-report":"General Ledger Report",
+		"journal-entries-report":"Journal Entries Report  ",
 
+        "cost-centers-report":"Cost Centers Reports"
     },
     "language": {
         "ARABIC": "Arabic",
@@ -389,9 +401,9 @@
         "isLeafAccount": "Leaf Account",
         "noteNotActive": "Note Not Active",
         "taxNumber": "Tax Number",
-        "account-classification":"Account Classification",
-        "account-classification-income-statement":"Account Classification (Income Statement)",
-        "budget":"Budget"
+        "account-classification": "Account Classification",
+        "account-classification-income-statement": "Account Classification (Income Statement)",
+        "budget": "Budget"
     },
     "accounting-configration": {
         "multiCurrency": "Multi Currency",
@@ -400,7 +412,7 @@
         "cycle": "JE  Cycle ",
         "account": "closing account  ",
         "endOfYear": "End Of Year",
-        "accountReceivables":"Account Receivables"
+        "accountReceivables": "Account Receivables"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -431,21 +443,36 @@
         "voucher-information": "Voucher Information",
         "voucher-total": "Voucher Total",
         "voucher-total-local": "Voucher Total Local",
-        "voucher-details-required":"Voucher Details is required",
-        "add-voucher":"Add Voucher",
-        "update-voucher":"Update Voucher",
+        "voucher-details-required": "Voucher Details is required",
+        "add-voucher": "Add Voucher",
+        "update-voucher": "Update Voucher",
         "voucher": "Voucher"
+    },
+    "journalEntry": {
+        "openBalance": "Open Balance"
+    },
+    "account-classification": {
+        "add-account-classification": "Add Account Classification",
+        "update-account-classification": "Add Account Classification"
+    },
+    "incoming-cheque": {
+        "add-incoming-cheque": "Add Incoming Cheque",
+        "sum-values-equal-to-cheque-details": "Sum of values is equal to cheque details",
+        "confirm-register":"Are you sure to register this check?",
+        "register":"Register",
+        "confirm-collect":"Are you sure to collect this check?",
+        "collect":"Collect",
+        "confirm-reject":"Are you sure to reject this check?",
+        "reject":"Reject",
+        "collect-cheque-done":"The cheque is collected successfully.",
+        "reject-cheque-done":"The cheque is rejected successfully.",
+        "cannot-edit":"You can not update this cheque",
+        "registered":"Registered",
+        "edit-registered":"Edited the registeration",
+        "collected":"Collected",
+        "rejected":"Rejected",
+        "cheque-details-status":"Cheque Details Status"
 
-    }
-,
-"journalEntry":{
-       
-    "openBalance": "Open Balance"
-},
-"account-classification":{
-    "add-account-classification":"Add Account Classification",
-    "update-account-classification":"Add Account Classification"
 
-}
-
+     }
 }

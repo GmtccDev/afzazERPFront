@@ -18,6 +18,24 @@
       <app-full-date (OnDateSelect)="onSelectToDate($event)" [selectedDate]="selectedToDate"></app-full-date>
     </div>
   </div>
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowFromEntryNo">
+    <div class="input-group  popup">
+      <label for="0" class="label-name"> {{'general.from-entry-no'|translate}}</label>
+      <div class="form-group position-relative">
+        <input type="number" class="form-control icon-branch" [(ngModel)]='fromEntryNo' name='fromEntryNo'
+          id="fromEntryNo" (ngModelChange)="onChangeFromEntryNo()">
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowToEntryNo">
+    <div class="input-group  popup">
+      <label for="0" class="label-name"> {{'general.to-entry-no'|translate}}</label>
+      <div class="form-group position-relative">
+        <input type="number" class="form-control icon-branch" [(ngModel)]='toEntryNo' name='toEntryNo'
+          id="toEntryNo" (ngModelChange)="onChangeToEntryNo()">
+      </div>
+    </div>
+  </div>
 
   <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowAccountGroup">
     <div class="input-group  popup">
@@ -131,6 +149,7 @@
       </div>
     </div>
   </div>
+ 
   <div class="col-md-4 col-12" [hidden]="!ShowOptions.ShowReportOptions">
     <div class="input-group  popup">
       <label for="0" class="label-name"> {{'general.report-options'|translate}}</label>

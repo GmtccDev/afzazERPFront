@@ -10,7 +10,6 @@ import { PublicService } from 'src/app/shared/services/public.service';
 import { Voucher, VoucherDetail } from 'src/app/erp/Accounting/models/voucher'
 import { VoucherServiceProxy } from '../../../services/voucher.service';
 import { VoucherDetailsServiceProxy } from '../../../services/voucher-details.service';
-
 import { VoucherTypeServiceProxy } from '../../../services/voucher-type.service';
 import { VoucherType } from 'src/app/erp/Accounting/models/voucher-type'
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';

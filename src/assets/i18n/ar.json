@@ -234,7 +234,15 @@
         "vouchers-transactions-report":"تقرير حركة السندات",
         "close-fiscal-period":"اغلاق الفترة المحاسبية",
         "incomingCheque":"الشيك الوراد",
-        "incomingCheque-information":"معلومات الشيك الوراد"
+        "incomingCheque-information":"معلومات الشيك الوراد",
+        "issuing-cheque":"الشيك الصادر",
+        "issuing-cheque-information":"معلومات الشيك الصادر",
+        "general-ledger-report":"تقرير دفتر الاستاذ العام",
+		"journal-entries-report":"تقرير القيود اليومية",
+        "cost-centers-report":"تقرير مراكز التكلفة"
+
+
+
 
     },
     "general": {
@@ -299,6 +307,7 @@
         "cost-center-account": "حساب مركز التكلفة",
         "cost-center": " مركز التكلفة",
         "description": "الوصف",
+        "procedures":"الأجراءات",
         "details": "التفاصيل",
         "debit": "مدين",
         "credit": "دائن",
@@ -306,7 +315,9 @@
         "debit-after-conversion": "مدين بعد التحويل",
         "credit-after-conversion": "دائن بعد التحويل",
         "beneficiary": "المستفيد",
+        "beneficiary-type": "نوع المستفيد",
         "beneficiary-account": "حساب المستفيد",
+        "balance":"التعادل",
         "notes": "ملاحظات",
         "gregorian":"ميلادى",
         "hijri":"هجرى",
@@ -323,9 +334,17 @@
         "template-name":"أسم النموذج",
         "report-options":"خيارات التقرير",
         "default-cash-account":"حساب النقدية الافتراضى",
-
         "amount":"الكمية",
-        "dueDate":"تاريخ الاستحقاق"
+        "dueDate":"تاريخ الاستحقاق",
+        "account-number":"رقم الحساب",
+        "add-new-row":"اضافة صف جديد",
+        "confirm":"تأكيد",
+        "amount-local":"الأجمالى محلى",
+        "from-entry-no":"من رقم القيد",
+        "to-entry-no":"الى رقم القيد"
+
+
+
 
 
     },
@@ -351,7 +370,7 @@
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
         "accountReceivables":"حساب أوراق القبض"
-     
+
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",
@@ -429,6 +448,26 @@
     "account-classification":{
         "add-account-classification":"اضافة تصنيف الحساب",
         "update-account-classification":"تحديث تصنيف الحساب"
-    
+
+    },
+    "incoming-cheque":{
+        "add-incoming-cheque":"اضافة شيك وارد",
+        "sum-values-equal-to-cheque-details":"مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك",
+        "confirm-register":"هل أنت متأكد من تسجيل هذا الشيك؟",
+        "register":"تسجيل",
+        "collect-cheque-done":"تم تحصيل الشيك بنجاح",
+        "reject-cheque-done":"تم رفض الشيك بنجاح",
+        "cannot-edit":"لا يمكنك تعديل الشيك",
+        "registered":"تم التسجيل",
+        "edit-registered":"تم تعديل التسجيل",
+        "collected":"تم التحصيل",
+        "rejected":"تم الرفض",
+        "cheque-details-status":"تقاصيل حالة الشيك"
+
+
+
+
+
+
     }
 }

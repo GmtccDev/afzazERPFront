@@ -18,7 +18,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 @Injectable({
     providedIn: 'root'
 })
-export class IncomingChequeServiceProxy {
+export class IssuingChequeServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -28,24 +28,22 @@ export class IncomingChequeServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createIncomingCheque(branch: any): Observable<any> {
-        debugger
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/add?", branch);
-       
+    createIssuingCheque(issuingCheque: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/add?", issuingCheque);
     }
-   
     // ids: number[] | undefined;
-    deleteListIncomingCheque(branch: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteList?", branch);
+    deleteListIssuingCheque(branch: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/deleteList?", branch);
     }
-    updateIncomingCheque(branch: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/edit?", branch);
+    updateIssuingCheque(branch: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/edit?", branch);
     }
     getDdl(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/IncomingCheque/get-ddl?");
+        return this.http.get<any>(this.baseUrl + "/api/IssuingCheque/get-ddl?");
     }
   
-    allIncomingChequees(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
+    allIssuingChequees(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
      
         let queryParams = new HttpParams();
         if (pageIndex != undefined)
@@ -59,24 +57,24 @@ export class IncomingChequeServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/IncomingCheque/all?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/IssuingCheque/all?", { params: queryParams });
 
         // return this.http.get<any>(environment.apiUrl + "/api/IncomingCheque/GetIncomingCheques");
     }
 
 
-    getIncomingCheque(id: any): Observable<any> {
+    getIssuingCheque(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(this.baseUrl + "/api/IncomingCheque/getById", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/IssuingCheque/getById", { params: params });
     }
     getLastCode(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/IncomingCheque/getLastCode?");
+        return this.http.get<any>(this.baseUrl + "/api/IssuingCheque/getLastCode?");
     }
-    deleteIncomingCheque(id: any): Observable<any> {
+    deleteIssuingCheque(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/IncomingCheque/delete", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/IssuingCheque/delete", { params: params });
     }
     generateEntryActions(id: any,action:any): Observable<any> {
         debugger
@@ -84,7 +82,7 @@ export class IncomingChequeServiceProxy {
         params = params.append('Id', id);
         params = params.append('action', action);
 
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/GenerateEntryActions?Id="+id+"&action="+action
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/GenerateEntryActions?Id="+id+"&action="+action
         , { params: params }
         );
     }

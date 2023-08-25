@@ -9,11 +9,11 @@
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
 
-                        <form [formGroup]="incomingChequeForm" id="incomingChequeSubmit" class="tabs-form">
+                        <form [formGroup]="IssuingChequeForm" id="IssuingChequeFormSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.incomingCheque-information'|translate}}</h3>
+                                    <h3>{{'component-names.issuingCheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
 
@@ -186,7 +186,7 @@
 
                                 </div>
 
-                                <div formArrayName="incomingChequeDetail" style="width: 100% ; overflow-x: scroll;">
+                                <div formArrayName="IssuingChequeDetail" style="width: 100% ; overflow-x: scroll;">
                                     <div style="width: 1500px;">
                                         <table class="table table-sm m-b-0 table-broder ">
                                             <thead class="thead-light">
@@ -206,7 +206,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let row of incomingChequeForm.get('incomingChequeDetail')['controls']; let i = index"
+                                                <tr *ngFor="let row of IssuingChequeForm.get('IssuingChequeDetail')['controls']; let i = index"
                                                     [formGroupName]="i">
                                                     <!-- <td> -->
                                                     <!-- {{ i+1 }} -->
@@ -393,9 +393,9 @@
                             <button type="button" (click)="initGroup()"
                                 class="btn btn-rounded btn-success">{{'general.add-new-row'|translate}}
                             </button>
-                            <div class="row" *ngIf="incomingChequeForm.value.id>0">
+                            <div class="row" *ngIf="IssuingChequeForm.value.id>0">
                                 <h1>{{'incoming-cheque.cheque-details-status'|translate}}</h1>
-                                <div formArrayName="incomingChequeStatusDetail" style="width: 100% ; overflow-x: scroll;">
+                                <div formArrayName="IssuingChequeStatusDetail" style="width: 100% ; overflow-x: scroll;">
                                     <div>
                                         <table class="table table-sm m-b-0 table-broder ">
                                             <thead class="thead-light">
@@ -406,7 +406,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let row of incomingChequeForm.get('incomingChequeStatusDetail')['controls']; let i = index"
+                                                <tr *ngFor="let row of IssuingChequeForm.get('IssuingChequeStatusDetail')['controls']; let i = index"
                                                     [formGroupName]="i">
                                                     <td>
                                                         <div class="form-group row">

@@ -11,25 +11,31 @@ import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabula
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import {AccountClassificationServiceProxy} from '../../services/account-classification'
+import format from 'date-fns/format';
+import { IssuingChequeServiceProxy } from '../../services/issuing-cheque.services';
 @Component({
-  selector: 'app-account-classification',
-  templateUrl: './account-classification.component.html',
-  styleUrls: ['./account-classification.component.scss']
+  selector: 'app-issuing-cheque',
+  templateUrl: './issuing-cheque.component.html',
+  styleUrls: ['./issuing-cheque.component.scss']
 })
-export class AccountClassificationComponent implements OnInit, OnDestroy, AfterViewInit {
+export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  accountClassification: any[] = [];
+  editFormatIcon() { //plain text value
+    return "<i class=' fa fa-edit'></i>";
+  };
+  issuingCheque: any[] = [];
+  lang: string = localStorage.getItem("language");
+
   currnetUrl: any;
-  addUrl: string = '/accounting-master-codes/accountClassification/add-accountClassification';
-  updateUrl: string = '/accounting-master-codes/accountClassification/update-accountClassification/';
-  listUrl: string = '/accounting-master-codes/accountClassification';
+  addUrl: string = '/accounting-operations/issuingCheque/add-issuingCheque';
+  updateUrl: string = '/accounting-operations/issuingCheque/update-issuingCheque/';
+  listUrl: string = '/accounting-operations/issuingCheque';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.accountClassification"),
+    componentList: this.translate.instant("component-names.issuing-cheque"),
     componentAdd: '',
 
   };
@@ -38,12 +44,13 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#region Constructor
   constructor(
-    private accountClassificationService: AccountClassificationServiceProxy,
+    private issuingChequeService: IssuingChequeServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+
   ) {
 
   }
@@ -60,7 +67,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
     this.listenToClickedButton();
 
-    this.getAccountClassificationes();
+    this.getIssuingChequees();
     setTimeout(() => {
 
       this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -96,21 +103,15 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getAccountClassificationes() {
+  getIssuingChequees() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.accountClassificationService.allAccountClassificationes(undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.issuingChequeService.allIssuingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
           console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
-          this.toolbarPathData.componentList = this.translate.instant("component-names.accountClassification");
+         
+          this.toolbarPathData.componentList = this.translate.instant("component-names.issuing-cheque");
           if (res.success) {
-            this.accountClassification = res.response.items
-              ;
-
+            this.issuingCheque = res.response.items
           }
 
 
@@ -132,16 +133,17 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#endregion
 
-  //#region CRUD Operations
+  //#region CRUD operations
   delete(id: any) {
-    this.accountClassificationService.deleteAccountClassification(id).subscribe((resonse) => {
+    this.issuingChequeService.deleteIssuingCheque(id).subscribe((resonse) => {
       console.log('delet response', resonse);
-      this.getAccountClassificationes();
+      this.getIssuingChequees();
     });
   }
   edit(id: string) {
+    debugger
     this.router.navigate([
-      '/accounting-master-codes/accountClassification/update-accountClassification',
+      '/accounting-operations/issuingCheque/update-issuingCheque',
       id,
     ]);
   }
@@ -159,11 +161,11 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.accountClassificationService.deleteAccountClassification(id).subscribe(
+        let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getAccountClassificationes();
+            this.getIssuingChequees();
 
           });
         this.subsList.push(sub);
@@ -177,16 +179,50 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
   sortByCols: any[] = [];
   searchFilters: any;
   groupByCols: string[] = [];
-  lang: string = localStorage.getItem("language");
   columnNames = [
-    this.lang == 'ar'
-      ? { title: ' الاسم', field: 'nameAr' } :
-      { title: ' Name  ', field: 'nameEn' },
-
+    
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
-    }
+    },
+    this.lang == 'ar'
+    ? {
+      title: '  تاريخ  ',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+    } : {
+      title: 'Date',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+    },
+    this.lang == "ar" ? {
+      title: "تحصيل",
+      field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        this.showConfirmCollectMessage(cell.getRow().getData().id);
+      }
+    } :
+      {
+        title: "Collect",
+        field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+          this.showConfirmCollectMessage(cell.getRow().getData().id);
+        },
+      },
+    this.lang == "ar" ? {
+      title: "رفض",
+      field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        this.showConfirmRejectMessage(cell.getRow().getData().id);
+      }
+    } :
+      {
+        title: "Reject",
+        field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+          this.showConfirmRejectMessage(cell.getRow().getData().id);
+        },
+      }
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -207,7 +243,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     ];
   }
 
-  openAccountClassificationes() { }
+  openIssuingChequees() { }
   onCheck(id) {
 
     this.listIds.push(id);
@@ -218,7 +254,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     } as ToolbarData);
   }
   onEdit(id) {
-
+debugger
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -227,13 +263,14 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
         submitMode: false
       } as ToolbarData);
 
+      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-master-codes/accountClassification/update-accountClassification/' + id])
+      this.router.navigate(['accounting-operations/issuingCheque/update-issuingCheque/' + id])
     }
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-
+debugger
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);
@@ -243,8 +280,9 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
           submitMode: false
         } as ToolbarData);
 
+        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-master-codes/accountClassification/update-accountClassification/' + event.item.id])
+        this.router.navigate(['accounting-operations/issuingCheque/update-issuingCheque/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -283,14 +321,70 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
 
   var ids = this.listIds;
-    let sub = this.accountClassificationService.deleteListAccountClassification(ids).subscribe(
+    let sub = this.issuingChequeService.deleteListIssuingCheque(ids).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getAccountClassificationes();
+        this.getIssuingChequees();
         this.listIds = [];
       });
     this.subsList.push(sub);
   }
   //#endregion
+  showConfirmCollectMessage(id: any) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-collect');
+    modalRef.componentInstance.title = this.translate.instant('general.confirm');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.collect');
+
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      if (rs == 'Confirm') {
+        debugger
+        this.issuingChequeService.generateEntryActions(id, 2).subscribe({
+          next: (result: any) => {
+            this.alertsService.showError(
+              this.translate.instant("incoming-cheque.collect-cheque-done"),
+              ""
+            )
+            return;
+
+          },
+          error: (err: any) => {
+          },
+          complete: () => {
+            console.log('complete');
+          },
+        });
+
+      }
+    });
+  }
+  showConfirmRejectMessage(id: any) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-reject');
+    modalRef.componentInstance.title = this.translate.instant('general.confirm');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.reject');
+
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      if (rs == 'Confirm') {
+        this.issuingChequeService.generateEntryActions(id, 3).subscribe({
+          next: (result: any) => {
+            this.alertsService.showError(
+              this.translate.instant("incoming-cheque.reject-cheque-done"),
+              ""
+            )
+            return;
+
+          },
+          error: (err: any) => {
+          },
+          complete: () => {
+            console.log('complete');
+          },
+        });
+      }
+    });
+  }
 }

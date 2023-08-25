@@ -55,18 +55,19 @@ export class NavService implements OnInit, OnDestroy {
 	constructor(private router: Router, private translate: TranslateService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
 		//	this.getVoucherTypes();
-		
+
 // this.voucherTypes.push(
 // 	 { path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
 
-// )  		
+// )
 this.voucherTypes.push(
 	{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 	{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
 	{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
 	{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
+	{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
 
-) 
+)
 this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
@@ -117,18 +118,18 @@ this.setScreenWidth(window.innerWidth);
 
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					
+
 
 					console.log(res);
 					if (res.success) {
-						
+
 						this.voucherType = res.response.items
 						this.voucherType.forEach(element => {
 							;
 							this.voucherTypes+=	"{path: '/accounting-operations/vouchers', title: "+element.voucherNameEn+", type: 'link', active: true },"
 
 						});
-					
+
 					}
 					resolve();
 				},
@@ -220,9 +221,9 @@ this.setScreenWidth(window.innerWidth);
 			    this.voucherTypes,
 				// [
 				// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
-				// ]		
-		
-	          
+				// ]
+
+
 
 		},
 		{
@@ -230,6 +231,9 @@ this.setScreenWidth(window.innerWidth);
 				{ path: '/accounting-reports/budgetReport', title: this.translate.instant("component-names.budget-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/incomeStatementReport', title: this.translate.instant("component-names.income-statement-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/vouchersTransactionsReport', title: this.translate.instant("component-names.vouchers-transactions-report"), type: 'link', active: true },
+				{ path: '/accounting-reports/generalLedgerReport', title: this.translate.instant("component-names.general-ledger-report"), type: 'link', active: true },
+				{ path: '/accounting-reports/journalEntriesReport', title: this.translate.instant("component-names.journal-entries-report"), type: 'link', active: true },
+				{ path: '/accounting-reports/costCentersReport', title: this.translate.instant("component-names.cost-centers-report"), type: 'link', active: true },
 
 			]
 		}
@@ -237,7 +241,7 @@ this.setScreenWidth(window.innerWidth);
 
 	];
 	// Array
-     
+
 	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 	itemsAccount = new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
 
