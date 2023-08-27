@@ -194,7 +194,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountGroupService.getAccountGroup(id).subscribe({
         next: (res: any) => {
-
+          resolve();
           this.accountGroupForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -205,10 +205,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
 
           });
 
-          console.log(
-            'this.accountGroupForm.value set value',
-            this.accountGroupForm.value
-          );
+       
         },
         error: (err: any) => {
           reject(err);

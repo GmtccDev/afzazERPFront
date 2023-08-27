@@ -12,6 +12,7 @@ import { SharedService } from '../../../../shared/common-services/shared-service
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-voucher-type',
   templateUrl: './voucher-type.component.html',
@@ -44,7 +45,9 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
   ) {
 
   }
@@ -54,20 +57,22 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    //this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([ this.getVoucherTypes()])
+    .then(a=>{
+      this.spinner.hide();
+      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.listenToClickedButton();
+    }).catch(err=>{
+      this.spinner.hide();
+    })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getVoucherTypes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
-
+  
 
   }
 
@@ -128,7 +133,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.voucherTypeService.deleteVoucherType(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
      // this.getVoucherTypes();
       this.router.navigate([this.listUrl])
       .then(() => {
@@ -137,7 +141,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   edit(id: string) {
-    ;
     this.router.navigate([
       '/accounting-master-codes/voucherType/update-voucher-type',
       id,
@@ -157,15 +160,18 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.voucherTypeService.deleteVoucherType(id).subscribe(
           (resonse) => {
-           // this.getVoucherTypes();
            this.router.navigate([this.listUrl])
            .then(() => {
              window.location.reload();
            });
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -301,7 +307,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         .then(() => {
           window.location.reload();
         });
-       // this.getVoucherTypes();
         this.listIds = [];
       });
     this.subsList.push(sub);

@@ -12,6 +12,7 @@ import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabula
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-bank-account',
   templateUrl: './bank-account.component.html',
@@ -43,7 +44,9 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -53,19 +56,22 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+   // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getBankAccounts()])
+    .then(a=>{
+      this.spinner.hide();
+      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.listenToClickedButton();
+    }).catch(err=>{
+      this.spinner.hide();
+    })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getBankAccountes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
+   
 
 
   }
@@ -96,20 +102,14 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getBankAccountes() {
+  getBankAccounts() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.bankAccountService.allBankAccountes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.bankAccount");
           if (res.success) {
             this.bankAccount = res.response.items
-              ;
 
           }
 
@@ -136,7 +136,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   delete(id: any) {
     this.bankAccountService.deleteBankAccount(id).subscribe((resonse) => {
       console.log('delet response', resonse);
-      this.getBankAccountes();
+      this.getBankAccounts();
     });
   }
   edit(id: string) {
@@ -159,15 +159,21 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.bankAccountService.deleteBankAccount(id).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getBankAccountes();
+            this.getBankAccounts();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
+    },err=>{
+      this.spinner.hide();
     });
   }
   //#endregion
@@ -231,7 +237,6 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/bankAccount/update-bankAccount/' + id])
     }
@@ -248,7 +253,6 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/bankAccount/update-bankAccount/' + event.item.id])
 
@@ -293,7 +297,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
       (resonse) => {
 
         //reloadPage()
-        this.getBankAccountes();
+        this.getBankAccounts();
         this.listIds = [];
       });
     this.subsList.push(sub);

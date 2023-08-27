@@ -64,14 +64,15 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    debugger
     this.getAccountClassificationsTypes();
     this.spinner.show();
+   
+    this.getRouteData();
     this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
       this.getaccountClassificationCode();
     }
-    this.getRouteData();
     this.changePath();
     this.listenToClickedButton();
     this.spinner.hide();
@@ -86,6 +87,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
         this.id = params['id'];
         if (this.id) {
           this.getaccountClassificationById(this.id).then(a => {
+            debugger
             this.spinner.hide();
 
           }).catch(err => {
@@ -94,7 +96,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
           });
 
         }
-        this.url = this.router.url.split('/')[2];
       }
     });
     this.subsList.push(sub);
@@ -154,10 +155,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region CRUD Operations
   getaccountClassificationById(id: any) {
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountClassificationService.getAccountClassification(id).subscribe({
         next: (res: any) => {
+          resolve();
 
           this.accountClassificationForm.setValue({
             id: res.response?.id,
@@ -169,10 +170,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
           });
 
-          console.log(
-            'this.accountClassificationForm.value set value',
-            this.accountClassificationForm.value
-          );
         },
         error: (err: any) => {
           reject(err);

@@ -5,11 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
-import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
+import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { IncomingChequeServiceProxy } from '../../../services/incoming-cheque.services';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
@@ -96,35 +96,62 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private dateService: DateCalculation,
 
   ) {
-    this.defineincomingChequeForm();
+    this.defineIncomingChequeForm();
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getGeneralConfiguration()
-    this.getCostCenter();
-    this.getCurrency();
-    this.getAccount();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
     this.getBeneficiaryTypes();
+    this.spinner.show();
+    Promise.all([
+      this.getGeneralConfiguration(),
+      this.getCostCenter(),
+      this.getCurrency(),
+      this.getAccount()
+    ]).then(a => {
+      this.getRouteData();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getIncomingChequeCode();
+      }
+      this.changePath();
+      this.listenToClickedButton();
+    }).catch(err => {
+      this.spinner.hide();
+    });
 
-    if (this.currnetUrl == this.addUrl) {
-      this.getincomingChequeCode();
-    }
 
-    this.sub = this.route.params.subscribe((params) => {
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
-        if (this.id) {
-          this.getincomingChequeById(this.id);
+        if (this.id > 0) {
+          this.getincomingChequeById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
       }
     });
+    this.subsList.push(sub);
+
   }
   onSelectJournal(event) {
 
@@ -203,7 +230,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
 
   }
-  defineincomingChequeForm() {
+  defineIncomingChequeForm() {
     this.incomingChequeForm = this.fb.group({
       id: 0,
       date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
@@ -334,10 +361,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   //#region CRUD operations
   getincomingChequeById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.incomingChequeService.getIncomingCheque(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.incomingChequeService.getIncomingCheque(id).subscribe({
         next: (res: any) => {
-
+          resolve();
           this.incomingChequeForm = this.fb.group({
             id: res.response?.id,
             date: this.dateService.getDateForCalender(res.response.date),
@@ -428,14 +455,15 @@ export class AddEditIncomingChequeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
 
-  getincomingChequeCode() {
-    const promise = new Promise<void>((resolve, reject) => {
+  getIncomingChequeCode() {
+    return new Promise<void>((resolve, reject) => {
 
-      this.incomingChequeService.getLastCode().subscribe({
+      let sub = this.incomingChequeService.getLastCode().subscribe({
 
         next: (res: any) => {
 
@@ -452,6 +480,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -482,7 +512,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("incoming-cheque.add-incoming-cheque");
-            this.defineincomingChequeForm();
+            this.defineIncomingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -495,9 +525,38 @@ export class AddEditIncomingChequeComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.incomingChequeForm.value;
+      debugger
+      entity.date = this.dateService.getDateForInsert(entity.date);
+      entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
+
+      let sub = this.incomingChequeService.createIncomingCheque(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          debugger
+          this.defineIncomingChequeForm();
+
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   onSave() {
 
     // if (this.checkPeriod == null) {
+
     //   this.alertsService.showError(
     //     'يجب أن يكون السنة المالية مفتوحة و الفترة المحاسبية مفتوحة',
     //     "",
@@ -533,39 +592,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
     debugger
     //  var entity = new CreateIncomingChequeCommand();
     if (this.incomingChequeForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.incomingChequeForm.value;
-        debugger
-        entity.date = this.dateService.getDateForInsert(entity.date);
-        entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
-
-        this.incomingChequeService.createIncomingCheque(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            debugger
-            console.log('result dataaddData ', result);
-            this.defineincomingChequeForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-      //  return this.incomingChequeForm.markAllAsTouched();
+      return this.incomingChequeForm.markAllAsTouched();
     }
   }
 
@@ -592,7 +628,45 @@ export class AddEditIncomingChequeComponent implements OnInit {
     }
 
   }
+  confirmUpdate() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.incomingChequeForm.value;
+      debugger
+      if (entity.status > 1) {
+        this.spinner.hide();
+        this.alertsService.showError(
+          this.translate.instant("incoming-cheque.cannot-edit"),
+          ""
+        )
+        return;
+      }
+      entity.status = 1;
+      debugger
+      entity.date = this.dateService.getDateForInsert(entity.date);
+      entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
+      let sub = this.incomingChequeService.updateIncomingCheque(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          console.log('result dataaddData ', result);
 
+          //  this.defineincomingChequeForm();
+
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   onUpdate() {
 
     console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
@@ -614,47 +688,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
     // }
     //  var entity = new CreateIncomingChequeCommand();
     if (this.incomingChequeForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.incomingChequeForm.value;
-        debugger
-        if (entity.status > 1) {
-          this.alertsService.showError(
-            this.translate.instant("incoming-cheque.cannot-edit"),
-            ""
-          )
-          return;
-        }
-        entity.status = 1;
-        debugger
-        entity.date = this.dateService.getDateForInsert(entity.date);
-        entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
-        this.incomingChequeService.updateIncomingCheque(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-
-            //  this.defineincomingChequeForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-      //  return this.incomingChequeForm.markAllAsTouched();
+      return this.incomingChequeForm.markAllAsTouched();
     }
   }
 

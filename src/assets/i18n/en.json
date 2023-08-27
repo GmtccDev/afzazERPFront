@@ -342,7 +342,7 @@
         "branches": "Branches",
         "branches-information": "Branches information ",
         "configurations": "configurations",
-        "journal": "journal",
+        "journal": "journal", 
         "journal-information": "journal information ",
         "fiscalPeriod-information": "Fiscal Period information",
         "fiscalPeriod": "Fiscal Period",
@@ -375,8 +375,8 @@
         "issuing-cheque-information": "Issuing Cheque Information ",
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
-
         "cost-centers-report":"Cost Centers Reports"
+        
     },
     "language": {
         "ARABIC": "Arabic",
@@ -479,5 +479,8 @@
      "account-groups":
      {
         "add-account-group":"Add Account Group"
+     },
+     "journal":{
+        "add-journal":"Add Journal"
      }
 }
