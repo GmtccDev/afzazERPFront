@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,7 +38,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -58,8 +57,6 @@ export class AddEditAccountGroupsComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private modelService: NgbModal,
-    private cd: ChangeDetectorRef
 
   ) {
     this.defineaccountGroupForm();
@@ -68,23 +65,43 @@ export class AddEditAccountGroupsComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    debugger
+    this.spinner.show();
+    Promise.all([
+      this.getAccountGroup()
+    ]).then(a => {
+      debugger
+      this.getRouteData();
+      this.changePath();
+      this.listenToClickedButton();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getaccountGroupCode();
+      }
+      this.spinner.hide();
+    }).catch(err => {
+      debugger
+      this.spinner.hide();
+    });
 
-    this.getAccountGroup();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getaccountGroupCode();
-    }
 
-    this.sub = this.route.params.subscribe((params) => {
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
         if (this.id) {
-          this.getaccountGroupById(this.id);
+          this.getaccountGroupById(this.id).then(a => {
+            this.spinner.hide();
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
         }
         this.url = this.router.url.split('/')[2];
+        this.spinner.hide();
       }
       if (params['parentId'] != null) {
         this.parentId = params['parentId'];
@@ -93,6 +110,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
         this.url = this.router.url.split('/')[2];
       }
     });
+    this.subsList.push(sub);
   }
   onSelectAccountGroup(event) {
 
@@ -110,6 +128,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
         s.unsubscribe();
       }
     });
+
   }
   //#endregion
 
@@ -172,8 +191,8 @@ export class AddEditAccountGroupsComponent implements OnInit {
   //#region CRUD Operations
   getaccountGroupById(id: any) {
 
-    const promise = new Promise<void>((resolve, reject) => {
-      this.accountGroupService.getAccountGroup(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountGroupService.getAccountGroup(id).subscribe({
         next: (res: any) => {
 
           this.accountGroupForm.setValue({
@@ -198,17 +217,18 @@ export class AddEditAccountGroupsComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   showPassword() {
     this.show = !this.show;
   }
   getaccountGroupCode() {
 
-    const promise = new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
 
-      this.accountGroupService.getLastCode(this.parentId).subscribe({
+      let sub = this.accountGroupService.getLastCode(this.parentId).subscribe({
 
         next: (res: any) => {
 
@@ -216,7 +236,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
           this.accountGroupForm.patchValue({
             code: res.response
           });
-        
+
 
         },
         error: (err: any) => {
@@ -226,6 +246,8 @@ export class AddEditAccountGroupsComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -254,8 +276,8 @@ export class AddEditAccountGroupsComponent implements OnInit {
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
-          } else if (currentBtn.action == ToolbarActions.New ||this.currnetUrl==this.addParentUrl) {
-            this.toolbarPathData.componentAdd = 'Add accountGroup';
+          } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
+            this.toolbarPathData.componentAdd = 'account-groups.add-account-group';
             this.defineaccountGroupForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -270,83 +292,89 @@ export class AddEditAccountGroupsComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    var entity = new CreateAccountGroupCommand();
     if (this.accountGroupForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        entity.inputDto = this.accountGroupForm.value;
 
-        this.accountGroupService.createAccountGroup(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.defineaccountGroupForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
       });
-      return promise;
+
 
     } else {
 
-      //  return this.accountGroupForm.markAllAsTouched();
+       return this.accountGroupForm.markAllAsTouched();
     }
+  }
+  confirmSave() {
+    var entity = new CreateAccountGroupCommand();
+    return new Promise<void>((resolve, reject) => {
+      entity.inputDto = this.accountGroupForm.value;
+      let sub = this.accountGroupService.createAccountGroup(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          console.log('result dataaddData ', result);
+          this.response = { ...result.response };
+          this.defineaccountGroupForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+    });
   }
 
 
   onUpdate() {
-    var entity = new EditAccountGroupCommand();
     if (this.accountGroupForm.valid) {
 
       this.accountGroupForm.value.id = this.id;
-      entity.inputDto = this.accountGroupForm.value;
-      entity.inputDto.id = this.id;
-
-      console.log("this.VendorCommissionsForm.value", this.accountGroupForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.accountGroupService.updateAccountGroup(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.defineaccountGroupForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a=>{
+        this.spinner.hide();
+      }).catch(e=>{
+        this.spinner.hide();
       });
-      return promise;
     }
 
     else {
 
-      // return this.accountGroupForm.markAllAsTouched();
+      return this.accountGroupForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    var entity = new EditAccountGroupCommand();
+    entity.inputDto = this.accountGroupForm.value;
+    entity.inputDto.id = this.id;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountGroupService.updateAccountGroup(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          console.log('result update ', result);
+          this.response = { ...result.response };
+          this.defineaccountGroupForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
-
+    });
+  }
 }
+
+
 

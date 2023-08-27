@@ -469,5 +469,10 @@
 
 
 
+    },
+    "account-groups":
+    {
+       "add-account-group":"اضافة مجموعة حساب"
     }
+
 }
