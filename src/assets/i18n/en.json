@@ -157,6 +157,7 @@
         "amount-local":"Amount Local",
         "from-entry-no":"From Entry No",
         "to-entry-no":"To Entry No"
+        
     },
     "menu": {},
     "home": {
@@ -474,5 +475,9 @@
         "cheque-details-status":"Cheque Details Status"
 
 
+     },
+     "account-groups":
+     {
+        "add-account-group":"Add Account Group"
      }
 }
