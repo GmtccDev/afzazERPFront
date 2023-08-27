@@ -78,7 +78,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   routefiscalPeriodApi = "fiscalPeriod/get-ddl?"
   routeAccountApi = "account/get-ddl?"
-  companyId:string= localStorage.getItem("companyId");
+  companyId: string = localStorage.getItem("companyId");
 
 
   constructor(
@@ -111,33 +111,22 @@ export class AddEditVoucherTypeComponent implements OnInit {
       this.getCurrencies()
 
     ]).then(a => {
-      this.spinner.hide();
+      this.getRouteData();
+      this.changePath();
+      this.listenToClickedButton();
     }).catch((err) => {
 
       this.spinner.hide();
     })
 
 
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
- 
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-    }
-    this.sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = params['id'];
-        if (this.id) {
-          this.getVoucherTypeById(this.id);
-     
 
-        }
-      }
-    });
+
   }
 
 
   //#endregion
+
 
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -165,7 +154,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   defineVoucherTypeForm() {
     this.voucherTypeForm = this.fb.group({
       id: 0,
-      companyId:this.companyId,
+      companyId: this.companyId,
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
       voucherNameEn: NAME_REQUIRED_VALIDATORS,
       journalId: null,
@@ -177,8 +166,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
       //chooseAccountNature: false,
       createFinancialEntryId: REQUIRED_VALIDATORS,
       defaultBeneficiaryId: REQUIRED_VALIDATORS,
-     // needReview: false,
-     // defaultLayoutId:null,
+      // needReview: false,
+      // defaultLayoutId:null,
       printAfterSave: false
     });
 
@@ -188,14 +177,43 @@ export class AddEditVoucherTypeComponent implements OnInit {
   //#endregion
 
   //#region CRUD Operations
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = params['id'];
+        if (this.id > 0) {
+          this.getVoucherTypeById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
+
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+      }
+    });
+    this.subsList.push(sub);
+
+  }
+
   getVoucherTypeById(id: any) {
     const promise = new Promise<void>((resolve, reject) => {
       this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res: any) => {
-
+          resolve();
           this.voucherTypeForm.setValue({
             id: res.response?.id,
-            companyId:res.response.companyId,
+            companyId: res.response.companyId,
             voucherNameAr: res.response?.voucherNameAr,
             voucherNameEn: res.response?.voucherNameEn,
             journalId: res.response?.journalId,
@@ -204,21 +222,18 @@ export class AddEditVoucherTypeComponent implements OnInit {
             serialId: res.response?.serialId,
             defaultAccountId: res.response?.defaultAccountId,
             defaultCurrencyId: res.response?.defaultCurrencyId,
-          //  chooseAccountNature: res.response?.chooseAccountNature,
+            //  chooseAccountNature: res.response?.chooseAccountNature,
             createFinancialEntryId: res.response?.createFinancialEntryId,
             defaultBeneficiaryId: res.response?.defaultBeneficiaryId,
-          //  needReview: res.response?.needReview,
-           // defaultLayoutId: res.response?.defaultLayoutId,
+            //  needReview: res.response?.needReview,
+            // defaultLayoutId: res.response?.defaultLayoutId,
             printAfterSave: res.response?.printAfterSave
 
 
 
           });
 
-          console.log(
-            'this.voucherTypeForm.value set value',
-            this.voucherTypeForm.value
-          );
+         
         },
         error: (err: any) => {
           reject(err);
@@ -284,11 +299,11 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   }
   getAccounts() {
-  return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.cashAccountList = res.response.filter(x=>x.isLeafAccount==true && x.isActive==true && x.accountClassificationId==AccountClassificationsEnum.Cash);
+            this.cashAccountList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true && x.accountClassificationId == AccountClassificationsEnum.Cash);
 
           }
           resolve();
@@ -430,38 +445,41 @@ export class AddEditVoucherTypeComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.voucherTypeForm.value;
+
+      let sub = this.voucherTypeService.createVoucherType(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+
+          this.defineVoucherTypeForm();
+
+          this.submited = false;
+          this.spinner.hide();
+          this.router.navigate([this.listUrl])
+            .then(() => {
+              window.location.reload();
+            });
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+  }
   onSave() {
     debugger
     if (this.voucherTypeForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.voucherTypeForm.value;
-
-        this.voucherTypeService.createVoucherType(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-
-            this.defineVoucherTypeForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-              this.router.navigate([this.listUrl])
-              .then(() => {
-                window.location.reload();
-              });
-            //  navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
       this.errorMessage = this.translate.instant("validation-messages.invalid-data");
@@ -470,44 +488,46 @@ export class AddEditVoucherTypeComponent implements OnInit {
       return this.voucherTypeForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    this.voucherTypeForm.value.id = this.id;
+    var entityDb = this.voucherTypeForm.value;
+    entityDb.id = this.id;
 
+    return new Promise<void>((resolve, reject) => {
+
+      this.voucherTypeService.updateVoucherType(entityDb).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+
+          this.defineVoucherTypeForm();
+          this.submited = false;
+          this.spinner.hide();
+
+          this.router.navigate([this.listUrl])
+            .then(() => {
+              window.location.reload();
+            });
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    });
+  }
 
   onUpdate() {
 
     if (this.voucherTypeForm.valid) {
 
-      this.voucherTypeForm.value.id = this.id;
-      var entityDb = this.voucherTypeForm.value;
-      entityDb.id = this.id;
-
-      console.log("this.voucherTypeForm.value", this.voucherTypeForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.voucherTypeService.updateVoucherType(entityDb).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-
-            this.defineVoucherTypeForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              this.router.navigate([this.listUrl])
-              .then(() => {
-                window.location.reload();
-              });
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a=>{
+        this.spinner.hide();
+      }).catch(e=>{
+        this.spinner.hide();
       });
-      return promise;
     }
 
     else {

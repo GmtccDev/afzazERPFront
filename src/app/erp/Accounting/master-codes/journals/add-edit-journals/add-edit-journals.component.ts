@@ -24,7 +24,7 @@ export class AddEditJournalsComponent implements OnInit {
   url: any;
   id: any = 0;
   currnetUrl;
-  journal:JournalDto[] = [];
+  journal: JournalDto[] = [];
   addUrl: string = '/accounting-master-codes/journal/add-journal';
   updateUrl: string = '/accounting-master-codes/journal/update-journal/';
   listUrl: string = '/accounting-master-codes/journal';
@@ -32,11 +32,11 @@ export class AddEditJournalsComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList:this.translate.instant("component-names.journal"),
+    componentList: this.translate.instant("component-names.journal"),
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -47,7 +47,7 @@ export class AddEditJournalsComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService,private translate:TranslateService
+    private SharedServices: SharedService, private translate: TranslateService
   ) {
     this.defineJournalForm();
   }
@@ -55,25 +55,51 @@ export class AddEditJournalsComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+    this.spinner.show();
+
+    this.getRouteData();
     this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
     if (this.currnetUrl == this.addUrl) {
       this.getJournalCode();
     }
-    this.sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = +params['id'];
-        if (this.id > 0) {
-          this.getJournalById(this.id);
-        }
-        this.url = this.router.url.split('/')[2];
-      }
-    });
+    this.changePath();
+    this.listenToClickedButton();
+    this.spinner.hide();
+
+
+
   }
 
   //#endregion
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = +params['id'];
+        if (this.id > 0) {
+          this.getJournalById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
+
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+
+      }
+      else {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+      }
+    });
+    this.subsList.push(sub);
+
+  }
 
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -104,7 +130,7 @@ export class AddEditJournalsComponent implements OnInit {
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
-      isActive:true
+      isActive: true
     });
   }
 
@@ -112,21 +138,18 @@ export class AddEditJournalsComponent implements OnInit {
 
   //#region CRUD Operations
   getJournalById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.journalService.getJournal(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalService.getJournal(id).subscribe({
         next: (res: any) => {
-          console.log('result data getbyid', res);
+          resolve();
           this.journalForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
-            isActive:res.response?.isActive
+            isActive: res.response?.isActive
           });
-          console.log(
-            'this.journalForm.value set value',
-            this.journalForm.value
-          );
+
         },
         error: (err: any) => {
           reject(err);
@@ -135,15 +158,16 @@ export class AddEditJournalsComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   getJournalCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.journalService.getLastCode().subscribe({
-       
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalService.getLastCode().subscribe({
+
         next: (res: any) => {
-          this.toolbarPathData.componentList=this.translate.instant("component-names.journal");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.journal");
           this.journalForm.patchValue({
             code: res.response
           });
@@ -156,8 +180,10 @@ export class AddEditJournalsComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-   
+
   }
   //#endregion
 
@@ -167,7 +193,7 @@ export class AddEditJournalsComponent implements OnInit {
     return this.journalForm.controls;
   }
 
-  
+
   //#endregion
   //#region Tabulator
   subsList: Subscription[] = [];
@@ -186,7 +212,7 @@ export class AddEditJournalsComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add Journal';
+            this.toolbarPathData.componentAdd = this.translate.instant("journal.add-journal");
             this.defineJournalForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -200,75 +226,84 @@ export class AddEditJournalsComponent implements OnInit {
   changePath() {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.journalService.createJournal(this.journalForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineJournalForm();
+
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   onSave() {
     if (this.journalForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.journalService.createJournal(this.journalForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.defineJournalForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-             
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
-     
-    //  return this.journalForm.markAllAsTouched();
+
+      return this.journalForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    this.journalForm.value.id = this.id;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalService.updateJournal(this.journalForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineJournalForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
+    });
+  }
 
   onUpdate() {
-    
-    if (this.journalForm.valid) {
 
-      this.journalForm.value.id = this.id;
-      console.log("this.VendorCommissionsForm.value", this.journalForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-        this.journalService.updateJournal( this.journalForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.defineJournalForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-             
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+    if (this.journalForm.valid) {
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
+
+
     }
 
     else {
-   
-     // return this.journalForm.markAllAsTouched();
+
+      return this.journalForm.markAllAsTouched();
     }
   }
 

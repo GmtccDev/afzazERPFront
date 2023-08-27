@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { CreateFiscalPeriodCommand, EditFiscalPeriodCommand, FiscalPeriodDto } from '../../../models/fiscal-period';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -40,7 +39,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -58,23 +57,51 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.spinner.show();
 
+    this.getRouteData();
     this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
     if (this.currnetUrl == this.addUrl) {
       this.getfiscalPeriodCode();
     }
-    this.sub = this.route.params.subscribe((params) => {
+    this.changePath();
+    this.listenToClickedButton();
+    this.spinner.hide();
+
+
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = +params['id'];
         if (this.id > 0) {
-          this.getfiscalPeriodById(this.id);
+          this.getfiscalPeriodById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
+
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.spinner.hide();
+        this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
       }
     });
+    this.subsList.push(sub);
+
   }
+
+
 
   //#endregion
 
@@ -104,24 +131,24 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   definefiscalPeriodForm() {
     this.fiscalPeriodForm = this.fb.group({
       id: 0,
-      nameAr: ['', Validators.compose([ Validators.required,Validators.minLength(2),Validators.maxLength(10)])],
-      nameEn: ['', Validators.compose([ Validators.required,Validators.minLength(2),Validators.maxLength(10)])],
+      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
+      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       fromDate: REQUIRED_VALIDATORS,
       toDate: REQUIRED_VALIDATORS,
       fiscalPeriodStatus: new FormControl('1')
-    }, {validator: this.dateRangeValidator});
+    }, { validator: this.dateRangeValidator });
   }
 
   //#endregion
 
   //#region CRUD Operations
   getfiscalPeriodById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          console.log('result data getbyid', res);
+          resolve();
           this.fiscalPeriodForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -130,7 +157,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
             isActive: res.response?.isActive,
             fromDate: formatDate(Date.parse(res.response.fromDate)),
             toDate: formatDate(Date.parse(res.response.toDate)),
-            fiscalPeriodStatus:res.response?.fiscalPeriodStatus.toString() 
+            fiscalPeriodStatus: res.response?.fiscalPeriodStatus.toString()
           });
           console.log(
             'this.fiscalPeriodForm.value set value',
@@ -144,12 +171,13 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   getfiscalPeriodCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.fiscalPeriodService.getLastCode().subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getLastCode().subscribe({
 
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.fiscalPeriod");
@@ -165,6 +193,8 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
 
   }
@@ -209,89 +239,97 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   changePath() {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  onSave() {
+  confirmSave() {
     var inputDto = new CreateFiscalPeriodCommand()
-    if (this.fiscalPeriodForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        inputDto.inputDto = this.fiscalPeriodForm.value;
-        this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.definefiscalPeriodForm();
+    return new Promise<void>((resolve, reject) => {
+      inputDto.inputDto = this.fiscalPeriodForm.value;
+      this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.definefiscalPeriodForm();
 
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
+          this.submited = false;
+          this.spinner.hide();
 
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
       });
-      return promise;
+    });
+  }
+  onSave() {
+    if (this.fiscalPeriodForm.valid) {
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
 
     } else {
 
-      //  return this.fiscalPeriodForm.markAllAsTouched();
+      return this.fiscalPeriodForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    var inputDto = new EditFiscalPeriodCommand()
 
+    return new Promise<void>((resolve, reject) => {
+
+      inputDto.inputDto = this.fiscalPeriodForm.value;
+
+      inputDto.inputDto.id = this.id;
+      let sub = this.fiscalPeriodService.updateFiscalPeriod(inputDto).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.definefiscalPeriodForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
   onUpdate() {
 
     if (this.fiscalPeriodForm.valid) {
-      var inputDto = new EditFiscalPeriodCommand()
-      // this.currencyForm.value.id = this.id;
-      console.log("this.VendorCommissionsForm.value", this.fiscalPeriodForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
+    }
+    else {
+      return this.fiscalPeriodForm.markAllAsTouched();
 
-        inputDto.inputDto = this.fiscalPeriodForm.value;
-
-        inputDto.inputDto.id = this.id;
-        console.log("this.VendorCommissionsForm.value", this.fiscalPeriodForm.value)
-        const promise = new Promise<void>((resolve, reject) => {
-          this.fiscalPeriodService.updateFiscalPeriod(inputDto).subscribe({
-            next: (result: any) => {
-              this.spinner.show();
-              console.log('result update ', result);
-              this.Response = { ...result.response };
-              this.definefiscalPeriodForm();
-              this.submited = false;
-              setTimeout(() => {
-                this.spinner.hide();
-
-                navigateUrl(this.listUrl, this.router);
-              }, 1000);
-            },
-            error: (err: any) => {
-              reject(err);
-            },
-            complete: () => {
-              console.log('complete');
-            },
-          });
-        });
-        return promise;
-      })
     }
   }
-  
-   dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
+
+  dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
     const startDate = control.get('fromDate').value;
     const endDate = control.get('toDate').value;
-  
+
     if (startDate && endDate) {
       return startDate <= endDate ? null : { 'dateRange': true };
     }
-  
+
     return null;
   }
 

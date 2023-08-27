@@ -473,6 +473,9 @@
     "account-groups":
     {
        "add-account-group":"اضافة مجموعة حساب"
-    }
+    },
+    "journal":{
+        "add-journal":"اضافة يومية"
+     }
 
 }
