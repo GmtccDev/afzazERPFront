@@ -17,6 +17,7 @@ import { VoucherTypeComponent } from './voucher-type/voucher-type.component';
 import { AddEditVoucherTypeComponent } from './voucher-type/add-edit-voucher-type/add-edit-voucher-type.component';
 import { BankAccountComponent } from './bank-account/bank-account.component';
 import { AddEditBankAccountComponent } from './bank-account/add-edit-bank-account/add-edit-bank-account.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 const routes: Routes = [
 	{
 		path: '',
@@ -58,6 +59,8 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+	exports: [RouterModule],
+	
 })
+
 export class MasterCodesRoutingModule { }

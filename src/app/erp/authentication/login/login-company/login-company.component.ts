@@ -185,7 +185,7 @@ this.loginForm.value.password=this.password;
     debugger
     const promise = new Promise<void>((resolve, reject) => {
       debugger
-      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+      this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
           debugger
           console.log('result data getbyid', res);
