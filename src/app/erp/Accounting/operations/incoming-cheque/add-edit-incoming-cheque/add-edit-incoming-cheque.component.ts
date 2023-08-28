@@ -204,7 +204,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           console.log(res);
           if (res.success && res.response.items.length > 0) {

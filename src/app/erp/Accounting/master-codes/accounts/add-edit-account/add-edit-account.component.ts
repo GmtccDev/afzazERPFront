@@ -251,7 +251,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
