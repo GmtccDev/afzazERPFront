@@ -157,6 +157,7 @@
         "amount-local":"Amount Local",
         "from-entry-no":"From Entry No",
         "to-entry-no":"To Entry No"
+        
     },
     "menu": {},
     "home": {
@@ -341,7 +342,7 @@
         "branches": "Branches",
         "branches-information": "Branches information ",
         "configurations": "configurations",
-        "journal": "journal",
+        "journal":"journal",
         "journal-information": "journal information ",
         "fiscalPeriod-information": "Fiscal Period information",
         "fiscalPeriod": "Fiscal Period",
@@ -374,8 +375,8 @@
         "issuing-cheque-information": "Issuing Cheque Information ",
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
-
         "cost-centers-report":"Cost Centers Reports"
+        
     },
     "language": {
         "ARABIC": "Arabic",
@@ -474,5 +475,12 @@
         "cheque-details-status":"Cheque Details Status"
 
 
+     },
+     "account-groups":
+     {
+        "add-account-group":"Add Account Group"
+     },
+     "journal":{
+        "add-journal":"Add Journal"
      }
 }

@@ -13,6 +13,7 @@ import { MessageModalComponent } from '../../../../shared/components/message-mod
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { AccountServiceProxy } from '../../services/account.services';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
@@ -45,7 +46,9 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -55,19 +58,22 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getAccounts()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
 
-    this.getAccountes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -99,7 +105,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region Basic Data
   ///Geting form dropdown list data
   filter: any = { id: null, name: null, selectedId: null };
-  getAccountes() {
+  getAccounts() {
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.accountService.getAllTree(this.filter).subscribe({
@@ -151,14 +157,16 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.accountService.deleteAccount(id).subscribe(
           (resonse) => {
-
-            //reloadPage()
-            this.getAccountes();
+            this.getAccounts();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -170,7 +178,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   searchFilters: any;
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
- 
+
   menuOptions: SettingMenuShowOptions = {
     showDelete: true,
     showEdit: true,
@@ -189,7 +197,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     ];
   }
 
- 
+
   onEdit(id) {
 
     if (id != undefined) {
@@ -200,7 +208,6 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/account/update-account/' + id])
     }
@@ -210,14 +217,13 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
-     
+
         this.sharedServices.changeButton({
           action: 'Update',
           componentName: 'List',
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/account/update-account/' + event.item.id])
 
@@ -236,7 +242,6 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/account/add-account/' + parentId])
     }
@@ -276,7 +281,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
       (resonse) => {
 
         //reloadPage()
-        this.getAccountes();
+        this.getAccounts();
         this.listIds = [];
       });
     this.subsList.push(sub);
@@ -308,10 +313,10 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
       const node = stack.pop()!;
       this.visitNode(node, hashMap, array);
       if (node.children) {
-        
+
         for (let i = node.children.length - 1; i >= 0; i--) {
           stack.push({ ...node.children[i], levelId: node.levelId! + 1, expanded: false, parent: node });
-         
+
         }
         if (node.children.length == 0) {
           node.children = null;

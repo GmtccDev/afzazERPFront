@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
     // if (this.loginForm.value.userName == "admin" && this.loginForm.value.password == "admin") {
 
     // }
-
+   debugger
     this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
 

@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +19,6 @@ import { SubscriptionService } from 'src/app/shared/components/layout/subscripti
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { AccountClassificationsArEnum, AccountClassificationsEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
-import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -88,10 +86,8 @@ export class AddEditAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private cd: ChangeDetectorRef,
     public subscriptionService: SubscriptionService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private modalService: NgbModal,
 
   ) {
     this.defineaccountForm();
@@ -100,29 +96,61 @@ export class AddEditAccountComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getLastSubscription();
-    this.getGeneralConfiguration();
-    this.getAccount();
-    this.getAccountGroup();
-    this.getCostCenter();
+    debugger
+    // this.defineGridColumn();
+    this.spinner.show();
     this.getAccountClassifications();
-    this.getAccountClassificationsForIncomeStatement();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
     this.getAccountType();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getaccountCode();
-    }
+ 
 
-    this.sub = this.route.params.subscribe((params) => {
+    Promise.all([this.getLastSubscription(), this.getGeneralConfiguration(), this.getAccount(), this.getCostCenter()
+      , this.getAccountClassificationsForIncomeStatement()
+    ])
+      .then(a => {
+        debugger
+        this.getRouteData();
+        this.currnetUrl = this.router.url;
+        if (this.currnetUrl == this.addUrl) {
+          this.getaccountCode();
+        }
+        this.spinner.hide();
+
+        this.changePath();
+        this.listenToClickedButton();
+        // this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        // this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      }).catch(err => {
+        this.spinner.hide();
+      })
+
+  
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
         if (this.id) {
-          this.getaccountById(this.id);
+          this.getaccountById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);          
+          this.spinner.hide();
         }
         this.url = this.router.url.split('/')[2];
+      }
+      else {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
       }
       if (params['parentId'] != null) {
         this.parentId = params['parentId'];
@@ -131,6 +159,8 @@ export class AddEditAccountComponent implements OnInit {
         this.url = this.router.url.split('/')[2];
       }
     });
+    this.subsList.push(sub);
+
   }
 
 
@@ -188,30 +218,35 @@ export class AddEditAccountComponent implements OnInit {
 
   }
   getLastSubscription() {
+    return new Promise<void>((resolve, reject) => {
 
-    this.subscriptionService.getLastSubscription().subscribe(
-      next => {
+      let sub = this.subscriptionService.getLastSubscription().subscribe(
+        next => {
+          resolve();
 
-        if (next.success == true) {
+          if (next.success == true) {
 
-          if (next.response != null) {
-            this.isMultiCompanies = next.response.multiCompanies;
-            if (this.isMultiCompanies) {
-              this.getCompanies();
+            if (next.response != null) {
+              this.isMultiCompanies = next.response.multiCompanies;
+              if (this.isMultiCompanies) {
+                this.getCompanies();
+              }
+              //MultiCompanies
             }
-            //MultiCompanies
+
+
           }
+        },
+        error => {
+          // reject(err);
 
 
         }
-      },
-      error => {
+      )
+      this.subsList.push(sub);
 
-        //this.showLoader = false;
-        console.log(error)
+    });
 
-      }
-    )
 
   }
   getGeneralConfiguration() {
@@ -219,11 +254,6 @@ export class AddEditAccountComponent implements OnInit {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
 
@@ -423,10 +453,10 @@ export class AddEditAccountComponent implements OnInit {
   //#region CRUD Operations
   getaccountById(id: any) {
 
-    const promise = new Promise<void>((resolve, reject) => {
-      this.accountService.getAccount(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.getAccount(id).subscribe({
         next: (res: any) => {
-
+          resolve();
           this.accountForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -464,15 +494,16 @@ export class AddEditAccountComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
 
   getaccountCode() {
 
-    const promise = new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
 
-      this.accountService.getLastCode(this.parentId).subscribe({
+      let sub = this.accountService.getLastCode(this.parentId).subscribe({
 
         next: (res: any) => {
 
@@ -490,6 +521,8 @@ export class AddEditAccountComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -533,76 +566,88 @@ export class AddEditAccountComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  onSave() {
+  confirmSave() {
     var entity = new CreateAccountCommand();
-    if (this.accountForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        entity.inputDto = this.accountForm.value;
+    entity.inputDto = this.accountForm.value;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.createAccount(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineaccountForm();
 
-        this.accountService.createAccount(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.response = { ...result.response };
-            this.defineaccountForm();
+          this.submited = false;
+          this.spinner.hide();
 
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
       });
-      return promise;
+      this.subsList.push(sub);
+
+    });
+  }
+  onSave() {
+    if (this.accountForm.valid) {
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+
+      }).catch(e => {
+        this.spinner.hide();
+      });
 
     } else {
 
       return this.accountForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    var entity = new EditAccountCommand();
 
+    this.accountForm.value.id = this.id;
+    entity.inputDto = this.accountForm.value;
+    entity.inputDto.id = this.id;
+
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.accountService.updateAccount(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineaccountForm();
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
   onUpdate() {
-    var entity = new EditAccountCommand();
     if (this.accountForm.valid) {
 
-      this.accountForm.value.id = this.id;
-      entity.inputDto = this.accountForm.value;
-      entity.inputDto.id = this.id;
-
-      console.log("this.VendorCommissionsForm.value", this.accountForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.accountService.updateAccount(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.response = { ...result.response };
-            this.defineaccountForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
+
     }
 
     else {
@@ -645,8 +690,6 @@ export class AddEditAccountComponent implements OnInit {
     let sub = this.accountService.checkAccount(id).subscribe(
       (resonse) => {
 
-        //reloadPage()
-        // this.getAccountes();
 
       });
   }

@@ -14,6 +14,7 @@ import { SettingMenuShowOptions } from '../../../../shared/components/models/set
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 import format from 'date-fns/format';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-fiscal-periods',
   templateUrl: './fiscal-periods.component.html',
@@ -45,7 +46,9 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
   ) {
 
   }
@@ -55,19 +58,23 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    debugger
+    this.spinner.show();
+    Promise.all([this.getFiscalPeriods()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getFiscalPeriodes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
+   
 
 
   }
@@ -98,20 +105,14 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getFiscalPeriodes() {
+  getFiscalPeriods() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.fiscalPeriodService.allFiscalPeriodes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.fiscalPeriod");
           if (res.success) {
             this.fiscalPeriods = res.response.items
-              ;
 
           }
 
@@ -137,8 +138,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
   //#region CRUD Operations
   delete(id: any) {
     this.fiscalPeriodService.deleteFiscalPeriod(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
-      this.getFiscalPeriodes();
+      this.getFiscalPeriods();
     });
   }
   edit(id: string) {
@@ -161,14 +161,18 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.fiscalPeriodService.deleteFiscalPeriod(id).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getFiscalPeriodes();
+            this.getFiscalPeriods();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -191,38 +195,38 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
     },
     this.lang == 'ar'
       ? {
-        title: '  تاريخ  ',width: 300,field: 'fromDate', formatter: function (cell, formatterParams, onRendered) {
+        title: '  تاريخ  ', width: 300, field: 'fromDate', formatter: function (cell, formatterParams, onRendered) {
           var value = cell.getValue();
           value = format(new Date(value), 'dd-MM-yyyy');;
           return value;
         }
       } : {
-        title: ' from Date',width: 300,field: 'fromDate', formatter: function (cell, formatterParams, onRendered) {
+        title: ' from Date', width: 300, field: 'fromDate', formatter: function (cell, formatterParams, onRendered) {
           var value = cell.getValue();
           value = format(new Date(value), 'dd-MM-yyyy');;
           return value;
         }
       },
-      this.lang == 'ar'
+    this.lang == 'ar'
       ? {
-        title: ' الي تاريخ  ',width: 300,field: 'toDate', formatter: function (cell, formatterParams, onRendered) {
+        title: ' الي تاريخ  ', width: 300, field: 'toDate', formatter: function (cell, formatterParams, onRendered) {
           var value = cell.getValue();
           value = format(new Date(value), 'dd-MM-yyyy');;
           return value;
         }
       } : {
-        title: '  To Date',width: 300,field: 'toDate', formatter: function (cell, formatterParams, onRendered) {
+        title: '  To Date', width: 300, field: 'toDate', formatter: function (cell, formatterParams, onRendered) {
           var value = cell.getValue();
           value = format(new Date(value), 'dd-MM-yyyy');;
           return value;
         }
       },
-      ///
-      this.lang == 'ar'
+    ///
+    this.lang == 'ar'
       ? {
-        title: '  الحالة  ',width: 300,field: 'fiscalPeriodStatusName',  formatter: this.translateEnum
+        title: '  الحالة  ', width: 300, field: 'fiscalPeriodStatusName', formatter: this.translateEnum
       } : {
-        title: '   Status',width: 300,field: 'fiscalPeriodStatusName'
+        title: '   Status', width: 300, field: 'fiscalPeriodStatusName'
       },
   ];
 
@@ -264,7 +268,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/fiscalPeriod/update-fiscalPeriod/' + id])
     }
@@ -281,7 +284,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/fiscalPeriod/update-fiscalPeriod/' + event.item.id])
 
@@ -326,7 +328,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
       (resonse) => {
 
         //reloadPage()
-        this.getFiscalPeriodes();
+        this.getFiscalPeriods();
         this.listIds = [];
       });
     this.subsList.push(sub);
@@ -349,7 +351,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
         break;
     }
     return text;
-   
+
   }
   //#endregion
 }

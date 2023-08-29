@@ -41,7 +41,7 @@ export class AddEditCostCenterComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -51,7 +51,7 @@ export class AddEditCostCenterComponent implements OnInit {
   fullPathUpdate: string;
   logo: any;
   showSearchModal = false;
-  showSearchModalCompanyy=false;
+  showSearchModalCompanyy = false;
   parentId: any;
   companyList: CompanyDto[] = [];
   routeApi = 'CostCenter/get-ddl?'
@@ -74,31 +74,56 @@ export class AddEditCostCenterComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getCompanies();
-    this.getCostCenter();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getcostCenterCode();
-    }
+    this.spinner.show();
+    Promise.all([
+      this.getCompanies(),
+      this.getCostCenter()
+    ]).then(a => {
+      this.getRouteData();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getCostCenterCode();
+      }
+      this.changePath();
+      this.listenToClickedButton();
+    }).catch(err => {
+      this.spinner.hide();
+    });
 
-    this.sub = this.route.params.subscribe((params) => {
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
-        if (this.id) {
-          this.getcostCenterById(this.id);
+        if (this.id > 0) {
+          this.getCostCenterById(this.id).then(a => {
+            debugger
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
       }
       if (params['parentId'] != null) {
         this.parentId = params['parentId'];
 
-        this.getcostCenterCode();
-        this.url = this.router.url.split('/')[2];
+        this.getCostCenterCode();
       }
     });
+    this.subsList.push(sub);
+
   }
   onSelectCostCenter(event) {
 
@@ -203,12 +228,13 @@ export class AddEditCostCenterComponent implements OnInit {
   //#endregion
 
   //#region CRUD Operations
-  getcostCenterById(id: any) {
-
-    const promise = new Promise<void>((resolve, reject) => {
-      this.costCenterService.getCostCenter(id).subscribe({
+  getCostCenterById(id: any) {
+   debugger
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.costCenterService.getCostCenter(id).subscribe({
         next: (res: any) => {
-
+          resolve();
+          debugger
           this.costCenterForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -216,14 +242,11 @@ export class AddEditCostCenterComponent implements OnInit {
             code: res.response?.code,
             isActive: res.response?.isActive,
             parentId: res.response?.parentId,
-            companyId: res.resonse?.companyId
+            companyId: res.response?.companyId
 
           });
 
-          console.log(
-            'this.costCenterForm.value set value',
-            this.costCenterForm.value
-          );
+        
         },
         error: (err: any) => {
           reject(err);
@@ -232,15 +255,17 @@ export class AddEditCostCenterComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
+
   }
- 
-  getcostCenterCode() {
 
-    const promise = new Promise<void>((resolve, reject) => {
+  getCostCenterCode() {
 
-      this.costCenterService.getLastCode(this.parentId).subscribe({
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.costCenterService.getLastCode(this.parentId).subscribe({
 
         next: (res: any) => {
 
@@ -258,6 +283,8 @@ export class AddEditCostCenterComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -301,81 +328,93 @@ export class AddEditCostCenterComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  onSave() {
+  confirmSave() {
     var entity = new CreateCostCenterCommand();
-    if (this.costCenterForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        entity.inputDto = this.costCenterForm.value;
+    return new Promise<void>((resolve, reject) => {
+      entity.inputDto = this.costCenterForm.value;
+      debugger
+      let sub = this.costCenterService.createCostCenter(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          console.log('result dataaddData ', result);
+          this.response = { ...result.response };
+          this.definecostCenterForm();
 
-        this.costCenterService.createCostCenter(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.definecostCenterForm();
+          this.submited = false;
 
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
+          this.spinner.hide();
 
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+          navigateUrl(this.listUrl, this.router);
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
       });
-      return promise;
+      this.subsList.push(sub);
+
+    });
+  }
+  onSave() {
+    if (this.costCenterForm.valid) {
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
 
     } else {
 
-      //  return this.costCenterForm.markAllAsTouched();
+      return this.costCenterForm.markAllAsTouched();
     }
+  }
+  confirmUpdate() {
+    var entity = new EditCostCenterCommand();
+    this.costCenterForm.value.id = this.id;
+    entity.inputDto = this.costCenterForm.value;
+    entity.inputDto.id = this.id;
+
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.costCenterService.updateCostCenter(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.definecostCenterForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
 
 
   onUpdate() {
-    var entity = new EditCostCenterCommand();
     if (this.costCenterForm.valid) {
-
-      this.costCenterForm.value.id = this.id;
-      entity.inputDto = this.costCenterForm.value;
-      entity.inputDto.id = this.id;
-
-      console.log("this.VendorCommissionsForm.value", this.costCenterForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.costCenterService.updateCostCenter(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.definecostCenterForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
+
     }
 
     else {
 
-      // return this.costCenterForm.markAllAsTouched();
+       return this.costCenterForm.markAllAsTouched();
     }
   }
   onSelectCompany(event) {

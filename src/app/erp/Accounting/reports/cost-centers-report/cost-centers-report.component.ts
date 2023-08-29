@@ -11,6 +11,7 @@ import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cost-centers-report',
@@ -49,6 +50,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
     private translate: TranslateService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private spinner: NgxSpinnerService,
 
   ) {
    
@@ -63,14 +65,25 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
    this.sharedServices.changeButton({ action: 'Report' } as ToolbarData);
    this.listenToClickedButton();
    this.sharedServices.changeToolbarPath(this.toolbarPathData);
-  
+   this.spinner.show();
+
+   Promise.all([
+    this.getGeneralConfigurationsOfAccountingPeriod()
+
+  ]).then(a => {
+    debugger
+
+    this.spinner.hide();
+  }).catch(err => {
+    debugger
+    this.spinner.hide();
+  });
   }
 
   //#endregion
  //#region ngAfterViewInit
   ngAfterViewInit(): void {
 
-    this.getGeneralConfigurationsOfAccountingPeriod()
 
 
   }
@@ -200,11 +213,11 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
   }
   getGeneralConfigurationsOfAccountingPeriod() {
     debugger
-    const promise = new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       debugger
-      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+     let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
-          debugger
+          resolve();
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
             debugger
@@ -221,16 +234,16 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
 
   }
   getfiscalPeriodById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+    let sub =  this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          debugger
-          console.log('result data getbyid', res);
+          resolve();
           this.fromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDate=this.dateConverterService.getDateForCalender(res.response.toDate);
 
@@ -245,8 +258,9 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
 
 }

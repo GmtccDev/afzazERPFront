@@ -239,7 +239,11 @@
         "issuing-cheque-information":"معلومات الشيك الصادر",
         "general-ledger-report":"تقرير دفتر الاستاذ العام",
 		"journal-entries-report":"تقرير القيود اليومية",
-        "cost-centers-report":"تقرير مراكز التكلفة"
+        "cost-centers-report":"تقرير مراكز التكلفة",
+        "bankAccount": "حساب البنك",
+        "bankAccount-information": "بيانات حساب البنك"
+
+
 
 
 
@@ -469,5 +473,13 @@
 
 
 
-    }
+    },
+    "account-groups":
+    {
+       "add-account-group":"اضافة مجموعة حساب"
+    },
+    "journal":{
+        "add-journal":"اضافة يومية"
+     }
+
 }
