@@ -59,11 +59,11 @@
         "save": "حفظ",
         "delete": "حذف",
         "cancel": "إلغاء",
-        "show":"عرض",
-        "design":"تصميم",
-        "default":"الافتراضى",
-        "close":"اغلاق",
-        "add":"اضافة"
+        "show": "عرض",
+        "design": "تصميم",
+        "default": "الافتراضى",
+        "close": "اغلاق",
+        "add": "اضافة"
     },
     "validation-message": {
         "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
@@ -180,8 +180,8 @@
         "export": "تصدير",
         "update": "تعديل",
         "print": "طباعة",
-        "view":"عرض",
-        "cancelDefaultReport":"الغاء التقرير الافتراضى"
+        "view": "عرض",
+        "cancelDefaultReport": "الغاء التقرير الافتراضى"
     },
     "component-names": {
         "country-information": "معلومات الدولة",
@@ -225,29 +225,23 @@
         "vouchers": "السندات",
         "voucher": "السند",
         "journalEntry": "قيود محاسبية",
-        "journalEntryPost":" قيود محاسبية مرحلة" ,
+        "journalEntryPost": " قيود محاسبية مرحلة",
         "journalEntry-information": "معلومات قيود محاسبية ",
-        "reports":"التقارير",
-        "budget-report":"تقرير الميزانية",
-        "analytical-budget-report":"تقرير الميزانية التوزيعى",
-        "income-statement-report":"تقرير قائمة الدخل",
-        "vouchers-transactions-report":"تقرير حركة السندات",
-        "close-fiscal-period":"اغلاق الفترة المحاسبية",
-        "incomingCheque":"الشيك الوراد",
-        "incomingCheque-information":"معلومات الشيك الوراد",
-        "issuing-cheque":"الشيك الصادر",
-        "issuing-cheque-information":"معلومات الشيك الصادر",
-        "general-ledger-report":"تقرير دفتر الاستاذ العام",
-		"journal-entries-report":"تقرير القيود اليومية",
-        "cost-centers-report":"تقرير مراكز التكلفة",
+        "reports": "التقارير",
+        "budget-report": "تقرير الميزانية",
+        "analytical-budget-report": "تقرير الميزانية التوزيعى",
+        "income-statement-report": "تقرير قائمة الدخل",
+        "vouchers-transactions-report": "تقرير حركة السندات",
+        "close-fiscal-period": "اغلاق الفترة المحاسبية",
+        "incomingCheque": "الشيك الوراد",
+        "incomingCheque-information": "معلومات الشيك الوراد",
+        "issuing-cheque": "الشيك الصادر",
+        "issuing-cheque-information": "معلومات الشيك الصادر",
+        "general-ledger-report": "تقرير دفتر الاستاذ العام",
+        "journal-entries-report": "تقرير القيود اليومية",
+        "cost-centers-report": "تقرير مراكز التكلفة",
         "bankAccount": "حساب البنك",
         "bankAccount-information": "بيانات حساب البنك"
-
-
-
-
-
-
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -311,7 +305,7 @@
         "cost-center-account": "حساب مركز التكلفة",
         "cost-center": " مركز التكلفة",
         "description": "الوصف",
-        "procedures":"الأجراءات",
+        "procedures": "الأجراءات",
         "details": "التفاصيل",
         "debit": "مدين",
         "credit": "دائن",
@@ -321,36 +315,31 @@
         "beneficiary": "المستفيد",
         "beneficiary-type": "نوع المستفيد",
         "beneficiary-account": "حساب المستفيد",
-        "balance":"التعادل",
+        "balance": "التعادل",
         "notes": "ملاحظات",
-        "gregorian":"ميلادى",
-        "hijri":"هجرى",
+        "gregorian": "ميلادى",
+        "hijri": "هجرى",
         "filterSearch": "فلتر البحث في التقارير",
-        "entries-status":"حالة القيود",
-        "number":"رقم",
-        "type-id":"رقم النمط",
-        "main-account":"الحساب الرئيسي",
-        "leaf-account":"الحساب الفرعى",
-        "type":"النوع",
-        "level":"المستوى",
-        "setting":"نمط",
-        "choose-template":"أختر النموذج",
-        "template-name":"أسم النموذج",
-        "report-options":"خيارات التقرير",
-        "default-cash-account":"حساب النقدية الافتراضى",
-        "amount":"الكمية",
-        "dueDate":"تاريخ الاستحقاق",
-        "account-number":"رقم الحساب",
-        "add-new-row":"اضافة صف جديد",
-        "confirm":"تأكيد",
-        "amount-local":"الأجمالى محلى",
-        "from-entry-no":"من رقم القيد",
-        "to-entry-no":"الى رقم القيد"
-
-
-
-
-
+        "entries-status": "حالة القيود",
+        "number": "رقم",
+        "type-id": "رقم النمط",
+        "main-account": "الحساب الرئيسي",
+        "leaf-account": "الحساب الفرعى",
+        "type": "النوع",
+        "level": "المستوى",
+        "setting": "نمط",
+        "choose-template": "أختر النموذج",
+        "template-name": "أسم النموذج",
+        "report-options": "خيارات التقرير",
+        "default-cash-account": "حساب النقدية الافتراضى",
+        "amount": "الكمية",
+        "dueDate": "تاريخ الاستحقاق",
+        "account-number": "رقم الحساب",
+        "add-new-row": "اضافة صف جديد",
+        "confirm": "تأكيد",
+        "amount-local": "الأجمالى محلى",
+        "from-entry-no": "من رقم القيد",
+        "to-entry-no": "الى رقم القيد"
     },
     "menu": {},
     "currency": {
@@ -373,8 +362,7 @@
         "cycle": "دورة القيد المالي",
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
-        "accountReceivables":"حساب أوراق القبض"
-
+        "accountReceivables": "حساب أوراق القبض"
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",
@@ -391,9 +379,9 @@
         "isLeafAccount": "هل الحساب فرعي ",
         "noteNotActive": "سبب عدم التفعيل",
         "taxNumber": "الرقم الضريبي",
-        "account-classification":"تصنيف الحساب",
-        "account-classification-income-statement":"تصنيف الحساب (قائمة الدخل)",
-        "budget":"الميزانية"
+        "account-classification": "تصنيف الحساب",
+        "account-classification-income-statement": "تصنيف الحساب (قائمة الدخل)",
+        "budget": "الميزانية"
     },
     "error": {
         "phoneValidation": "The phone number is invalid",
@@ -434,52 +422,43 @@
         "done": "نجاح",
         "wrong": "خطأ"
     },
-     "voucher":{
-        "voucher-information":"بيانات السند",
-        "voucher-total":"أجمالى قيمة السند",
-        "voucher-total-local":"أجمالى قيمة السند محلى",
-        "voucher-details-required":"من فضلك أدخل تفاصيل السند",
-        "add-voucher":"اضافة سند",
-        "update-voucher":"تحديث السند",
+    "voucher": {
+        "voucher-information": "بيانات السند",
+        "voucher-total": "أجمالى قيمة السند",
+        "voucher-total-local": "أجمالى قيمة السند محلى",
+        "voucher-details-required": "من فضلك أدخل تفاصيل السند",
+        "add-voucher": "اضافة سند",
+        "update-voucher": "تحديث السند",
         "voucher": "السند"
-
-
-     }
-    ,
+    },
     "journalEntry": {
         "openBalance": "الرصيد الافتتاحي "
     },
-    "account-classification":{
-        "add-account-classification":"اضافة تصنيف الحساب",
-        "update-account-classification":"تحديث تصنيف الحساب"
-
+    "account-classification": {
+        "add-account-classification": "اضافة تصنيف الحساب",
+        "update-account-classification": "تحديث تصنيف الحساب"
     },
-    "incoming-cheque":{
-        "add-incoming-cheque":"اضافة شيك وارد",
-        "sum-values-equal-to-cheque-details":"مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك",
-        "confirm-register":"هل أنت متأكد من تسجيل هذا الشيك؟",
-        "register":"تسجيل",
-        "collect-cheque-done":"تم تحصيل الشيك بنجاح",
-        "reject-cheque-done":"تم رفض الشيك بنجاح",
-        "cannot-edit":"لا يمكنك تعديل الشيك",
-        "registered":"تم التسجيل",
-        "edit-registered":"تم تعديل التسجيل",
-        "collected":"تم التحصيل",
-        "rejected":"تم الرفض",
-        "cheque-details-status":"تقاصيل حالة الشيك"
-
-
-
-
-
-
+    "incoming-cheque": {
+        "add-incoming-cheque": "اضافة شيك وارد",
+        "sum-values-equal-to-cheque-details": "مجموع القيم ف المجموع الكلي يجب يكون متساوي مع تفاصيل الشيك",
+        "confirm-register": "هل أنت متأكد من تسجيل هذا الشيك؟",
+        "register": "تسجيل",
+        "collect-cheque-done": "تم تحصيل الشيك بنجاح",
+        "reject-cheque-done": "تم رفض الشيك بنجاح",
+        "cannot-edit": "لا يمكنك تعديل الشيك",
+        "registered": "تم التسجيل",
+        "edit-registered": "تم تعديل التسجيل",
+        "collected": "تم التحصيل",
+        "rejected": "تم الرفض",
+        "cheque-details-status": "تقاصيل حالة الشيك"
     },
-    "account-groups":
-    {
-       "add-account-group":"اضافة مجموعة حساب"
+    "account-groups": {
+        "add-account-group": "اضافة مجموعة حساب"
     },
-    "journal":{
-        "add-journal":"اضافة يومية"
+    "journal": {
+        "add-journal": "اضافة يومية"
+    },
+    "branch":{
+        "add-branch":"اضافة فرع"
      }
-
 }

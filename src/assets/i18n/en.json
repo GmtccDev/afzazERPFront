@@ -482,5 +482,8 @@
      },
      "journal":{
         "add-journal":"Add Journal"
+     },
+     "branch":{
+        "add-branch":"Add Branch"
      }
 }
