@@ -53,10 +53,10 @@ export class AddEditBranchComponent implements OnInit {
   fullPathUpdate: string;
   logo: any;
   showSearchModal = false;
-  showSearchModalCountry=false;
+  showSearchModalCountry = false;
   companyId: any;
-  routeApi='Company/get-ddl?'
-  routeApiCountry='Country/get-ddl?'
+  routeApi = 'Company/get-ddl?'
+  routeApiCountry = 'Country/get-ddl?'
   constructor(
     private countryService: CountryServiceProxy,
     private companyService: CompanyServiceProxy,
@@ -76,25 +76,53 @@ export class AddEditBranchComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.spinner.show();
+    Promise.all([
+      this.getCountries(),
+      this.getCompanies()
+    ]).then(a => {
+      this.getRouteData();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getbranchCode();
+      }
+      this.changePath();
+      this.listenToClickedButton();
+    }).catch((err) => {
 
-    this.getCountries();
-    this.getCompanies();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getbranchCode();
-    }
-    this.sub = this.route.params.subscribe((params) => {
+      this.spinner.hide();
+    })
+
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
         if (this.id) {
-          this.getbranchById(this.id);
+          this.getbranchById(this.id).then(a => {
+
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
       }
     });
+    this.subsList.push(sub);
+
   }
   onSelectCompany(event) {
 
@@ -103,11 +131,9 @@ export class AddEditBranchComponent implements OnInit {
     this.showSearchModal = false;
   }
   onSelectCountry(event) {
-    
-       
-        this.branchForm.controls.countryId.setValue(event.id);
-        this.showSearchModalCountry = false;
-      }
+    this.branchForm.controls.countryId.setValue(event.id);
+    this.showSearchModalCountry = false;
+  }
   //#endregion
 
   //#region ngOnDestroy
@@ -143,7 +169,7 @@ export class AddEditBranchComponent implements OnInit {
       phoneNumber: null,
       countryId: null,
       companyId: null,
-      address:null
+      address: null
     });
 
   }
@@ -204,11 +230,10 @@ export class AddEditBranchComponent implements OnInit {
 
   //#region CRUD Operations
   getbranchById(id: any) {
-
-    const promise = new Promise<void>((resolve, reject) => {
-      this.branchService.getBranch(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.branchService.getBranch(id).subscribe({
         next: (res: any) => {
-          
+          resolve();
           this.branchForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -218,7 +243,7 @@ export class AddEditBranchComponent implements OnInit {
             phoneNumber: res.response?.phoneNumber,
             countryId: res.response?.countryId,
             companyId: res.response?.companyId,
-            address:res.response?.address
+            address: res.response?.address
 
           });
 
@@ -234,19 +259,17 @@ export class AddEditBranchComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   showPassword() {
     this.show = !this.show;
   }
   getbranchCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-
-      this.branchService.getLastCode().subscribe({
-
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.branchService.getLastCode().subscribe({
         next: (res: any) => {
-
           this.toolbarPathData.componentList = this.translate.instant("component-names.branch");
           this.branchForm.patchValue({
             code: res.response
@@ -260,6 +283,8 @@ export class AddEditBranchComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -289,7 +314,7 @@ export class AddEditBranchComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add branch';
+            this.toolbarPathData.componentAdd = this.translate.instant("branch.add-branch");
             this.definebranchForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -303,42 +328,50 @@ export class AddEditBranchComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  onSave() {
-  //  var entity = new CreateBranchCommand();
-    if (this.branchForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity= this.branchForm.value;
-       
-        this.branchService.createBranch(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-           
-            this.definebranchForm();
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.branchForm.value;
 
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
+      let sub = this.branchService.createBranch(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          console.log('result dataaddData ', result);
 
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+          this.definebranchForm();
+
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
       });
-      return promise;
+      this.subsList.push(sub);
 
+    });
+  }
+  onSave() {
+    if (this.branchForm.valid) {
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
     } else {
 
-      //  return this.branchForm.markAllAsTouched();
+      return this.branchForm.markAllAsTouched();
     }
   }
-
+confirmUpdate()
+{
+  
+}
 
   onUpdate() {
     var entity = new EditBranchCommand();
@@ -347,15 +380,14 @@ export class AddEditBranchComponent implements OnInit {
       this.branchForm.value.id = this.id;
       entity.inputDto = this.branchForm.value;
       entity.inputDto.id = this.id;
-     var entityDb=entity.inputDto;
-      console.log("this.VendorCommissionsForm.value", this.branchForm.value)
+      var entityDb = entity.inputDto;
       const promise = new Promise<void>((resolve, reject) => {
 
         this.branchService.updateBranch(entityDb).subscribe({
           next: (result: any) => {
             this.spinner.show();
             console.log('result update ', result);
-           
+
             this.definebranchForm();
             this.submited = false;
             setTimeout(() => {
@@ -377,10 +409,10 @@ export class AddEditBranchComponent implements OnInit {
 
     else {
 
-      // return this.branchForm.markAllAsTouched();
+      return this.branchForm.markAllAsTouched();
     }
   }
- 
+
 
 }
 

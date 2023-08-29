@@ -48,7 +48,7 @@ export class VoucherServiceProxy {
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/edit?", branch);
     }
     getDdl(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Voucher/get-ddl?");
+        return this.http.get<any>(environment.apiUrl + "/api/Voucher/get-ddl?");
     }
   
     allVouchers(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
