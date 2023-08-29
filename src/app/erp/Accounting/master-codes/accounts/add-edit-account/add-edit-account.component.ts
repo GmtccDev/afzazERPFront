@@ -146,7 +146,6 @@ export class AddEditAccountComponent implements OnInit {
           this.sharedServices.changeButton({ action: 'New' } as ToolbarData);          
           this.spinner.hide();
         }
-        this.url = this.router.url.split('/')[2];
       }
       else {
         this.spinner.hide();
