@@ -132,7 +132,12 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#region CRUD Operations
   delete(id: any) {
-    this.accountClassificationService.deleteAccountClassification(id).subscribe((resonse) => {
+    var entity={
+      tableName:"AccountClassifications",
+      id:id,
+      idName:"Id"
+    }
+    this.accountClassificationService.deleteEntityAccountClassification(entity).subscribe((resonse) => {
       console.log('delet response', resonse);
       this.getAccountClassifications();
     });
@@ -158,8 +163,12 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
       console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
-
-        let sub = this.accountClassificationService.deleteAccountClassification(id).subscribe(
+        const input={
+          tableName:"AccountClassifications",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.accountClassificationService.deleteEntityAccountClassification(input).subscribe(
           (resonse) => {
 
             //reloadPage()
@@ -285,7 +294,12 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
   }
   onDelete() {
     var ids = this.listIds;
-    let sub = this.accountClassificationService.deleteListAccountClassification(ids).subscribe(
+    var entity={
+      tableName:"AccountClassifications",
+      ids:ids,
+      idName:"Id"
+    }
+    let sub = this.accountClassificationService.deleteListEntityAccountClassification(entity).subscribe(
       (resonse) => {
 
         //reloadPage()
