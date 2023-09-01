@@ -87,5 +87,13 @@ export class BranchServiceProxy {
     uploadFile(formData ):Observable<any>{
         return this.http.post<any>(environment.apiUrl + "/api/UploadFile/FileUpload", formData);
       }
+      deleteEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Branch/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Branch/deleteListEntity?", entity);
+    }
 }
 

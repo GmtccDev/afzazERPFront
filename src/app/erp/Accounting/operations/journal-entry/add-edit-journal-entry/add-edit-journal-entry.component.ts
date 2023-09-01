@@ -201,7 +201,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
   }
   onChangeJournal(event) {
-    debugger
+    
     //this.journalEntryForm.controls['jEMasterStatusId'].value
     let journalModel;
     if (event != null) {
@@ -243,7 +243,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           console.log(res);
 
           if (res.success) {
-             debugger
+             
 
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.items.find(c => c.id == 3).value;

@@ -99,7 +99,7 @@ export class AddEditCostCenterComponent implements OnInit {
 
         if (this.id > 0) {
           this.getCostCenterById(this.id).then(a => {
-            debugger
+            
             this.spinner.hide();
 
           }).catch(err => {
@@ -229,12 +229,12 @@ export class AddEditCostCenterComponent implements OnInit {
 
   //#region CRUD Operations
   getCostCenterById(id: any) {
-   debugger
+   
     return new Promise<void>((resolve, reject) => {
       let sub = this.costCenterService.getCostCenter(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.costCenterForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -332,7 +332,7 @@ export class AddEditCostCenterComponent implements OnInit {
     var entity = new CreateCostCenterCommand();
     return new Promise<void>((resolve, reject) => {
       entity.inputDto = this.costCenterForm.value;
-      debugger
+      
       let sub = this.costCenterService.createCostCenter(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();

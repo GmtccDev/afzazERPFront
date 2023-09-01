@@ -56,7 +56,7 @@ export class CompanyServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/Company/all?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/Company/get-all?", { params: queryParams });
 
         // return this.http.get<any>(environment.apiUrl + "/api/Company/GetCompanys");
     }
@@ -78,5 +78,13 @@ export class CompanyServiceProxy {
     uploadFile(formData ):Observable<any>{
         return this.http.post<any>(environment.apiUrl + "/api/UploadFile/FileUpload", formData);
       }
+      deleteEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Company/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Company/deleteListEntity?", entity);
+    }
 }
 

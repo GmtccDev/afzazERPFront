@@ -235,7 +235,7 @@ export class AccountingConfigurationsComponent implements OnInit {
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
 
-            this.generalConfiguration = res.response.items
+            this.generalConfiguration = res.response.result.items
             this.currencyId = Number(this.generalConfiguration.find(c => c.id == 1).value);
             this.multiCurrency = this.generalConfiguration.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = this.generalConfiguration.find(c => c.id == 3).value;
@@ -301,7 +301,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let item = new EditGeneralConfigurationCommand();
       item.generalConfiguration = this.generalConfiguration;
       let sub = this.generalConfigurationService.updateGeneralConfiguration(item).subscribe({

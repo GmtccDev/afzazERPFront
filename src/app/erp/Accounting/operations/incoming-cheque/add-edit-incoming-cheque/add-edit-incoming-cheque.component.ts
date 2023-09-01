@@ -259,7 +259,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
 
     this.incomingChequeForm.get('incomingChequeDetail').valueChanges.subscribe(values => {
-      debugger
+      
       // this.totalamount = 0;
       // const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
       // ctrl.controls.forEach(x => {
@@ -282,10 +282,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   get incomingChequeDetailList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
   initGroup() {
-    debugger
+    
     this.counter += 1;
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
-    debugger
+    
     if (incomingChequeDetail.length > 0) {
       this.amountLocal = this.amountLocal + this.incomingChequeForm.get('incomingChequeDetail').value[0].currencyLocal;
       if (this.incomingChequeForm.value.currencyId == this.mainCurrencyId) {
@@ -334,11 +334,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
     }
   }
   onDeleteRow(rowIndex) {
-    debugger
+    
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
     incomingChequeDetail.removeAt(rowIndex);
     this.counter -= 1;
-    debugger
+    
 
   }
   atLeastOne = (validator: ValidatorFn, controls: string[]) => (
@@ -411,11 +411,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
             this.counter = element.jeDetailSerial;
           });
-          debugger
+          
           let ListDetailStatus = res.response?.incomingChequeStatusDetail;
           this.incomingChequeDetailStatusDTOList.clear();
           ListDetailStatus.forEach(element => {
-            debugger
+            
             if (element.status == 0) {
               element.status = this.translate.instant("incoming-cheque.registered");
             }
@@ -528,14 +528,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-      debugger
+      
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
 
       let sub = this.incomingChequeService.createIncomingCheque(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          debugger
+          
           this.defineIncomingChequeForm();
 
           this.submited = false;
@@ -564,7 +564,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    debugger
+    
     console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
@@ -589,7 +589,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    debugger
+    
     //  var entity = new CreateIncomingChequeCommand();
     if (this.incomingChequeForm.valid) {
       this.spinner.show();
@@ -607,7 +607,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   onChangeCurrency(event, index) {
     console.log('Name changed:', event.target.value);
-    debugger
+    
     if (event.target.value == this.mainCurrencyId) {
       const faControl =
         (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(index);
@@ -631,7 +631,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-      debugger
+      
       if (entity.status > 1) {
         this.spinner.hide();
         this.alertsService.showError(
@@ -641,7 +641,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         return;
       }
       entity.status = 1;
-      debugger
+      
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
       let sub = this.incomingChequeService.updateIncomingCheque(entity).subscribe({

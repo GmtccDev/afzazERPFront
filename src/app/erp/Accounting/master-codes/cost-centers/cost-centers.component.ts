@@ -59,7 +59,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region ngOnInit
   ngOnInit(): void {
    // this.defineGridColumn();
-   debugger
+   
     this.spinner.show();
     Promise.all([this.getCostCenters()])
     .then(a=>{
@@ -108,10 +108,10 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   filter: any = { id: null, name: null, selectedId: null };
   getCostCenters() {
     return new Promise<void>((resolve, reject) => {
-     debugger
+     
       let sub = this.costCenterService.getAllTree(this.filter).subscribe({
         next: (res) => {
-          debugger
+          
           console.log(res);
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.costCenter");

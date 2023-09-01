@@ -102,7 +102,14 @@ export class CurrencyServiceProxy {
         return this.http.get<any>(this.baseUrl + "/api/Currency/get-ddl-currencies-transactions?");
     }
 
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/Currency/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Currency/deleteListEntity?", entity);
+    }
 
 }
 

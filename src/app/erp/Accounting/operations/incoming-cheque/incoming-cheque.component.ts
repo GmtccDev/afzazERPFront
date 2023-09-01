@@ -109,7 +109,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     return new Promise<void>((resolve, reject) => {
       let sub = this.incomingChequeService.allIncomingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          debugger
+          
         
           this.toolbarPathData.componentList = this.translate.instant("component-names.incomingCheque");
           if (res.success) {
@@ -143,7 +143,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
   edit(id: string) {
-    debugger
+    
     this.router.navigate([
       '/accounting-operations/incomingCheque/update-incomingCheque',
       id,
@@ -259,7 +259,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     } as ToolbarData);
   }
   onEdit(id) {
-    debugger
+    
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -274,7 +274,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-    debugger
+    
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);

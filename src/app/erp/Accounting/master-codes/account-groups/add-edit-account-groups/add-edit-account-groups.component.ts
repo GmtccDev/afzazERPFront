@@ -65,12 +65,12 @@ export class AddEditAccountGroupsComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    debugger
+    
     this.spinner.show();
     Promise.all([
       this.getAccountGroup()
     ]).then(a => {
-      debugger
+      
       this.getRouteData();
       this.changePath();
       this.listenToClickedButton();
@@ -80,7 +80,7 @@ export class AddEditAccountGroupsComponent implements OnInit {
       }
       this.spinner.hide();
     }).catch(err => {
-      debugger
+      
       this.spinner.hide();
     });
 

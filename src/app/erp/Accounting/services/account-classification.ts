@@ -77,7 +77,7 @@ export class AccountClassificationServiceProxy {
         return this.http.get<any>(environment.apiUrl + "/api/AccountClassification/delete", { params: params });
     }
     deleteEntityAccountClassification(entity: any): Observable<any> {
-debugger
+
         return this.http.post<any>(environment.apiUrl + "/api/AccountClassification/deleteEntity?", entity);
     }
     deleteListEntityAccountClassification(entity: any): Observable<any> {

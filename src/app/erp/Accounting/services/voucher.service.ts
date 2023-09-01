@@ -72,7 +72,7 @@ export class VoucherServiceProxy {
 
 
     getVoucher(id: any): Observable<any> {
-        debugger
+        
         let params = new HttpParams();
         params = params.append('id', id);
         return this.http.get<any>(this.baseUrl + "/api/Voucher/getById", { params: params });
@@ -90,6 +90,13 @@ export class VoucherServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/Voucher/deleteVoucherAndRelation", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/deleteListEntity?", entity);
+    }
 }
 

@@ -96,7 +96,7 @@ export class AddEditAccountComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    debugger
+    
     // this.defineGridColumn();
     this.spinner.show();
     this.getAccountClassifications();
@@ -107,7 +107,7 @@ export class AddEditAccountComponent implements OnInit {
       , this.getAccountClassificationsForIncomeStatement()
     ])
       .then(a => {
-        debugger
+        
         this.getRouteData();
         this.currnetUrl = this.router.url;
         if (this.currnetUrl == this.addUrl) {

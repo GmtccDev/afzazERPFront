@@ -74,7 +74,14 @@ export class BusinessServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/Business/delete", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/Business/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Business/deleteListEntity?", entity);
+    }
 
 
 

@@ -472,7 +472,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     });
   }
   onSave() {
-    debugger
+    
     if (this.voucherTypeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {

@@ -89,7 +89,7 @@ export class AddEditBankAccountComponent implements OnInit {
         this.id = params['id'];
 
         if (this.id > 0) {
-          debugger
+          
           this.getbankAccountById(this.id).then(a => {
             this.spinner.hide();
 

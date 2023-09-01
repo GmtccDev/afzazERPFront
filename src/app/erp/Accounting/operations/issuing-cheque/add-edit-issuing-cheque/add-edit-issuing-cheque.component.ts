@@ -258,7 +258,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
 
     this.issuingChequeForm.get('issuingChequeDetail').valueChanges.subscribe(values => {
-      debugger
+      
       // this.totalamount = 0;
       // const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
       // ctrl.controls.forEach(x => {
@@ -404,11 +404,11 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
             this.counter = element.jeDetailSerial;
           });
-          debugger
+          
           let ListDetailStatus = res.response?.issuingChequeStatusDetails;
           this.issuingChequeDetailStatusDTOList.clear();
           ListDetailStatus.forEach(element => {
-            debugger
+            
             if (element.status == 0) {
               element.status = this.translate.instant("incoming-cheque.registered");
             }
@@ -529,12 +529,12 @@ export class AddEditIssuingChequeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.issuingChequeForm.value;
-      debugger
+      
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
       let sub = this.issuingChequeService.createIssuingCheque(entity).subscribe({
         next: (result: any) => {
-          debugger
+          
           this.spinner.show();
           this.defineIssuingChequeForm();
           this.submited = false;
@@ -563,7 +563,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    debugger
+    
     console.log("getRawValue=>", this.issuingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
@@ -588,7 +588,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    debugger
+    
     //  var entity = new CreateissuingChequeCommand();
     if (this.issuingChequeForm.valid) {
       this.spinner.show();

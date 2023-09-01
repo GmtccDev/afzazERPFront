@@ -145,7 +145,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     });
   }
   edit(id: string) {
-    debugger
+    
     this.router.navigate([
       '/accounting-operations/issuingCheque/update-issuingCheque',
       id,
@@ -262,7 +262,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     } as ToolbarData);
   }
   onEdit(id) {
-    debugger
+    
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -277,7 +277,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-    debugger
+    
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);

@@ -59,7 +59,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
   //#region ngOnInit
   ngOnInit(): void {
     // this.defineGridColumn();
-    debugger
+    
     this.spinner.show();
     Promise.all([this.getFiscalPeriods()])
       .then(a => {

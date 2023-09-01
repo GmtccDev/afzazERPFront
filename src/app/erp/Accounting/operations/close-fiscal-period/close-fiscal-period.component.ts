@@ -192,7 +192,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
-            debugger
+            
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("component-names.close-fiscal-period");
@@ -209,10 +209,10 @@ export class CloseFiscalPeriodComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    debugger
+    
     this.closeFiscalPeriodForm.value.closeDate = this.dateService.getDateForInsert(this.closeFiscalPeriodForm.controls["closeDate"].value);
     return new Promise<void>((resolve, reject) => {
-       debugger
+       
       this.closeDate = formatDate(Date.parse(this.closeFiscalPeriodForm.value.closeDate))
       let sub = this.fiscalPeriodService.closeFiscalPeriod(this.companyId, this.branchId, this.fiscalPeriodId, this.closeDate, this.fromDate, this.toDate, this.closeAccountId).subscribe({
         next: (result: any) => {
@@ -236,7 +236,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
     });
   }
   onSave() {
-    debugger
+    
     if (this.closeFiscalPeriodForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {

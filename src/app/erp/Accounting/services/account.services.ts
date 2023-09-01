@@ -98,5 +98,13 @@ export class AccountServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/Account/check", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Account/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Account/deleteListEntity?", entity);
+    }
 }
 

@@ -68,11 +68,11 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getGeneralConfigurationsOfAccountingPeriod()
 
     ]).then(a => {
-      debugger
+      
 
       this.spinner.hide();
     }).catch(err => {
-      debugger
+      
       this.spinner.hide();
     });
 
@@ -82,15 +82,15 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-    debugger
+    
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
-          debugger
+          
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
-            debugger
+            
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -113,7 +113,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          debugger
+          
           console.log('result data getbyid', res);
           this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);

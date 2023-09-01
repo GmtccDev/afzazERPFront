@@ -159,7 +159,12 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.branchService.deleteBranch(id).subscribe(
+        const input={
+          tableName:"Branches",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.branchService.deleteEntity(input).subscribe(
           (resonse) => {
 
             //reloadPage()
@@ -292,7 +297,12 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   var ids = this.listIds;
-    let sub = this.branchService.deleteListBranch(ids).subscribe(
+  const input={
+    tableName:"Branches",
+    ids:ids,
+    idName:"Id"
+  };
+    let sub = this.branchService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

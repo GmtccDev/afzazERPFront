@@ -64,7 +64,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    debugger
+    
     this.getAccountClassificationsTypes();
     this.spinner.show();
    
@@ -87,7 +87,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
         this.id = params['id'];
         if (this.id) {
           this.getaccountClassificationById(this.id).then(a => {
-            debugger
+            
             this.spinner.hide();
 
           }).catch(err => {

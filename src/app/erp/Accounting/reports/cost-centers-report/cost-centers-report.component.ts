@@ -71,11 +71,11 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
     this.getGeneralConfigurationsOfAccountingPeriod()
 
   ]).then(a => {
-    debugger
+    
 
     this.spinner.hide();
   }).catch(err => {
-    debugger
+    
     this.spinner.hide();
   });
   }
@@ -102,7 +102,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
 
   gotoViewer() {
  
-    debugger
+    
     let monthFrom;
     let monthTo;
 
@@ -143,7 +143,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
     }
   
    
-    debugger
+    
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate + 
@@ -180,7 +180,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
   OnFilter(e: {
     fromDate, toDate,branchId,entriesStatusId,costCenterId
   }) {
-    debugger
+    
       this.fromDate = e.fromDate
       this.toDate = e.toDate
       this.branchId=e.branchId
@@ -197,12 +197,12 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
         if (currentBtn != null) {
           
           if (currentBtn.action == ToolbarActions.Print) {
-            debugger
+            
             this.gotoViewer();
 
           }
           else if (currentBtn.action == ToolbarActions.CancelDefaultReport) {
-            debugger
+            
             this.cancelDefaultReportStatus();
           }
           this.sharedServices.changeButton({ action: 'Report' } as ToolbarData);
@@ -212,15 +212,15 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
     this.subsList.push(sub);
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-    debugger
+    
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
      let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
           resolve();
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
-            debugger
+            
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }

@@ -152,7 +152,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
           if (res.success) {
-            debugger
+            
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
 
           }
@@ -186,7 +186,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   edit(id: string) {
-    debugger
+    
     this.router.navigate([
       '/accounting-operations/vouchers/update-voucher/',
       this.voucherTypeId, id,
@@ -206,7 +206,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        debugger
+        
         this.spinner.show();
         let sub = this.voucherService.deleteVoucher(id).subscribe(
           (resonse) => {
@@ -308,7 +308,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
-        debugger
+        
         this.edit(event.item.id);
         this.sharedServices.changeButton({
           action: 'Update',

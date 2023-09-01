@@ -17,11 +17,37 @@ export class CompanyDto {
     webSite: string | undefined;
 }
 export class CreateCompanyCommand {
-    inputDto:CompanyDto;
+    id: number;
+    nameAr: string | undefined;
+    nameEn: string | undefined;
+    code: string | undefined;
+    phoneNumber: string | undefined;
+    email: string | undefined;
+    isActive: boolean | undefined;
+    countryId: number | undefined;
+    currencyId: number | undefined;
+
+    motherCompany: boolean | undefined;
+    useHijri: boolean | undefined;
+    logo: string | undefined;
+    webSite: string | undefined;
 }
 
 export class EditCompanyCommand {
-    inputDto:CompanyDto;
+    id: number;
+    nameAr: string | undefined;
+    nameEn: string | undefined;
+    code: string | undefined;
+    phoneNumber: string | undefined;
+    email: string | undefined;
+    isActive: boolean | undefined;
+    countryId: number | undefined;
+    currencyId: number | undefined;
+
+    motherCompany: boolean | undefined;
+    useHijri: boolean | undefined;
+    logo: string | undefined;
+    webSite: string | undefined;
 }
 export class CompanyDtoPageList {
     metadata: IPagedListMetaData;

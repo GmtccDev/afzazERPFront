@@ -121,7 +121,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
    // this.getLanguage();
     //this.GetData();
     this.getGeneralConfigurationsOfAccountingPeriod()
-    debugger
+    
   
 
 
@@ -387,15 +387,15 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-    debugger
+    
     const promise = new Promise<void>((resolve, reject) => {
-      debugger
+      
       this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
-          debugger
+          
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
-            debugger
+            
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -417,7 +417,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     const promise = new Promise<void>((resolve, reject) => {
       this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          debugger
+          
           console.log('result data getbyid', res);
           this.selectedFromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.selectedToDate=this.dateConverterService.getDateForCalender(res.response.toDate);
@@ -436,7 +436,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     return promise;
   }
   FireSearch() {
-    debugger
+    
     if (!this.selectedFromDate) {
     //  this.selectedFromDate = this.dateConverterService.getCurrentDate();
     }
@@ -468,7 +468,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
   onSelectFromDate(e: DateModel) {
-    debugger
+    
     this.selectedFromDate = e
     this.FireSearch()
   }
@@ -511,7 +511,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectBranch() {
-    debugger
+    
     this.branchIds=''
     this.selectedBranchId?.forEach(c => {
       this.branchIds += c.id + ",";

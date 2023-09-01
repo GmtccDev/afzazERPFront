@@ -161,7 +161,12 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.companyService.deleteCompany(id).subscribe(
+        const input={
+          tableName:"Companies",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.companyService.deleteEntity(input).subscribe(
           (resonse) => {
 
             //reloadPage()
@@ -307,7 +312,12 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item = new DeleteListCompanyCommand();
     item.ids = this.listIds;
-    let sub = this.companyService.deleteListCompany(item).subscribe(
+    const input={
+      tableName:"Companies",
+      ids:this.listIds,
+      idName:"Id"
+    };
+    let sub = this.companyService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()
