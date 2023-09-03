@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { AccountDto, CreateAccountCommand, EditAccountCommand } from '../../../models/account';
+import { AccountDto } from '../../../models/account';
 import { AccountServiceProxy } from '../../../services/account.services';
 import { CompanyDto } from 'src/app/erp/master-codes/models/company';
 import { CostCenterDto } from '../../../models/cost-Center';
@@ -101,7 +101,7 @@ export class AddEditAccountComponent implements OnInit {
     this.spinner.show();
     this.getAccountClassifications();
     this.getAccountType();
- 
+    this.getAccountGroup();
 
     Promise.all([this.getLastSubscription(), this.getGeneralConfiguration(), this.getAccount(), this.getCostCenter()
       , this.getAccountClassificationsForIncomeStatement()
@@ -256,8 +256,8 @@ export class AddEditAccountComponent implements OnInit {
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
 
-            if (res.response.items.length>0) {
-              this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
+            if (res.response.result.items.length>0) {
+              this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
               if (this.isMultiCurrency) {
                 this.getCurrency();
               }
@@ -284,6 +284,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.accountService.getDdl().subscribe({
         next: (res) => {
 
@@ -392,6 +393,7 @@ export class AddEditAccountComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
+            
             this.accountGroupList = res.response;
 
           }
@@ -456,7 +458,9 @@ export class AddEditAccountComponent implements OnInit {
       let sub = this.accountService.getAccount(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           this.accountForm.setValue({
+            
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
@@ -566,8 +570,8 @@ export class AddEditAccountComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    var entity = new CreateAccountCommand();
-    entity.inputDto = this.accountForm.value;
+    var entity = new AccountDto();
+    entity= this.accountForm.value;
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountService.createAccount(entity).subscribe({
         next: (result: any) => {
@@ -607,11 +611,11 @@ export class AddEditAccountComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    var entity = new EditAccountCommand();
+    var entity = new AccountDto();
 
     this.accountForm.value.id = this.id;
-    entity.inputDto = this.accountForm.value;
-    entity.inputDto.id = this.id;
+    entity = this.accountForm.value;
+    entity.id = this.id;
 
     return new Promise<void>((resolve, reject) => {
 

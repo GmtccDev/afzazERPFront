@@ -308,7 +308,7 @@ export class AddCompanyComponent implements OnInit {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    debugger
+    
     var entity = new CreateCompanyCommand();
     if (this.companyForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {

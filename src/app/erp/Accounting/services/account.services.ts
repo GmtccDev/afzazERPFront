@@ -29,16 +29,16 @@ export class AccountServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createAccount(accountGroup: CreateAccountCommand): Observable<AccountDto> {
+    createAccount(accountGroup: AccountDto): Observable<AccountDto> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Account/add?", accountGroup);
+        return this.http.post<any>(environment.apiUrl + "/api/Account/create?", accountGroup);
     }
     // ids: number[] | undefined;
     deleteListAccount(accountGroup: DeleteListAccountCommand): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/Account/deleteList?", accountGroup);
     }
-    updateAccount(accountGroup: EditAccountCommand): Observable<AccountDto> {
-        return this.http.post<any>(environment.apiUrl + "/api/Account/edit?", accountGroup);
+    updateAccount(accountGroup: AccountDto): Observable<AccountDto> {
+        return this.http.post<any>(environment.apiUrl + "/api/Account/update?", accountGroup);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Account/get-ddl?");
@@ -85,13 +85,13 @@ export class AccountServiceProxy {
             params = params.append('parentId', id);
         }
     
-        return this.http.get<any>(this.baseUrl + "/api/Account/getLastCode", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/Account/getLastCodeTree", { params: params });
        // return this.http.get<any>(this.baseUrl + "/api/Account/getLastCode?");
     }
     deleteAccount(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Account/delete", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/Account/deleteAccount", { params: params });
     }
     checkAccount(id: any): Observable<any> {
         let params = new HttpParams();

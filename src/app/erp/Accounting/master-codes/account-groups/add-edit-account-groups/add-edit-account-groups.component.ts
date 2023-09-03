@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { AccountGroupDto, CreateAccountGroupCommand, EditAccountGroupCommand } from '../../../models/account-group';
+import { AccountGroupDto } from '../../../models/account-group';
 import { AccountGroupServiceProxy } from '../../../services/account-group.services';
 @Component({
   selector: 'app-add-edit-account-groups',
@@ -303,9 +303,9 @@ export class AddEditAccountGroupsComponent implements OnInit {
     }
   }
   confirmSave() {
-    var entity = new CreateAccountGroupCommand();
+    var entity = new AccountGroupDto();
     return new Promise<void>((resolve, reject) => {
-      entity.inputDto = this.accountGroupForm.value;
+      entity = this.accountGroupForm.value;
       let sub = this.accountGroupService.createAccountGroup(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -346,9 +346,9 @@ export class AddEditAccountGroupsComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    var entity = new EditAccountGroupCommand();
-    entity.inputDto = this.accountGroupForm.value;
-    entity.inputDto.id = this.id;
+    var entity = new AccountGroupDto();
+    entity = this.accountGroupForm.value;
+    entity.id = this.id;
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountGroupService.updateAccountGroup(entity).subscribe({
         next: (result: any) => {

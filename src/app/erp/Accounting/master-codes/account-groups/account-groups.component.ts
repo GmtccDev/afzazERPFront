@@ -157,6 +157,11 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        var entity={
+          tableName:"AccountGroups",
+          id:id,
+          idName:"Id"
+        }
         let sub = this.accountGroupService.deleteAccountGroup(id).subscribe(
           (resonse) => {
 
@@ -170,7 +175,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
   }
   //#endregion
   //#region Tabulator
-
+ 
   panelId: number = 1;
   sortByCols: any[] = [];
   searchFilters: any;
