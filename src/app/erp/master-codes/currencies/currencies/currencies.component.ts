@@ -158,7 +158,12 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.countryService.deleteCurrency(id).subscribe(
+        const input={
+          tableName:"Currencies",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.countryService.deleteEntity(input).subscribe(
           (resonse) => {
 
             //reloadPage()
@@ -289,7 +294,12 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
     
     let item = new DeleteListCurrencyCommand();
     item.ids = this.listIds;
-    let sub = this.countryService.deleteListCurrency( item).subscribe(
+    const input={
+      tableName:"Currencies",
+      ids:this.listIds,
+      idName:"Id"
+    };
+    let sub = this.countryService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

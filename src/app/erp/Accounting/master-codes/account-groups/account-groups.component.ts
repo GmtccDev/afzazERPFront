@@ -13,6 +13,7 @@ import { MessageModalComponent } from '../../../../shared/components/message-mod
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { AccountGroupServiceProxy } from '../../services/account-group.services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-account-groups',
@@ -37,6 +38,8 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
   };
   listIds: any[] = [];
   listOfMapData: any[];
+  filter: any = { id: null, name: null, selectedId: null };
+
   //#endregion
 
   //#region Constructor
@@ -46,7 +49,9 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -56,21 +61,22 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   //#region ngOnInit
   ngOnInit(): void {
-
+   // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([ this.getAccountGroups()])
+    .then(a=>{
+      this.spinner.hide();
+      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.listenToClickedButton();
+    }).catch(err=>{
+      this.spinner.hide();
+    })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getAccountGroupes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
-
-
+    
   }
 
 
@@ -99,8 +105,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   //#region Basic Data
   ///Geting form dropdown list data
-  filter: any = { id: null, name: null, selectedId: null };
-  getAccountGroupes() {
+  getAccountGroups() {
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.accountGroupService.getAllTree(this.filter).subscribe({
@@ -152,11 +157,16 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        var entity={
+          tableName:"AccountGroups",
+          id:id,
+          idName:"Id"
+        }
         let sub = this.accountGroupService.deleteAccountGroup(id).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getAccountGroupes();
+            this.getAccountGroups();
 
           });
         this.subsList.push(sub);
@@ -165,7 +175,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
   }
   //#endregion
   //#region Tabulator
-
+ 
   panelId: number = 1;
   sortByCols: any[] = [];
   searchFilters: any;
@@ -218,7 +228,6 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/accountGroup/update-accountGroup/' + event.item.id])
 
@@ -237,7 +246,6 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/accountGroup/add-accountGroup/' + parentId])
     }
@@ -277,7 +285,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
       (resonse) => {
 
         //reloadPage()
-        this.getAccountGroupes();
+        this.getAccountGroups();
         this.listIds = [];
       });
     this.subsList.push(sub);

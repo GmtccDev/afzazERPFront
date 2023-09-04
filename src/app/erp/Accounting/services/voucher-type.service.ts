@@ -76,6 +76,13 @@ export class VoucherTypeServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/VoucherType/delete", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherType/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherType/deleteListEntity?", entity);
+    }
 }
 

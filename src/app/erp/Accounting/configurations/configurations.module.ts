@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from "../../../shared/shared.module";
 import { AccountingConfigurationsComponent } from './accounting-configurations/accounting-configurations.component';
 import { ConfigurationsRoutingModule } from './configurations-routing.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -11,7 +12,8 @@ import { ConfigurationsRoutingModule } from './configurations-routing.module';
 	imports: [
 		CommonModule,
 		SharedModule,
-		ConfigurationsRoutingModule
+		ConfigurationsRoutingModule,
+		NgxSpinnerModule
 	],
 	providers:[]
 })

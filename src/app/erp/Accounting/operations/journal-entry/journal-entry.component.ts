@@ -11,8 +11,9 @@ import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabula
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import {JournalEntryServiceProxy} from '../../services/journal-entry'
+import { JournalEntryServiceProxy } from '../../services/journal-entry'
 import format from 'date-fns/format';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-journal-entry',
   templateUrl: './journal-entry.component.html',
@@ -44,7 +45,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
   ) {
 
   }
@@ -54,19 +57,22 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    //  this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getJournalEntryes()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
 
-    this.getJournalEntryes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -102,16 +108,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.journalEntryService.allJournalEntryes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-            debugger
-            this.journalEntry = res.response.items.filter(x=>x.isCloseFiscalPeriod!=true);
-              
+            
+            this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
+
 
           }
 
@@ -137,7 +138,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD operations
   delete(id: any) {
     this.journalEntryService.deleteJournalEntry(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
       this.getJournalEntryes();
     });
   }
@@ -161,14 +161,17 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
           (resonse) => {
 
-            //reloadPage()
             this.getJournalEntryes();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -181,31 +184,31 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
   columnNames = [
-    
+
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
     },
     this.lang == 'ar'
-    ? {
-      title: '  تاريخ  ',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
-      }
-    } : {
-      title: 'Date',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
-      }
-    },
+      ? {
+        title: '  تاريخ  ', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      } : {
+        title: 'Date', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      },
     this.lang == 'ar'
-    ? {
-      title: '  الحالة  ',width: 300,field: 'postType',  formatter: this.translateArEnum
-    } : {
-      title: '   Status',width: 300,field: 'postType',  formatter: this.translateEnEnum
-    },
+      ? {
+        title: '  الحالة  ', width: 300, field: 'postType', formatter: this.translateArEnum
+      } : {
+        title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
+      },
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -246,7 +249,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + id])
     }
@@ -263,7 +265,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + event.item.id])
 
@@ -303,7 +304,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
 
-  var ids = this.listIds;
+    var ids = this.listIds;
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 
@@ -314,7 +315,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   translateArEnum(cell, formatterParams, onRendered) {
-    
+
     const status = cell.getValue();
     let text;
     switch (status) {
@@ -324,16 +325,16 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       case 2:
         text = 'غير مرحل';
         break;
-      
+
       default:
         text = status;
         break;
     }
     return text;
-   
+
   }
   translateEnEnum(cell, formatterParams, onRendered) {
-    
+
     const status = cell.getValue();
     let text;
     switch (status) {
@@ -343,13 +344,13 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       case 2:
         text = 'Not Post';
         break;
-      
+
       default:
         text = status;
         break;
     }
     return text;
-   
+
   }
   //#endregion
 }

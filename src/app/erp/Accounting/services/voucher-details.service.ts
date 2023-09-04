@@ -65,7 +65,7 @@ export class VoucherDetailsServiceProxy {
 
 
     getVoucherDetails(id: any): Observable<any> {
-        debugger
+        
         let params = new HttpParams();
         params = params.append('id', id);
         return this.http.get<any>(this.baseUrl + "/api/VoucherDetails/getById", { params: params });
@@ -78,7 +78,14 @@ export class VoucherDetailsServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/VoucherDetails/delete", { params: params });
     }
-   
+    deleteEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherDetails/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/VoucherDetails/deleteListEntity?", entity);
+    }
 
 }
 

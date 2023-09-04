@@ -85,7 +85,7 @@ export class ReportServiceProxy {
       }
     
       cancelDefaultReport(reportType, reportTypeId): Observable<string> {
-        debugger
+        
         return this.http.get<string>(this.baseUrl + "/api/Report/cancelDefaultReport?reportType="+reportType+
           "&reportTypeId="+reportTypeId );
       }

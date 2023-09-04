@@ -45,10 +45,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
   errorClass = '';
   submited: boolean = false;
   showSearchModal = false;
-  showSearchModalCountry=false;
+  showSearchModalCountry = false;
   companyId: any;
-  routeApi='Company/get-ddl?'
-  routeApiCountry='Country/get-ddl?'
+  routeApi = 'Company/get-ddl?'
+  routeApiCountry = 'Country/get-ddl?'
   constructor(
     private accountClassificationService: AccountClassificationServiceProxy,
     private router: Router,
@@ -56,7 +56,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private cd: ChangeDetectorRef
 
   ) {
     this.defineaccountClassificationForm();
@@ -65,23 +64,42 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
+    
     this.getAccountClassificationsTypes();
+    this.spinner.show();
+   
+    this.getRouteData();
+    this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
       this.getaccountClassificationCode();
     }
-    this.sub = this.route.params.subscribe((params) => {
+    this.changePath();
+    this.listenToClickedButton();
+    this.spinner.hide();
+
+
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
-
         if (this.id) {
-          this.getaccountClassificationById(this.id);
+          this.getaccountClassificationById(this.id).then(a => {
+            
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
         }
-        this.url = this.router.url.split('/')[2];
       }
     });
+    this.subsList.push(sub);
+
   }
   onSelectCompany(event) {
 
@@ -90,11 +108,11 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.showSearchModal = false;
   }
   onSelectCountry(event) {
-    
-       
-        this.accountClassificationForm.controls.countryId.setValue(event.id);
-        this.showSearchModalCountry = false;
-      }
+
+
+    this.accountClassificationForm.controls.countryId.setValue(event.id);
+    this.showSearchModalCountry = false;
+  }
   //#endregion
 
   //#region ngOnDestroy
@@ -126,7 +144,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
-      type:REQUIRED_VALIDATORS,
+      type: REQUIRED_VALIDATORS,
       isActive: true
     });
 
@@ -137,11 +155,11 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region CRUD Operations
   getaccountClassificationById(id: any) {
-
-    const promise = new Promise<void>((resolve, reject) => {
-      this.accountClassificationService.getAccountClassification(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountClassificationService.getAccountClassification(id).subscribe({
         next: (res: any) => {
-          
+          resolve();
+
           this.accountClassificationForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -152,10 +170,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
           });
 
-          console.log(
-            'this.accountClassificationForm.value set value',
-            this.accountClassificationForm.value
-          );
         },
         error: (err: any) => {
           reject(err);
@@ -164,8 +178,9 @@ export class AddEditAccountClassificationComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   getAccountClassificationsTypes() {
     if (this.lang == 'en') {
@@ -180,12 +195,9 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.show = !this.show;
   }
   getaccountClassificationCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-
-      this.accountClassificationService.getLastCode().subscribe({
-
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountClassificationService.getLastCode().subscribe({
         next: (res: any) => {
-
           this.toolbarPathData.componentList = this.translate.instant("component-names.accountClassification");
           this.accountClassificationForm.patchValue({
             code: res.response
@@ -199,6 +211,8 @@ export class AddEditAccountClassificationComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -243,83 +257,93 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-  //  var entity = new CreateAccountClassificationCommand();
     if (this.accountClassificationForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity= this.accountClassificationForm.value;
-       
-        this.accountClassificationService.createAccountClassification(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-           
-            this.defineaccountClassificationForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-       return this.accountClassificationForm.markAllAsTouched();
+      return this.accountClassificationForm.markAllAsTouched();
     }
+  }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.accountClassificationForm.value;
+
+      let sub = this.accountClassificationService.createAccountClassification(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+
+          this.defineaccountClassificationForm();
+
+          this.submited = false;
+
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
 
 
   onUpdate() {
-  
+
     if (this.accountClassificationForm.valid) {
 
-      this.accountClassificationForm.value.id = this.id;
-   var   entityDb = this.accountClassificationForm.value;
-      entityDb.id = this.id;
-   
-      console.log("this.VendorCommissionsForm.value", this.accountClassificationForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.accountClassificationService.updateAccountClassification(entityDb).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-           
-            this.defineaccountClassificationForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
     }
 
     else {
 
-       return this.accountClassificationForm.markAllAsTouched();
+      return this.accountClassificationForm.markAllAsTouched();
     }
   }
- 
+  confirmUpdate() {
+    this.accountClassificationForm.value.id = this.id;
+    var entityDb = this.accountClassificationForm.value;
+    entityDb.id = this.id;
+
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.accountClassificationService.updateAccountClassification(entityDb).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+
+          this.defineaccountClassificationForm();
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+
 
 }
 

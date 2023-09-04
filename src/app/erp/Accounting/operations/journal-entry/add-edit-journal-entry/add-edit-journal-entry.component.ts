@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
@@ -13,10 +13,8 @@ import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url
 import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { EntriesStatusArEnum, EntriesStatusEnum, EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -92,30 +90,60 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getGeneralConfiguration()
-    this.getCostCenter();
-    this.getCurrency();
-    this.getFiscalPeriod();
-    this.getJournals();
-    this.getAccount();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
     this.getEntriesStatusEnum();
-    if (this.currnetUrl == this.addUrl) {
-      this.getjournalEntryCode();
-    }
 
-    this.sub = this.route.params.subscribe((params) => {
+    this.spinner.show();
+    Promise.all([
+      this.getGeneralConfiguration(),
+      this.getCostCenter(),
+      this.getCurrency(),
+      this.getFiscalPeriod(),
+      this.getJournals(),
+      this.getAccount()
+    ]).then(a => {
+      this.getRouteData();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getjournalEntryCode();
+      }
+      this.changePath();
+      this.listenToClickedButton();
+    }).catch(err => {
+      this.spinner.hide();
+    });
+
+
+
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
-        if (this.id) {
-          this.getjournalEntryById(this.id);
+        if (this.id > 0) {
+          this.getjournalEntryById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
       }
+      else {
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
+      }
+
     });
+    this.subsList.push(sub);
+
   }
   onSelectJournal(event) {
 
@@ -160,66 +188,62 @@ export class AddEditJournalEntryComponent implements OnInit {
       { nameAr: "اليومية / الفترة المحاسبي / رقم   ", nameEn: 'Daily/Period Accounting/Number', value: '3' }
     ];
   }
-  codeSerial='';
-  journal='';
-  onChangeCode(event)
-  {
-    if(this.serial=='2'){
-   
-      this.codeSerial= this.journal+"/"+this.journalEntryForm.controls['code'].value
-     }
-     if(this.serial=='3'){
-   
-      this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
-     }
+  codeSerial = '';
+  journal = '';
+  onChangeCode(event) {
+    if (this.serial == '2') {
+
+      this.codeSerial = this.journal + "/" + this.journalEntryForm.controls['code'].value
+    }
+    if (this.serial == '3') {
+
+      this.codeSerial = this.journal + "/" + this.fiscalPeriod + "/" + this.journalEntryForm.controls['code'].value
+    }
   }
   onChangeJournal(event) {
-   debugger
-   //this.journalEntryForm.controls['jEMasterStatusId'].value
-   let journalModel;
-   if(event!=null)
-   {
-    journalModel = this.journalList.find(x => x.id == event.id);
-   }
-   if(journalModel!=null)
-   {
-   this.journal= this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
-   }
-   if(this.serial=='1'){
-   
-    this.codeSerial=this.journalEntryForm.controls['code'].value
-   }
-   if(this.serial=='2'){
-   
-    this.codeSerial= this.journal+"/"+this.journalEntryForm.controls['code'].value
-   }
-   if(this.serial=='3'){
-   
-    this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
-   }
+    
+    //this.journalEntryForm.controls['jEMasterStatusId'].value
+    let journalModel;
+    if (event != null) {
+      journalModel = this.journalList.find(x => x.id == event.id);
+    }
+    if (journalModel != null) {
+      this.journal = this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
+    }
+    if (this.serial == '1') {
+
+      this.codeSerial = this.journalEntryForm.controls['code'].value
+    }
+    if (this.serial == '2') {
+
+      this.codeSerial = this.journal + "/" + this.journalEntryForm.controls['code'].value
+    }
+    if (this.serial == '3') {
+
+      this.codeSerial = this.journal + "/" + this.fiscalPeriod + "/" + this.journalEntryForm.controls['code'].value
+    }
   }
   onChangefiscalPeriod(event) {
-    
-     let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
-     if(fiscalPeriodModel!=null)
-     {
-     this.fiscalPeriod= this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
-     }
-     if(this.serial=='3'){
-   
-      this.codeSerial= this.journal+"/"+ this.fiscalPeriod+"/"+this.journalEntryForm.controls['code'].value
-     }
-    
-   }
+
+    let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
+    if (fiscalPeriodModel != null) {
+      this.fiscalPeriod = this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
+    }
+    if (this.serial == '3') {
+
+      this.codeSerial = this.journal + "/" + this.fiscalPeriod + "/" + this.journalEntryForm.controls['code'].value
+    }
+
+  }
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(1, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
           console.log(res);
 
           if (res.success) {
-
+             
 
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.items.find(c => c.id == 3).value;
@@ -255,7 +279,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       notes: null,
       journalId: ['', Validators.compose([Validators.required])],
       fiscalPeriodId: ['', Validators.compose([Validators.required])],
-    //  postType:2,
+      //  postType:2,
       journalEntriesDetail: this.fb.array([])
     });
     this.initGroup();
@@ -340,11 +364,10 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   //#region CRUD operations
   getjournalEntryById(id: any) {
-
-    const promise = new Promise<void>((resolve, reject) => {
-      this.journalEntryService.getJournalEntry(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
-        
+          resolve();
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
@@ -354,7 +377,7 @@ export class AddEditJournalEntryComponent implements OnInit {
             notes: res.response?.notes,
             journalId: res.response?.journalId,
             fiscalPeriodId: res.response?.fiscalPeriodId,
-           // postType:res.response?.postType,
+            // postType:res.response?.postType,
             journalEntriesDetail: this.fb.array([])
 
           });
@@ -442,9 +465,9 @@ export class AddEditJournalEntryComponent implements OnInit {
               this.cd.detectChanges()
             });
           })
-          
-          if(res.response?.postType==1){
-          this.journalEntryForm.disable();
+
+          if (res.response?.postType == 1) {
+            this.journalEntryForm.disable();
           }
           console.log(
             'this.journalEntryForm.value set value',
@@ -458,15 +481,15 @@ export class AddEditJournalEntryComponent implements OnInit {
           console.log('complete');
         },
       });
-      
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
 
   getjournalEntryCode() {
-    const promise = new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
 
-      this.journalEntryService.getLastCode().subscribe({
+      let sub = this.journalEntryService.getLastCode().subscribe({
 
         next: (res: any) => {
 
@@ -474,7 +497,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           this.journalEntryForm.patchValue({
             code: res.response
           });
-          this.codeSerial=res.response;
+          this.codeSerial = res.response;
         },
         error: (err: any) => {
           reject(err);
@@ -483,6 +506,8 @@ export class AddEditJournalEntryComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -526,6 +551,29 @@ export class AddEditJournalEntryComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.journalEntryForm.value;
+
+      let sub = this.journalEntryService.createJournalEntry(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.definejournalEntryForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   onSave() {
 
     // if (this.checkPeriod == null) {
@@ -561,36 +609,16 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
     //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.journalEntryForm.value;
-
-        this.journalEntryService.createJournalEntry(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-
-            this.definejournalEntryForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-      //  return this.journalEntryForm.markAllAsTouched();
+      return this.journalEntryForm.markAllAsTouched();
     }
   }
 
@@ -605,6 +633,29 @@ export class AddEditJournalEntryComponent implements OnInit {
     faControl['controls'].jEDetailCreditLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailCredit.value);
     faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailDebit.value);
     faControl['controls'].jEDetailSerial.setValue(index + 1);
+  }
+  confirmUpdate()
+  {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.journalEntryForm.value;
+
+     let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   onUpdate() {
 
@@ -631,38 +682,17 @@ export class AddEditJournalEntryComponent implements OnInit {
       )
       return;
     }
-    //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity = this.journalEntryForm.value;
-
-        this.journalEntryService.updateJournalEntry(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-
-            //  this.definejournalEntryForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-      //  return this.journalEntryForm.markAllAsTouched();
+        return this.journalEntryForm.markAllAsTouched();
     }
   }
 

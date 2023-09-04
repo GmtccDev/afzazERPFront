@@ -77,7 +77,7 @@ export class IssuingChequeServiceProxy {
         return this.http.get<any>(environment.apiUrl + "/api/IssuingCheque/delete", { params: params });
     }
     generateEntryActions(id: any,action:any): Observable<any> {
-        debugger
+        
         let params = new HttpParams();
         params = params.append('Id', id);
         params = params.append('action', action);
@@ -86,6 +86,13 @@ export class IssuingChequeServiceProxy {
         , { params: params }
         );
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/deleteListEntity?", entity);
+    }
 }
 

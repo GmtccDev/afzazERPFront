@@ -10,11 +10,23 @@ export class CostCenterDto {
     companyId: number | undefined;
 }
 export class CreateCostCenterCommand {
-    inputDto:CostCenterDto;
+    id: number;
+    nameAr: string | undefined;
+    nameEn: string | undefined;
+    code: string | undefined;
+    isActive: boolean | undefined;
+    parentId: number | undefined;
+    companyId: number | undefined;
 }
 
 export class EditCostCenterCommand {
-    inputDto:CostCenterDto;
+    id: number;
+    nameAr: string | undefined;
+    nameEn: string | undefined;
+    code: string | undefined;
+    isActive: boolean | undefined;
+    parentId: number | undefined;
+    companyId: number | undefined;
 }
 export class CostCenterDtoPageList {
     metadata: IPagedListMetaData;

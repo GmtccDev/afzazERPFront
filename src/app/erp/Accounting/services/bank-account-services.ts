@@ -76,6 +76,13 @@ export class BankAccountServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/BankAccount/delete", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/BankAccount/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/BankAccount/deleteListEntity?", entity);
+    }
 }
 

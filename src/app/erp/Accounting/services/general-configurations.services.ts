@@ -57,7 +57,7 @@ export class GeneralConfigurationServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/GeneralConfiguration/all?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/GeneralConfiguration/show?", { params: queryParams });
 
         // return this.http.get<any>(environment.apiUrl + "/api/GeneralConfiguration/GetGeneralConfigurations");
     }

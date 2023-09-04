@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
 <h3> {{'component-names.currencies'|translate}}</h3>
 <br/>
 <div class="row">
@@ -119,7 +122,31 @@
   </div>
 </div>
 
-
+<div class="row">
+    <div class="col-md-6 col-6">
+        <label for="account" class="label-name">
+            {{'accounting-configration.accountExchange'|translate}}
+    
+        </label>
+        <div class="">
+            <ng-select  style="width:100%"  [(ngModel)]="accountExchangeId" name="accountExchangeId">
+                <ng-option *ngFor="let account of accountList" [value]="account.id">
+                    {{lang=="ar"?account.nameAr:account.nameEn}}
+                </ng-option>
+                
+            </ng-select>
+    
+        </div>
+          
+        <div class="col-md-2 col-2">
+            <button
+              
+            class="btn btn-rounded btn-dark" (click)="showSearchModalAccountExchange=true"
+            type="button"><i class="fa fa-search"></i></button>
+        </div>
+       
+    </div>
+  </div>
 <div class="row">
   <div class="col-md-6 col-6">
       <label for="account" class="label-name">
@@ -146,4 +173,7 @@
 
 <app-public-search-modal [isVisible]="showSearchModalAccountReceivables" [routeApi]="routeApi"
     (emitClose)="showSearchModalAccountReceivables = false;" (emitSearch)="onSelectAccountReceivables($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchModalAccountExchange" [routeApi]="routeApi"
+    (emitClose)="showSearchModalAccountExchange = false;" (emitSearch)="onSelectAccountExchange($event)">
 </app-public-search-modal>

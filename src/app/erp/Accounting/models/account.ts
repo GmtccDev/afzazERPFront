@@ -16,7 +16,8 @@ export class AccountDto {
     currencyId: number | undefined;
     costCenterId: number | undefined;
     accountGroupId: number | undefined;
-
+    isLeafAccount: boolean | undefined;
+    accountType: number | undefined;
 }
 export class CreateAccountCommand {
     inputDto: AccountDto;
@@ -52,4 +53,5 @@ export interface TreeNodeInterface {
     isActive: boolean | undefined;
     parentId: number | undefined;
     parent?: TreeNodeInterface;
+    isLeafAccount: boolean | undefined;
 }

@@ -128,7 +128,7 @@ export class LoginCompanyComponent implements OnInit {
     // if (this.loginForm.value.userName == "admin" && this.loginForm.value.password == "admin") {
 
     // }
-debugger
+
 this.loginForm.value.userName=this.userName;
 this.loginForm.value.password=this.password;
     this.authService.UserLoginCompany(this.loginForm.value).subscribe(

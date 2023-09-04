@@ -160,7 +160,12 @@ export class CountriesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.countryService.deleteCountry(id).subscribe(
+        const input={
+          tableName:"Countries",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.countryService.deleteEntity(input).subscribe(
           (resonse) => {
 
             //reloadPage()
@@ -287,7 +292,12 @@ export class CountriesComponent implements OnInit, OnDestroy, AfterViewInit {
     
     let item = new DeleteListCountryCommand();
     item.ids = this.listIds;
-    let sub = this.countryService.deleteListCountry( item).subscribe(
+    const input={
+      tableName:"Countries",
+      ids:item.ids,
+      idName:"Id"
+    };
+    let sub = this.countryService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

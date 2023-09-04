@@ -13,6 +13,7 @@ import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { IncomingChequeServiceProxy } from '../../services/incoming-cheque.services'
 import format from 'date-fns/format';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-incoming-cheque',
   templateUrl: './incoming-cheque.component.html',
@@ -47,7 +48,9 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
   ) {
 
   }
@@ -57,20 +60,22 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   //#region ngOnInit
   ngOnInit(): void {
-
+  //  this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getIncomingChequees()])
+    .then(a=>{
+      this.spinner.hide();
+      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.listenToClickedButton();
+    }).catch(err=>{
+      this.spinner.hide();
+    })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getIncomingChequees();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
-
+    
 
   }
 
@@ -104,12 +109,8 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     return new Promise<void>((resolve, reject) => {
       let sub = this.incomingChequeService.allIncomingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          debugger
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
+          
+        
           this.toolbarPathData.componentList = this.translate.instant("component-names.incomingCheque");
           if (res.success) {
             this.incomingCheque = res.response.items
@@ -138,12 +139,11 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   //#region CRUD operations
   delete(id: any) {
     this.incomingChequeService.deleteIncomingCheque(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
       this.getIncomingChequees();
     });
   }
   edit(id: string) {
-    debugger
+    
     this.router.navigate([
       '/accounting-operations/incomingCheque/update-incomingCheque',
       id,
@@ -163,14 +163,16 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
         let sub = this.incomingChequeService.deleteIncomingCheque(id).subscribe(
           (resonse) => {
 
-            //reloadPage()
             this.getIncomingChequees();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -257,7 +259,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     } as ToolbarData);
   }
   onEdit(id) {
-    debugger
+    
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -266,14 +268,13 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-operations/incomingCheque/update-incomingCheque/' + id])
     }
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-    debugger
+    
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);
@@ -283,7 +284,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-operations/incomingCheque/update-incomingCheque/' + event.item.id])
 
@@ -343,8 +343,9 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
-        debugger
-        this.incomingChequeService.generateEntryActions(id, 2).subscribe({
+        this.spinner.show();
+
+       let sub= this.incomingChequeService.generateEntryActions(id, 2).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
@@ -359,6 +360,10 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
             console.log('complete');
           },
         });
+        this.subsList.push(sub);
+
+        this.spinner.hide();
+
 
       }
     });
@@ -372,7 +377,9 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
-        this.incomingChequeService.generateEntryActions(id, 3).subscribe({
+        this.spinner.show();
+
+        let sub = this.incomingChequeService.generateEntryActions(id, 3).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
@@ -387,6 +394,10 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
             console.log('complete');
           },
         });
+        this.subsList.push(sub);
+        this.spinner.hide();
+
+
       }
     });
   }

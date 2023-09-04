@@ -29,7 +29,7 @@ export class IncomingChequeServiceProxy {
     }
 
     createIncomingCheque(branch: any): Observable<any> {
-        debugger
+        
         return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/add?", branch);
        
     }
@@ -79,7 +79,7 @@ export class IncomingChequeServiceProxy {
         return this.http.get<any>(environment.apiUrl + "/api/IncomingCheque/delete", { params: params });
     }
     generateEntryActions(id: any,action:any): Observable<any> {
-        debugger
+        
         let params = new HttpParams();
         params = params.append('Id', id);
         params = params.append('action', action);
@@ -88,6 +88,13 @@ export class IncomingChequeServiceProxy {
         , { params: params }
         );
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteListEntity?", entity);
+    }
 }
 

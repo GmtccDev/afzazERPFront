@@ -13,7 +13,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { AccountGroupDto, CreateAccountGroupCommand, DeleteListAccountGroupCommand, EditAccountGroupCommand, TreeDto } from "../models/account-group";
+import { AccountGroupDto, DeleteListAccountGroupCommand, TreeDto } from "../models/account-group";
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
@@ -29,16 +29,16 @@ export class AccountGroupServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createAccountGroup(accountGroup: CreateAccountGroupCommand): Observable<AccountGroupDto> {
+    createAccountGroup(accountGroup: AccountGroupDto): Observable<AccountGroupDto> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/add?", accountGroup);
+        return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/create?", accountGroup);
     }
     // ids: number[] | undefined;
     deleteListAccountGroup(accountGroup: DeleteListAccountGroupCommand): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/deleteList?", accountGroup);
     }
-    updateAccountGroup(accountGroup: EditAccountGroupCommand): Observable<AccountGroupDto> {
-        return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/edit?", accountGroup);
+    updateAccountGroup(accountGroup: AccountGroupDto): Observable<AccountGroupDto> {
+        return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/update?", accountGroup);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/AccountGroup/get-ddl?");
@@ -85,14 +85,21 @@ export class AccountGroupServiceProxy {
             params = params.append('parentId', id);
         }
     
-        return this.http.get<any>(this.baseUrl + "/api/AccountGroup/getLastCode", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/AccountGroup/getLastCodeTree", { params: params });
        // return this.http.get<any>(this.baseUrl + "/api/AccountGroup/getLastCode?");
     }
     deleteAccountGroup(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/AccountGroup/delete", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/AccountGroup/deleteAccountGroup", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/AccountGroup/deleteListEntity?", entity);
+    }
 }
 

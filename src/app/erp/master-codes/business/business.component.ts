@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import {  BusinessServiceProxy } from '../services/business-field.servies'
-import { BusinessDto, DeleteListBusinessCommand } from '../models/business'
 
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
@@ -13,6 +12,7 @@ import { ITabulatorActionsSelected } from '../../../shared/interfaces/ITabulator
 import { MessageModalComponent } from '../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
+import { BusinessDto, DeleteListBusinessCommand } from '../models/Business';
 @Component({
   selector: 'app-business',
   templateUrl: './business.component.html',
@@ -152,7 +152,12 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.businessService.deleteBusiness(id).subscribe(
+        const input={
+          tableName:"Business",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.businessService.deleteEntity(input).subscribe(
           () => {
             //reloadPage()
             this.getBusinesss();
@@ -279,7 +284,12 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item = new DeleteListBusinessCommand();
     item.ids = this.listIds;
-    let sub = this.businessService.deleteListBusiness( item).subscribe(
+    const input={
+      tableName:"Business",
+      ids:item.ids,
+      idName:"Id"
+    };
+    let sub = this.businessService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

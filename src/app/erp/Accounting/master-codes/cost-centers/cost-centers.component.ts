@@ -13,6 +13,7 @@ import { MessageModalComponent } from '../../../../shared/components/message-mod
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { CostCenterServiceProxy } from '../../services/cost-Center.services';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-cost-centers',
   templateUrl: './cost-centers.component.html',
@@ -45,7 +46,9 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -55,19 +58,23 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+   // this.defineGridColumn();
+   
+    this.spinner.show();
+    Promise.all([this.getCostCenters()])
+    .then(a=>{
+      this.spinner.hide();
+      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.listenToClickedButton();
+    }).catch(err=>{
+      this.spinner.hide();
+    })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getCostCenteres();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
+  
 
 
   }
@@ -99,12 +106,12 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region Basic Data
   ///Geting form dropdown list data
   filter: any = { id: null, name: null, selectedId: null };
-  getCostCenteres() {
+  getCostCenters() {
     return new Promise<void>((resolve, reject) => {
-
+     
       let sub = this.costCenterService.getAllTree(this.filter).subscribe({
         next: (res) => {
-
+          
           console.log(res);
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.costCenter");
@@ -151,14 +158,17 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.costCenterService.deleteCostCenter(id).subscribe(
           (resonse) => {
 
-            //reloadPage()
-            this.getCostCenteres();
+            this.getCostCenters();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -200,7 +210,6 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/costCenter/update-costCenter/' + id])
     }
@@ -217,7 +226,6 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/costCenter/update-costCenter/' + event.item.id])
 
@@ -236,7 +244,6 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/costCenter/add-costCenter/' + parentId])
     }
@@ -276,7 +283,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
       (resonse) => {
 
         //reloadPage()
-        this.getCostCenteres();
+        this.getCostCenters();
         this.listIds = [];
       });
     this.subsList.push(sub);

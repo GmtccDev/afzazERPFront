@@ -13,6 +13,7 @@ import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import format from 'date-fns/format';
 import { IssuingChequeServiceProxy } from '../../services/issuing-cheque.services';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-issuing-cheque',
   templateUrl: './issuing-cheque.component.html',
@@ -50,6 +51,8 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
 
   ) {
 
@@ -60,19 +63,21 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    //  this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getIssuingChequees()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getIssuingChequees();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -108,7 +113,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
       let sub = this.issuingChequeService.allIssuingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           console.log(res);
-         
+
           this.toolbarPathData.componentList = this.translate.instant("component-names.issuing-cheque");
           if (res.success) {
             this.issuingCheque = res.response.items
@@ -136,12 +141,11 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   //#region CRUD operations
   delete(id: any) {
     this.issuingChequeService.deleteIssuingCheque(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
       this.getIssuingChequees();
     });
   }
   edit(id: string) {
-    debugger
+    
     this.router.navigate([
       '/accounting-operations/issuingCheque/update-issuingCheque',
       id,
@@ -161,6 +165,8 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
+
         let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
           (resonse) => {
 
@@ -169,6 +175,8 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -180,25 +188,25 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   searchFilters: any;
   groupByCols: string[] = [];
   columnNames = [
-    
+
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
     },
     this.lang == 'ar'
-    ? {
-      title: '  تاريخ  ',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
-      }
-    } : {
-      title: 'Date',width: 300,field: 'date', formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
-      }
-    },
+      ? {
+        title: '  تاريخ  ', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      } : {
+        title: 'Date', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
+          var value = cell.getValue();
+          value = format(new Date(value), 'dd-MM-yyyy');;
+          return value;
+        }
+      },
     this.lang == "ar" ? {
       title: "تحصيل",
       field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
@@ -254,7 +262,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     } as ToolbarData);
   }
   onEdit(id) {
-debugger
+    
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -263,14 +271,13 @@ debugger
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-operations/issuingCheque/update-issuingCheque/' + id])
     }
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-debugger
+    
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);
@@ -280,7 +287,6 @@ debugger
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-operations/issuingCheque/update-issuingCheque/' + event.item.id])
 
@@ -298,11 +304,8 @@ debugger
   currentBtn!: string;
   subsList: Subscription[] = [];
   listenToClickedButton() {
-
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
@@ -320,7 +323,7 @@ debugger
   onDelete() {
 
 
-  var ids = this.listIds;
+    var ids = this.listIds;
     let sub = this.issuingChequeService.deleteListIssuingCheque(ids).subscribe(
       (resonse) => {
 
@@ -340,8 +343,8 @@ debugger
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
-        debugger
-        this.issuingChequeService.generateEntryActions(id, 2).subscribe({
+        this.spinner.show();
+        let sub = this.issuingChequeService.generateEntryActions(id, 2).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
@@ -356,6 +359,9 @@ debugger
             console.log('complete');
           },
         });
+        this.subsList.push(sub);
+        this.spinner.hide();
+
 
       }
     });
@@ -369,7 +375,8 @@ debugger
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
-        this.issuingChequeService.generateEntryActions(id, 3).subscribe({
+        this.spinner.show();
+        let sub=this.issuingChequeService.generateEntryActions(id, 3).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
@@ -384,6 +391,8 @@ debugger
             console.log('complete');
           },
         });
+        this.subsList.push(sub);
+        this.spinner.hide();
       }
     });
   }

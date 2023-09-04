@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
+import {  Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -42,10 +42,10 @@ export class AddEditBankAccountComponent implements OnInit {
   errorClass = '';
   submited: boolean = false;
   showSearchModal = false;
-  showSearchModalCountry=false;
+  showSearchModalCountry = false;
   companyId: any;
-  routeApi='Company/get-ddl?'
-  routeApiCountry='Country/get-ddl?'
+  routeApi = 'Company/get-ddl?'
+  routeApiCountry = 'Country/get-ddl?'
   accountList: any;
   routeAccountApi = "account/get-ddl?"
   constructor(
@@ -55,7 +55,7 @@ export class AddEditBankAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private cd: ChangeDetectorRef,private publicService:PublicService
+    private publicService: PublicService
 
   ) {
     this.definebankAccountForm();
@@ -64,23 +64,56 @@ export class AddEditBankAccountComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getAccount();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getbankAccountCode();
-    }
-    this.sub = this.route.params.subscribe((params) => {
+    this.spinner.show();
+    Promise.all([
+      this.getAccount()
+
+    ]).then(a => {
+      this.getRouteData();
+      this.currnetUrl = this.router.url;
+
+      if (this.currnetUrl == this.addUrl) {
+        this.getbankAccountCode();
+      }
+      this.changePath();
+      this.listenToClickedButton();
+    }).catch(err => {
+      this.spinner.hide();
+    });
+
+
+  }
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
-        if (this.id) {
-          this.getbankAccountById(this.id);
+        if (this.id > 0) {
+          
+          this.getbankAccountById(this.id).then(a => {
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+
+
+         
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
       }
+      else {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+      }
+
     });
+    this.subsList.push(sub);
+
   }
   onSelectCompany(event) {
 
@@ -89,11 +122,11 @@ export class AddEditBankAccountComponent implements OnInit {
     this.showSearchModal = false;
   }
   onSelectAccount(event) {
-    
-       
-        this.bankAccountForm.controls.accountId.setValue(event.id);
-        this.showSearchModal = false;
-      }
+
+
+    this.bankAccountForm.controls.accountId.setValue(event.id);
+    this.showSearchModal = false;
+  }
   //#endregion
 
   //#region ngOnDestroy
@@ -126,7 +159,7 @@ export class AddEditBankAccountComponent implements OnInit {
       nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      accountId:REQUIRED_VALIDATORS
+      accountId: REQUIRED_VALIDATORS
     });
 
   }
@@ -157,23 +190,22 @@ export class AddEditBankAccountComponent implements OnInit {
     });
 
   }
-  
+
   //#endregion
 
   //#region CRUD master-codes
   getbankAccountById(id: any) {
-
-    const promise = new Promise<void>((resolve, reject) => {
-      this.bankAccountService.getBankAccount(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.bankAccountService.getBankAccount(id).subscribe({
         next: (res: any) => {
-          
+          resolve();
           this.bankAccountForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
             isActive: res.response?.isActive,
-            accountId:res.response?.accountId
+            accountId: res.response?.accountId
 
           });
 
@@ -189,16 +221,16 @@ export class AddEditBankAccountComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   showPassword() {
     this.show = !this.show;
   }
   getbankAccountCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-
-      this.bankAccountService.getLastCode().subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.bankAccountService.getLastCode().subscribe({
 
         next: (res: any) => {
 
@@ -215,6 +247,8 @@ export class AddEditBankAccountComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -258,84 +292,89 @@ export class AddEditBankAccountComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  onSave() {
-  //  var entity = new CreateBankAccountCommand();
-    if (this.bankAccountForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        var entity= this.bankAccountForm.value;
-       
-        this.bankAccountService.createBankAccount(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-           
-            this.definebankAccountForm();
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var entity = this.bankAccountForm.value;
+      let sub = this.bankAccountService.createBankAccount(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.definebankAccountForm();
+          this.submited = false;
+          this.spinner.hide();
 
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
       });
-      return promise;
+      this.subsList.push(sub);
+
+    });
+  }
+  onSave() {
+    if (this.bankAccountForm.valid) {
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
+
 
     } else {
 
-      //  return this.bankAccountForm.markAllAsTouched();
+      return this.bankAccountForm.markAllAsTouched();
     }
+  }
+  confirmUpdate() {
+    this.bankAccountForm.value.id = this.id;
+    var entityDb = this.bankAccountForm.value;
+    entityDb.id = this.id;
+
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.bankAccountService.updateBankAccount(entityDb).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.definebankAccountForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
 
 
   onUpdate() {
-  
+
     if (this.bankAccountForm.valid) {
-
-      this.bankAccountForm.value.id = this.id;
-   var   entityDb = this.bankAccountForm.value;
-      entityDb.id = this.id;
-   
-      console.log("this.VendorCommissionsForm.value", this.bankAccountForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.bankAccountService.updateBankAccount(entityDb).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-           
-            this.definebankAccountForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
     }
 
     else {
 
-      // return this.bankAccountForm.markAllAsTouched();
+      return this.bankAccountForm.markAllAsTouched();
     }
   }
- 
+
 
 }
 

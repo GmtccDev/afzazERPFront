@@ -308,11 +308,12 @@ export class AddCompanyComponent implements OnInit {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
+    
     var entity = new CreateCompanyCommand();
     if (this.companyForm.valid) {
       const promise = new Promise<void>((resolve, reject) => {
-        entity.inputDto = this.companyForm.value;
-        entity.inputDto.logo = this.logo;
+        entity = this.companyForm.value;
+        entity.logo = this.logo;
         this.companyService.createCompany(entity).subscribe({
           next: (result: any) => {
             this.spinner.show();
@@ -349,9 +350,9 @@ export class AddCompanyComponent implements OnInit {
     if (this.companyForm.valid) {
 
       this.companyForm.value.id = this.id;
-      entity.inputDto = this.companyForm.value;
-      entity.inputDto.id = this.id;
-      entity.inputDto.logo = this.logo;
+      entity = this.companyForm.value;
+      entity.id = this.id;
+      entity.logo = this.logo;
       console.log("this.VendorCommissionsForm.value", this.companyForm.value)
       const promise = new Promise<void>((resolve, reject) => {
 

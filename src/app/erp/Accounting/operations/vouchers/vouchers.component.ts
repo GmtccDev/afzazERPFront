@@ -12,6 +12,7 @@ import { SharedService } from '../../../../shared/common-services/shared-service
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -51,7 +52,9 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
   ) {
 
   }
@@ -61,35 +64,33 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.sub = this.route.params.subscribe(params => {
+    //  this.defineGridColumn();
+    let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
-       //  this.getVoucherTypes(this.voucherTypeId);
 
 
       }
-
     })
-    // this.queryParams = this.route.queryParams.subscribe(params => {
-    //   if (params['voucherTypeId'] != null) {
-    //     this.voucherTypeId = params['voucherTypeId'];
-    //   }
-    // })
-    this.subsList.push(this.sub);
+    this.subsList.push(sub);
+    this.spinner.show();
+    Promise.all([this.getVouchers()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
+
+
 
 
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getVouchers();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -151,8 +152,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
           if (res.success) {
-            debugger
-            this.vouchers = res.response.items.filter(x=>x.voucherTypeId==this.voucherTypeId && x.branchId==this.branchId&&x.companyId==this.companyId)
+            
+            this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
 
           }
           resolve();
@@ -178,17 +179,17 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.voucherService.deleteVoucher(id).subscribe((resonse) => {
       console.log('delete response', resonse);
       this.getVouchers();
-      this.router.navigate([this.listUrl+this.voucherTypeId])
-      .then(() => {
-        window.location.reload();
-      });
+      this.router.navigate([this.listUrl + this.voucherTypeId])
+        .then(() => {
+          window.location.reload();
+        });
     });
   }
   edit(id: string) {
-    debugger
+    
     this.router.navigate([
       '/accounting-operations/vouchers/update-voucher/',
-      this.voucherTypeId,id,
+      this.voucherTypeId, id,
     ]);
   }
 
@@ -205,16 +206,19 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        debugger
+        
+        this.spinner.show();
         let sub = this.voucherService.deleteVoucher(id).subscribe(
           (resonse) => {
             this.getVouchers();
-           this.router.navigate([this.listUrl+this.voucherTypeId])
-           .then(() => {
-          //   window.location.reload();
-           });
+            this.router.navigate([this.listUrl + this.voucherTypeId])
+              .then(() => {
+                //   window.location.reload();
+              });
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -226,8 +230,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   searchFilters: any;
   groupByCols: string[] = [];
   lang: string = localStorage.getItem("language");
-  branchId:string= localStorage.getItem("branchId");
-  companyId:string= localStorage.getItem("companyId");
+  branchId: string = localStorage.getItem("branchId");
+  companyId: string = localStorage.getItem("companyId");
 
   columnNames = [
     {
@@ -251,12 +255,12 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
     //   field: 'createdAt',
     // },
-  
+
     // {
     //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
     //   field: 'updatedAt',
     // },
-   
+
 
   ];
 
@@ -297,7 +301,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-     // this.router.navigate(['accounting-operations/vouchers/update-voucher/' + id])
     }
 
   }
@@ -305,7 +308,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
-        debugger
+        
         this.edit(event.item.id);
         this.sharedServices.changeButton({
           action: 'Update',
@@ -314,7 +317,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      //  this.router.navigate(['accounting-opertions/vouchers/update-voucher/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -339,9 +341,9 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           if (currentBtn.action == ToolbarActions.List) {
 
           } else if (currentBtn.action == ToolbarActions.New) {
-            
-            this.router.navigate([this.addUrl+this.voucherTypeId]);
-          //  this.router.navigate(['/control-panel/accounting/update-account', id]);
+
+            this.router.navigate([this.addUrl + this.voucherTypeId]);
+            //  this.router.navigate(['/control-panel/accounting/update-account', id]);
 
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
@@ -356,10 +358,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     var ids = this.listIds;
     let sub = this.voucherService.deleteListVoucher(ids).subscribe(
       (resonse) => {
-        this.router.navigate([this.listUrl+this.voucherTypeId])
-        .then(() => {
-          window.location.reload();
-        });
+        this.router.navigate([this.listUrl + this.voucherTypeId])
+          .then(() => {
+            window.location.reload();
+          });
         this.getVouchers();
         this.listIds = [];
       });

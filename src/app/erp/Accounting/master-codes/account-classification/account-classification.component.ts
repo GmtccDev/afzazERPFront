@@ -11,7 +11,8 @@ import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabula
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import {AccountClassificationServiceProxy} from '../../services/account-classification'
+import { AccountClassificationServiceProxy } from '../../services/account-classification'
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-account-classification',
   templateUrl: './account-classification.component.html',
@@ -43,7 +44,9 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -53,20 +56,20 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getAccountClassifications()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
-
-    this.listenToClickedButton();
-
-    this.getAccountClassificationes();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
-
 
   }
 
@@ -96,20 +99,15 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getAccountClassificationes() {
+  getAccountClassifications() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountClassificationService.allAccountClassificationes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.accountClassification");
           if (res.success) {
             this.accountClassification = res.response.items
-              ;
+
 
           }
 
@@ -134,9 +132,14 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 
   //#region CRUD Operations
   delete(id: any) {
-    this.accountClassificationService.deleteAccountClassification(id).subscribe((resonse) => {
+    var entity={
+      tableName:"AccountClassifications",
+      id:id,
+      idName:"Id"
+    }
+    this.accountClassificationService.deleteEntityAccountClassification(entity).subscribe((resonse) => {
       console.log('delet response', resonse);
-      this.getAccountClassificationes();
+      this.getAccountClassifications();
     });
   }
   edit(id: string) {
@@ -159,15 +162,25 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.accountClassificationService.deleteAccountClassification(id).subscribe(
+        this.spinner.show();
+        const input={
+          tableName:"AccountClassifications",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.accountClassificationService.deleteEntityAccountClassification(input).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getAccountClassificationes();
+            this.getAccountClassifications();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
+    }, err => {
+      this.spinner.hide();
     });
   }
   //#endregion
@@ -280,14 +293,17 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     this.subsList.push(sub);
   }
   onDelete() {
-
-
-  var ids = this.listIds;
-    let sub = this.accountClassificationService.deleteListAccountClassification(ids).subscribe(
+    var ids = this.listIds;
+    var entity={
+      tableName:"AccountClassifications",
+      ids:ids,
+      idName:"Id"
+    }
+    let sub = this.accountClassificationService.deleteListEntityAccountClassification(entity).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getAccountClassificationes();
+        this.getAccountClassifications();
         this.listIds = [];
       });
     this.subsList.push(sub);

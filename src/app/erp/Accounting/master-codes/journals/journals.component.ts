@@ -13,6 +13,7 @@ import { JournalServiceProxy } from '../../services/journal.service';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-journals',
   templateUrl: './journals.component.html',
@@ -41,7 +42,8 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
     private journalService: JournalServiceProxy,
     private router: Router,
     private sharedServices: SharedService, private translate: TranslateService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,private spinner: NgxSpinnerService,
+    ) {
 
   }
 
@@ -50,17 +52,21 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    //this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([ this.getJournals()])
+    .then(a=>{
+      this.spinner.hide();
+      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.listenToClickedButton();
+    }).catch(err=>{
+      this.spinner.hide();
+    })
   }
 
   ngAfterViewInit(): void {
-    this.listenToClickedButton();
-
-    this.getJournals();
-    setTimeout(() => {
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
+   
 
 
   }
@@ -95,11 +101,7 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalService.allJournales(undefined,undefined,undefined,undefined,undefined).subscribe({
         next: (res) => {
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
+        
           this.toolbarPathData.componentList = this.translate.instant("component-names.journal");
           if (res.success) {
             this.journal = res.response.items;
@@ -152,13 +154,21 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        let sub = this.journalService.deleteJournal(id).subscribe(
+        this.spinner.show();
+        const input={
+          tableName:"Journals",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.journalService.deleteEntity(input).subscribe(
           () => {
             //reloadPage()
             this.getJournals();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -209,7 +219,6 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['accounting-master-codes/journal/update-journal/' + id]
       )
@@ -227,7 +236,6 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['accounting-master-codes/journal/update-journal/' + event.item.id]
         )
@@ -279,7 +287,12 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item = new DeleteListJournalCommand();
     item.ids = this.listIds;
-    let sub = this.journalService.deleteListJournal( item).subscribe(
+    const input={
+      tableName:"Journals",
+      ids: this.listIds,
+      idName:"Id"
+    };
+    let sub = this.journalService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

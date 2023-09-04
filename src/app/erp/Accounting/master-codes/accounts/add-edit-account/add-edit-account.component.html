@@ -343,7 +343,8 @@
                                                     {{'account.isLeafAccount'|translate}} </label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isLeafAccount"
+                                                        <input type="checkbox" class="form-control" name="isLeafAccount" 
+                                                        (change)="onChangeLeaf($event)"
                                                             formControlName="isLeafAccount">
                                                         <span class="switch-state"></span>
                                                     </label>

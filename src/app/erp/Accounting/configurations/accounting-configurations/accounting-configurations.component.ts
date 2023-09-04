@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -40,7 +37,7 @@ export class AccountingConfigurationsComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -53,31 +50,42 @@ export class AccountingConfigurationsComponent implements OnInit {
   accountingPeriodId: any;
   showSearchModalAccountReceivables: boolean;
   ListPeriod: any;
+  accountExchangeId: any;
+  showSearchModalAccountExchange: boolean;
   constructor(private currencyService: CurrencyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private router: Router,
     private publicService: PublicService,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService, private translate: TranslateService
+    private sharedService: SharedService, private translate: TranslateService
   ) {
-    
+
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+
     this.getSerial();
     this.getCycle();
-    this.getCurrencies();
-    this.getAccount();
-    this.getAccountPeriod();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
- //   this.changePath();
-    this.getGeneralConfiguration();
-    this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
-    this.getSelecteditem();
+    this.spinner.show();
+
+    Promise.all([
+      this.getGeneralConfiguration(),
+      this.getCurrencies(),
+      this.getCurrencies(),
+      this.getAccount(),
+      this.getAccountPeriod()])
+      .then(a => {
+        this.spinner.hide();
+        this.listenToClickedButton();
+        this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
+        this.getSelecteditem();
+      }).catch(err => {
+        this.spinner.hide();
+      })
+
+
   }
 
   getSelecteditem() {
@@ -89,12 +97,12 @@ export class AccountingConfigurationsComponent implements OnInit {
   }
   radioSel: any;
   cycleSelected: string;
-  currencyId:any;
-  multiCurrency:any;
-  accountReceivablesId:any;
-  serial:any;
+  currencyId: any;
+  multiCurrency: any;
+  accountReceivablesId: any;
+  serial: any;
   radioSelectedString: string;
-  accountId:any;
+  accountId: any;
   lang = localStorage.getItem("language");
   getSerial() {
     this.serialList = [
@@ -110,7 +118,7 @@ export class AccountingConfigurationsComponent implements OnInit {
       { nameAr: "  مرحل  ", nameEn: 'carried over', value: '3' }
     ];
   }
- 
+
   //#endregion
 
   //#region ngOnDestroy
@@ -221,25 +229,20 @@ export class AccountingConfigurationsComponent implements OnInit {
   //#region CRUD Operations
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(undefined,undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(undefined, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-debugger
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
+
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
-            
-            this.generalConfiguration = res.response.items
-             this.currencyId=Number(this.generalConfiguration.find(c=>c.id==1).value) ;
-             this.multiCurrency= this.generalConfiguration.find(c=>c.id==2).value=="true"?true:false;
-             this.serial=this.generalConfiguration.find(c=>c.id==3).value;
-             this.cycleSelected=this.generalConfiguration.find(c=>c.id==4).value;
-             this.accountId=this.generalConfiguration.find(c=>c.id==5).value;
-             this.accountingPeriodId=Number(this.generalConfiguration.find(c=>c.id==6).value);
-             this.accountReceivablesId=this.generalConfiguration.find(c=>c.id==7).value;
+
+            this.generalConfiguration = res.response.result.items
+            this.currencyId = Number(this.generalConfiguration.find(c => c.id == 1).value);
+            this.multiCurrency = this.generalConfiguration.find(c => c.id == 2).value == "true" ? true : false;
+            this.serial = this.generalConfiguration.find(c => c.id == 3).value;
+            this.cycleSelected = this.generalConfiguration.find(c => c.id == 4).value;
+            this.accountId = this.generalConfiguration.find(c => c.id == 5).value;
+            this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 6).value);
+            this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 7).value;
           }
 
 
@@ -264,27 +267,27 @@ debugger
 
   //#region Helper Functions
 
- 
+
 
   //#endregion
   //#region Tabulator
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
-    
-    let sub = this.SharedServices.getClickedbutton().subscribe({
+
+    let sub = this.sharedService.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
 
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
-           currentBtn.action=this.updateUrl
+            currentBtn.action = this.updateUrl
           } else if (currentBtn.action == ToolbarActions.Save) {
-            currentBtn.action=this.updateUrl
+            currentBtn.action = this.updateUrl
           } else if (currentBtn.action == ToolbarActions.New) {
-            currentBtn.action=this.updateUrl
-            
-            this.SharedServices.changeToolbarPath(this.toolbarPathData);
+            currentBtn.action = this.updateUrl
+
+            this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
@@ -294,83 +297,90 @@ debugger
     this.subsList.push(sub);
   }
   changePath() {
-    this.SharedServices.changeToolbarPath(this.toolbarPathData);
+    this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
+  confirmUpdate() {
+    return new Promise<void>((resolve, reject) => {
+      
+      let item = new EditGeneralConfigurationCommand();
+      item.generalConfiguration = this.generalConfiguration;
+      let sub = this.generalConfigurationService.updateGeneralConfiguration(item).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.getGeneralConfiguration()
+          this.submited = false;
+          this.spinner.hide();
 
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
   onUpdate() {
-
-   {
-
-    
-    if( this.generalConfiguration.length>0){
-      this.generalConfiguration.forEach((s) => {
-        if (s) {
-        if(s.id==1){
-          s.value=this.currencyId+"";
-        }
-        else  if(s.id==2){
-          s.value=this.multiCurrency+"";
-        }
-        else  if(s.id==3){
-          s.value=this.serial+"";
-        }
-        else  if(s.id==4){
-          s.value=this.cycleSelected+"";
-        }
-        else  if(s.id==5){
-          s.value=this.accountId+"";
-        }
-        else  if(s.id==6){
-          s.value=this.accountingPeriodId+"";
-        }
-        else  if(s.id==7){
-          s.value=this.accountReceivablesId+"";
-        }
-        }
-      });
-              
-        const promise = new Promise<void>((resolve, reject) => {
-          debugger
-          let item=new EditGeneralConfigurationCommand();
-          item.generalConfiguration=this.generalConfiguration;
-          this.generalConfigurationService.updateGeneralConfiguration(item).subscribe({
-            next: (result: any) => {
-              this.spinner.show();
-              console.log('result update ', result);
-              this.Response = { ...result.response };
-              this.getGeneralConfiguration() 
-              this.submited = false;
-              setTimeout(() => {
-                this.spinner.hide();
-  
-                navigateUrl(this.listUrl, this.router);
-              }, 1000);
-            },
-            error: (err: any) => {
-              reject(err);
-            },
-            complete: () => {
-              console.log('complete');
-            },
-          });
+    {
+      if (this.generalConfiguration.length > 0) {
+        this.generalConfiguration.forEach((s) => {
+          if (s) {
+            if (s.id == 1) {
+              s.value = this.currencyId + "";
+            }
+            else if (s.id == 2) {
+              s.value = this.multiCurrency + "";
+            }
+            else if (s.id == 3) {
+              s.value = this.serial + "";
+            }
+            else if (s.id == 4) {
+              s.value = this.cycleSelected + "";
+            }
+            else if (s.id == 5) {
+              s.value = this.accountId + "";
+            }
+            else if (s.id == 6) {
+              s.value = this.accountReceivablesId + "";
+            }
+            else if (s.id == 7) {
+              s.value = this.accountingPeriodId + "";
+            }
+          }
         });
-        return promise;
+
+        this.spinner.show();
+        this.confirmUpdate().then(a => {
+          this.spinner.hide();
+        }).catch(e => {
+          this.spinner.hide();
+        });
       }
-  
+
     }
-   
-   
+
+
   }
   onSelectAccount(event) {
-    
-    this.accountId=event.id;
+
+    this.accountId = event.id;
     this.showSearchModal = false;
   }
   onSelectAccountReceivables(event) {
-    
-    this.accountReceivablesId=event.id;
+
+    this.accountReceivablesId = event.id;
     this.showSearchModalAccountReceivables = false;
+  }
+  onSelectAccountExchange(event) {
+    
+    this.accountExchangeId=event.id;
+    this.showSearchModalAccountExchange = false;
   }
   //#endregion
 }

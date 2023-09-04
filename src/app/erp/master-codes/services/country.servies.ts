@@ -79,7 +79,14 @@ export class CountryServiceProxy {
 
 
 
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/Country/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Country/deleteListEntity?", entity);
+    }
 
 
 

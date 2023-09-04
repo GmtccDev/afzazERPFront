@@ -31,14 +31,14 @@ export class CostCenterServiceProxy {
 
     createCostCenter(costCenter: CreateCostCenterCommand): Observable<CostCenterDto> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/CostCenter/add?", costCenter);
+        return this.http.post<any>(environment.apiUrl + "/api/CostCenter/create?", costCenter);
     }
     // ids: number[] | undefined;
     deleteListCostCenter(costCenter: DeleteListCostCenterCommand): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/CostCenter/deleteList?", costCenter);
     }
     updateCostCenter(costCenter: EditCostCenterCommand): Observable<CostCenterDto> {
-        return this.http.post<any>(environment.apiUrl + "/api/CostCenter/edit?", costCenter);
+        return this.http.post<any>(environment.apiUrl + "/api/CostCenter/update?", costCenter);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/CostCenter/get-ddl?");
@@ -71,7 +71,7 @@ export class CostCenterServiceProxy {
         if (filter.selectedId != undefined)
             queryParams = queryParams.append("selectedId", filter.selectedId);
       //  return this.http.post<any>(this.baseUrl + "/api/CostCenter/all-tree", filter);
-        return this.http.get<any>(this.baseUrl + "/api/CostCenter/all-tree?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/CostCenter/all-tree", { params: queryParams });
     }
 
     getCostCenter(id: any): Observable<any> {
@@ -85,7 +85,7 @@ export class CostCenterServiceProxy {
             params = params.append('parentId', id);
         }
     
-        return this.http.get<any>(this.baseUrl + "/api/CostCenter/getLastCode", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/CostCenter/getLastCodeTree", { params: params });
        // return this.http.get<any>(this.baseUrl + "/api/CostCenter/getLastCode?");
     }
     deleteCostCenter(id: any): Observable<any> {
@@ -93,6 +93,13 @@ export class CostCenterServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/CostCenter/delete", { params: params });
     }
+    deleteEntity(entity: any): Observable<any> {
 
+        return this.http.post<any>(environment.apiUrl + "/api/CostCenter/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/CostCenter/deleteListEntity?", entity);
+    }
 }
 

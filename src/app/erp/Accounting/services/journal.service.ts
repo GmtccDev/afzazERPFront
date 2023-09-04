@@ -76,6 +76,13 @@ export class JournalServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/Journal/delete", { params: params });
     }
-  
+    deleteEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Journal/deleteEntity?", entity);
+    }
+    deleteListEntity(entity: any): Observable<any> {
+
+        return this.http.post<any>(environment.apiUrl + "/api/Journal/deleteListEntity?", entity);
+    }
 }
 
