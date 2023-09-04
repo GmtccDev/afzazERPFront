@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
   // public authService: AuthService,
   constructor(private fb: FormBuilder, public authService: UserLoginService,
     private modelService: NgbModal,
-    
+
      public router: Router,  private userService: UserService,private translate:TranslateService) {
-      
+
       this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
       this.translate.use(this.currentSystemLanguage);
       if (this.currentSystemLanguage === 'ar') {
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       else {
         document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
       }
-  
+
   }
 
   ngOnInit() {
@@ -73,22 +73,22 @@ export class LoginComponent implements OnInit {
         },
       });
 
-     
+
     });
 
   }
   onChangeCompany(values) {
-   
+
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.authService.getDdlWithCompanies(values).subscribe({
         next: (res) => {
 
           if (res.success) {
-            
+
 
             this.branchesList = res.response;
-           
+
 
 
           }
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
         },
       });
 
-    
+
     });
 
   }
@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
     this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
 
-        
+
         console.log(next);
 
         if (next.success == true) {
@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit {
           // let Role = decodedJwtData.role;
           // debugger
           // localStorage.setItem("userName",decodedJwtData.fullName)
-        
+
           const modalRef = this.modelService.open(LoginCompanyComponent);
           modalRef.componentInstance.name = 'World';
           modalRef.componentInstance.userName = this.loginForm.value.userName;
@@ -143,11 +143,14 @@ export class LoginComponent implements OnInit {
           modalRef.componentInstance.branches=next.response.branches;
           modalRef.result.then((result) => {
             if (result) {
+
+
               if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
                 window.location.replace('authentication/add-password?email='+next.response.user.email);
               }
               else{
              //   this.router.navigate(['/dashboard/default']);
+			 debugger
              this.router.navigate(['/Subscription']);
               }
               this.modelService.dismissAll();
@@ -160,11 +163,11 @@ export class LoginComponent implements OnInit {
         //  //   this.router.navigate(['/dashboard/default']);
         //  this.router.navigate(['/Subscription']);
         //   }
-         
+
         }
       },
       error => {
-        
+
         this.showLoader = false;
         console.log(error)
 

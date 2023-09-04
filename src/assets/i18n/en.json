@@ -374,7 +374,7 @@
         "issuing-cheque-information": "Issuing Cheque Information ",
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
-
+		"accounts-balance-report":"Accounts Balance Report",
         "cost-centers-report":"Cost Centers Reports"
     },
     "language": {

@@ -43,7 +43,7 @@ export class LoginCompanyComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
      public router: Router,  private userService: UserService,private translate:TranslateService) {
-      
+
       this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
       this.translate.use(this.currentSystemLanguage);
       if (this.currentSystemLanguage === 'ar') {
@@ -52,7 +52,7 @@ export class LoginCompanyComponent implements OnInit {
       else {
         document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
       }
-  
+
   }
 
   ngOnInit() {
@@ -85,22 +85,22 @@ export class LoginCompanyComponent implements OnInit {
         },
       });
 
-     
+
     });
 
   }
   onChangeCompany(values) {
-   
+
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.authService.getDdlWithCompanies(values).subscribe({
         next: (res) => {
 
           if (res.success) {
-            
+
 
             this.branchesList = res.response;
-           
+
 
 
           }
@@ -117,7 +117,7 @@ export class LoginCompanyComponent implements OnInit {
         },
       });
 
-    
+
     });
 
   }
@@ -134,7 +134,7 @@ this.loginForm.value.password=this.password;
     this.authService.UserLoginCompany(this.loginForm.value).subscribe(
       next => {
 
-        
+
         console.log(next);
 
         if (next.success == true) {
@@ -147,6 +147,7 @@ this.loginForm.value.password=this.password;
           this.userService.setToken(jwt.toString());
           let Role = decodedJwtData.role;
           debugger
+		  localStorage.setItem("userId",decodedJwtData.userLoginId)
           localStorage.setItem("userName",decodedJwtData.fullName)
           localStorage.setItem("branchId",this.loginForm.value.branchId)
           localStorage.setItem("companyId",this.loginForm.value.companyId)
@@ -159,11 +160,11 @@ this.loginForm.value.password=this.password;
          //   this.router.navigate(['/dashboard/default']);
          this.router.navigate(['/Subscription']);
           }
-         
+
         }
       },
       error => {
-        
+
         this.showLoader = false;
         console.log(error)
 
@@ -222,7 +223,7 @@ this.loginForm.value.password=this.password;
           //formatDate(Date.parse(res.response.fromDate)),
          // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
 
-        
+
         },
         error: (err: any) => {
           reject(err);

@@ -1,22 +1,23 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TranslateService } from "@ngx-translate/core";
-import { Subscription } from "rxjs";
-import { ReportServiceProxy } from "src/app/shared/common-services/report.service";
-import { SharedService } from "src/app/shared/common-services/shared-service";
-import { ToolbarPath } from "src/app/shared/interfaces/toolbar-path";
-import { DateConverterService } from "src/app/shared/services/date-services/date-converter.service";
-import { GeneralConfigurationServiceProxy } from "../../services/general-configurations.services";
-import { FiscalPeriodServiceProxy } from "../../services/fiscal-period.services";
-import { ToolbarData } from "src/app/shared/interfaces/toolbar-data";
-import { NgbdModalContent } from "src/app/shared/components/modal/modal-component";
-import { ToolbarActions } from "src/app/shared/enum/toolbar-actions";
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
+import { SharedService } from 'src/app/shared/common-services/shared-service';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
+import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
+import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+
 @Component({
-	selector: "app-journal-entries-report",
-	templateUrl: "./journal-entries-report.component.html",
-	styleUrls: ["./journal-entries-report.component.scss"],
+  selector: 'app-accounts-balance-report',
+  templateUrl: './accounts-balance-report.component.html',
+  styleUrls: ['./accounts-balance-report.component.scss']
 })
-export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, AfterViewInit {
 	//#region Main Declarations
 	facialPeriodId: any;
 	userId: any = localStorage.getItem("userId");
@@ -38,7 +39,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		listPath: "",
 		addPath: "",
 		updatePath: "",
-		componentList: this.translate.instant("component-names.journal-entries-report"),
+		componentList: this.translate.instant("component-names.accounts-balance-report"),
 		componentAdd: "",
 	};
 

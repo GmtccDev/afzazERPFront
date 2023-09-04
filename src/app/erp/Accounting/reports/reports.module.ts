@@ -13,7 +13,8 @@ import { IncomeStatementReportComponent } from './income-statement-report/income
 import { VouchersTransactionsReportComponent } from './vouchers-transactions-report/vouchers-trasnactions-report.component'
 import { GeneralLedgerReportComponent } from './general-ledger-report/general-ledger-report.component';
 import { JournalEntriesReportComponent } from './journal-entries-report/journal-entries-report.component'
-import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component'
+import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component';
+import { AccountsBalanceReportComponent } from './accounts-balance-report/accounts-balance-report.component'
 
 
 
@@ -24,6 +25,7 @@ import { CostCentersReportComponent } from './cost-centers-report/cost-centers-r
     VouchersTransactionsReportComponent,
     GeneralLedgerReportComponent, JournalEntriesReportComponent,
     CostCentersReportComponent,
+    AccountsBalanceReportComponent,
 
 
   ],
