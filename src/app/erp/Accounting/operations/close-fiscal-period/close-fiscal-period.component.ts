@@ -209,7 +209,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    
     this.closeFiscalPeriodForm.value.closeDate = this.dateService.getDateForInsert(this.closeFiscalPeriodForm.controls["closeDate"].value);
     return new Promise<void>((resolve, reject) => {
        

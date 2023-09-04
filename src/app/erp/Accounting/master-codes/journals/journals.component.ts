@@ -155,8 +155,12 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
-
-        let sub = this.journalService.deleteJournal(id).subscribe(
+        const input={
+          tableName:"Journals",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.journalService.deleteEntity(input).subscribe(
           () => {
             //reloadPage()
             this.getJournals();
@@ -283,7 +287,12 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item = new DeleteListJournalCommand();
     item.ids = this.listIds;
-    let sub = this.journalService.deleteListJournal( item).subscribe(
+    const input={
+      tableName:"Journals",
+      ids: this.listIds,
+      idName:"Id"
+    };
+    let sub = this.journalService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

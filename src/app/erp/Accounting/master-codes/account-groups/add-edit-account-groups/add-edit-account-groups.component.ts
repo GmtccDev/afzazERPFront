@@ -233,7 +233,9 @@ export class AddEditAccountGroupsComponent implements OnInit {
           this.accountGroupForm.patchValue({
             code: res.response
           });
-
+          if (this.parentId != undefined || this.parentId != null) {
+            this.accountGroupForm.controls.parentId.setValue(Number(this.parentId));
+          }
 
         },
         error: (err: any) => {

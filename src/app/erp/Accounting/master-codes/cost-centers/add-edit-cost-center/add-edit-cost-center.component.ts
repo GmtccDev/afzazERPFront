@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { CostCenterDto, CreateCostCenterCommand, EditCostCenterCommand } from '../../../models/cost-Center';
+import { CostCenterDto } from '../../../models/cost-Center';
 import { CostCenterServiceProxy } from '../../../services/cost-Center.services';
 import { CompanyDto } from 'src/app/erp/master-codes/models/company';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
@@ -273,8 +273,9 @@ export class AddEditCostCenterComponent implements OnInit {
           this.costCenterForm.patchValue({
             code: res.response
           });
-
-
+          if (this.parentId != undefined || this.parentId != null) {
+            this.costCenterForm.controls.parentId.setValue(Number(this.parentId));
+          }
         },
         error: (err: any) => {
           reject(err);
@@ -329,9 +330,9 @@ export class AddEditCostCenterComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    var entity = new CreateCostCenterCommand();
+    var entity = new CostCenterDto();
     return new Promise<void>((resolve, reject) => {
-      entity.inputDto = this.costCenterForm.value;
+      entity= this.costCenterForm.value;
       
       let sub = this.costCenterService.createCostCenter(entity).subscribe({
         next: (result: any) => {
@@ -373,10 +374,10 @@ export class AddEditCostCenterComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    var entity = new EditCostCenterCommand();
+    var entity = new CostCenterDto();
     this.costCenterForm.value.id = this.id;
-    entity.inputDto = this.costCenterForm.value;
-    entity.inputDto.id = this.id;
+    entity= this.costCenterForm.value;
+    entity.id = this.id;
 
     return new Promise<void>((resolve, reject) => {
       let sub = this.costCenterService.updateCostCenter(entity).subscribe({

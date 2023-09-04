@@ -129,6 +129,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
+      debugger
       if (params['id'] != null) {
         this.id = params['id'];
 
@@ -514,7 +515,9 @@ export class AddEditAccountComponent implements OnInit {
           this.accountForm.patchValue({
             code: res.response
           });
-
+          if (this.parentId != undefined || this.parentId != null) {
+            this.accountForm.controls.parentId.setValue((this.parentId));
+          }
 
         },
         error: (err: any) => {
