@@ -121,8 +121,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
    // this.getLanguage();
     //this.GetData();
     this.getGeneralConfigurationsOfAccountingPeriod()
-    
-  
+    debugger
+
 
 
   }
@@ -136,7 +136,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
- 
+
 
 
 
@@ -178,7 +178,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (res) => {
 
           if (res.success) {
-            
+
             this.accountGroupList = res.response;
 
           }
@@ -248,7 +248,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getAccountsByAccountGroup()
   {
-    
+
     if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
         this.mainAccountsList = this.mainAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
         this.leafAccountsList = this.leafAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
@@ -259,11 +259,11 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mainAccountsList = this.mainAccountsList;
       this.leafAccountsList = this.leafAccountsList;
     }
-            
+
  }
  getLeafAccountsByMainAccount()
  {
-   
+
    if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
        this.leafAccountsList = this.leafAccountsList.filter(x => x.parentId == this.selectedMainAccountId);
 
@@ -272,7 +272,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
    {
      this.leafAccountsList = this.leafAccountsList;
    }
-           
+
 }
 
   getCostCenter() {
@@ -387,15 +387,15 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-    
+    debugger
     const promise = new Promise<void>((resolve, reject) => {
-      
-      this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
+      debugger
+      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
-          
+          debugger
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
-            
+            debugger
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -417,13 +417,13 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     const promise = new Promise<void>((resolve, reject) => {
       this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          
+          debugger
           console.log('result data getbyid', res);
           this.selectedFromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.selectedToDate=this.dateConverterService.getDateForCalender(res.response.toDate);
 
 
-        
+
         },
         error: (err: any) => {
           reject(err);
@@ -436,7 +436,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     return promise;
   }
   FireSearch() {
-    
+    debugger
     if (!this.selectedFromDate) {
     //  this.selectedFromDate = this.dateConverterService.getCurrentDate();
     }
@@ -458,7 +458,6 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       level:this.level,
       fromEntryNo:this.fromEntryNo,
       toEntryNo:this.toEntryNo,
-
       reportOptionId: this.selectedReportOptionId,
       costCenterId:this.selectedCostCenterId
 
@@ -468,7 +467,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
   onSelectFromDate(e: DateModel) {
-    
+    debugger
     this.selectedFromDate = e
     this.FireSearch()
   }
@@ -511,7 +510,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectBranch() {
-    
+    debugger
     this.branchIds=''
     this.selectedBranchId?.forEach(c => {
       this.branchIds += c.id + ",";
@@ -520,7 +519,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.branchIds = this.branchIds.substring(0, this.branchIds.length - 1);
 
     this.FireSearch()
-   
+
   }
   onSelectVoucher() {
     this.FireSearch()
