@@ -243,7 +243,7 @@
         "chequeCanceld": "This check is canceled",
         "chequeIssued": "This check has already been issued",
         "sepratorError": "The numbers must be separated by a (,)",
-        "required": "this feild is required",
+        "required": "this field is required",
         "space": "It is not possible to add a space",
         "AllDataRequired": "Please enter all data",
         "amountiszero": "*The amount must be greater than zero !",
@@ -252,7 +252,8 @@
         "failedSaveDataFlag": "An unexpected error occurred",
         "whentenentshouldpayError": "Duration must be greater than zero!",
         "invalidPassword": "invalid Password",
-        "userNameRequired": "Failed Required"
+        "userNameRequired": "Failed Required",
+        "invalid-code":"Invalid Code"
     },
     "validation-messages": {
         "invalid-data": "Please enter valid data!",
@@ -301,7 +302,8 @@
         "user-mobile": "Mobile",
         "unified-number": "Unified Number",
         "commercial-registeration-no": "Commercial registeration number",
-        "commercial-registration-issue-date": "Commercial registeration issue date"
+        "commercial-registration-issue-date": "Commercial registeration issue date",
+        "add-role":"Add Role"
     },
     "toolbar": {
         "list": "List",
@@ -386,12 +388,15 @@
     "currency": {
         "transaction-date": "Transaction Date",
         "transaction-factor": "Transaction Factor",
-        "currency-transactions": "New Currency Transactions"
+        "currency-transactions": "New Currency Transactions",
+        "add-currency":"Add Currency",
+        "add-edit":"Add and Edit"
     },
     "company": {
         "motherCompany": "Mother Company",
         "useHijri": "Use Hijri",
-        "web-site": "Web Site"
+        "web-site": "Web Site",
+        "add-company":"Add Company"
     },
     "account": {
         "debitLimit": "Debit Limit",
@@ -486,5 +491,12 @@
      },
      "branch":{
         "add-branch":"Add Branch"
+     },
+     "business":{
+        "add-business":"Add Business"
+     },
+     "country":{
+        "add-country":"Add Country"
      }
+    
 }

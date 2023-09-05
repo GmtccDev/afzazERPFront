@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { UserLoginService } from '../services/user-login-service'
-import { CompanyServiceProxy } from '../../master-codes/services/company.service';
-import { BranchServiceProxy } from '../../master-codes/services/branch.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginCompanyComponent } from './login-company/login-company.component';
+import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -26,28 +26,46 @@ export class LoginComponent implements OnInit {
   currentSystemLanguage = 'en';
   companiesList: any;
   branchesList: any;
+  subsList: Subscription[] = [];
+
   // public authService: AuthService,
   constructor(private fb: FormBuilder, public authService: UserLoginService,
     private modelService: NgbModal,
+    private spinner: NgxSpinnerService,
+    public router: Router, private userService: UserService, private translate: TranslateService) {
 
-     public router: Router,  private userService: UserService,private translate:TranslateService) {
-
-      this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
-      this.translate.use(this.currentSystemLanguage);
-      if (this.currentSystemLanguage === 'ar') {
-        document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
-      }
-      else {
-        document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
-      }
+    this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
+    this.translate.use(this.currentSystemLanguage);
+    if (this.currentSystemLanguage === 'ar') {
+      document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
+    }
+    else {
+      document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
+    }
 
   }
 
   ngOnInit() {
-    this.getCompanies();
-    this.userService.logout();
-  }
+    this.spinner.show();
+    Promise.all([this.getCompanies()])
+      .then(a => {
+        this.userService.logout();
+        this.spinner.hide();
 
+      }).catch(err => {
+        this.spinner.hide();
+      })
+
+  }
+  //#region ngOnDestroy
+  ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  //#endregion
   showPassword() {
     this.show = !this.show;
   }
@@ -72,6 +90,8 @@ export class LoginComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
 
 
     });
@@ -104,6 +124,8 @@ export class LoginComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
 
 
     });
@@ -116,16 +138,16 @@ export class LoginComponent implements OnInit {
     // if (this.loginForm.value.userName == "admin" && this.loginForm.value.password == "admin") {
 
     // }
-   
-    this.authService.UserLoginLogin(this.loginForm.value).subscribe(
+
+    let sub = this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
 
 
         console.log(next);
 
         if (next.success == true) {
-          
-       //   this.translate.use("en");
+
+          //   this.translate.use("en");
           // let jwt = next.response.token;
           // let jwtData = jwt.split('.')[1]
           // let decodedJwtJsonData = window.atob(jwtData)
@@ -138,31 +160,31 @@ export class LoginComponent implements OnInit {
           const modalRef = this.modelService.open(LoginCompanyComponent);
           modalRef.componentInstance.name = 'World';
           modalRef.componentInstance.userName = this.loginForm.value.userName;
-          modalRef.componentInstance.password =  this.loginForm.value.password;
-          modalRef.componentInstance.companies=next.response.companies;
-          modalRef.componentInstance.branches=next.response.branches;
+          modalRef.componentInstance.password = this.loginForm.value.password;
+          modalRef.componentInstance.companies = next.response.companies;
+          modalRef.componentInstance.branches = next.response.branches;
           modalRef.result.then((result) => {
             if (result) {
 
 
-              if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
-                window.location.replace('authentication/add-password?email='+next.response.user.email);
+              if (next.response.user.loginCount == null || next.response.user.loginCount == 0) {
+                window.location.replace('authentication/add-password?email=' + next.response.user.email);
               }
-              else{
-             //   this.router.navigate(['/dashboard/default']);
-			 debugger
-             this.router.navigate(['/Subscription']);
+              else {
+                //   this.router.navigate(['/dashboard/default']);
+                debugger
+                this.router.navigate(['/Subscription']);
               }
               this.modelService.dismissAll();
             }
           });
-        //   if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
-        //     window.location.replace('authentication/add-password?email='+next.response.user.email);
-        //   }
-        //   else{
-        //  //   this.router.navigate(['/dashboard/default']);
-        //  this.router.navigate(['/Subscription']);
-        //   }
+          //   if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
+          //     window.location.replace('authentication/add-password?email='+next.response.user.email);
+          //   }
+          //   else{
+          //  //   this.router.navigate(['/dashboard/default']);
+          //  this.router.navigate(['/Subscription']);
+          //   }
 
         }
       },
@@ -173,6 +195,8 @@ export class LoginComponent implements OnInit {
 
       }
     )
+    this.subsList.push(sub);
+
 
   }
   logout() {

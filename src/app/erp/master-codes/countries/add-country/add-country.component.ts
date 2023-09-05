@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import {CountryServiceProxy } from '../../services/country.servies';
+import { CountryServiceProxy } from '../../services/country.servies';
 import { CountryDto } from '../../models/country';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from 'src/app/shared/constants/input-validators';
@@ -32,11 +32,11 @@ export class AddCountryComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList:this.translate.instant("countries") ,
+    componentList: this.translate.instant("countries"),
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -46,8 +46,8 @@ export class AddCountryComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService,
-    private translate:TranslateService
+    private sharedServices: SharedService,
+    private translate: TranslateService
   ) {
 
     this.defineCountryForm();
@@ -57,22 +57,17 @@ export class AddCountryComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
+    this.spinner.show();
+    this.getRouteData();
     this.changePath();
+    this.listenToClickedButton();
+    this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
       this.getCountryCode();
     }
-    this.sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = +params['id'];
-        if (this.id > 0) {
-          this.getCountryById(this.id);
-        }
-        this.url = this.router.url.split('/')[2];
-      }
-    });
+    this.spinner.hide();
+
+
   }
 
   //#endregion
@@ -86,7 +81,33 @@ export class AddCountryComponent implements OnInit {
     });
   }
   //#endregion
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = params['id'];
 
+        if (this.id) {
+          this.getCountryById(this.id).then(a => {
+
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
+      }
+    });
+    this.subsList.push(sub);
+  }
   //#region Authentications
 
   //#endregion
@@ -105,8 +126,8 @@ export class AddCountryComponent implements OnInit {
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: NAME_REQUIRED_VALIDATORS,
-      code:  CODE_REQUIRED_VALIDATORS,
-      isActive:true
+      code: CODE_REQUIRED_VALIDATORS,
+      isActive: true
     });
   }
 
@@ -114,17 +135,16 @@ export class AddCountryComponent implements OnInit {
 
   //#region CRUD Operations
   getCountryById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.countryService.getCountry(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.countryService.getCountry(id).subscribe({
         next: (res: any) => {
-          
-          console.log('result data getbyid', res);
+          resolve();
           this.countriesForm.setValue({
             id: res.response.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
-           isActive:res.response?.isActive
+            isActive: res.response?.isActive
           });
           console.log(
             'this.countriesForm.value set value',
@@ -138,15 +158,16 @@ export class AddCountryComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   getCountryCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.countryService.getLastCode().subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.countryService.getLastCode().subscribe({
         next: (res: any) => {
 
-          this.toolbarPathData.componentList=this.translate.instant("component-names.countries");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.countries");
           this.countriesForm.patchValue({
             code: res.response
           });
@@ -159,6 +180,8 @@ export class AddCountryComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
 
   }
@@ -176,22 +199,22 @@ export class AddCountryComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
-    let sub = this.SharedServices.getClickedbutton().subscribe({
+    let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
 
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
-            this.SharedServices.changeToolbarPath({
+            this.sharedServices.changeToolbarPath({
               listPath: this.listUrl,
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add Country';
+            this.toolbarPathData.componentAdd = this.translate.instant("country.add-country");
             this.defineCountryForm();
-            this.SharedServices.changeToolbarPath(this.toolbarPathData);
+            this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
@@ -201,77 +224,85 @@ export class AddCountryComponent implements OnInit {
     this.subsList.push(sub);
   }
   changePath() {
-    this.SharedServices.changeToolbarPath(this.toolbarPathData);
+    this.sharedServices.changeToolbarPath(this.toolbarPathData);
+  }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.countryService.createCountry(this.countriesForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineCountryForm();
+
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   onSave() {
     if (this.countriesForm.valid) {
-         ;
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.countryService.createCountry(this.countriesForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.defineCountryForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-    //  return this.countriesForm.markAllAsTouched();
+      return this.countriesForm.markAllAsTouched();
     }
   }
 
+  confirmUpdate() {
+    this.countriesForm.value.id = this.id;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.countryService.updateCountry(this.countriesForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineCountryForm();
+          this.submited = false;
+          this.spinner.hide();
 
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   onUpdate() {
 
     if (this.countriesForm.valid) {
-      this.countriesForm.value.id = this.id;
-      console.log("this.VendorCommissionsForm.value", this.countriesForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-        this.countryService.updateCountry(this.countriesForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.defineCountryForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
     }
 
     else {
 
-     // return this.countriesForm.markAllAsTouched();
+      return this.countriesForm.markAllAsTouched();
     }
   }
 
