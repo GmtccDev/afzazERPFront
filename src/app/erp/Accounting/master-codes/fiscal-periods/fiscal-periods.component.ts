@@ -162,8 +162,12 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
       console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
-
-        let sub = this.fiscalPeriodService.deleteFiscalPeriod(id).subscribe(
+        const input={
+          tableName:"FiscalPeriods",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.fiscalPeriodService.deleteEntity(input).subscribe(
           (resonse) => {
 
             //reloadPage()
@@ -324,7 +328,12 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
     let item = new DeleteListFiscalPeriodCommand();
     item.ids = this.listIds;
-    let sub = this.fiscalPeriodService.deleteListFiscalPeriod(item).subscribe(
+    const input={
+      tableName:"FiscalPeriods",
+      ids: this.listIds,
+      idName:"Id"
+    };
+    let sub = this.fiscalPeriodService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()

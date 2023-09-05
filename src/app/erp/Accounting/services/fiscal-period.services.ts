@@ -38,7 +38,7 @@ export class FiscalPeriodServiceProxy {
         return this.http.post<any>(environment.apiUrl + "/api/FiscalPeriod/deleteList?", fiscalPeriod);
     }
     updateFiscalPeriod(fiscalPeriod: FiscalPeriodDto): Observable<FiscalPeriodDto> {
-        return this.http.post<any>(environment.apiUrl + "/api/FiscalPeriod/edit?", fiscalPeriod);
+        return this.http.post<any>(environment.apiUrl + "/api/FiscalPeriod/updateFiscalPeriod?", fiscalPeriod);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/FiscalPeriod/get-ddl?");
