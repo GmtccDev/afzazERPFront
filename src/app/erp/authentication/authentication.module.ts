@@ -15,19 +15,18 @@ import { RouterModule } from '@angular/router';
 import { AddNewPasswordComponent } from './add-new-password/add-new-password.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { LoginCompanyComponent } from './login/login-company/login-company.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
 @NgModule({
 	declarations: [
-
 		AuthenticationComponent,
-
 		LoginComponent,
 		VerificationCodeComponent,
 		AddNewPasswordComponent,
 		ForgetPasswordComponent,
-  LoginCompanyComponent,
+		LoginCompanyComponent,
 
 
 
@@ -41,7 +40,7 @@ import { LoginCompanyComponent } from './login/login-company/login-company.compo
 		NgbModule,
 		ReactiveFormsModule,
 		AngularMultiSelectModule,
-		SharedModule, AuthenticationRoutingModule,
+		SharedModule, AuthenticationRoutingModule,NgxSpinnerModule
 	],
 	providers: [UserLoginService]
 })

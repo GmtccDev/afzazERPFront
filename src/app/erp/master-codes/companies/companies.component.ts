@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../shared/common-services/notifications-alerts.service';
 import { CompanyServiceProxy } from '../services/company.service';
 import { CompanyDto, DeleteListCompanyCommand } from '../models/company';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
@@ -13,6 +12,7 @@ import { ITabulatorActionsSelected } from '../../../shared/interfaces/ITabulator
 import { MessageModalComponent } from '../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-companies',
   templateUrl: './companies.component.html',
@@ -43,9 +43,10 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
     private companyService: CompanyServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
   ) {
 
   }
@@ -55,19 +56,21 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getCompanies()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getCompanies();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -103,15 +106,9 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.companyService.allCompanies(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
             this.companies = res.response.items
-              ;
 
           }
 
@@ -137,7 +134,6 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.companyService.deleteCompany(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
       this.getCompanies();
     });
   }
@@ -161,19 +157,21 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        const input={
-          tableName:"Companies",
-          id:id,
-          idName:"Id"
+        this.spinner.show();
+        const input = {
+          tableName: "Companies",
+          id: id,
+          idName: "Id"
         };
         let sub = this.companyService.deleteEntity(input).subscribe(
           (resonse) => {
 
-            //reloadPage()
             this.getCompanies();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -254,7 +252,6 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['master-codes/companies/update-company/' + id])
     }
@@ -271,7 +268,6 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['master-codes/companies/update-company/' + event.item.id])
 
@@ -312,10 +308,10 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item = new DeleteListCompanyCommand();
     item.ids = this.listIds;
-    const input={
-      tableName:"Companies",
-      ids:this.listIds,
-      idName:"Id"
+    const input = {
+      tableName: "Companies",
+      ids: this.listIds,
+      idName: "Id"
     };
     let sub = this.companyService.deleteListEntity(input).subscribe(
       (resonse) => {

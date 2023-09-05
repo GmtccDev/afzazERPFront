@@ -21,8 +21,8 @@
                                 <!-- <input class="form-control" type="text" required="" formControlName="code" placeholder="Verification Code"> -->
                                 <input type="text" class="form-control" id="code" formControlName="code" name="code" placeholder="{{'login.code'|translate}}" [ngClass]="{'error' : (f.code.touched) && (f.code.errors)}">
                                 <small *ngIf="(f.code.touched) && (f.code.errors)" class="w-100 text-danger mt-1">
-                                <span *ngIf="(f.code.errors?.required)">{{'validation.required'|translate}}</span>
-                                <span *ngIf="(f.code.errors.minlength)">{{'validation.invalid-code'|translate}}</span>
+                                <span *ngIf="(f.code.errors?.required)">{{'error.required'|translate}}</span>
+                                <span *ngIf="(f.code.errors.minlength)">{{'error.invalid-code'|translate}}</span>
 
                               </small>
 

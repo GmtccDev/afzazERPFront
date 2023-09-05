@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import {  BusinessServiceProxy } from '../services/business-field.servies'
+import { BusinessServiceProxy } from '../services/business-field.servies'
 
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { MessageModalComponent } from '../../../shared/components/message-modal/
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
 import { BusinessDto, DeleteListBusinessCommand } from '../models/Business';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-business',
   templateUrl: './business.component.html',
@@ -41,7 +42,9 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
     private businessService: BusinessServiceProxy,
     private router: Router,
     private sharedServices: SharedService, private translate: TranslateService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private spinner: NgxSpinnerService,
+  ) {
 
   }
 
@@ -50,17 +53,21 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getBusiness()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
-    this.listenToClickedButton();
 
-    this.getBusinesss();
-    setTimeout(() => {
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -91,15 +98,10 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getBusinesss() {
+  getBusiness() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.businessService.allBusiness(undefined,undefined,undefined,undefined,undefined).subscribe({
+      let sub = this.businessService.allBusiness(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.business");
           if (res.success) {
             this.business = res.response.items;
@@ -126,10 +128,8 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region CRUD Operations
   delete(id: any) {
-    
     this.businessService.deleteBusiness(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
-      this.getBusinesss();
+      this.getBusiness();
     });
   }
   edit(id: string) {
@@ -150,20 +150,21 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
-        const input={
-          tableName:"Business",
-          id:id,
-          idName:"Id"
+        this.spinner.show();
+        const input = {
+          tableName: "Business",
+          id: id,
+          idName: "Id"
         };
         let sub = this.businessService.deleteEntity(input).subscribe(
           () => {
-            //reloadPage()
-            this.getBusinesss();
+            this.getBusiness();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -214,7 +215,6 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['master-codes/business/update-business/' + id]
       )
@@ -232,7 +232,6 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['master-codes/business/update-business/' + event.item.id]
         )
@@ -254,7 +253,6 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
@@ -270,8 +268,6 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onCheck(id) {
-    
- 
     this.listIds.push(id);
     this.sharedServices.changeButton({
       action: 'Delete',
@@ -284,16 +280,15 @@ export class BusinessComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item = new DeleteListBusinessCommand();
     item.ids = this.listIds;
-    const input={
-      tableName:"Business",
-      ids:item.ids,
-      idName:"Id"
+    const input = {
+      tableName: "Business",
+      ids: item.ids,
+      idName: "Id"
     };
     let sub = this.businessService.deleteListEntity(input).subscribe(
       (resonse) => {
 
-        //reloadPage()
-        this.getBusinesss();
+        this.getBusiness();
         this.listIds = [];
       });
     this.subsList.push(sub);

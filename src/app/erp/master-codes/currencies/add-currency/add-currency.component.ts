@@ -41,7 +41,7 @@ export class AddCurrencyComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -53,7 +53,7 @@ export class AddCurrencyComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService,
+    private sharedServices: SharedService,
     private translate: TranslateService,
     private modelService: NgbModal
   ) {
@@ -65,22 +65,17 @@ export class AddCurrencyComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
+    this.spinner.show();
+    this.getRouteData();
     this.changePath();
+    this.listenToClickedButton();
+    this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
       this.getCurrencyCode();
     }
-    this.sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = +params['id'];
-        if (this.id > 0) {
-          this.getCurrencyById(this.id);
-        }
-        this.url = this.router.url.split('/')[2];
-      }
-    });
+    this.spinner.hide();
+
+
   }
 
   //#endregion
@@ -94,7 +89,33 @@ export class AddCurrencyComponent implements OnInit {
     });
   }
   //#endregion
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = params['id'];
 
+        if (this.id) {
+          this.getCurrencyById(this.id).then(a => {
+
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
+      }
+    });
+    this.subsList.push(sub);
+  }
   //#region Authentications
 
   //#endregion
@@ -115,7 +136,7 @@ export class AddCurrencyComponent implements OnInit {
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      symbol:''
+      symbol: ''
     });
   }
   getSymbol() {
@@ -131,18 +152,17 @@ export class AddCurrencyComponent implements OnInit {
 
   //#region CRUD Operations
   getCurrencyById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.currencyService.getCurrency(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.currencyService.getCurrency(id).subscribe({
         next: (res: any) => {
-
-          console.log('result data getbyid', res);
+          resolve();
           this.currenciesForm.setValue({
             id: res.response.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
             isActive: res.response?.isActive,
-            symbol:res.response?.symbol
+            symbol: res.response?.symbol
           });
           this.currencyTransactionsDto = res.response?.currencyTransactionsDto;
           this.drawTable();
@@ -158,12 +178,13 @@ export class AddCurrencyComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   getCurrencyCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.currencyService.getLastCode().subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.currencyService.getLastCode().subscribe({
         next: (res: any) => {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.currencies");
@@ -179,6 +200,8 @@ export class AddCurrencyComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
 
   }
@@ -196,22 +219,22 @@ export class AddCurrencyComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
-    let sub = this.SharedServices.getClickedbutton().subscribe({
+    let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
 
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
-            this.SharedServices.changeToolbarPath({
+            this.sharedServices.changeToolbarPath({
               listPath: this.listUrl,
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add Currency';
+            this.toolbarPathData.componentAdd = this.translate.instant("currency.add-currency");
             this.defineCurrencyForm();
-            this.SharedServices.changeToolbarPath(this.toolbarPathData);
+            this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
@@ -221,77 +244,81 @@ export class AddCurrencyComponent implements OnInit {
     this.subsList.push(sub);
   }
   changePath() {
-    this.SharedServices.changeToolbarPath(this.toolbarPathData);
+    this.sharedServices.changeToolbarPath(this.toolbarPathData);
+  }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.currencyService.createCurrency(this.currenciesForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineCurrencyForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   onSave() {
     if (this.currenciesForm.valid) {
-      ;
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.currencyService.createCurrency(this.currenciesForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.defineCurrencyForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-      //  return this.currenciesForm.markAllAsTouched();
+      return this.currenciesForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    this.currenciesForm.value.id = this.id;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.currencyService.updateCurrency(this.currenciesForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineCurrencyForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
+    });
+  }
 
   onUpdate() {
-
     if (this.currenciesForm.valid) {
-      this.currenciesForm.value.id = this.id;
-      console.log("this.VendorCommissionsForm.value", this.currenciesForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-        this.currencyService.updateCurrency(this.currenciesForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.defineCurrencyForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
     }
 
     else {
 
-      // return this.currenciesForm.markAllAsTouched();
+      return this.currenciesForm.markAllAsTouched();
     }
   }
 
@@ -303,7 +330,7 @@ export class AddCurrencyComponent implements OnInit {
 
   doUpdateEvent(id) {
     const modalRef = this.modelService.open(AddEditCurrencyTransactionsComponent, { size: 'lg' });
-    modalRef.componentInstance.name = 'AddEdit';
+    modalRef.componentInstance.name = this.translate.instant('currency.add-edit');
     modalRef.componentInstance.currencyMasterId = this.id;
     modalRef.componentInstance.id = id;
     modalRef.result.then((result) => {
@@ -315,7 +342,7 @@ export class AddCurrencyComponent implements OnInit {
 
   doNewEvent() {
     const modalRef = this.modelService.open(AddEditCurrencyTransactionsComponent, { size: 'lg' });
-    modalRef.componentInstance.name = 'AddEdit';
+    modalRef.componentInstance.name = this.translate.instant('currency.add-edit');
     modalRef.componentInstance.currencyMasterId = this.id;
     modalRef.result.then((result) => {
       if (result) {
@@ -334,6 +361,7 @@ export class AddCurrencyComponent implements OnInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
         let sub = this.currencyService.deleteCurrencyTransaction(id).subscribe(
           () => {
             //reloadPage()
@@ -341,6 +369,8 @@ export class AddCurrencyComponent implements OnInit {
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -360,29 +390,29 @@ export class AddCurrencyComponent implements OnInit {
   columnNames = [
     this.lang == 'ar'
       ? {
-        title: ' العملة ',width: 300,field: 'currencyDetailNameAr'
+        title: ' العملة ', width: 300, field: 'currencyDetailNameAr'
       } : {
-        title: ' Currency ',width: 300,field: 'currencyDetailNameEn'
+        title: ' Currency ', width: 300, field: 'currencyDetailNameEn'
       },
     this.lang == 'ar'
       ? {
-        title: '  تاريخ  ',width: 300,field: 'transactionDate', formatter: function (cell, formatterParams, onRendered) {
+        title: '  تاريخ  ', width: 300, field: 'transactionDate', formatter: function (cell, formatterParams, onRendered) {
           var value = cell.getValue();
           value = format(new Date(value), 'dd-MM-yyyy');;
           return value;
         }
       } : {
-        title: '   Date',width: 300,field: 'transactionDate', formatter: function (cell, formatterParams, onRendered) {
+        title: '   Date', width: 300, field: 'transactionDate', formatter: function (cell, formatterParams, onRendered) {
           var value = cell.getValue();
           value = format(new Date(value), 'dd-MM-yyyy');;
           return value;
         }
       },
-      this.lang == 'ar'
+    this.lang == 'ar'
       ? {
-        title: ' معامل التحويل  ',width: 300,field: 'transactionFactor'
+        title: ' معامل التحويل  ', width: 300, field: 'transactionFactor'
       } : {
-        title: '  Currency Factor ',width: 300,field: 'transactionFactor'
+        title: '  Currency Factor ', width: 300, field: 'transactionFactor'
       },
     this.lang == "ar" ? {
       title: "حذف",
