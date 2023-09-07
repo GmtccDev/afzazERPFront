@@ -42,7 +42,6 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     private accountClassificationService: AccountClassificationServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService
@@ -277,7 +276,6 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 

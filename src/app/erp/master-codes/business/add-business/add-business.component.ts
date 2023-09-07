@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../shared/helper/helper-url';
-import {BusinessServiceProxy} from '../../services/business-field.servies'
+import { BusinessServiceProxy } from '../../services/business-field.servies'
 import { BusinessDto } from '../../models/Business';
 @Component({
   selector: 'app-add-business',
@@ -26,7 +24,7 @@ export class AddBusinessComponent implements OnInit {
   url: any;
   id: any = 0;
   currnetUrl;
-  business:BusinessDto[] = [];
+  business: BusinessDto[] = [];
   addUrl: string = '/master-codes/business/add-business';
   updateUrl: string = '/master-codes/business/update-business/';
   listUrl: string = '/master-codes/business';
@@ -34,24 +32,21 @@ export class AddBusinessComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList:this.translate.instant("component-names.business"),
+    componentList: this.translate.instant("component-names.business"),
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
   constructor(
     private businessService: BusinessServiceProxy,
     private router: Router,
-    private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
-    private modalService: NgbModal,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService,private translate:TranslateService
+    private SharedServices: SharedService, private translate: TranslateService
   ) {
     this.defineBusinessForm();
   }
@@ -59,25 +54,46 @@ export class AddBusinessComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+    this.spinner.show();
+    this.getRouteData();
     this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
     if (this.currnetUrl == this.addUrl) {
       this.getBusinessCode();
     }
-    this.sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = +params['id'];
-        if (this.id > 0) {
-          this.getBusinessById(this.id);
-        }
-        this.url = this.router.url.split('/')[2];
-      }
-    });
+    this.changePath();
+    this.listenToClickedButton();
+    this.spinner.hide();
+
   }
 
   //#endregion
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = params['id'];
+
+        if (this.id) {
+          this.getBusinessById(this.id).then(a => {
+
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+        }
+        else {
+          this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
+      }
+    });
+    this.subsList.push(sub);
+  }
 
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -108,7 +124,7 @@ export class AddBusinessComponent implements OnInit {
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
-      isActive:true
+      isActive: true
     });
   }
 
@@ -116,8 +132,8 @@ export class AddBusinessComponent implements OnInit {
 
   //#region CRUD Operations
   getBusinessById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.businessService.getBusiness(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.businessService.getBusiness(id).subscribe({
         next: (res: any) => {
           console.log('result data getbyid', res);
           this.businessFieldForm.setValue({
@@ -125,7 +141,7 @@ export class AddBusinessComponent implements OnInit {
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
-            isActive:res.response?.isActive
+            isActive: res.response?.isActive
           });
           console.log(
             'this.businessFieldForm.value set value',
@@ -139,15 +155,17 @@ export class AddBusinessComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
+
   }
   getBusinessCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.businessService.getLastCode().subscribe({
-       
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.businessService.getLastCode().subscribe({
+
         next: (res: any) => {
-          this.toolbarPathData.componentList=this.translate.instant("component-names.business");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.business");
           this.businessFieldForm.patchValue({
             code: res.response
           });
@@ -160,8 +178,10 @@ export class AddBusinessComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-   
+
   }
   //#endregion
 
@@ -171,7 +191,7 @@ export class AddBusinessComponent implements OnInit {
     return this.businessFieldForm.controls;
   }
 
-  
+
   //#endregion
   //#region Tabulator
   subsList: Subscription[] = [];
@@ -190,7 +210,7 @@ export class AddBusinessComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add Business';
+            this.toolbarPathData.componentAdd = this.translate.instant("business.add-business");
             this.defineBusinessForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -204,75 +224,87 @@ export class AddBusinessComponent implements OnInit {
   changePath() {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.businessService.createBusiness(this.businessFieldForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineBusinessForm();
+
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   onSave() {
     if (this.businessFieldForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.businessService.createBusiness(this.businessFieldForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.defineBusinessForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-             
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
-
     } else {
-     
-    //  return this.businessFieldForm.markAllAsTouched();
+
+      return this.businessFieldForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    this.businessFieldForm.value.id = this.id;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.businessService.updateBusiness(this.businessFieldForm.value).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          console.log('result update ', result);
+          this.response = { ...result.response };
+          this.defineBusinessForm();
+          this.submited = false;
+          setTimeout(() => {
+            this.spinner.hide();
 
+            navigateUrl(this.listUrl, this.router);
+          }, 1000);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
   onUpdate() {
-    
-    if (this.businessFieldForm.valid) {
 
-      this.businessFieldForm.value.id = this.id;
-      console.log("this.VendorCommissionsForm.value", this.businessFieldForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-        this.businessService.updateBusiness( this.businessFieldForm.value).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.defineBusinessForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-             
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+    if (this.businessFieldForm.valid) {
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
+
     }
 
     else {
-   
-     // return this.businessFieldForm.markAllAsTouched();
+
+      return this.businessFieldForm.markAllAsTouched();
     }
   }
 

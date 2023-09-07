@@ -29,7 +29,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   enableFilters: boolean = false;
   lang = localStorage.getItem("language")
   selectedAccountGroupId: any;
-  level:any=1;
+  level: any = 1;
   accountGroupList: any;
   routeAccountGroupApi = "AccountGroup/get-ddl?"
 
@@ -55,7 +55,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   routeCurrencyApi = "Currency/get-ddl?"
   currenciesList: any;
 
- // selectedBranchId: any;
+  // selectedBranchId: any;
   selectedBranchId: BranchDto[];
 
   branchesList: any;
@@ -65,21 +65,21 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   vouchersList: any;
   routeVoucherApi = "Voucher/get-ddl?"
-  facialPeriodId:any;
-  fromEntryNo:any;
-  toEntryNo:any;
-  costCenterId:any;
+  facialPeriodId: any;
+  fromEntryNo: any;
+  toEntryNo: any;
+  costCenterId: any;
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId,mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,
-    voucherKindId, voucherId,level,reportOptionId,fromEntryNo,toEntryNo,costCenterId
+    fromDate, toDate, accountGroupId, mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,
+    voucherKindId, voucherId, level, reportOptionId, fromEntryNo, toEntryNo, costCenterId
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
     ShowToDate: boolean, ShowSearch: boolean, ShowAccountGroup: boolean, ShowMainAccount: boolean, ShowLeafAccount: boolean,
-    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean,ShowLevel:boolean,
-    ShowReportOptions:boolean,ShowFromEntryNo:boolean,ShowToEntryNo:boolean
+    ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean, ShowLevel: boolean,
+    ShowReportOptions: boolean, ShowFromEntryNo: boolean, ShowToEntryNo: boolean
   } = {
 
       ShowFromDate: false,
@@ -92,12 +92,12 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       ShowEntriesStatus: false,
       ShowCurrency: false,
       ShowBranch: false,
-      ShowVoucherKind:false,
+      ShowVoucherKind: false,
       ShowVoucher: false,
-      ShowLevel:false,
-      ShowReportOptions:false,
-      ShowFromEntryNo:false,
-      ShowToEntryNo:false
+      ShowLevel: false,
+      ShowReportOptions: false,
+      ShowFromEntryNo: false,
+      ShowToEntryNo: false
     }
 
   subsList: Subscription[] = [];
@@ -118,7 +118,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit() {
-   // this.getLanguage();
+    // this.getLanguage();
     //this.GetData();
     this.getGeneralConfigurationsOfAccountingPeriod()
     debugger
@@ -206,23 +206,23 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (res) => {
           if (res.success) {
             if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
-              this.mainAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount != true && x.isActive==true);
+              this.mainAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount != true && x.isActive == true);
               if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
-                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive==true);
+                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive == true);
               }
               else {
-                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.isActive==true);
+                this.leafAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount == true && x.isActive == true);
 
               }
             }
-             else {
-              this.mainAccountsList = res.response.filter(x => x.isLeafAccount != true && x.isActive==true);
-               if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
-                 this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive==true);
+            else {
+              this.mainAccountsList = res.response.filter(x => x.isLeafAccount != true && x.isActive == true);
+              if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
+                this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive == true);
 
-               }
-               else {
-                this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive==true);
+              }
+              else {
+                this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
               }
 
             }
@@ -246,34 +246,30 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  getAccountsByAccountGroup()
-  {
+  getAccountsByAccountGroup() {
 
     if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
-        this.mainAccountsList = this.mainAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
-        this.leafAccountsList = this.leafAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
+      this.mainAccountsList = this.mainAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
+      this.leafAccountsList = this.leafAccountsList.filter(x => x.accountGroupId == this.selectedAccountGroupId);
 
     }
-    else
-    {
+    else {
       this.mainAccountsList = this.mainAccountsList;
       this.leafAccountsList = this.leafAccountsList;
     }
 
- }
- getLeafAccountsByMainAccount()
- {
+  }
+  getLeafAccountsByMainAccount() {
 
-   if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
-       this.leafAccountsList = this.leafAccountsList.filter(x => x.parentId == this.selectedMainAccountId);
+    if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
+      this.leafAccountsList = this.leafAccountsList.filter(x => x.parentId == this.selectedMainAccountId);
 
-   }
-   else
-   {
-     this.leafAccountsList = this.leafAccountsList;
-   }
+    }
+    else {
+      this.leafAccountsList = this.leafAccountsList;
+    }
 
-}
+  }
 
   getCostCenter() {
     return new Promise<void>((resolve, reject) => {
@@ -388,12 +384,11 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   getGeneralConfigurationsOfAccountingPeriod() {
     debugger
-    const promise = new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       debugger
-      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+      let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
-          debugger
-          console.log('result data getbyid', res);
+          resolve();
           if (res.response.value > 0) {
             debugger
             this.facialPeriodId = res.response.value;
@@ -409,18 +404,19 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
 
   }
   getfiscalPeriodById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
           debugger
           console.log('result data getbyid', res);
-          this.selectedFromDate=this.dateConverterService.getDateForCalender(res.response.fromDate);
-          this.selectedToDate=this.dateConverterService.getDateForCalender(res.response.toDate);
+          this.selectedFromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.selectedToDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 
 
 
@@ -432,16 +428,17 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   FireSearch() {
     debugger
     if (!this.selectedFromDate) {
-    //  this.selectedFromDate = this.dateConverterService.getCurrentDate();
+      //  this.selectedFromDate = this.dateConverterService.getCurrentDate();
     }
     if (!this.selectedToDate) {
-    //  this.selectedToDate = this.dateConverterService.getCurrentDate();
+      //  this.selectedToDate = this.dateConverterService.getCurrentDate();
     }
     this.OnFilter.emit({
 
@@ -455,11 +452,11 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       branchId: this.branchIds,
       voucherKindId: this.selectedVoucherKindId,
       voucherId: this.selectedVoucherId,
-      level:this.level,
-      fromEntryNo:this.fromEntryNo,
-      toEntryNo:this.toEntryNo,
+      level: this.level,
+      fromEntryNo: this.fromEntryNo,
+      toEntryNo: this.toEntryNo,
       reportOptionId: this.selectedReportOptionId,
-      costCenterId:this.selectedCostCenterId
+      costCenterId: this.selectedCostCenterId
 
 
 
@@ -476,8 +473,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedToDate = e;
     this.FireSearch()
   }
-  onSelectVoucherKind()
-  {
+  onSelectVoucherKind() {
     this.FireSearch()
 
   }
@@ -511,7 +507,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   onSelectBranch() {
     debugger
-    this.branchIds=''
+    this.branchIds = ''
     this.selectedBranchId?.forEach(c => {
       this.branchIds += c.id + ",";
     })
@@ -525,8 +521,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.FireSearch()
 
   }
-  onChangeLevel()
-  {
+  onChangeLevel() {
     this.FireSearch()
 
   }

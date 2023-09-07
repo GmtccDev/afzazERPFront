@@ -168,7 +168,8 @@
         "user-mobile": "رقم الهاتف المحمول",
         "unified-number": "الرقم الموحد",
         "commercial-registeration-no": "رقم السجل التجاري",
-        "commercial-registration-issue-date": "تاريخ اصدار السجل التجاري"
+        "commercial-registration-issue-date": "تاريخ اصدار السجل التجاري",
+        "add-role":"اضافة دور"
     },
     "toolbar": {
         "list": "القائمة",
@@ -346,12 +347,18 @@
     "currency": {
         "transaction-date": "تاريخ المعامل ",
         "transaction-factor": " معامل التحويل ",
-        "currency-transactions": " معاملات التحويل"
+        "currency-transactions": " معاملات التحويل",
+        "add-currency":"اضافة عملة",
+        "add-edit":"اضافة وتعديل"
+
+
     },
     "company": {
         "motherCompany": "الشركة الام",
         "useHijri": "استخم التاريخ الهجري",
-        "web-site": "الموقع"
+        "web-site": "الموقع",
+        "add-company":"اضافة شركة"
+
     },
     "fiscal-period": {
         "fiscal-period-status": "الحالة"
@@ -404,7 +411,8 @@
         "whentenentshouldpayError": "Duration must be greater than zero!",
         "invalidPassword": "invalid Password",
         "userNameRequired": "Failed Required",
-        "required": "هذا الحقل مطلوب"
+        "required": "هذا الحقل مطلوب",
+        "invalid-code":"كود غير صحيح"
     },
     "voucher-type": {
         "voucher-type-information": "بيانات نمط السند",
@@ -461,5 +469,11 @@
     },
     "branch":{
         "add-branch":"اضافة فرع"
+     },
+     "business":{
+        "add-business":"اضافة عمل"
+     },
+     "country":{
+        "add-country":"اضافة بلد"
      }
 }

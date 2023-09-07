@@ -7,11 +7,11 @@ import { ToolbarPath } from '../../../shared/interfaces/toolbar-path';
 import { RoleServiceProxy } from '../services/role.servies'
 import { ToolbarData } from '../../../shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import { ITabulatorActionsSelected } from '../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from '../../../shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
 import { DeleteListRoleCommand, RoleDto } from '../models/role';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -40,7 +40,7 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
     private roleService: RoleServiceProxy,
     private router: Router,
     private sharedServices: SharedService, private translate: TranslateService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,private spinner: NgxSpinnerService) {
 
   }
 
@@ -49,20 +49,20 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    this.spinner.show();
+    Promise.all([this.getRoles()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
-    this.listenToClickedButton();
-
-    this.getRoless();
-    setTimeout(() => {
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
-
-
-  }
+   }
 
 
   //#endregion
@@ -90,15 +90,11 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getRoless() {
+  getRoles() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.roleService.allRoles(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
+         
           this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
           if (res.success) {
             this.role = res.response?.items;
@@ -126,8 +122,7 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.roleService.deleteRole(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
-      this.getRoless();
+      this.getRoles();
     });
   }
   edit(id: string) {
@@ -150,13 +145,15 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
+        this.spinner.show();
         let sub = this.roleService.deleteRole(id).subscribe(
           () => {
-            //reloadPage()
-            this.getRoless();
+            this.getRoles();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -208,7 +205,6 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['security/role/update-role/' + id]
       )
@@ -227,7 +223,6 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
@@ -261,7 +256,7 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
       (resonse) => {
 
         //reloadPage()
-        this.getRoless();
+        this.getRoles();
         this.listIds = [];
       });
     this.subsList.push(sub);

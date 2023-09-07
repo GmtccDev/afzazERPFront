@@ -6,12 +6,13 @@ import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import {CurrencyDto, DeleteListCurrencyCommand} from '../../models/currency';
-import {CurrencyServiceProxy} from '../../services/currency.servies';
+import { CurrencyDto, DeleteListCurrencyCommand } from '../../models/currency';
+import { CurrencyServiceProxy } from '../../services/currency.servies';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-currencies',
   templateUrl: './currencies.component.html',
@@ -42,7 +43,9 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private sharedServices: SharedService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -52,19 +55,21 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getCurrencies()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getCurrencies();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -99,16 +104,9 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.countryService.all(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.currencies");
           if (res.success) {
             this.currencies = res.response.items
-            ;
 
           }
 
@@ -134,7 +132,6 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.countryService.deleteCurrency(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
       this.getCurrencies();
     });
   }
@@ -158,10 +155,11 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        const input={
-          tableName:"Currencies",
-          id:id,
-          idName:"Id"
+        this.spinner.show();
+        const input = {
+          tableName: "Currencies",
+          id: id,
+          idName: "Id"
         };
         let sub = this.countryService.deleteEntity(input).subscribe(
           (resonse) => {
@@ -171,6 +169,8 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -236,7 +236,6 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['master-codes/currencies/update-currency/' + id])
     }
@@ -253,7 +252,6 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['master-codes/currencies/update-currency/' + event.item.id])
 
@@ -274,7 +272,7 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-        
+
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
@@ -291,13 +289,13 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    
+
     let item = new DeleteListCurrencyCommand();
     item.ids = this.listIds;
-    const input={
-      tableName:"Currencies",
-      ids:this.listIds,
-      idName:"Id"
+    const input = {
+      tableName: "Currencies",
+      ids: this.listIds,
+      idName: "Id"
     };
     let sub = this.countryService.deleteListEntity(input).subscribe(
       (resonse) => {

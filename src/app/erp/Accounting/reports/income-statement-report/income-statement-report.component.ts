@@ -215,13 +215,10 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     this.subsList.push(sub);
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
-
-          console.log('result data getbyid', res);
+          resolve();
           if (res.response.value > 0) {
 
             this.facialPeriodId = res.response.value;

@@ -1,15 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { UserLoginService } from '../../services/user-login-service'
-import { CompanyServiceProxy } from '../../../master-codes/services/company.service';
-import { BranchServiceProxy } from '../../../master-codes/services/branch.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-company',
@@ -17,15 +16,15 @@ import { DateConverterService } from 'src/app/shared/services/date-services/date
   styleUrls: ['./login-company.component.scss']
 })
 export class LoginCompanyComponent implements OnInit {
-  @Input()  userName;
-  @Input()  password;
-  @Input () companies;
+  @Input() userName;
+  @Input() password;
+  @Input() companies;
   public show: boolean = false;
   public loginForm = this.fb.group({
     userName: [''],
     password: [''],
     companyId: ['', [Validators.required]],
-    branchId:['', [Validators.required]],
+    branchId: ['', [Validators.required]],
   });
   public errorMessage: any;
   // authService: any;
@@ -33,25 +32,26 @@ export class LoginCompanyComponent implements OnInit {
   currentSystemLanguage = 'en';
   companiesList: any;
   branchesList: any;
-  facialPeriodId:any;
+  facialPeriodId: any;
   fromDateOfFacialPeriod: any;
   toDateOfFacialPeriod: any;
-  // public authService: AuthService,
+  subsList: Subscription[] = [];
+
   constructor(private fb: FormBuilder, public authService: UserLoginService,
     private modelService: NgbModal,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
-     public router: Router,  private userService: UserService,private translate:TranslateService) {
+    public router: Router, private userService: UserService, private translate: TranslateService) {
 
-      this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
-      this.translate.use(this.currentSystemLanguage);
-      if (this.currentSystemLanguage === 'ar') {
-        document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
-      }
-      else {
-        document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
-      }
+    this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
+    this.translate.use(this.currentSystemLanguage);
+    if (this.currentSystemLanguage === 'ar') {
+      document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
+    }
+    else {
+      document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
+    }
 
   }
 
@@ -59,7 +59,15 @@ export class LoginCompanyComponent implements OnInit {
     this.companiesList = this.companies;
     this.userService.logout();
   }
-
+  //#region ngOnDestroy
+  ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  //#endregion
   showPassword() {
     this.show = !this.show;
   }
@@ -85,6 +93,7 @@ export class LoginCompanyComponent implements OnInit {
         },
       });
 
+      this.subsList.push(sub);
 
     });
 
@@ -116,6 +125,8 @@ export class LoginCompanyComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
 
 
     });
@@ -129,9 +140,9 @@ export class LoginCompanyComponent implements OnInit {
 
     // }
 
-this.loginForm.value.userName=this.userName;
-this.loginForm.value.password=this.password;
-    this.authService.UserLoginCompany(this.loginForm.value).subscribe(
+    this.loginForm.value.userName = this.userName;
+    this.loginForm.value.password = this.password;
+    let sub = this.authService.UserLoginCompany(this.loginForm.value).subscribe(
       next => {
 
 
@@ -139,7 +150,7 @@ this.loginForm.value.password=this.password;
 
         if (next.success == true) {
           debugger
-       //   this.translate.use("en");
+          //   this.translate.use("en");
           let jwt = next.response.token;
           let jwtData = jwt.split('.')[1]
           let decodedJwtJsonData = window.atob(jwtData)
@@ -147,18 +158,18 @@ this.loginForm.value.password=this.password;
           this.userService.setToken(jwt.toString());
           let Role = decodedJwtData.role;
           debugger
-		  localStorage.setItem("userId",decodedJwtData.userLoginId)
-          localStorage.setItem("userName",decodedJwtData.fullName)
-          localStorage.setItem("branchId",this.loginForm.value.branchId)
-          localStorage.setItem("companyId",this.loginForm.value.companyId)
-         // this.getGeneralConfigurationsOfAccountingPeriod()
+          localStorage.setItem("userId", decodedJwtData.userLoginId)
+          localStorage.setItem("userName", decodedJwtData.fullName)
+          localStorage.setItem("branchId", this.loginForm.value.branchId)
+          localStorage.setItem("companyId", this.loginForm.value.companyId)
+          // this.getGeneralConfigurationsOfAccountingPeriod()
           this.modelService.dismissAll();
-          if( next.response.user.loginCount==null ||next.response.user.loginCount==0){
-            window.location.replace('authentication/add-password?email='+next.response.user.email);
+          if (next.response.user.loginCount == null || next.response.user.loginCount == 0) {
+            window.location.replace('authentication/add-password?email=' + next.response.user.email);
           }
-          else{
-         //   this.router.navigate(['/dashboard/default']);
-         this.router.navigate(['/Subscription']);
+          else {
+            //   this.router.navigate(['/dashboard/default']);
+            this.router.navigate(['/Subscription']);
           }
 
         }
@@ -170,6 +181,8 @@ this.loginForm.value.password=this.password;
 
       }
     )
+    this.subsList.push(sub);
+
 
   }
   logout() {
@@ -183,10 +196,8 @@ this.loginForm.value.password=this.password;
     window.location.reload();
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-    debugger
-    const promise = new Promise<void>((resolve, reject) => {
-      debugger
-      this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
           debugger
           console.log('result data getbyid', res);
@@ -205,23 +216,24 @@ this.loginForm.value.password=this.password;
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
 
   }
   getfiscalPeriodById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+    let sub =  this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
           debugger
           console.log('result data getbyid', res);
-          this.fromDateOfFacialPeriod=this.dateConverterService.getDateForCalender(res.response.fromDate);
-          this.toDateOfFacialPeriod=this.dateConverterService.getDateForCalender(res.response.toDate);
-          localStorage.setItem("fromDateOfFacialPeriod",this.fromDateOfFacialPeriod)
-          localStorage.setItem("toDateOfFacialPeriod",this.toDateOfFacialPeriod)
+          this.fromDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.fromDate);
+          this.toDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.toDate);
+          localStorage.setItem("fromDateOfFacialPeriod", this.fromDateOfFacialPeriod)
+          localStorage.setItem("toDateOfFacialPeriod", this.toDateOfFacialPeriod)
 
           //formatDate(Date.parse(res.response.fromDate)),
-         // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
+          // this.selectedToDate=formatDate(Date.parse(res.response.toDate)),
 
 
         },
@@ -232,7 +244,9 @@ this.loginForm.value.password=this.password;
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
+
     });
-    return promise;
   }
 }

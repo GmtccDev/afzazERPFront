@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { CODE_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
-import { CreateFiscalPeriodCommand, EditFiscalPeriodCommand, FiscalPeriodDto } from '../../../models/fiscal-period';
+import {  FiscalPeriodDto } from '../../../models/fiscal-period';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -240,9 +240,9 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    var inputDto = new CreateFiscalPeriodCommand()
+    var inputDto = new FiscalPeriodDto()
     return new Promise<void>((resolve, reject) => {
-      inputDto.inputDto = this.fiscalPeriodForm.value;
+      inputDto = this.fiscalPeriodForm.value;
       this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -278,13 +278,13 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    var inputDto = new EditFiscalPeriodCommand()
+    var inputDto = new FiscalPeriodDto()
 
     return new Promise<void>((resolve, reject) => {
 
-      inputDto.inputDto = this.fiscalPeriodForm.value;
+      inputDto = this.fiscalPeriodForm.value;
 
-      inputDto.inputDto.id = this.id;
+      inputDto.id = this.id;
       let sub = this.fiscalPeriodService.updateFiscalPeriod(inputDto).subscribe({
         next: (result: any) => {
           this.spinner.show();

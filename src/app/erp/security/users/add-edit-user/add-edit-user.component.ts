@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
@@ -43,7 +43,7 @@ export class AddEditUserComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -58,36 +58,36 @@ export class AddEditUserComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService,
+    private sharedServices: SharedService,
     private translate: TranslateService,
     private companyService: CompanyServiceProxy,
     private branchService: BranchServiceProxy,
   ) {
-    this.defineuserForm();
+    this.defineUserForm();
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getRoles();
-    this.getCompanies();
-    // this.getBranches();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getuserCode();
-    }
-    this.sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = params['id'];
+    this.spinner.show();
+    Promise.all([
+      this.getRoles(),
+      this.getCompanies()
+    ]).then(a => {
 
-        if (this.id) {
-          this.getuserById(this.id);
-        }
-        this.url = this.router.url.split('/')[2];
+      this.getRouteData();
+      this.changePath();
+      this.listenToClickedButton();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getUserCode();
       }
+      this.spinner.hide();
+    }).catch(err => {
+
+      this.spinner.hide();
     });
+
   }
 
   //#endregion
@@ -101,6 +101,33 @@ export class AddEditUserComponent implements OnInit {
     });
   }
   //#endregion
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = params['id'];
+
+        if (this.id) {
+          this.getUserById(this.id).then(a => {
+
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
+      }
+    });
+    this.subsList.push(sub);
+  }
 
   //#region Authentications
 
@@ -115,7 +142,7 @@ export class AddEditUserComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  defineuserForm() {
+  defineUserForm() {
     this.userForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
@@ -184,18 +211,18 @@ export class AddEditUserComponent implements OnInit {
 
   }
   onChangeCompany(values) {
-    this.companiesUserDto=[];
+    this.companiesUserDto = [];
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.branchService.getDdlWithCompanies(values).subscribe({
         next: (res) => {
 
           if (res.success) {
-            
+
 
             this.branchesList = res.response;
             values.forEach(element => {
-              
+
               let company = new CompaniesUserDto();
               company.companyId = element;
               company.branches = [];
@@ -223,11 +250,11 @@ export class AddEditUserComponent implements OnInit {
   }
   onChangeBranch(values) {
     values.forEach(element => {
-      
+
       var item = this.branchesList.find(c => c.id == element);
       this.companiesUserDto.forEach(
         company => {
-          
+
           if (company.companyId == item.companyId) {
             company.branches.push(element)
           }
@@ -238,11 +265,11 @@ export class AddEditUserComponent implements OnInit {
   //#endregion
 
   //#region CRUD Operations
-  getuserById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.userService.getUser(id).subscribe({
+  getUserById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.userService.getUser(id).subscribe({
         next: (res: any) => {
-          console.log('result data getbyid', res);
+          resolve();
           this.userForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -257,7 +284,7 @@ export class AddEditUserComponent implements OnInit {
             companies: res.response?.companies,
             branches: res.response?.branches
           });
-          this.onChangeCompany( res.response?.companies)
+          this.onChangeCompany(res.response?.companies)
           console.log(
             'this.userForm.value set value',
             this.userForm.value
@@ -270,19 +297,18 @@ export class AddEditUserComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   showPassword() {
     this.show = !this.show;
   }
-  getuserCode() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.userService.getLastCode().subscribe({
-
+  getUserCode() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.userService.getLastCode().subscribe({
         next: (res: any) => {
-
-          this.toolbarPathData.componentList = this.translate.instant("component-names.role");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.user");
           this.userForm.patchValue({
             code: res.response
           });
@@ -295,6 +321,8 @@ export class AddEditUserComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   //#endregion
@@ -311,22 +339,22 @@ export class AddEditUserComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
-    let sub = this.SharedServices.getClickedbutton().subscribe({
+    let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
 
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
-            this.SharedServices.changeToolbarPath({
+            this.sharedServices.changeToolbarPath({
               listPath: this.listUrl,
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add user';
-            this.defineuserForm();
-            this.SharedServices.changeToolbarPath(this.toolbarPathData);
+            this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-user");
+            this.defineUserForm();
+            this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
@@ -336,82 +364,92 @@ export class AddEditUserComponent implements OnInit {
     this.subsList.push(sub);
   }
   changePath() {
-    this.SharedServices.changeToolbarPath(this.toolbarPathData);
+    this.sharedServices.changeToolbarPath(this.toolbarPathData);
+  }
+  confirmSave() {
+    return new Promise<void>((resolve, reject) => {
+      var user = this.userForm.value;
+      user.companiesUserDtos = this.companiesUserDto
+      let sub = this.userService.createUser(user).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineUserForm();
+
+          this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   onSave() {
     if (this.userForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        
-        var user = this.userForm.value;
-        user.companiesUserDtos = this.companiesUserDto
-        this.userService.createUser(user).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.defineuserForm();
-
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
 
     } else {
 
-      //  return this.userForm.markAllAsTouched();
+      return this.userForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    this.userForm.value.id = this.id;
+    var user = this.userForm.value;
+    user.companiesUserDtos = this.companiesUserDto
 
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.userService.updateUser(user).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineUserForm();
+          this.submited = false;
+          setTimeout(() => {
+            this.spinner.hide();
+
+            navigateUrl(this.listUrl, this.router);
+          }, 1000);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
 
   onUpdate() {
-
     if (this.userForm.valid) {
-      
-      this.userForm.value.id = this.id;
-      var user=this.userForm.value;
-      user.companiesUserDtos = this.companiesUserDto
-     
-      console.log("this.VendorCommissionsForm.value", this.userForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-        this.userService.updateUser(user).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.defineuserForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
-    }
 
+    }
     else {
 
-      // return this.userForm.markAllAsTouched();
+      return this.userForm.markAllAsTouched();
     }
   }
 

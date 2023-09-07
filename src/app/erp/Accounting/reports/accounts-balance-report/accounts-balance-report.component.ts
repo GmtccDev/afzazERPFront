@@ -13,11 +13,11 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 
 @Component({
-  selector: 'app-accounts-balance-report',
-  templateUrl: './accounts-balance-report.component.html',
-  styleUrls: ['./accounts-balance-report.component.scss']
+	selector: 'app-accounts-balance-report',
+	templateUrl: './accounts-balance-report.component.html',
+	styleUrls: ['./accounts-balance-report.component.scss']
 })
-export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, AfterViewInit {
+export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterViewInit {
 	//#region Main Declarations
 	facialPeriodId: any;
 	userId: any = localStorage.getItem("userId");
@@ -46,7 +46,7 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 	};
 
 	//#region Constructor
-	constructor(private modalService: NgbModal, private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) {}
+	constructor(private modalService: NgbModal, private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) { }
 
 	//#endregion
 
@@ -113,7 +113,7 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 			this.toDate = this.dateConverterService.getCurrentDate();
 			monthTo = Number(this.toDate.month + 1);
 			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		} else if(!this.isContainsDate(this.toDate)) {
+		} else if (!this.isContainsDate(this.toDate)) {
 			monthTo = Number(this.toDate.month + 1);
 			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
 		}
@@ -237,12 +237,14 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 					console.log("complete");
 				},
 			});
+			this.subsList.push(sub);
+
 		});
-		return promise;
+
 	}
 	getfiscalPeriodById(id: any) {
-		const promise = new Promise<void>((resolve, reject) => {
-			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
 					;
 					console.log("result data getbyid", res);
@@ -256,7 +258,8 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 					console.log("complete");
 				},
 			});
+			this.subsList.push(sub);
+
 		});
-		return promise;
 	}
 }

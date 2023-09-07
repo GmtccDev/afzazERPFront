@@ -12,6 +12,7 @@ import { ITabulatorActionsSelected } from '../../../shared/interfaces/ITabulator
 import { MessageModalComponent } from '../../../shared/components/message-modal/message-modal.component'
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { ToolbarActions } from '../../../shared/enum/toolbar-actions'
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-branches',
   templateUrl: './branches.component.html',
@@ -43,7 +44,9 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
+
   ) {
 
   }
@@ -53,19 +56,21 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-
+    // this.defineGridColumn();
+    this.spinner.show();
+    Promise.all([this.getBranchs()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    this.listenToClickedButton();
-
-    this.getBranches();
-    setTimeout(() => {
-
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-    }, 300);
 
 
   }
@@ -96,20 +101,13 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getBranches() {
+  getBranchs() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.branchService.allBranches(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
-          console.log(res);
-          //let data =
-          //   res.data.map((res: PeopleOfBenefitsVM[]) => {
-          //   return res;
-          // });
           this.toolbarPathData.componentList = this.translate.instant("component-names.branches");
           if (res.success) {
             this.branches = res.response.items
-              ;
 
           }
 
@@ -135,8 +133,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.branchService.deleteBranch(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
-      this.getBranches();
+      this.getBranchs();
     });
   }
   edit(id: string) {
@@ -159,19 +156,22 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        const input={
-          tableName:"Branches",
-          id:id,
-          idName:"Id"
+        this.spinner.show();
+        const input = {
+          tableName: "Branches",
+          id: id,
+          idName: "Id"
         };
         let sub = this.branchService.deleteEntity(input).subscribe(
           (resonse) => {
 
             //reloadPage()
-            this.getBranches();
+            this.getBranchs();
 
           });
         this.subsList.push(sub);
+        this.spinner.hide();
+
       }
     });
   }
@@ -239,7 +239,6 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
-      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
       this.router.navigate(['master-codes/branches/update-branch/' + id])
     }
@@ -256,7 +255,6 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
           submitMode: false
         } as ToolbarData);
 
-        // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.router.navigate(['master-codes/branches/update-branch/' + event.item.id])
 
@@ -278,7 +276,6 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
@@ -294,19 +291,16 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-
-
-  var ids = this.listIds;
-  const input={
-    tableName:"Branches",
-    ids:ids,
-    idName:"Id"
-  };
+    var ids = this.listIds;
+    const input = {
+      tableName: "Branches",
+      ids: ids,
+      idName: "Id"
+    };
     let sub = this.branchService.deleteListEntity(input).subscribe(
       (resonse) => {
 
-        //reloadPage()
-        this.getBranches();
+        this.getBranchs();
         this.listIds = [];
       });
     this.subsList.push(sub);

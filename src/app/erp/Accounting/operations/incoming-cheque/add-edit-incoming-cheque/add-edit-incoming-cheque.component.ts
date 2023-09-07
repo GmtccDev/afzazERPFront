@@ -28,7 +28,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
   branchId: string = localStorage.getItem("branchId");
   companyId: string = localStorage.getItem("companyId");
   incomingChequeForm!: FormGroup;
-  sub: any;
   url: any;
   id: any = 0;
   amount: number = 0;
@@ -117,6 +116,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
       }
       this.changePath();
       this.listenToClickedButton();
+      this.spinner.hide();
+
     }).catch(err => {
       this.spinner.hide();
     });
@@ -206,7 +207,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
+          resolve();
           if (res.success && res.response.items.length > 0) {
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.items.find(c => c.id == 3).value;
@@ -215,7 +216,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           }
 
 
-          resolve();
 
         },
         error: (err: any) => {

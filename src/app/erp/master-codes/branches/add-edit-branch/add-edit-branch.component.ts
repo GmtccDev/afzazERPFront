@@ -66,11 +66,9 @@ export class AddEditBranchComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
-    private modelService: NgbModal,
-    private cd: ChangeDetectorRef
 
   ) {
-    this.definebranchForm();
+    this.defineBranchForm();
   }
   //#endregion
 
@@ -159,7 +157,7 @@ export class AddEditBranchComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  definebranchForm() {
+  defineBranchForm() {
     this.branchForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
@@ -304,7 +302,6 @@ export class AddEditBranchComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.sharedServices.changeToolbarPath({
@@ -315,7 +312,7 @@ export class AddEditBranchComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("branch.add-branch");
-            this.definebranchForm();
+            this.defineBranchForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -335,9 +332,8 @@ export class AddEditBranchComponent implements OnInit {
       let sub = this.branchService.createBranch(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          console.log('result dataaddData ', result);
 
-          this.definebranchForm();
+          this.defineBranchForm();
 
           this.submited = false;
           this.spinner.hide();
@@ -368,43 +364,43 @@ export class AddEditBranchComponent implements OnInit {
       return this.branchForm.markAllAsTouched();
     }
   }
-confirmUpdate()
-{
-  
-}
+  confirmUpdate() {
+    var entity = new EditBranchCommand();
+    this.branchForm.value.id = this.id;
+    entity.inputDto = this.branchForm.value;
+    entity.inputDto.id = this.id;
+    var entityDb = entity.inputDto;
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.branchService.updateBranch(entityDb).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.defineBranchForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
   onUpdate() {
-    var entity = new EditBranchCommand();
     if (this.branchForm.valid) {
-
-      this.branchForm.value.id = this.id;
-      entity.inputDto = this.branchForm.value;
-      entity.inputDto.id = this.id;
-      var entityDb = entity.inputDto;
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.branchService.updateBranch(entityDb).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-
-            this.definebranchForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
+
     }
 
     else {

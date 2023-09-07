@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, EMAIL_VALIDATORS, NAME_REQUIRED_VALIDATORS, PHONE_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
@@ -15,10 +15,6 @@ import { CompanyDto, CreateCompanyCommand, EditCompanyCommand } from '../../mode
 import { CountryServiceProxy } from '../../../master-codes/services/country.servies';
 import { CountryDto } from '../../../master-codes/models/country';
 import { CurrencyServiceProxy } from '../../../master-codes/services/currency.servies';
-import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
-import format from 'date-fns/format';
 import { CurrencyDto } from '../../models/currency';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -47,7 +43,7 @@ export class AddCompanyComponent implements OnInit {
     componentAdd: '',
 
   };
-  Response: any;
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -66,38 +62,67 @@ export class AddCompanyComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private SharedServices: SharedService, private translate: TranslateService,
-    private modelService: NgbModal,
     private cd: ChangeDetectorRef
 
   ) {
-    this.definecompanyForm();
+    this.defineCompanyForm();
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.spinner.show();
+    Promise.all([
+      this.getCountries(),
+      this.getCurrencies()
 
-    this.getCountries();
-    this.getCurrencies();
-    this.currnetUrl = this.router.url;
-    this.listenToClickedButton();
-    this.changePath();
-    if (this.currnetUrl == this.addUrl) {
-      this.getcompanyCode();
-    }
-    this.sub = this.route.params.subscribe((params) => {
+    ]).then(a => {
+
+      this.getRouteData();
+      this.changePath();
+      this.listenToClickedButton();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getCompanyCode();
+      }
+      this.spinner.hide();
+    }).catch(err => {
+
+      this.spinner.hide();
+    });
+
+
+
+  }
+
+  //#endregion
+  getRouteData() {
+    let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
 
         if (this.id) {
-          this.getcompanyById(this.id);
+          this.getCompanyById(this.id).then(a => {
+
+            this.spinner.hide();
+
+          }).catch(err => {
+            this.spinner.hide();
+
+          });
         }
-        this.url = this.router.url.split('/')[2];
+        else {
+          this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
+      }
+      else {
+        this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
       }
     });
+    this.subsList.push(sub);
   }
-
-  //#endregion
 
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -122,7 +147,7 @@ export class AddCompanyComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  definecompanyForm() {
+  defineCompanyForm() {
     this.companyForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
@@ -135,9 +160,9 @@ export class AddCompanyComponent implements OnInit {
       currencyId: null,
       motherCompany: false,
       useHijri: false,
-      webSite:null,
-      address:null
-     // logo: null,
+      webSite: null,
+      address: null
+      // logo: null,
 
       // applications: ""
     });
@@ -199,14 +224,13 @@ export class AddCompanyComponent implements OnInit {
   //#endregion
 
   //#region CRUD Operations
-  getcompanyById(id: any) {
-
-    const promise = new Promise<void>((resolve, reject) => {
-      this.companyService.getCompany(id).subscribe({
+  getCompanyById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.companyService.getCompany(id).subscribe({
         next: (res: any) => {
-          if(res.response.logo)
-          this.logoPath = environment.apiUrl + "/wwwroot/Uploads/Company/" + res.response.logo;
-          console.log('result data getbyid', res);
+          resolve();
+          if (res.response.logo)
+            this.logoPath = environment.apiUrl + "/wwwroot/Uploads/Company/" + res.response.logo;
           this.companyForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -219,17 +243,14 @@ export class AddCompanyComponent implements OnInit {
             currencyId: res.response?.currencyId,
             motherCompany: res.response?.motherCompany,
             useHijri: res.response?.useHijri,
-            webSite:res.response?.webSite,
-            address:res.response?.address
-           // logo: res.response?.logo,
+            webSite: res.response?.webSite,
+            address: res.response?.address
+            // logo: res.response?.logo,
 
 
           });
 
-          console.log(
-            'this.companyForm.value set value',
-            this.companyForm.value
-          );
+
         },
         error: (err: any) => {
           reject(err);
@@ -238,16 +259,17 @@ export class AddCompanyComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
   showPassword() {
     this.show = !this.show;
   }
-  getcompanyCode() {
-    const promise = new Promise<void>((resolve, reject) => {
+  getCompanyCode() {
+    return new Promise<void>((resolve, reject) => {
 
-      this.companyService.getLastCode().subscribe({
+      let sub = this.companyService.getLastCode().subscribe({
 
         next: (res: any) => {
 
@@ -264,6 +286,9 @@ export class AddCompanyComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
+
     });
   }
   //#endregion
@@ -293,8 +318,8 @@ export class AddCompanyComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add company';
-            this.definecompanyForm();
+            this.toolbarPathData.componentAdd = this.translate.instant("company.add-company");
+            this.defineCompanyForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -307,86 +332,94 @@ export class AddCompanyComponent implements OnInit {
   changePath() {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  onSave() {
-    
+  confirmSave() {
     var entity = new CreateCompanyCommand();
-    if (this.companyForm.valid) {
-      const promise = new Promise<void>((resolve, reject) => {
-        entity = this.companyForm.value;
-        entity.logo = this.logo;
-        this.companyService.createCompany(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result dataaddData ', result);
-            this.Response = { ...result.response };
-            this.definecompanyForm();
 
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
+    return new Promise<void>((resolve, reject) => {
+      entity = this.companyForm.value;
+      entity.logo = this.logo;
+      let sub = this.companyService.createCompany(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineCompanyForm();
+          this.submited = false;
+          this.spinner.hide();
 
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
       });
-      return promise;
+      this.subsList.push(sub);
+
+    });
+  }
+  onSave() {
+    if (this.companyForm.valid) {
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
 
     } else {
 
-      //  return this.companyForm.markAllAsTouched();
+      return this.companyForm.markAllAsTouched();
     }
   }
+  confirmUpdate() {
+    var entity = new EditCompanyCommand();
+    this.companyForm.value.id = this.id;
+    entity = this.companyForm.value;
+    entity.id = this.id;
+    entity.logo = this.logo;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.companyService.updateCompany(entity).subscribe({
+        next: (result: any) => {
+          this.spinner.show();
+          this.response = { ...result.response };
+          this.defineCompanyForm();
+          this.submited = false;
+          this.spinner.hide();
+          navigateUrl(this.listUrl, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
+    });
+
+  }
 
   onUpdate() {
-    var entity = new EditCompanyCommand();
     if (this.companyForm.valid) {
-
-      this.companyForm.value.id = this.id;
-      entity = this.companyForm.value;
-      entity.id = this.id;
-      entity.logo = this.logo;
-      console.log("this.VendorCommissionsForm.value", this.companyForm.value)
-      const promise = new Promise<void>((resolve, reject) => {
-
-        this.companyService.updateCompany(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            console.log('result update ', result);
-            this.Response = { ...result.response };
-            this.definecompanyForm();
-            this.submited = false;
-            setTimeout(() => {
-              this.spinner.hide();
-
-              navigateUrl(this.listUrl, this.router);
-            }, 1000);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-            console.log('complete');
-          },
-        });
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
       });
-      return promise;
+
+
     }
 
     else {
 
-      // return this.companyForm.markAllAsTouched();
+      return this.companyForm.markAllAsTouched();
     }
   }
   onFileChange(event) {
-    ;
     let reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
@@ -398,7 +431,7 @@ export class AddCompanyComponent implements OnInit {
       this.cd.markForCheck();
     }
   }
- 
+
   upload(files) {
     if (files != null) {
       if (files.length === 0)
@@ -408,16 +441,18 @@ export class AddCompanyComponent implements OnInit {
         formData.append(file.name, file);
       }
 
-      this.companyService.uploadFile(formData).subscribe((res: any) => {
-       
+      let sub = this.companyService.uploadFile(formData).subscribe((res: any) => {
+
         this.logoPath = environment.apiUrl + "/wwwroot/Uploads/Company/" + res.response;
         this.logo = res.response;
       })
+      this.subsList.push(sub);
+
 
     }
   }
 
- 
+
 
 }
 
