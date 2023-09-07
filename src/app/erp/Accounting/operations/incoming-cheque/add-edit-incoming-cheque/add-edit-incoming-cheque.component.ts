@@ -208,10 +208,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           resolve();
-          if (res.success && res.response.items.length > 0) {
-            this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
-            this.serial = res.response.items.find(c => c.id == 3).value;
-            this.mainCurrencyId = res.response.items.find(c => c.id == 1).value;
+          if (res.success && res.response.result.items.length > 0) {
+            this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
+            this.serial = res.response.result.items.find(c => c.id == 3).value;
+            this.mainCurrencyId = res.response.result.items.find(c => c.id == 1).value;
 
           }
 
