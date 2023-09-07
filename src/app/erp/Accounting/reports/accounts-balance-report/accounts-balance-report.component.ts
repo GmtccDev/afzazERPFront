@@ -220,7 +220,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 		const promise = new Promise<void>((resolve, reject) => {
 
-			this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+		let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
 				next: (res: any) => {
 
 					console.log("result data getbyid", res);

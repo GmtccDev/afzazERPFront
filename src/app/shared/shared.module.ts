@@ -33,7 +33,6 @@ import { OnlyAlphabetsDirective } from './directives/only-alphabets.directive';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { ShowOptionsDirective } from './directives/show-options.directive';
 // Services
-import { ChatService } from './services/chat.service';
 import { LayoutService } from './services/layout.service';
 import { NavService } from './services/nav.service';
 import { TableService } from './services/table.service';
@@ -134,7 +133,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
   ],
   providers: [
     NavService,
-    ChatService,
     LayoutService,
     TableService,
     DecimalPipe, {
