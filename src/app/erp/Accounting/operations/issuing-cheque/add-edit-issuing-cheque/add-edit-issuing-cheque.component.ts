@@ -206,6 +206,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
+          resolve();
           if (res.success && res.response.items.length > 0) {
             this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.items.find(c => c.id == 3).value;

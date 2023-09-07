@@ -231,6 +231,7 @@ export class AccountingConfigurationsComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(undefined, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
+          resolve();
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
           if (res.success) {
@@ -246,7 +247,6 @@ export class AccountingConfigurationsComponent implements OnInit {
           }
 
 
-          resolve();
 
         },
         error: (err: any) => {

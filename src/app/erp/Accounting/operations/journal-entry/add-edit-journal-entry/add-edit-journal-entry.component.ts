@@ -239,8 +239,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
-          console.log(res);
+          resolve();
 
           if (res.success) {
              
@@ -252,9 +251,6 @@ export class AddEditJournalEntryComponent implements OnInit {
             // }
 
           }
-
-
-          resolve();
 
         },
         error: (err: any) => {
