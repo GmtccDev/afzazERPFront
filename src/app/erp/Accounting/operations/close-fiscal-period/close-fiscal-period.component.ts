@@ -192,7 +192,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
-            
+
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("component-names.close-fiscal-period");
@@ -211,7 +211,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
   confirmSave() {
     this.closeFiscalPeriodForm.value.closeDate = this.dateService.getDateForInsert(this.closeFiscalPeriodForm.controls["closeDate"].value);
     return new Promise<void>((resolve, reject) => {
-       
+
       this.closeDate = formatDate(Date.parse(this.closeFiscalPeriodForm.value.closeDate))
       let sub = this.fiscalPeriodService.closeFiscalPeriod(this.companyId, this.branchId, this.fiscalPeriodId, this.closeDate, this.fromDate, this.toDate, this.closeAccountId).subscribe({
         next: (result: any) => {
@@ -235,7 +235,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
     });
   }
   onSave() {
-    
+
     if (this.closeFiscalPeriodForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -273,12 +273,10 @@ export class CloseFiscalPeriodComponent implements OnInit {
     });
   }
   getGeneralConfigurationsOfCloseAccount() {
-
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.generalConfigurationService.getGeneralConfiguration(5).subscribe({
         next: (res: any) => {
-
+          resolve();
           console.log('result data getbyid', res);
 
           if (res.response.value > 0) {
