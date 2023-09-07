@@ -21,7 +21,7 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 	//#region Main Declarations
 	facialPeriodId: any;
 	userId: any = localStorage.getItem("userId");
-	// = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
+
 	orderBy: any;
 	companyId: string = localStorage.getItem("companyId");
 	lang = localStorage.getItem("language");
@@ -30,6 +30,8 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 	fromDate: any;
 	toDate: any;
 	currencyId: any;
+	accountGroupId:any;
+	parentAccountId:any;
 	branchId: any;
 	entriesStatusId: any;
 	fromEntryNo: any = "";
@@ -86,23 +88,24 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 	}
 	//#endregion
 	isContainsDate(input: string): boolean {
-		debugger;
+		;
 		const date = new Date(input);
 
 		let reuslt= date instanceof Date && !isNaN(date.getTime());
 		 return reuslt;
 	  }
+
 	gotoViewer() {
-		debugger;
+		;
 		let monthFrom;
 		let monthTo;
-
+        debugger
 		if (this.fromDate == undefined || this.fromDate == null) {
 			this.fromDate = this.dateConverterService.getCurrentDate();
-			monthFrom = Number(this.fromDate.month - 1);
+			monthFrom = Number(this.fromDate.month + 1);
 			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
 		} else if(!this.isContainsDate(this.fromDate)) {
-			monthFrom = Number(this.fromDate.month - 1);
+			monthFrom = Number(this.fromDate.month + 1);
 			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
 		}
 
@@ -122,6 +125,9 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
 			this.branchId = 0;
 		}
+		if (this.accountGroupId == null || this.accountGroupId == undefined || this.accountGroupId == "") {
+			this.accountGroupId = 0;
+		}
 		if (this.entriesStatusId == null || this.entriesStatusId == undefined || this.entriesStatusId == "") {
 			this.entriesStatusId = 0;
 		}
@@ -132,21 +138,31 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		if (this.toEntryNo == null || this.toEntryNo == undefined || this.toEntryNo == "") {
 			this.toEntryNo = "";
 		}
-		if (this.JournalId == null || this.JournalId == undefined || this.JournalId == "") {
-			this.JournalId = 0;
+		if (this.parentAccountId == null || this.parentAccountId == undefined || this.parentAccountId == "") {
+			this.parentAccountId = 0;
 		}
 
-		debugger;
-
-		let reportParams: string = "reportParameter=fromDate!" + this.fromDate + "&reportParameter=toDate!" + this.toDate + "&reportParameter=branchId!" + this.branchId + "&reportParameter=companyId!" + this.companyId + "&reportParameter=entriesStatusId!" + this.entriesStatusId + "&reportParameter=JournalId!" + this.JournalId + "&reportParameter=fromEntryNo!" + this.fromEntryNo + "&reportParameter=toEntryNo!" + this.toEntryNo + "&reportParameter=lang!" + this.lang + "&reportParameter=userId!" + this.userId;
+		;
+         debugger;
+		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
+		 + "&reportParameter=toDate!" + this.toDate
+		  + "&reportParameter=branchId!" + this.branchId
+		  + "&reportParameter=companyId!" + this.companyId
+		  + "&reportParameter=parentAccountId!" + this.parentAccountId
+		  + "&reportParameter=entriesStatusId!" + this.entriesStatusId
+		  + "&reportParameter=accountGroupId!" + this.accountGroupId
+		  + "&reportParameter=fromEntryNo!" + this.fromEntryNo
+		  + "&reportParameter=toEntryNo!" + this.toEntryNo
+		   + "&reportParameter=lang!" + this.lang
+		   + "&reportParameter=userId!" + this.userId;
 
 		const modalRef = this.modalService.open(NgbdModalContent);
 		modalRef.componentInstance.reportParams = reportParams;
 		modalRef.componentInstance.reportType = 1;
-		modalRef.componentInstance.reportTypeID = 6;
+		modalRef.componentInstance.reportTypeID = 7;
 	}
 	cancelDefaultReportStatus() {
-		this.reportService.cancelDefaultReport(1, 6).subscribe((resonse) => {});
+		this.reportService.cancelDefaultReport(1, 7).subscribe((resonse) => {});
 	}
 	ShowOptions: {
 		ShowFromDate: boolean;
@@ -156,11 +172,15 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		ShowBranch: boolean;
 		ShowEntriesStatus: boolean;
 		ShowFromEntryNo: boolean;
+		ShowAccountGroup:boolean;
 		ShowToEntryNo: boolean;
+		ShowMainAccount:boolean;
 	} = {
 		ShowFromDate: true,
 		ShowToDate: true,
 		ShowSearch: false,
+		ShowAccountGroup:true,
+		ShowMainAccount:true,
 		ShowCurrency: true,
 		ShowBranch: true,
 		ShowEntriesStatus: true,
@@ -168,7 +188,7 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		ShowToEntryNo: true,
 	};
 
-	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId }) {
+	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; entriesStatusId;parentAccountId;accountGroupId }) {
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
@@ -176,6 +196,8 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		this.currencyId = e.currencyId;
 		this.branchId = e.branchId;
 		this.entriesStatusId = e.entriesStatusId;
+		this.parentAccountId=e.parentAccountId;
+		this.accountGroupId=e.accountGroupId;
 	}
 
 	listenToClickedButton() {
@@ -195,15 +217,15 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		this.subsList.push(sub);
 	}
 	getGeneralConfigurationsOfAccountingPeriod() {
-		debugger;
+
 		const promise = new Promise<void>((resolve, reject) => {
-			debugger;
+
 			this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
 				next: (res: any) => {
-					debugger;
+
 					console.log("result data getbyid", res);
 					if (res.response.value > 0) {
-						debugger;
+
 						this.facialPeriodId = res.response.value;
 						//this.getfiscalPeriodById(this.facialPeriodId);
 					}
@@ -222,7 +244,7 @@ export class AccountsBalanceReportComponent implements  OnInit, OnDestroy, After
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					debugger;
+					;
 					console.log("result data getbyid", res);
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);

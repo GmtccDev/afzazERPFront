@@ -6,6 +6,8 @@ import { VouchersTransactionsReportComponent } from './vouchers-transactions-rep
 import { GeneralLedgerReportComponent } from './general-ledger-report/general-ledger-report.component';
 import { JournalEntriesReportComponent } from './journal-entries-report/journal-entries-report.component';
 import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component';
+import { AccountClassificationComponent } from '../master-codes/account-classification/account-classification.component';
+import { AccountsBalanceReportComponent } from './accounts-balance-report/accounts-balance-report.component';
 
 
 
@@ -18,8 +20,9 @@ const routes: Routes = [
 			{ path: 'vouchersTransactionsReport', component: VouchersTransactionsReportComponent },
 			{ path: 'generalLedgerReport', component: GeneralLedgerReportComponent },
 			{ path: 'journalEntriesReport', component: JournalEntriesReportComponent },
-
 			{ path: 'costCentersReport', component: CostCentersReportComponent },
+			{ path: 'accountsBalanceReport', component: AccountsBalanceReportComponent },
+
 
 
 		]
