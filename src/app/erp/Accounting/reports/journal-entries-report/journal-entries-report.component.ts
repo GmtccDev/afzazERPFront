@@ -85,14 +85,14 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	}
 	//#endregion
 	isContainsDate(input: string): boolean {
-		debugger;
+		;
 		const date = new Date(input);
 
 		let reuslt= date instanceof Date && !isNaN(date.getTime());
 		 return reuslt;
 	  }
 	gotoViewer() {
-		debugger;
+		;
 		let monthFrom;
 		let monthTo;
 
@@ -135,7 +135,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 			this.JournalId = 0;
 		}
 
-		debugger;
+		;
 
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		+ "&reportParameter=toDate!" + this.toDate
@@ -208,15 +208,15 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		this.subsList.push(sub);
 	}
 	getGeneralConfigurationsOfAccountingPeriod() {
-		debugger;
+		;
 		const promise = new Promise<void>((resolve, reject) => {
-			debugger;
+			;
 			this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
 				next: (res: any) => {
-					debugger;
+					;
 					console.log("result data getbyid", res);
 					if (res.response.value > 0) {
-						debugger;
+						;
 						this.facialPeriodId = res.response.value;
 						//this.getfiscalPeriodById(this.facialPeriodId);
 					}
@@ -235,7 +235,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					debugger;
+					;
 					console.log("result data getbyid", res);
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);

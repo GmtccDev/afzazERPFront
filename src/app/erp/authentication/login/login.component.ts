@@ -172,7 +172,7 @@ export class LoginComponent implements OnInit {
               }
               else {
                 //   this.router.navigate(['/dashboard/default']);
-                debugger
+                
                 this.router.navigate(['/Subscription']);
               }
               this.modelService.dismissAll();

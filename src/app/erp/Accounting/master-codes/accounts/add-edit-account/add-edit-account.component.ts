@@ -129,7 +129,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      debugger
+      
       if (params['id'] != null) {
         this.id = params['id'];
 
@@ -285,7 +285,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.accountService.getDdl().subscribe({
         next: (res) => {
 
@@ -459,7 +459,7 @@ export class AddEditAccountComponent implements OnInit {
       let sub = this.accountService.getAccount(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.accountForm.setValue({
             
             id: res.response?.id,

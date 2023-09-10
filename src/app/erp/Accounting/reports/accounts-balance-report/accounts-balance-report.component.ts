@@ -126,7 +126,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		}
 
 		;
-         debugger;
+         ;
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		 + "&reportParameter=toDate!" + this.toDate
 		 + "&reportParameter=branchId!" + this.branchId

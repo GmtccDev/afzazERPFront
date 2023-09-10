@@ -328,6 +328,7 @@ export class AccountingConfigurationsComponent implements OnInit {
 
   onUpdate() {
     {
+      
       if (this.generalConfiguration.length > 0) {
         this.generalConfiguration.forEach((s) => {
           if (s) {
