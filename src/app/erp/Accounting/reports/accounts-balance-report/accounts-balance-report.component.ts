@@ -99,7 +99,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		;
 		let monthFrom;
 		let monthTo;
-        debugger
+        
 		if (this.fromDate == undefined || this.fromDate == null) {
 			this.fromDate = this.dateConverterService.getCurrentDate();
 			monthFrom = Number(this.fromDate.month + 1);
@@ -143,7 +143,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		}
 
 		;
-         debugger;
+         ;
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		 + "&reportParameter=toDate!" + this.toDate
 		  + "&reportParameter=branchId!" + this.branchId

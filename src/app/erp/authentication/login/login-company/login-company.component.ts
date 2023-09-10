@@ -149,7 +149,7 @@ export class LoginCompanyComponent implements OnInit {
         console.log(next);
 
         if (next.success == true) {
-          debugger
+          
           //   this.translate.use("en");
           let jwt = next.response.token;
           let jwtData = jwt.split('.')[1]
@@ -157,7 +157,7 @@ export class LoginCompanyComponent implements OnInit {
           let decodedJwtData = JSON.parse(decodedJwtJsonData)
           this.userService.setToken(jwt.toString());
           let Role = decodedJwtData.role;
-          debugger
+          
           localStorage.setItem("userId", decodedJwtData.userLoginId)
           localStorage.setItem("userName", decodedJwtData.fullName)
           localStorage.setItem("branchId", this.loginForm.value.branchId)
@@ -199,10 +199,10 @@ export class LoginCompanyComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
-          debugger
+          
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
-            debugger
+            
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -225,7 +225,7 @@ export class LoginCompanyComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
     let sub =  this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          debugger
+          
           console.log('result data getbyid', res);
           this.fromDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.toDate);
