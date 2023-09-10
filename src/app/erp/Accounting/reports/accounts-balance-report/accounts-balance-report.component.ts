@@ -25,7 +25,6 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	orderBy: any;
 	companyId: string = localStorage.getItem("companyId");
 	lang = localStorage.getItem("language");
-
 	subsList: Subscription[] = [];
 	fromDate: any;
 	toDate: any;
@@ -62,20 +61,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	ngAfterViewInit(): void {
 		this.getGeneralConfigurationsOfAccountingPeriod();
 	}
-	getFromDate() {
-		let monthFrom;
-		this.fromDate = this.dateConverterService.getCurrentDate();
-		monthFrom = Number(this.fromDate.month + 1);
-		this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		return this.fromDate;
-	}
-	getDateTo() {
-		let monthTo;
-		this.toDate = this.dateConverterService.getCurrentDate();
-		monthTo = Number(this.toDate.month + 1);
-		this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		return this.toDate;
-	}
+
 	//#endregion
 
 	//#region ngOnDestroy
@@ -88,7 +74,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	}
 	//#endregion
 	isContainsDate(input: string): boolean {
-		;
+
 		const date = new Date(input);
 
 		let reuslt= date instanceof Date && !isNaN(date.getTime());
@@ -96,10 +82,10 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	  }
 
 	gotoViewer() {
-		;
+
 		let monthFrom;
 		let monthTo;
-        debugger
+
 		if (this.fromDate == undefined || this.fromDate == null) {
 			this.fromDate = this.dateConverterService.getCurrentDate();
 			monthFrom = Number(this.fromDate.month + 1);
@@ -118,9 +104,6 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
 		}
 
-		//   if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
-		// 	this.currencyId = 0;
-		//   }
 
 		if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
 			this.branchId = 0;
@@ -146,7 +129,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
          debugger;
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		 + "&reportParameter=toDate!" + this.toDate
-		  + "&reportParameter=branchId!" + this.branchId
+		 + "&reportParameter=branchId!" + this.branchId
 		  + "&reportParameter=companyId!" + this.companyId
 		  + "&reportParameter=parentAccountId!" + this.parentAccountId
 		  + "&reportParameter=entriesStatusId!" + this.entriesStatusId
@@ -220,7 +203,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 		const promise = new Promise<void>((resolve, reject) => {
 
-			this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+		let sub=this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
 				next: (res: any) => {
 
 					console.log("result data getbyid", res);
