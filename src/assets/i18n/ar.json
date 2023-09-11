@@ -459,7 +459,9 @@
         "edit-registered": "تم تعديل التسجيل",
         "collected": "تم التحصيل",
         "rejected": "تم الرفض",
-        "cheque-details-status": "تقاصيل حالة الشيك"
+        "cheque-details-status": "تقاصيل حالة الشيك",
+        "can-not-add-more-than-one-detail":"لا يمكنك اضافة أكثر من واحد تفاصيل للشيك"
+
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"
