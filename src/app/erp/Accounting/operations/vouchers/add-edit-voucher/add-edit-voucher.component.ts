@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -82,8 +82,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   queryParams: any;
   voucherTypeId: any;
   voucherType: VoucherType[] = [];
-
-
+  currencyFactor: number;
+  voucherTotal: number = 0;
+  voucherTotalLocal: number = 0;
+  currency: any;
   addUrl: string = '/accounting-operations/vouchers/add-voucher';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
   listUrl: string = '/accounting-operations/vouchers/';
@@ -102,7 +104,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private cd: ChangeDetectorRef,
     private publicService: PublicService,
     private voucherService: VoucherServiceProxy,
     private voucherDetailsService: VoucherDetailsServiceProxy,
@@ -115,6 +116,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private spinnerService: NgxSpinnerService,
+    private currencyServiceProxy: CurrencyServiceProxy,
+
 
 
   ) {
@@ -127,7 +130,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+
 
     this.getBeneficiaryTypes();
     this.spinner.show();
@@ -152,7 +155,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      
+
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = params['voucherTypeId'];
         if (this.voucherTypeId) {
@@ -228,7 +231,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       currencyId: REQUIRED_VALIDATORS,
       description: '',
       voucherTotal: REQUIRED_VALIDATORS,
-      voucherTotalLocal: REQUIRED_VALIDATORS
+      voucherTotalLocal: REQUIRED_VALIDATORS,
+      currencyFactor: '',
+
 
 
     });
@@ -259,7 +264,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.voucherkindId = res.response.voucherKindId;
           this.serialTypeId = res.response.serialTypeId;
 
-          
+
           if (this.id == 0) {
             if (this.serialTypeId == SerialTypeEnum.Automatic) {
               this.getVoucherCode();
@@ -298,9 +303,12 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
             description: res.response?.description,
             voucherTotal: res.response?.voucherTotal,
             voucherTotalLocal: res.response?.voucherTotalLocal,
+            currencyFactor: res.response?.currencyFactor
+
 
           });
-
+          this.voucherTotal = res.response?.voucherTotal;
+          this.voucherTotalLocal = res.response?.voucherTotalLocal;
           console.log(
             'this.voucherForm.value set value',
             this.voucherForm.value
@@ -321,11 +329,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherDetailsService.allVoucherDetails(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res: any) => {
-
+          resolve();
           res = res.response.items.filter(x => x.voucherId == id)
-
           res.forEach(element => {
-            
+
             var currencyName;
             var beneficiaryAccountName;
             var costCenterName;
@@ -361,9 +368,12 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
                 costCenterNameEn: costCenterName?.nameEn ?? ''
               }
             )
-          });
+            this.totalDebitLocal += element.debitLocal ?? 0;
+            this.totalCreditLocal += element.creditLocal ?? 0;
 
-          //this.voucherDetail=res
+          });
+          this.voucher.voucherDetail = this.voucherDetail;
+
 
 
         },
@@ -379,9 +389,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     });
   }
   getGeneralConfigurationsOfMainCurrency() {
-    
     return new Promise<void>((resolve, reject) => {
-      
       let sub = this.generalConfigurationService.getGeneralConfiguration(1).subscribe({
         next: (res: any) => {
           resolve();
@@ -479,7 +487,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getBeneficiaryAccountByType() {
-    
+
     this.beneficiaryAccountsList = this.beneficiaryAccountsList.find(x => x.accountClassificationId == this.selectedVoucherDetail.beneficiaryTypeId)
   }
   getCurrencies() {
@@ -507,12 +515,12 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getCurrenciesTransactions() {
-    
+
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyService.getCurrenciesTransactions().subscribe({
         next: (res) => {
           if (res.success) {
-            
+
             this.currencyTransactionList = res.response;
 
           }
@@ -556,7 +564,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openCurrencySearchDialog(i) {
-    
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyNameAr ?? '';
@@ -576,9 +584,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       if (i == -1) {
         this.selectedVoucherDetail!.currencyNameAr = data[0].nameAr;
         this.selectedVoucherDetail!.currencyId = data[0].id;
-        
+
         if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
-          
+
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getValueAfterConversion();
@@ -587,7 +595,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.voucherDetail[i].currencyNameAr = data[0].nameAr;
         this.voucherDetail[i].currencyId = data[0].id;
         if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
-          
+
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getAddedValueAfterConversion(i);
@@ -605,18 +613,18 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
               this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
               this.selectedVoucherDetail!.currencyId = d.id;
               if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
-                
+
                 this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
                 this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
                 this.getValueAfterConversion();
 
               }
             } else {
-              
+
               this.voucherDetail[i].currencyNameAr = d.nameAr;
               this.voucherDetail[i].currencyId = d.id;
               if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
-                
+
                 this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
                 this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
                 this.getAddedValueAfterConversion(i);
@@ -629,7 +637,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openBeneficiaryAccountSearchDialog(i) {
-    
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '';
@@ -675,7 +683,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openCostCenterSearchDialog(i) {
-    
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.costCenterNameAr ?? '';
@@ -744,7 +752,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
   }
   addItem() {
-    
     this.voucherDetail.push({
       id: 0,
       voucherId: this.selectedVoucherDetail?.voucherId ?? 0,
@@ -775,7 +782,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       //here
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
       if (this.currencyId != this.mainCurrencyId) {
-        
+
         this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
 
         currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
@@ -788,7 +795,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     if (this.voucherkindId == 2) {
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
       if (this.currencyId != this.mainCurrencyId) {
-        
+
         this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
 
         currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
@@ -803,14 +810,14 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   deleteItem(index) {
-    
+    debugger
     this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
     this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
     let currencyConversionFactor;
     if (this.voucherkindId == 1) {
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
       if (this.currencyId != this.mainCurrencyId) {
-        
+
         this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
 
         currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
@@ -823,7 +830,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     if (this.voucherkindId == 2) {
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
       if (this.currencyId != this.mainCurrencyId) {
-        
+
         this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
 
         currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
@@ -841,9 +848,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.voucherDetail.splice(index, 1);
       }
     }
-    
-    this.voucher.voucherDetail = this.voucherDetail;
 
+    this.voucher.voucherDetail = this.voucherDetail;
+    
+    this.currencyFactor = 0;
+    this.currencyId = null;
 
   }
   clearSelectedItemData() {
@@ -872,7 +881,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   setInputData() {
-    
+
     this.voucher = {
       id: this.voucherForm.controls["id"].value,
       companyId: this.voucherForm.controls["companyId"].value,
@@ -886,6 +895,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       description: this.voucherForm.controls["description"].value,
       voucherTotal: this.voucherForm.controls["voucherTotal"].value,
       voucherTotalLocal: this.voucherForm.controls["voucherTotalLocal"].value,
+      currencyFactor: this.voucherForm.controls["currencyFactor"].value,
 
       voucherDetail: this.voucher.voucherDetail ?? [],
 
@@ -893,20 +903,19 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
 
   }
-  confirmSave()
-  {
+  confirmSave() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
 
-    let sub =  this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
+      let sub = this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
           this.clearSelectedItemData();
           this.voucherDetail = [];
           // this.submited = false;
-            this.spinner.hide();
+          this.spinner.hide();
 
-            navigateUrl(this.listUrl + this.voucherTypeId, this.router);
+          navigateUrl(this.listUrl + this.voucherTypeId, this.router);
         },
         error: (err: any) => {
           reject(err);
@@ -935,7 +944,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       }).catch(e => {
         this.spinner.hide();
       });
-   
+
 
 
 
@@ -948,24 +957,23 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     }
   }
-  confirmUpdate()
-  {
+  confirmUpdate() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
 
     return new Promise<void>((resolve, reject) => {
 
-     let sub = this.voucherService.updateVoucherAndRelations(this.voucher).subscribe({
+      let sub = this.voucherService.updateVoucherAndRelations(this.voucher).subscribe({
         next: (result: any) => {
-          
+
 
           this.defineVoucherForm();
           this.clearSelectedItemData();
           this.voucherDetail = [];
 
           // this.submited = false;
-            this.spinner.hide();
+          this.spinner.hide();
 
-            navigateUrl(this.listUrl + this.voucherTypeId, this.router);
+          navigateUrl(this.listUrl + this.voucherTypeId, this.router);
         },
         error: (err: any) => {
           reject(err);
@@ -994,7 +1002,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       }).catch(e => {
         this.spinner.hide();
       });
-   
+
 
 
 
@@ -1054,6 +1062,25 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
     this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
+  }
+  getAmount() {
+    if (this.voucherForm.value.currencyId == this.mainCurrencyId) {
+      this.voucherTotal = this.voucherTotalLocal;
+      this.currencyFactor = 1;
+    }
+    else {
+      let sub = this.currencyServiceProxy.getCurrency(this.voucherForm.value.currencyId).subscribe({
+        next: (res: any) => {
+          debugger
+          this.currency = res;
+          let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
+          this.currencyFactor = 1 / currencyModel.transactionFactor;
+          this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
+        }
+      })
+      this.subsList.push(sub);
+
+    }
   }
 }
 

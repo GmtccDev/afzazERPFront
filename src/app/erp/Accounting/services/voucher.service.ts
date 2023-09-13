@@ -83,7 +83,7 @@ export class VoucherServiceProxy {
     deleteVoucher(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Voucher/deleteVoucher", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/Voucher/delete", { params: params });
     }
     deleteVoucherAndRelations(id: any): Observable<any> {
         let params = new HttpParams();

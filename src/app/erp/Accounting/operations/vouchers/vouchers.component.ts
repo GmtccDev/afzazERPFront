@@ -149,6 +149,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
+          debugger
           console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
           if (res.success) {
@@ -243,8 +244,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'voucherDate',
     },
     {
-      title: this.lang == 'ar' ? ' أجمالى قيمة السند' : 'Voucher Total ',
-      field: 'voucherTotal',
+      title: this.lang == 'ar' ? 'اجمالى قيمة السند محلى' : 'Voucher Total Local',
+      field: 'voucherTotalLocal',
     },
     {
       title: this.lang == 'ar' ? 'الوصف' : 'Description',
