@@ -121,7 +121,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.getLanguage();
     //this.GetData();
     this.getGeneralConfigurationsOfAccountingPeriod()
-    
+
 
 
 
@@ -383,14 +383,14 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   getGeneralConfigurationsOfAccountingPeriod() {
-    
+
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
           resolve();
           if (res.response.value > 0) {
-            
+
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -413,7 +413,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     return new Promise<void>((resolve, reject) => {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          
+
           console.log('result data getbyid', res);
           this.selectedFromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.selectedToDate = this.dateConverterService.getDateForCalender(res.response.toDate);
@@ -433,7 +433,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   FireSearch() {
-    
+
     if (!this.selectedFromDate) {
       //  this.selectedFromDate = this.dateConverterService.getCurrentDate();
     }
@@ -464,7 +464,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
   onSelectFromDate(e: DateModel) {
-    
+
     this.selectedFromDate = e
     this.FireSearch()
   }
@@ -506,7 +506,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectBranch() {
-    
+
     this.branchIds = ''
     this.selectedBranchId?.forEach(c => {
       this.branchIds += c.id + ",";
