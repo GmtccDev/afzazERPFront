@@ -478,7 +478,8 @@
         "edit-registered":"Edited the registeration",
         "collected":"Collected",
         "rejected":"Rejected",
-        "cheque-details-status":"Cheque Details Status"
+        "cheque-details-status":"Cheque Details Status",
+        "can-not-add-more-than-one-detail":"You can not add more than one detail for the cheque"
 
 
      },

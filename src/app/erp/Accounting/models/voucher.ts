@@ -11,6 +11,7 @@ export class Voucher {
     description: string;
     voucherTotal: number;
     voucherTotalLocal: number;
+    currencyFactor: number;
     voucherDetail:VoucherDetail[]=[];
 
 

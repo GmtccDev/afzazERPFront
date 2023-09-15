@@ -68,7 +68,7 @@
 
                                                 <input type="text" class="form-control icon-branch"
                                                     [ngClass]="{'is-invalid':f['voucherTotal'].errors || f['voucherTotal'].invalid}"
-                                                    name="voucherTotal" formControlName="voucherTotal">
+                                                    name="voucherTotal" formControlName="voucherTotal" [(ngModel)]="voucherTotal">
                                                 <div *ngIf="(f['voucherTotal'].touched || f['voucherTotal'].dirty ) && f['voucherTotal'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -81,13 +81,21 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-3">
+                                            <label for="currencyFactor" class="label-name">
+                                                {{'currency.transaction-factor'|translate}}</label>
+                                            <div class="input-group form-group">
+                                                <input type="number"  [(ngModel)]="currencyFactor" required class="form-control required"
+                                                    formControlName="currencyFactor" name="currencyFactor" style="width: 70px;" disabled="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-3">
                                             <label for="currencyId" class="label-name">{{'general.currency'|translate}}
                                             </label>
                                             <span class="text-danger">*</span>
 
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="currencyId"
-                                                    name='currencyId' class="" id="currencyId" [(ngModel)]="currencyId">
+                                                    name='currencyId' class="" id="currencyId" [(ngModel)]="currencyId" (change)="getAmount()">
                                                     <ng-option *ngFor="let currency of currenciesList"
                                                         [value]="currency.id">
                                                         {{lang=="ar"?currency.nameAr:currency.nameEn}}
@@ -120,7 +128,7 @@
 
                                                 <input type="text" class="form-control icon-branch"
                                                     [ngClass]="{'is-invalid':f['voucherTotalLocal'].errors || f['voucherTotalLocal'].invalid}"
-                                                    name="voucherTotalLocal" formControlName="voucherTotalLocal">
+                                                    name="voucherTotalLocal" formControlName="voucherTotalLocal" [(ngModel)]="voucherTotalLocal">
                                                 <div *ngIf="(f['voucherTotalLocal'].touched || f['voucherTotalLocal'].dirty ) && f['voucherTotalLocal'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>

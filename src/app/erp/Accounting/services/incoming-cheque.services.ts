@@ -96,5 +96,6 @@ export class IncomingChequeServiceProxy {
 
         return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteListEntity?", entity);
     }
+    
 }
 

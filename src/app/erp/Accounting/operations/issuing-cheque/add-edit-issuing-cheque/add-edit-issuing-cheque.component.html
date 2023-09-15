@@ -145,7 +145,7 @@
                                             </label>
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="currencyId" (change)="getAmount()"
+                                                <ng-select style="width:100%" [(ngModel)]="currencyId" formControlName="currencyId" (change)="getAmount()"
                                                     name='currencyId' class="" id="currencyId">
                                                     <ng-option *ngFor="let currency of currencyList"
                                                         [value]="currency.id">

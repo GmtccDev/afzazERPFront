@@ -137,7 +137,17 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 
 		;
 
-		let reportParams: string = "reportParameter=fromDate!" + this.fromDate + "&reportParameter=toDate!" + this.toDate + "&reportParameter=branchId!" + this.branchId + "&reportParameter=companyId!" + this.companyId + "&reportParameter=entriesStatusId!" + this.entriesStatusId + "&reportParameter=JournalId!" + this.JournalId + "&reportParameter=fromEntryNo!" + this.fromEntryNo + "&reportParameter=toEntryNo!" + this.toEntryNo + "&reportParameter=lang!" + this.lang + "&reportParameter=userId!" + this.userId;
+		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
+		+ "&reportParameter=toDate!" + this.toDate
+		+ "&reportParameter=branchId!" + this.branchId
+		+ "&reportParameter=companyId!" + this.companyId
+		+ "&reportParameter=entriesStatusId!" + this.entriesStatusId
+		+ "&reportParameter=JournalId!" + this.JournalId
+		+ "&reportParameter=fromEntryNo!" + this.fromEntryNo
+		+ "&reportParameter=toEntryNo!" + this.toEntryNo
+		+ "&reportParameter=accountId!" + this.accountId
+		+ "&reportParameter=lang!" + this.lang
+		+ "&reportParameter=userId!" + this.userId;
 
 		const modalRef = this.modalService.open(NgbdModalContent);
 		modalRef.componentInstance.reportParams = reportParams;
@@ -147,6 +157,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	cancelDefaultReportStatus() {
 		this.reportService.cancelDefaultReport(1, 6).subscribe((resonse) => {});
 	}
+	accountId
 	ShowOptions: {
 		ShowFromDate: boolean;
 		ShowToDate: boolean;
@@ -156,6 +167,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowEntriesStatus: boolean;
 		ShowFromEntryNo: boolean;
 		ShowToEntryNo: boolean;
+		ShowMainAccount:boolean;
 	} = {
 		ShowFromDate: true,
 		ShowToDate: true,
@@ -165,9 +177,10 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowEntriesStatus: true,
 		ShowFromEntryNo: true,
 		ShowToEntryNo: true,
+		ShowMainAccount:true
 	};
 
-	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId }) {
+	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;accountId }) {
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
@@ -175,6 +188,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		this.currencyId = e.currencyId;
 		this.branchId = e.branchId;
 		this.entriesStatusId = e.entriesStatusId;
+		this.accountId=e.accountId;
 	}
 
 	listenToClickedButton() {
