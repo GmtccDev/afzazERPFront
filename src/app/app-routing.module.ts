@@ -111,6 +111,19 @@ const routes: Routes = [
 				path: '',
 				loadChildren: () => import('./erp/Accounting/reports/reports.module').then(m => m.ReportsModule)
 			}]
+	},
+	{
+		path: 'warehouses-master-codes',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('./erp/Warehouses/master-codes/master-codes.module').then(m => m.MasterCodesModule)
+			}
+		]
+
 	}
 	,
 

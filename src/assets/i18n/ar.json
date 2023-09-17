@@ -243,7 +243,11 @@
 		"accounts-balance-report":"تقرير أرصدة الحسابات",
         "cost-centers-report":"تقرير مراكز التكلفة",
         "bankAccount": "حساب البنك",
-        "bankAccount-information": "بيانات حساب البنك"
+        "bankAccount-information": "بيانات حساب البنك",
+        "warehouses-period-information": "بيانات الفترة",
+        "warehouses-period": "الفترة",
+        "add-warehouses-period": "اضافة فترة"
+
     },
     "general": {
         "nameAr": "الاسم العربي",
