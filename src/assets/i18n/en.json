@@ -18,6 +18,7 @@
         "Ar": "AR",
         "GMTCC": "GMTCC",
         "currencySymbol": "Currency Symbol",
+        "unit-symbol":"Unit Symbol",
         "rights-reserved": "All Rights Reserved",
         "links": "Links",
         "get-in-touch": "Get in touch",
@@ -325,6 +326,8 @@
         "role-information": "Role Information",
         "countries": "Countries",
         "currencies": "Currencies",
+        "units": "Units",
+        "unit-information": "Unit Information",
         "business": "Business",
         "roles-permissions": "Roles & Permissions",
         "role": "Roles",
@@ -504,6 +507,12 @@
      },
      "country":{
         "add-country":"Add Country"
+     },
+     "warehouses-unit":{
+        "transaction-factor": "Transaction Factor",
+        "unit-transactions": "New Unit Transactions",
+        "add-unit":"Add Unit",
+        "add-edit":"Add and Edit"
      }
      
     

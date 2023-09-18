@@ -194,6 +194,8 @@
         "role": "الأدوار",
         "roles-permissions": " الأدوار والصلاحيات",
         "currencies": "العملات",
+        "units": "الوحدات",
+        "unit-information": "بيانات الوحدة ",
         "user-information": "معلومات المستخدمين",
         "user": " المستخدمين",
         "master-code": "التعريفات الاساسية",
@@ -254,6 +256,7 @@
         "nameEn": "الاسم الانجليزى",
         "code": "التسلسل",
         "currencySymbol": "رمز العملة",
+        "unit-symbol": "رمز الوحدة",
         "home": " الرئيسية",
         "about-us": "عن الشركة",
         "recently-added": "المضافة حديثا",
@@ -483,5 +486,13 @@
      },
      "country":{
         "add-country":"اضافة بلد"
-     }
+     },
+     "warehouses-unit": {
+        "transaction-factor": " معامل التحويل ",
+        "unit-transactions": " معاملات التحويل",
+        "add-unit":"اضافة وحدة",
+        "add-edit":"اضافة وتعديل"
+
+
+    }
 }
