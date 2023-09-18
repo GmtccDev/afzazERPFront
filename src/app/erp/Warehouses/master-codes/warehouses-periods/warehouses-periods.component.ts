@@ -44,7 +44,6 @@ export class WarehousesPeriodsComponent implements OnInit, OnDestroy, AfterViewI
     private warehousesPeriodService: WarehousesPeriodServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,

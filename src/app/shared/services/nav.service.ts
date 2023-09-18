@@ -237,6 +237,31 @@ this.setScreenWidth(window.innerWidth);
 				{ path: '/accounting-reports/accountsBalanceReport', title: this.translate.instant("component-names.accounts-balance-report"), type: 'link', active: true },
 
 			]
+		},
+		{
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
+	
+			]
+		}
+
+
+	];
+	MENUITEMSWarehouses: Menu[] = [
+
+
+		{
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
+		},
+		{
+			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
+		},
+
+		{
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
+	
+			]
 		}
 
 
@@ -245,5 +270,6 @@ this.setScreenWidth(window.innerWidth);
 
 	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 	itemsAccount = new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
+	itemsWarehouses = new BehaviorSubject<Menu[]>(this.MENUITEMSWarehouses);
 
 }
