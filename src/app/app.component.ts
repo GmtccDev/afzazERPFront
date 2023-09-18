@@ -1,9 +1,10 @@
-import { Component, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, PLATFORM_ID, Inject, HostListener } from '@angular/core';
 // import { isPlatformBrowser } from '@angular/common';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { map, delay, withLatestFrom } from 'rxjs/operators';
 // import { TranslateService } from '@ngx-translate/core';
-
+import {IdleService} from './shared/common-services/idle.service'
+import { UserService } from './shared/common-services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,12 +20,29 @@ export class AppComponent {
   );
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    private loader: LoadingBarService) {
+    private loader: LoadingBarService,private idleService: IdleService, private userService: UserService) {
       
     // if (isPlatformBrowser(this.platformId)) {
     //   translate.setDefaultLang('en');
     //   translate.addLangs(['en', 'de', 'es', 'fr', 'pt', 'cn', 'ae']);
     // }
   }
+  ngOnInit(): void {
+    this.idleService.isIdle$.subscribe((isIdle) => {
+      if (isIdle) {
+        this.userService.logout();
+      }
+    });
+  }
 
+  @HostListener('window:mousemove', ['$event'])
+  @HostListener('window:click', ['$event'])
+  @HostListener('window:keypress', ['$event'])
+  onActivity(event: MouseEvent | KeyboardEvent): void {
+    this.idleService.onActivity();
+  }
+
+  private logout(): void {
+    // Perform logout action here, such as clearing session data and redirecting to the login page
+  }
 }
