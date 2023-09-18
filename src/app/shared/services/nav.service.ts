@@ -28,7 +28,7 @@ export interface Menu {
 export class NavService implements OnInit, OnDestroy {
 	voucherType: any[] = [];
 	subsList: Subscription[] = [];
-	voucherTypes:any=[];
+	voucherTypes: any = [];
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
@@ -56,19 +56,19 @@ export class NavService implements OnInit, OnDestroy {
 		private voucherTypeService: VoucherTypeServiceProxy) {
 		//	this.getVoucherTypes();
 
-// this.voucherTypes.push(
-// 	 { path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
+		// this.voucherTypes.push(
+		// 	 { path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
 
-// )
-this.voucherTypes.push(
-	{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
-	{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
-	{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
-	{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
-	{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
+		// )
+		this.voucherTypes.push(
+			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
+			{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
+			{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
+			{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
+			{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
 
-)
-this.setScreenWidth(window.innerWidth);
+		)
+		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
 			takeUntil(this.unsubscriber)
@@ -97,7 +97,7 @@ this.setScreenWidth(window.innerWidth);
 	//#region ngOnInit
 	ngOnInit(): void {
 		;
-    // this.getVoucherTypes();
+		// this.getVoucherTypes();
 	}
 	//#endregion
 
@@ -126,7 +126,7 @@ this.setScreenWidth(window.innerWidth);
 						this.voucherType = res.response.items
 						this.voucherType.forEach(element => {
 							;
-							this.voucherTypes+=	"{path: '/accounting-operations/vouchers', title: "+element.voucherNameEn+", type: 'link', active: true },"
+							this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
 
 						});
 
@@ -212,16 +212,16 @@ this.setScreenWidth(window.innerWidth);
 				{ path: '/accounting-master-codes/accountClassification', title: this.translate.instant("component-names.accountClassification"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/account', title: this.translate.instant("component-names.account"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
-			//	{ path: '/accounting-master-codes/bankAccount', title: this.translate.instant("component-names.bankAccount"), type: 'link', active: true },
+				//	{ path: '/accounting-master-codes/bankAccount', title: this.translate.instant("component-names.bankAccount"), type: 'link', active: true },
 
 			]
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'Operations', active: false, children:
-			    this.voucherTypes,
-				// [
-				// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
-				// ]
+				this.voucherTypes,
+			// [
+			// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
+			// ]
 
 
 
@@ -241,7 +241,7 @@ this.setScreenWidth(window.innerWidth);
 		{
 			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
 				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
-	
+
 			]
 		}
 
@@ -260,7 +260,8 @@ this.setScreenWidth(window.innerWidth);
 		{
 			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
 				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
-	
+				{ path: '/warehouses-master-codes/warehousesUnit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
+
 			]
 		}
 
