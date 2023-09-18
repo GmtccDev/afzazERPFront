@@ -10,9 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { formatDate } from '../../../../../shared/helper/helper-url';
 import { WarehousesPeriodDto } from '../../../models/warehouses-period';
 import { WarehousesPeriodServiceProxy } from '../../../Services/warehousesperiod.service';
+import { DateModel } from 'src/app/shared/model/date-model';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
   selector: 'app-add-edit-warehouses-periods',
   templateUrl: './add-edit-warehouses-periods.component.html',
@@ -21,10 +22,11 @@ import { WarehousesPeriodServiceProxy } from '../../../Services/warehousesperiod
 export class AddEditWarehousesPeriodsComponent implements OnInit {
   //#region Main Declarations
   warehousesPeriodForm!: FormGroup;
-  sub: any;
-  url: any;
   id: any = 0;
   currnetUrl;
+  fromDate!: DateModel;
+  toDate!: DateModel;
+
   WarehousesPeriod: WarehousesPeriodDto[] = [];
   addUrl: string = '/warehouses-master-codes/warehousesPeriod/add-warehousesPeriod';
   updateUrl: string = '/warehouses-master-codes/warehousesPeriod/update-warehousesPeriod/';
@@ -47,7 +49,9 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private sharedService: SharedService, private translate: TranslateService
+    private sharedService: SharedService, private translate: TranslateService,
+    private dateService: DateCalculation
+
   ) {
     this.defineWarehousesPeriodForm();
   }
@@ -136,9 +140,13 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
       fromDate: REQUIRED_VALIDATORS,
       toDate: REQUIRED_VALIDATORS
     }
-    //, { validator: this.dateRangeValidator
-     //}
-     );
+      , {
+        validator: this.dateRangeValidator
+      }
+    );
+    this.fromDate = this.dateService.getCurrentDate();
+    this.toDate = this.dateService.getCurrentDate();
+
   }
 
   //#endregion
@@ -155,10 +163,12 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
             nameEn: res.response?.nameEn,
             code: res.response?.code,
             isActive: res.response?.isActive,
-            fromDate: formatDate(Date.parse(res.response.fromDate)),
-            toDate: formatDate(Date.parse(res.response.toDate))
+            fromDate: this.dateService.getDateForCalender(res.response.fromDate),
+            toDate: this.dateService.getDateForCalender(res.response.toDate),
           });
-          
+          this.fromDate = this.dateService.getDateForCalender(res.response.fromDate);
+          this.toDate = this.dateService.getDateForCalender(res.response.toDate);
+
         },
         error: (err: any) => {
           reject(err);
@@ -175,7 +185,7 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.warehousesPeriodService.getLastCode().subscribe({
         next: (res: any) => {
-          this.toolbarPathData.componentList = this.translate.instant("component-names.Warehouses-period");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.warehouses-period");
           this.warehousesPeriodForm.patchValue({
             code: res.response
           });
@@ -238,6 +248,8 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
     var inputDto = new WarehousesPeriodDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.warehousesPeriodForm.value;
+      inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
+      inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       this.warehousesPeriodService.createWarehousesPeriod(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -271,11 +283,11 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
   }
   confirmUpdate() {
     var inputDto = new WarehousesPeriodDto()
-
     return new Promise<void>((resolve, reject) => {
-
       inputDto = this.warehousesPeriodForm.value;
       inputDto.id = this.id;
+      inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
+      inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       let sub = this.warehousesPeriodService.updateWarehousesPeriod(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -310,17 +322,22 @@ export class AddEditWarehousesPeriodsComponent implements OnInit {
 
     }
   }
+  getFromDate(selectedDate: DateModel) {
+    this.fromDate = selectedDate;
+  }
+  getToDate(selectedDate: DateModel) {
+    this.toDate = selectedDate;
+  }
+  dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
+    const startDate = control.get('fromDate').value;
+    const endDate = control.get('toDate').value;
 
-  // dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
-  //   const startDate = control.get('fromDate').value;
-  //   const endDate = control.get('toDate').value;
+    if (startDate && endDate) {
+      return startDate <= endDate ? null : { 'dateRange': true };
+    }
 
-  //   if (startDate && endDate) {
-  //     return startDate <= endDate ? null : { 'dateRange': true };
-  //   }
-
-  //   return null;
-  // }
+    return null;
+  }
 
 }
 

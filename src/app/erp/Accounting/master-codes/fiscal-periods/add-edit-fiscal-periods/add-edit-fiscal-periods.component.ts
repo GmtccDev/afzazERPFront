@@ -12,8 +12,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { formatDate } from '../../../../../shared/helper/helper-url';
 import { FiscalPeriodStatus } from '../../../../../shared/enum/fiscal-period-status';
+import { DateModel } from 'src/app/shared/model/date-model';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
   selector: 'app-add-edit-fiscal-periods',
   templateUrl: './add-edit-fiscal-periods.component.html',
@@ -22,8 +23,6 @@ import { FiscalPeriodStatus } from '../../../../../shared/enum/fiscal-period-sta
 export class AddEditFiscalPeriodsComponent implements OnInit {
   //#region Main Declarations
   fiscalPeriodForm!: FormGroup;
-  sub: any;
-  url: any;
   id: any = 0;
   currnetUrl;
   fiscalPeriodStatusList = FiscalPeriodStatus;
@@ -43,13 +42,17 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  fromDate!: DateModel;
+  toDate!: DateModel;
   constructor(
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService, private translate: TranslateService
+    private SharedServices: SharedService, private translate: TranslateService,
+    private dateService: DateCalculation
+
   ) {
     this.definefiscalPeriodForm();
   }
@@ -139,6 +142,8 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
       toDate: REQUIRED_VALIDATORS,
       fiscalPeriodStatus: new FormControl('1')
     }, { validator: this.dateRangeValidator });
+    this.fromDate = this.dateService.getCurrentDate();
+    this.toDate = this.dateService.getCurrentDate();
   }
 
   //#endregion
@@ -155,10 +160,12 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
             nameEn: res.response?.nameEn,
             code: res.response?.code,
             isActive: res.response?.isActive,
-            fromDate: formatDate(Date.parse(res.response.fromDate)),
-            toDate: formatDate(Date.parse(res.response.toDate)),
+            fromDate: this.dateService.getDateForCalender(res.response.fromDate),
+            toDate: this.dateService.getDateForCalender(res.response.toDate),
             fiscalPeriodStatus: res.response?.fiscalPeriodStatus.toString()
           });
+          this.fromDate = this.dateService.getDateForCalender(res.response.fromDate);
+          this.toDate = this.dateService.getDateForCalender(res.response.toDate);
           console.log(
             'this.fiscalPeriodForm.value set value',
             this.fiscalPeriodForm.value
@@ -225,7 +232,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = 'Add fiscalPeriod';
+            this.toolbarPathData.componentAdd = this.translate.instant("fiscal-period.add-fiscal-period");
             this.definefiscalPeriodForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
@@ -243,15 +250,13 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     var inputDto = new FiscalPeriodDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.fiscalPeriodForm.value;
+      inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
+      inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
         next: (result: any) => {
-          this.spinner.show();
           this.response = { ...result.response };
           this.definefiscalPeriodForm();
-
           this.submited = false;
-          this.spinner.hide();
-
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
@@ -279,19 +284,16 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   }
   confirmUpdate() {
     var inputDto = new FiscalPeriodDto()
-
     return new Promise<void>((resolve, reject) => {
-
       inputDto = this.fiscalPeriodForm.value;
-
       inputDto.id = this.id;
+      inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
+      inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       let sub = this.fiscalPeriodService.updateFiscalPeriod(inputDto).subscribe({
         next: (result: any) => {
-          this.spinner.show();
           this.response = { ...result.response };
           this.definefiscalPeriodForm();
           this.submited = false;
-          this.spinner.hide();
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
@@ -331,6 +333,12 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     }
 
     return null;
+  }
+  getFromDate(selectedDate: DateModel) {
+    this.fromDate = selectedDate;
+  }
+  getToDate(selectedDate: DateModel) {
+    this.toDate = selectedDate;
   }
 
 }

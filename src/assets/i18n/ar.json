@@ -245,7 +245,7 @@
         "bankAccount": "حساب البنك",
         "bankAccount-information": "بيانات حساب البنك",
         "warehouses-period-information": "بيانات الفترة",
-        "warehouses-period": "الفترة",
+        "warehouses-period":"الفترات",
         "add-warehouses-period": "اضافة فترة"
 
     },
@@ -365,7 +365,9 @@
 
     },
     "fiscal-period": {
-        "fiscal-period-status": "الحالة"
+        "fiscal-period-status": "الحالة",
+        "add-fiscal-period": "اضافة الفترة المحاسبية"
+
     },
     "accounting-configration": {
         "multiCurrency": "عملات متعددة ",
