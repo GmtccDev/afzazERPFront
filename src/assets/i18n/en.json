@@ -378,7 +378,11 @@
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
 		"accounts-balance-report":"Accounts Balance Report",
-        "cost-centers-report":"Cost Centers Reports"
+        "cost-centers-report":"Cost Centers Reports",
+        "warehouses-period-information": "Period Information",
+        "warehouses-period": "Period",
+        "add-warehouses-period": "Add Period"
+
 
     },
     "language": {
@@ -499,5 +503,6 @@
      "country":{
         "add-country":"Add Country"
      }
+     
     
 }
