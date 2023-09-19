@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
