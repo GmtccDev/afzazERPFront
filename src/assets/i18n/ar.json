@@ -379,7 +379,8 @@
         "cycle": "دورة القيد المالي",
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
-        "accountReceivables": "حساب أوراق القبض"
+        "accountReceivables": "حساب أوراق القبض",
+        "idleTime":"ووقت الخمول"
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",

@@ -426,7 +426,8 @@
         "cycle": "JE  Cycle ",
         "account": "closing account  ",
         "endOfYear": "End Of Year",
-        "accountReceivables": "Account Receivables"
+        "accountReceivables": "Account Receivables",
+        "idleTime":"Idle Time"
     },
     "fiscal-period-status": {
         "Opened": "Opened",

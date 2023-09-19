@@ -52,6 +52,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   ListPeriod: any;
   accountExchangeId: any;
   showSearchModalAccountExchange: boolean;
+  idleTime: number;
   constructor(private currencyService: CurrencyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private router: Router,
@@ -229,7 +230,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   //#region CRUD Operations
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(undefined, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(undefined, 1, 10000, undefined, undefined, undefined).subscribe({
         next: (res) => {
           resolve();
 
@@ -244,6 +245,7 @@ export class AccountingConfigurationsComponent implements OnInit {
             this.accountId = this.generalConfiguration.find(c => c.id == 5).value;
             this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 6).value);
             this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 7).value;
+            this.idleTime= Number(this.generalConfiguration.find(c => c.id == 10001).value);
           }
 
 
@@ -352,6 +354,9 @@ export class AccountingConfigurationsComponent implements OnInit {
             }
             else if (s.id == 7) {
               s.value = this.accountingPeriodId + "";
+            }
+            else if (s.id == 10001) {
+              s.value = this.idleTime + "";
             }
           }
         });

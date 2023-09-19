@@ -2,20 +2,20 @@
     <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <h3> {{'component-names.currencies'|translate}}</h3>
-<br/>
+<br />
 <div class="row">
     <div class="col-md-6 col-6">
         <label for="currencyId" class="label-name">
             {{'component-names.currencies'|translate}}
-    
+
         </label>
         <div class="input-group  popup">
             <ng-select style="width:100%" [(ngModel)]="currencyId" name="currencyId">
-                <ng-option *ngFor="let currency of currencyList"   [value]="currency.id">
+                <ng-option *ngFor="let currency of currencyList" [value]="currency.id">
                     {{lang=="ar"?currency.nameAr:currency.nameEn}}
                 </ng-option>
             </ng-select>
-    
+
         </div>
     </div>
     <div class="col-6 col-md-6">
@@ -30,150 +30,156 @@
         </div>
     </div>
 </div>
-<br/>
+<br />
 <h3>{{'accounting-configration.journalentries'|translate}}</h3>
-<br/>
+<br />
 <div class="row">
     <div class="col-md-6 col-6">
         <label for="serial" class="label-name">
             {{'accounting-configration.serial'|translate}}
-    
+
         </label>
         <div class="">
-            <ng-select  style="width:100%"  [(ngModel)]="serial" name="serial">
-                <ng-option *ngFor="let serialObject of serialList"  [value]="serialObject.value">
+            <ng-select style="width:100%" [(ngModel)]="serial" name="serial">
+                <ng-option *ngFor="let serialObject of serialList" [value]="serialObject.value">
                     {{lang=="ar"?serialObject.nameAr:serialObject.nameEn}}
                 </ng-option>
             </ng-select>
-    
+
         </div>
     </div>
 </div>
-<br/>
+<br />
 
 <div class="row">
     <div class="col-md-6 col-6">
         <label for="cycle" class="label-name">
             {{'accounting-configration.cycle'|translate}}
-    
+
         </label>
         <div class="">
-    <ul class="list-group">
-          <li class="list-group-item"  *ngFor="let item of cycleList">
-            <input type="radio" [(ngModel)]="cycleSelected" name="cycleSelected" value="{{item.value}}" (change)="onItemChange(item)"/> 
-            {{lang=="ar"?item.nameAr:item.nameEn}}
-            
-          </li>
-    </ul>
-  </div>
-  <br/>
-  <h3>  {{'accounting-configration.endOfYear'|translate}}</h3>
-  <div class="row">
-    <div class="col-md-6 col-6">
-        <label for="account" class="label-name">
-            {{'accounting-configration.account'|translate}}
-    
-        </label>
-        <div class="">
-            <ng-select  style="width:100%"  [(ngModel)]="accountId" name="accountId">
-                <ng-option *ngFor="let account of accountList" [value]="account.id">
-                    {{lang=="ar"?account.nameAr:account.nameEn}}
-                </ng-option>
-                
-            </ng-select>
-    
-        </div>
-          
-        <div class="col-md-2 col-2">
-            <button
-              
-            class="btn btn-rounded btn-dark" (click)="showSearchModal=true"
-            type="button"><i class="fa fa-search"></i></button>
-        </div>
-       
-    </div>
-</div>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let item of cycleList">
+                    <input type="radio" [(ngModel)]="cycleSelected" name="cycleSelected" value="{{item.value}}"
+                        (change)="onItemChange(item)" />
+                    {{lang=="ar"?item.nameAr:item.nameEn}}
 
-<br/>
-
-<div class="row">
-  <div class="col-md-6 col-6">
-      <label for="account" class="label-name">
-          {{'accounting-configration.accountReceivables'|translate}}
-  
-      </label>
-      <div class="">
-          <ng-select  style="width:100%"  [(ngModel)]="accountReceivablesId" name="accountReceivablesId">
-              <ng-option *ngFor="let account of accountList" [value]="account.id">
-                  {{lang=="ar"?account.nameAr:account.nameEn}}
-              </ng-option>
-              
-          </ng-select>
-  
-      </div>
-        
-      <div class="col-md-2 col-2">
-          <button
-            
-          class="btn btn-rounded btn-dark" (click)="showSearchModalAccountReceivables=true"
-          type="button"><i class="fa fa-search"></i></button>
-      </div>
-     
-  </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 col-6">
-        <label for="account" class="label-name">
-            {{'accounting-configration.accountExchange'|translate}}
-    
-        </label>
-        <div class="">
-            <ng-select  style="width:100%"  [(ngModel)]="accountExchangeId" name="accountExchangeId">
-                <ng-option *ngFor="let account of accountList" [value]="account.id">
-                    {{lang=="ar"?account.nameAr:account.nameEn}}
-                </ng-option>
-                
-            </ng-select>
-    
+                </li>
+            </ul>
         </div>
-          
-        <div class="col-md-2 col-2">
-            <button
-              
-            class="btn btn-rounded btn-dark" (click)="showSearchModalAccountExchange=true"
-            type="button"><i class="fa fa-search"></i></button>
-        </div>
-       
-    </div>
-  </div>
-<div class="row">
-  <div class="col-md-6 col-6">
-      <label for="account" class="label-name">
-          {{'component-names.fiscalPeriod'|translate}}
-  
-      </label>
-      <div class="">
-          <ng-select  style="width:100%"  [(ngModel)]="accountingPeriodId" name="accountingPeriodId">
-              <ng-option *ngFor="let period of ListPeriod" [value]="period.id">
-                  {{lang=="ar"?period.nameAr:period.nameEn}}
-              </ng-option>
-              
-          </ng-select>
-  
-      </div>
-        
-     
-     
-  </div>
-</div>
-<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
-    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccount($event)">
-</app-public-search-modal>
+        <br />
+        <h3> {{'accounting-configration.endOfYear'|translate}}</h3>
+        <div class="row">
+            <div class="col-md-6 col-6">
+                <label for="account" class="label-name">
+                    {{'accounting-configration.account'|translate}}
 
-<app-public-search-modal [isVisible]="showSearchModalAccountReceivables" [routeApi]="routeApi"
-    (emitClose)="showSearchModalAccountReceivables = false;" (emitSearch)="onSelectAccountReceivables($event)">
-</app-public-search-modal>
-<app-public-search-modal [isVisible]="showSearchModalAccountExchange" [routeApi]="routeApi"
-    (emitClose)="showSearchModalAccountExchange = false;" (emitSearch)="onSelectAccountExchange($event)">
-</app-public-search-modal>
+                </label>
+                <div class="">
+                    <ng-select style="width:100%" [(ngModel)]="accountId" name="accountId">
+                        <ng-option *ngFor="let account of accountList" [value]="account.id">
+                            {{lang=="ar"?account.nameAr:account.nameEn}}
+                        </ng-option>
+
+                    </ng-select>
+
+                </div>
+
+                <div class="col-md-2 col-2">
+                    <button class="btn btn-rounded btn-dark" (click)="showSearchModal=true" type="button"><i
+                            class="fa fa-search"></i></button>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-6 col-6">
+                <label for="account" class="label-name">
+                    {{'accounting-configration.accountReceivables'|translate}}
+
+                </label>
+                <div class="">
+                    <ng-select style="width:100%" [(ngModel)]="accountReceivablesId" name="accountReceivablesId">
+                        <ng-option *ngFor="let account of accountList" [value]="account.id">
+                            {{lang=="ar"?account.nameAr:account.nameEn}}
+                        </ng-option>
+
+                    </ng-select>
+
+                </div>
+
+                <div class="col-md-2 col-2">
+                    <button class="btn btn-rounded btn-dark" (click)="showSearchModalAccountReceivables=true"
+                        type="button"><i class="fa fa-search"></i></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-6">
+                <label for="account" class="label-name">
+                    {{'accounting-configration.accountExchange'|translate}}
+
+                </label>
+                <div class="">
+                    <ng-select style="width:100%" [(ngModel)]="accountExchangeId" name="accountExchangeId">
+                        <ng-option *ngFor="let account of accountList" [value]="account.id">
+                            {{lang=="ar"?account.nameAr:account.nameEn}}
+                        </ng-option>
+
+                    </ng-select>
+
+                </div>
+
+                <div class="col-md-2 col-2">
+                    <button class="btn btn-rounded btn-dark" (click)="showSearchModalAccountExchange=true"
+                        type="button"><i class="fa fa-search"></i></button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-6">
+                <label for="account" class="label-name">
+                    {{'component-names.fiscalPeriod'|translate}}
+
+                </label>
+                <div class="">
+                    <ng-select style="width:100%" [(ngModel)]="accountingPeriodId" name="accountingPeriodId">
+                        <ng-option *ngFor="let period of ListPeriod" [value]="period.id">
+                            {{lang=="ar"?period.nameAr:period.nameEn}}
+                        </ng-option>
+
+                    </ng-select>
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="media">
+                <label class="col-form-label m-r-10"> {{'accounting-configration.idleTime'|translate}} </label>
+                <div class="icon-state media-body mx-5">
+                    
+                        <input type="text" class="form-control" [(ngModel)]="idleTime" name="idleTime">
+                       
+                  
+                </div>
+            </div>
+        </div>
+        <app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
+            (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccount($event)">
+        </app-public-search-modal>
+
+        <app-public-search-modal [isVisible]="showSearchModalAccountReceivables" [routeApi]="routeApi"
+            (emitClose)="showSearchModalAccountReceivables = false;" (emitSearch)="onSelectAccountReceivables($event)">
+        </app-public-search-modal>
+        <app-public-search-modal [isVisible]="showSearchModalAccountExchange" [routeApi]="routeApi"
+            (emitClose)="showSearchModalAccountExchange = false;" (emitSearch)="onSelectAccountExchange($event)">
+        </app-public-search-modal>
