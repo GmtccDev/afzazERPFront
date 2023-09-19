@@ -166,7 +166,9 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   save() {
+    
     if (this.currencyForm.value.id == 0) {
+
       this.onInsert();
     }
     else {
@@ -174,19 +176,19 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     }
   }
   confirmSave() {
+    
     var inputDto = new CreateCurrencyTransactionCommand()
     return new Promise<void>((resolve, reject) => {
       inputDto.inputDto = this.currencyForm.value;
       inputDto.inputDto.currencyMasterId = this.currencyMasterId;
       let sub = this.currencyService.createCurrencyTransaction(inputDto).subscribe({
         next: (result: any) => {
-          this.spinner.show();
+          
           this.response = { ...result.response };
           this.defineCurrencyForm();
-
           this.submited = false;
-          this.spinner.hide();
           this.activeModal.close(this.currencyMasterId);
+          
         },
         error: (err: any) => {
           reject(err);
@@ -213,21 +215,21 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     }
   }
   confirmUpdate() {
+    
     var inputDto = new EditCurrencyTransactionCommand()
     return new Promise<void>((resolve, reject) => {
-
+      
       inputDto.inputDto = this.currencyForm.value;
       inputDto.inputDto.currencyMasterId = this.currencyMasterId;
       inputDto.inputDto.id = this.id;
       let sub = this.currencyService.updateCurrencyTransaction(inputDto).subscribe({
         next: (result: any) => {
-          this.spinner.show();
+          
           this.response = { ...result.response };
           this.defineCurrencyForm();
           this.submited = false;
-          this.spinner.hide();
           this.activeModal.close(this.currencyMasterId);
-
+          
 
         },
         error: (err: any) => {

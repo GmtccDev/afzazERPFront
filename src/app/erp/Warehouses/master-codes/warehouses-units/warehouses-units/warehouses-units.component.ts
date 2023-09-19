@@ -23,9 +23,9 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   //#region Main Declarations
   warehousesUnits: WarehousesUnitDto[] = [];
   currnetUrl: any;
-  addUrl: string = '/master-codes/warehousesUnit/add-warehousesUnit';
-  updateUrl: string = '/master-codes/warehousesUnit/update-warehousesUnit/';
-  listUrl: string = '/master-codes/warehousesUnit';
+  addUrl: string = '/warehouses-master-codes/warehousesUnit/add-warehousesUnit';
+  updateUrl: string = '/warehouses-master-codes/warehousesUnit/update-warehousesUnit/';
+  listUrl: string = '/warehouses-master-codes/warehousesUnit';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -137,7 +137,7 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   }
   edit(id: string) {
     this.router.navigate([
-      '/master-codes/warehousesUnit/update-warehousesUnit',
+      '/warehouses-master-codes/warehousesUnit/update-warehousesUnit',
       id,
     ]);
   }
@@ -234,7 +234,7 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
       } as ToolbarData);
 
       this.sharedService.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['master-codes/warehousesUnit/update-warehousesUnit/' + id])
+      this.router.navigate(['warehouses-master-codes/warehousesUnit/update-warehousesUnit/' + id])
     }
 
   }
@@ -250,7 +250,7 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
         } as ToolbarData);
 
         this.sharedService.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['master-codes/warehousesUnit/update-warehousesUnit/' + event.item.id])
+        this.router.navigate(['warehouses-master-codes/warehousesUnit/update-warehousesUnit/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);

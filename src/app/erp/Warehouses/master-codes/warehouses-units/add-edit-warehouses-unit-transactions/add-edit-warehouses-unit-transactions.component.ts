@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -27,7 +26,6 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
   warehousesUnitsList: any;
   constructor(
     private warehousesUnitService: WarehousesUnitServiceProxy,
-    private router: Router,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     public activeModal: NgbActiveModal
@@ -91,12 +89,11 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
   //#region CRUD Operations
   getWarehousesUnitTransaction(id: any) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.warehousesUnitService.getWarehousesUnit(id).subscribe({
+      let sub = this.warehousesUnitService.getWarehousesUnitTransaction(id).subscribe({
         next: (res: any) => {
           resolve();
           this.warehousesUnitTransactionsForm.setValue({
             id: res.response?.id,
-            transactionDate: this.formatDate(Date.parse(res.response.transactionDate)),
             transactionFactor: res.response.transactionFactor,
             warehousesUnitMasterId: this.warehousesUnitMasterId,
             warehousesUnitDetailId: res.response?.warehousesUnitDetailId,
@@ -177,6 +174,7 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
           this.defineWarehousesUnitTransactionsForm();
           this.submited = false;
           this.activeModal.close(this.warehousesUnitMasterId);
+          this.spinner.hide();
         },
         error: (err: any) => {
           reject(err);
@@ -203,6 +201,7 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
     }
   }
   confirmUpdate() {
+    debugger
     var inputDto = new EditWarehousesUnitTransactionCommand()
     return new Promise<void>((resolve, reject) => {
 
@@ -211,11 +210,14 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
       inputDto.inputDto.id = this.id;
       let sub = this.warehousesUnitService.updateWarehousesUnitTransaction(inputDto).subscribe({
         next: (result: any) => {
+          debugger
           this.response = { ...result.response };
           this.defineWarehousesUnitTransactionsForm();
           this.submited = false;
           this.activeModal.close(this.warehousesUnitMasterId);
+          this.spinner.hide();
 
+          debugger
 
         },
         error: (err: any) => {
@@ -234,8 +236,10 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
     if (this.warehousesUnitTransactionsForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
+        debugger
         this.spinner.hide();
       }).catch(e => {
+        debugger
         this.spinner.hide();
       });
     }

@@ -29,9 +29,9 @@ export class AddwarehousesUnitComponent implements OnInit {
   id: any = 0;
   currnetUrl;
   warehousesUnits: WarehousesUnitDto[] = [];
-  addUrl: string = '/master-codes/warehousesUnit/add-warehousesUnit';
-  updateUrl: string = '/master-codes/warehousesUnit/update-warehousesUnit/';
-  listUrl: string = '/master-codes/warehousesUnit';
+  addUrl: string = '/warehouses-master-codes/warehousesUnit/add-warehousesUnit';
+  updateUrl: string = '/warehouses-master-codes/warehousesUnit/update-warehousesUnit/';
+  listUrl: string = '/warehouses-master-codes/warehousesUnit';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -268,14 +268,17 @@ export class AddwarehousesUnitComponent implements OnInit {
     }
   }
   confirmUpdate() {
+    
     this.warehousesUnitForm.value.id = this.id;
     return new Promise<void>((resolve, reject) => {
       let sub = this.warehousesUnitService.updateWarehousesUnit(this.warehousesUnitForm.value).subscribe({
         next: (result: any) => {
+          
           this.response = { ...result.response };
           this.defineWarehousesUnitForm();
           this.submited = false;
           navigateUrl(this.listUrl, this.router);
+          
         },
         error: (err: any) => {
           reject(err);
@@ -443,7 +446,7 @@ export class AddwarehousesUnitComponent implements OnInit {
       paginationCounter: "rows",
     });
     //    this.exTable.setData(persons);
-    //document.getElementById('ex-table-div').appendChild(this.tab);
+    document.getElementById('ex-table-div').appendChild(this.tab);
   }
 
 }
