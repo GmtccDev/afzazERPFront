@@ -249,7 +249,9 @@
         "warehouses-period-information": "بيانات الفترة",
         "warehouses-period":"الفترات",
         "add-warehouses-period": "اضافة فترة",
-        "taxes":"الضرائب"
+        "taxes":"الضرائب",
+        "storeCard": "بطاقة المستودع",
+        "storeCard-information": "معلومات بطاقة المستودع"
 
 
     },
@@ -351,7 +353,9 @@
         "amount-local": "الأجمالى محلى",
         "from-entry-no": "من رقم القيد",
         "to-entry-no": "الى رقم القيد",
-        "account":"الحساب"
+        "account":"الحساب",
+        "address":"العنوان",
+        "storeKeeper":"أمين المستودع"
 
     },
     "menu": {},

@@ -6,6 +6,8 @@ import { WarehousesUnitsComponent } from 'src/app/erp/Warehouses/master-codes/wa
 import { AddwarehousesUnitComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-warehouses-unit/add-warehouses-unit.component';
 import { AddEditWarehousesTaxComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-taxes/add-edit-warehouses-tax/add-edit-warehouses-tax.component';
 import {WarehousesTaxComponent} from 'src/app/erp/Warehouses/master-codes/warehouses-taxes/warehouses-taxes.component'
+import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
+import { StoreCardComponent } from './store-card/store-card.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -20,7 +22,10 @@ const routes: Routes = [
 			{ path: 'warehousesTax/add-warehousesTax', component: AddEditWarehousesTaxComponent },
 			{ path: 'warehousesTax/update-warehousesTax/:id', component: AddEditWarehousesTaxComponent },
 			{ path: 'warehousesTax', component: WarehousesTaxComponent },
-			
+			{ path: 'storeCard/add-storeCard', component: AddEditStoreCardComponent },
+			{ path: 'storeCard/update-storeCard/:id', component: AddEditStoreCardComponent },
+			{ path: 'storeCard', component: StoreCardComponent},
+			{ path: 'storeCard/add-storeCard/:parentId', component: AddEditStoreCardComponent },
 		]
 	}
 ];

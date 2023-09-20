@@ -156,7 +156,8 @@ export class AddEditStoreCardComponent implements OnInit {
       isActive: true,
       parentId: null,
       storekeeper:null,
-      address:null
+      address:null,
+      notes:null
     });
 
   }
@@ -207,7 +208,8 @@ export class AddEditStoreCardComponent implements OnInit {
             isActive: res.response?.isActive,
             parentId: res.response?.parentId,
             storekeeper:res.response?.storekeeper,
-            address:res.response?.address
+            address:res.response?.address,
+            notes:res.response?.notes,
 
           });
 

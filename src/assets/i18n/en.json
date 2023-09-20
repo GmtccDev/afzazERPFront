@@ -385,7 +385,11 @@
         "warehouses-period-information": "Period Information",
         "warehouses-period": "Periods",
         "add-warehouses-period": "Add Period",
-        "taxes":"Taxes"
+        "taxes":"Taxes",
+        "storeCard": "Store Card",
+        "storeCard-information": "Store Card Information",
+        "address":"Address",
+        "storeKeeper":" Store Keeper"
     },
     "language": {
         "ARABIC": "Arabic",
