@@ -17,6 +17,8 @@ import { AddwarehousesUnitComponent } from 'src/app/erp/Warehouses/master-codes/
 import { AddEditWarehousesUnitTransactionsComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-edit-warehouses-unit-transactions/add-edit-warehouses-unit-transactions.component';
 import { WarehousesTaxComponent } from './warehouses-taxes/warehouses-taxes.component';
 import { AddEditWarehousesTaxComponent } from './warehouses-taxes/add-edit-warehouses-tax/add-edit-warehouses-tax.component';
+import { StoreCardComponent } from './store-card/store-card.component';
+import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
 
 
 
@@ -24,6 +26,7 @@ import { AddEditWarehousesTaxComponent } from './warehouses-taxes/add-edit-wareh
 @NgModule({
   declarations: [
     WarehousesPeriodsComponent, AddEditWarehousesPeriodsComponent,WarehousesUnitsComponent,AddwarehousesUnitComponent,AddEditWarehousesUnitTransactionsComponent,WarehousesTaxComponent,AddEditWarehousesTaxComponent
+    , StoreCardComponent, AddEditStoreCardComponent
   ],
   imports: [
     CommonModule,
