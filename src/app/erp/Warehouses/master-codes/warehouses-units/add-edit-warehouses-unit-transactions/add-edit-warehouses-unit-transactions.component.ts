@@ -1,23 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-
-import { CreateCurrencyTransactionCommand, EditCurrencyTransactionCommand } from '../../models/currency';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CurrencyServiceProxy } from '../../services/currency.servies';
+import { WarehousesUnitServiceProxy } from '../../../Services/warehousesunit.servies';
+import { CreateWarehousesUnitTransactionCommand, EditWarehousesUnitTransactionCommand } from '../../../models/warehouses-unit';
 @Component({
-  selector: 'app-add-edit-currency-transactions',
-  templateUrl: './add-edit-currency-transactions.component.html',
-  styleUrls: ['./add-edit-currency-transactions.component.scss']
+  selector: 'app-add-edit-warehouses-unit-transactions',
+  templateUrl: './add-edit-warehouses-unit-transactions.component.html',
+  styleUrls: ['./add-edit-warehouses-unit-transactions.component.scss']
 })
-export class AddEditCurrencyTransactionsComponent implements OnInit {
+export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
   //#region Main Declarations
-  currencyForm!: FormGroup;
-  sub: any;
-  url: any;
-  // id: any = 0;
+  warehousesUnitTransactionsForm!: FormGroup;
+
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
@@ -25,17 +21,16 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  @Input() public currencyMasterId;
+  @Input() public warehousesUnitMasterId;
   @Input() public id: any = 0;
-  currenciesList: any;
+  warehousesUnitsList: any;
   constructor(
-    private currencyService: CurrencyServiceProxy,
-    private router: Router,
+    private warehousesUnitService: WarehousesUnitServiceProxy,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     public activeModal: NgbActiveModal
   ) {
-    this.defineCurrencyForm();
+    this.defineWarehousesUnitTransactionsForm();
   }
   //#endregion
 
@@ -43,10 +38,10 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     Promise.all([
-      this.getCurrencies()
+      this.getWarehousesUnits()
     ]).then(a => {
       if (this.id != 0) {
-        this.getCurrencyTransaction(this.id)
+        this.getWarehousesUnitTransaction(this.id)
       }
       this.spinner.hide();
 
@@ -72,13 +67,12 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  defineCurrencyForm() {
-    this.currencyForm = this.fb.group({
+  defineWarehousesUnitTransactionsForm() {
+    this.warehousesUnitTransactionsForm = this.fb.group({
       id: 0,
-      transactionDate: null,
       transactionFactor: null,
-      currencyMasterId: this.currencyMasterId,
-      currencyDetailId: null,
+      warehousesUnitMasterId: this.warehousesUnitMasterId,
+      warehousesUnitDetailId: null,
     });
   }
 
@@ -93,25 +87,21 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     return [year, month, day].join('-');
   }
   //#region CRUD Operations
-  getCurrencyTransaction(id: any) {
+  getWarehousesUnitTransaction(id: any) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.currencyService.getCurrencyTransaction(id).subscribe({
+      let sub = this.warehousesUnitService.getWarehousesUnitTransaction(id).subscribe({
         next: (res: any) => {
           resolve();
-          this.currencyForm.setValue({
+          this.warehousesUnitTransactionsForm.setValue({
             id: res.response?.id,
-            transactionDate: this.formatDate(Date.parse(res.response.transactionDate)),
             transactionFactor: res.response.transactionFactor,
-            currencyMasterId: this.currencyMasterId,
-            currencyDetailId: res.response?.currencyDetailId,
+            warehousesUnitMasterId: this.warehousesUnitMasterId,
+            warehousesUnitDetailId: res.response?.warehousesUnitDetailId,
 
           });
 
 
-          console.log(
-            'this.currencyForm.value set value',
-            this.currencyForm.value
-          );
+         
         },
         error: (err: any) => {
           reject(err);
@@ -124,14 +114,14 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
 
     });
   }
-  getCurrencies() {
+  getWarehousesUnits() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.currencyService.getDdl().subscribe({
+      let sub = this.warehousesUnitService.getDdl().subscribe({
         next: (res) => {
 
           if (res.success) {
 
-            this.currenciesList = res.response.filter(h => h.id !== this.currencyMasterId);;
+            this.warehousesUnitsList = res.response.filter(h => h.id !== this.warehousesUnitMasterId);;
 
           }
 
@@ -157,7 +147,7 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   //#region Helper Functions
 
   get f(): { [key: string]: AbstractControl } {
-    return this.currencyForm.controls;
+    return this.warehousesUnitTransactionsForm.controls;
   }
 
 
@@ -166,9 +156,7 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   save() {
-    
-    if (this.currencyForm.value.id == 0) {
-
+    if (this.warehousesUnitTransactionsForm.value.id == 0) {
       this.onInsert();
     }
     else {
@@ -176,19 +164,17 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     }
   }
   confirmSave() {
-    
-    var inputDto = new CreateCurrencyTransactionCommand()
+    var inputDto = new CreateWarehousesUnitTransactionCommand()
     return new Promise<void>((resolve, reject) => {
-      inputDto.inputDto = this.currencyForm.value;
-      inputDto.inputDto.currencyMasterId = this.currencyMasterId;
-      let sub = this.currencyService.createCurrencyTransaction(inputDto).subscribe({
+      inputDto.inputDto = this.warehousesUnitTransactionsForm.value;
+      inputDto.inputDto.warehousesUnitMasterId = this.warehousesUnitMasterId;
+      let sub = this.warehousesUnitService.createWarehousesUnitTransaction(inputDto).subscribe({
         next: (result: any) => {
-          
           this.response = { ...result.response };
-          this.defineCurrencyForm();
+          this.defineWarehousesUnitTransactionsForm();
           this.submited = false;
-          this.activeModal.close(this.currencyMasterId);
-          
+          this.activeModal.close(this.warehousesUnitMasterId);
+          this.spinner.hide();
         },
         error: (err: any) => {
           reject(err);
@@ -202,7 +188,7 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     });
   }
   onInsert() {
-    if (this.currencyForm.valid) {
+    if (this.warehousesUnitTransactionsForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
@@ -211,25 +197,27 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
       });
     } else {
 
-      return this.currencyForm.markAllAsTouched();
+      return this.warehousesUnitTransactionsForm.markAllAsTouched();
     }
   }
   confirmUpdate() {
-    
-    var inputDto = new EditCurrencyTransactionCommand()
+    debugger
+    var inputDto = new EditWarehousesUnitTransactionCommand()
     return new Promise<void>((resolve, reject) => {
-      
-      inputDto.inputDto = this.currencyForm.value;
-      inputDto.inputDto.currencyMasterId = this.currencyMasterId;
+
+      inputDto.inputDto = this.warehousesUnitTransactionsForm.value;
+      inputDto.inputDto.warehousesUnitMasterId = this.warehousesUnitMasterId;
       inputDto.inputDto.id = this.id;
-      let sub = this.currencyService.updateCurrencyTransaction(inputDto).subscribe({
+      let sub = this.warehousesUnitService.updateWarehousesUnitTransaction(inputDto).subscribe({
         next: (result: any) => {
-          
+          debugger
           this.response = { ...result.response };
-          this.defineCurrencyForm();
+          this.defineWarehousesUnitTransactionsForm();
           this.submited = false;
-          this.activeModal.close(this.currencyMasterId);
-          
+          this.activeModal.close(this.warehousesUnitMasterId);
+          this.spinner.hide();
+
+          debugger
 
         },
         error: (err: any) => {
@@ -245,17 +233,19 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   }
 
   onUpdate() {
-    if (this.currencyForm.valid) {
+    if (this.warehousesUnitTransactionsForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
+        debugger
         this.spinner.hide();
       }).catch(e => {
+        debugger
         this.spinner.hide();
       });
     }
     else {
 
-      return this.currencyForm.markAllAsTouched();
+      return this.warehousesUnitTransactionsForm.markAllAsTouched();
     }
   }
 

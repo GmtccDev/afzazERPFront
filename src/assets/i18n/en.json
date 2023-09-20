@@ -18,6 +18,7 @@
         "Ar": "AR",
         "GMTCC": "GMTCC",
         "currencySymbol": "Currency Symbol",
+        "unit-symbol":"Unit Symbol",
         "rights-reserved": "All Rights Reserved",
         "links": "Links",
         "get-in-touch": "Get in touch",
@@ -325,6 +326,8 @@
         "role-information": "Role Information",
         "countries": "Countries",
         "currencies": "Currencies",
+        "units": "Units",
+        "unit-information": "Unit Information",
         "business": "Business",
         "roles-permissions": "Roles & Permissions",
         "role": "Roles",
@@ -378,7 +381,11 @@
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
 		"accounts-balance-report":"Accounts Balance Report",
-        "cost-centers-report":"Cost Centers Reports"
+        "cost-centers-report":"Cost Centers Reports",
+        "warehouses-period-information": "Period Information",
+        "warehouses-period": "Periods",
+        "add-warehouses-period": "Add Period"
+
 
     },
     "language": {
@@ -419,7 +426,8 @@
         "cycle": "JE  Cycle ",
         "account": "closing account  ",
         "endOfYear": "End Of Year",
-        "accountReceivables": "Account Receivables"
+        "accountReceivables": "Account Receivables",
+        "idleTime":"Idle Time"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -427,7 +435,9 @@
         "ClosedForRevision": "ClosedForRevision"
     },
     "fiscal-period": {
-        "fiscal-period-status": "status"
+        "fiscal-period-status": "status",
+        "add-fiscal-period": "Add Fiscal Period"
+
     },
     "voucher-type": {
         "voucher-type-information": "Voucher Type Information",
@@ -498,6 +508,13 @@
      },
      "country":{
         "add-country":"Add Country"
+     },
+     "warehouses-unit":{
+        "transaction-factor": "Transaction Factor",
+        "unit-transactions": "New Unit Transactions",
+        "add-unit":"Add Unit",
+        "add-edit":"Add and Edit"
      }
+     
     
 }

@@ -194,6 +194,8 @@
         "role": "الأدوار",
         "roles-permissions": " الأدوار والصلاحيات",
         "currencies": "العملات",
+        "units": "الوحدات",
+        "unit-information": "بيانات الوحدة ",
         "user-information": "معلومات المستخدمين",
         "user": " المستخدمين",
         "master-code": "التعريفات الاساسية",
@@ -243,13 +245,18 @@
 		"accounts-balance-report":"تقرير أرصدة الحسابات",
         "cost-centers-report":"تقرير مراكز التكلفة",
         "bankAccount": "حساب البنك",
-        "bankAccount-information": "بيانات حساب البنك"
+        "bankAccount-information": "بيانات حساب البنك",
+        "warehouses-period-information": "بيانات الفترة",
+        "warehouses-period":"الفترات",
+        "add-warehouses-period": "اضافة فترة"
+
     },
     "general": {
         "nameAr": "الاسم العربي",
         "nameEn": "الاسم الانجليزى",
         "code": "التسلسل",
         "currencySymbol": "رمز العملة",
+        "unit-symbol": "رمز الوحدة",
         "home": " الرئيسية",
         "about-us": "عن الشركة",
         "recently-added": "المضافة حديثا",
@@ -361,7 +368,9 @@
 
     },
     "fiscal-period": {
-        "fiscal-period-status": "الحالة"
+        "fiscal-period-status": "الحالة",
+        "add-fiscal-period": "اضافة الفترة المحاسبية"
+
     },
     "accounting-configration": {
         "multiCurrency": "عملات متعددة ",
@@ -370,7 +379,8 @@
         "cycle": "دورة القيد المالي",
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
-        "accountReceivables": "حساب أوراق القبض"
+        "accountReceivables": "حساب أوراق القبض",
+        "idleTime":"ووقت الخمول"
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",
@@ -477,5 +487,13 @@
      },
      "country":{
         "add-country":"اضافة بلد"
-     }
+     },
+     "warehouses-unit": {
+        "transaction-factor": " معامل التحويل ",
+        "unit-transactions": " معاملات التحويل",
+        "add-unit":"اضافة وحدة",
+        "add-edit":"اضافة وتعديل"
+
+
+    }
 }

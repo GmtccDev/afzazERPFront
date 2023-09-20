@@ -1,40 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { CODE_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
-import {  FiscalPeriodDto } from '../../../models/fiscal-period';
-import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { FiscalPeriodStatus } from '../../../../../shared/enum/fiscal-period-status';
+import { WarehousesPeriodDto } from '../../../models/warehouses-period';
+import { WarehousesPeriodServiceProxy } from '../../../Services/warehousesperiod.service';
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
-  selector: 'app-add-edit-fiscal-periods',
-  templateUrl: './add-edit-fiscal-periods.component.html',
-  styleUrls: ['./add-edit-fiscal-periods.component.scss']
+  selector: 'app-add-edit-warehouses-periods',
+  templateUrl: './add-edit-warehouses-periods.component.html',
+  styleUrls: ['./add-edit-warehouses-periods.component.scss']
 })
-export class AddEditFiscalPeriodsComponent implements OnInit {
+export class AddEditWarehousesPeriodsComponent implements OnInit {
   //#region Main Declarations
-  fiscalPeriodForm!: FormGroup;
+  warehousesPeriodForm!: FormGroup;
   id: any = 0;
   currnetUrl;
-  fiscalPeriodStatusList = FiscalPeriodStatus;
-  fiscalPeriod: FiscalPeriodDto[] = [];
-  addUrl: string = '/accounting-master-codes/fiscalPeriod/add-fiscalPeriod';
-  updateUrl: string = '/accounting-master-codes/fiscalPeriod/update-fiscalPeriod/';
-  listUrl: string = '/accounting-master-codes/fiscalPeriod';
+  fromDate!: DateModel;
+  toDate!: DateModel;
+
+  WarehousesPeriod: WarehousesPeriodDto[] = [];
+  addUrl: string = '/warehouses-master-codes/warehousesPeriod/add-warehousesPeriod';
+  updateUrl: string = '/warehouses-master-codes/warehousesPeriod/update-warehousesPeriod/';
+  listUrl: string = '/warehouses-master-codes/warehousesPeriod';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.fiscalPeriod"),
+    componentList: this.translate.instant("component-names.warehouses-period"),
     componentAdd: '',
 
   };
@@ -42,19 +43,17 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  fromDate!: DateModel;
-  toDate!: DateModel;
   constructor(
-    private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private warehousesPeriodService: WarehousesPeriodServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private SharedServices: SharedService, private translate: TranslateService,
+    private sharedService: SharedService, private translate: TranslateService,
     private dateService: DateCalculation
 
   ) {
-    this.definefiscalPeriodForm();
+    this.defineWarehousesPeriodForm();
   }
   //#endregion
 
@@ -65,7 +64,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     this.getRouteData();
     this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
-      this.getfiscalPeriodCode();
+      this.getWarehousesPeriodCode();
     }
     this.changePath();
     this.listenToClickedButton();
@@ -80,7 +79,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
       if (params['id'] != null) {
         this.id = +params['id'];
         if (this.id > 0) {
-          this.getfiscalPeriodById(this.id).then(a => {
+          this.getWarehousesPeriodById(this.id).then(a => {
             this.spinner.hide();
 
           }).catch(err => {
@@ -91,13 +90,13 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
         }
         else {
-          this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.sharedService.changeButton({ action: 'New' } as ToolbarData);
           this.spinner.hide();
         }
       }
       else {
         this.spinner.hide();
-        this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.sharedService.changeButton({ action: 'New' } as ToolbarData);
       }
     });
     this.subsList.push(sub);
@@ -131,30 +130,34 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  definefiscalPeriodForm() {
-    this.fiscalPeriodForm = this.fb.group({
+  defineWarehousesPeriodForm() {
+    this.warehousesPeriodForm = this.fb.group({
       id: 0,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
       nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       fromDate: REQUIRED_VALIDATORS,
-      toDate: REQUIRED_VALIDATORS,
-      fiscalPeriodStatus: new FormControl('1')
-    }, { validator: this.dateRangeValidator });
+      toDate: REQUIRED_VALIDATORS
+    }
+      , {
+        validator: this.dateRangeValidator
+      }
+    );
     this.fromDate = this.dateService.getCurrentDate();
     this.toDate = this.dateService.getCurrentDate();
+
   }
 
   //#endregion
 
   //#region CRUD Operations
-  getfiscalPeriodById(id: any) {
+  getWarehousesPeriodById(id: any) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+      let sub = this.warehousesPeriodService.getWarehousesPeriod(id).subscribe({
         next: (res: any) => {
           resolve();
-          this.fiscalPeriodForm.setValue({
+          this.warehousesPeriodForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
@@ -162,14 +165,10 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
             isActive: res.response?.isActive,
             fromDate: this.dateService.getDateForCalender(res.response.fromDate),
             toDate: this.dateService.getDateForCalender(res.response.toDate),
-            fiscalPeriodStatus: res.response?.fiscalPeriodStatus.toString()
           });
           this.fromDate = this.dateService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateService.getDateForCalender(res.response.toDate);
-          console.log(
-            'this.fiscalPeriodForm.value set value',
-            this.fiscalPeriodForm.value
-          );
+
         },
         error: (err: any) => {
           reject(err);
@@ -182,13 +181,12 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
     });
   }
-  getfiscalPeriodCode() {
+  getWarehousesPeriodCode() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.fiscalPeriodService.getLastCode().subscribe({
-
+      let sub = this.warehousesPeriodService.getLastCode().subscribe({
         next: (res: any) => {
-          this.toolbarPathData.componentList = this.translate.instant("component-names.fiscalPeriod");
-          this.fiscalPeriodForm.patchValue({
+          this.toolbarPathData.componentList = this.translate.instant("component-names.warehouses-period");
+          this.warehousesPeriodForm.patchValue({
             code: res.response
           });
 
@@ -210,7 +208,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   //#region Helper Functions
 
   get f(): { [key: string]: AbstractControl } {
-    return this.fiscalPeriodForm.controls;
+    return this.warehousesPeriodForm.controls;
   }
 
 
@@ -219,22 +217,22 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   subsList: Subscription[] = [];
   currentBtnResult;
   listenToClickedButton() {
-    let sub = this.SharedServices.getClickedbutton().subscribe({
+    let sub = this.sharedService.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
 
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
-            this.SharedServices.changeToolbarPath({
+            this.sharedService.changeToolbarPath({
               listPath: this.listUrl,
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = this.translate.instant("fiscal-period.add-fiscal-period");
-            this.definefiscalPeriodForm();
-            this.SharedServices.changeToolbarPath(this.toolbarPathData);
+            this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-warehouses-period');
+            this.defineWarehousesPeriodForm();
+            this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
@@ -244,19 +242,20 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     this.subsList.push(sub);
   }
   changePath() {
-    this.SharedServices.changeToolbarPath(this.toolbarPathData);
+    this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    var inputDto = new FiscalPeriodDto()
+    var inputDto = new WarehousesPeriodDto()
     return new Promise<void>((resolve, reject) => {
-      inputDto = this.fiscalPeriodForm.value;
+      inputDto = this.warehousesPeriodForm.value;
       inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
-      this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
+      this.warehousesPeriodService.createWarehousesPeriod(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
-          this.definefiscalPeriodForm();
+          this.defineWarehousesPeriodForm();
           this.submited = false;
+
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
@@ -269,7 +268,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     });
   }
   onSave() {
-    if (this.fiscalPeriodForm.valid) {
+    if (this.warehousesPeriodForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
@@ -279,20 +278,20 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
     } else {
 
-      return this.fiscalPeriodForm.markAllAsTouched();
+      return this.warehousesPeriodForm.markAllAsTouched();
     }
   }
   confirmUpdate() {
-    var inputDto = new FiscalPeriodDto()
+    var inputDto = new WarehousesPeriodDto()
     return new Promise<void>((resolve, reject) => {
-      inputDto = this.fiscalPeriodForm.value;
+      inputDto = this.warehousesPeriodForm.value;
       inputDto.id = this.id;
       inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
-      let sub = this.fiscalPeriodService.updateFiscalPeriod(inputDto).subscribe({
+      let sub = this.warehousesPeriodService.updateWarehousesPeriod(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
-          this.definefiscalPeriodForm();
+          this.defineWarehousesPeriodForm();
           this.submited = false;
           navigateUrl(this.listUrl, this.router);
         },
@@ -310,7 +309,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
   onUpdate() {
 
-    if (this.fiscalPeriodForm.valid) {
+    if (this.warehousesPeriodForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();
@@ -319,11 +318,16 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
       });
     }
     else {
-      return this.fiscalPeriodForm.markAllAsTouched();
+      return this.warehousesPeriodForm.markAllAsTouched();
 
     }
   }
-
+  getFromDate(selectedDate: DateModel) {
+    this.fromDate = selectedDate;
+  }
+  getToDate(selectedDate: DateModel) {
+    this.toDate = selectedDate;
+  }
   dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
     const startDate = control.get('fromDate').value;
     const endDate = control.get('toDate').value;
@@ -333,12 +337,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     }
 
     return null;
-  }
-  getFromDate(selectedDate: DateModel) {
-    this.fromDate = selectedDate;
-  }
-  getToDate(selectedDate: DateModel) {
-    this.toDate = selectedDate;
   }
 
 }

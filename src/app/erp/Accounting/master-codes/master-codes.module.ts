@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {SharedModule} from '../../../shared/shared.module'
 import { MasterCodesRoutingModule } from './master-codes-routing.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -24,6 +24,9 @@ import { VoucherTypeComponent } from './voucher-type/voucher-type.component';
 import { AddEditVoucherTypeComponent } from './voucher-type/add-edit-voucher-type/add-edit-voucher-type.component';
 import { BankAccountComponent } from './bank-account/bank-account.component';
 import { AddEditBankAccountComponent } from './bank-account/add-edit-bank-account/add-edit-bank-account.component';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     JournalsComponent, AddEditJournalsComponent,AddEditFiscalPeriodsComponent,FiscalPeriodsComponent,
@@ -38,6 +41,6 @@ import { AddEditBankAccountComponent } from './bank-account/add-edit-bank-accoun
     NzButtonModule,
     NzIconModule
   ],
-  providers: [JournalServiceProxy,FiscalPeriodServiceProxy]
+  providers: [JournalServiceProxy,FiscalPeriodServiceProxy,DateCalculation,DatePipe,DateConverterService,NgbCalendarIslamicUmalqura]
 })
 export class MasterCodesModule { }

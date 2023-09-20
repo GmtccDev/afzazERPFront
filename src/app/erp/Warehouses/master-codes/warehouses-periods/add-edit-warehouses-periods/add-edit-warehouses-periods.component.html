@@ -8,11 +8,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form [formGroup]="fiscalPeriodForm" id="fiscalPeriodSubmit" class="tabs-form">
+                        <form [formGroup]="warehousesPeriodForm" id="warehousesPeriodSubmit" class="tabs-form">
                             <div class="main-customer">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.fiscalPeriod-information'|translate}}</h3>
+                                    <h3>{{'component-names.warehouses-period-information'|translate}}</h3>
                                     <hr>
                                     <div class="row align-items-center">
 
@@ -69,7 +69,6 @@
 
                                             </div>
                                         </div>
-
                                         <div class="col-md-6 col-12">
                                             <label for="fromDate" class="label-name">
                                                 {{'general.fromDate'|translate}}</label><span
@@ -109,21 +108,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-4">
-                                            <label for="fiscalPeriodStatus" class="label-name">
-                                                {{'fiscal-period.fiscal-period-status'|translate}}
-                                              
-                                            </label>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="fiscalPeriodStatus" name='fiscalPeriodStatus' class="" id="fiscalPeriodStatus">
-                                                    <ng-option *ngFor="let item of fiscalPeriodStatusList | enumKeyValuelist;" [value]="item.key" >
-                                                        {{'fiscal-period-status.'+ item.value|translate}}
-                                                    </ng-option>
-                                                </ng-select>
-                                               
-                                            </div>
-                                         
-                                        </div>
                                         <div class="col-md-6 col-12">
                                             <div class="media">
                                                 <label class="col-form-label m-r-10"> {{'general.status'|translate}}

@@ -7,54 +7,36 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form [formGroup]="currencyForm" id="BusinessSubmit" class="tabs-form">
-                    <div class="main-currency">
+                <form [formGroup]="warehousesUnitTransactionsForm" id="warehousesUnitTransactionsSubmit"
+                    class="tabs-form">
+                    <div class="main-unit">
                         <div class="wrapper-title">
 
-
-
-
                             <div class="modal-header">
-                                <h4 class="modal-title">{{ 'currency.currency-transactions'|translate}}</h4>
+                                <h4 class="modal-title">{{ 'warehouses-unit.unit-transactions'|translate}}</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row ">
-
-
-                                    <div class="col-12 col-md-6">
-                                        <label for="transactionDate"
-                                            class="label-name">{{'currency.transaction-date'|translate}}</label>
-                                        <div class="form-group position-relative">
-
-                                            <input type="date" class="form-control icon-currency" name="transactionDate"
-                                                formControlName="transactionDate">
-
-                                        </div>
-                                    </div>
-
                                     <div class="col-12 col-md-12">
                                         <label for="transactionFactor"
-                                            class="label-name">{{'currency.transaction-factor'|translate}}</label>
+                                            class="label-name">{{'warehouses-unit.transaction-factor'|translate}}</label>
                                         <div class="form-group position-relative">
-
-                                            <input type="number" class="form-control icon-currency"
+                                            <input type="number" class="form-control icon-warehouses-unit"
                                                 name="transactionFactor" formControlName="transactionFactor">
-
-
                                         </div>
                                     </div>
                                     <hr class="p-0">
 
                                     <div class="col-md-6 col-6">
                                         <label for="countryId" class="label-name">
-                                            {{'component-names.currency-information'|translate}}
+                                            {{'component-names.unit-information'|translate}}
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="input-group  popup">
-                                            <ng-select style="width:100%" formControlName="currencyDetailId"
-                                                name='currencyDetailId' class="" id="currencyDetailId">
-                                                <ng-option *ngFor="let curreny of currenciesList" [value]="curreny.id">
-                                                    {{lang=="ar"?curreny.nameAr:curreny.nameEn}}
+                                            <ng-select style="width:100%" formControlName="warehousesUnitDetailId"
+                                                name='warehousesUnitDetailId' class="" id="warehousesUnitDetailId">
+                                                <ng-option *ngFor="let unit of warehousesUnitsList" [value]="unit.id">
+                                                    {{lang=="ar"?unit.nameAr:unit.nameEn}}
                                                 </ng-option>
                                             </ng-select>
 
