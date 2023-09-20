@@ -1,0 +1,315 @@
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { Subscription } from 'rxjs';
+import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
+import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
+import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
+import { SharedService } from '../../../../shared/common-services/shared-service';
+import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
+import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
+import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { WarehousesTaxServiceProxy } from '../../Services/warehousestax.service';
+
+@Component({
+  selector: 'app-warehouses-taxes',
+  templateUrl: './warehouses-taxes.component.html',
+  styleUrls: ['./warehouses-taxes.component.scss']
+})
+export class WarehousesTaxComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  //#region Main Declarations
+  warehousesTaxes: any[] = [];
+  currnetUrl: any;
+  queryParams: any;
+
+  addUrl: string = '/warehouses-master-codes/warehousesTax/add-warehousesTax/';
+  updateUrl: string = '/warehouses-master-codes/warehousesTax/update-warehousesTax/';
+  listUrl: string = '/warehouses-master-codes/warehousesTax/';
+  toolbarPathData: ToolbarPath = {
+    listPath: '',
+    updatePath: this.updateUrl,
+    addPath: this.addUrl,
+    componentList: this.translate.instant("component-names.taxes"),
+    componentAdd: '',
+
+  };
+  listIds: any[] = [];
+
+  //#endregion
+
+  //#region Constructor
+  constructor(
+    private warehousesTaxService: WarehousesTaxServiceProxy,
+    private router: Router,
+    private route: ActivatedRoute,
+    private sharedServices: SharedService,
+    private alertsService: NotificationsAlertsService,
+    private modalService: NgbModal,
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService,
+
+  ) {
+
+  }
+
+
+  //#endregion
+
+  //#region ngOnInit
+  ngOnInit(): void {
+    //  this.defineGridColumn();
+   
+    this.spinner.show();
+    Promise.all([this.getWarehousesTaxes()])
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
+
+
+
+
+  }
+
+  ngAfterViewInit(): void {
+
+
+
+  }
+
+
+  //#endregion
+
+  //#region ngOnDestroy
+  ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  //#endregion
+
+  //#region Authentications
+
+  //#endregion
+
+  //#region Permissions
+
+  //#endregion
+
+  //#region  State Management
+  //#endregion
+
+  //#region Basic Data
+  ///Geting form dropdown list data
+
+  getWarehousesTaxes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.warehousesTaxService.allWarehousesTaxes(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          debugger
+          console.log(res);
+          this.toolbarPathData.componentList = this.translate.instant("component-names.taxes");
+          if (res.success) {
+            
+            this.warehousesTaxes = res.response.items;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+
+  //#endregion
+
+  //#region CRUD Operations
+  delete(id: any) {
+    this.warehousesTaxService.deleteWarehousesTax(id).subscribe((resonse) => {
+      console.log('delete response', resonse);
+      this.getWarehousesTaxes();
+      
+    });
+  }
+  edit(id: string) {
+    this.router.navigate([
+      '/warehouses-master-codes/warehousesTax/update-warehousesTax',
+      id,
+    ]);
+  }
+
+  //#endregion
+
+
+
+  showConfirmDeleteMessage(id) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      console.log(rs);
+      if (rs == 'Confirm') {
+        this.spinner.show();
+        const input={
+          tableName:"WarehousesTaxes",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.warehousesTaxService.deleteWarehousesTax(input.id).subscribe(
+          (resonse) => {
+
+            this.getWarehousesTaxes();
+
+          });
+        this.subsList.push(sub);
+        this.spinner.hide();
+
+      }
+    });
+  }
+  //#endregion
+  //#region Tabulator
+
+  panelId: number = 1;
+  sortByCols: any[] = [];
+  searchFilters: any;
+  groupByCols: string[] = [];
+  lang: string = localStorage.getItem("language")!;
+
+
+  columnNames = [
+    {
+      title: this.lang == 'ar' ? ' كود' : 'Code ',
+      field: 'code',
+    },
+    this.lang == 'ar'
+    ? { title: ' الاسم', field: 'nameAr' } :
+    { title: ' Name  ', field: 'nameEn' },
+
+
+   
+
+
+  ];
+
+  menuOptions: SettingMenuShowOptions = {
+    showDelete: true,
+    showEdit: true,
+  };
+
+  direction: string = 'ltr';
+
+  onSearchTextChange(searchTxt: string) {
+    this.searchFilters = [
+      [
+        { field: 'code', type: 'like', value: searchTxt },
+        { field: 'nameAr', type: 'like', value: searchTxt },
+        { field: 'nameEn', type: 'like', value: searchTxt }
+
+        ,
+      ],
+    ];
+  }
+
+  onCheck(id) {
+
+    this.listIds.push(id);
+    this.sharedServices.changeButton({
+      action: 'Delete',
+      componentName: 'List',
+      submitMode: false
+    } as ToolbarData);
+  }
+  onEdit(id) {
+    if (id != undefined) {
+      this.edit(id);
+      this.sharedServices.changeButton({
+        action: 'Update',
+        componentName: 'List',
+        submitMode: false
+      } as ToolbarData);
+
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+    }
+
+  }
+  onMenuActionSelected(event: ITabulatorActionsSelected) {
+
+    if (event != null) {
+      if (event.actionName == 'Edit') {
+        
+        this.edit(event.item.id);
+        this.sharedServices.changeButton({
+          action: 'Update',
+          componentName: 'List',
+          submitMode: false
+        } as ToolbarData);
+
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
+      } else if (event.actionName == 'Delete') {
+        this.showConfirmDeleteMessage(event.item.id);
+      }
+    }
+  }
+
+  //#endregion
+
+
+
+  //#region Toolbar Service
+  currentBtn!: string;
+  subsList: Subscription[] = [];
+  listenToClickedButton() {
+
+    let sub = this.sharedServices.getClickedbutton().subscribe({
+      next: (currentBtn: ToolbarData) => {
+
+        //currentBtn;
+        if (currentBtn != null) {
+          if (currentBtn.action == ToolbarActions.List) {
+
+          } else if (currentBtn.action == ToolbarActions.New) {
+            this.router.navigate([this.addUrl]);
+          }
+          else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
+            this.onDelete();
+          }
+        }
+      },
+    });
+    this.subsList.push(sub);
+  }
+  onDelete() {
+    var ids = this.listIds;
+    let sub = this.warehousesTaxService.deleteListWarehousesTax(ids).subscribe(
+      (resonse) => {
+        
+        this.getWarehousesTaxes();
+        this.listIds = [];
+      });
+    this.subsList.push(sub);
+  }
+  //#endregion
+}
