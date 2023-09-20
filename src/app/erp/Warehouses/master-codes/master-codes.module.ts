@@ -15,13 +15,15 @@ import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { WarehousesUnitsComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/warehouses-units/warehouses-units.component';
 import { AddwarehousesUnitComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-warehouses-unit/add-warehouses-unit.component';
 import { AddEditWarehousesUnitTransactionsComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-edit-warehouses-unit-transactions/add-edit-warehouses-unit-transactions.component';
+import { StoreCardComponent } from './store-card/store-card.component';
+import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
 
 
 
 
 @NgModule({
   declarations: [
-    WarehousesPeriodsComponent, AddEditWarehousesPeriodsComponent,WarehousesUnitsComponent,AddwarehousesUnitComponent,AddEditWarehousesUnitTransactionsComponent
+    WarehousesPeriodsComponent, AddEditWarehousesPeriodsComponent,WarehousesUnitsComponent,AddwarehousesUnitComponent,AddEditWarehousesUnitTransactionsComponent, StoreCardComponent, AddEditStoreCardComponent
   ],
   imports: [
     CommonModule,
