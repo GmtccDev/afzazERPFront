@@ -237,19 +237,12 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/accounting-reports/accountsBalanceReport', title: this.translate.instant("component-names.accounts-balance-report"), type: 'link', active: true },
 
 			]
-		},
-		{
-			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
-				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
-
-			]
 		}
+		
 
 
 	];
 	MENUITEMSWarehouses: Menu[] = [
-
-
 		{
 			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
 		},
@@ -261,6 +254,7 @@ export class NavService implements OnInit, OnDestroy {
 			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
 				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/warehousesUnit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/warehousesTax', title: this.translate.instant("component-names.taxes"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/storeCard', title: this.translate.instant("component-names.storeCard"), type: 'link', active: true },
 
 			]
