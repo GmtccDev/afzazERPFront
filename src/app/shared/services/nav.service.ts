@@ -256,6 +256,7 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/warehouses-master-codes/warehousesUnit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/warehousesTax', title: this.translate.instant("component-names.taxes"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/storeCard', title: this.translate.instant("component-names.storeCard"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/warehousesPaymentMethod', title: this.translate.instant("component-names.warehouses-payment-method"), type: 'link', active: true },
 
 			]
 		}

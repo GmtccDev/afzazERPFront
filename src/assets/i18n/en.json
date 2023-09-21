@@ -389,7 +389,10 @@
         "storeCard": "Store Card",
         "storeCard-information": "Store Card Information",
         "address":"Address",
-        "storekeeper":" Store Keeper"
+        "storekeeper":" Store Keeper",
+        "warehouses-payment-method":"Payment Methods",
+        "warehouses-payment-method-information": "Payment Method Information"
+
     },
     "language": {
         "ARABIC": "Arabic",
