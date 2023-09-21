@@ -121,7 +121,9 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
       { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.jpg', link: '/dashboard/default' },
       { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
       { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.jpg', link: '/dashboard/default' },
-      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' }
+      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
+      { descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: true, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
+
     ];
   }
   openLink(object) {
