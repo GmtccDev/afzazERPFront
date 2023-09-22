@@ -251,7 +251,9 @@
         "add-warehouses-period": "اضافة فترة",
         "taxes":"الضرائب",
         "storeCard": "بطاقة المستودع",
-        "storeCard-information": "معلومات بطاقة المستودع"
+        "storeCard-information": "معلومات بطاقة المستودع",
+        "warehouses-payment-method-information": "بيانات طريقة الدفع"
+
 
 
     },
