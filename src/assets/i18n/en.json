@@ -381,6 +381,7 @@
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
 		"accounts-balance-report":"Accounts Balance Report",
+		"trail-balance-report":"trail Balance Report",
         "cost-centers-report":"Cost Centers Reports",
         "warehouses-period-information": "Period Information",
         "warehouses-period": "Periods",
@@ -515,6 +516,6 @@
         "add-unit":"Add Unit",
         "add-edit":"Add and Edit"
      }
-     
-    
+
+
 }

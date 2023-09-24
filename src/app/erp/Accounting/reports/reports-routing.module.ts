@@ -8,6 +8,7 @@ import { JournalEntriesReportComponent } from './journal-entries-report/journal-
 import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component';
 import { AccountClassificationComponent } from '../master-codes/account-classification/account-classification.component';
 import { AccountsBalanceReportComponent } from './accounts-balance-report/accounts-balance-report.component';
+import { TrailBalanceReportComponent } from './trail-balance-report/trail-balance-report.component';
 
 
 
@@ -22,6 +23,8 @@ const routes: Routes = [
 			{ path: 'journalEntriesReport', component: JournalEntriesReportComponent },
 			{ path: 'costCentersReport', component: CostCentersReportComponent },
 			{ path: 'accountsBalanceReport', component: AccountsBalanceReportComponent },
+			{ path: 'trailBalanceReport', component: TrailBalanceReportComponent },
+
 
 
 

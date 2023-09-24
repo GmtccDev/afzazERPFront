@@ -5,7 +5,7 @@ import * as data from '../../shared/data/tasks/task';
   providedIn: 'root'
 })
 export class TasksService {
-  
+
   public Tasks: any[] = data.tasks;
 
   constructor() { }
@@ -13,5 +13,5 @@ export class TasksService {
   addTasks(task) {
     this.Tasks.push(task);
   }
-  
+
 }
