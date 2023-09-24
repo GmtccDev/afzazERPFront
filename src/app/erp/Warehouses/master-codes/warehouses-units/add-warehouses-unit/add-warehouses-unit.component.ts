@@ -25,7 +25,7 @@ import { MessageModalComponent } from '../../../../../shared/components/message-
 export class AddwarehousesUnitComponent implements OnInit {
   //#region Main Declarations
   warehousesUnitForm!: FormGroup;
-  
+
   id: any = 0;
   currnetUrl;
   warehousesUnits: WarehousesUnitDto[] = [];
@@ -47,7 +47,7 @@ export class AddwarehousesUnitComponent implements OnInit {
   lang = localStorage.getItem("language")
   symbolList: { descriptionAr: string; descriptionEn: string; value: string; }[];
   constructor(
-    private warehousesUnitService:WarehousesUnitServiceProxy,
+    private warehousesUnitService: WarehousesUnitServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -137,7 +137,7 @@ export class AddwarehousesUnitComponent implements OnInit {
       symbol: ''
     });
   }
- 
+
   //#endregion
 
   //#region CRUD Operations
@@ -156,7 +156,7 @@ export class AddwarehousesUnitComponent implements OnInit {
           });
           this.warehousesUnitTransactionsDto = res.response?.warehousesUnitTransactionsDto;
           this.drawTable();
-        
+
         },
         error: (err: any) => {
           reject(err);
@@ -268,17 +268,15 @@ export class AddwarehousesUnitComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    
     this.warehousesUnitForm.value.id = this.id;
     return new Promise<void>((resolve, reject) => {
       let sub = this.warehousesUnitService.updateWarehousesUnit(this.warehousesUnitForm.value).subscribe({
         next: (result: any) => {
-          
           this.response = { ...result.response };
           this.defineWarehousesUnitForm();
           this.submited = false;
           navigateUrl(this.listUrl, this.router);
-          
+
         },
         error: (err: any) => {
           reject(err);
@@ -380,7 +378,7 @@ export class AddwarehousesUnitComponent implements OnInit {
       } : {
         title: ' Unit ', width: 300, field: 'warehousesUnitDetailNameEn'
       },
-   
+
     this.lang == 'ar'
       ? {
         title: ' معامل التحويل  ', width: 300, field: 'transactionFactor'

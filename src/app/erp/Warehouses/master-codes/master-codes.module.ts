@@ -21,6 +21,10 @@ import { StoreCardComponent } from './store-card/store-card.component';
 import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
 import { WarehousesPaymentMethodsComponent } from './warehouses-payment-methods/warehouses-payment-methods.component';
 import { AddEditWarehousesPaymentMethodsComponent } from './warehouses-payment-methods/add-edit-warehouses-payment-methods/add-edit-warehouses-payment-methods.component';
+import { WarehousesCustomersComponent } from './warehouses-customers/warehouses-customers.component';
+import { AddEditWarehousesCustomersComponent } from './warehouses-customers/add-edit-warehouses-customers/add-edit-warehouses-customers.component';
+import { WarehousesSuppliersComponent } from './warehouses-suppliers/warehouses-suppliers.component';
+import { AddEditWarehousesSuppliersComponent } from './warehouses-suppliers/add-edit-warehouses-suppliers/add-edit-warehouses-suppliers.component';
 
 
 
@@ -29,6 +33,8 @@ import { AddEditWarehousesPaymentMethodsComponent } from './warehouses-payment-m
   declarations: [
     WarehousesPeriodsComponent, AddEditWarehousesPeriodsComponent,WarehousesUnitsComponent,AddwarehousesUnitComponent,AddEditWarehousesUnitTransactionsComponent,WarehousesTaxComponent,AddEditWarehousesTaxComponent
     , StoreCardComponent, AddEditStoreCardComponent,WarehousesPaymentMethodsComponent, AddEditWarehousesPaymentMethodsComponent
+    ,WarehousesCustomersComponent, AddEditWarehousesCustomersComponent,WarehousesSuppliersComponent, AddEditWarehousesSuppliersComponent
+
   ],
   imports: [
     CommonModule,

@@ -2,35 +2,35 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { SharedService } from '../../../../../shared/common-services/shared-service';
-import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
-import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
+import { SharedService } from '../../../../shared/common-services/shared-service';
+import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
+import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import { WarehousesUnitDto, DeleteListWarehousesUnit } from '../../../models/warehouses-unit';
-import { MessageModalComponent } from '../../../../../shared/components/message-modal/message-modal.component';
-import { SettingMenuShowOptions } from '../../../../../shared/components/models/setting-menu-show-options';
-import { ITabulatorActionsSelected } from '../../../../../shared/interfaces/ITabulator-action-selected';
-import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
+import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
+import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
+import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
+import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { NgxSpinnerService } from 'ngx-spinner';
-import { WarehousesUnitServiceProxy } from '../../../Services/warehousesunit.servies';
+import { DeleteListWarehousesCustomer, WarehousesCustomerDto } from '../../models/warehouses-customer';
+import { WarehousesCustomerServiceProxy } from '../../Services/warehouses-customer.service';
 @Component({
-  selector: 'app-warehouses-units',
-  templateUrl: './warehouses-units.component.html',
-  styleUrls: ['./warehouses-units.component.scss']
+  selector: 'app-warehouses-Customers',
+  templateUrl: './warehouses-Customers.component.html',
+  styleUrls: ['./warehouses-Customers.component.scss']
 })
-export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class WarehousesCustomersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  warehousesUnits: WarehousesUnitDto[] = [];
+  warehousesCustomers: WarehousesCustomerDto[] = [];
   currnetUrl: any;
-  addUrl: string = '/warehouses-master-codes/warehousesUnit/add-warehousesUnit';
-  updateUrl: string = '/warehouses-master-codes/warehousesUnit/update-warehousesUnit/';
-  listUrl: string = '/warehouses-master-codes/warehousesUnit';
+  addUrl: string = '/warehouses-master-codes/warehousesCustomer/add-warehousesCustomer';
+  updateUrl: string = '/warehouses-master-codes/warehousesCustomer/update-warehousesCustomer/';
+  listUrl: string = '/warehouses-master-codes/warehousesCustomer';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.units"),
+    componentList: this.translate.instant("component-names.warehouses-customer"),
     componentAdd: '',
 
   };
@@ -39,12 +39,12 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
 
   //#region Constructor
   constructor(
-    private warehousesUnitService: WarehousesUnitServiceProxy,
+    private warehousesCustomerService: WarehousesCustomerServiceProxy,
     private router: Router,
-    private sharedService: SharedService,
+    private sharedServices: SharedService,
     private modalService: NgbModal,
     private translate: TranslateService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
 
   ) {
 
@@ -56,12 +56,13 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   //#region ngOnInit
   ngOnInit(): void {
     // this.defineGridColumn();
+    
     this.spinner.show();
-    Promise.all([this.getWarehousesUnits()])
+    Promise.all([this.getWarehousesCustomers()])
       .then(a => {
         this.spinner.hide();
-        this.sharedService.changeButton({ action: 'List' } as ToolbarData);
-        this.sharedService.changeToolbarPath(this.toolbarPathData);
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.listenToClickedButton();
       }).catch(err => {
         this.spinner.hide();
@@ -70,6 +71,7 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngAfterViewInit(): void {
 
+   
 
 
   }
@@ -100,13 +102,14 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getWarehousesUnits() {
+  getWarehousesCustomers() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.warehousesUnitService.all(undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.warehousesCustomerService.allWarehousesCustomers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          this.toolbarPathData.componentList = this.translate.instant("component-names.units");
+
+          this.toolbarPathData.componentList = this.translate.instant("component-names.warehouses-customer");
           if (res.success) {
-            this.warehousesUnits = res.response.items
+            this.warehousesCustomers = res.response.items
 
           }
 
@@ -131,13 +134,13 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
 
   //#region CRUD Operations
   delete(id: any) {
-    this.warehousesUnitService.deleteWarehousesUnit(id).subscribe((resonse) => {
-      this.getWarehousesUnits();
+    this.warehousesCustomerService.deleteWarehousesCustomer(id).subscribe((resonse) => {
+      this.getWarehousesCustomers();
     });
   }
   edit(id: string) {
     this.router.navigate([
-      '/warehouses-master-codes/warehousesUnit/update-warehousesUnit',
+      '/warehouses-master-codes/warehousesCustomer/update-warehousesCustomer',
       id,
     ]);
   }
@@ -156,16 +159,15 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
       console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
-        const input = {
-          tableName: "warehousesUnits",
-          id: id,
-          idName: "Id"
+        const input={
+          tableName:"WarehousesCustomers",
+          id:id,
+          idName:"Id"
         };
-        let sub = this.warehousesUnitService.deleteEntity(input).subscribe(
+        let sub = this.warehousesCustomerService.deleteEntity(input).subscribe(
           (resonse) => {
 
-            //reloadPage()
-            this.getWarehousesUnits();
+            this.getWarehousesCustomers();
 
           });
         this.subsList.push(sub);
@@ -181,18 +183,30 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   sortByCols: any[] = [];
   searchFilters: any;
   groupByCols: string[] = [];
-  lang = localStorage.getItem("language")
+  lang = localStorage.getItem("language");
   columnNames = [
     this.lang == 'ar'
       ? { title: ' الاسم', field: 'nameAr' } :
       { title: ' Name  ', field: 'nameEn' },
 
     {
-      title: this.lang == 'ar' ? ' الكود' : 'code ',
+      title: this.lang == 'ar' ? ' الكود' : 'Code ',
       field: 'code',
     },
-    
-
+    {
+      title: this.lang == 'ar' ? 'الهاتف' : 'Phone',
+      field: 'phone',
+    },
+    {
+      title: this.lang == 'ar' ? 'البريد الالكترونى' : 'Email',
+      field: 'email',
+    },
+    {
+      title: this.lang == 'ar' ? 'رقم الحساب' : 'Account Number',
+      field: 'accountId',
+    },
+ 
+   
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -208,16 +222,19 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
         { field: 'nameEn', type: 'like', value: searchTxt },
         { field: 'nameAr', type: 'like', value: searchTxt },
         { field: 'code', type: 'like', value: searchTxt },
+        { field: 'phone', type: 'like', value: searchTxt },
+        { field: 'email', type: 'like', value: searchTxt },
+        { field: 'accountId', type: 'like', value: searchTxt }
+
         ,
       ],
     ];
   }
 
-  openWarehousesUnits() { }
   onCheck(id) {
 
     this.listIds.push(id);
-    this.sharedService.changeButton({
+    this.sharedServices.changeButton({
       action: 'Delete',
       componentName: 'List',
       submitMode: false
@@ -227,14 +244,14 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
 
     if (id != undefined) {
       this.edit(id);
-      this.sharedService.changeButton({
+      this.sharedServices.changeButton({
         action: 'Update',
         componentName: 'List',
         submitMode: false
       } as ToolbarData);
 
-      this.sharedService.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['warehouses-master-codes/warehousesUnit/update-warehousesUnit/' + id])
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.router.navigate(['warehouses-master-codes/warehousesCustomer/update-warehousesCustomer/' + id])
     }
 
   }
@@ -243,14 +260,14 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);
-        this.sharedService.changeButton({
+        this.sharedServices.changeButton({
           action: 'Update',
           componentName: 'List',
           submitMode: false
         } as ToolbarData);
 
-        this.sharedService.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['warehouses-master-codes/warehousesUnit/update-warehousesUnit/' + event.item.id])
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.router.navigate(['warehouses-master-codes/warehousesCustomer/update-warehousesCustomer/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -267,7 +284,7 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   subsList: Subscription[] = [];
   listenToClickedButton() {
 
-    let sub = this.sharedService.getClickedbutton().subscribe({
+    let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
         //currentBtn;
@@ -287,21 +304,22 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   }
   onDelete() {
 
-    let item = new DeleteListWarehousesUnit();
+    let item = new DeleteListWarehousesCustomer();
     item.ids = this.listIds;
-    const input = {
-      tableName: "WarehousesUnits",
+    const input={
+      tableName:"WarehousesCustomers",
       ids: this.listIds,
-      idName: "Id"
+      idName:"Id"
     };
-    let sub = this.warehousesUnitService.deleteListEntity(input).subscribe(
+    let sub = this.warehousesCustomerService.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getWarehousesUnits();
+        this.getWarehousesCustomers();
         this.listIds = [];
       });
     this.subsList.push(sub);
   }
+  
   //#endregion
 }
