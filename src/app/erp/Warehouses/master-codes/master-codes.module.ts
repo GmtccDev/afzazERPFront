@@ -15,13 +15,20 @@ import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { WarehousesUnitsComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/warehouses-units/warehouses-units.component';
 import { AddwarehousesUnitComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-warehouses-unit/add-warehouses-unit.component';
 import { AddEditWarehousesUnitTransactionsComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-edit-warehouses-unit-transactions/add-edit-warehouses-unit-transactions.component';
+import { WarehousesTaxComponent } from './warehouses-taxes/warehouses-taxes.component';
+import { AddEditWarehousesTaxComponent } from './warehouses-taxes/add-edit-warehouses-tax/add-edit-warehouses-tax.component';
+import { StoreCardComponent } from './store-card/store-card.component';
+import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
+import { WarehousesPaymentMethodsComponent } from './warehouses-payment-methods/warehouses-payment-methods.component';
+import { AddEditWarehousesPaymentMethodsComponent } from './warehouses-payment-methods/add-edit-warehouses-payment-methods/add-edit-warehouses-payment-methods.component';
 
 
 
 
 @NgModule({
   declarations: [
-    WarehousesPeriodsComponent, AddEditWarehousesPeriodsComponent,WarehousesUnitsComponent,AddwarehousesUnitComponent,AddEditWarehousesUnitTransactionsComponent
+    WarehousesPeriodsComponent, AddEditWarehousesPeriodsComponent,WarehousesUnitsComponent,AddwarehousesUnitComponent,AddEditWarehousesUnitTransactionsComponent,WarehousesTaxComponent,AddEditWarehousesTaxComponent
+    , StoreCardComponent, AddEditStoreCardComponent,WarehousesPaymentMethodsComponent, AddEditWarehousesPaymentMethodsComponent
   ],
   imports: [
     CommonModule,

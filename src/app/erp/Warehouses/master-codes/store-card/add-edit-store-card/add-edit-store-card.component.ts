@@ -1,56 +1,59 @@
-import {  Component, OnInit } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { SharedService } from '../../../../../shared/common-services/shared-service';
-import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
+import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
+import { SharedService } from '../../../../../shared/common-services/shared-service';
+import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { AccountClassificationServiceProxy } from '../../../services/account-classification';
-import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
-import { AccountClassificationsForIncomeStatementArEnum, AccountClassificationsForIncomeStatementEnum, VoucherTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
-@Component({
-  selector: 'app-add-edit-account-classification',
-  templateUrl: './add-edit-account-classification.component.html',
-  styleUrls: ['./add-edit-account-classification.component.scss']
-})
-export class AddEditAccountClassificationComponent implements OnInit {
-  //#region Main Declarations
-  accountClassificationForm!: FormGroup;
-  accountClassificationsTypes: ICustomEnum[] = [];
+import { StoreCardDto } from '../../../models/store-card';
+import { StoreCardServiceProxy } from '../../../Services/store-card-service';
 
+@Component({
+  selector: 'app-add-edit-store-card',
+  templateUrl: './add-edit-store-card.component.html',
+  styleUrls: ['./add-edit-store-card.component.scss']
+})
+export class AddEditStoreCardComponent implements OnInit {
+  //#region Main Declarations
+  storeCardForm!: FormGroup;
   sub: any;
   url: any;
   id: any = 0;
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
-  accountClassification: [] = [];
-  addUrl: string = '/accounting-master-codes/accountClassification/add-accountClassification';
-  updateUrl: string = '/accounting-master-codes/accountClassification/update-accountClassification/';
-  listUrl: string = '/accounting-master-codes/accountClassification';
+  addUrl: string = '/warehouses-master-codes/storeCard/add-storeCard';
+  addParentUrl: string = '/warehouses-master-codes/storeCard/add-storeCard/';
+  updateUrl: string = '/warehouses-master-codes/storeCard/update-storeCard/';
+  listUrl: string = '/warehouses-master-codes/storeCard';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.accountClassification"),
+    componentList: this.translate.instant("component-names.storeCard"),
     componentAdd: '',
 
   };
+  response: any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  storeCardList: StoreCardDto[] = [];
+  files: any;
+  logoPath: string;
+  fullPathUpdate: string;
+  logo: any;
   showSearchModal = false;
-  showSearchModalCountry = false;
-  companyId: any;
-  routeApi = 'Company/get-ddl?'
-  routeApiCountry = 'Country/get-ddl?'
+  parentId: any;
+  routeApi = 'StoreCard/get-ddl?'
   constructor(
-    private accountClassificationService: AccountClassificationServiceProxy,
+    private storeCardService: StoreCardServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -58,25 +61,30 @@ export class AddEditAccountClassificationComponent implements OnInit {
     private sharedServices: SharedService, private translate: TranslateService,
 
   ) {
-    this.defineaccountClassificationForm();
+    this.definestoreCardForm();
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
     
-    this.getAccountClassificationsTypes();
     this.spinner.show();
-   
-    this.getRouteData();
-    this.currnetUrl = this.router.url;
-    if (this.currnetUrl == this.addUrl) {
-      this.getaccountClassificationCode();
-    }
-    this.changePath();
-    this.listenToClickedButton();
-    this.spinner.hide();
-
+    Promise.all([
+      this.getStoreCard()
+    ]).then(a => {
+      
+      this.getRouteData();
+      this.changePath();
+      this.listenToClickedButton();
+      this.currnetUrl = this.router.url;
+      if (this.currnetUrl == this.addUrl) {
+        this.getstoreCardCode();
+      }
+      this.spinner.hide();
+    }).catch(err => {
+      
+      this.spinner.hide();
+    });
 
 
 
@@ -85,34 +93,34 @@ export class AddEditAccountClassificationComponent implements OnInit {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
-        if (this.id) {
-          this.getaccountClassificationById(this.id).then(a => {
-            
-            this.spinner.hide();
 
+        if (this.id) {
+          this.getstoreCardById(this.id).then(a => {
+            this.spinner.hide();
           }).catch(err => {
             this.spinner.hide();
 
           });
-
         }
+        this.url = this.router.url.split('/')[2];
+        this.spinner.hide();
+      }
+      if (params['parentId'] != null) {
+        this.parentId = params['parentId'];
+
+        this.getstoreCardCode();
+        this.url = this.router.url.split('/')[2];
       }
     });
     this.subsList.push(sub);
-
   }
-  onSelectCompany(event) {
+  onSelectStoreCard(event) {
 
-    this.companyId = event.id;
-    this.accountClassificationForm.controls.companyId.setValue(event.id);
+    this.parentId = event.id;
+    this.storeCardForm.controls.parentId.setValue(event.id);
     this.showSearchModal = false;
   }
-  onSelectCountry(event) {
 
-
-    this.accountClassificationForm.controls.countryId.setValue(event.id);
-    this.showSearchModalCountry = false;
-  }
   //#endregion
 
   //#region ngOnDestroy
@@ -122,6 +130,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
         s.unsubscribe();
       }
     });
+
   }
   //#endregion
 
@@ -138,38 +147,73 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  defineaccountClassificationForm() {
-    this.accountClassificationForm = this.fb.group({
+  definestoreCardForm() {
+    this.storeCardForm = this.fb.group({
       id: 0,
       nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: NAME_REQUIRED_VALIDATORS,
+      nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
-      type: REQUIRED_VALIDATORS,
-      isActive: true
+      isActive: true,
+      parentId: null,
+      storekeeper:null,
+      address:null,
+      notes:null
     });
 
   }
 
+  getStoreCard() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.storeCardService.getDdl().subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.storeCardList = res.response;
+
+          }
+          if (this.parentId != undefined || this.parentId != null) {
+            this.storeCardForm.controls.parentId.setValue(Number(this.parentId));
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
 
   //#endregion
 
   //#region CRUD Operations
-  getaccountClassificationById(id: any) {
+  getstoreCardById(id: any) {
+
     return new Promise<void>((resolve, reject) => {
-      let sub = this.accountClassificationService.getAccountClassification(id).subscribe({
+      let sub = this.storeCardService.getStoreCard(id).subscribe({
         next: (res: any) => {
           resolve();
-
-          this.accountClassificationForm.setValue({
+          this.storeCardForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
-            type: res.response?.type,
-            isActive: res.response?.isActive
+            isActive: res.response?.isActive,
+            parentId: res.response?.parentId,
+            storekeeper:res.response?.storekeeper,
+            address:res.response?.address,
+            notes:res.response?.notes,
 
           });
 
+       
         },
         error: (err: any) => {
           reject(err);
@@ -182,26 +226,24 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
     });
   }
-  getAccountClassificationsTypes() {
-    if (this.lang == 'en') {
-      this.accountClassificationsTypes = convertEnumToArray(AccountClassificationsForIncomeStatementEnum);
-    }
-    else {
-      this.accountClassificationsTypes = convertEnumToArray(AccountClassificationsForIncomeStatementArEnum);
-
-    }
-  }
   showPassword() {
     this.show = !this.show;
   }
-  getaccountClassificationCode() {
+  getstoreCardCode() {
+
     return new Promise<void>((resolve, reject) => {
-      let sub = this.accountClassificationService.getLastCode().subscribe({
+
+      let sub = this.storeCardService.getLastCode(this.parentId).subscribe({
+
         next: (res: any) => {
-          this.toolbarPathData.componentList = this.translate.instant("component-names.accountClassification");
-          this.accountClassificationForm.patchValue({
+
+          this.toolbarPathData.componentList = this.translate.instant("component-names.storeCard");
+          this.storeCardForm.patchValue({
             code: res.response
           });
+          if (this.parentId != undefined || this.parentId != null) {
+            this.storeCardForm.controls.parentId.setValue(Number(this.parentId));
+          }
 
         },
         error: (err: any) => {
@@ -220,7 +262,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
   //#region Helper Functions
 
   get f(): { [key: string]: AbstractControl } {
-    return this.accountClassificationForm.controls;
+    return this.storeCardForm.controls;
   }
 
 
@@ -241,9 +283,9 @@ export class AddEditAccountClassificationComponent implements OnInit {
             this.router.navigate([this.listUrl]);
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
-          } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = this.translate.instant("account-classification.add-account-classification");
-            this.defineaccountClassificationForm();
+          } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
+            this.toolbarPathData.componentAdd = 'store-cards.add-store-card';
+            this.definestoreCardForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -257,33 +299,32 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   onSave() {
-    if (this.accountClassificationForm.valid) {
+    if (this.storeCardForm.valid) {
+
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
       });
 
+
     } else {
 
-      return this.accountClassificationForm.markAllAsTouched();
+       return this.storeCardForm.markAllAsTouched();
     }
   }
   confirmSave() {
+    var entity = new StoreCardDto();
     return new Promise<void>((resolve, reject) => {
-      var entity = this.accountClassificationForm.value;
-
-      let sub = this.accountClassificationService.createAccountClassification(entity).subscribe({
+      entity = this.storeCardForm.value;
+      let sub = this.storeCardService.createStoreCard(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
-
-          this.defineaccountClassificationForm();
-
+          console.log('result dataaddData ', result);
+          this.response = { ...result.response };
+          this.definestoreCardForm();
           this.submited = false;
-
           this.spinner.hide();
-
           navigateUrl(this.listUrl, this.router);
-
         },
         error: (err: any) => {
           reject(err);
@@ -293,43 +334,40 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
       });
       this.subsList.push(sub);
-
     });
   }
 
 
   onUpdate() {
+    if (this.storeCardForm.valid) {
 
-    if (this.accountClassificationForm.valid) {
-
+      this.storeCardForm.value.id = this.id;
       this.spinner.show();
-      this.confirmUpdate().then(a => {
+      this.confirmUpdate().then(a=>{
         this.spinner.hide();
-      }).catch(e => {
+      }).catch(e=>{
         this.spinner.hide();
       });
     }
 
     else {
 
-      return this.accountClassificationForm.markAllAsTouched();
+      return this.storeCardForm.markAllAsTouched();
     }
   }
   confirmUpdate() {
-    this.accountClassificationForm.value.id = this.id;
-    var entityDb = this.accountClassificationForm.value;
-    entityDb.id = this.id;
-
+    var entity = new StoreCardDto();
+    entity = this.storeCardForm.value;
+    entity.id = this.id;
     return new Promise<void>((resolve, reject) => {
-
-      let sub = this.accountClassificationService.updateAccountClassification(entityDb).subscribe({
+      let sub = this.storeCardService.updateStoreCard(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
-
-          this.defineaccountClassificationForm();
+          console.log('result update ', result);
+          this.response = { ...result.response };
+          this.definestoreCardForm();
           this.submited = false;
           this.spinner.hide();
-
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
@@ -343,7 +381,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
     });
   }
-
-
 }
+
+
 

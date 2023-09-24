@@ -8,11 +8,11 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
-                        <form [formGroup]="accountGroupForm" id="branchSubmit" class="tabs-form">
+                        <form [formGroup]="storeCardForm" id="branchSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.accountGroup-information'|translate}}</h3>
+                                    <h3>{{'component-names.branches-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
   
@@ -23,8 +23,8 @@
                                             </label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="parentId" name='parentId' class="" id="parentId">
-                                                    <ng-option *ngFor="let accountGroup of accountGroupList" [value]="accountGroup.id">
-                                                        {{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
+                                                    <ng-option *ngFor="let storeCard of storeCardList" [value]="storeCard.id">
+                                                        {{lang=="ar"?storeCard.nameAr:storeCard.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
                                                
@@ -72,18 +72,40 @@
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
-                                                <!-- <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div> -->
+                                                
 
                                             </div>
                                         </div>
 
-                                      
+                                        <div class="col-12 col-md-6">
+                                            <label for="storekeeper" class="label-name">{{'general.storekeeper'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="storekeeper" formControlName="storekeeper">
+                                                
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="address" class="label-name">{{'general.address'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="address" formControlName="address">
+                                                
+
+                                            </div>
+                                        </div>
                                      
-                                       
+                                        <div class="col-12 col-md-6">
+                                            <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
+                                                
+
+                                            </div>
+                                        </div>
+                                     
                                         <hr class="mt-3 mb-3 p-0">
                                         <div class="col-12 col-md-6">
                                             <div class="media">
@@ -110,5 +132,5 @@
     </div>
 </section>
 <app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
-    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccountGroup($event)">
+    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectStoreCard($event)">
 </app-public-search-modal>

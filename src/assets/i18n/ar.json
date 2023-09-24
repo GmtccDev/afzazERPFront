@@ -249,7 +249,13 @@
         "bankAccount-information": "بيانات حساب البنك",
         "warehouses-period-information": "بيانات الفترة",
         "warehouses-period":"الفترات",
-        "add-warehouses-period": "اضافة فترة"
+        "add-warehouses-period": "اضافة فترة",
+        "taxes":"الضرائب",
+        "storeCard": "بطاقة المستودع",
+        "storeCard-information": "معلومات بطاقة المستودع",
+        "warehouses-payment-method-information": "بيانات طريقة الدفع"
+
+
 
     },
     "general": {
@@ -349,7 +355,11 @@
         "confirm": "تأكيد",
         "amount-local": "الأجمالى محلى",
         "from-entry-no": "من رقم القيد",
-        "to-entry-no": "الى رقم القيد"
+        "to-entry-no": "الى رقم القيد",
+        "account":"الحساب",
+        "address":"العنوان",
+        "storekeeper":"أمين المستودع"
+
     },
     "menu": {},
     "currency": {
@@ -494,6 +504,15 @@
         "unit-transactions": " معاملات التحويل",
         "add-unit":"اضافة وحدة",
         "add-edit":"اضافة وتعديل"
+
+
+    },
+    "warehouses-tax": {
+        "tax-information": "بيانات الضريبة",
+        "tax-ratio": "نسبة الخصم",
+        "tax-details-required":"تفاصيل الضريبة مطلوب",
+        "add-tax":"اضافة ضريبة"
+
 
 
     }

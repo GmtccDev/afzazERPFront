@@ -18,7 +18,7 @@
         "Ar": "AR",
         "GMTCC": "GMTCC",
         "currencySymbol": "Currency Symbol",
-        "unit-symbol":"Unit Symbol",
+        "unit-symbol": "Unit Symbol",
         "rights-reserved": "All Rights Reserved",
         "links": "Links",
         "get-in-touch": "Get in touch",
@@ -154,11 +154,11 @@
         "amount": "amount",
         "dueDate": "Due date",
         "add-new-row": "Add New Row",
-        "confirm":"Confirm",
-        "amount-local":"Amount Local",
-        "from-entry-no":"From Entry No",
-        "to-entry-no":"To Entry No"
-
+        "confirm": "Confirm",
+        "amount-local": "Amount Local",
+        "from-entry-no": "From Entry No",
+        "to-entry-no": "To Entry No",
+        "account":"Account"
     },
     "menu": {},
     "home": {
@@ -254,7 +254,7 @@
         "whentenentshouldpayError": "Duration must be greater than zero!",
         "invalidPassword": "invalid Password",
         "userNameRequired": "Failed Required",
-        "invalid-code":"Invalid Code"
+        "invalid-code": "Invalid Code"
     },
     "validation-messages": {
         "invalid-data": "Please enter valid data!",
@@ -304,7 +304,7 @@
         "unified-number": "Unified Number",
         "commercial-registeration-no": "Commercial registeration number",
         "commercial-registration-issue-date": "Commercial registeration issue date",
-        "add-role":"Add Role"
+        "add-role": "Add Role"
     },
     "toolbar": {
         "list": "List",
@@ -347,7 +347,7 @@
         "branches": "Branches",
         "branches-information": "Branches information ",
         "configurations": "configurations",
-        "journal":"Journal",
+        "journal": "Journal",
         "journal-information": "journal information ",
         "fiscalPeriod-information": "Fiscal Period information",
         "fiscalPeriod": "Fiscal Period",
@@ -381,12 +381,17 @@
         "general-ledger-report":"General Ledger Report",
 		"journal-entries-report":"Journal Entries Report  ",
 		"accounts-balance-report":"Accounts Balance Report",
-		"trail-balance-report":"trail Balance Report",
         "cost-centers-report":"Cost Centers Reports",
         "warehouses-period-information": "Period Information",
         "warehouses-period": "Periods",
-        "add-warehouses-period": "Add Period"
-
+        "add-warehouses-period": "Add Period",
+        "taxes":"Taxes",
+        "storeCard": "Store Card",
+        "storeCard-information": "Store Card Information",
+        "address":"Address",
+        "storekeeper":" Store Keeper",
+        "warehouses-payment-method":"Payment Methods",
+        "warehouses-payment-method-information": "Payment Method Information"
 
     },
     "language": {
@@ -397,14 +402,14 @@
         "transaction-date": "Transaction Date",
         "transaction-factor": "Transaction Factor",
         "currency-transactions": "New Currency Transactions",
-        "add-currency":"Add Currency",
-        "add-edit":"Add and Edit"
+        "add-currency": "Add Currency",
+        "add-edit": "Add and Edit"
     },
     "company": {
         "motherCompany": "Mother Company",
         "useHijri": "Use Hijri",
         "web-site": "Web Site",
-        "add-company":"Add Company"
+        "add-company": "Add Company"
     },
     "account": {
         "debitLimit": "Debit Limit",
@@ -428,7 +433,7 @@
         "account": "closing account  ",
         "endOfYear": "End Of Year",
         "accountReceivables": "Account Receivables",
-        "idleTime":"Idle Time"
+        "idleTime": "Idle Time"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -438,7 +443,6 @@
     "fiscal-period": {
         "fiscal-period-status": "status",
         "add-fiscal-period": "Add Fiscal Period"
-
     },
     "voucher-type": {
         "voucher-type-information": "Voucher Type Information",
@@ -476,41 +480,38 @@
     "incoming-cheque": {
         "add-incoming-cheque": "Add Incoming Cheque",
         "sum-values-equal-to-cheque-details": "Sum of values is equal to cheque details",
-        "confirm-register":"Are you sure to register this check?",
-        "register":"Register",
-        "confirm-collect":"Are you sure to collect this check?",
-        "collect":"Collect",
-        "confirm-reject":"Are you sure to reject this check?",
-        "reject":"Reject",
-        "collect-cheque-done":"The cheque is collected successfully.",
-        "reject-cheque-done":"The cheque is rejected successfully.",
-        "cannot-edit":"You can not update this cheque",
-        "registered":"Registered",
-        "edit-registered":"Edited the registeration",
-        "collected":"Collected",
-        "rejected":"Rejected",
-        "cheque-details-status":"Cheque Details Status",
-        "can-not-add-more-than-one-detail":"You can not add more than one detail for the cheque"
-
-
-     },
-     "account-groups":
-     {
-        "add-account-group":"Add Account Group"
-     },
-     "journal":{
-        "add-journal":"Add Journal"
-     },
-     "branch":{
-        "add-branch":"Add Branch"
-     },
-     "business":{
-        "add-business":"Add Business"
-     },
-     "country":{
-        "add-country":"Add Country"
-     },
-     "warehouses-unit":{
+        "confirm-register": "Are you sure to register this check?",
+        "register": "Register",
+        "confirm-collect": "Are you sure to collect this check?",
+        "collect": "Collect",
+        "confirm-reject": "Are you sure to reject this check?",
+        "reject": "Reject",
+        "collect-cheque-done": "The cheque is collected successfully.",
+        "reject-cheque-done": "The cheque is rejected successfully.",
+        "cannot-edit": "You can not update this cheque",
+        "registered": "Registered",
+        "edit-registered": "Edited the registeration",
+        "collected": "Collected",
+        "rejected": "Rejected",
+        "cheque-details-status": "Cheque Details Status",
+        "can-not-add-more-than-one-detail": "You can not add more than one detail for the cheque"
+    },
+    "account-groups": {
+        "add-account-group": "Add Account Group"
+    },
+    "journal": {
+        "add-journal": "Add Journal"
+    },
+    "branch": {
+        "add-branch": "Add Branch"
+    },
+    "business": {
+        "add-business": "Add Business"
+    },
+    "country": {
+        "add-country": "Add Country"
+    },
+    "warehouses-unit": {
         "transaction-factor": "Transaction Factor",
         "unit-transactions": "New Unit Transactions",
         "add-unit":"Add Unit",
