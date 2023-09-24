@@ -253,7 +253,14 @@
         "taxes":"الضرائب",
         "storeCard": "بطاقة المستودع",
         "storeCard-information": "معلومات بطاقة المستودع",
-        "warehouses-payment-method-information": "بيانات طريقة الدفع"
+        "warehouses-payment-method":"طرق الدفع",
+        "warehouses-payment-method-information": "بيانات طريقة الدفع",
+        "warehouses-customer":"العملاء",
+        "warehouses-customer-information": "بيانات العميل",
+        "warehouses-supplier":"الموردين",
+        "warehouses-supplier-information": "بيانات المورد",
+        "add-warehouses-customer": "اضافة عميل",
+        "add-warehouses-supplier": "اضافة مورد"
 
 
 
@@ -358,7 +365,11 @@
         "to-entry-no": "الى رقم القيد",
         "account":"الحساب",
         "address":"العنوان",
-        "storekeeper":"أمين المستودع"
+        "storekeeper":"أمين المستودع",
+        "responsible-person":"الشخص المسئول",
+        "required":"هذا الحقل مطلوب"
+
+
 
     },
     "menu": {},
@@ -509,7 +520,7 @@
     },
     "warehouses-tax": {
         "tax-information": "بيانات الضريبة",
-        "tax-ratio": "نسبة الخصم",
+        "tax-ratio": "نسبة الضريبة",
         "tax-details-required":"تفاصيل الضريبة مطلوب",
         "add-tax":"اضافة ضريبة"
 

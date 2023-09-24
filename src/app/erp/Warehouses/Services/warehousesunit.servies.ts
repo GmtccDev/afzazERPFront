@@ -13,7 +13,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { WarehousesUnitDto, CreateWarehousesUnitCommand, DeleteListWarehousesUnitCommand, EditWarehousesUnitCommand } from '../models/warehouses-unit'
+import { WarehousesUnitDto, CreateWarehousesUnit , DeleteListWarehousesUnit , EditWarehousesUnit  } from '../models/warehouses-unit'
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
@@ -29,15 +29,15 @@ export class WarehousesUnitServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createWarehousesUnit(currency: CreateWarehousesUnitCommand): Observable<WarehousesUnitDto> {
+    createWarehousesUnit(currency: CreateWarehousesUnit ): Observable<WarehousesUnitDto> {
 
         return this.http.post<any>(environment.apiUrl + "/api/WarehousesUnit/add?", currency);
     }
     // ids: number[] | undefined;
-    deleteListWarehousesUnit(currency: DeleteListWarehousesUnitCommand): Observable<number> {
+    deleteListWarehousesUnit(currency: DeleteListWarehousesUnit ): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/WarehousesUnit/deleteList?", currency);
     }
-    updateWarehousesUnit(currency: EditWarehousesUnitCommand): Observable<WarehousesUnitDto> {
+    updateWarehousesUnit(currency: EditWarehousesUnit ): Observable<WarehousesUnitDto> {
         return this.http.post<any>(environment.apiUrl + "/api/WarehousesUnit/edit?", currency);
     }
     getDdl(): Observable<any> {

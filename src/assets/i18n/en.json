@@ -158,7 +158,9 @@
         "amount-local": "Amount Local",
         "from-entry-no": "From Entry No",
         "to-entry-no": "To Entry No",
-        "account":"Account"
+        "account":"Account",
+        "address":"Address",
+        "responsible-person":"The Responsible Person"
     },
     "menu": {},
     "home": {
@@ -391,7 +393,14 @@
         "address":"Address",
         "storekeeper":" Store Keeper",
         "warehouses-payment-method":"Payment Methods",
-        "warehouses-payment-method-information": "Payment Method Information"
+        "warehouses-payment-method-information": "Payment Method Information",
+        "warehouses-customer":"Customers",
+        "warehouses-customer-information": "Customer Information",
+        "warehouses-supplier":"Supplier",
+        "warehouses-supplier-information": "Supplier Information",
+        "add-warehouses-customer": "Add Customer",
+        "add-warehouses-supplier": "Add Supplier"
+
 
     },
     "language": {
