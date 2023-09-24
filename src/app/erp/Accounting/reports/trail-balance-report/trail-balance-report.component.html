@@ -1,0 +1,18 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-report">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="main-report">
+                    <div class="wrapper-title">
+                        <app-filters [ShowOptions]="ShowOptions" (OnFilter)="OnFilter($event)"></app-filters>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

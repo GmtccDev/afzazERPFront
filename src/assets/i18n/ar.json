@@ -243,6 +243,7 @@
         "general-ledger-report":"تقرير دفتر الاستاذ العام",
 		"journal-entries-report":"تقرير القيود اليومية",
 		"accounts-balance-report":"تقرير أرصدة الحسابات",
+		"trail-balance-report":"تقرير ميزان المراجعة",
         "cost-centers-report":"تقرير مراكز التكلفة",
         "bankAccount": "حساب البنك",
         "bankAccount-information": "بيانات حساب البنك",

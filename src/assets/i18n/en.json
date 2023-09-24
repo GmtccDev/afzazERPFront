@@ -378,10 +378,10 @@
         "incomingCheque-information": "Incoming Cheque Information ",
         "issuing-cheque": " Issuing Cheque",
         "issuing-cheque-information": "Issuing Cheque Information ",
-        "general-ledger-report": "General Ledger Report",
-        "journal-entries-report": "Journal Entries Report  ",
-        "accounts-balance-report": "Accounts Balance Report",
-        "cost-centers-report": "Cost Centers Reports",
+        "general-ledger-report":"General Ledger Report",
+		"journal-entries-report":"Journal Entries Report  ",
+		"accounts-balance-report":"Accounts Balance Report",
+        "cost-centers-report":"Cost Centers Reports",
         "warehouses-period-information": "Period Information",
         "warehouses-period": "Periods",
         "add-warehouses-period": "Add Period",
@@ -514,14 +514,9 @@
     "warehouses-unit": {
         "transaction-factor": "Transaction Factor",
         "unit-transactions": "New Unit Transactions",
-        "add-unit": "Add Unit",
-        "add-edit": "Add and Edit"
-    },
-    "warehouses-tax": {
-        "tax-information": "Tax Information",
-        "tax-ratio": "Tax Ratio",
-        "tax-details-required":"Tax details is required",
-        "add-tax":"Add Tax"
+        "add-unit":"Add Unit",
+        "add-edit":"Add and Edit"
+     }
 
-    }
+
 }
