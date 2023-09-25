@@ -13,7 +13,7 @@ export class CreateWarehousesPaymentMethod {
     inputDto:WarehousesPaymentMethodDto;
 }
 
-export class EditWarehousesPeriod {
+export class EditWarehousesPaymentMethod {
     inputDto:WarehousesPaymentMethodDto;
 }
 export class WarehousesPaymentMethodDtoPageList {

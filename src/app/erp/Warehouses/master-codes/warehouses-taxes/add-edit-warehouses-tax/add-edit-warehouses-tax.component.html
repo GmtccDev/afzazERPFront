@@ -142,22 +142,26 @@
                                                             <tr *ngFor="let item of warehousesTaxesDetail; let i= index;">
                                                                 <td> {{i+1}}</td>
                                                                 <td>
-                                                                    <app-full-date
+                                                                    {{warehousesTaxesDetail[i].fromDate}}
+
+                                                                    <!-- <app-full-date
                                                                         [(ngModel)]="warehousesTaxesDetail[i].fromDate"
                                                                         ngDefaultControl
                                                                         [selectedDate]="warehousesTaxesDetail[i].fromDate"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        (OnDateSelect)="getFromDate($event,i)"></app-full-date>
+                                                                        (OnDateSelect)="getFromDate($event,i)"></app-full-date> -->
 
 
                                                                 </td>
                                                                 <td>
-                                                                    <app-full-date
+                                                                    {{warehousesTaxesDetail[i].toDate}}
+
+                                                                    <!-- <app-full-date
                                                                         [(ngModel)]="warehousesTaxesDetail[i].toDate"
                                                                         ngDefaultControl
                                                                         [selectedDate]="warehousesTaxesDetail[i].toDate"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        (OnDateSelect)="getToDate($event,i)"></app-full-date>
+                                                                        (OnDateSelect)="getToDate($event,i)"></app-full-date> -->
 
 
                                                                 </td>

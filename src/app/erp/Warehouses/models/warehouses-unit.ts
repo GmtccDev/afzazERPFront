@@ -7,14 +7,14 @@ export class WarehousesUnitDto {
     isActive:boolean| undefined;
     symbol: string | undefined;
 }
-export class CreateWarehousesUnitCommand {
+export class CreateWarehousesUnit  {
     nameAr: string | undefined;
     nameEn: string | undefined;
     code: string | undefined;
     isActive:boolean| undefined;
     symbol: string | undefined;
 }
-export class EditWarehousesUnitCommand {
+export class EditWarehousesUnit  {
     nameAr: string | undefined;
     nameEn: string | undefined;
     id: number;
@@ -27,7 +27,7 @@ export interface IWarehousesUnitDtoPageList {
     metadata: IPagedListMetaData;
     items: WarehousesUnitDto[] | undefined;
 }
-export class DeleteListWarehousesUnitCommand{
+export class DeleteListWarehousesUnit {
     ids: number[] | undefined;
 }
 
@@ -38,10 +38,10 @@ export class WarehousesUnitTransactionDto {
     transactionDate: any | undefined;
     transactionFactor: number | undefined;
 }
-export class CreateWarehousesUnitTransactionCommand {
+export class CreateWarehousesUnitTransaction  {
     inputDto: WarehousesUnitTransactionDto;
 }
-export class EditWarehousesUnitTransactionCommand {
+export class EditWarehousesUnitTransaction  {
     inputDto: WarehousesUnitTransactionDto;
     id: number | undefined;
 }

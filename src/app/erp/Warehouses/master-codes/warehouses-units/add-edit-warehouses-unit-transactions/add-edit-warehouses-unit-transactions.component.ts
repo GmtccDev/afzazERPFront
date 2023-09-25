@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehousesUnitServiceProxy } from '../../../Services/warehousesunit.servies';
-import { CreateWarehousesUnitTransactionCommand, EditWarehousesUnitTransactionCommand } from '../../../models/warehouses-unit';
+import { CreateWarehousesUnitTransaction, EditWarehousesUnitTransaction } from '../../../models/warehouses-unit';
 @Component({
   selector: 'app-add-edit-warehouses-unit-transactions',
   templateUrl: './add-edit-warehouses-unit-transactions.component.html',
@@ -164,7 +164,7 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
     }
   }
   confirmSave() {
-    var inputDto = new CreateWarehousesUnitTransactionCommand()
+    var inputDto = new CreateWarehousesUnitTransaction()
     return new Promise<void>((resolve, reject) => {
       inputDto.inputDto = this.warehousesUnitTransactionsForm.value;
       inputDto.inputDto.warehousesUnitMasterId = this.warehousesUnitMasterId;
@@ -202,7 +202,7 @@ export class AddEditWarehousesUnitTransactionsComponent implements OnInit {
   }
   confirmUpdate() {
     debugger
-    var inputDto = new EditWarehousesUnitTransactionCommand()
+    var inputDto = new EditWarehousesUnitTransaction()
     return new Promise<void>((resolve, reject) => {
 
       inputDto.inputDto = this.warehousesUnitTransactionsForm.value;
