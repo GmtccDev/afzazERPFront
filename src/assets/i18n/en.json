@@ -9,6 +9,7 @@
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
         "code": "Code",
+        "barcode":"barcode",
         "home": "Home",
         "about-us": "About Us",
         "recently-added": "Recently added",
@@ -160,7 +161,8 @@
         "to-entry-no": "To Entry No",
         "account":"Account",
         "address":"Address",
-        "responsible-person":"The Responsible Person"
+        "responsible-person":"The Responsible Person",
+        "image":"Image"
     },
     "menu": {},
     "home": {
@@ -399,7 +401,10 @@
         "warehouses-supplier":"Supplier",
         "warehouses-supplier-information": "Supplier Information",
         "add-warehouses-customer": "Add Customer",
-        "add-warehouses-supplier": "Add Supplier"
+        "add-warehouses-supplier": "Add Supplier",
+        "item-card":"Item Card",
+        "item-information": "Item Information",
+        "add-item": "Add Item"
 
 
     },
@@ -525,6 +530,30 @@
         "unit-transactions": "New Unit Transactions",
         "add-unit":"Add Unit",
         "add-edit":"Add and Edit"
+     },
+     "item":{
+        "item-group":"Item Group",
+        "unit":"Unit",
+        "item-type":"Item Type",
+        "cost-calculate-method":"Cost Calculate Method",
+        "general-information":"General Information",
+        "model":"Model",
+        "manufacturer":"Manufacturer",
+        "maximum":"Maximum",
+        "minimum":"Minimum",
+        "reorder-limit":"Reorder Limit",
+        "units":"Units",
+        "main-unit":"Main Unit",
+        "selling-price":"Selling Price",
+        "consumer-price":"Consumer Price",
+        "min-selling-price":"Minimum Selling Price",
+        "opening-cost-price":"opening Cost Price",
+        "properties":"Properties",
+        "has-expired-date":"Has Expired Date",
+        "life-time":"Life Time",
+        "life-time-type":"Life Time Type"
+
+
      }
 
 

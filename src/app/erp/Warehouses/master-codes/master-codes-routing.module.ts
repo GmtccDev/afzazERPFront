@@ -14,6 +14,8 @@ import { WarehousesCustomersComponent } from './warehouses-customers/warehouses-
 import { AddEditWarehousesCustomersComponent } from './warehouses-customers/add-edit-warehouses-customers/add-edit-warehouses-customers.component';
 import { WarehousesSuppliersComponent } from './warehouses-suppliers/warehouses-suppliers.component';
 import { AddEditWarehousesSuppliersComponent } from './warehouses-suppliers/add-edit-warehouses-suppliers/add-edit-warehouses-suppliers.component';
+import { ItemCardComponent } from './item-card/item-card.component';
+import { AddEditItemCardComponent } from './item-card/add-edit-item-card/add-edit-item-card.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -41,6 +43,9 @@ const routes: Routes = [
 			{ path: 'warehousesSupplier', component: WarehousesSuppliersComponent },
 			{ path: 'warehousesSupplier/add-warehousesSupplier', component: AddEditWarehousesSuppliersComponent },
 			{ path: 'warehousesSupplier/update-warehousesSupplier/:id', component: AddEditWarehousesSuppliersComponent },
+			{ path: 'itemCard', component: ItemCardComponent },
+			{ path: 'itemCard/add-itemCard', component: AddEditItemCardComponent },
+			{ path: 'itemCard/update-itemCard/:id', component: AddEditItemCardComponent },
 		]
 	}
 ];

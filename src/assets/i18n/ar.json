@@ -260,7 +260,10 @@
         "warehouses-supplier":"الموردين",
         "warehouses-supplier-information": "بيانات المورد",
         "add-warehouses-customer": "اضافة عميل",
-        "add-warehouses-supplier": "اضافة مورد"
+        "add-warehouses-supplier": "اضافة مورد",
+        "item-card":"بطاقة الصنف",
+        "item-information": "بيانات الصنف",
+        "add-item": "اضافة صنف"
 
 
 
@@ -269,6 +272,7 @@
         "nameAr": "الاسم العربي",
         "nameEn": "الاسم الانجليزى",
         "code": "التسلسل",
+        "barcode":"الباركود",
         "currencySymbol": "رمز العملة",
         "unit-symbol": "رمز الوحدة",
         "home": " الرئيسية",
@@ -367,7 +371,9 @@
         "address":"العنوان",
         "storekeeper":"أمين المستودع",
         "responsible-person":"الشخص المسئول",
-        "required":"هذا الحقل مطلوب"
+        "required":"هذا الحقل مطلوب",
+        "image":"الصورة"
+
 
 
 
