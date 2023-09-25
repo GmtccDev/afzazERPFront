@@ -1,0 +1,14 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'page-form.loading'|translate}} </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-auction">
+    <div class="container-fluid p-0">
+        <app-tabulator [idColName]="'id'" [childRowData]="items" [parentColName]="'groupId'"
+            [divId]="'Items'" [columnSettings]="columnNames" [componentName]="'Item'"
+            (onEditItem)="onEdit($event)" (onCheckItem)="onCheck($event)"
+            (onDeleteItem)="showConfirmDeleteMessage($event)" (onMenuActionSelected)="onMenuActionSelected($event)"
+            [showMenuOptions]="menuOptions" [direction]="direction" [sortByList]="sortByCols"
+            [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters"
+            (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1" [path]="'Item'"></app-tabulator>
+    </div>
+</section>
