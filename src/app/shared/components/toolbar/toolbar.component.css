@@ -9,9 +9,8 @@ svg.feather.feather-search {
 .dropdown-toggle.k-button::after {
   content: "\e6e2" !important;
   border: none !important;
-  font-family: 'themify';
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+  font-family: "themify";
+  transform: rotate(90deg);
   font-size: 13px;
 }
 
@@ -21,5 +20,4 @@ svg.feather.feather-search {
   -moz-transform: translate(0, 36px) !important;
   -ms-transform: translate(0, 36px) !important;
   -o-transform: translate(0, 36px) !important;
-}
-/*# sourceMappingURL=toolbar.component.css.map */
+}/*# sourceMappingURL=toolbar.component.css.map */

@@ -224,8 +224,7 @@
   color: var(--theme-deafult);
 }
 .todo .todo-list-wrapper #todo-list li.new .task-container {
-  -webkit-animation: taskHighlighter 2000ms linear 1;
-          animation: taskHighlighter 2000ms linear 1;
+  animation: taskHighlighter 2000ms linear 1;
 }
 .todo .todo-list-wrapper .todo-list-header h5 {
   text-align: center;
@@ -269,14 +268,6 @@
 .todo .notification-popup.hide {
   opacity: 0;
   visibility: hidden;
-}
-@-webkit-keyframes taskHighlighter {
-  0% {
-    background: rgba(68, 102, 242, 0.5);
-  }
-  100% {
-    background: #fff;
-  }
 }
 @keyframes taskHighlighter {
   0% {

@@ -5,15 +5,67 @@
   margin: auto;
 }
 
+.text-start {
+  text-align: start !important;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url(../../../../assets/images/login/bg-1.jpg);
+  filter: blur(8px);
+  height: 100vh;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  left: auto;
+  opacity: 0.6;
+}
+
+.box-img img {
+  height: 100vh;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.form-control,
+button.btn.btn-block.btn-primary.w-100 {
+  min-height: 40px !important;
+}
+
+.text.text-danger.mt-1.ng-star-inserted {
+  position: absolute;
+  bottom: -23px;
+  font-size: 12px;
+  right: 0;
+}
+
+html[dir=rtl] .text.text-danger.mt-1.ng-star-inserted {
+  left: 0;
+  right: initial;
+}
+
+.mb-2.text-muted.btn-link a {
+  text-decoration: none !important;
+}
+
+.row.bg-login-admin {
+  background-image: linear-gradient(33deg, rgba(41, 49, 118, 0.88), rgba(0, 31, 43, 0.88)), url(../../../../assets/images/login/bg.gif);
+  background-size: contain;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-attachment: fixed;
+  background-position: center;
+}
+
 .loader--text:after {
   content: "Loading";
   font-weight: bold;
-  -webkit-animation-name: loading-text;
-          animation-name: loading-text;
-  -webkit-animation-duration: 3s;
-          animation-duration: 3s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation-name: loading-text;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
 }
 
 .h-100vh {
@@ -22,65 +74,26 @@
 }
 
 .BG-IMG-WAVE {
-  background-image: linear-gradient(45deg, #1410239e, #29317694), url(../../../../assets/images/login/bg.gif);
+  background-image: linear-gradient(45deg, rgba(20, 16, 35, 0.6196078431), rgba(41, 49, 118, 0.5803921569)), url(../../../../assets/images/login/bg.gif);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
-@-webkit-keyframes loader {
-  15% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-  45% {
-    -webkit-transform: translateX(230px);
-            transform: translateX(230px);
-  }
-  65% {
-    -webkit-transform: translateX(230px);
-            transform: translateX(230px);
-  }
-  95% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-}
-
 @keyframes loader {
   15% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
   45% {
-    -webkit-transform: translateX(230px);
-            transform: translateX(230px);
+    transform: translateX(230px);
   }
   65% {
-    -webkit-transform: translateX(230px);
-            transform: translateX(230px);
+    transform: translateX(230px);
   }
   95% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
 }
-
-@-webkit-keyframes loading-text {
-  0% {
-    content: "Loading";
-  }
-  25% {
-    content: "Loading.";
-  }
-  50% {
-    content: "Loading..";
-  }
-  75% {
-    content: "Loading...";
-  }
-}
-
 @keyframes loading-text {
   0% {
     content: "Loading";
@@ -94,5 +107,4 @@
   75% {
     content: "Loading...";
   }
-}
-/*# sourceMappingURL=login.component.css.map */
+}/*# sourceMappingURL=login.component.css.map */

@@ -16,7 +16,7 @@ export class CustomizerComponent implements OnInit {
   public sidebarSetting: string = 'default-sidebar';
   public MIXLayout: string = 'default';
 
-	public primary_color: string = '#f4aa2c';
+  public primary_color: string = '#4bc2f1';
   public secondary_color: string = '#575656';
 
   constructor(private modalService: NgbModal,
@@ -45,13 +45,13 @@ export class CustomizerComponent implements OnInit {
 
     this.layoutType = val;
     this.layout.config.settings.layout_type = val;
-    if(val == 'rtl') {
+    if (val == 'rtl') {
       localStorage.setItem('language', "ar");
       document.getElementsByTagName('html')[0].setAttribute('dir', val);
-   
+
     } else {
       localStorage.setItem('language', "en");
-  
+
       document.getElementsByTagName('html')[0].removeAttribute('dir');
     }
   }
@@ -81,11 +81,11 @@ export class CustomizerComponent implements OnInit {
   }
 
   resetColor() {
-	  document.documentElement.style.setProperty('--theme-deafult', '#f4aa2c');
+    document.documentElement.style.setProperty('--theme-deafult', '#4bc2f1');
     document.documentElement.style.setProperty('--theme-secondary', '#575656');
-	  (<HTMLInputElement>document.getElementById('ColorPicker1')).value = '#f4aa2c';
+    (<HTMLInputElement>document.getElementById('ColorPicker1')).value = '#4bc2f1';
     (<HTMLInputElement>document.getElementById('ColorPicker2')).value = '#575656';
-	  this.layout.config.color.primary_color = '#f4aa2c';
+    this.layout.config.color.primary_color = '#4bc2f1';
     this.layout.config.color.secondary_color = '#575656';
   }
 

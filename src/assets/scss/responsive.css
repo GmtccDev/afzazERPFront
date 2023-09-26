@@ -114,7 +114,7 @@
     max-width: 50%;
   }
   .img-gallery-set1,
-.img-gallery-set5 {
+  .img-gallery-set5 {
     display: none;
   }
   .box-layout.page-wrapper.horizontal-wrapper .page-header {
@@ -128,7 +128,7 @@
 }
 @media screen and (max-width: 1580px) and (min-width: 1200px) {
   .docs-buttons,
-.docs-toggles {
+  .docs-toggles {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -655,11 +655,11 @@
     padding: 0.375rem 1.25rem;
   }
   .left-header .level-menu .nav-link svg,
-.left-header .mega-menu .nav-link svg {
+  .left-header .mega-menu .nav-link svg {
     margin-right: 0;
   }
   .left-header .level-menu .nav-link span,
-.left-header .mega-menu .nav-link span {
+  .left-header .mega-menu .nav-link span {
     display: none;
   }
   .link-section > div.active > h6:before {
@@ -693,8 +693,7 @@
   .left-header .mega-menu-container.d-block {
     right: 0;
     transition: all 0.3s ease;
-    -webkit-animation: fadeInRight 0.3s ease-in-out;
-            animation: fadeInRight 0.3s ease-in-out;
+    animation: fadeInRight 0.3s ease-in-out;
   }
   .left-header .mega-menu-container .mega-box {
     flex-basis: auto;
@@ -1033,7 +1032,7 @@
     flex: 0 0 26%;
     max-width: 26%;
   }
-  .page-wrapper.compact-wrapper .page-header .header-wrapper .nav-right {
+  .page-wrapper.compact-wrapper .page-header .header-wrapper .nav-right0 {
     flex: 0 0 71.66667%;
     max-width: 71.66667%;
   }
@@ -1095,7 +1094,7 @@
     display: none !important;
   }
   .page-wrapper.compact-sidebar .page-body-wrapper .page-body {
-    margin-top: 60px;
+    margin-top: 170px;
   }
   .page-wrapper.only-body .page-header .header-wrapper .search-full .Typeahead-menu {
     top: 65px;
@@ -1133,7 +1132,7 @@
     width: calc(100vw - 0px);
   }
   .document-content .page-body {
-    margin-top: 90px !important;
+    margin-top: 190px !important;
   }
   .document-content ul.nav-pills {
     max-height: calc(100vh - 84px);
@@ -1168,18 +1167,18 @@
     margin-bottom: 30px;
   }
   .page-wrapper .card .card-header,
-.page-wrapper .card .card-body,
-.page-wrapper .card .card-footer {
+  .page-wrapper .card .card-body,
+  .page-wrapper .card .card-footer {
     padding: 20px;
   }
   .page-wrapper .card .card-header .tab-content .m-t-30,
-.page-wrapper .card .card-body .tab-content .m-t-30,
-.page-wrapper .card .card-footer .tab-content .m-t-30 {
+  .page-wrapper .card .card-body .tab-content .m-t-30,
+  .page-wrapper .card .card-footer .tab-content .m-t-30 {
     margin-top: 20px !important;
   }
   .page-wrapper .card .card-header .tab-content .m-b-30,
-.page-wrapper .card .card-body .tab-content .m-b-30,
-.page-wrapper .card .card-footer .tab-content .m-b-30 {
+  .page-wrapper .card .card-body .tab-content .m-b-30,
+  .page-wrapper .card .card-footer .tab-content .m-b-30 {
     margin-bottom: 20px !important;
   }
   .page-wrapper .page-body-wrapper .page-title {
@@ -1269,15 +1268,15 @@
     margin-top: 0;
   }
   .page-body-wrapper .page-body,
-.page-body-wrapper footer {
+  .page-body-wrapper footer {
     margin-left: 0 !important;
   }
   .page-body-wrapper .page-body #customer-review .owl-stage-outer,
-.page-body-wrapper footer #customer-review .owl-stage-outer {
+  .page-body-wrapper footer #customer-review .owl-stage-outer {
     width: 100% !important;
   }
   .page-body-wrapper .page-body .calender-widget .cal-desc p,
-.page-body-wrapper footer .calender-widget .cal-desc p {
+  .page-body-wrapper footer .calender-widget .cal-desc p {
     max-height: 101px;
   }
   .default-according .card {
@@ -1312,7 +1311,7 @@
     margin-bottom: 20px;
   }
   .timeline-content p,
-.timeline-content .comments-box {
+  .timeline-content .comments-box {
     margin-top: 20px;
   }
   .social-chat {
@@ -1322,7 +1321,7 @@
     padding: 20px;
   }
   .social-chat .your-msg,
-.social-chat .other-msg {
+  .social-chat .other-msg {
     margin-bottom: 20px;
   }
   .social-network span {
@@ -1370,7 +1369,7 @@
     padding: 20px;
   }
   .floated-customizer-btn,
-.floated-customizer-panel {
+  .floated-customizer-panel {
     display: none;
   }
   .page-builder .ge-canvas.ge-editing .row {
@@ -1714,6 +1713,13 @@
   }
 }
 @media only screen and (max-width: 767.98px) {
+  span.k-button-text {
+    display: none;
+  }
+  .btn-tools {
+    justify-content: space-between;
+    width: 100%;
+  }
   .grid-pie-chart.flot-chart-container {
     height: 400px;
   }
@@ -1740,9 +1746,6 @@
   .page-wrapper.compact-wrapper .left-header .mega-menu span, .page-wrapper.compact-sidebar .left-header .mega-menu span {
     display: none;
   }
-  .page-wrapper.compact-wrapper .nav-right .nav-menus {
-    margin-right: 47px;
-  }
   .page-wrapper.material-type::before {
     display: none;
   }
@@ -1755,12 +1758,6 @@
   }
   .page-wrapper.only-body .page-header .header-wrapper .nav-right > ul > li {
     margin-right: -2px;
-  }
-  .page-wrapper.only-body .page-header .header-wrapper .nav-right .nav-menus {
-    margin-right: -10px;
-  }
-  .page-wrapper .nav-right .nav-menus {
-    margin-right: 60px;
   }
   .profile-media .media-body {
     display: none;
@@ -1808,7 +1805,7 @@
     text-align: center;
   }
   .ngx-datatable .datatable-footer .page-count,
-.ngx-datatable .datatable-footer .datatable-pager {
+  .ngx-datatable .datatable-footer .datatable-pager {
     flex: 1 1 100% !important;
     text-align: center !important;
   }
@@ -1995,7 +1992,7 @@
     margin-top: 0px;
   }
   .calendar-wrap .fc-events-container h6,
-.calendar-wrap .fc-events-container .checkbox {
+  .calendar-wrap .fc-events-container .checkbox {
     text-align: right;
   }
   .calendar-wrap .checkbox label {
@@ -2008,7 +2005,7 @@
     font-size: 12px !important;
   }
   .calendar-wrap .fc-toolbar .fc-left .fc-today-button,
-.calendar-wrap .fc-toolbar .fc-right .fc-today-button {
+  .calendar-wrap .fc-toolbar .fc-right .fc-today-button {
     padding-top: 0px !important;
   }
   .calendar-wrap .fc {
@@ -2241,7 +2238,7 @@
     max-width: 50px;
   }
   .card-block .table-responsive .checkbox-td-width tbody tr td,
-.card-block .table-responsive .radio-first-col-width tbody tr td {
+  .card-block .table-responsive .radio-first-col-width tbody tr td {
     min-width: 200px !important;
   }
   #batchDelete .jsgrid-grid-header .jsgrid-table .jsgrid-header-row .jsgrid-header-cell:first-child {
@@ -2264,7 +2261,7 @@
     margin-bottom: 15px;
   }
   .chat-box .chat-menu #info-profile,
-.chat-box .chat-menu #info-contact {
+  .chat-box .chat-menu #info-contact {
     margin-bottom: 15px;
   }
   .hovercard .info .follow .text-md-right {
@@ -2277,7 +2274,7 @@
     margin-top: 15px !important;
   }
   .lg-outer .lg-actions .lg-next,
-.lg-outer .lg-actions .lg-prev {
+  .lg-outer .lg-actions .lg-prev {
     top: 48%;
   }
   .feature-products .filter-toggle {
@@ -2419,14 +2416,14 @@
     width: 100px !important;
   }
   .product-list-custom .ngx-datatable .datatable-body-row,
-.product-list-custom .ngx-datatable .datatable-row-center,
-.product-list-custom .ngx-datatable .datatable-header-inner {
+  .product-list-custom .ngx-datatable .datatable-row-center,
+  .product-list-custom .ngx-datatable .datatable-header-inner {
     display: flex !important;
     width: 536px !important;
     overflow: auto;
   }
   .product-list-custom .ngx-datatable .datatable-body-cell,
-.product-list-custom .ngx-datatable .datatable-header-cell {
+  .product-list-custom .ngx-datatable .datatable-header-cell {
     min-width: 150px;
     overflow-x: auto;
   }
@@ -2446,19 +2443,19 @@
     right: unset;
   }
   .mutliple-datepicker ngb-datepicker,
-.mutliple-datepicker .dropdown-menu {
+  .mutliple-datepicker .dropdown-menu {
     width: 350px;
   }
   .mutliple-datepicker ngb-datepicker .ngb-dp-months,
-.mutliple-datepicker .dropdown-menu .ngb-dp-months {
+  .mutliple-datepicker .dropdown-menu .ngb-dp-months {
     display: block;
   }
   .mutliple-datepicker ngb-datepicker .ngb-dp-months .ngb-dp-month,
-.mutliple-datepicker .dropdown-menu .ngb-dp-months .ngb-dp-month {
+  .mutliple-datepicker .dropdown-menu .ngb-dp-months .ngb-dp-month {
     width: 100%;
   }
   .mutliple-datepicker ngb-datepicker ngb-datepicker-month-view,
-.mutliple-datepicker .dropdown-menu ngb-datepicker-month-view {
+  .mutliple-datepicker .dropdown-menu ngb-datepicker-month-view {
     padding-left: 49px;
   }
   .mutliple-datepicker .ngb-dp-header {
@@ -2504,7 +2501,7 @@
     margin: 0;
   }
   .page-header .header-wrapper .nav-right .cart-box .badge,
-.page-header .header-wrapper .nav-right .notification-box .badge {
+  .page-header .header-wrapper .nav-right .notification-box .badge {
     font-size: 10px;
   }
   .page-header .header-wrapper .left-header ul li .search-form .form-control-plaintext {
@@ -2541,9 +2538,6 @@
   }
   .page-wrapper .page-body-wrapper .page-title .breadcrumb {
     margin-top: 0;
-  }
-  .page-wrapper .nav-right .nav-menus {
-    margin-right: 45px;
   }
   .page-wrapper.compact-wrapper .left-header .mega-menu, .page-wrapper.compact-sidebar .left-header .mega-menu {
     top: 17px;
@@ -2608,7 +2602,7 @@
     padding: 8px 30px;
   }
   .page-wrapper.compact-wrapper .page-body-wrapper .page-body {
-    margin-top: 60px;
+    margin-top: 170px;
   }
   .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links {
     height: calc(100vh - 79px);
@@ -2661,7 +2655,7 @@
     left: 30px !important;
   }
   .social-app-tab .media-body,
-.social-app-tab .nav {
+  .social-app-tab .nav {
     text-align: left;
   }
   .social-app-tab .market-tabs .nav {
@@ -2675,9 +2669,9 @@
     padding: 0;
   }
   .social-app-tab .custom-card ul li,
-.social-app-tab .pepole-knows ul li,
-.social-app-tab .photos ul li,
-.social-app-tab .social-group ul li {
+  .social-app-tab .pepole-knows ul li,
+  .social-app-tab .photos ul li,
+  .social-app-tab .social-group ul li {
     position: relative;
     top: 0;
   }
@@ -2843,7 +2837,7 @@
     height: 60px;
   }
   .timeline-content p,
-.timeline-content .comments-box {
+  .timeline-content .comments-box {
     margin-top: 15px;
   }
   .timeline-content .comments-box .media .m-r-20 {
@@ -2865,7 +2859,7 @@
     padding: 15px;
   }
   .social-chat .your-msg,
-.social-chat .other-msg {
+  .social-chat .other-msg {
     margin-bottom: 15px;
   }
   .social-network span {
@@ -3056,7 +3050,7 @@
     min-height: 30px;
   }
   div.dataTables_wrapper table.dataTable th,
-div.dataTables_wrapper table.dataTable td {
+  div.dataTables_wrapper table.dataTable td {
     padding: 0.5rem;
   }
   div.dataTables_wrapper div.dataTables_paginate {
@@ -3139,7 +3133,7 @@ div.dataTables_wrapper table.dataTable td {
     box-shadow: inset 0px -100px 100px -13px rgba(0, 0, 0, 0.6);
   }
   .blog-box .blog-details p,
-.blog-box .blog-details .single-blog-content-top {
+  .blog-box .blog-details .single-blog-content-top {
     margin-top: 15px;
   }
   .blog-box .blog-details h4 {
@@ -3188,21 +3182,21 @@ div.dataTables_wrapper table.dataTable td {
     margin-bottom: 15px;
   }
   .page-wrapper .page-body-wrapper .default-according .card .card-header,
-.page-wrapper .page-body-wrapper .default-according .card .card-body,
-.page-wrapper .page-body-wrapper .default-according .card .card-footer {
+  .page-wrapper .page-body-wrapper .default-according .card .card-body,
+  .page-wrapper .page-body-wrapper .default-according .card .card-footer {
     padding: 0.75rem 1.25rem;
   }
   .page-wrapper .page-body-wrapper .card {
     margin-bottom: 20px;
   }
   .page-wrapper .page-body-wrapper .card .card-header .tab-content .m-t-30,
-.page-wrapper .page-body-wrapper .card .card-body .tab-content .m-t-30,
-.page-wrapper .page-body-wrapper .card .card-footer .tab-content .m-t-30 {
+  .page-wrapper .page-body-wrapper .card .card-body .tab-content .m-t-30,
+  .page-wrapper .page-body-wrapper .card .card-footer .tab-content .m-t-30 {
     margin-top: 20px !important;
   }
   .page-wrapper .page-body-wrapper .card .card-header .tab-content .m-b-30,
-.page-wrapper .page-body-wrapper .card .card-body .tab-content .m-b-30,
-.page-wrapper .page-body-wrapper .card .card-footer .tab-content .m-b-30 {
+  .page-wrapper .page-body-wrapper .card .card-body .tab-content .m-b-30,
+  .page-wrapper .page-body-wrapper .card .card-footer .tab-content .m-b-30 {
     margin-bottom: 20px !important;
   }
   .page-wrapper .page-body-wrapper .page-body {
@@ -3512,7 +3506,7 @@ div.dataTables_wrapper table.dataTable td {
     text-align: left;
   }
   .page-wrapper.document .page-body-wrapper.document-content .page-body {
-    margin-top: 75px !important;
+    margin-top: 175px !important;
   }
   .xm-mb-peity {
     margin-bottom: 8px;
@@ -3599,9 +3593,9 @@ div.dataTables_wrapper table.dataTable td {
     display: none;
   }
   .box-layout.page-wrapper .set-col-6,
-.box-layout.page-wrapper .set-col-3,
-.box-layout.page-wrapper .set-col-7,
-.box-layout.page-wrapper .set-col-5 {
+  .box-layout.page-wrapper .set-col-3,
+  .box-layout.page-wrapper .set-col-7,
+  .box-layout.page-wrapper .set-col-5 {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -3832,18 +3826,18 @@ div.dataTables_wrapper table.dataTable td {
     font-size: 15px;
   }
   .custom-datepicker ngb-datepicker,
-.custom-datepicker .dropdown-menu {
+  .custom-datepicker .dropdown-menu {
     width: 248px;
   }
   .custom-datepicker .ngb-dp-navigation-select .form-select {
     width: 75px;
   }
   .mutliple-datepicker ngb-datepicker,
-.mutliple-datepicker .dropdown-menu {
+  .mutliple-datepicker .dropdown-menu {
     width: 246px;
   }
   .mutliple-datepicker ngb-datepicker ngb-datepicker-month-view,
-.mutliple-datepicker .dropdown-menu ngb-datepicker-month-view {
+  .mutliple-datepicker .dropdown-menu ngb-datepicker-month-view {
     padding-left: 5px;
   }
   .mutliple-datepicker .ngb-dp-navigation-select .form-select {

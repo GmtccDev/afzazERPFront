@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "simple.component.scss"
-    ],
-    "names": [],
-    "file": "simple.component.css"
-}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"simple.component.css"}
