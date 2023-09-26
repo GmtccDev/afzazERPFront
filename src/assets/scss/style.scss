@@ -20,6 +20,7 @@
     --theme-deafult: #4bc2f1;
     --theme-secondary: #293176;
 }
+
 // font family arbaic
 @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
 
@@ -326,46 +327,51 @@ span.k-button-text {
         width: 32px;
     }
 }
+
 .font-white {
     color: #ffffff !important;
 }
-.bg-imge-side{
+
+.bg-imge-side {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 // mixin stat
-@mixin none-border{
-    border:none !important;
+@mixin none-border {
+    border: none !important;
 }
-@mixin text-capitalize{
+
+@mixin text-capitalize {
     text-transform: capitalize !important;
 }
-@mixin transition{
+
+@mixin transition {
     transition: .5s all ease;
     -webkit-transition: .5s all ease;
     -moz-transition: .5s all ease;
     -ms-transition: .5s all ease;
     -o-transition: .5s all ease;
 }
-// end mixin
-// staer custm .tabulator 
 
+// end mixin
+// staer custm .tabulator
 .tabulator {
     height: max-content !important;
-   
-     
-        background-color: transparent !important;
-   
+    background-color: transparent !important;
 }
-div#my-tabular-tablePeopleOfBenefits{
+
+div#my-tabular-tablePeopleOfBenefits {
     position: initial !important;
     padding: 0 !important;
 }
-app-tabulator > div{
+
+app-tabulator>div {
     position: initial !important;
     overflow: hidden !important;
 }
+
 .btn-tabulator-secondary {
     background-color: rgba(var(--theme-secondary), 0.1);
     font-size: 12px;
@@ -375,117 +381,143 @@ app-tabulator > div{
     @include transition;
     @include text-capitalize;
     &:hover {
-        
         background: #414040;
-        border-color: #353738;}
+        border-color: #353738;
+    }
 }
 
-.tabulator-row.tabulator-selected,.tabulator .tabulator-tableHolder .tabulator-table {
-    background-color:rgba(244 ,170 ,44 ,24%) !important ;
+.tabulator-row.tabulator-selected,
+.tabulator .tabulator-tableHolder .tabulator-table {
+    background-color: rgba(244, 170, 44, 24%) !important;
     @include transition;
 }
-.tabulator-row{
+
+.tabulator-row {
     @include transition;
 }
-.tabulator-row .tabulator-cell,.tabulator .tabulator-header,.tabulator,.tabulator .tabulator-header .tabulator-col{
+
+.tabulator-row .tabulator-cell,
+.tabulator .tabulator-header,
+.tabulator,
+.tabulator .tabulator-header .tabulator-col {
     @include none-border;
 }
 
-.tabulator-row .tabulator-cell{
+.tabulator-row .tabulator-cell {
     padding: 5px 25px !important;
 }
-// end custm .tabulator 
+
+// end custm .tabulator
 button:focus {
     outline: none !important;
 }
+
 button.arabic.btn.font-secondary.p-0.ng-star-inserted {
     font-family: 'Almarai', sans-serif;
 }
-.right-0{
+
+.right-0 {
     right: 0 !important;
-} 
-.bottom-0{
-bottom: 0 !important;
 }
-.bg-login-admin{
-    .footer-copyright{
+
+.bottom-0 {
+    bottom: 0 !important;
+}
+
+.bg-login-admin {
+    .footer-copyright {
         text-align: end !important;
     }
 }
-.show-hide span,.show-hide span.show {
+
+.show-hide span,
+.show-hide span.show {
     font: normal normal normal 14px/1 FontAwesome;
     &:before {
-        
         content: "\f070";
-       
     }
-
 }
+
 .show-hide span.show:before {
     content: "\f06e";
 }
+
 // start rtl style
 html[dir="rtl"] {
-    body,.btn{
-    font-family: 'Almarai', sans-serif;
-}
-.ml-auto {
-    margin-left: initial !important;
-    margin-right: auto !important;
-}
-.was-validated .form-control:invalid, .form-control.is-invalid {
-    
-    padding-right: initial !important;
-    padding-left: calc(1.5em + 0.75rem);
-   
-    background-position: left calc(0.375em + 0.1875rem) center;
-}
-.show-hide {
-   
-    right: initial !important;
-    left: 20px;
-   
-}
-
+    body,
+    .btn {
+        font-family: 'Almarai', sans-serif;
+    }
+    .ml-auto {
+        margin-left: initial !important;
+        margin-right: auto !important;
+    }
+    .was-validated .form-control:invalid,
+    .form-control.is-invalid {
+        padding-right: initial !important;
+        padding-left: calc(1.5em + 0.75rem);
+        background-position: left calc(0.375em + 0.1875rem) center;
+    }
+    .show-hide {
+        right: initial !important;
+        left: 20px;
+    }
 }
 
 // end rtl style
 .tabulator .tabulator-header .tabulator-col {
-    
     border-right: none;
-    background:#4bc2f14f !important;
+    background: #4bc2f14f !important;
     text-align: start !important;
     min-width: 155px !important;
     min-height: 40px;
-    line-height: 32px;}
-    .tabulator-headers {
-        /* border-radius: 10px; */
-        color: var(--theme-deafult) !important;
-    
-    }
-    .tabulator {
-        border-radius: 5px;
-    }    
-    .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+    line-height: 32px;
+}
 
-        border-bottom: 4px solid #575656a1 !important;
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-    }
-    .validation.alert-danger.position-absolute.ng-star-inserted {
-        bottom: 0;
-        right: 0;
-        padding: 4px;
-        height: 30px;
-        line-height: 21px;
-        border-radius: 5px;
-    }
-.form-control{
+.tabulator-headers {
+    /* border-radius: 10px; */
+    color: var(--theme-deafult) !important;
+}
+
+.tabulator {
+    border-radius: 5px;
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+    border-bottom: 4px solid #575656a1 !important;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+.validation.alert-danger.position-absolute.ng-star-inserted {
+    bottom: 0;
+    right: 0;
+    padding: 4px;
+    height: 30px;
+    line-height: 21px;
+    border-radius: 5px;
+}
+
+.form-control {
     max-height: 30px !important;
 }
-.input-group > .form-control, .input-group > .form-select {
-   
-    font-size: 13px;}
-    select.form-select{
-        margin: 0 !important;
-    }
+
+.input-group>.form-control,
+.input-group>.form-select {
+    font-size: 13px;
+}
+
+select.form-select {
+    margin: 0 !important;
+}
+
+.login-card .login-main .theme-form input,
+input {
+    border-color: #d8d8d8;
+}
+
+.modal-dialog .modal-content {
+    padding: 3rem;
+}

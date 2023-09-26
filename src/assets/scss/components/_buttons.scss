@@ -10,6 +10,7 @@
 
 .btn-link {
     color: var(--theme-deafult);
+    text-decoration: none !important;
 }
 
 @mixin btn-gradien($deg, $leftcolor, $leftcolor-per, $rightcolor, $rightcolor-per, $font-color) {

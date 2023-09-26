@@ -5,6 +5,60 @@
     margin: auto;
 }
 
+.text-start {
+    text-align: start !important;
+}
+
+.bg-image {
+    /* The image used */
+    background-image: url(../../../../assets/images/login/bg-1.jpg);
+    filter: blur(8px);
+    height: 100vh;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    left: auto;
+    opacity: .6;
+}
+
+.box-img img {
+    height: 100vh;
+    object-fit: contain;
+}
+
+.form-control,
+button.btn.btn-block.btn-primary.w-100 {
+    min-height: 40px !important;
+}
+
+.text.text-danger.mt-1.ng-star-inserted {
+    position: absolute;
+    bottom: -23px;
+    font-size: 12px;
+    right: 0;
+}
+
+html[dir=rtl] .text.text-danger.mt-1.ng-star-inserted {
+    left: 0;
+    right: initial;
+}
+
+.mb-2.text-muted.btn-link a {
+    text-decoration: none !important;
+}
+
+.row.bg-login-admin {
+    background-image: linear-gradient(33deg, rgb(41 49 118 / 88%), rgb(0 31 43 / 88%)), url(../../../../assets/images/login/bg.gif);
+    background-size: contain;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-attachment: fixed;
+    background-position: center;
+}
+
 .loader--text:after {
     content: "Loading";
     font-weight: bold;
@@ -17,12 +71,14 @@
     max-height: 100vh;
     height: 100%;
 }
-.BG-IMG-WAVE{
-    background-image:linear-gradient(45deg, #1410239e, #29317694), url(../../../../assets/images/login/bg.gif);
+
+.BG-IMG-WAVE {
+    background-image: linear-gradient(45deg, #1410239e, #29317694), url(../../../../assets/images/login/bg.gif);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed
 }
+
 @keyframes loader {
     15% {
         transform: translateX(0);

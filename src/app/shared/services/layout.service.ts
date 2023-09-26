@@ -13,13 +13,13 @@ export class LayoutService {
       sidebar_type: 'default-sidebar'
     },
     color: {
-      primary_color: '#f4aa2c',
-		secondary_color: '#575656'
+      primary_color: '#4bc2f1',
+      secondary_color: '#575656'
     }
   }
 
   constructor() {
-    if(this.config.settings.layout_type == 'rtl')
+    if (this.config.settings.layout_type == 'rtl')
       document.getElementsByTagName('html')[0].setAttribute('dir', this.config.settings.layout_type);
 
     document.documentElement.style.setProperty('--theme-deafult', this.config.color.primary_color);

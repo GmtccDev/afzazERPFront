@@ -53,7 +53,7 @@ import { SubscriptionComponent } from './components/layout/subscription/subscrip
 import { FilterPipe } from "../shared/pipes/filter-pipe";
 import { PublicSearchModalComponent } from './components/public-search-modal/public-search-modal.component';
 import { PublicService } from './services/public.service';
-import {EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
+import { EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { MatTableModule } from '@angular/material/table';
@@ -61,118 +61,118 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
-import {BidiModule} from '@angular/cdk/bidi';
-import {SearchFormModule} from 'src/app/shared/components/search-form/search-form.module'
-import {FiltersComponent} from 'src/app/shared/components/filters/filters.component'
-import {FullDateComponent} from 'src/app/shared/date/full-date/full-date.component'
-import {HijriDateComponent} from 'src/app/shared/date/hijri-date/hijri-date.component'
-import {GregorianDateComponent} from 'src/app/shared/date/gregorian-date/gregorian-date.component'
+import { BidiModule } from '@angular/cdk/bidi';
+import { SearchFormModule } from 'src/app/shared/components/search-form/search-form.module'
+import { FiltersComponent } from 'src/app/shared/components/filters/filters.component'
+import { FullDateComponent } from 'src/app/shared/date/full-date/full-date.component'
+import { HijriDateComponent } from 'src/app/shared/date/hijri-date/hijri-date.component'
+import { GregorianDateComponent } from 'src/app/shared/date/gregorian-date/gregorian-date.component'
 
 
 import { filter } from 'rxjs';
 import { NgbdModalContent } from './components/modal/modal-component';
 import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
-    ContentComponent,
-    DashboardComponent,
-    SubscriptionComponent,
-    BreadcrumbComponent,
-    
-    CustomizerComponent,
-    FeatherIconsComponent,
-    FullComponent,
-    FullDateComponent,
-    ShowOptionsDirective,
-    DisableKeyPressDirective,
-    OnlyAlphabetsDirective,
-    OnlyNumbersDirective,
-    LoaderComponent,
-    TapToTopComponent,
-    SearchComponent,
-    MegaMenuComponent,
-    LanguagesComponent,
-    NotificationComponent,
-    BookmarkComponent,
-    CartComponent,
-    MessageBoxComponent,
-    MyAccountComponent,
-    NgbdSortableHeader,
-    ToolbarComponent,
-    ModalComponent,
-    MessageModalComponent,
-    InputComponent,
-    SwitchButtonComponent,
-    ChangePasswordComponent,
-    FilterPipe,
-    EnumKeyValueListPipe,
-    PublicSearchModalComponent,
-    FiltersComponent,
-    NgbdModalContent,
-    HijriDateComponent,
-    GregorianDateComponent
-    ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModule,
-    TabulatorModule,
-    DragulaModule.forRoot(),
-    TranslateModule,
-    NgxSpinnerModule,NzModalModule,NzTableModule, MatTableModule,MatPaginatorModule,
-    MatButtonModule,MatInputModule,
-    MatFormFieldModule,
-    BidiModule,
-    NgSelectModule,
-    MultiSelectModule
-  ],
-  providers: [
-    NavService,
-    LayoutService,
-    TableService,
-    DecimalPipe, {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ResortHttpInterceptor,
-      multi: true
-    },
-    PublicService,
-    TranslatePipe 
-  ],
-  exports: [
-    NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    LoaderComponent,
-    BreadcrumbComponent,
-    FooterComponent,
-    FullDateComponent,
-    FeatherIconsComponent,
-    ModalComponent,
-    ChangePasswordComponent,
-    FiltersComponent,
-    TapToTopComponent,
-    DisableKeyPressDirective,
-    OnlyAlphabetsDirective,
-    OnlyNumbersDirective,
-    NgbdSortableHeader, TabulatorModule, NgSelectModule,
-    InputComponent,
-    SwitchButtonComponent,
-    FilterPipe,
-    EnumKeyValueListPipe,PublicSearchModalComponent,
-    SearchFormModule,
-    HijriDateComponent,
-    GregorianDateComponent
-    
-  ],
+	declarations: [
+		HeaderComponent,
+		FooterComponent,
+		SidebarComponent,
+		ContentComponent,
+		DashboardComponent,
+		SubscriptionComponent,
+		BreadcrumbComponent,
+
+		CustomizerComponent,
+		FeatherIconsComponent,
+		FullComponent,
+		FullDateComponent,
+		ShowOptionsDirective,
+		DisableKeyPressDirective,
+		OnlyAlphabetsDirective,
+		OnlyNumbersDirective,
+		LoaderComponent,
+		TapToTopComponent,
+		SearchComponent,
+		MegaMenuComponent,
+		LanguagesComponent,
+		NotificationComponent,
+		BookmarkComponent,
+		CartComponent,
+		MessageBoxComponent,
+		MyAccountComponent,
+		NgbdSortableHeader,
+		ToolbarComponent,
+		ModalComponent,
+		MessageModalComponent,
+		InputComponent,
+		SwitchButtonComponent,
+		ChangePasswordComponent,
+		FilterPipe,
+		EnumKeyValueListPipe,
+		PublicSearchModalComponent,
+		FiltersComponent,
+		NgbdModalContent,
+		HijriDateComponent,
+		GregorianDateComponent
+	],
+	imports: [
+		CommonModule,
+		RouterModule,
+		FormsModule,
+		ReactiveFormsModule,
+		NgbModule,
+		TabulatorModule,
+		DragulaModule.forRoot(),
+		TranslateModule,
+		NgxSpinnerModule, NzModalModule, NzTableModule, MatTableModule, MatPaginatorModule,
+		MatButtonModule, MatInputModule,
+		MatFormFieldModule,
+		BidiModule,
+		NgSelectModule,
+		MultiSelectModule
+	],
+	providers: [
+		NavService,
+		LayoutService,
+		TableService,
+		DecimalPipe, {
+			provide: HTTP_INTERCEPTORS,
+			useClass: ResortHttpInterceptor,
+			multi: true
+		},
+		PublicService,
+		TranslatePipe
+	],
+	exports: [
+		NgbModule,
+		FormsModule,
+		ReactiveFormsModule,
+		TranslateModule,
+		LoaderComponent,
+		BreadcrumbComponent,
+		FooterComponent,
+		FullDateComponent,
+		FeatherIconsComponent,
+		ModalComponent,
+		ChangePasswordComponent,
+		FiltersComponent,
+		TapToTopComponent,
+		DisableKeyPressDirective,
+		OnlyAlphabetsDirective,
+		OnlyNumbersDirective,
+		NgbdSortableHeader, TabulatorModule, NgSelectModule,
+		InputComponent,
+		SwitchButtonComponent,
+		FilterPipe,
+		EnumKeyValueListPipe, PublicSearchModalComponent,
+		SearchFormModule,
+		HijriDateComponent,
+		GregorianDateComponent
+
+	],
 })
 export class SharedModule {
-  // constructor(@Optional() @SkipSelf() parentModule: SharedModule) {
-  //   throwIfAlreadyLoaded(parentModule, 'SharedModule')
-  // }
+	// constructor(@Optional() @SkipSelf() parentModule: SharedModule) {
+	//   throwIfAlreadyLoaded(parentModule, 'SharedModule')
+	// }
 }

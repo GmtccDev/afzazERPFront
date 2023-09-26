@@ -42,8 +42,7 @@
 
 .noflick, .button, .note {
   perspective: 1000;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
 }
 
@@ -60,7 +59,7 @@
   min-height: 300px;
   margin: 15px;
   border-radius: 5px;
-  background-color: #f9d18d;
+  background-color: #aae2f8;
   transition: transform 0.15s;
   z-index: 1;
 }
@@ -98,13 +97,13 @@
   min-height: 200px;
 }
 .note:nth-child(2n) {
-  background: #fedde5;
+  background: #7f88d3;
 }
 .note:nth-child(3n) {
   background: #ebfae5;
 }
 .note:nth-child(4n) {
-  background: #fbd594;
+  background: #c1eafa;
 }
 .note:nth-child(5n) {
   background: #fef7d8;
