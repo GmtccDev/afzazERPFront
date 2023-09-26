@@ -1,5 +1,5 @@
 {
-    "url": "http://localhost:5030/api",
+    "url": "http://195.88.87.244:9188/api",
     "tokenKey": "token"
 }
 
