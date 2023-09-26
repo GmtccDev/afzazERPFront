@@ -404,7 +404,9 @@
         "add-warehouses-supplier": "Add Supplier",
         "item-card":"Item Card",
         "item-information": "Item Information",
-        "add-item": "Add Item"
+        "add-item": "Add Item",
+        "item-groups-card": " Item Groups Card ",
+        "item-groups-card-information": " Item Groups Card Information  "
 
 
     },

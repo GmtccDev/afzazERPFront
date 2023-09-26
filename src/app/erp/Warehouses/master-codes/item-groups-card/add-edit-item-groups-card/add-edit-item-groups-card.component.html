@@ -8,11 +8,11 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
-                        <form [formGroup]="storeCardForm" id="storeCardForm" class="tabs-form">
+                        <form [formGroup]="itemGroupsCardForm" id="itemGroupsCard" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
-                                    <h3>{{'component-names.storeCard-information'|translate}}</h3>
+                                    <h3>{{'component-names.item-groups-card-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
   
@@ -23,8 +23,8 @@
                                             </label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="parentId" name='parentId' class="" id="parentId">
-                                                    <ng-option *ngFor="let storeCard of storeCardList" [value]="storeCard.id">
-                                                        {{lang=="ar"?storeCard.nameAr:storeCard.nameEn}}
+                                                    <ng-option *ngFor="let itemGroupsCard of itemGroupsCardList" [value]="itemGroupsCard.id">
+                                                        {{lang=="ar"?itemGroupsCard.nameAr:itemGroupsCard.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
                                                
@@ -132,5 +132,5 @@
     </div>
 </section>
 <app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
-    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectStoreCard($event)">
+    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectItemGroupsCard($event)">
 </app-public-search-modal>
