@@ -14,6 +14,7 @@ import { ItemGroupsCardDto } from '../../../models/item-groups-card';
 import { navigateUrl } from 'src/app/shared/helper/helper-url';
 import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum } from '../../../../../shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
+import { PublicService } from 'src/app/shared/services/public.service';
 
 @Component({
   selector: 'app-add-edit-item-groups-card',
@@ -37,7 +38,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.itemGroupsCard"),
+    componentList: this.translate.instant("component-names.item-groups-card"),
     componentAdd: '',
 
   };
@@ -53,14 +54,16 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
   showSearchModal = false;
   parentId: any;
   routeApi = 'ItemGroupsCard/get-ddl?'
+  routeUnitApi = 'WarehousesUnit/get-ddl?'
   itemTypeEnum: ICustomEnum[] = [];
   costCalculateMethodsEnum: ICustomEnum[] = [];
+  unitsList: any;
   constructor(
     private itemGroupsCardService: ItemGroupsCardServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService,  private publicService: PublicService,
     private sharedServices: SharedService, private translate: TranslateService,
 
   ) {
@@ -70,10 +73,12 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+    this.getItemTypeEnum();
+    this.getCostCalculateMethodsEnum();
     this.spinner.show();
     Promise.all([
-      this.getItemGroupsCard()
+      this.getItemGroupsCard(),
+      this.getUnits()
     ]).then(a => {
       
       this.getRouteData();
@@ -109,6 +114,31 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
       this.costCalculateMethodsEnum = convertEnumToArray(CostCalculateMethodsArEnum);
 
     }
+  }
+  getUnits() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeUnitApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            
+            this.unitsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
@@ -178,7 +208,8 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
       parentId: null,
       itemType: null,
       costCalculation: null,
-      notes:null
+      notes:null,
+      warehousesUnitId:null
     });
 
   }
@@ -221,6 +252,8 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
       let sub = this.itemGroupsCardService.getItemGroupsCard(id).subscribe({
         next: (res: any) => {
           resolve();
+          
+          console.log(res)
           this.itemGroupsCardForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -231,7 +264,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
             itemType: res.response?.itemType,
             costCalculation: res.response?.costCalculation,
             notes:res.response?.notes,
-
+            warehousesUnitId:res.response?.warehousesUnitId,
           });
 
        
@@ -258,7 +291,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
 
         next: (res: any) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.itemGroupsCard");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.item-groups-card");
           this.itemGroupsCardForm.patchValue({
             code: res.response
           });
@@ -349,6 +382,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
           console.log('complete');

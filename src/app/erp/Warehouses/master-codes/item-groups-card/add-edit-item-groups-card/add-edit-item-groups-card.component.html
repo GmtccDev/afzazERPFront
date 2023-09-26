@@ -76,24 +76,45 @@
 
                                             </div>
                                         </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="item-type" class="label-name">{{'item.item-type'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="itemType"
+                                                    [items]="itemTypeEnum" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
+
+                                            </div>
+                                        </div>
 
                                         <div class="col-12 col-md-6">
-                                            <label for="storekeeper" class="label-name">{{'general.storekeeper'|translate}}</label>
-                                            <div class="form-group position-relative">
-
-                                                <input type="text" class="form-control icon-branch" name="storekeeper" formControlName="storekeeper">
-                                                
+                                            <label for="cost-calculate-method"
+                                                class="label-name">{{'item.cost-calculate-method'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="costCalculation"
+                                                    [items]="costCalculateMethodsEnum" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <label for="address" class="label-name">{{'general.address'|translate}}</label>
-                                            <div class="form-group position-relative">
+                                            <label for="warehousesUnitId" class="label-name">
+                                                {{'item.unit'|translate}}
 
-                                                <input type="text" class="form-control icon-branch" name="address" formControlName="address">
-                                                
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="warehousesUnitId"
+                                                    name='warehousesUnitId' class="" id="warehousesUnitId">
+                                                    <ng-option *ngFor="let unit of unitsList"
+                                                        [value]="unit.id">
+                                                        {{lang=="ar" ? unit.nameAr:unit.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                              
 
                                             </div>
+
                                         </div>
                                      
                                         <div class="col-12 col-md-6">

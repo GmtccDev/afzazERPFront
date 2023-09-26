@@ -31,7 +31,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.itemGroupsCard"),
+    componentList: this.translate.instant("component-names.item-groups-card"),
     componentAdd: '',
 
   };
@@ -111,7 +111,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
 
           console.log(res);
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.itemGroupsCard");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.item-groups-card");
           if (res.success) {
 
             this.listOfMapData = res.response
