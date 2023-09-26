@@ -6,7 +6,7 @@ import { SharedService } from '../../../../../shared/common-services/shared-serv
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
-import { WarehousesUnitDto, DeleteListWarehousesUnitCommand } from '../../../models/warehouses-unit';
+import { WarehousesUnitDto, DeleteListWarehousesUnit } from '../../../models/warehouses-unit';
 import { MessageModalComponent } from '../../../../../shared/components/message-modal/message-modal.component';
 import { SettingMenuShowOptions } from '../../../../../shared/components/models/setting-menu-show-options';
 import { ITabulatorActionsSelected } from '../../../../../shared/interfaces/ITabulator-action-selected';
@@ -287,7 +287,7 @@ export class WarehousesUnitsComponent implements OnInit, OnDestroy, AfterViewIni
   }
   onDelete() {
 
-    let item = new DeleteListWarehousesUnitCommand();
+    let item = new DeleteListWarehousesUnit();
     item.ids = this.listIds;
     const input = {
       tableName: "WarehousesUnits",

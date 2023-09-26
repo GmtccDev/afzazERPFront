@@ -9,6 +9,7 @@
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
         "code": "Code",
+        "barcode":"barcode",
         "home": "Home",
         "about-us": "About Us",
         "recently-added": "Recently added",
@@ -158,7 +159,10 @@
         "amount-local": "Amount Local",
         "from-entry-no": "From Entry No",
         "to-entry-no": "To Entry No",
-        "account":"Account"
+        "account":"Account",
+        "address":"Address",
+        "responsible-person":"The Responsible Person",
+        "image":"Image"
     },
     "menu": {},
     "home": {
@@ -378,10 +382,10 @@
         "incomingCheque-information": "Incoming Cheque Information ",
         "issuing-cheque": " Issuing Cheque",
         "issuing-cheque-information": "Issuing Cheque Information ",
-        "general-ledger-report": "General Ledger Report",
-        "journal-entries-report": "Journal Entries Report  ",
-        "accounts-balance-report": "Accounts Balance Report",
-        "cost-centers-report": "Cost Centers Reports",
+        "general-ledger-report":"General Ledger Report",
+		"journal-entries-report":"Journal Entries Report  ",
+		"accounts-balance-report":"Accounts Balance Report",
+        "cost-centers-report":"Cost Centers Reports",
         "warehouses-period-information": "Period Information",
         "warehouses-period": "Periods",
         "add-warehouses-period": "Add Period",
@@ -389,7 +393,22 @@
         "storeCard": "Store Card",
         "storeCard-information": "Store Card Information",
         "address":"Address",
-        "storekeeper":" Store Keeper"
+        "storekeeper":" Store Keeper",
+        "warehouses-payment-method":"Payment Methods",
+        "warehouses-payment-method-information": "Payment Method Information",
+        "warehouses-customer":"Customers",
+        "warehouses-customer-information": "Customer Information",
+        "warehouses-supplier":"Supplier",
+        "warehouses-supplier-information": "Supplier Information",
+        "add-warehouses-customer": "Add Customer",
+        "add-warehouses-supplier": "Add Supplier",
+        "item-card":"Item Card",
+        "item-information": "Item Information",
+        "add-item": "Add Item",
+        "item-groups-card": " Item Groups Card ",
+        "item-groups-card-information": " Item Groups Card Information  "
+
+
     },
     "language": {
         "ARABIC": "Arabic",
@@ -511,14 +530,33 @@
     "warehouses-unit": {
         "transaction-factor": "Transaction Factor",
         "unit-transactions": "New Unit Transactions",
-        "add-unit": "Add Unit",
-        "add-edit": "Add and Edit"
-    },
-    "warehouses-tax": {
-        "tax-information": "Tax Information",
-        "tax-ratio": "Tax Ratio",
-        "tax-details-required":"Tax details is required",
-        "add-tax":"Add Tax"
+        "add-unit":"Add Unit",
+        "add-edit":"Add and Edit"
+     },
+     "item":{
+        "item-group":"Item Group",
+        "unit":"Unit",
+        "item-type":"Item Type",
+        "cost-calculate-method":"Cost Calculate Method",
+        "general-information":"General Information",
+        "model":"Model",
+        "manufacturer":"Manufacturer",
+        "maximum":"Maximum",
+        "minimum":"Minimum",
+        "reorder-limit":"Reorder Limit",
+        "units":"Units",
+        "main-unit":"Main Unit",
+        "selling-price":"Selling Price",
+        "consumer-price":"Consumer Price",
+        "min-selling-price":"Minimum Selling Price",
+        "opening-cost-price":"opening Cost Price",
+        "properties":"Properties",
+        "has-expired-date":"Has Expired Date",
+        "life-time":"Life Time",
+        "life-time-type":"Life Time Type"
 
-    }
+
+     }
+
+
 }

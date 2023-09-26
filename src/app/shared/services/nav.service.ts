@@ -235,6 +235,7 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/accounting-reports/journalEntriesReport', title: this.translate.instant("component-names.journal-entries-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/costCentersReport', title: this.translate.instant("component-names.cost-centers-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/accountsBalanceReport', title: this.translate.instant("component-names.accounts-balance-report"), type: 'link', active: true },
+				{ path: '/accounting-reports/trailBalanceReport', title: this.translate.instant("component-names.trail-balance-report"), type: 'link', active: true },
 
 			]
 		}
@@ -256,6 +257,11 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/warehouses-master-codes/warehousesUnit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/warehousesTax', title: this.translate.instant("component-names.taxes"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/storeCard', title: this.translate.instant("component-names.storeCard"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/warehousesPaymentMethod', title: this.translate.instant("component-names.warehouses-payment-method"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/warehousesCustomer', title: this.translate.instant("component-names.warehouses-customer"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/warehousesSupplier', title: this.translate.instant("component-names.warehouses-supplier"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/itemCard', title: this.translate.instant("component-names.item-card"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/itemGroupsCard', title: this.translate.instant("component-names.item-groups-card"), type: 'link', active: true },
 
 			]
 		}

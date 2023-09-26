@@ -85,9 +85,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	}
 	//#endregion
 	isContainsDate(input: string): boolean {
-		;
 		const date = new Date(input);
-
 		let reuslt= date instanceof Date && !isNaN(date.getTime());
 		 return reuslt;
 	  }
@@ -117,6 +115,10 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		//   if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
 		// 	this.currencyId = 0;
 		//   }
+
+		if (this.accountId == null || this.accountId == undefined || this.accountId == "") {
+			this.accountId = 0;
+		}
 
 		if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
 			this.branchId = 0;
@@ -167,7 +169,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowEntriesStatus: boolean;
 		ShowFromEntryNo: boolean;
 		ShowToEntryNo: boolean;
-		ShowMainAccount:boolean;
+		ShowLeafAccount:boolean;
 	} = {
 		ShowFromDate: true,
 		ShowToDate: true,
@@ -177,10 +179,11 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowEntriesStatus: true,
 		ShowFromEntryNo: true,
 		ShowToEntryNo: true,
-		ShowMainAccount:true
+		ShowLeafAccount:true
 	};
 
-	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;accountId }) {
+	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
+		debugger
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
@@ -188,7 +191,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		this.currencyId = e.currencyId;
 		this.branchId = e.branchId;
 		this.entriesStatusId = e.entriesStatusId;
-		this.accountId=e.accountId;
+		this.accountId=e.leafAccountId;
 	}
 
 	listenToClickedButton() {

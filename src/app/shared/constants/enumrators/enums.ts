@@ -97,17 +97,49 @@ export enum AccountClassificationsArEnum {
   موظف = 5,
   أخرى = 6
 }
-export enum  ReportOptionsEnum {
+export enum ReportOptionsEnum {
   Quarterly = 1,
   Monthly = 2,
   'Semi Monthly' = 3,
   Weekly = 4,
   Daily = 5,
 }
-export enum  ReportOptionsArEnum {
+export enum ReportOptionsArEnum {
   'ربع سنوى' = 1,
   شهرى = 2,
   'نصف شهرى' = 3,
   أسبوعى = 4,
   يومى = 5,
+}
+export enum ItemTypeEnum {
+  Warehouse = 1,
+  Service = 2
+}
+export enum ItemTypeArEnum {
+  مستودع = 1,
+  خدمة = 2
+}
+export enum CostCalculateMethodsEnum {
+  'Last purchase price' = 1,
+  'Opening price' = 2,
+  'Actual average' = 3,
+  'the highest price' = 4
+}
+export enum CostCalculateMethodsArEnum {
+  'آخر سعر شراء' = 1,
+  'السعر الافتتاحي' = 2,
+  'المتوسط الفعلي' = 3,
+  'أعلى سعر' = 4
+}
+export enum LifeTimeTypeEnum {
+  Day = 1,
+  Month = 2,
+  Year = 3
+
+}
+export enum LifeTimeTypeArEnum {
+  يوم = 1,
+  شهر = 2,
+  سنة = 3
+
 }

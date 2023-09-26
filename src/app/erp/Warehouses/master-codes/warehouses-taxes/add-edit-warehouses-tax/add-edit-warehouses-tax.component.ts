@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { CODE_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { PublicService } from '../../../../../shared/services/public.service';
-import { SearchDialogService } from '../../../../../shared/services/search-dialog.service'
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
@@ -15,7 +14,7 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { DateCalculation, DateModel } from '../../../../../shared/services/date-services/date-calc.service';
 import { WarehousesTaxesDetail, WarehousesTaxesMaster } from '../../../models/warehouses-tax';
 import { WarehousesTaxServiceProxy } from '../../../Services/warehousestax.service';
-import {  navigateUrl } from '../../../../../shared/helper/helper-url';
+import {  formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
 
 @Component({
   selector: 'app-add-edit-warehouses-tax',
@@ -258,10 +257,8 @@ export class AddEditWarehousesTaxComponent implements OnInit, AfterViewInit {
     this.warehousesTaxesDetail.push({
       id: 0,
       warehousesTaxId: this.selectedWarehousesTaxDetail?.warehousesTaxId ?? 0,
-      fromDate: this.dateService.getDateForInsert(this.selectedWarehousesTaxDetail?.fromDate),
-      toDate: this.dateService.getDateForInsert(this.selectedWarehousesTaxDetail?.toDate),
-      // fromDate:formatDate(this.selectedWarehousesTaxDetail?.fromDate) ,
-      // toDate: formatDate(this.selectedWarehousesTaxDetail?.toDate) ,
+      fromDate:formatDate(this.dateService.getDateForInsert(this.selectedWarehousesTaxDetail?.fromDate)),
+      toDate: formatDate(this.dateService.getDateForInsert(this.selectedWarehousesTaxDetail?.toDate)),
       taxRatio: this.selectedWarehousesTaxDetail?.taxRatio ?? 0,
 
     });
