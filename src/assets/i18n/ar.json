@@ -6,8 +6,8 @@
     "editSuccessfully": "تم التعديل بنجاح",
     "deleteSuccessfully": "تم الحذف بنجاح",
     "language": {
-        "ARABIC": "العربية",
-        "ENGLISH": "الانجليزية"
+        "ARABIC": "ع",
+        "ENGLISH": "EN"
     },
     "home": {
         "enter-keyword": "أدخل الكلمة الرئيسية",
@@ -23,6 +23,7 @@
         "view-all-projects": "عرض كل المشاريع"
     },
     "login": {
+        "welcome": "حياك الله",
         "login-your-account": "تسجيل الدخول الى حسابك",
         "login": "تسجيل دخول",
         "register": "تسجيل",
