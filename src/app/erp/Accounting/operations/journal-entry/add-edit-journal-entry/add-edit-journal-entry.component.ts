@@ -244,8 +244,8 @@ export class AddEditJournalEntryComponent implements OnInit {
           if (res.success) {
              
 
-            this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
-            this.serial = res.response.items.find(c => c.id == 3).value;
+            this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
+            this.serial = res.response.result.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
             //   this.getCurrency();
             // }
@@ -725,7 +725,7 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.accountList = res.response;
+            this.accountList = res.response.filter(c=>c.isLeafAccount==true);
 
           }
 
