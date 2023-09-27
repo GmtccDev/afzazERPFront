@@ -135,21 +135,22 @@
     object-fit: cover !important;
 }
 
+$border-color:#d8d8d8;
 // start toolbar style
 .toolbar-wrapper {
-    border-top: 1px solid #e8e8e8;
+    border-top: 1px solid $border-color;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .k-toolbar {
-    border-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: $border-color !important;
     color: #424242 !important;
     background-color: #f0f0f1 !important;
 }
 
 .k-input-solid {
-    border-color: rgba(0, 0, 0, 0.08);
+    border-color: $border-color;
     color: #424242;
     background-color: #ffffff;
 }
@@ -240,7 +241,7 @@
 }
 
 .k-button-solid-base {
-    border-color: #534b4b67;
+    border-color: $border-color;
     color: #424242;
     background-color: #fff !important;
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.02));
@@ -291,7 +292,7 @@ button:focus {
 button.k-button.k-button-md.k-button-solid-base.k-rounded-md.disabled {
     background: #dfdbdb !important;
     color: #c6bbbb !important;
-    border-color: #ccc !important;
+    border-color: $border-color !important;
     cursor: initial;
 }
 
@@ -324,7 +325,10 @@ span.k-button-text {
 
 .media.profile-media {
     img {
-        width: 32px;
+        width: 35px;
+        border: 2px solid #b5b7ba;
+        border-radius: 50% !important;
+        padding: 3px;
     }
 }
 
@@ -377,12 +381,12 @@ app-tabulator>div {
     font-size: 12px;
     padding: 5px 10px;
     font-weight: 600;
-    border: 1px solid #9a9999;
+    border: 1px solid $border-color;
     @include transition;
     @include text-capitalize;
     &:hover {
         background: #414040;
-        border-color: #353738;
+        border-color: $border-color;
     }
 }
 
@@ -486,7 +490,7 @@ html[dir="rtl"] {
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
-    border-bottom: 4px solid #575656a1 !important;
+    border-bottom: 4px solid $border-color !important;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
 }
@@ -514,10 +518,74 @@ select.form-select {
 }
 
 .login-card .login-main .theme-form input,
-input {
-    border-color: #d8d8d8;
+input,
+.ng-select.ng-select-opened>.ng-select-container {
+    border-color: $border-color;
 }
 
 .modal-dialog .modal-content {
     padding: 3rem;
+}
+
+.ng-select .ng-select-container {
+    height: 35px;
+    border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    -ms-border-radius: 3px !important;
+    -o-border-radius: 3px !important;
+    line-height: 39px;
+    border-color: $border-color !important;
+}
+
+.form-group .ng-dropdown-panel .scroll-host>div {
+    background-color: #e6e8ea;
+    padding: 0;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+    color: #fff !important;
+    background-color: #4bc2f10d !important;
+    border: 1px solid #d5e0e5 !important;
+    padding: 3px 15px !important;
+}
+
+span.ng-clear-wrapper.ng-star-inserted {
+    color: $border-color !important;
+}
+
+span.ng-option-label.ng-star-inserted {
+    color: #787878;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    padding: 5px;
+}
+
+.page-header.subscription {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+footer.footer.general-footer {
+    background: white;
+    .text-white-50 {
+        color: #797878 !important;
+    }
+}
+
+.page-wrapper.compact-wrapper .page-header .header-wrapper .logo-wrapper {
+    display: inline;
+}
+
+.header-logo-wrapper {
+    img {
+        height: 45px;
+    }
+    width: max-content;
+}
+
+.page-wrapper .page-header .header-wrapper .nav-right {
+    width: max-content;
 }

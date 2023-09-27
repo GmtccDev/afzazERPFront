@@ -23,6 +23,7 @@
         "view-all-projects": "عرض كل المشاريع"
     },
     "login": {
+        "welcome": "حياك الله",
         "login-your-account": "تسجيل الدخول الى حسابك",
         "login": "تسجيل دخول",
         "register": "تسجيل",

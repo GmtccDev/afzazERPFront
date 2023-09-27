@@ -6,37 +6,37 @@ import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
 
 @Component({
-  selector: 'app-my-account',
-  templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss']
+	selector: 'app-my-account',
+	templateUrl: './my-account.component.html',
+	styleUrls: ['./my-account.component.scss']
 })
 export class MyAccountComponent implements OnInit {
 
-  public userName: string;
-  public profileImg: 'assets/images/dashboard/profile.jpg';
+	public userName: string;
+	public profileImg: 'assets/images/dashboard/profile.png';
 
-  constructor(public router: Router, private modelService: NgbModal) {
-    console.log("12 localstorage", (localStorage.getItem('userName')))
-    this.userName = localStorage.getItem('userName');
-    if ((localStorage.getItem('user'))) {
-      console.log("true");
-    } else {
-      console.log("NO ");
-    }
+	constructor(public router: Router, private modelService: NgbModal) {
+		console.log("12 localstorage", (localStorage.getItem('userName')))
+		this.userName = localStorage.getItem('userName');
+		if ((localStorage.getItem('user'))) {
+			console.log("true");
+		} else {
+			console.log("NO ");
+		}
 
-  }
+	}
 
 
-  logoutFunc() {
-    localStorage.clear();
-    this.router.navigate(['/auth/login']);
-  }
+	logoutFunc() {
+		localStorage.clear();
+		this.router.navigate(['/auth/login']);
+	}
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
-  showModalFrom() {
-    const modalRef = this.modelService.open(ChangePasswordComponent);
-    modalRef.componentInstance.name = 'World';
-  }
+	showModalFrom() {
+		const modalRef = this.modelService.open(ChangePasswordComponent);
+		modalRef.componentInstance.name = 'World';
+	}
 }
