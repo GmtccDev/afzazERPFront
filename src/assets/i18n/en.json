@@ -159,10 +159,26 @@
         "amount-local": "Amount Local",
         "from-entry-no": "From Entry No",
         "to-entry-no": "To Entry No",
+<<<<<<< HEAD
+        "account":"Account",
+        "address":"Address",
+        "responsible-person":"The Responsible Person",
+        "image":"Image",
+        "quantity":"Quantity",
+        "sales-account":"Sales Account",
+        "sales-return-account":"Sales Return Account",
+        "purchases-account":"Purchases Account",
+        "purchases-return-account":"Purchases Return Account",
+        "sales-cost-account":"Sales Cost Account",
+        "inventory-account":"Inventory Account"
+
+
+=======
         "account": "Account",
         "address": "Address",
         "responsible-person": "The Responsible Person",
         "image": "Image"
+>>>>>>> master
     },
     "menu": {},
     "home": {
@@ -408,7 +424,8 @@
         "item-information": "Item Information",
         "add-item": "Add Item",
         "item-groups-card": " Item Groups Card ",
-        "item-groups-card-information": " Item Groups Card Information  "
+        "item-groups-card-information": " Item Groups Card Information",
+        "tax-information":"Tax Information"
 
 
     },
@@ -532,6 +549,52 @@
     "warehouses-unit": {
         "transaction-factor": "Transaction Factor",
         "unit-transactions": "New Unit Transactions",
+<<<<<<< HEAD
+        "add-unit":"Add Unit",
+        "add-edit":"Add and Edit"
+     },
+     "warehouses-tax": {
+        "tax-information": "Tax Information",
+        "tax-ratio": "Tax Ratio",
+        "tax-details-required": "Tax details is required",
+        "add-tax": "Add Tax"
+    },
+     "item":{
+        "item-group":"Item Group",
+        "unit":"Unit",
+        "item-type":"Item Type",
+        "cost-calculate-method":"Cost Calculate Method",
+        "general-information":"General Information",
+        "model":"Model",
+        "manufacturer":"Manufacturer",
+        "maximum":"Maximum",
+        "minimum":"Minimum",
+        "reorder-limit":"Reorder Limit",
+        "units":"Units",
+        "main-unit":"Main Unit",
+        "selling-price":"Selling Price",
+        "consumer-price":"Consumer Price",
+        "min-selling-price":"Minimum Selling Price",
+        "opening-cost-price":"opening Cost Price",
+        "properties":"Properties",
+        "has-expired-date":"Has Expired Date",
+        "life-time":"Life Time",
+        "life-time-type":"Life Time Type",
+        "alternative-items":"Alternative Items",
+        "has-serial-number":"Has Serial Number",
+        "warranty-period":"Warranty Period",
+        "warranty-type":"Warranty Type",
+        "item-kind":"Item kind",
+        "height-factor":"Height Factor",
+        "width-factor":"Width Factor",
+        "length-factor":"Length Factor",
+        "tranaction-factor":"Transaction Factor",
+        "item-name":"Item Name",
+        "cost-price":"Cost Price",
+        "type":"Type",
+        "current-balance":"Current Balance"
+
+=======
         "add-unit": "Add Unit",
         "add-edit": "Add and Edit"
     },
@@ -556,6 +619,7 @@
         "has-expired-date": "Has Expired Date",
         "life-time": "Life Time",
         "life-time-type": "Life Time Type"
+>>>>>>> master
 
 
     }

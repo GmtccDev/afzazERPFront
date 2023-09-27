@@ -97,7 +97,7 @@ export class WarehousesUnitServiceProxy {
     }
 
 
-    getCurrenciesTransactions(): Observable<any> {
+    getUnitTransactions(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/WarehousesUnit/get-ddl-warehouses-units-transactions?");
     }
 
