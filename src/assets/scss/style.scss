@@ -135,21 +135,22 @@
     object-fit: cover !important;
 }
 
+$border-color:#d8d8d8;
 // start toolbar style
 .toolbar-wrapper {
-    border-top: 1px solid #e8e8e8;
+    border-top: 1px solid $border-color;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .k-toolbar {
-    border-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: $border-color !important;
     color: #424242 !important;
     background-color: #f0f0f1 !important;
 }
 
 .k-input-solid {
-    border-color: rgba(0, 0, 0, 0.08);
+    border-color: $border-color;
     color: #424242;
     background-color: #ffffff;
 }
@@ -240,7 +241,7 @@
 }
 
 .k-button-solid-base {
-    border-color: #534b4b67;
+    border-color: $border-color;
     color: #424242;
     background-color: #fff !important;
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.02));
@@ -291,7 +292,7 @@ button:focus {
 button.k-button.k-button-md.k-button-solid-base.k-rounded-md.disabled {
     background: #dfdbdb !important;
     color: #c6bbbb !important;
-    border-color: #ccc !important;
+    border-color: $border-color !important;
     cursor: initial;
 }
 
@@ -324,7 +325,10 @@ span.k-button-text {
 
 .media.profile-media {
     img {
-        width: 32px;
+        width: 35px;
+        border: 2px solid #b5b7ba;
+        border-radius: 50% !important;
+        padding: 3px;
     }
 }
 
@@ -377,12 +381,12 @@ app-tabulator>div {
     font-size: 12px;
     padding: 5px 10px;
     font-weight: 600;
-    border: 1px solid #9a9999;
+    border: 1px solid $border-color;
     @include transition;
     @include text-capitalize;
     &:hover {
         background: #414040;
-        border-color: #353738;
+        border-color: $border-color;
     }
 }
 
@@ -486,7 +490,7 @@ html[dir="rtl"] {
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
-    border-bottom: 4px solid #575656a1 !important;
+    border-bottom: 4px solid $border-color !important;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
 }
@@ -514,10 +518,422 @@ select.form-select {
 }
 
 .login-card .login-main .theme-form input,
-input {
-    border-color: #d8d8d8;
+input,
+.ng-select.ng-select-opened>.ng-select-container {
+    border-color: $border-color;
 }
 
 .modal-dialog .modal-content {
     padding: 3rem;
+}
+
+.ng-select .ng-select-container {
+    height: 35px;
+    border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    -ms-border-radius: 3px !important;
+    -o-border-radius: 3px !important;
+    line-height: 39px;
+    border-color: $border-color !important;
+}
+
+.form-group .ng-dropdown-panel .scroll-host>div {
+    background-color: #e6e8ea;
+    padding: 0;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+    color: #fff !important;
+    background-color: #4bc2f10d !important;
+    border: 1px solid #d5e0e5 !important;
+    padding: 3px 15px !important;
+}
+
+span.ng-clear-wrapper.ng-star-inserted {
+    color: $border-color !important;
+}
+
+span.ng-option-label.ng-star-inserted {
+    color: #787878;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    padding: 5px;
+}
+
+.page-header.subscription {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+footer.footer.general-footer {
+    background: white;
+    .text-white-50 {
+        color: #797878 !important;
+    }
+}
+
+.page-wrapper.compact-wrapper .page-header .header-wrapper .logo-wrapper {
+    display: inline;
+}
+
+.header-logo-wrapper {
+    img {
+        height: 45px;
+    }
+    width: max-content;
+}
+
+.page-wrapper .page-header .header-wrapper .nav-right {
+    width: max-content;
+}
+
+html[dir=rtl] body,
+html[dir=rtl] .btn,
+html[dir=rtl] {
+    h1,
+    h2,
+    p,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    a {
+        font-family: "Almarai", sans-serif !important;
+    }
+    .fa-angle-right:before {
+        content: "\f104";
+    }
+}
+
+.dashbord-page1 {
+    .page-body {
+        min-height: calc(100vh - 55px) !important;
+        margin-top: 55px !important;
+    }
+}
+
+.sidebar-wrapper {
+    .logo-wrapper {
+        a img.img-fluid.for-light {
+            width: 125px !important;
+        }
+    }
+}
+
+.page-header.pages-header-rain {
+    .header-wrapper .nav-right {
+        width: inherit !important;
+    }
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items {
+    background: #ebedf1 !important;
+    box-shadow: 0px 2px 5px #b3b3b3;
+}
+
+.ng-select.ng-select-opened>.ng-select-container {
+    border-color: #c6c6c6 !important;
+    box-shadow: 0px 0px 0px 2px #4bc2f166;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container,
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+    padding: 0 5px;
+    line-height: 33px;
+}
+
+// .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value .ng-value-icon {
+//     display: inline !important;
+// }
+span.ng-star-inserted {
+    color: var(--theme-secondary) !important;
+}
+
+.card-header {
+    padding: 14px 14px 0px !important;
+    h3 {
+        font-size: 1.2rem !important;
+        font-weight: 600;
+        color: var(--theme-secondary);
+    }
+}
+
+// .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value .ng-value-icon::after {
+//     content: "nn";
+// }
+// staer custm .tabulator
+app-tabulator>div {
+    position: initial !important;
+    overflow: hidden !important;
+}
+
+.tabulator {
+    height: max-content !important;
+    .tabulator-header {
+        background-color: var(--theme-deafult);
+        color: var(--theme-secondary);
+    }
+}
+
+.tabulator-container {
+    &>div {
+        position: initial !important;
+        padding: 0 !important;
+    }
+}
+
+.tabulator .tabulator-header {
+    // overflow: initial !important;
+    overflow: initial !important;
+    display: table;
+    .tabulator-col {
+        border-right: none;
+        background: transparent !important;
+        text-align: start !important;
+        min-width: 155px !important;
+        min-height: 40px;
+        line-height: 32px;
+    }
+}
+
+.tabulator-headers {
+    color: var(--cui-body-bg);
+    background: var(--theme-deafult);
+    width: fit-content !important;
+}
+
+.tabulator {
+    border-radius: 5px;
+    text-align: start !important;
+    margin-top: 13px !important;
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow,
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+    border-bottom: 4px solid #eae6e6a1 !important;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+// end mixin
+.tabulator {
+    height: max-content !important;
+    background-color: transparent !important;
+}
+
+.tabulator-container>div {
+    position: initial !important;
+    padding: 0 !important;
+}
+
+app-tabulator>div {
+    position: initial !important;
+    overflow: visible !important;
+}
+
+.btn-tabulator-secondary {
+    background-color: rgba(var(--theme-secondary), 0.1);
+    font-size: 12px;
+    padding: 5px 10px;
+    font-weight: 600;
+    border: 1px solid #9a9999;
+    @include transition;
+    @include text-capitalize;
+    &:hover {
+        background: #414040;
+        border-color: #353738;
+    }
+}
+
+.tabulator-row.tabulator-selected,
+.tabulator .tabulator-tableHolder .tabulator-table {
+    background-color: #594b2c24 !important;
+    @include transition;
+}
+
+.tabulator-row {
+    @include transition;
+}
+
+.tabulator-row .tabulator-cell,
+.tabulator .tabulator-header,
+.tabulator,
+.tabulator .tabulator-header .tabulator-col {
+    @include none-border;
+}
+
+.tabulator-row .tabulator-cell {
+    padding: 5px 5px !important;
+    color: #797979 !important;
+}
+
+.tabulator .tabulator-footer .tabulator-page.active {
+    background: var(--theme-deafult);
+    color: var(--bs-white);
+    border: var(--theme-deafult);
+    color: #fff !important;
+    //    background: $theme-primary !important;
+    padding: 3px 10px;
+}
+
+.tabulator .tabulator-footer .tabulator-page {
+    background: #cbcbcb;
+}
+
+.tabulator .tabulator-footer .tabulator-page-size {
+    border: 1px solid #ccccccb8 !important;
+    background: #a98d4d00;
+    height: 26px !important;
+}
+
+.tabulator {
+    overflow: auto !important;
+    max-height: 55vh !important;
+    // max-height: max-content !important;
+    border: 1px solid #e1e0e0 !important;
+    background-color: #fff !important;
+    .tabulator-tableHolder {
+        overflow: initial !important;
+    }
+    .tabulator-header .tabulator-col .tabulator-col-content .tabulator-header-menu-button {
+        float: left;
+    }
+    .tabulator-footer {
+        padding: 10px 10px !important;
+        border-top: 1px solid transparent !important;
+        background-color: #fff !important;
+        text-align: start !important;
+        color: #555;
+    }
+    .tabulator-tableHolder .tabulator-table {
+        display: contents !important;
+    }
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="desc"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+    border-top: 6px solid #cecdcc9c !important;
+    color: #cecdcc9c !important;
+}
+
+.tabulator-row {
+    min-height: 40px;
+    line-height: 30px;
+}
+
+.exportdevices_main_icons {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-content: center;
+    vertical-align: middle;
+    gap: 5px;
+}
+
+.tabulator-table {
+    padding: 0 !important;
+}
+
+.tabulator .tabulator-header .tabulator-col:first-child .tabulator-col-content,
+.tabulator .tabulator-header .tabulator-col:first-child,
+.tabulator-row .tabulator-cell:first-child {
+    max-width: 250px !important;
+    width: 200px !important;
+    min-width: 150px !important;
+    text-align: center !important;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+    border-right: none;
+    background: transparent !important;
+    text-align: start !important;
+    min-width: 155px !important;
+}
+
+.search-btn {
+    transition: all 0s ease 0s;
+    display: block;
+    width: 20px;
+    visibility: visible;
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    height: 20px;
+}
+
+input.search-txt {
+    width: 90%;
+    height: 35px;
+    border-radius: 3px 0 0 3px !important;
+    border: 1px solid #ccc;
+    padding: 10px;
+    @include transition;
+    &:focus-visible {
+        outline-color: var(--theme-deafult);
+    }
+}
+
+button.search-btn0.btn.btn-primary {
+    border-radius: 0 3px 3px 0 !important;
+    padding: 17px 10px;
+}
+
+app-tabulator>div {
+    position: initial !important;
+    overflow: visible !important;
+}
+
+.tabulator .tabulator-footer .tabulator-paginator {
+    color: #a3a19c !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+}
+
+.tabulator .tabulator-footer .tabulator-page:disabled {
+    color: #838587;
+    opacity: 0.5;
+    cursor: initial !important;
+    background: #d2d0cc;
+    &:hover {
+        color: #838587 !important;
+    }
+}
+
+.tabulator .tabulator-header {
+    border-bottom: 2px solid #decda7 !important;
+    background-color: #ffffff !important;
+}
+
+.tabulator-header {
+    position: sticky !important;
+    top: 0px;
+}
+
+.tabulator-footer {
+    position: sticky !important;
+    bottom: 0px;
+    box-shadow: 0px 0px 10px #a19c906e;
+}
+
+#NotManagementFormSubmit {
+    .tabulator {
+        max-height: 43vh !important;
+    }
+}
+
+.tabulator-row.tabulator-row-even {
+    background-color: #ffffff !important;
+}
+
+.tabulator-row .tabulator-cell:last-of-type,
+.tabulator .tabulator-header .tabulator-col:last-of-type {
+    border: none !important;
+    min-width: 200px !important;
+    width: max-content !important;
+}
+
+.tabulator-container {
+    position: initial !important;
 }

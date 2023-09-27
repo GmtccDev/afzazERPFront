@@ -1,13 +1,14 @@
 <!-- Page Header Start-->
-<div class="page-header" [class.close_icon]="navServices.collapseSidebar">
+<div class="page-header pages-header-rain" [class.close_icon]="navServices.collapseSidebar">
     <div class="header-wrapper row m-0">
         <app-search></app-search>
         <div class="header-logo-wrapper">
             <div class="logo-wrapper">
-                <a routerLink='/'>
-                    <!-- <img class="img-fluid for-light" src="assets/images/logo/logo.png" alt="">
+                <!-- <a routerLink='/'> -->
+                <!-- <img class="img-fluid for-light rania1" src="assets/images/logo/logo-erp.png" alt=""> -->
+                <!-- <img class="img-fluid for-light" src="assets/images/logo/logo.png" alt="">
                     <img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt=""> -->
-                </a>
+                <!-- </a> -->
             </div>
             <div class="toggle-sidebar" (click)="sidebarToggle()">
                 <app-feather-icons [icon]="'align-center'" class="status_toggle middle"></app-feather-icons>
@@ -18,7 +19,7 @@
     </div> -->
         <div class="col col-lg-12 nav-right p-0 pull-right right-header">
             <ul class="nav-menus">
-                <li class="language-nav" >
+                <li class="language-nav">
                     <app-languages></app-languages>
                 </li>
                 <!-- <li>
@@ -44,17 +45,17 @@
         <li class="onhover-dropdown">
           <app-message-box></app-message-box>
         </li> -->
-                <!-- <li class="maximize">
-          <a class="text-dark" href="javascript:void(0)" (click)="toggleFullScreen()">
-            <app-feather-icons [icon]="'maximize'"></app-feather-icons>
-          </a>
-        </li> -->
-        <li>
-            <div class="mode" (click)="layoutToggle()">
-              <i class="fa fa-moon-o" *ngIf="!dark"></i>
-              <i class="fa fa-lightbulb-o" *ngIf="dark"></i>
-            </div>
-          </li>
+                <li class="maximize">
+                    <a class="text-dark" href="javascript:void(0)" (click)="toggleFullScreen()">
+                        <app-feather-icons [icon]="'maximize'"></app-feather-icons>
+                    </a>
+                </li>
+                <li>
+                    <div class="mode" (click)="layoutToggle()">
+                        <i class="fa fa-moon-o" *ngIf="!dark"></i>
+                        <i class="fa fa-lightbulb-o" *ngIf="dark"></i>
+                    </div>
+                </li>
                 <li class="profile-nav onhover-dropdown p-0">
                     <app-my-account></app-my-account>
                 </li>
@@ -64,7 +65,7 @@
 
     <app-toolbar></app-toolbar>
 
-    
+
 </div>
 <!-- <div class="page-body">
 
