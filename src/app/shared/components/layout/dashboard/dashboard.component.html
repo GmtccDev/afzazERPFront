@@ -5,12 +5,13 @@
             <div class="header-wrapper row m-0">
                 <app-search></app-search>
                 <div class="header-logo-wrapper">
-                    <div class="logo-wrapper">
-                        <a routerLink='/'>
-                            <!-- <img class="img-fluid for-light" src="assets/images/logo/logo.png" alt="">
+                    <!-- <div class="logo-wrapper"> -->
+                    <!-- <a routerLink='/'> -->
+                    <!-- <img class="img-fluid for-light rania2" src="assets/images/logo/logo-erp.png" alt=""> -->
+                    <!-- <img class="img-fluid for-light" src="assets/images/logo/logo.png" alt="">
                         <img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt=""> -->
-                        </a>
-                    </div>
+                    <!-- </a> -->
+                    <!-- </div> -->
                     <div class="toggle-sidebar" (click)="sidebarToggle()">
                         <app-feather-icons [icon]="'align-center'" class="status_toggle middle"></app-feather-icons>
                     </div>
@@ -37,7 +38,7 @@
         </div>
         <!-- <app-header></app-header> -->
         <!-- Page Body Start-->
-        <div class="page-body-wrapper">
+        <div class="page-body-wrapper dashbord-page1">
             <div class="sidebar-wrapper" [attr.sidebar-layout]="layout.config.settings.sidebar_type" [class.close_icon]="navServices.collapseSidebar">
                 <app-sidebar></app-sidebar>
             </div>
@@ -67,10 +68,10 @@
                                             <h4 class="f-w-600">
                                                 <span id="greeting">{{greeting}}</span>
                                                 <span class="right-circle ms-1"><i
-                                                        class="fa fa-check-circle f-14 middle"></i></span>
+														class="fa fa-check-circle f-14 middle"></i></span>
                                             </h4>
                                             <p><span> Today's earrning is $405 & your sales increase rate is 3.7 over
-                                                    the last 24 hours</span></p>
+													the last 24 hours</span></p>
                                             <div class="whatsnew-btn"><a class="btn btn-primary">Whats New !</a></div>
                                             <div class="left-icon"><i class="fa fa-bell"> </i></div>
                                         </div>
@@ -271,7 +272,7 @@
                                         <div class="media align-items-center">
                                             <div class="media-body right-chart-content">
                                                 <h4>$95,900<span class="new-box">Hot</span></h4><span>Purchase Order
-                                                    Value</span>
+													Value</span>
                                             </div>
                                             <div id="knob"></div>
                                         </div>
@@ -284,7 +285,7 @@
                                         <div class="media align-items-center">
                                             <div class="media-body right-chart-content">
                                                 <h4>$95,000<span class="new-box">New</span></h4><span>Product Order
-                                                    Value</span>
+													Value</span>
                                             </div>
                                             <div id="knob-right"></div>
                                         </div>
@@ -298,26 +299,26 @@
                                             <h5 class="m-0">News & Update</h5>
                                             <div class="card-header-right-icon">
                                                 <select class="button btn btn-primary">
-                                                    <option>Today</option>
-                                                    <option>Tomorrow</option>
-                                                    <option>Yesterday</option>
-                                                </select>
+													<option>Today</option>
+													<option>Tomorrow</option>
+													<option>Yesterday</option>
+												</select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body p-0">
                                         <div class="news-update">
                                             <h6>36% off For pixel lights Couslations Types.</h6><span>Lorem Ipsum is
-                                                simply dummy...</span>
+												simply dummy...</span>
                                         </div>
                                         <div class="news-update">
                                             <h6>We are produce new product this</h6><span> Lorem Ipsum is simply text of
-                                                the printing...
-                                            </span>
+												the printing...
+											</span>
                                         </div>
                                         <div class="news-update">
                                             <h6>50% off For COVID Couslations Types.</h6><span>Lorem Ipsum is simply
-                                                dummy...</span>
+												dummy...</span>
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -334,10 +335,10 @@
                                                     <h5 class="m-0">appointment</h5>
                                                     <div class="card-header-right-icon">
                                                         <select class="button btn btn-primary">
-                                                            <option>Today</option>
-                                                            <option>Tomorrow</option>
-                                                            <option>Yesterday</option>
-                                                        </select>
+															<option>Today</option>
+															<option>Tomorrow</option>
+															<option>Yesterday</option>
+														</select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -398,9 +399,9 @@
                                             <div class="card-body">
                                                 <div class="body-bottom">
                                                     <h6> 10% off For drama lights Couslations...</h6><span class="font-roboto">Lorem Ipsum
-                                                        is simply dummy...It is a long established fact that a reader
-                                                        will be distracted by
-                                                    </span>
+														is simply dummy...It is a long established fact that a reader
+														will be distracted by
+													</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -414,10 +415,10 @@
                                             <h5 class="m-0">notification</h5>
                                             <div class="card-header-right-icon">
                                                 <select class="button btn btn-primary">
-                                                    <option>Today</option>
-                                                    <option>Tomorrow</option>
-                                                    <option>Yesterday</option>
-                                                </select>
+													<option>Today</option>
+													<option>Tomorrow</option>
+													<option>Yesterday</option>
+												</select>
                                             </div>
                                         </div>
                                     </div>
@@ -463,10 +464,10 @@
                                             <h5 class="m-0">Market Value</h5>
                                             <div class="card-header-right-icon">
                                                 <select class="button btn btn-primary">
-                                                    <option>Year</option>
-                                                    <option>Month</option>
-                                                    <option>Day</option>
-                                                </select>
+													<option>Year</option>
+													<option>Month</option>
+													<option>Day</option>
+												</select>
                                             </div>
                                         </div>
                                     </div>
@@ -501,7 +502,7 @@
                                                             <span class="mb-0">Hi deo, Please send me link.</span>
                                                         </div>
                                                         <div class="sub-message message-main"><span class="mb-0">Right
-                                                                Now</span></div>
+																Now</span></div>
                                                     </div>
                                                 </div>
                                                 <p class="f-w-400">7:28 PM</p>
@@ -522,7 +523,7 @@
                                                     </div>
                                                     <div class="main-chat">
                                                         <div class="sub-message message-main mt-0"><span>It's
-                                                                urgently</span></div>
+																urgently</span></div>
                                                     </div>
                                                 </div>
                                                 <p class="f-w-400">7:28 PM</p>
@@ -531,7 +532,7 @@
                                                 <div class="media-body text-end">
                                                     <div class="message-main pull-right">
                                                         <span class="loader-span mb-0 text-start" id="wave">
-                                                            <span class="dot"></span>
+															<span class="dot"></span>
                                                         <span class="dot"></span>
                                                         <span class="dot"></span>
                                                         </span>
@@ -556,8 +557,8 @@
                                             </div>
                                         </div>
                                         <span class="default-dots-stay overview-dots full-width-dots">
-                                            <span class="dots-group">
-                                                <span class="dots dots1"></span>
+											<span class="dots-group">
+												<span class="dots dots1"></span>
                                         <span class="dots dots2 dot-small"></span>
                                         <span class="dots dots3 dot-small"></span>
                                         <span class="dots dots4 dot-medium"></span>

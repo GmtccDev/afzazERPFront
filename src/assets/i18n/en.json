@@ -413,8 +413,8 @@
 
     },
     "language": {
-        "ARABIC": "Arabic",
-        "ENGLISH": "English"
+        "ARABIC": "Ar",
+        "ENGLISH": "En"
     },
     "currency": {
         "transaction-date": "Transaction Date",
