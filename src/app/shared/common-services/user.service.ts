@@ -49,6 +49,7 @@ export class UserService {
     logout() {
         this.removeToken();
         this.removeRefreshToken();
+        localStorage.clear();
         this.router.navigate(['/authentication/login'])
     }
   
@@ -72,5 +73,24 @@ export class UserService {
         if(name)return name;
         else return '';
     }
-
+    setBranchId(name: string) {
+        if (name) {
+            localStorage.setItem('branchId', name);
+        }
+    }
+    getBranchId(){
+        let name = localStorage.getItem('branchId');
+        if(name)return name;
+        else return '';
+    }
+    setCompanyId(name: string) {
+        if (name) {
+            localStorage.setItem('companyId', name);
+        }
+    }
+    getCompanyId(){
+        let name = localStorage.getItem('companyId');
+        if(name)return name;
+        else return '';
+    }
 }

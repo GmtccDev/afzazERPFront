@@ -99,7 +99,11 @@
     </div>
    
 </section>
-<div class="input-group  popup">
+<div class="col-md-6 col-12">
+    
+   <p>Module Type</p>
+</div>
+<div class="col-md-6 col-12">
     <ng-select style="width:100%" (change)="onChange($event)">
         <ng-option *ngFor="let module of modulesType" [value]="module.value">
             {{lang=="ar"?module.descriptionAr:module.descriptionEn}}
