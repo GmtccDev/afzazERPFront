@@ -392,7 +392,7 @@ app-tabulator>div {
 
 .tabulator-row.tabulator-selected,
 .tabulator .tabulator-tableHolder .tabulator-table {
-    background-color: rgba(244, 170, 44, 24%) !important;
+    background-color: rgba(179, 229, 249, 36%) !important;
     @include transition;
 }
 
@@ -662,6 +662,14 @@ span.ng-star-inserted {
     }
 }
 
+.page-title {
+    h4 {
+        font-size: 1.2rem !important;
+        font-weight: 600;
+        color: var(--theme-secondary);
+    }
+}
+
 // .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value .ng-value-icon::after {
 //     content: "nn";
 // }
@@ -702,7 +710,7 @@ app-tabulator>div {
 
 .tabulator-headers {
     color: var(--cui-body-bg);
-    background: var(--theme-deafult);
+    // background: var(--theme-deafult);
     width: fit-content !important;
 }
 
@@ -750,10 +758,13 @@ app-tabulator>div {
     }
 }
 
-.tabulator-row.tabulator-selected,
-.tabulator .tabulator-tableHolder .tabulator-table {
-    background-color: #594b2c24 !important;
-    @include transition;
+// .tabulator-row.tabulator-selected,
+// .tabulator .tabulator-tableHolder .tabulator-table {
+//     background-color: #594b2c24 !important;
+//     @include transition;
+// }
+.tabulator-row.tabulator-selectable:hover {
+    background-color: #b3e5f969 !important;
 }
 
 .tabulator-row {
@@ -840,9 +851,9 @@ app-tabulator>div {
 .tabulator .tabulator-header .tabulator-col:first-child .tabulator-col-content,
 .tabulator .tabulator-header .tabulator-col:first-child,
 .tabulator-row .tabulator-cell:first-child {
-    max-width: 250px !important;
-    width: 200px !important;
-    min-width: 150px !important;
+    max-width: 100px !important;
+    width: 100px !important;
+    min-width: 100px !important;
     text-align: center !important;
 }
 
@@ -902,7 +913,7 @@ app-tabulator>div {
 }
 
 .tabulator .tabulator-header {
-    border-bottom: 2px solid #decda7 !important;
+    border-bottom: 2px solid none !important;
     background-color: #ffffff !important;
 }
 
@@ -930,10 +941,23 @@ app-tabulator>div {
 .tabulator-row .tabulator-cell:last-of-type,
 .tabulator .tabulator-header .tabulator-col:last-of-type {
     border: none !important;
-    min-width: 200px !important;
+    min-width: 140px !important;
     width: max-content !important;
 }
 
 .tabulator-container {
     position: initial !important;
+    overflow: hidden !important;
+}
+
+.tabulator .tabulator-header {
+    border-bottom: 2px solid #ccc !important;
+}
+
+.tabulator-row.tabulator-selectable {
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.tabulator-row.tabulator-selected {
+    background-color: #4bc2f1a6 !important;
 }

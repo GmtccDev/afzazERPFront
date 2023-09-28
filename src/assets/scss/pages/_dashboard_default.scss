@@ -43,7 +43,7 @@ $badge-light-color in (primary, $primary-color),
 }
 
 .profile-greeting {
-    background-image: url(../../images/dashboard/bg.png);
+    background-image: linear-gradient(45deg, #030d20, #00000036), url(../../images/dashboard/bg.png);
     background-size: cover !important;
     background-repeat: no-repeat;
     background-position: center center;
@@ -90,7 +90,7 @@ $badge-light-color in (primary, $primary-color),
         }
     }
     .greeting-user {
-        margin: 42px 0;
+        margin: 22px 0;
         h4 {
             margin-top: 30px;
             margin-bottom: 20px;
