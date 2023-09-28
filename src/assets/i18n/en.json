@@ -169,7 +169,8 @@
         "purchases-account":"Purchases Account",
         "purchases-return-account":"Purchases Return Account",
         "sales-cost-account":"Sales Cost Account",
-        "inventory-account":"Inventory Account"
+        "inventory-account":"Inventory Account",
+        "minute":"minute"
     },
     "menu": {},
     "home": {
@@ -459,7 +460,8 @@
         "account": "closing account  ",
         "endOfYear": "End Of Year",
         "accountReceivables": "Account Receivables",
-        "idleTime": "Idle Time"
+        "idleTime": "Idle Time",
+        "account-exchange":"Account Exchange"
     },
     "fiscal-period-status": {
         "Opened": "Opened",

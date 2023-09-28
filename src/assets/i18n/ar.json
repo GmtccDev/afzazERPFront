@@ -380,7 +380,8 @@
         "purchases-account":"حساب المشتريات",
         "purchases-return-account":"حساب مرتجع المشتريات",
         "sales-cost-account":"حساب تكلفة المبيعات",
-        "inventory-account":"حساب المخزون"
+        "inventory-account":"حساب المخزون",
+        "minute":"دقيقة"
 
     },
     "menu": {},
@@ -409,7 +410,8 @@
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
         "accountReceivables": "حساب أوراق القبض",
-        "idleTime": "ووقت الخمول"
+        "idleTime": "وقت الخمول",
+        "account-exchange":"تبادل الحساب"
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",
