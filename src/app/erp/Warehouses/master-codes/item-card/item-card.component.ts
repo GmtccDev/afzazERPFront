@@ -196,18 +196,13 @@ export class  ItemCardComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'code',
     },
     {
-      title: this.lang == 'ar' ? 'الهاتف' : 'Phone',
-      field: 'phone',
+      title: this.lang == 'ar' ? ' الباركود' : 'Barcode ',
+      field: 'barcode',
     },
     {
-      title: this.lang == 'ar' ? 'البريد الالكترونى' : 'Email',
-      field: 'email',
-    },
-    {
-      title: this.lang == 'ar' ? 'رقم الحساب' : 'Account Number',
-      field: 'accountId',
-    },
- 
+      title: this.lang == 'ar' ? 'مجموعة الصنف' : 'Item Group',
+      field: 'itemGroupId',
+    }
    
   ];
 
@@ -224,11 +219,9 @@ export class  ItemCardComponent implements OnInit, OnDestroy, AfterViewInit {
         { field: 'nameEn', type: 'like', value: searchTxt },
         { field: 'nameAr', type: 'like', value: searchTxt },
         { field: 'code', type: 'like', value: searchTxt },
-        { field: 'phone', type: 'like', value: searchTxt },
-        { field: 'email', type: 'like', value: searchTxt },
-        { field: 'accountId', type: 'like', value: searchTxt }
+        { field: 'barcode', type: 'like', value: searchTxt },
 
-        ,
+        
       ],
     ];
   }
@@ -253,7 +246,7 @@ export class  ItemCardComponent implements OnInit, OnDestroy, AfterViewInit {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate([' master-codes/ ItemCard/update- ItemCard/' + id])
+      this.router.navigate(['warehouses-master-codes/itemCard/update-itemCard/' + id])
     }
 
   }
@@ -269,7 +262,7 @@ export class  ItemCardComponent implements OnInit, OnDestroy, AfterViewInit {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate([' master-codes/ ItemCard/update- ItemCard/' + event.item.id])
+        this.router.navigate(['warehouses-master-codes/itemCard/update-itemCard/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);

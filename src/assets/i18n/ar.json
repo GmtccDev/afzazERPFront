@@ -373,7 +373,16 @@
         "storekeeper": "أمين المستودع",
         "responsible-person": "الشخص المسئول",
         "required": "هذا الحقل مطلوب",
-        "image": "الصورة"
+        "image": "الصورة",
+        "quantity":"الكمية",
+        "sales-account":"حساب المبيعات",
+        "sales-return-account":"حساب مرتجع المبيعات",
+        "purchases-account":"حساب المشتريات",
+        "purchases-return-account":"حساب مرتجع المشتريات",
+        "sales-cost-account":"حساب تكلفة المبيعات",
+        "inventory-account":"حساب المخزون",
+        "minute":"دقيقة"
+
     },
     "menu": {},
     "currency": {
@@ -401,7 +410,8 @@
         "account": "حساب اغلاق العام",
         "endOfYear": "نهاية العام",
         "accountReceivables": "حساب أوراق القبض",
-        "idleTime": "ووقت الخمول"
+        "idleTime": "وقت الخمول",
+        "account-exchange":"تبادل الحساب"
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",
@@ -519,5 +529,43 @@
         "tax-ratio": "نسبة الضريبة",
         "tax-details-required": "تفاصيل الضريبة مطلوب",
         "add-tax": "اضافة ضريبة"
-    }
+    },
+    "item":{
+        "item-group":"مجموعة الصنف",
+        "unit":"الوحدة",
+        "item-type":"نوع الصنف",
+        "cost-calculate-method":"طريقة أحتساب التكلفة",
+        "general-information":"بيانات عامة",
+        "model":"موديل",
+        "manufacturer":"المصنع",
+        "maximum":"الحد الأقصى",
+        "minimum":"الحد الأدنى",
+        "reorder-limit":"حد أعادة الطلب",
+        "units":"الوحدات",
+        "main-unit":"الوحدة الأساسية",
+        "selling-price":"سعر البيع",
+        "consumer-price":"سعر المستهلك",
+        "min-selling-price":"أقل سعر بيع",
+        "opening-cost-price":"سعر التكلفة الأفتتاحى",
+        "properties":"الخصائص",
+        "has-expired-date":"تاريخ صلاحية",
+        "life-time":"العمر الافتراضى",
+        "life-time-type":"نوع العمر الافتراضى",
+        "alternative-items":"الأصناف البديلة",
+        "has-serial-number":"رقم تسلسلى",
+        "warranty-period":"فترة الضمان",
+        "warranty-type":"نوع الضمان",
+        "item-kind":"نوع الصنف",
+        "height-factor":"معامل الطول",
+        "width-factor":"معامل العرض",
+        "length-factor":"معامل الارتفاع",
+        "tranaction-factor":"معامل التحويل",
+        "item-name":"أسم الصنف",
+        "cost-price":"سعر التكلفة",
+        "type":"النوع",
+        "current-balance":"الرصيد الحالى"
+
+
+
+     }
 }

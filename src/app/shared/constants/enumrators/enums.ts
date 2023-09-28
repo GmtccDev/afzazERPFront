@@ -85,9 +85,13 @@ export enum AccountClassificationsEnum {
   Cash = 1,
   Supplier = 2,
   Client = 3,
-  Double = 4,
+  Binary = 4,
   Employee = 5,
-  Other = 6
+  Other = 6,
+  Sales = 7,
+  Purchases = 8,
+  Inventory = 9
+
 }
 export enum AccountClassificationsArEnum {
   نقدية = 1,
@@ -95,7 +99,10 @@ export enum AccountClassificationsArEnum {
   عميل = 3,
   مزدوج = 4,
   موظف = 5,
-  أخرى = 6
+  أخرى = 6,
+  مبيعات = 7,
+  مشتريات = 8,
+  مخزون = 9
 }
 export enum ReportOptionsEnum {
   Quarterly = 1,
@@ -138,6 +145,18 @@ export enum LifeTimeTypeEnum {
 
 }
 export enum LifeTimeTypeArEnum {
+  يوم = 1,
+  شهر = 2,
+  سنة = 3
+
+}
+export enum WarrantyTypeEnum {
+  Day = 1,
+  Month = 2,
+  Year = 3
+
+}
+export enum WarrantyTypeArEnum {
   يوم = 1,
   شهر = 2,
   سنة = 3
