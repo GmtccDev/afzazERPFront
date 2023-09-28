@@ -15,6 +15,7 @@ import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { UserService } from 'src/app/shared/common-services/user.service';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -71,8 +72,10 @@ export class AddEditJournalEntryComponent implements OnInit {
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
   entriesStatusEnum: any;
+  branchId: string = this.userService.getBranchId();
+  companyId: string = this.userService.getCompanyId();
   constructor(
-    private journalEntryService: JournalEntryServiceProxy,
+    private journalEntryService: JournalEntryServiceProxy,private userService:UserService,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -201,7 +204,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
   }
   onChangeJournal(event) {
-    
+
     //this.journalEntryForm.controls['jEMasterStatusId'].value
     let journalModel;
     if (event != null) {
@@ -242,7 +245,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           resolve();
 
           if (res.success) {
-             
+
 
             this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == 3).value;
@@ -550,7 +553,8 @@ export class AddEditJournalEntryComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.journalEntryForm.value;
-
+      entity.branchId = this.branchId;
+      entity.companyId = this.companyId;
       let sub = this.journalEntryService.createJournalEntry(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -630,12 +634,12 @@ export class AddEditJournalEntryComponent implements OnInit {
     faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailDebit.value);
     faControl['controls'].jEDetailSerial.setValue(index + 1);
   }
-  confirmUpdate()
-  {
+  confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.journalEntryForm.value;
-
-     let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
+      entity.branchId = this.branchId;
+      entity.companyId = this.companyId;
+      let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
           this.submited = false;
@@ -688,7 +692,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     } else {
 
-        return this.journalEntryForm.markAllAsTouched();
+      return this.journalEntryForm.markAllAsTouched();
     }
   }
 
@@ -725,7 +729,7 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.accountList = res.response.filter(c=>c.isLeafAccount==true);
+            this.accountList = res.response.filter(c => c.isLeafAccount == true);
 
           }
 
