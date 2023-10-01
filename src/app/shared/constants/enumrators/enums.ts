@@ -162,3 +162,21 @@ export enum WarrantyTypeArEnum {
   سنة = 3
 
 }
+export enum BillKindEnum {
+  
+  'Sales Bill' = 1,
+  'Purchases Bill' = 2,
+  'Sales Returns Bill' = 3,
+  'Purchases Returns Bill' = 4,
+  'First Period Goods Bill'=5
+
+}
+export enum BillKindArEnum {
+  'فاتورة مبيعات' = 1,
+  'فاتورة مشتريات' = 2,
+  'فاتورة مردودات مبيعات' = 3,
+  'فاتورة مردودات مشتريات' = 4,
+  'فاتورة بضاعة أول المدة'=5
+
+
+}

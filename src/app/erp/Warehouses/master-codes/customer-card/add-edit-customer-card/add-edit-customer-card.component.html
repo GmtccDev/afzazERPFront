@@ -39,7 +39,7 @@
 
                                                 <input type="text" class="form-control "
                                                     [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-                                                    name="nameAr" formControlName="nameAr">
+                                                    name="nameAr" formControlName="nameAr" maxlength="50">
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -52,19 +52,10 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="nameEn" class="label-name">
-                                                {{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+                                                {{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
-
                                                 <input type="text" class="form-control " name="nameEn"
-                                                    formControlName="nameEn">
-                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid"
-                                                    class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
-
+                                                    formControlName="nameEn" maxlength="50">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
