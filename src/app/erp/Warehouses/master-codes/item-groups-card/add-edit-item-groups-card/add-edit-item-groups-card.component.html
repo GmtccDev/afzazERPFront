@@ -15,7 +15,7 @@
                                     <h3>{{'component-names.item-groups-card-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-  
+
                                         <div class="col-md-4 col-4">
                                             <label for="parentId" class="label-name">
                                                 {{'general.parent'|translate}}
@@ -27,18 +27,15 @@
                                                         {{lang=="ar"?itemGroupsCard.nameAr:itemGroupsCard.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
-                                               
+
                                             </div>
-                                          
+
                                         </div>
-                                      
+
                                         <div class="col-md-2 col-2">
-                                            <button
-                                              
-                                            class="btn btn-rounded btn-dark" (click)="showSearchModal=true"
-                                            type="button"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-rounded btn-dark" (click)="showSearchModal=true" type="button"><i class="fa fa-search"></i></button>
                                         </div>
-                                       
+
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
@@ -72,7 +69,7 @@
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
-                                                
+
 
                                             </div>
                                         </div>
@@ -80,21 +77,16 @@
                                             <label for="item-type" class="label-name">{{'item.item-type'|translate}}
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="itemType"
-                                                    [items]="itemTypeEnum" bindLabel="name" bindValue="id"
-                                                    style="width:100%"></ng-select>
+                                                <ng-select class="custom" formControlName="itemType" [items]="itemTypeEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
 
                                             </div>
                                         </div>
 
                                         <div class="col-12 col-md-6">
-                                            <label for="cost-calculate-method"
-                                                class="label-name">{{'item.cost-calculate-method'|translate}}
+                                            <label for="cost-calculate-method" class="label-name">{{'item.cost-calculate-method'|translate}}
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="costCalculation"
-                                                    [items]="costCalculateMethodsEnum" bindLabel="name" bindValue="id"
-                                                    style="width:100%"></ng-select>
+                                                <ng-select class="custom" formControlName="costCalculation" [items]="costCalculateMethodsEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
 
                                             </div>
                                         </div>
@@ -104,36 +96,35 @@
 
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="warehousesUnitId"
-                                                    name='warehousesUnitId' class="" id="warehousesUnitId">
-                                                    <ng-option *ngFor="let unit of unitsList"
-                                                        [value]="unit.id">
+                                                <ng-select style="width:100%" formControlName="warehousesUnitId" name='warehousesUnitId' class="" id="warehousesUnitId">
+                                                    <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
                                                         {{lang=="ar" ? unit.nameAr:unit.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
-                                              
+
 
                                             </div>
 
                                         </div>
-                                     
+
                                         <div class="col-12 col-md-6">
                                             <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
-                                                
+
 
                                             </div>
                                         </div>
-                                     
+
                                         <hr class="mt-3 mb-3 p-0">
                                         <div class="col-12 col-md-6">
                                             <div class="media">
-                                                <label class="col-form-label m-r-10"> {{'general.status'|translate}} </label>
+                                                <label class="label-name"> {{'general.status'|translate}} </label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive" formControlName="isActive">
+                                                        <input type="checkbox" class="form-control" name="isActive"
+                                                            formControlName="isActive">
                                                         <span class="switch-state"></span>
                                                     </label>
                                                 </div>
@@ -152,6 +143,5 @@
 
     </div>
 </section>
-<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
-    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectItemGroupsCard($event)">
+<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi" (emitClose)="showSearchModal = false;" (emitSearch)="onSelectItemGroupsCard($event)">
 </app-public-search-modal>

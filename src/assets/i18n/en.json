@@ -208,6 +208,7 @@
         "send": "Send",
         "password": "Password",
         "change-password": "Change Password",
+        "select-company": "select company & branch",
         "log-out": "Log Out",
         "old-password": "Old Password ",
         "password-no-match": "Password No Match ",
@@ -577,7 +578,7 @@
         "bill-type": "Bill Type",
         "add-bill-type": "Add Bill Type",
         "update-bill-type": "Update Bill Type",
-        "basic-properties":"Basic Properties",
-        "warehouse-effect":"Warehouse Effect"
+        "basic-properties": "Basic Properties",
+        "warehouse-effect": "Warehouse Effect"
     }
 }

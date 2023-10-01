@@ -7,22 +7,19 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form [formGroup]="unitTransactionForm" id="unitTransactionSubmit"
-                    class="tabs-form">
+                <form [formGroup]="unitTransactionForm" id="unitTransactionSubmit" class="tabs-form">
                     <div class="main-unit">
                         <div class="wrapper-title">
 
                             <div class="modal-header">
-                                <h4 class="modal-title">{{'unit.unit-transactions'|translate}}</h4>
+                                <h4 class="modal-title text-capitalize">{{'unit.unit-transactions'|translate}}</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row ">
                                     <div class="col-12 col-md-12">
-                                        <label for="transactionFactor"
-                                            class="label-name">{{'unit.transaction-factor'|translate}}</label>
+                                        <label for="transactionFactor" class="label-name">{{'unit.transaction-factor'|translate}}</label>
                                         <div class="form-group position-relative">
-                                            <input type="number" class="form-control icon-unit"
-                                                name="transactionFactor" formControlName="transactionFactor">
+                                            <input type="number" class="form-control icon-unit" name="transactionFactor" formControlName="transactionFactor">
                                         </div>
                                     </div>
                                     <hr class="p-0">
@@ -33,8 +30,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="input-group  popup">
-                                            <ng-select style="width:100%" formControlName="unitDetailId"
-                                                name='unitDetailId' class="" id="unitDetailId">
+                                            <ng-select style="width:100%" formControlName="unitDetailId" name='unitDetailId' class="" id="unitDetailId">
                                                 <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
                                                     {{lang=="ar"?unit.nameAr:unit.nameEn}}
                                                 </ng-option>

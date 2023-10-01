@@ -1,8 +1,8 @@
 /**=====================
     Typography css start
 ==========================**/
-//Custom css Start
 
+//Custom css Start
 html {
     scroll-behavior: smooth;
 }
@@ -14,7 +14,8 @@ body {
     color: $theme-body-font-color;
 }
 
-ol, ul {
+ol,
+ul {
     padding-left: $ul-padding-left;
     list-style-type: none;
     margin-bottom: 0;
@@ -59,12 +60,10 @@ code {
 blockquote {
     border-left: $blockquote-border;
     padding: $blockquote-padding;
-
     &.text-center {
         border: none;
         padding: $blockquote-padding;
     }
-
     &.text-end {
         border-left: none;
         border-right: $blockquote-border;
@@ -102,10 +101,8 @@ label {
 }
 
 //Custom css End
-
 //Typography css start
 .typography {
-
     h1,
     .h1,
     h2,
@@ -120,12 +117,10 @@ label {
     .h6 {
         margin: 20px 0;
         margin-top: 0;
-
         &:last-child {
             margin-bottom: 0;
         }
     }
-
     small {
         padding-left: $small-tag-padding;
         color: $small-tag-color;
@@ -137,7 +132,6 @@ pre {
     padding: $pre-tag-padding;
 }
 
-
 //Typography css end
 .owl-theme {
     .owl-dots {
@@ -145,7 +139,6 @@ pre {
             span {
                 background: lighten($primary-color, 20%);
             }
-
             &.active,
             &:hover {
                 span {
@@ -154,7 +147,6 @@ pre {
             }
         }
     }
-
     .owl-nav {
         &.disabled {
             &+.owl-dots {
@@ -209,6 +201,7 @@ pre {
         }
     }
 }
+
 @keyframes modal-animation {
     0% {
         opacity: 0;
@@ -227,7 +220,6 @@ pre {
         right: 30px !important;
         color: var(--theme-deafult);
     }
-
     span {
         +span {
             +span {
@@ -239,17 +231,14 @@ pre {
             }
         }
     }
-
     i {
         padding: 20px;
         padding-right: 0 !important;
         margin-right: 20px !important;
     }
-
     .progress {
         margin-top: -2px !important;
         height: 2px;
-
         .progress-bar {
             background-color: var(--theme-deafult);
         }
@@ -263,13 +252,11 @@ pre {
     width: 300px;
     color: $white;
     background-color: var(--theme-deafult);
-
     .btn-close {
         box-shadow: none;
         color: $white;
         line-height: 1.4;
         font-weight: 100;
-
         &:focus {
             outline: none;
         }
@@ -294,7 +281,6 @@ pre {
 .irs-to,
 .irs-single {
     background: var(--theme-deafult);
-
     &:after {
         border-top-color: var(--theme-deafult);
     }
@@ -311,7 +297,6 @@ pre {
 // sweetalert css
 .swal-button {
     background-color: var(--theme-deafult);
-
     &:active {
         background-color: darken($primary-color, 5%);
     }
@@ -328,19 +313,16 @@ pre {
 }
 
 fieldset {
-
     .bootstrap-touchspin-postfix,
     .bootstrap-touchspin-prefix {
         border-radius: 0;
         padding: .4rem .75rem;
     }
-
     .input-group-prepend {
         &~.form-control {
             height: 39px;
         }
     }
-
     .input-group-lg {
         .touchspin {
             height: 50px;
@@ -365,47 +347,48 @@ fieldset {
 
 // tap-top
 .tap-top {
-	text-align: center;
-	cursor: pointer;
-	display: none;
-	width: 40px;
-	height: 40px;
-	border-radius: 100%;
-	position: fixed;
-	bottom: 30px;
-	right: 30px;
-	z-index: 5;
-	color: #fff;
-	background: var(--theme-deafult);
-	border: none;
-	padding: 7px;
-	box-shadow: 0 0 10px var(--theme-deafult);
-	opacity: 0.5;
-	transition: all 0.3s ease;
-  
-	&:hover {
-	  transition: all 0.3s ease;
-	  opacity: 1;
-	}
-  
-	svg {
-	  width: 20px;
-	}
+    text-align: center;
+    cursor: pointer;
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 5;
+    color: #fff;
+    background: var(--theme-deafult);
+    border: none;
+    padding: 7px;
+    box-shadow: 0 0 10px var(--theme-deafult);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    &:hover {
+        transition: all 0.3s ease;
+        opacity: 1;
+    }
+    svg {
+        width: 20px;
+    }
 }
+
 .media {
     display: flex;
-    align-items: flex-start;
-    .media-body {    
+    align-items: center;
+    gap: 20px;
+    .media-body {
         flex: 1;
     }
 }
+
 .input-group-lg button {
     line-height: 2.3;
 }
-.input-group-text{
+
+.input-group-text {
     display: inline-flex;
 }
-
 
 
 /**=====================
