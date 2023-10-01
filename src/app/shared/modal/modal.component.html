@@ -1,55 +1,51 @@
-
 <div class="container-fluid">
-  <div class="row">
-    <div  class="col-sm-12 col-xl-12">
-     
-      <div class="card-body text-center p-3">
-        <ng-template #content let-modal>
-          <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Chenge password</h4>
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-          </div>
-          <div class="modal-body">
-            <form class="custom-datepicker custom-datepicker-dropdown">
-              <p class="">Your new password must be different from your previous passwords.</p>
-              <div class="form-group">
-                <!-- <label for="newPassword">Old password</label> -->
-                <div class="input-group">
-                  <input id="oldPassword" class="form-control" placeholder="Old password" name="oldPassword" type="password" 
-                   >
-                  
-                </div>
-              </div>
-              <div class="form-group">
-                <!-- <label for="newPassword">New password</label> -->
-                <div class="input-group">
-                  <input id="newPassword" class="form-control" placeholder="New password" name="password" type="password" 
-                   >
-                  
-                </div>
-              </div>
-              <div class="form-group">
-                <!-- <label for="newPassword">confirmPassword</label> -->
-                <div class="input-group">
-                  <input id="confirmPassword" class="form-control" placeholder="Confirm password" name="confirmPassword" type="password" 
-                   >
-                  
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">cancel</button>
-            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save</button>
-          </div>
-        </ng-template>
-        <h5 class="p-15">Your new password must be different from your previous passwords</h5>
-        <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Change Password</button>
-     
-      </div>
-      
-     
+    <div class="row">
+        <div class="col-sm-12 col-xl-12">
+
+            <div class="card-body text-center p-3">
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title text-capitalize" id="modal-basic-title">Chenge password</h4>
+                        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="custom-datepicker custom-datepicker-dropdown">
+                            <p class="">Your new password must be different from your previous passwords.</p>
+                            <div class="form-group">
+                                <!-- <label for="newPassword">Old password</label> -->
+                                <div class="input-group">
+                                    <input id="oldPassword" class="form-control" placeholder="Old password" name="oldPassword" type="password">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- <label for="newPassword">New password</label> -->
+                                <div class="input-group">
+                                    <input id="newPassword" class="form-control" placeholder="New password" name="password" type="password">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- <label for="newPassword">confirmPassword</label> -->
+                                <div class="input-group">
+                                    <input id="confirmPassword" class="form-control" placeholder="Confirm password" name="confirmPassword" type="password">
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">cancel</button>
+                        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save</button>
+                    </div>
+                </ng-template>
+                <h5 class="p-15">Your new password must be different from your previous passwords</h5>
+                <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Change Password</button>
+
+            </div>
+
+
+        </div>
+
     </div>
-   
-  </div>
 </div>

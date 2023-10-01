@@ -15,7 +15,7 @@
                                     <h3>{{'component-names.costCenter-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-  
+
                                         <div class="col-md-4 col-4">
                                             <label for="parentId" class="label-name">
                                                 {{'general.parent'|translate}}
@@ -27,18 +27,15 @@
                                                         {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
-                                               
+
                                             </div>
-                                          
+
                                         </div>
-                                      
+
                                         <div class="col-md-2 col-2">
-                                            <button
-                                              
-                                            class="btn btn-rounded btn-dark" (click)="showSearchModal=true"
-                                            type="button"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-rounded btn-dark" (click)="showSearchModal=true" type="button"><i class="fa fa-search"></i></button>
                                         </div>
-                                       
+
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
@@ -92,26 +89,25 @@
                                                         {{lang=="ar"?company.nameAr:company.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
-                                               
+
                                             </div>
-                                          
+
                                         </div>
-                                      
+
                                         <div class="col-md-2 col-2">
-                                            <button
-                                              
-                                            class="btn btn-rounded btn-dark" (click)="showSearchModalCompanyy=true"
-                                            type="button"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-rounded btn-dark" (click)="showSearchModalCompanyy=true" type="button"><i
+                                                    class="fa fa-search"></i></button>
                                         </div>
-                                     
-                                       
+
+
                                         <hr class="mt-3 mb-3 p-0">
                                         <div class="col-12 col-md-6">
                                             <div class="media">
-                                                <label class="col-form-label m-r-10"> {{'general.status'|translate}} </label>
+                                                <label class="label-name"> {{'general.status'|translate}} </label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive" formControlName="isActive">
+                                                        <input type="checkbox" class="form-control" name="isActive"
+                                                            formControlName="isActive">
                                                         <span class="switch-state"></span>
                                                     </label>
                                                 </div>
@@ -130,9 +126,7 @@
 
     </div>
 </section>
-<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi"
-    (emitClose)="showSearchModal = false;" (emitSearch)="onSelectCostCenter($event)">
+<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi" (emitClose)="showSearchModal = false;" (emitSearch)="onSelectCostCenter($event)">
 </app-public-search-modal>
-<app-public-search-modal [isVisible]="showSearchModalCompanyy" [routeApi]="routeCompanyApi"
-    (emitClose)="showSearchModalCompanyy = false;" (emitSearch)="onSelectCompany($event)">
+<app-public-search-modal [isVisible]="showSearchModalCompanyy" [routeApi]="routeCompanyApi" (emitClose)="showSearchModalCompanyy = false;" (emitSearch)="onSelectCompany($event)">
 </app-public-search-modal>
