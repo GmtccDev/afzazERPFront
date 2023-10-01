@@ -17,54 +17,55 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}} </span>
+														{{'error.required'|translate}} </span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="nameAr" class="label-name">
-                                                {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control " [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <input type="text" class="form-control " [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr" maxlength="50">
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="nameEn" class="label-name">
-                                                {{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+												{{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
+                                                <<<<<<< HEAD <input type="text" class="form-control " name="nameEn" formControlName="nameEn">
+                                                    <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
+                                                        <i class="fa fa-close "></i>
+                                                        <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
+															{{'error.required'|translate}}</span>
+                                                    </div>
 
-                                                <input type="text" class="form-control " name="nameEn" formControlName="nameEn">
-                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
-
+                                                    =======
+                                                    <input type="text" class="form-control " name="nameEn" formControlName="nameEn" maxlength="50"> >>>>>>> 05ada7203aa9c3695243d3db8890fd56ad6c52f7
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="address" class="label-name">
-                                                {{'general.address'|translate}}</label><span class="text-danger">*</span>
+												{{'general.address'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
                                                 <input type="texr" aria-multiline="true" class="form-control" name="address" formControlName="address">
                                                 <div *ngIf="(f['address'].touched || f['address'].dirty ) && f['address'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['address'].errors && f['address'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -72,9 +73,9 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="countryId" class="label-name">
-                                                {{'component-names.countries'|translate}}
+												{{'component-names.countries'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="countryId" name='countryId' class="" id="countryId">
                                                     <ng-option *ngFor="let country of countriesList" [value]="country.id">
@@ -92,7 +93,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="phone" class="label-name">
-                                                {{'general.phone-number'|translate}}</label><span class="text-danger">*</span>
+												{{'general.phone-number'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control" maxLength="20" name="phone" formControlName="phone" required="true">
@@ -115,7 +116,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="email" class="label-name">
-                                                {{'general.email'|translate}}</label>
+												{{'general.email'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="email" class="form-control" name="email" formControlName="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                                 <div class="validtion alert-danger" *ngIf="(f['email'].touched && f['email'].dirty) && f['email'].invalid">
@@ -128,7 +129,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="fax" class="label-name">
-                                                {{'general.fax'|translate}}</label>
+												{{'general.fax'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="text" maxLength="20" class="form-control" name="fax" formControlName="fax">
                                                 <div *ngIf="f['fax'].touched && f['fax'].invalid" class=" alert-danger validtion">
@@ -143,14 +144,14 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="responsiblePerson" class="label-name">
-                                                {{'general.responsible-person'|translate}}</label><span class="text-danger">*</span>
+												{{'general.responsible-person'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control " name="responsiblePerson" formControlName="responsiblePerson">
                                                 <div *ngIf="(f['responsiblePerson'].touched || f['responsiblePerson'].dirty ) && f['responsiblePerson'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['responsiblePerson'].errors && f['responsiblePerson'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -158,8 +159,8 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="accountId" class="label-name">
-                                                {{'general.account'|translate}}
-                                            </label>
+												{{'general.account'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="accountId" name='accountId' class="" id="accountId">
@@ -170,7 +171,7 @@
                                                 <div *ngIf="(f['accountId'].touched || f['accountId'].dirty ) && f['accountId'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['accountId'].errors && f['accountId'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -180,13 +181,13 @@
                                         <div class="col-md-6 col-12">
                                             <div class="media">
                                                 <label class="label-name"> {{'general.status'|translate}}
-                                                </label>
+												</label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
                                                 </div>
                                             </div>
                                         </div>

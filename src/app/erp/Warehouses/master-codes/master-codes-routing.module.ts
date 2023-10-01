@@ -18,6 +18,8 @@ import { AddEditItemGroupsCardComponent } from './item-groups-card/add-edit-item
 import { ItemGroupsCardComponent } from './item-groups-card/item-groups-card.component';
 import { AddEditCustomerCardComponent } from './customer-card/add-edit-customer-card/add-edit-customer-card.component';
 import { CustomerCardComponent } from './customer-card/customer-card.component';
+import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edit-bill-type.component';
+import { BillTypeComponent } from './bill-type/bill-type.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -52,6 +54,9 @@ const routes: Routes = [
 			{ path: 'itemGroupsCard/update-itemGroupsCard/:id', component: AddEditItemGroupsCardComponent },
 			{ path: 'itemGroupsCard', component: ItemGroupsCardComponent},
 			{ path: 'itemGroupsCard/add-itemGroupsCard/:parentId', component: AddEditItemGroupsCardComponent },
+			{ path: 'billType', component: BillTypeComponent },
+			{ path: 'billType/add-billType', component: AddEditBillTypeComponent },
+			{ path: 'billType/update-billType/:id', component: AddEditBillTypeComponent },
 		]
 	}
 ];

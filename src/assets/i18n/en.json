@@ -187,7 +187,6 @@
         "view-all-projects": "View All Projects"
     },
     "login": {
-
         "welcome": "Welcome!",
         "login-your-account": "Login your account",
         "login": "Login",
@@ -418,8 +417,8 @@
         "add-item": "Add Item",
         "item-groups-card": " Item Groups Card ",
         "item-groups-card-information": " Item Groups Card Information",
-        "tax-information": "Tax Information"
-
+        "tax-information": "Tax Information",
+        "bill-types": "Bill Types"
 
     },
     "language": {
@@ -552,7 +551,6 @@
         "tax-details-required": "Tax details is required",
         "add-tax": "Add Tax"
     },
-
     "item": {
         "item-group": "Item Group",
         "unit": "Unit",
@@ -574,9 +572,13 @@
         "has-expired-date": "Has Expired Date",
         "life-time": "Life Time",
         "life-time-type": "Life Time Type"
-
-
+    },
+    "bill-type": {
+        "bill-type-information": "Bill Type Information",
+        "bill-type": "Bill Type",
+        "add-bill-type": "Add Bill Type",
+        "update-bill-type": "Update Bill Type",
+        "basic-properties": "Basic Properties",
+        "warehouse-effect": "Warehouse Effect"
     }
-
-
 }
