@@ -266,7 +266,9 @@
         "item-information": "بيانات الصنف",
         "add-item": "اضافة صنف",
         "item-groups-card": "بطاقة مجموعة اصناف",
-        "item-groups-card-information": "معلومات بطاقة مجموعة اصناف"
+        "item-groups-card-information": "معلومات بطاقة مجموعة اصناف",
+        "bill-types": "أنواع الفواتير"
+
 
     },
     "general": {
