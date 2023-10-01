@@ -159,9 +159,9 @@ export class LoginCompanyComponent implements OnInit {
           let Role = decodedJwtData.role;
           
           localStorage.setItem("userId", decodedJwtData.userLoginId)
-          localStorage.setItem("userName", decodedJwtData.fullName)
-          localStorage.setItem("branchId", this.loginForm.value.branchId)
-          localStorage.setItem("companyId", this.loginForm.value.companyId)
+          this.userService.setUserName(decodedJwtData.fullName)
+          this.userService.setBranchId(this.loginForm.value.branchId)
+          this.userService.setCompanyId(this.loginForm.value.companyId)
           // this.getGeneralConfigurationsOfAccountingPeriod()
           this.modelService.dismissAll();
           if (next.response.user.loginCount == null || next.response.user.loginCount == 0) {

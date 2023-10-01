@@ -358,8 +358,13 @@ export class AddEditRoleComponent implements OnInit {
     ];
   }
   onChange(event) {
-    this.screens = this.screensList.filter(x => x.moduleType == Number(event));
+    debugger
+    if (this.screensList != undefined) {
 
+      this.screens = this.screensList.filter(x => x.moduleType == Number(event));
+
+    }
+  
   }
 
 

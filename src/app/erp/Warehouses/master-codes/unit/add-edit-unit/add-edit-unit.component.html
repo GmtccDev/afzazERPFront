@@ -2,20 +2,18 @@
     <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card mb-3">
+                <div class="card">
                     <div class="card-body">
-                        <form [formGroup]="roleForm" id="BusinessSubmit" class="tabs-form">
-                            <div class="main-customer">
+                        <form [formGroup]="unitForm" id="unitSubmit" class="tabs-form">
+                            <div class="main-unit">
                                 <div class="wrapper-title">
+                                    <h3>{{'component-names.unit-information'|translate}}</h3>
 
-                                    <h3>{{'component-names.role-information'|translate}}</h3>
                                     <hr>
                                     <div class="row align-items-center">
-
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
@@ -34,6 +32,7 @@
 
                                             </div>
                                         </div>
+
                                         <div class="col-md-6 col-12">
                                             <label for="nameAr" class="label-name">
                                                 {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
@@ -47,15 +46,14 @@
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                        {{'error.required'|translate}} </span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <label for="nameEn"
-                                                class="label-name">{{'general.nameEn'|translate}}</label><span
-                                                class="text-danger">*</span>
+                                            <label for="nameEn" class="label-name">
+                                                {{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-user" name="nameEn"
@@ -65,20 +63,28 @@
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                        {{'error.required'|translate}} </span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="unitSymbol"
+                                                    class="label-name">{{'general.unit-symbol'|translate}}</label>
+                                                <input type="text" class="form-control icon-user" name="symbol"
+                                                    formControlName="symbol">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
                                             <div class="media">
-                                                <label class="col-form-label m-r-10"> {{'general.status'|translate}}
-                                                </label>
+                                                <label
+                                                    class="col-form-label m-r-10">{{'general.status'|translate}}</label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
+                                                        <input type="checkbox" checked=""><span
+                                                            class="switch-state"></span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -92,47 +98,12 @@
                 </div>
             </div>
         </div>
+        <button (click)="doNewEvent()" [disabled]="id==0" class="btn btn-primary" type="button">
+            <i class="icon-plus"></i>
+            {{ 'unit.unit-transactions'|translate}}
 
-        <!-- 
-        <div id="ex-table-div"></div> -->
+        </button>
 
+        <div id="ex-table-div"></div>
     </div>
-   
 </section>
-<div class="col-md-6 col-12">
-    
-   <p>Module Type</p>
-</div>
-<div class="col-md-6 col-12">
-    <ng-select style="width:100%" (change)="onChange($event)">
-        <ng-option *ngFor="let module of modulesType" [value]="module.value">
-            {{lang=="ar"?module.descriptionAr:module.descriptionEn}}
-        </ng-option>
-    </ng-select>
-   
-</div>
-<br/>
-   <input
-   autocomplete="off" 
-      type="text"
-      placeholder=""
-      [(ngModel)]="searchText"
-    />
-<br/>
-<input type="checkbox" name="list_name" [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)"/> &nbsp;&nbsp;<strong> {{'general.selectUnselect'|translate}} </strong>
-<div  class="row" >
-
-    <div *ngFor="let option of screens| filter:searchText;" class="col-md-4">
-        <h3>
-            {{lang=="ar"?option.screenNameAr:option.screenNameEn}}
-        </h3>
-        <div class="row" *ngFor="let item of option.permissions;">
-            <label>
-                <input type="checkbox" name="options" value="{{item.id}}" [(ngModel)]="item.isChecked"  (change)="updateCheckedOptions(item, $event)" />
-               
-                {{lang=="ar"?item.actionNameAr:item.actionNameEn}}
-            </label>
-        </div>
-    <br/>
-    </div>
-</div>

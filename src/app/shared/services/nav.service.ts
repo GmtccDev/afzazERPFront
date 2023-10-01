@@ -253,13 +253,13 @@ export class NavService implements OnInit, OnDestroy {
 
 		{
 			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
-				{ path: '/warehouses-master-codes/warehousesPeriod', title: this.translate.instant("component-names.warehouses-period"), type: 'link', active: true },
-				{ path: '/warehouses-master-codes/warehousesUnit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
-				{ path: '/warehouses-master-codes/warehousesTax', title: this.translate.instant("component-names.taxes"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/period', title: this.translate.instant("component-names.period"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/unit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/tax', title: this.translate.instant("component-names.taxes"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/storeCard', title: this.translate.instant("component-names.storeCard"), type: 'link', active: true },
-				{ path: '/warehouses-master-codes/warehousesPaymentMethod', title: this.translate.instant("component-names.warehouses-payment-method"), type: 'link', active: true },
-				{ path: '/warehouses-master-codes/warehousesCustomer', title: this.translate.instant("component-names.warehouses-customer"), type: 'link', active: true },
-				{ path: '/warehouses-master-codes/warehousesSupplier', title: this.translate.instant("component-names.warehouses-supplier"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/paymentMethod', title: this.translate.instant("component-names.payment-method"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/customerCard', title: this.translate.instant("component-names.customer-card"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/supplierCard', title: this.translate.instant("component-names.supplier-card"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/itemCard', title: this.translate.instant("component-names.item-card"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/itemGroupsCard', title: this.translate.instant("component-names.item-groups-card"), type: 'link', active: true },
 
