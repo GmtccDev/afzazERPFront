@@ -1,50 +1,50 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WarehousesPeriodsComponent } from './warehouses-periods/warehouses-periods.component';
-import { AddEditWarehousesPeriodsComponent } from './warehouses-periods/add-edit-warehouses-periods/add-edit-warehouses-periods.component';
-import { WarehousesUnitsComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/warehouses-units/warehouses-units.component';
-import { AddwarehousesUnitComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-units/add-warehouses-unit/add-warehouses-unit.component';
-import { AddEditWarehousesTaxComponent } from 'src/app/erp/Warehouses/master-codes/warehouses-taxes/add-edit-warehouses-tax/add-edit-warehouses-tax.component';
-import {WarehousesTaxComponent} from 'src/app/erp/Warehouses/master-codes/warehouses-taxes/warehouses-taxes.component'
+import { PeriodComponent } from './period/period.component';
+import { AddEditPeriodComponent } from './period/add-edit-period/add-edit-period.component';
+import { UnitComponent } from 'src/app/erp/Warehouses/master-codes/unit/unit/unit.component';
+import { AddEditUnitComponent } from 'src/app/erp/Warehouses/master-codes/unit/add-edit-unit/add-edit-unit.component';
+import { AddEditTaxComponent } from 'src/app/erp/Warehouses/master-codes/tax/add-edit-tax/add-edit-tax.component';
+import { TaxComponent} from 'src/app/erp/Warehouses/master-codes/tax/tax.component'
 import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
 import { StoreCardComponent } from './store-card/store-card.component';
-import { WarehousesPaymentMethodsComponent } from './warehouses-payment-methods/warehouses-payment-methods.component';
-import { AddEditWarehousesPaymentMethodsComponent } from './warehouses-payment-methods/add-edit-warehouses-payment-methods/add-edit-warehouses-payment-methods.component';
-import { WarehousesCustomersComponent } from './warehouses-customers/warehouses-customers.component';
-import { AddEditWarehousesCustomersComponent } from './warehouses-customers/add-edit-warehouses-customers/add-edit-warehouses-customers.component';
-import { WarehousesSuppliersComponent } from './warehouses-suppliers/warehouses-suppliers.component';
-import { AddEditWarehousesSuppliersComponent } from './warehouses-suppliers/add-edit-warehouses-suppliers/add-edit-warehouses-suppliers.component';
+import { PaymentMethodComponent } from './payment-method/payment-method.component';
+import { AddEditPaymentMethodComponent } from './payment-method/add-edit-payment-method/add-edit-payment-method.component';
+import { SupplierCardComponent } from './supplier-card/supplier-card.component';
+import { AddEditSupplierCardComponent } from './supplier-card/add-edit-supplier-card/add-edit-supplier-card.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { AddEditItemCardComponent } from './item-card/add-edit-item-card/add-edit-item-card.component';
 import { AddEditItemGroupsCardComponent } from './item-groups-card/add-edit-item-groups-card/add-edit-item-groups-card.component';
 import { ItemGroupsCardComponent } from './item-groups-card/item-groups-card.component';
+import { AddEditCustomerCardComponent } from './customer-card/add-edit-customer-card/add-edit-customer-card.component';
+import { CustomerCardComponent } from './customer-card/customer-card.component';
 const routes: Routes = [
 	{
 		path: '',
 		children: [
 		
-			{ path: 'warehousesPeriod', component: WarehousesPeriodsComponent },
-			{ path: 'warehousesPeriod/add-warehousesPeriod', component: AddEditWarehousesPeriodsComponent },
-			{ path: 'warehousesPeriod/update-warehousesPeriod/:id', component: AddEditWarehousesPeriodsComponent },
-			{ path: 'warehousesUnit/add-warehousesUnit', component: AddwarehousesUnitComponent },
-			{ path: 'warehousesUnit/update-warehousesUnit/:id', component: AddwarehousesUnitComponent },
-			{ path: 'warehousesUnit', component: WarehousesUnitsComponent },
-			{ path: 'warehousesTax/add-warehousesTax', component: AddEditWarehousesTaxComponent },
-			{ path: 'warehousesTax/update-warehousesTax/:id', component: AddEditWarehousesTaxComponent },
-			{ path: 'warehousesTax', component: WarehousesTaxComponent },
+			{ path: 'period', component: PeriodComponent },
+			{ path: 'period/add-period', component: AddEditPeriodComponent },
+			{ path: 'period/update-period/:id', component: AddEditPeriodComponent },
+			{ path: 'unit/add-unit', component: AddEditUnitComponent },
+			{ path: 'unit/update-unit/:id', component: AddEditUnitComponent },
+			{ path: 'unit', component: UnitComponent },
+			{ path: 'tax/add-tax', component: AddEditTaxComponent },
+			{ path: 'tax/update-tax/:id', component: AddEditTaxComponent },
+			{ path: 'tax', component: TaxComponent },
 			{ path: 'storeCard/add-storeCard', component: AddEditStoreCardComponent },
 			{ path: 'storeCard/update-storeCard/:id', component: AddEditStoreCardComponent },
 			{ path: 'storeCard', component: StoreCardComponent},
 			{ path: 'storeCard/add-storeCard/:parentId', component: AddEditStoreCardComponent },
-			{ path: 'warehousesPaymentMethod', component: WarehousesPaymentMethodsComponent },
-			{ path: 'warehousesPaymentMethod/add-warehousesPaymentMethod', component: AddEditWarehousesPaymentMethodsComponent },
-			{ path: 'warehousesPaymentMethod/update-warehousesPaymentMethod/:id', component: AddEditWarehousesPaymentMethodsComponent },
-			{ path: 'warehousesCustomer', component: WarehousesCustomersComponent },
-			{ path: 'warehousesCustomer/add-warehousesCustomer', component: AddEditWarehousesCustomersComponent },
-			{ path: 'warehousesCustomer/update-warehousesCustomer/:id', component: AddEditWarehousesCustomersComponent },
-			{ path: 'warehousesSupplier', component: WarehousesSuppliersComponent },
-			{ path: 'warehousesSupplier/add-warehousesSupplier', component: AddEditWarehousesSuppliersComponent },
-			{ path: 'warehousesSupplier/update-warehousesSupplier/:id', component: AddEditWarehousesSuppliersComponent },
+			{ path: 'paymentMethod', component: PaymentMethodComponent },
+			{ path: 'paymentMethod/add-paymentMethod', component: AddEditPaymentMethodComponent },
+			{ path: 'paymentMethod/update-paymentMethod/:id', component: AddEditPaymentMethodComponent },
+			{ path: 'customerCard', component: CustomerCardComponent },
+			{ path: 'customerCard/add-customerCard', component: AddEditCustomerCardComponent },
+			{ path: 'customerCard/update-customerCard/:id', component: AddEditCustomerCardComponent },
+			{ path: 'supplierCard', component: SupplierCardComponent },
+			{ path: 'supplierCard/add-supplierCard', component: AddEditSupplierCardComponent },
+			{ path: 'supplierCard/update-supplierCard/:id', component: AddEditSupplierCardComponent },
 			{ path: 'itemCard', component: ItemCardComponent },
 			{ path: 'itemCard/add-itemCard', component: AddEditItemCardComponent },
 			{ path: 'itemCard/update-itemCard/:id', component: AddEditItemCardComponent },
