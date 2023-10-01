@@ -371,11 +371,10 @@ div#my-tabular-tablePeopleOfBenefits {
     padding: 0 !important;
 }
 
-app-tabulator>div {
-    position: initial !important;
-    overflow: hidden !important;
-}
-
+// app-tabulator>div {
+//     position: initial !important;
+//     overflow: hidden !important;
+// }
 .btn-tabulator-secondary {
     background-color: rgba(var(--theme-secondary), 0.1);
     font-size: 12px;
@@ -493,6 +492,10 @@ html[dir="rtl"] {
     border-bottom: 4px solid $border-color !important;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title {
+    padding-right: 0px !important;
 }
 
 .validation.alert-danger.position-absolute.ng-star-inserted {
@@ -674,11 +677,10 @@ span.ng-star-inserted {
 //     content: "nn";
 // }
 // staer custm .tabulator
-app-tabulator>div {
-    position: initial !important;
-    overflow: hidden !important;
-}
-
+// app-tabulator>div {
+//     position: initial !important;
+//     overflow: hidden !important;
+// }
 .tabulator {
     height: max-content !important;
     .tabulator-header {
@@ -739,30 +741,33 @@ app-tabulator>div {
     padding: 0 !important;
 }
 
-app-tabulator>div {
-    position: initial !important;
-    overflow: visible !important;
-}
-
-.btn-tabulator-secondary {
-    background-color: rgba(var(--theme-secondary), 0.1);
-    font-size: 12px;
-    padding: 5px 10px;
-    font-weight: 600;
-    border: 1px solid #9a9999;
-    @include transition;
-    @include text-capitalize;
-    &:hover {
-        background: #414040;
-        border-color: #353738;
-    }
-}
-
-// .tabulator-row.tabulator-selected,
-// .tabulator .tabulator-tableHolder .tabulator-table {
-//     background-color: #594b2c24 !important;
-//     @include transition;
+// app-tabulator>div {
+//     position: initial !important;
+//     overflow: visible !important;
 // }
+// .btn-tabulator-secondary {
+//     background-color: rgba(var(--theme-secondary), 0.1);
+//     font-size: 12px;
+//     padding: 5px 10px;
+//     font-weight: 600;
+//     border: 1px solid #9a9999;
+//     @include transition;
+//     @include text-capitalize;
+//     &:hover {
+//         background: #414040;
+//         border-color: #353738;
+//     }
+// }
+.search_area_on_export_setting {
+    margin-top: 1.5rem;
+}
+
+.tabulator-row.tabulator-selected,
+.tabulator .tabulator-tableHolder .tabulator-table {
+    background-color: #594b2c24 !important;
+    @include transition;
+}
+
 .tabulator-row.tabulator-selectable:hover {
     background-color: #b3e5f969 !important;
 }
@@ -771,13 +776,12 @@ app-tabulator>div {
     @include transition;
 }
 
-.tabulator-row .tabulator-cell,
-.tabulator .tabulator-header,
-.tabulator,
-.tabulator .tabulator-header .tabulator-col {
-    @include none-border;
-}
-
+// .tabulator-row .tabulator-cell,
+// .tabulator .tabulator-header,
+// .tabulator,
+// .tabulator .tabulator-header .tabulator-col {
+//     @include none-border;
+// }
 .tabulator-row .tabulator-cell {
     padding: 5px 5px !important;
     color: #797979 !important;
@@ -875,7 +879,7 @@ app-tabulator>div {
 }
 
 input.search-txt {
-    width: 90%;
+    width: 25%;
     height: 35px;
     border-radius: 3px 0 0 3px !important;
     border: 1px solid #ccc;
@@ -886,9 +890,28 @@ input.search-txt {
     }
 }
 
+html[dir=rtl] input.search-txt {
+    border-radius: 0 3px 3px 0 !important;
+    -webkit-border-radius: 0 3px 3px 0 !important;
+    -moz-border-radius: 0 3px 3px 0 !important;
+    -ms-border-radius: 0 3px 3px 0 !important;
+    -o-border-radius: 0 3px 3px 0 !important;
+}
+
 button.search-btn0.btn.btn-primary {
     border-radius: 0 3px 3px 0 !important;
-    padding: 17px 10px;
+    height: 35px;
+    margin-left: -2px;
+}
+
+html[dir=rtl] button.search-btn0.btn.btn-primary {
+    border-radius: 3px 0 0 3px !important;
+    margin-right: -2px;
+    margin-left: initial;
+    -webkit-border-radius: 3px 0 0 3px !important;
+    -moz-border-radius: 3px 0 0 3px !important;
+    -ms-border-radius: 3px 0 0 3px !important;
+    -o-border-radius: 3px 0 0 3px !important;
 }
 
 app-tabulator>div {
@@ -941,7 +964,7 @@ app-tabulator>div {
 .tabulator-row .tabulator-cell:last-of-type,
 .tabulator .tabulator-header .tabulator-col:last-of-type {
     border: none !important;
-    min-width: 140px !important;
+    min-width: 90px !important;
     width: max-content !important;
 }
 
