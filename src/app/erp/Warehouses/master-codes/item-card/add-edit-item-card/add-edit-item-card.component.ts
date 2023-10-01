@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-import { CODE_REQUIRED_VALIDATORS, PHONE_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,14 +11,12 @@ import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { PublicService } from '../../../../../shared/services/public.service';
-import { ItemCardDto } from '../../../models/item-card';
+import { ItemCardAlternativeDto, ItemCardDto, ItemCardUnitDto } from '../../../models/item-card';
 import { ItemCardServiceProxy } from '../../../Services/item-card.service';
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
-import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum } from '../../../../../shared/constants/enumrators/enums';
+import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum, WarrantyTypeEnum, WarrantyTypeArEnum, AccountClassificationsEnum } from '../../../../../shared/constants/enumrators/enums';
 import { environment } from 'src/environments/environment';
-
-
-
+import { UnitServiceProxy } from '../../../Services/unit.servies';
 
 @Component({
   selector: 'app-add-edit-item-card',
@@ -34,19 +32,37 @@ export class AddEditItemCardComponent implements OnInit {
   companyId = localStorage.getItem("companyId")
   branchId = localStorage.getItem("branchId")
   routeAccountApi = 'Account/get-ddl?'
-  accountsList: any;
+  salesAccountsList: any;
+  salesReturnsAccountsList: any;
+  purchasesAccountsList: any;
+  purchasesReturnsAccountsList: any;
+  salesCostAccountsList: any;
+  inventoryAccountsList: any;
+  unitTransactionsList: any;
+  filterUnitTransactionsList: any;
+
+
   routeItemGroupApi = 'ItemGroup/get-ddl?'
   itemGroupsList: any;
 
-  routeUnitApi = 'WarehousesUnit/get-ddl?'
+  routeUnitApi = 'Unit/get-ddl?'
+  mainUnitsList: any;
   unitsList: any;
+
+  routeItemCardApi = 'ItemCard/get-ddl?'
+  itemsList: any;
 
   files: any;
   imagePath: string;
   fullPathUpdate: string;
   image: any;
-  item: ItemCardDto = new ItemCardDto();
-  ItemCard: ItemCardDto[] = [];
+  itemCard: ItemCardDto = new ItemCardDto();
+  itemCardUnit: ItemCardUnitDto[] = [];
+  itemCardAlternative: ItemCardAlternativeDto[] = [];
+  selectedItemCardAlternative: ItemCardAlternativeDto = new ItemCardAlternativeDto();
+
+
+  //ItemCard: ItemCardDto[] = [];
   addUrl: string = '/warehouses-master-codes/itemCard/add-itemCard';
   updateUrl: string = '/warehouses-master-codes/itemCard/update-itemCard/';
   listUrl: string = '/warehouses-master-codes/itemCard';
@@ -65,9 +81,15 @@ export class AddEditItemCardComponent implements OnInit {
   itemTypeEnum: ICustomEnum[] = [];
   costCalculateMethodsEnum: ICustomEnum[] = [];
   lifeTimeTypeEnum: ICustomEnum[] = [];
+  warrantyTypeEnum: ICustomEnum[] = [];
+  itemKindList: { nameAr: string; nameEn: string; value: string; }[];
+  itemAlternativeTypeList: { nameAr: string; nameEn: string; value: string; }[];
+  warehousesTaxesDetail: any;
+  warehousesTaxesMaster: any;
 
   constructor(
-    private ItemCardService: ItemCardServiceProxy,
+    private itemCardService: ItemCardServiceProxy,
+    private unitService: UnitServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -89,12 +111,17 @@ export class AddEditItemCardComponent implements OnInit {
     this.getItemTypeEnum();
     this.getCostCalculateMethodsEnum();
     this.getLifeTimeTypeEnum();
+    this.getWarrantyTypeEnum();
+    this.getItemKind();
+    this.getItemAlternativeType();
 
     this.spinner.show();
     Promise.all([
       this.getItemGroups(),
-      this.getUnits(),
-      this.getAccounts()
+      this.getMainUnits(),
+      this.getUnitTransactions(),
+      this.getAccounts(),
+      this.getItems()
 
 
     ]).then(a => {
@@ -177,36 +204,41 @@ export class AddEditItemCardComponent implements OnInit {
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(250)])],
       nameEn: '',
       itemGroupId: REQUIRED_VALIDATORS,
-      itemTypeId: '',
-      costCalculateMethodId: '',
+      itemType: '',
+      image: '',
+      costCalculateMethod: '',
       notes: '',
-      isActive: true,
       model: '',
       manufacturer: '',
       maxLimit: '',
       minLimit: '',
       reorderLimit: '',
       description: '',
-      mainUnitId:'',
+      mainUnitId: '',
       sellingPrice: '',
       consumerPrice: '',
       minSellingPrice: '',
       openingCostPrice: '',
-      hasExpiredDate: '',
+      hasExpiredDate: false,
       lifeTime: '',
       lifeTimeType: '',
-      hasSerialNumber: '',
+      hasSerialNumber: false,
       quantity: '',
       warrantyPeriod: '',
       warrantyType: '',
       itemKind: '',
+      heightFactor: '',
+      widthFactor: '',
+      lengthFactor: '',
       salesAccountId: '',
       salesReturnsAccountId: '',
       purchasesAccountId: '',
       purchasesReturnsAccountId: '',
       salesCostAccountId: '',
       inventoryAccountId: '',
-     
+      isActive: true
+
+
 
     }
 
@@ -220,22 +252,52 @@ export class AddEditItemCardComponent implements OnInit {
   //#region CRUD Operations
   getItemCardById(id: any) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.ItemCardService.getItemCard(id).subscribe({
+      let sub = this.itemCardService.getItemCard(id).subscribe({
         next: (res: any) => {
           resolve();
           this.itemCardForm.setValue({
-            id: res.response?.id,
-            code: res.response?.code,
-            nameAr: res.response?.nameAr,
+            id: res.response.id,
+            companyId: res.response.companyId,
+            branchId: res.response.branchId,
+            code: res.response.code,
+            barcode: res.response?.barcode,
+            nameAr:res.response.nameAr ,
             nameEn: res.response?.nameEn,
-            address: res.response?.address,
-            phone: res.response?.phone,
-            fax: res.response?.fax,
-            email: res.response?.email,
-            responsiblePerson: res.response?.responsiblePerson,
-            accountId: res.response?.accountId,
-            countryId: res.response?.countryId,
-            isActive: res.response?.isActive,
+            itemGroupId: res.response.itemGroupId,
+            itemType: res.response,
+            image: res.response?.itemType,
+            costCalculateMethod: res.response?.costCalculateMethod,
+            notes: res.response?.notes,
+            model: res.response?.model,
+            manufacturer: res.response?.manufacturer,
+            maxLimit: res.response?.maxLimit,
+            minLimit: res.response?.minLimit,
+            reorderLimit: res.response?.reorderLimit,
+            description: res.response?.description,
+            mainUnitId: res.response?.mainUnitId,
+            sellingPrice: res.response?.sellingPrice,
+            consumerPrice: res.response?.consumerPrice,
+            minSellingPrice: res.response?.minSellingPrice,
+            openingCostPrice: res.response?.openingCostPrice,
+            hasExpiredDate: res.response?.hasExpiredDate,
+            lifeTime: res.response?.lifeTime,
+            lifeTimeType: res.response?.lifeTimeType,
+            hasSerialNumber: res.response?.hasSerialNumber,
+            quantity: res.response?.quantity,
+            warrantyPeriod: res.response?.warrantyPeriod,
+            warrantyType: res.response?.warrantyType,
+            itemKind: res.response?.itemKind,
+            heightFactor: res.response?.heightFactor,
+            widthFactor: res.response?.widthFactor,
+            lengthFactor: res.response?.lengthFactor,
+            salesAccountId: res.response?.salesAccountId,
+            salesReturnsAccountId: res.response?.salesReturnsAccountId,
+            purchasesAccountId: res.response?.purchasesAccountId,
+            purchasesReturnsAccountId: res.response?.purchasesReturnsAccountId,
+            salesCostAccountId: res.response?.salesCostAccountId,
+            inventoryAccountId: res.response?.inventoryAccountId,
+            isActive: res.response?.isActive
+
 
           });
 
@@ -254,7 +316,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
   getItemCardCode() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.ItemCardService.getLastCode().subscribe({
+      let sub = this.itemCardService.getLastCode().subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-card");
           this.itemCardForm.patchValue({
@@ -280,7 +342,12 @@ export class AddEditItemCardComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.accountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+            this.salesAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Sales && x.isActive == true);
+            this.salesReturnsAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Sales && x.isActive == true);
+            this.purchasesAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Purchases && x.isActive == true);
+            this.purchasesReturnsAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Purchases && x.isActive == true);
+            this.salesCostAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Sales && x.isActive == true);
+            this.inventoryAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Inventory && x.isActive == true);
 
           }
 
@@ -324,12 +391,36 @@ export class AddEditItemCardComponent implements OnInit {
     });
 
   }
-  getUnits() {
+  getMainUnits() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeUnitApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.unitsList = res.response.filter(x => x.isActive == true);
+            this.mainUnitsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getItems() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeItemCardApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.itemsList = res.response.filter(x => x.isActive == true);
 
           }
 
@@ -374,6 +465,27 @@ export class AddEditItemCardComponent implements OnInit {
       this.lifeTimeTypeEnum = convertEnumToArray(LifeTimeTypeArEnum);
 
     }
+  }
+  getWarrantyTypeEnum() {
+    if (this.lang == 'en') {
+      this.warrantyTypeEnum = convertEnumToArray(WarrantyTypeEnum);
+    }
+    else {
+      this.warrantyTypeEnum = convertEnumToArray(WarrantyTypeArEnum);
+
+    }
+  }
+  getItemKind() {
+    this.itemKindList = [
+      { nameAr: 'مادة مساحة', nameEn: 'Space Material', value: '1' },
+      { nameAr: 'مادة حجم', nameEn: 'Size Material', value: '2' }
+    ];
+  }
+  getItemAlternativeType() {
+    this.itemAlternativeTypeList = [
+      { nameAr: 'بديل من طرف واحد', nameEn: 'Unilateral Alternative', value: '1' },
+      { nameAr: 'بديل من طرفين', nameEn: 'Two-party Alternative', value: '2' }
+    ];
   }
   //#endregion
 
@@ -420,7 +532,7 @@ export class AddEditItemCardComponent implements OnInit {
     var inputDto = new ItemCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.itemCardForm.value;
-      this.ItemCardService.createItemCard(inputDto).subscribe({
+      this.itemCardService.createItemCard(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineItemCardForm();
@@ -457,7 +569,7 @@ export class AddEditItemCardComponent implements OnInit {
       inputDto = this.itemCardForm.value;
       inputDto.id = this.id;
 
-      let sub = this.ItemCardService.updateItemCard(inputDto).subscribe({
+      let sub = this.itemCardService.updateItemCard(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineItemCardForm();
@@ -513,15 +625,111 @@ export class AddEditItemCardComponent implements OnInit {
         formData.append(file.name, file);
       }
 
-      let sub = this.ItemCardService.uploadFile(formData).subscribe((res: any) => {
-
+      let sub = this.itemCardService.uploadFile(formData).subscribe((res: any) => {
         this.imagePath = environment.apiUrl + "/wwwroot/Uploads/Item/" + res.response;
+        this.itemCardForm.value.image = this.imagePath;
         this.image = res.response;
       })
       this.subsList.push(sub);
 
 
     }
+  }
+  getUnitTransactions() {
+    return new Promise<void>((resolve, reject) => {
+      debugger
+      let sub = this.unitService.getUnitTransactions().subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            debugger
+            this.unitTransactionsList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getUnitsByMainUnitId(mainUnitId: any) {
+    debugger
+    this.itemCardUnit = [];
+    this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.warehousesUnitMasterId == mainUnitId);
+    this.filterUnitTransactionsList.forEach(element => {
+      //  let unitName=this.unitsList.filter(x=>x.id==element.warehousesUnitDetailId);
+      this.itemCardUnit.push(
+        {
+          unitId: element.warehousesUnitDetailId,
+          unitName: element.warehousesUnitDetailId,
+          id: 0,
+          itemCardId: 0,
+          transactionFactor: element.transactionFactor,
+          sellingPrice: 0,
+          minSellingPrice: 0,
+          consumerPrice: 0,
+          openingCostPrice: 0
+        }
+      )
+    });
+
+
+  }
+
+  addItem() {
+    debugger
+    this.itemCardAlternative.push({
+      id: 0,
+      itemCardId: 0,
+      alternativeItemId: this.selectedItemCardAlternative.alternativeItemId,
+      sellingPrice: this.selectedItemCardAlternative.sellingPrice?? 0,
+      alternativeType: this.selectedItemCardAlternative.alternativeType?? 0,
+      costPrice: this.selectedItemCardAlternative.costPrice?? 0,
+      currentBalance: this.selectedItemCardAlternative.currentBalance?? 0
+    });
+
+    debugger
+    this.itemCard!.itemCardAlternatives = this.itemCardAlternative;
+    this.clearSelectedItemData();
+
+  }
+  clearSelectedItemData() {
+    this.selectedItemCardAlternative = {
+      id: 0,
+      itemCardId: 0,
+      alternativeItemId: 0,
+      sellingPrice: 0,
+      alternativeType: 0,
+      costPrice: 0,
+      currentBalance: 0
+
+    }
+  }
+
+  deleteItem(index) {
+    debugger
+    if (this.itemCardAlternative.length) {
+      if (this.itemCardAlternative.length == 1) {
+        this.itemCardAlternative = [];
+      } else {
+        this.itemCardAlternative.splice(index, 1);
+      }
+    }
+
+    this.itemCard.itemCardAlternatives = this.itemCardAlternative;
+
+
   }
 
 

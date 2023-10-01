@@ -2,30 +2,72 @@
 import { IPagedListMetaData } from '../../../shared/interfaces/paged-list-meta-data';
 export class ItemCardDto {
     id: number;
+    companyId: number;
+    branchId: number;
     code: string;
-    barcode:string | undefined;
+    barcode: string | undefined;
     nameAr: string;
     nameEn: string | undefined;
-    itemGroupId:number;
-    itemTypeId:number;
-    costCalculateMethodId:number;
-    notes:string;
-    model:string;
-    manufacturer:string;
-    maximum:number;
-    minimum:number;
-    requestLimit:number;
-    description:string;
+    itemGroupId: number;
+    itemTypeId: number | undefined;
+    image: string | undefined;
+    costCalculateMethod: number | undefined;
+    notes: string | undefined;
+    model: string | undefined;
+    manufacturer: string | undefined;
+    maxLimit: number | undefined;
+    minLimit: number | undefined;
+    reorderLimit: number | undefined;
+    description: string | undefined;
     isActive: boolean | undefined;
-    itemCardUnits:ItemCardUnitsDto[]=[];
+    mainUnitId: number | undefined;
+    sellingPrice: number | undefined;
+    consumerPrice: number | undefined;
+    minSellingPrice: number | undefined;
+    openingCostPrice: number | undefined;
+    hasExpiredDate: boolean | undefined;
+    lifeTime: number | undefined;
+    lifeTimeType: number | undefined;
+    hasSerialNumber: boolean | undefined;
+    quantity: number | undefined;
+    warrantyPeriod: number | undefined;
+    warrantyType: number | undefined;
+    itemKind: number | undefined;
+    heightFactor: number | undefined;
+    widthFactor: number | undefined;
+    lengthFactor: number | undefined;
+    salesAccountId: number | undefined;
+    salesReturnsAccountId: number | undefined;
+    purchasesAccountId: number | undefined;
+    purchasesReturnsAccountId: number | undefined;
+    salesCostAccountId: number | undefined;
+    inventoryAccountId: number | undefined;
+    itemCardUnits: ItemCardUnitDto[] = [];
+    itemCardAlternatives: ItemCardAlternativeDto[] = [];
 
 }
-export class ItemCardUnitsDto {
+export class ItemCardUnitDto {
     id: number;
+    itemCardId: number;
     unitId: number;
-    nameAr: string;
-    nameEn: string;
-    isActive: boolean | undefined;
+    transactionFactor: number;
+    sellingPrice: number | undefined;
+    minSellingPrice: number | undefined;
+    consumerPrice: number | undefined;
+    openingCostPrice: number | undefined;
+    unitName: string | undefined;
+
+
+}
+export class ItemCardAlternativeDto {
+    id: number;
+    itemCardId: number;
+    alternativeItemId: number;
+    costPrice: number | undefined;
+    sellingPrice: number | undefined;
+    alternativeType: number;
+    currentBalance: number;
+
 
 }
 export class CreateItemCard {

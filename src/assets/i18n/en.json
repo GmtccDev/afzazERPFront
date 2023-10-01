@@ -9,7 +9,7 @@
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
         "code": "Code",
-        "barcode":"barcode",
+        "barcode": "barcode",
         "home": "Home",
         "about-us": "About Us",
         "recently-added": "Recently added",
@@ -162,7 +162,15 @@
         "account":"Account",
         "address":"Address",
         "responsible-person":"The Responsible Person",
-        "image":"Image"
+        "image":"Image",
+        "quantity":"Quantity",
+        "sales-account":"Sales Account",
+        "sales-return-account":"Sales Return Account",
+        "purchases-account":"Purchases Account",
+        "purchases-return-account":"Purchases Return Account",
+        "sales-cost-account":"Sales Cost Account",
+        "inventory-account":"Inventory Account",
+        "minute":"minute"
     },
     "menu": {},
     "home": {
@@ -179,6 +187,8 @@
         "view-all-projects": "View All Projects"
     },
     "login": {
+
+        "welcome": "Welcome!",
         "login-your-account": "Login your account",
         "login": "Login",
         "register": "Register",
@@ -382,37 +392,38 @@
         "incomingCheque-information": "Incoming Cheque Information ",
         "issuing-cheque": " Issuing Cheque",
         "issuing-cheque-information": "Issuing Cheque Information ",
-        "general-ledger-report":"General Ledger Report",
-		"journal-entries-report":"Journal Entries Report  ",
-		"accounts-balance-report":"Accounts Balance Report",
-        "cost-centers-report":"Cost Centers Reports",
-        "warehouses-period-information": "Period Information",
-        "warehouses-period": "Periods",
-        "add-warehouses-period": "Add Period",
-        "taxes":"Taxes",
+        "general-ledger-report": "General Ledger Report",
+        "journal-entries-report": "Journal Entries Report  ",
+        "accounts-balance-report": "Accounts Balance Report",
+        "cost-centers-report": "Cost Centers Reports",
+        "period-information": "Period Information",
+        "period": "Periods",
+        "add-period": "Add Period",
+        "taxes": "Taxes",
         "storeCard": "Store Card",
         "storeCard-information": "Store Card Information",
-        "address":"Address",
-        "storekeeper":" Store Keeper",
-        "warehouses-payment-method":"Payment Methods",
-        "warehouses-payment-method-information": "Payment Method Information",
-        "warehouses-customer":"Customers",
-        "warehouses-customer-information": "Customer Information",
-        "warehouses-supplier":"Supplier",
-        "warehouses-supplier-information": "Supplier Information",
-        "add-warehouses-customer": "Add Customer",
-        "add-warehouses-supplier": "Add Supplier",
-        "item-card":"Item Card",
+        "address": "Address",
+        "storekeeper": " Store Keeper",
+        "payment-method": "Payment Methods",
+        "payment-method-information": "Payment Method Information",
+        "customer-card": "Customer Card",
+        "customer-card-information": "Customer Card Information",
+        "supplier-card": "Supplier Card",
+        "supplier-card-information": "Supplier Card Information",
+        "add-customer-card": "Add Customer",
+        "add-supplier-card": "Add Supplier",
+        "item-card": "Item Card",
         "item-information": "Item Information",
         "add-item": "Add Item",
         "item-groups-card": " Item Groups Card ",
-        "item-groups-card-information": " Item Groups Card Information  "
+        "item-groups-card-information": " Item Groups Card Information",
+        "tax-information":"Tax Information"
 
 
     },
     "language": {
-        "ARABIC": "Arabic",
-        "ENGLISH": "English"
+        "ARABIC": "Ar",
+        "ENGLISH": "En"
     },
     "currency": {
         "transaction-date": "Transaction Date",
@@ -449,7 +460,8 @@
         "account": "closing account  ",
         "endOfYear": "End Of Year",
         "accountReceivables": "Account Receivables",
-        "idleTime": "Idle Time"
+        "idleTime": "Idle Time",
+        "account-exchange":"Account Exchange"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -527,36 +539,43 @@
     "country": {
         "add-country": "Add Country"
     },
-    "warehouses-unit": {
+    "unit": {
         "transaction-factor": "Transaction Factor",
         "unit-transactions": "New Unit Transactions",
         "add-unit":"Add Unit",
         "add-edit":"Add and Edit"
      },
-     "item":{
-        "item-group":"Item Group",
-        "unit":"Unit",
-        "item-type":"Item Type",
-        "cost-calculate-method":"Cost Calculate Method",
-        "general-information":"General Information",
-        "model":"Model",
-        "manufacturer":"Manufacturer",
-        "maximum":"Maximum",
-        "minimum":"Minimum",
-        "reorder-limit":"Reorder Limit",
-        "units":"Units",
-        "main-unit":"Main Unit",
-        "selling-price":"Selling Price",
-        "consumer-price":"Consumer Price",
-        "min-selling-price":"Minimum Selling Price",
-        "opening-cost-price":"opening Cost Price",
-        "properties":"Properties",
-        "has-expired-date":"Has Expired Date",
-        "life-time":"Life Time",
-        "life-time-type":"Life Time Type"
+     "tax": {
+        "tax-information": "Tax Information",
+        "tax-ratio": "Tax Ratio",
+        "tax-details-required": "Tax details is required",
+        "add-tax": "Add Tax"
+    },
+   
+    "item": {
+        "item-group": "Item Group",
+        "unit": "Unit",
+        "item-type": "Item Type",
+        "cost-calculate-method": "Cost Calculate Method",
+        "general-information": "General Information",
+        "model": "Model",
+        "manufacturer": "Manufacturer",
+        "maximum": "Maximum",
+        "minimum": "Minimum",
+        "reorder-limit": "Reorder Limit",
+        "units": "Units",
+        "main-unit": "Main Unit",
+        "selling-price": "Selling Price",
+        "consumer-price": "Consumer Price",
+        "min-selling-price": "Minimum Selling Price",
+        "opening-cost-price": "opening Cost Price",
+        "properties": "Properties",
+        "has-expired-date": "Has Expired Date",
+        "life-time": "Life Time",
+        "life-time-type": "Life Time Type"
 
 
-     }
+    }
 
 
 }
