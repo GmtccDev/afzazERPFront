@@ -248,20 +248,20 @@
         "cost-centers-report": "تقرير مراكز التكلفة",
         "bankAccount": "حساب البنك",
         "bankAccount-information": "بيانات حساب البنك",
-        "warehouses-period-information": "بيانات الفترة",
-        "warehouses-period": "الفترات",
-        "add-warehouses-period": "اضافة فترة",
+        "period-information": "معلومات الفترة",
+        "period": "الفترة",
+        "add-period": "اضافة فترة",
         "taxes": "الضرائب",
         "storeCard": "بطاقة المستودع",
         "storeCard-information": "معلومات بطاقة المستودع",
-        "warehouses-payment-method": "طرق الدفع",
-        "warehouses-payment-method-information": "بيانات طريقة الدفع",
-        "warehouses-customer": "العملاء",
-        "warehouses-customer-information": "بيانات العميل",
-        "warehouses-supplier": "الموردين",
-        "warehouses-supplier-information": "بيانات المورد",
-        "add-warehouses-customer": "اضافة عميل",
-        "add-warehouses-supplier": "اضافة مورد",
+        "payment-method": "طرق الدفع",
+        "payment-method-information": "معلومات طريقة الدفع",
+        "customer-card": "بطاقة العميل",
+        "customer-card-information":"معلومات بطاقة العميل",
+        "supplier-card": "بطاقة المورد",
+        "supplier-card-information": "معلومات بطاقة المورد",
+        "add-customer-card": "اضافة عميل",
+        "add-supplier-card": "اضافة مورد",
         "item-card": "بطاقة الصنف",
         "item-information": "بيانات الصنف",
         "add-item": "اضافة صنف",
@@ -518,13 +518,13 @@
     "country": {
         "add-country": "اضافة بلد"
     },
-    "warehouses-unit": {
+    "unit": {
         "transaction-factor": " معامل التحويل ",
         "unit-transactions": " معاملات التحويل",
         "add-unit": "اضافة وحدة",
         "add-edit": "اضافة وتعديل"
     },
-    "warehouses-tax": {
+    "tax": {
         "tax-information": "بيانات الضريبة",
         "tax-ratio": "نسبة الضريبة",
         "tax-details-required": "تفاصيل الضريبة مطلوب",

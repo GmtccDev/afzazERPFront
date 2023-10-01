@@ -16,7 +16,7 @@ import { ItemCardServiceProxy } from '../../../Services/item-card.service';
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum, WarrantyTypeEnum, WarrantyTypeArEnum, AccountClassificationsEnum } from '../../../../../shared/constants/enumrators/enums';
 import { environment } from 'src/environments/environment';
-import { WarehousesUnitServiceProxy } from '../../../Services/warehousesunit.servies';
+import { UnitServiceProxy } from '../../../Services/unit.servies';
 
 @Component({
   selector: 'app-add-edit-item-card',
@@ -45,7 +45,7 @@ export class AddEditItemCardComponent implements OnInit {
   routeItemGroupApi = 'ItemGroup/get-ddl?'
   itemGroupsList: any;
 
-  routeUnitApi = 'WarehousesUnit/get-ddl?'
+  routeUnitApi = 'Unit/get-ddl?'
   mainUnitsList: any;
   unitsList: any;
 
@@ -89,8 +89,7 @@ export class AddEditItemCardComponent implements OnInit {
 
   constructor(
     private itemCardService: ItemCardServiceProxy,
-    private unitService: WarehousesUnitServiceProxy,
-
+    private unitService: UnitServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
