@@ -31,14 +31,38 @@ export class AddEditBillTypeComponent implements OnInit {
   billTypeForm!: FormGroup;
   billKinds: ICustomEnum[] = [];
   warehouseEffectList: { nameAr: string; nameEn: string; value: string; }[];
+  accountingEffectList: { nameAr: string; nameEn: string; value: string; }[];
+  codingPolicyList: { nameAr: string; nameEn: string; value: string; }[];
 
-  journalList: any;
   id: any = 0;
+  routeCurrencyApi = 'Currency/get-ddl?'
+  currenciesList: any;
 
-  currnetUrl;
-  public show: boolean = false;
-  lang = localStorage.getItem("language")
-  accountClassification: [] = [];
+  routeUnitApi = 'Unit/get-ddl?'
+  unitsList: any;
+
+  routeStoreApi = 'StoreCard/get-ddl?'
+  storesList: any;
+
+  routeCostCenterApi = 'CostCenter/get-ddl?'
+  costCentersList: any;
+
+  routePaymentMethodApi = 'PaymentMethod/get-ddl?'
+  paymentMethodsList: any;
+
+  routeVendorApi = 'Vendor/get-ddl?'
+  vendorsList: any;
+
+  routeProjectApi = 'Project/get-ddl?'
+  projectsList: any;
+
+  routePriceApi = 'Price/get-ddl?'
+  pricesList: any;
+
+  lang = localStorage.getItem("language");
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
+
   addUrl: string = '/warehouses-master-codes/billType/add-billType';
   updateUrl: string = '/warehouses-master-codes/billType/update-billType/';
   listUrl: string = '/warehouses-master-codes/billType';
@@ -53,16 +77,8 @@ export class AddEditBillTypeComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  showSearchJournalModal = false;
-  showSearchAccountModal = false;
-  showSearchCurrencyModal = false;
-
-  routeJournalApi = "journal/get-ddl?"
-  routeCurrencyApi = "currency/get-ddl?"
-
   
-  companyId: any = localStorage.getItem("companyId");
-  branchId: any = localStorage.getItem("branchId");
+
 
 
   constructor(
@@ -84,10 +100,24 @@ export class AddEditBillTypeComponent implements OnInit {
   ngOnInit(): void {
     this.getBillKind();
     this.getWarehouseEffect();
+    this.getAccountingEffect();
+    this.getCodingPolicy();
+
 
     this.spinner.show();
     Promise.all([
-      this.getJournal()
+      this.getCurrencies(),
+      this.getUnits(),
+      this.getStores(),
+      this.getCostCenters(),
+      this.getPaymentMethods(),
+      this.getVendors(),
+      this.getProjects(),
+      this.getPrices()
+
+
+
+
 
     ]).then(a => {
       this.getRouteData();
@@ -252,29 +282,8 @@ export class AddEditBillTypeComponent implements OnInit {
     });
     return promise;
   }
-  getJournal() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.journalList = res.response;
 
-          }
-          resolve();
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-
-      this.subsList.push(sub);
-    });
-
-  }
+  
  
   getBillKind() {
     if (this.lang == 'en') {
@@ -292,6 +301,215 @@ export class AddEditBillTypeComponent implements OnInit {
       { nameAr: 'ترحل إلى المستودعات تلقائياً', nameEn: 'Post to the warehouses automatically', value: '3' }
 
     ];
+  }
+  getAccountingEffect() {
+    this.accountingEffectList = [
+      { nameAr: 'لا تولد سند قيد', nameEn: 'No generate entry', value: '1' },
+      { nameAr: 'لا تولد سند قيد تلقائي', nameEn: 'No generate entry automatically', value: '2' },
+      { nameAr: ' تولد سند قيد تلقائي', nameEn: 'Generate entry automatically', value: '3' },
+
+    ];
+  }
+
+  getCodingPolicy() {
+    this.codingPolicyList = [
+      { nameAr: 'يدوي', nameEn: 'Manual', value: '1' },
+      { nameAr: 'آلي', nameEn: 'Automatic', value: '2' },
+      { nameAr: 'آلي على حسب المستخدم', nameEn: 'Automatic depending on the user', value: '3' },
+
+    ];
+  }
+  getCurrencies() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.currenciesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getUnits() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeUnitApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.unitsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getStores() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeStoreApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.storesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCostCenters() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.costCentersList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getPaymentMethods() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routePaymentMethodApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.paymentMethodsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getVendors() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeVendorApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.vendorsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getProjects() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeProjectApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.projectsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getPrices() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routePriceApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.pricesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
  
   //#endregion
@@ -428,6 +646,7 @@ export class AddEditBillTypeComponent implements OnInit {
       return this.billTypeForm.markAllAsTouched();
     }
   }
+  
 
  
 }

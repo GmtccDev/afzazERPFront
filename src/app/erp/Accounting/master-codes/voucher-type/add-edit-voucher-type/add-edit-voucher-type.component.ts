@@ -79,6 +79,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   routefiscalPeriodApi = "fiscalPeriod/get-ddl?"
   routeAccountApi = "account/get-ddl?"
   companyId: string = localStorage.getItem("companyId");
+  branchId: string = localStorage.getItem("branchId");
 
 
   constructor(
@@ -155,6 +156,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     this.voucherTypeForm = this.fb.group({
       id: 0,
       companyId: this.companyId,
+      branchId: this.branchId,
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
       voucherNameEn: NAME_REQUIRED_VALIDATORS,
       journalId: null,
@@ -213,7 +215,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
           resolve();
           this.voucherTypeForm.setValue({
             id: res.response?.id,
-            companyId: res.response.companyId,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             voucherNameAr: res.response?.voucherNameAr,
             voucherNameEn: res.response?.voucherNameEn,
             journalId: res.response?.journalId,

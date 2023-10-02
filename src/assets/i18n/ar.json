@@ -327,6 +327,7 @@
         "accounts": "الحسابات",
         "default-account": "الحساب الافتراضى",
         "default-currency": "العملة الافتراضية",
+        "default-unit": "الوحدة الافتراضية",
         "currency": "العملة",
         "need-review": "تحتاج للمراجعة",
         "print-options": "خيارات الطباعة",

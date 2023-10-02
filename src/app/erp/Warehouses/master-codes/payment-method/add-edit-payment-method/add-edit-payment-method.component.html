@@ -50,11 +50,7 @@
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control " name="nameEn" formControlName="nameEn">
-                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
+                                          
 
                                             </div>
                                         </div>

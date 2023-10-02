@@ -1,9 +1,11 @@
 import {IPagedListMetaData} from '../../../shared/interfaces/paged-list-meta-data';
 export class UnitDto {
-    nameAr: string | undefined;
+    companyId: number;
+    branchId: number;
+    nameAr: string;
     nameEn: string | undefined;
     id: number;
-    code: string | undefined;
+    code: string;
     isActive:boolean| undefined;
     symbol: string | undefined;
 }

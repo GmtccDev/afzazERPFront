@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -25,7 +25,8 @@ import { MessageModalComponent } from '../../../../../shared/components/message-
 export class AddEditUnitComponent implements OnInit {
   //#region Main Declarations
   unitForm!: FormGroup;
-
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
   units: UnitDto[] = [];
@@ -130,8 +131,10 @@ export class AddEditUnitComponent implements OnInit {
   defineUnitForm() {
     this.unitForm = this.fb.group({
       id: 0,
-      nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: NAME_REQUIRED_VALIDATORS,
+      companyId: this.companyId,
+      branchId: this.branchId,
+      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
+      nameEn: '',
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       symbol: ''
@@ -148,6 +151,8 @@ export class AddEditUnitComponent implements OnInit {
           resolve();
           this.unitForm.setValue({
             id: res.response.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
