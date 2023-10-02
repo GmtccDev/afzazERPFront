@@ -17,48 +17,38 @@
                                     <div class="row ">
                                         <div class="col-md-4 col-4">
                                             <label for="billKind" class="label-name">
-                                                {{'bill-type.bill-type'|translate}}
+												{{'bill-type.bill-type'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="billKind" [items]="billKinds"
-                                                    bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['billKind'].touched || f['billKind'].dirty ) && f['billKind'].invalid"
-                                                    class="alert alert-danger">
+                                                <ng-select class="custom" formControlName="billKind" [items]="billKinds" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+                                                <div *ngIf="(f['billKind'].touched || f['billKind'].dirty ) && f['billKind'].invalid" class="alert alert-danger">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['billKind'].errors && f['billKind'].errors['required']">
-                                                        {{'validation-messages.required-field'|translate}}</span>
+                                                    <span *ngIf="f['billKind'].errors && f['billKind'].errors['required']">
+														{{'validation-messages.required-field'|translate}}</span>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="col-md-4 col-4">
                                             <label for="billNameAr" class="label-name">
-                                                {{'general.nameAr'|translate}}</label>
+												{{'general.nameAr'|translate}}</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['billNameAr'].errors || f['billNameAr'].invalid}"
-                                                    name="billNameAr" formControlName="billNameAr">
-                                                <div *ngIf="(f['billNameAr'].touched || f['billNameAr'].dirty ) && f['billNameAr'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['billNameAr'].errors || f['billNameAr'].invalid}" name="billNameAr" formControlName="billNameAr">
+                                                <div *ngIf="(f['billNameAr'].touched || f['billNameAr'].dirty ) && f['billNameAr'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['billNameAr'].errors && f['billNameAr'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['billNameAr'].errors && f['billNameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-4">
-                                            <label for="billNameEn"
-                                                class="label-name">{{'general.nameEn'|translate}}</label>
+                                            <label for="billNameEn" class="label-name">{{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
-                                                <input type="text" class="form-control icon-branch" name="billNameEn"
-                                                    formControlName="billNameEn">
+                                                <input type="text" class="form-control icon-branch" name="billNameEn" formControlName="billNameEn">
 
                                             </div>
                                         </div>
@@ -70,20 +60,16 @@
                                     </div>
                                     <hr>
                                     <!-- start tabs -->
-                                    <nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
+                                    <nav ngbNav #nav="ngbNav" class="nav-tabs m-0">
                                         <li ngbNavItem>
                                             <a ngbNavLink>{{'bill-type.basic-properties'|translate}}</a>
                                             <ng-template ngbNavContent>
                                                 <div class="col-6 col-md-6">
-                                                    <label for="warehouses-effect"
-                                                        class="label-name">{{'bill-type.warehouse-effect'|translate}}
-                                                    </label>
+                                                    <label for="warehouses-effect" class="label-name">{{'bill-type.warehouse-effect'|translate}}
+													</label>
                                                     <ul class="list-group">
-                                                        <li class="list-group-item"
-                                                            *ngFor="let item of warehouseEffectList">
-                                                            <input type="radio" formControlName="warehouseEffect"
-                                                                name="warehouseEffect" value="{{item.value}}" />
-                                                            {{lang=="ar"?item.nameAr:item.nameEn}}
+                                                        <li class="list-group-item" *ngFor="let item of warehouseEffectList">
+                                                            <input type="radio" formControlName="warehouseEffect" name="warehouseEffect" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
 
                                                         </li>
                                                     </ul>
@@ -103,4 +89,3 @@
 
     </div>
 </section>
-

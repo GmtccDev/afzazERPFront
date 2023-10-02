@@ -335,6 +335,8 @@
     },
     "component-names": {
         "country-information": "Country information",
+        "modulesType": "Modules Type",
+        "search-roles": "filter permissions",
         "currency-information": "Currency Information",
         "business-information": "Buisness Information",
         "role-information": "Role Information",

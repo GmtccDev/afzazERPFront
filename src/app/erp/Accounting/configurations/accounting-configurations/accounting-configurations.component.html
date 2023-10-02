@@ -8,8 +8,8 @@
             <h3> {{'component-names.currencies'|translate}}</h3>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 col-6">
+            <div class="row align-items-end">
+                <div class="col-md-6 col-12">
                     <label for="currencyId" class="label-name">
 						{{'component-names.currencies'|translate}}
 
@@ -24,17 +24,17 @@
                     </div>
                 </div>
                 <div class="col-6 col-md-6">
-                    <!-- <div class="media"> -->
-                    <label class="label-name"> {{'accounting-configration.multiCurrency'|translate}}
-					</label>
-                    <div class="icon-state media-body mx-5">
-                        <label class="switch">
-							<input type="checkbox" class="form-control" [(ngModel)]="multiCurrency"
-								name="multiCurrency">
-							<span class="switch-state"></span>
+                    <div class="media">
+                        <label class="label-name"> {{'accounting-configration.multiCurrency'|translate}}
 						</label>
+                        <div class="icon-state media-body">
+                            <label class="switch">
+								<input type="checkbox" class="form-control" [(ngModel)]="multiCurrency"
+									name="multiCurrency">
+								<span class="switch-state"></span>
+							</label>
+                        </div>
                     </div>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="card-body">
 
                 <!-- <div class="row">
-					<div class="col-md-6 col-6"> -->
+					<div class="col-md-6 col-12"> -->
                 <label for="serial" class="label-name">
 					{{'accounting-configration.serial'|translate}}
 
@@ -96,7 +96,7 @@
         </div>
         <div class="card-body">
             <div class="row gy-3">
-                <div class="col-md-6 col-6">
+                <div class="col-md-6 col-12">
                     <label for="account" class="label-name">
 						{{'accounting-configration.account'|translate}}
 
@@ -119,7 +119,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-6 col-6">
+                <div class="col-md-6 col-12">
                     <label for="account" class="label-name">
 						{{'accounting-configration.accountReceivables'|translate}}
 
@@ -141,7 +141,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-6 col-6">
+                <div class="col-md-6 col-12">
                     <label for="account" class="label-name">
 						{{'accounting-configration.account-exchange'|translate}}
 
@@ -163,7 +163,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-6 col-6">
+                <div class="col-md-6 col-12">
                     <label for="account" class="label-name">
 						{{'component-names.fiscalPeriod'|translate}}
 

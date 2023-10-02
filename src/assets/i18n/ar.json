@@ -188,6 +188,8 @@
     },
     "component-names": {
         "country-information": "معلومات الدولة",
+        "modulesType": "حدد البرنامج",
+        "search-roles": "فلتر الصلاحيات",
         "business-information": "معلومات الانشطة",
         "currency-information": "بيانات العملة ",
         "role-information": "معلومات وظيفة المستخدم",
