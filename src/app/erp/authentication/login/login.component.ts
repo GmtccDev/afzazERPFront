@@ -207,6 +207,7 @@ export class LoginComponent implements OnInit {
   }
   changeLanguage(language: string) {
     this.userService.setLanguage(language);
+    this.userService.setCurrentLanguage(language);
     window.location.reload();
   }
 }

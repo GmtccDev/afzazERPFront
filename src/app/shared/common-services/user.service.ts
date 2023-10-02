@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
     providedIn: 'root'
 })
 export class UserService {
+    language: string;
     constructor(
         private router: Router
     ) { }
@@ -19,6 +20,15 @@ export class UserService {
     }
     setLanguage(language: string) {
         localStorage.setItem('language', language)
+        
+    }
+    getCurrentLanguage(): string {
+      
+       return this.language;
+    }
+    setCurrentLanguage(language: string) {
+      this.language=language;
+        
     }
     isLoggedIn(): boolean {
         

@@ -43,8 +43,8 @@ export class LoginCompanyComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
     public router: Router, private userService: UserService, private translate: TranslateService) {
-
-    this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
+debugger
+    this.currentSystemLanguage = this.userService.getCurrentLanguage();
     this.translate.use(this.currentSystemLanguage);
     if (this.currentSystemLanguage === 'ar') {
       document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -56,6 +56,7 @@ export class LoginCompanyComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.companiesList = this.companies;
     this.userService.logout();
   }
