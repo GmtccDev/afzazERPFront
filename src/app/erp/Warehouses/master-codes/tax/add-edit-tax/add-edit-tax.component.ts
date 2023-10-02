@@ -25,6 +25,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   //#region Main Declarations
 
   taxForm: FormGroup = new FormGroup({});
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
   accountId: any;
   fromDate!: DateModel;
   toDate!: DateModel;
@@ -148,8 +150,10 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   defineTaxForm() {
     this.taxForm = this.fb.group({
       id: 0,
+      companyId: this.companyId,
+      branchId: this.branchId,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
-      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
+      nameEn: '',
       code: CODE_REQUIRED_VALIDATORS,
       accountId: REQUIRED_VALIDATORS,
       isActive: true,
@@ -174,6 +178,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
           resolve();
           this.taxForm.setValue({
             id: res.response.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             code: res.response.code,
             nameAr: res.response.nameAr,
             nameEn: res.response?.nameEn,
@@ -297,6 +303,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
     this.taxMaster = {
       id: this.taxForm.controls["id"].value,
+      companyId: this.taxForm.controls["companyId"].value,
+      branchId: this.taxForm.controls["branchId"].value,
       code: this.taxForm.controls["code"].value,
       nameAr: this.taxForm.controls["nameAr"].value,
       nameEn: this.taxForm.controls["nameEn"].value,

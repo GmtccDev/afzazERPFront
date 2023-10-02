@@ -46,16 +46,8 @@
                                             <label for="nameEn" class="label-name">
 												{{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
-
-                                                <<<<<<< HEAD <input type="text" class="form-control " name="nameEn" formControlName="nameEn">
-                                                    <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
-                                                        <i class="fa fa-close "></i>
-                                                        <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
-															{{'error.required'|translate}}</span>
-                                                    </div>
-                                                    =======
-                                                    <input type="text" class="form-control " name="nameEn" formControlName="nameEn" maxlength="50"> >>>>>>> 05ada7203aa9c3695243d3db8890fd56ad6c52f7
-
+                                                <input type="text" class="form-control " name="nameEn"
+                                                    formControlName="nameEn" maxlength="50">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">

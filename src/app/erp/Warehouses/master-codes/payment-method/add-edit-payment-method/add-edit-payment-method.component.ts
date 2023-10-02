@@ -22,6 +22,8 @@ import { PublicService } from '../../../../../shared/services/public.service';
 export class AddEditPaymentMethodComponent implements OnInit {
   //#region Main Declarations
   paymentMethodForm!: FormGroup;
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
   routeAccountApi = 'Account/get-ddl?'
@@ -137,6 +139,8 @@ export class AddEditPaymentMethodComponent implements OnInit {
   definePaymentMethodForm() {
     this.paymentMethodForm = this.fb.group({
       id: 0,
+      companyId: this.companyId,
+      branchId: this.branchId,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
       nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
       code: CODE_REQUIRED_VALIDATORS,
@@ -159,6 +163,8 @@ export class AddEditPaymentMethodComponent implements OnInit {
           resolve();
           this.paymentMethodForm.setValue({
             id: res.response?.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,

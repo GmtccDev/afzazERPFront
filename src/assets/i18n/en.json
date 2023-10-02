@@ -117,6 +117,7 @@
         "accounts": "Accounts",
         "default-account": "Default Account",
         "default-currency": "Default Currency",
+        "default-unit": "Default Unit",
         "currency": "Currency",
         "balance": "Balance",
         "need-review": "Need Review",
@@ -578,7 +579,28 @@
         "bill-type": "Bill Type",
         "add-bill-type": "Add Bill Type",
         "update-bill-type": "Update Bill Type",
-        "basic-properties": "Basic Properties",
-        "warehouse-effect": "Warehouse Effect"
+        "basic-properties":"Basic Properties",
+        "affect-on-cost-price":"Affect On Cost Price",
+        "accounting-effect":"Accounting Effect",
+        "post-to-accounts-automatically":"Posting to the accounts automatically",
+        "warehouse-effect":"Warehouse Effect",
+        "coding-policy":"Coding Policy",
+        "other-options":"Other Options",
+        "confirm-cost-center":"Confirm Cost Center",
+        "confirm-analytical-code":"Confirm Analytical Code",
+        "additional-options":"Additional Options",
+        "not-calculating-tax":"Not Calculating Tax",
+        "calculating-value-added-tax-after-luxury-tax":"Calculating Value Added Tax After Luxury Tax",
+        "calculating-tax-on-price-after-deduction-and-addition":"Calculating Tax On Price After Deduction And Addition",
+        "discount-affects-cost-price":"Discount Affects Cost Price",
+        "addition-affects-cost-price":"Addition Affects Cost Price",
+        "default-values":"Default Values",
+        "store":"Store",
+        "cost-center":"Cost Center",
+        "vendor":"Vendor",
+        "project":"Project",
+        "payment-method":"Payment Method",
+        "default-price":"Default Price"
+
     }
 }
