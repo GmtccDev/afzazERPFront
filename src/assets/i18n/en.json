@@ -159,18 +159,18 @@
         "amount-local": "Amount Local",
         "from-entry-no": "From Entry No",
         "to-entry-no": "To Entry No",
-        "account":"Account",
-        "address":"Address",
-        "responsible-person":"The Responsible Person",
-        "image":"Image",
-        "quantity":"Quantity",
-        "sales-account":"Sales Account",
-        "sales-return-account":"Sales Return Account",
-        "purchases-account":"Purchases Account",
-        "purchases-return-account":"Purchases Return Account",
-        "sales-cost-account":"Sales Cost Account",
-        "inventory-account":"Inventory Account",
-        "minute":"minute"
+        "account": "Account",
+        "address": "Address",
+        "responsible-person": "The Responsible Person",
+        "image": "Image",
+        "quantity": "Quantity",
+        "sales-account": "Sales Account",
+        "sales-return-account": "Sales Return Account",
+        "purchases-account": "Purchases Account",
+        "purchases-return-account": "Purchases Return Account",
+        "sales-cost-account": "Sales Cost Account",
+        "inventory-account": "Inventory Account",
+        "minute": "minute"
     },
     "menu": {},
     "home": {
@@ -187,7 +187,6 @@
         "view-all-projects": "View All Projects"
     },
     "login": {
-
         "welcome": "Welcome!",
         "login-your-account": "Login your account",
         "login": "Login",
@@ -209,6 +208,7 @@
         "send": "Send",
         "password": "Password",
         "change-password": "Change Password",
+        "select-company": "select company & branch",
         "log-out": "Log Out",
         "old-password": "Old Password ",
         "password-no-match": "Password No Match ",
@@ -417,8 +417,8 @@
         "add-item": "Add Item",
         "item-groups-card": " Item Groups Card ",
         "item-groups-card-information": " Item Groups Card Information",
-        "tax-information":"Tax Information"
-
+        "tax-information": "Tax Information",
+        "bill-types": "Bill Types"
 
     },
     "language": {
@@ -461,7 +461,7 @@
         "endOfYear": "End Of Year",
         "accountReceivables": "Account Receivables",
         "idleTime": "Idle Time",
-        "account-exchange":"Account Exchange"
+        "account-exchange": "Account Exchange"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -542,16 +542,15 @@
     "unit": {
         "transaction-factor": "Transaction Factor",
         "unit-transactions": "New Unit Transactions",
-        "add-unit":"Add Unit",
-        "add-edit":"Add and Edit"
-     },
-     "tax": {
+        "add-unit": "Add Unit",
+        "add-edit": "Add and Edit"
+    },
+    "tax": {
         "tax-information": "Tax Information",
         "tax-ratio": "Tax Ratio",
         "tax-details-required": "Tax details is required",
         "add-tax": "Add Tax"
     },
-   
     "item": {
         "item-group": "Item Group",
         "unit": "Unit",
@@ -573,9 +572,13 @@
         "has-expired-date": "Has Expired Date",
         "life-time": "Life Time",
         "life-time-type": "Life Time Type"
-
-
+    },
+    "bill-type": {
+        "bill-type-information": "Bill Type Information",
+        "bill-type": "Bill Type",
+        "add-bill-type": "Add Bill Type",
+        "update-bill-type": "Update Bill Type",
+        "basic-properties": "Basic Properties",
+        "warehouse-effect": "Warehouse Effect"
     }
-
-
 }

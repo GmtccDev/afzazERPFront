@@ -28151,7 +28151,8 @@ body {
   color: #2b2b2b;
 }
 
-ol, ul {
+ol,
+ul {
   padding-left: 0px;
   list-style-type: none;
   margin-bottom: 0;
@@ -28459,7 +28460,8 @@ fieldset .input-group-lg .touchspin {
 
 .media {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 20px;
 }
 .media .media-body {
   flex: 1;
@@ -47786,205 +47788,205 @@ body [class*=dark-] .for-light {
   transition: all 0.3s ease;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2) svg {
   color: #fae475 !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a svg {
+  stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2) svg {
+  color: #e77681 !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a svg {
-  stroke: #fae475 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a svg {
   stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a:hover {
-  background-color: rgba(81, 187, 37, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a svg {
-  stroke: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5) svg {
-  color: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7) svg {
-  color: #e77681 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a svg {
-  stroke: #79dc50 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg {
   stroke: #e77681 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5) svg {
+  color: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a svg {
+  stroke: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a:hover {
+  background-color: rgba(81, 187, 37, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a svg {
+  stroke: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a svg {
+  stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg {
+  color: #fae475 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg {
+  stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover {
+  background-color: rgba(41, 49, 118, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9) svg {
-  color: #e77681 !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a:hover {
   background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10) svg {
-  color: #79dc50 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg {
-  color: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg {
-  stroke: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg {
-  color: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg {
   color: #92daf7 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg {
+  stroke: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg {
+  color: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg {
+  stroke: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg {
+  color: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg {
   stroke: #3d49af !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg {
-  color: #79dc50 !important;
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg {
+  color: #fae475 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg {
   stroke: #92daf7 !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover {
+  background-color: rgba(244, 244, 244, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg {
+  color: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg {
+  stroke: white !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a svg {
-  stroke: #e77681 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16) svg {
-  color: #e77681 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17) svg {
-  color: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg {
   color: white !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg {
+  stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover {
+  background-color: rgba(248, 214, 43, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg {
+  color: #79dc50 !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19) svg {
   color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20) svg {
-  color: #3d49af !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22) svg {
-  color: #3d49af !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a svg {
   stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23) svg {
-  color: #92daf7 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23):hover a svg {
   stroke: #fae475 !important;
@@ -47993,28 +47995,28 @@ body [class*=dark-] .for-light {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24) svg {
-  color: #92daf7 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a svg {
   stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
@@ -48023,160 +48025,160 @@ body [class*=dark-] .for-light {
   color: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a svg {
-  stroke: white !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29) svg {
-  color: #fae475 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30) svg {
-  color: white !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31) svg {
-  color: #79dc50 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32) svg {
-  color: #fae475 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a svg {
   stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34) svg {
-  color: #92daf7 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a svg {
-  stroke: white !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35) svg {
-  color: #92daf7 !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a svg {
-  stroke: white !important;
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36) svg {
   color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a svg {
-  stroke: white !important;
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37) svg {
-  color: #fae475 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38) svg {
-  color: #fae475 !important;
+  color: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39) svg {
-  color: #79dc50 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40) svg {
   color: #92daf7 !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a svg {
+  stroke: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40) svg {
+  color: #e77681 !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41) svg {
-  color: #79dc50 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a svg {
   stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42) svg {
-  color: #79dc50 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a svg {
   stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43) svg {
-  color: #92daf7 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44) svg {
-  color: #fae475 !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
@@ -48185,94 +48187,94 @@ body [class*=dark-] .for-light {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46) svg {
-  color: #92daf7 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a svg {
-  stroke: white !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47) svg {
-  color: #92daf7 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48) svg {
-  color: #92daf7 !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50) svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49) svg {
   color: #fae475 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a svg {
-  stroke: #92daf7 !important;
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a svg {
+  stroke: #79dc50 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51) svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50) svg {
   color: #92daf7 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a svg {
   stroke: #e77681 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a:hover {
   background-color: rgba(220, 53, 69, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51) svg {
+  color: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a svg {
+  stroke: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover {
+  background-color: rgba(244, 244, 244, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52) svg {
-  color: #e77681 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a svg {
   stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a:hover {
-  background-color: rgba(81, 187, 37, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg {
-  color: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54) svg {
-  color: #79dc50 !important;
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg {
+  color: #92daf7 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a svg {
-  stroke: #79dc50 !important;
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg {
+  stroke: #92daf7 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a svg {
+  stroke: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55) svg {
-  color: white !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55):hover a svg {
   stroke: #92daf7 !important;
@@ -48281,49 +48283,49 @@ body [class*=dark-] .for-light {
   background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56) svg {
-  color: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg {
-  color: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg {
-  stroke: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58) svg {
   color: #92daf7 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a svg {
-  stroke: #92daf7 !important;
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg {
+  stroke: white !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover {
   background-color: rgba(81, 187, 37, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg {
+  color: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg {
+  stroke: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a svg {
+  stroke: #79dc50 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a:hover {
+  background-color: rgba(41, 49, 118, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59) svg {
-  color: #79dc50 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a svg {
-  stroke: white !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 
 /**=====================
@@ -50204,12 +50206,14 @@ body [class*=dark-] .for-light {
   margin-right: 10px;
   stroke: #2c323f;
 }
+.page-wrapper main {
+  margin-top: 165px;
+}
 .page-wrapper .page-body-wrapper {
   background-color: #f8f8f8;
 }
 .page-wrapper .page-body-wrapper .page-body {
-  min-height: calc(100vh - 145px);
-  margin-top: 145px;
+  min-height: calc(100vh - 55px);
   padding: 20px 15px 20px 15px;
   position: relative;
   transition: 0.5s;
@@ -51969,7 +51973,8 @@ body [class*=dark-] .for-light {
 .rtl .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper.close_icon .logo-icon-wrapper img {
   margin-left: 8px;
 }
-.rtl .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper.close_icon ~ .page-body, .rtl .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper.close_icon ~ footer {
+.rtl .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper.close_icon ~ .page-body,
+.rtl .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper.close_icon ~ footer {
   margin-left: 0;
   margin-right: 100px;
   transition: 0.5s;
@@ -52216,11 +52221,13 @@ body [class*=dark-] .for-light {
 .rtl .earning-card.card .card-body .chart-left {
   padding: 40px 40px 40px 0;
 }
-.rtl .earning-card.card .card-body .inner-top-left ul li, .rtl .earning-card.card .card-body .inner-top-right ul li {
+.rtl .earning-card.card .card-body .inner-top-left ul li,
+.rtl .earning-card.card .card-body .inner-top-right ul li {
   margin-left: unset;
   margin-right: 35px;
 }
-.rtl .earning-card.card .card-body .inner-top-left ul li:first-child, .rtl .earning-card.card .card-body .inner-top-right ul li:first-child {
+.rtl .earning-card.card .card-body .inner-top-left ul li:first-child,
+.rtl .earning-card.card .card-body .inner-top-right ul li:first-child {
   margin-right: 0;
 }
 .rtl .earning-card.card .card-body .inner-top-right {
@@ -52234,15 +52241,18 @@ body [class*=dark-] .for-light {
   border-right: unset;
   border-left: 1px solid #ecf3fa;
 }
-.rtl .chart_data_left .card-body .chart-main .media, .rtl .chart_data_right .card-body .chart-main .media {
+.rtl .chart_data_left .card-body .chart-main .media,
+.rtl .chart_data_right .card-body .chart-main .media {
   border-right: unset;
   border-left: 1px solid #ecf3fa;
 }
-.rtl .chart_data_left .card-body .chart-main .media .media-body .right-chart-content, .rtl .chart_data_right .card-body .chart-main .media .media-body .right-chart-content {
+.rtl .chart_data_left .card-body .chart-main .media .media-body .right-chart-content,
+.rtl .chart_data_right .card-body .chart-main .media .media-body .right-chart-content {
   margin-left: unset;
   margin-right: 30px;
 }
-.rtl .chart_data_left .card-body .chart-main .media.border-none, .rtl .chart_data_right .card-body .chart-main .media.border-none {
+.rtl .chart_data_left .card-body .chart-main .media.border-none,
+.rtl .chart_data_right .card-body .chart-main .media.border-none {
   border-left: none;
 }
 .rtl .chart_data_right .card-body .media .right-chart-content h4 .new-box, .rtl .chart_data_right .card-body .media .right-chart-content .h4 .new-box {
@@ -52379,11 +52389,13 @@ body [class*=dark-] .for-light {
   left: -10px;
   right: unset;
 }
-.rtl .our-product table tr td:first-child, .rtl .best-seller-table table tr td:first-child {
+.rtl .our-product table tr td:first-child,
+.rtl .best-seller-table table tr td:first-child {
   padding-left: 20px;
   padding-right: 0;
 }
-.rtl .our-product table tr td:last-child, .rtl .best-seller-table table tr td:last-child {
+.rtl .our-product table tr td:last-child,
+.rtl .best-seller-table table tr td:last-child {
   padding-right: 20px;
   padding-left: 0;
   text-align: left;
@@ -52404,7 +52416,8 @@ body [class*=dark-] .for-light {
   left: unset;
   right: 46px;
 }
-.rtl .offer-box .offer-slider .owl-prev, .rtl .offer-box .offer-slider .owl-next {
+.rtl .offer-box .offer-slider .owl-prev,
+.rtl .offer-box .offer-slider .owl-next {
   right: unset;
   left: 0;
 }
@@ -52417,15 +52430,18 @@ body [class*=dark-] .for-light {
 .rtl .cal-date-widget .cal-info .pe-3 {
   padding-right: 1rem !important;
 }
-.rtl .me-4, .rtl .mx-4 {
+.rtl .me-4,
+.rtl .mx-4 {
   margin-left: 1.5rem !important;
   margin-right: unset !important;
 }
-.rtl .pe-4, .rtl .px-4 {
+.rtl .pe-4,
+.rtl .px-4 {
   padding-left: 1.5rem !important;
   padding-right: unset !important;
 }
-.rtl .me-1, .rtl .mx-1 {
+.rtl .me-1,
+.rtl .mx-1 {
   margin-left: 0.25rem !important;
   margin-right: unset !important;
 }
@@ -52475,10 +52491,23 @@ body [class*=dark-] .for-light {
 .rtl .widget-joins .row .ps-0 {
   padding-left: 15px !important;
 }
-.rtl .order-box .sub-total .shipping-class .shopping-checkout-option, .rtl .order-box .sub-total .shipping-class span, .rtl .order-box .sub-total li .shopping-checkout-option, .rtl .order-box .sub-total li span, .rtl .order-box .total .shipping-class .shopping-checkout-option, .rtl .order-box .total .shipping-class span, .rtl .order-box .total li .shopping-checkout-option, .rtl .order-box .total li span, .rtl .order-box .qty .shipping-class .shopping-checkout-option, .rtl .order-box .qty .shipping-class span, .rtl .order-box .qty li .shopping-checkout-option, .rtl .order-box .qty li span {
+.rtl .order-box .sub-total .shipping-class .shopping-checkout-option,
+.rtl .order-box .sub-total .shipping-class span,
+.rtl .order-box .sub-total li .shopping-checkout-option,
+.rtl .order-box .sub-total li span,
+.rtl .order-box .total .shipping-class .shopping-checkout-option,
+.rtl .order-box .total .shipping-class span,
+.rtl .order-box .total li .shopping-checkout-option,
+.rtl .order-box .total li span,
+.rtl .order-box .qty .shipping-class .shopping-checkout-option,
+.rtl .order-box .qty .shipping-class span,
+.rtl .order-box .qty li .shopping-checkout-option,
+.rtl .order-box .qty li span {
   float: left;
 }
-.rtl .order-box .sub-total li .count, .rtl .order-box .total li .count, .rtl .order-box .qty li .count {
+.rtl .order-box .sub-total li .count,
+.rtl .order-box .total li .count,
+.rtl .order-box .qty li .count {
   float: left;
 }
 .rtl .img-paypal {
@@ -52597,14 +52626,16 @@ body [class*=dark-] .for-light {
   right: 20px;
   left: unset;
 }
-.rtl .me-0, .rtl .mx-0 {
+.rtl .me-0,
+.rtl .mx-0 {
   margin-left: 0 !important;
   margin-right: unset !important;
 }
 .rtl .footer .pull-right {
   float: none;
 }
-.rtl .checkbox_animated, .rtl .radio_animated {
+.rtl .checkbox_animated,
+.rtl .radio_animated {
   margin: 0 8px 0 16px;
 }
 .rtl .button.remove {
@@ -52652,7 +52683,8 @@ body [class*=dark-] .for-light {
   margin-left: 10px;
   margin-right: unset;
 }
-.rtl .pe-3, .rtl .px-3 {
+.rtl .pe-3,
+.rtl .px-3 {
   padding-left: 1rem !important;
   padding-right: unset !important;
 }
@@ -52664,7 +52696,8 @@ body [class*=dark-] .for-light {
   margin-right: 20px !important;
   margin-left: unset !important;
 }
-.rtl .ps-3, .rtl .px-3 {
+.rtl .ps-3,
+.rtl .px-3 {
   padding-right: 1rem !important;
 }
 .rtl .b-r-light {
@@ -52684,11 +52717,13 @@ body [class*=dark-] .for-light {
   border-left: 1px solid #dee2e6 !important;
   border-right: unset !important;
 }
-.rtl .pe-0, .rtl .px-0 {
+.rtl .pe-0,
+.rtl .px-0 {
   padding-left: 0 !important;
   padding-right: unset !important;
 }
-.rtl .ps-0, .rtl .px-0 {
+.rtl .ps-0,
+.rtl .px-0 {
   padding-right: 0 !important;
   padding-left: unset !important;
 }
@@ -52699,7 +52734,8 @@ body [class*=dark-] .for-light {
 .rtl .owl-carousel {
   direction: ltr;
 }
-.rtl .btn-group > .btn:not(:last-child):not(.dropdown-toggle), .rtl .btn-group > :not(:last-child) > .btn {
+.rtl .btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+.rtl .btn-group > :not(:last-child) > .btn {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0.25rem;
@@ -52720,28 +52756,35 @@ body [class*=dark-] .for-light {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.rtl .btn-group .btn + .btn, .rtl .btn-group .btn + .btn-group {
+.rtl .btn-group .btn + .btn,
+.rtl .btn-group .btn + .btn-group {
   margin-right: -1px;
   border-right: none;
 }
-.rtl .btn-group .btn-group + .btn, .rtl .btn-group .btn-group + .btn-group {
+.rtl .btn-group .btn-group + .btn,
+.rtl .btn-group .btn-group + .btn-group {
   margin-right: -1px;
 }
-.rtl .btn-group .btn-group-vertical .btn + .btn, .rtl .btn-group .btn-group-vertical .btn + .btn-group {
+.rtl .btn-group .btn-group-vertical .btn + .btn,
+.rtl .btn-group .btn-group-vertical .btn + .btn-group {
   margin-right: -1px;
 }
-.rtl .btn-group .btn-group-vertical .btn-group + .btn, .rtl .btn-group .btn-group-vertical .btn-group + .btn-group {
+.rtl .btn-group .btn-group-vertical .btn-group + .btn,
+.rtl .btn-group .btn-group-vertical .btn-group + .btn-group {
   margin-right: -1px;
 }
-.rtl .me-3, .rtl .mx-3 {
+.rtl .me-3,
+.rtl .mx-3 {
   margin-right: unset !important;
   margin-left: 1rem !important;
 }
-.rtl .me-5, .rtl .mx-5 {
+.rtl .me-5,
+.rtl .mx-5 {
   margin-left: 3rem !important;
   margin-right: unset !important;
 }
-.rtl .ms-3, .rtl .mx-3 {
+.rtl .ms-3,
+.rtl .mx-3 {
   margin-right: 1rem !important;
   margin-left: unset !important;
 }
@@ -52776,11 +52819,11 @@ body [class*=dark-] .for-light {
 .rtl .alert {
   text-align: right;
 }
-.rtl .pull-right, .rtl .f-right {
+.rtl .pull-right,
+.rtl .f-right {
   float: left;
 }
 .rtl .form-inline .form-group {
-  margin-left: 15px;
   margin-right: 0;
 }
 .rtl .card {
@@ -52842,7 +52885,8 @@ body [class*=dark-] .for-light {
   padding-left: 0.5rem;
   padding-right: unset;
 }
-.rtl code[class*=language-], .rtl pre[class*=language-] {
+.rtl code[class*=language-],
+.rtl pre[class*=language-] {
   text-align: right;
 }
 .rtl .input-group-prepend {
@@ -52855,13 +52899,23 @@ body [class*=dark-] .for-light {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.rtl .input-group > .input-group-prepend > .btn, .rtl .input-group > .input-group-prepend > .input-group-text, .rtl .input-group > .input-group-append:not(:last-child) > .btn, .rtl .input-group > .input-group-append:not(:last-child) > .input-group-text, .rtl .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle), .rtl .input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
+.rtl .input-group > .input-group-prepend > .btn,
+.rtl .input-group > .input-group-prepend > .input-group-text,
+.rtl .input-group > .input-group-append:not(:last-child) > .btn,
+.rtl .input-group > .input-group-append:not(:last-child) > .input-group-text,
+.rtl .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.rtl .input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-.rtl .input-group > .input-group-append > .btn, .rtl .input-group > .input-group-append > .input-group-text, .rtl .input-group > .input-group-prepend:not(:first-child) > .btn, .rtl .input-group > .input-group-prepend:not(:first-child) > .input-group-text, .rtl .input-group > .input-group-prepend:first-child > .btn:not(:first-child), .rtl .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
+.rtl .input-group > .input-group-append > .btn,
+.rtl .input-group > .input-group-append > .input-group-text,
+.rtl .input-group > .input-group-prepend:not(:first-child) > .btn,
+.rtl .input-group > .input-group-prepend:not(:first-child) > .input-group-text,
+.rtl .input-group > .input-group-prepend:first-child > .btn:not(:first-child),
+.rtl .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
@@ -52938,7 +52992,8 @@ body [class*=dark-] .for-light {
   padding-left: 20px;
   padding-right: unset;
 }
-.rtl .header-faq, .rtl .faq-title {
+.rtl .header-faq,
+.rtl .faq-title {
   text-align: right;
 }
 .rtl .faq-accordion .faq-header svg {
@@ -53072,11 +53127,15 @@ body [class*=dark-] .for-light {
 .rtl .mega-menu .list-unstyled div a:hover {
   padding: 8px 10px 8px 35px;
 }
-.rtl #testimonial .owl-stage-outer .owl-stage .owl-item .slide--item .media .me-3, .rtl #testimonial .owl-stage-outer .owl-stage .owl-item .slide--item .media .mx-3 {
+.rtl #testimonial .owl-stage-outer .owl-stage .owl-item .slide--item .media .me-3,
+.rtl #testimonial .owl-stage-outer .owl-stage .owl-item .slide--item .media .mx-3 {
   margin-right: 1rem !important;
   margin-left: unset !important;
 }
-.rtl .needs-validation .input-group > .form-control:not(:last-child), .rtl .needs-validation .input-group > .form-select:not(:last-child), .rtl form .row .input-group > .form-control:not(:last-child), .rtl form .row .input-group > .form-select:not(:last-child) {
+.rtl .needs-validation .input-group > .form-control:not(:last-child),
+.rtl .needs-validation .input-group > .form-select:not(:last-child),
+.rtl form .row .input-group > .form-control:not(:last-child),
+.rtl form .row .input-group > .form-select:not(:last-child) {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
   border-top-right-radius: 0;
@@ -53089,7 +53148,8 @@ body [class*=dark-] .for-light {
 .rtl .mega-menu .default-according .card .btn-link {
   text-align: right;
 }
-.rtl .mega-menu .default-according.style-1 button[aria-expanded=true]:before, .rtl .mega-menu .default-according.style-1 button[aria-expanded=false]:before {
+.rtl .mega-menu .default-according.style-1 button[aria-expanded=true]:before,
+.rtl .mega-menu .default-according.style-1 button[aria-expanded=false]:before {
   right: unset;
   left: 20px;
 }
@@ -53287,11 +53347,13 @@ body [class*=dark-] .for-light {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-.rtl .form-builder-column #pills-tabContent .theme-form .form-group .input-group #buttondropdown, .rtl .form-builder-column #pills-tabContent .theme-form .ui-draggable .input-group #buttondropdown {
+.rtl .form-builder-column #pills-tabContent .theme-form .form-group .input-group #buttondropdown,
+.rtl .form-builder-column #pills-tabContent .theme-form .ui-draggable .input-group #buttondropdown {
   margin-right: unset;
   margin-left: 15px;
 }
-.rtl .form-builder-column #pills-tabContent .theme-form .form-group .input-group .input-group-btn button, .rtl .form-builder-column #pills-tabContent .theme-form .ui-draggable .input-group .input-group-btn button {
+.rtl .form-builder-column #pills-tabContent .theme-form .form-group .input-group .input-group-btn button,
+.rtl .form-builder-column #pills-tabContent .theme-form .ui-draggable .input-group .input-group-btn button {
   border-radius: 4px !important;
 }
 .rtl .form-horizontal.theme-form fieldset .tab-content .tab-pane .component .form-group .text-lg-left {
@@ -53433,7 +53495,8 @@ body [class*=dark-] .for-light {
   right: -300px;
   left: unset;
 }
-.rtl .page-wrapper.modern-type .page-body-wrapper div.sidebar-wrapper.close_icon ~ .page-body, .rtl .page-wrapper.modern-type .page-body-wrapper div.sidebar-wrapper.close_icon ~ footer {
+.rtl .page-wrapper.modern-type .page-body-wrapper div.sidebar-wrapper.close_icon ~ .page-body,
+.rtl .page-wrapper.modern-type .page-body-wrapper div.sidebar-wrapper.close_icon ~ footer {
   margin-right: 0;
 }
 .rtl .left-header .level-menu .nav-link {
@@ -53469,7 +53532,8 @@ body [class*=dark-] .for-light {
   border-left: unset;
   border-right: 1px solid #efefef;
 }
-.rtl .left-header .mega-menu .nav-link svg, .rtl .left-header .level-menu .nav-link svg {
+.rtl .left-header .mega-menu .nav-link svg,
+.rtl .left-header .level-menu .nav-link svg {
   margin-right: unset;
   margin-left: 5px;
 }
@@ -53772,10 +53836,16 @@ body [class*=dark-] .for-light {
 .rtl .chat-right-aside .chat .chat-header img {
   float: right;
 }
-.rtl .cke_toolbar, .rtl .cke_toolgroup, .rtl a.cke_button, .rtl .cke_combo_text {
+.rtl .cke_toolbar,
+.rtl .cke_toolgroup,
+.rtl a.cke_button,
+.rtl .cke_combo_text {
   float: right;
 }
-.rtl .cke_reset_all, .rtl .cke_reset_all *, .rtl .cke_reset_all a, .rtl .cke_reset_all textarea {
+.rtl .cke_reset_all,
+.rtl .cke_reset_all *,
+.rtl .cke_reset_all a,
+.rtl .cke_reset_all textarea {
   text-align: right;
 }
 .rtl .cke_combo_text {
@@ -53824,7 +53894,8 @@ body [class*=dark-] .for-light {
 .rtl .dataTables_wrapper .btn-group button:last-child {
   margin-left: 0;
 }
-.rtl .dataTables_wrapper table.dataTable tbody td.select-checkbox:after, .rtl .dataTables_wrapper table.dataTable tbody th.select-checkbox:after {
+.rtl .dataTables_wrapper table.dataTable tbody td.select-checkbox:after,
+.rtl .dataTables_wrapper table.dataTable tbody th.select-checkbox:after {
   margin-left: 31px;
 }
 .rtl div.dataTables_wrapper div.dataTables_paginate {
@@ -53844,7 +53915,11 @@ body [class*=dark-] .for-light {
   left: 0.5em !important;
   right: unset;
 }
-.rtl table.dataTable thead .sorting:before, .rtl table.dataTable thead .sorting_asc:before, .rtl table.dataTable thead .sorting_desc:before, .rtl table.dataTable thead .sorting_asc_disabled:before, .rtl table.dataTable thead .sorting_desc_disabled:before {
+.rtl table.dataTable thead .sorting:before,
+.rtl table.dataTable thead .sorting_asc:before,
+.rtl table.dataTable thead .sorting_desc:before,
+.rtl table.dataTable thead .sorting_asc_disabled:before,
+.rtl table.dataTable thead .sorting_desc_disabled:before {
   left: 1em !important;
   right: unset;
 }
@@ -53898,10 +53973,12 @@ body [class*=dark-] .for-light {
   padding-left: 20px;
   padding-right: 0;
 }
-.rtl .product-box .ribbon-bookmark.ribbon-vertical-left.ribbon-info:before, .rtl .product-box .ribbon-bookmark.ribbon-vertical-right.ribbon-info:before {
+.rtl .product-box .ribbon-bookmark.ribbon-vertical-left.ribbon-info:before,
+.rtl .product-box .ribbon-bookmark.ribbon-vertical-right.ribbon-info:before {
   border-left-color: #007bff;
 }
-.rtl .product-box .ribbon-bookmark.ribbon-vertical-left:before, .rtl .product-box .ribbon-bookmark.ribbon-vertical-right:before {
+.rtl .product-box .ribbon-bookmark.ribbon-vertical-left:before,
+.rtl .product-box .ribbon-bookmark.ribbon-vertical-right:before {
   right: 0;
   left: unset;
   border-left: 15px solid #2a3142;
@@ -54018,7 +54095,8 @@ body [class*=dark-] .for-light {
 .rtl .list-group {
   padding-right: 0;
 }
-.rtl .list-group i, .rtl .list-group img {
+.rtl .list-group i,
+.rtl .list-group img {
   margin-left: 10px;
   margin-right: 0;
 }
@@ -54076,7 +54154,8 @@ body [class*=dark-] .for-light {
   right: -15px;
   left: unset;
 }
-.rtl .order-history table th:first-child, .rtl .order-history table td:first-child {
+.rtl .order-history table th:first-child,
+.rtl .order-history table td:first-child {
   text-align: right;
 }
 .rtl .product-page-details span {
@@ -54090,10 +54169,16 @@ body [class*=dark-] .for-light {
 .rtl .form-label-align-right label {
   text-align: left;
 }
-.rtl .br-theme-bars-reversed .br-widget .br-current-rating, .rtl .br-theme-bars-movie .br-widget .br-current-rating, .rtl .br-theme-bars-1to10 .br-widget .br-current-rating, .rtl .br-theme-bars-square .br-widget .br-current-rating {
+.rtl .br-theme-bars-reversed .br-widget .br-current-rating,
+.rtl .br-theme-bars-movie .br-widget .br-current-rating,
+.rtl .br-theme-bars-1to10 .br-widget .br-current-rating,
+.rtl .br-theme-bars-square .br-widget .br-current-rating {
   float: right;
 }
-.rtl .br-theme-bars-reversed .br-widget a, .rtl .br-theme-bars-movie .br-widget a, .rtl .br-theme-bars-1to10 .br-widget a, .rtl .br-theme-bars-square .br-widget a {
+.rtl .br-theme-bars-reversed .br-widget a,
+.rtl .br-theme-bars-movie .br-widget a,
+.rtl .br-theme-bars-1to10 .br-widget a,
+.rtl .br-theme-bars-square .br-widget a {
   float: right;
 }
 .rtl .ribbon-left {
@@ -54143,7 +54228,8 @@ body [class*=dark-] .for-light {
   margin-left: -30px;
   margin-right: unset;
 }
-.rtl .primary-color ul, .rtl .yellow-color ul {
+.rtl .primary-color ul,
+.rtl .yellow-color ul {
   padding-right: 0;
 }
 .rtl .u-step-desc {
@@ -54321,7 +54407,8 @@ body [class*=dark-] .for-light {
 .rtl .bar-chart-widget .bottom-content .num .ms-1 {
   margin-right: 0.25rem !important;
 }
-.rtl .chart-vertical-center #myDoughnutGraph, .rtl .chart-vertical-center #myPolarGraph {
+.rtl .chart-vertical-center #myDoughnutGraph,
+.rtl .chart-vertical-center #myPolarGraph {
   width: auto !important;
 }
 .rtl .crm-activity ul.dates li + li {
@@ -54372,7 +54459,8 @@ body [class*=dark-] .for-light {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.rtl .popover.top > .arrow:after, .rtl .popover.bottom > .arrow:after {
+.rtl .popover.top > .arrow:after,
+.rtl .popover.bottom > .arrow:after {
   margin-right: -10px;
   margin-left: unset;
 }
@@ -54383,7 +54471,8 @@ body [class*=dark-] .for-light {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
-.rtl .bootstrap-touchspin > .form-control:not(:last-child), .rtl .bootstrap-touchspin > .form-select:not(:last-child) {
+.rtl .bootstrap-touchspin > .form-control:not(:last-child),
+.rtl .bootstrap-touchspin > .form-select:not(:last-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
@@ -54584,11 +54673,13 @@ body [class*=dark-] .for-light {
   }
 }
 @media (min-width: 1200px) {
-  .rtl .chat-box .pe-xl-0, .rtl .chat-box .px-xl-0 {
+  .rtl .chat-box .pe-xl-0,
+  .rtl .chat-box .px-xl-0 {
     padding-left: 0 !important;
     padding-right: 15px !important;
   }
-  .rtl .chat-box .ps-xl-0, .rtl .chat-box .px-xl-0 {
+  .rtl .chat-box .ps-xl-0,
+  .rtl .chat-box .px-xl-0 {
     padding-right: 0 !important;
     padding-left: 15px !important;
   }
@@ -54712,7 +54803,8 @@ body [class*=dark-] .for-light {
     margin-left: 15px;
     margin-right: unset;
   }
-  .rtl .page-body-wrapper .page-body, .rtl .page-body-wrapper footer {
+  .rtl .page-body-wrapper .page-body,
+  .rtl .page-body-wrapper footer {
     margin-right: 0 !important;
   }
   .rtl .main .langChoice {
@@ -54758,7 +54850,8 @@ body [class*=dark-] .for-light {
   .rtl .offer-box .offer-slider .selling-slide .d-flex .left-content {
     padding-right: 0;
   }
-  .rtl .offer-box .offer-slider .owl-prev-icon, .rtl .offer-box .offer-slider .owl-next-icon {
+  .rtl .offer-box .offer-slider .owl-prev-icon,
+  .rtl .offer-box .offer-slider .owl-next-icon {
     right: unset;
     left: 20px;
   }
@@ -54838,7 +54931,8 @@ body [class*=dark-] .for-light {
   .rtl .float-sm-end {
     float: left !important;
   }
-  .rtl .me-sm-2, .rtl .mx-sm-2 {
+  .rtl .me-sm-2,
+  .rtl .mx-sm-2 {
     margin-left: 0.5rem !important;
     margin-right: unset !important;
   }
@@ -55787,11 +55881,6 @@ div#my-tabular-tablePeopleOfBenefits {
   padding: 0 !important;
 }
 
-app-tabulator > div {
-  position: initial !important;
-  overflow: hidden !important;
-}
-
 .btn-tabulator-secondary {
   background-color: rgba(var(--theme-secondary), 0.1);
   font-size: 12px;
@@ -55921,17 +56010,25 @@ html[dir=rtl] .show-hide {
   padding-right: 0px !important;
 }
 
-.validation.alert-danger.position-absolute.ng-star-inserted {
-  bottom: 0;
+.validation.position-absolute.ng-star-inserted {
+  bottom: -22px;
   right: 0;
-  padding: 4px;
-  height: 30px;
+  padding: 0;
+  height: -moz-max-content;
+  height: max-content;
   line-height: 21px;
   border-radius: 5px;
+  background: transparent !important;
+  color: var(--bs-danger) !important;
 }
 
 .form-control {
-  max-height: 30px !important;
+  max-height: 35px !important;
+  height: 35px;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+  height: 100% !important;
 }
 
 .input-group > .form-control,
@@ -55949,8 +56046,31 @@ input,
   border-color: #d8d8d8;
 }
 
-.modal-dialog .modal-content {
-  padding: 3rem;
+button.close span {
+  font-size: 25px;
+}
+
+button.close {
+  border: none !important;
+  background: transparent;
+}
+
+.wrapper-title h3, .wrapper-title .h3 {
+  font-size: 18px;
+  margin: 0 !important;
+  color: var(--theme-secondary);
+  font-weight: 600;
+}
+
+hr {
+  background-color: rgba(149, 145, 145, 0.7803921569);
+}
+
+label.label-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bs-gray);
+  letter-spacing: 0;
 }
 
 .ng-select .ng-select-container {
@@ -55960,13 +56080,25 @@ input,
   -moz-border-radius: 3px !important;
   -ms-border-radius: 3px !important;
   -o-border-radius: 3px !important;
-  line-height: 39px;
+  line-height: normal;
   border-color: #d8d8d8 !important;
+  margin: 0 !important;
+  align-items: center;
+  padding: 10px;
 }
 
 .form-group .ng-dropdown-panel .scroll-host > div {
   background-color: #e6e8ea;
   padding: 0;
+}
+
+.switch-state {
+  background-color: var(--bs-gray-500);
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  padding: 3px 5px;
+  border-radius: 2px;
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
@@ -55986,7 +56118,7 @@ span.ng-option-label.ng-star-inserted {
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
-  padding: 5px;
+  padding: 5px 15px;
 }
 
 .page-header.subscription {
@@ -56063,6 +56195,9 @@ html[dir=rtl] .fa-angle-right:before {
   min-height: calc(100vh - 55px) !important;
   margin-top: 55px !important;
 }
+.dashbord-page1 main {
+  margin-top: 0;
+}
 
 .sidebar-wrapper .logo-wrapper a img.img-fluid.for-light {
   width: 125px !important;
@@ -56082,12 +56217,6 @@ html[dir=rtl] .fa-angle-right:before {
   box-shadow: 0px 0px 0px 2px rgba(75, 194, 241, 0.4);
 }
 
-.ng-select.ng-select-single .ng-select-container .ng-value-container,
-.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
-  padding: 0 5px;
-  line-height: 33px;
-}
-
 span.ng-star-inserted {
   color: var(--theme-secondary) !important;
 }
@@ -56105,11 +56234,6 @@ span.ng-star-inserted {
   font-size: 1.2rem !important;
   font-weight: 600;
   color: var(--theme-secondary);
-}
-
-app-tabulator > div {
-  position: initial !important;
-  overflow: hidden !important;
 }
 
 .tabulator {
@@ -56170,27 +56294,22 @@ app-tabulator > div {
   padding: 0 !important;
 }
 
-app-tabulator > div {
-  position: initial !important;
-  overflow: visible !important;
+.search_area_on_export_setting {
+  margin-top: 1.3rem;
+  background: #fff;
+  padding: 12px;
+  box-shadow: 0px 0px 5px #c5c6cb;
+  border-radius: 2px;
 }
 
-.btn-tabulator-secondary {
-  background-color: rgba(var(--theme-secondary), 0.1);
-  font-size: 12px;
-  padding: 5px 10px;
-  font-weight: 600;
-  border: 1px solid #9a9999;
+.tabulator-row.tabulator-selected,
+.tabulator .tabulator-tableHolder .tabulator-table {
+  background-color: rgba(89, 75, 44, 0.1411764706) !important;
   transition: 0.5s all ease;
   -webkit-transition: 0.5s all ease;
   -moz-transition: 0.5s all ease;
   -ms-transition: 0.5s all ease;
   -o-transition: 0.5s all ease;
-  text-transform: capitalize !important;
-}
-.btn-tabulator-secondary:hover {
-  background: #414040;
-  border-color: #353738;
 }
 
 .tabulator-row.tabulator-selectable:hover {
@@ -56203,13 +56322,6 @@ app-tabulator > div {
   -moz-transition: 0.5s all ease;
   -ms-transition: 0.5s all ease;
   -o-transition: 0.5s all ease;
-}
-
-.tabulator-row .tabulator-cell,
-.tabulator .tabulator-header,
-.tabulator,
-.tabulator .tabulator-header .tabulator-col {
-  border: none !important;
 }
 
 .tabulator-row .tabulator-cell {
@@ -56307,7 +56419,7 @@ app-tabulator > div {
 }
 
 input.search-txt {
-  width: 90%;
+  width: 25%;
   height: 35px;
   border-radius: 3px 0 0 3px !important;
   border: 1px solid #ccc;
@@ -56322,9 +56434,28 @@ input.search-txt:focus-visible {
   outline-color: var(--theme-deafult);
 }
 
+html[dir=rtl] input.search-txt {
+  border-radius: 0 3px 3px 0 !important;
+  -webkit-border-radius: 0 3px 3px 0 !important;
+  -moz-border-radius: 0 3px 3px 0 !important;
+  -ms-border-radius: 0 3px 3px 0 !important;
+  -o-border-radius: 0 3px 3px 0 !important;
+}
+
 button.search-btn0.btn.btn-primary {
   border-radius: 0 3px 3px 0 !important;
-  padding: 17px 10px;
+  height: 35px;
+  margin-left: -2px;
+}
+
+html[dir=rtl] button.search-btn0.btn.btn-primary {
+  border-radius: 3px 0 0 3px !important;
+  margin-right: -2px;
+  margin-left: initial;
+  -webkit-border-radius: 3px 0 0 3px !important;
+  -moz-border-radius: 3px 0 0 3px !important;
+  -ms-border-radius: 3px 0 0 3px !important;
+  -o-border-radius: 3px 0 0 3px !important;
 }
 
 app-tabulator > div {
@@ -56375,7 +56506,7 @@ app-tabulator > div {
 .tabulator-row .tabulator-cell:last-of-type,
 .tabulator .tabulator-header .tabulator-col:last-of-type {
   border: none !important;
-  min-width: 140px !important;
+  min-width: 90px !important;
   width: -moz-max-content !important;
   width: max-content !important;
 }
@@ -56395,6 +56526,31 @@ app-tabulator > div {
 
 .tabulator-row.tabulator-selected {
   background-color: rgba(75, 194, 241, 0.6509803922) !important;
+}
+
+html[dir=ltr] input,
+html[dir=ltr] h1,
+html[dir=ltr] .h1,
+html[dir=ltr] h2,
+html[dir=ltr] .h2,
+html[dir=ltr] h3,
+html[dir=ltr] .h3,
+html[dir=ltr] h4,
+html[dir=ltr] .h4,
+html[dir=ltr] h5,
+html[dir=ltr] .h5,
+html[dir=ltr] h6,
+html[dir=ltr] .h6,
+html[dir=ltr] span,
+html[dir=ltr] p,
+html[dir=ltr] a {
+  font-family: "Rubik" !important;
+}
+
+.form-inline .form-group,
+.input-group,
+.form-inline {
+  width: 100% !important;
 }
 
 /**=====================

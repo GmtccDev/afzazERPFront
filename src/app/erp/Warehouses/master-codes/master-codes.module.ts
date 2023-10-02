@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import {SharedModule} from '../../../shared/shared.module'
+import { SharedModule } from '../../../shared/shared.module'
 import { MasterCodesRoutingModule } from './master-codes-routing.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -29,15 +29,18 @@ import { ItemGroupsCardComponent } from './item-groups-card/item-groups-card.com
 import { AddEditItemGroupsCardComponent } from './item-groups-card/add-edit-item-groups-card/add-edit-item-groups-card.component';
 import { CustomerCardComponent } from './customer-card/customer-card.component';
 import { AddEditCustomerCardComponent } from './customer-card/add-edit-customer-card/add-edit-customer-card.component';
+import { BillTypeComponent } from './bill-type/bill-type.component';
+import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edit-bill-type.component';
 
 
 
 @NgModule({
   declarations: [
-    PeriodComponent, AddEditPeriodComponent,UnitComponent,AddEditUnitComponent,AddEditUnitTransactionComponent,TaxComponent,AddEditTaxComponent
-    , StoreCardComponent, AddEditStoreCardComponent,PaymentMethodComponent, AddEditPaymentMethodComponent
-    ,CustomerCardComponent, AddEditCustomerCardComponent,SupplierCardComponent, AddEditSupplierCardComponent
-    ,ItemCardComponent,AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent
+    PeriodComponent, AddEditPeriodComponent, UnitComponent, AddEditUnitComponent, AddEditUnitTransactionComponent, TaxComponent, AddEditTaxComponent
+    , StoreCardComponent, AddEditStoreCardComponent, PaymentMethodComponent, AddEditPaymentMethodComponent
+    , CustomerCardComponent, AddEditCustomerCardComponent, SupplierCardComponent, AddEditSupplierCardComponent
+    , ItemCardComponent, AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent,
+    BillTypeComponent, AddEditBillTypeComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +48,7 @@ import { AddEditCustomerCardComponent } from './customer-card/add-edit-customer-
     NzButtonModule,
     NzIconModule
   ],
-  providers: [PeriodServiceProxy,DateCalculation,DatePipe,DateConverterService,NgbCalendarIslamicUmalqura 
+  providers: [PeriodServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
   ]
 })
 export class MasterCodesModule { }

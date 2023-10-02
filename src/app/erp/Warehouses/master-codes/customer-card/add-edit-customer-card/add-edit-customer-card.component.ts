@@ -149,7 +149,7 @@ export class AddEditCustomerCardComponent implements OnInit {
       id: 0,
       code: CODE_REQUIRED_VALIDATORS,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
+      nameEn: '',
       address: REQUIRED_VALIDATORS,
       isActive: true,
       phone: PHONE_VALIDATORS,
