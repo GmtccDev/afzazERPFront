@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"add-edit-role.component.css"}
+{"version":3,"sources":["add-edit-role.component.scss","add-edit-role.component.css"],"names":[],"mappings":"AAAA;EACI,8BAAA;EACA,aAAA;EACA,qBAAA;EACA,kBAAA;EACA,oCAAA;ACCJ","file":"add-edit-role.component.css"}
