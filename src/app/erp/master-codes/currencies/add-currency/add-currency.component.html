@@ -64,7 +64,7 @@
                                                 <label for="currencySymbol" class="label-name">{{'general.currencySymbol'|translate}}</label>
                                                 <input type="text" class="form-control icon-user" name="symbol" formControlName="symbol">
 
-                                              <!--  <ng-select style="width:100%" formControlName="symbol" name='symbol' class="" id="symbol">
+                                                <!--  <ng-select style="width:100%" formControlName="symbol" name='symbol' class="" id="symbol">
                                                     <ng-option *ngFor="let symbol of symbolList" [value]="symbol.value">
                                                         {{lang=="ar"?symbol.descriptionAr:symbol.descriptionEn}}
                                                     </ng-option>
@@ -83,7 +83,7 @@
 
                                         <div class="col-md-6 col-12">
                                             <div class="media">
-                                                <label class="col-form-label m-r-10">Status</label>
+                                                <label class="label-name">Status</label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
                                                         <input type="checkbox" checked=""><span
@@ -102,12 +102,12 @@
             </div>
         </div>
         <button (click)="doNewEvent()" [disabled]="id==0" class="btn btn-primary" type="button">
-			<i class="icon-plus"></i>
+            <i class="icon-plus"></i>
 
-              {{ 'currency.currency-transactions'|translate}}
+            {{ 'currency.currency-transactions'|translate}}
 
         </button>
-      
+
         <div id="ex-table-div"></div>
     </div>
 </section>

@@ -8,8 +8,7 @@
             <div class="col-md-12">
                 <div class="card mb-3 mt-3">
                     <div class="card-body">
-                        <form [formGroup]="accountClassificationForm" id="accountClassificationSubmit"
-                            class="tabs-form">
+                        <form [formGroup]="accountClassificationForm" id="accountClassificationSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
 
@@ -19,54 +18,44 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
-                                                <input type="text" class="form-control icon-branch" name="code"
-                                                    formControlName="code">
-                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}} </span>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}} </span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="nameAr" class="label-name">
-                                                {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-                                                    name="nameAr" formControlName="nameAr">
-                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="nameEn" class="label-name">
-                                                {{'general.nameEn'|translate}}
-                                            </label>
+												{{'general.nameEn'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch" name="nameEn"
-                                                    formControlName="nameEn">
-                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
+                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -74,32 +63,29 @@
 
                                         <div class="col-md-4 col-4">
                                             <label for="voucher-type" class="label-name">{{'general.type'|translate}}
-                                                <span class="text-danger">*</span></label>
+												<span class="text-danger">*</span></label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="type"
-                                                    [items]="accountClassificationsTypes" bindLabel="name"
-                                                    bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['type'].touched || f['type'].dirty ) && f['type'].invalid"
-                                                    class="alert alert-danger">
+                                                <ng-select class="custom" formControlName="type" [items]="accountClassificationsTypes" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+                                                <div *ngIf="(f['type'].touched || f['type'].dirty ) && f['type'].invalid" class="alert alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['type'].errors && f['type'].errors['required']">
-                                                        {{'validation-messages.required-field'|translate}}</span>
+														{{'validation-messages.required-field'|translate}}</span>
                                                 </div>
                                             </div>
                                         </div>
 
 
                                         <hr class="mt-3 mb-3 p-0">
-                                        <div class="col-12 col-md-6">
+                                        <div class="align-items-end col-12 col-md-6 d-flex">
                                             <div class="media">
-                                                <label class="col-form-label m-r-10"> {{'general.status'|translate}}
-                                                </label>
+                                                <label class="label-name"> {{'general.status'|translate}}
+												</label>
                                                 <div class="icon-state media-body mx-5">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
                                                 </div>
                                             </div>
                                         </div>

@@ -88,7 +88,11 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 	@Input() decreaseHeight: string = '350';
 	height: string = "100%"
 
-	customStyle: string = `padding-left: 5px; padding-top: 0px;height: calc(100vh - ${this.decreaseHeight}px);display: block;position: absolute;`;
+	// customStyle: string = `padding-left: 5px; padding-top: 0px;
+	// height: calc(100vh - ${this.decreaseHeight}px);
+	// display: block;position: absolute;`;
+	customStyle: string = `padding-left: 5px; padding-top: 0px;
+	display: block;position: absolute;`;
 
 
 	@Input() columnSettings: any[] = [];
@@ -234,13 +238,15 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (this.isModal) {
-			this.tabulatorStyle = "width: 100%;height: 500px;position: absolute;overflow-x: scroll; overflow-y: hidden; backgroud-color:white"
-			this.customStyle = `padding-left: 5px; padding-top: 0px;height: calc(100vh - ${this.decreaseHeight}px);display: block;position: absolute;width:900px; background-color:white;`;
+			// this.tabulatorStyle = "width: 100%;height: 500px;position: absolute;overflow-x: scroll; overflow-y: hidden; backgroud-color:white"
+			// this.customStyle = `padding-left: 5px; padding-top: 0px;height: calc(100vh - ${this.decreaseHeight}px);display: block;position: absolute;width:900px; background-color:white;`;
+			this.tabulatorStyle = "width: 100%;height: auto;position: absolute;overflow-x: scroll; overflow-y: hidden; backgroud-color:white"
+			this.customStyle = `padding-left: 5px; padding-top: 0px;display: block;position: absolute;width:900px; background-color:white;`;
 
 		} else {
 
-			this.customStyle = `padding-left: 5px; padding-top: 0px;height: calc(100vh - ${this.decreaseHeight}px);display: block;position: absolute;`;
-			this.tabulatorStyle = "width: 100%;height: 500px;position: absolute;overflow-x: scroll; overflow-y: hidden; backgroud-color:white"
+			this.customStyle = `padding-left: 5px; padding-top: 0px;display: block;position: absolute;`;
+			this.tabulatorStyle = "width: 100%;height:auto;position: absolute;overflow-x: scroll; overflow-y: hidden; backgroud-color:white"
 		}
 
 		if (changes["searchFilters"]) {

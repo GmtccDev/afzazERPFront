@@ -525,9 +525,9 @@
                 }
                 .profile-dropdown {
                     width: 200px;
-                        top: 45px;
-                        left: -px;
-                        padding: 0 10px;
+                    top: 45px;
+                    left: -px;
+                    padding: 0 10px;
                     li {
                         padding: 10px !important;
                         &:hover {
@@ -563,11 +563,15 @@
             }
         }
     }
+    main {
+        margin-top: #{$header-size};
+    }
     .page-body-wrapper {
         background-color: $body-color;
         .page-body {
-            min-height: calc(100vh - #{$header-size});
-            margin-top: $header-size;
+            min-height: calc(100vh - 55px);
+            // min-height: calc(100vh);
+            // margin-top: $header-size;
             padding: $page-body-padding;
             position: relative;
             transition: 0.5s;

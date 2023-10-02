@@ -15,30 +15,26 @@
 
 
                             <div class="modal-header">
-                                <h4 class="modal-title">{{ 'currency.currency-transactions'|translate}}</h4>
+                                <h4 class="modal-title text-capitalize">{{ 'currency.currency-transactions'|translate}}</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row ">
 
 
                                     <div class="col-12 col-md-6">
-                                        <label for="transactionDate"
-                                            class="label-name">{{'currency.transaction-date'|translate}}</label>
+                                        <label for="transactionDate" class="label-name">{{'currency.transaction-date'|translate}}</label>
                                         <div class="form-group position-relative">
 
-                                            <input type="date" class="form-control icon-currency" name="transactionDate"
-                                                formControlName="transactionDate">
+                                            <input type="date" class="form-control icon-currency" name="transactionDate" formControlName="transactionDate">
 
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-12">
-                                        <label for="transactionFactor"
-                                            class="label-name">{{'currency.transaction-factor'|translate}}</label>
+                                        <label for="transactionFactor" class="label-name">{{'currency.transaction-factor'|translate}}</label>
                                         <div class="form-group position-relative">
 
-                                            <input type="number" class="form-control icon-currency"
-                                                name="transactionFactor" formControlName="transactionFactor">
+                                            <input type="number" class="form-control icon-currency" name="transactionFactor" formControlName="transactionFactor">
 
 
                                         </div>
@@ -51,8 +47,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="input-group  popup">
-                                            <ng-select style="width:100%" formControlName="currencyDetailId"
-                                                name='currencyDetailId' class="" id="currencyDetailId">
+                                            <ng-select style="width:100%" formControlName="currencyDetailId" name='currencyDetailId' class="" id="currencyDetailId">
                                                 <ng-option *ngFor="let curreny of currenciesList" [value]="curreny.id">
                                                     {{lang=="ar"?curreny.nameAr:curreny.nameEn}}
                                                 </ng-option>

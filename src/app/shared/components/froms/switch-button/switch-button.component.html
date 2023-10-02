@@ -1,13 +1,13 @@
 <div class="col-md-6 col-12">
-	<div class="media">
-		<label [for]="inputId" class="col-form-label m-r-10"> {{labelName|translate}}
+    <div class="media">
+        <label [for]="inputId" class="label-name"> {{labelName|translate}}
 		</label>
-		<div class="media-body text-end icon-state">
-			<label class="switch">
-				<input type="{{type}}"  [checked]="formControlValue" [formControl]="control"  [id]="inputId" name="{{inputName}}"  class="form-control"
-					>
+        <div class="media-body text-end icon-state">
+            <label class="switch">
+				<input type="{{type}}" [checked]="formControlValue" [formControl]="control" [id]="inputId"
+					name="{{inputName}}" class="form-control">
 				<span class="switch-state"></span>
 			</label>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
