@@ -2,12 +2,14 @@
 import { IPagedListMetaData } from '../../../shared/interfaces/paged-list-meta-data';
 export class PeriodDto {
     id: number;
-    nameAr: string | undefined;
+    companyId: number;
+    branchId: number;
+    nameAr: string;
     nameEn: string | undefined;
-    code: string | undefined;
+    code: string;
     isActive: boolean | undefined;
-    fromDate: any | undefined;
-    toDate: any | undefined;
+    fromDate: any;
+    toDate: any;
    
 }
 export class CreatePeriodCommand {

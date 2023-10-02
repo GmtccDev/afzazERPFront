@@ -22,6 +22,8 @@ import { DateCalculation } from '../../../../../shared/services/date-services/da
 export class AddEditPeriodComponent implements OnInit {
   //#region Main Declarations
   periodForm!: FormGroup;
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
   fromDate!: DateModel;
@@ -133,8 +135,10 @@ export class AddEditPeriodComponent implements OnInit {
   definePeriodForm() {
     this.periodForm = this.fb.group({
       id: 0,
+      companyId: this.companyId,
+      branchId: this.branchId,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
-      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
+      nameEn: '',
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       fromDate: REQUIRED_VALIDATORS,
@@ -159,6 +163,8 @@ export class AddEditPeriodComponent implements OnInit {
           resolve();
           this.periodForm.setValue({
             id: res.response?.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,

@@ -578,6 +578,8 @@
         "add-bill-type": "Add Bill Type",
         "update-bill-type": "Update Bill Type",
         "basic-properties":"Basic Properties",
-        "warehouse-effect":"Warehouse Effect"
+        "affect-on-cost-price":"Affect On Cost Price",
+        "accounting-effect":"Accounting Effect",
+        "post-to-accounts-automatically":"Posting to the accounts automatically"
     }
 }

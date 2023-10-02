@@ -2,6 +2,8 @@
 import { IPagedListMetaData } from '../../../shared/interfaces/paged-list-meta-data';
 export class PaymentMethodDto {
     id: number;
+    companyId: number;
+    branchId: number;
     nameAr: string;
     nameEn: string;
     code: string;

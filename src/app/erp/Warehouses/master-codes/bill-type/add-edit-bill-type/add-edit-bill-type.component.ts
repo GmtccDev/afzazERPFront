@@ -31,6 +31,7 @@ export class AddEditBillTypeComponent implements OnInit {
   billTypeForm!: FormGroup;
   billKinds: ICustomEnum[] = [];
   warehouseEffectList: { nameAr: string; nameEn: string; value: string; }[];
+  accountingEffectList: { nameAr: string; nameEn: string; value: string; }[];
 
   journalList: any;
   id: any = 0;
@@ -84,6 +85,8 @@ export class AddEditBillTypeComponent implements OnInit {
   ngOnInit(): void {
     this.getBillKind();
     this.getWarehouseEffect();
+    this.getAccountingEffect();
+
 
     this.spinner.show();
     Promise.all([
@@ -290,6 +293,14 @@ export class AddEditBillTypeComponent implements OnInit {
       { nameAr: ' ليس لها تأثير مستودعى', nameEn: 'It has no warehouse effect', value: '1' },
       { nameAr: 'لا ترحل إلى المستودع تلقائياً', nameEn: 'No post to the warehouses automatically', value: '2' },
       { nameAr: 'ترحل إلى المستودعات تلقائياً', nameEn: 'Post to the warehouses automatically', value: '3' }
+
+    ];
+  }
+  getAccountingEffect() {
+    this.accountingEffectList = [
+      { nameAr: 'لا تولد سند قيد', nameEn: 'No generate entry', value: '1' },
+      { nameAr: 'لا تولد سند قيد تلقائي', nameEn: 'No generate entry automatically', value: '2' },
+      { nameAr: ' تولد سند قيد تلقائي', nameEn: 'Generate entry automatically', value: '3' },
 
     ];
   }

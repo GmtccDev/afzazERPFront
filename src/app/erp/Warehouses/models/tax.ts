@@ -1,5 +1,7 @@
 export class TaxMaster {
     id: number;
+    companyId: number;
+    branchId: number;
     code: string;
     nameAr: string;
     nameEn: string | undefined;
