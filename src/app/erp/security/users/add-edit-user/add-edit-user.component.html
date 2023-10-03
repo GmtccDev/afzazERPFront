@@ -95,15 +95,15 @@
                                             </div>
                                         </div> -->
                                         <div class="col-12 col-md-6">
-                                            <label for="phoneNumber" class="label-name">{{'user-manager.user-mobile'|translate}}</label>
+                                            <label for="phoneNumber" class="label-name">{{'user-manager.user-mobile'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-user" name="phoneNumber" formControlName="phoneNumber">
-                                                <!-- <div *ngIf="(f['phoneNumber'].touched || f['phoneNumber'].dirty ) && f['phoneNumber'].invalid" class="validation alert-danger position-absolute">
+                                                <div *ngIf="(f['phoneNumber'].touched || f['phoneNumber'].dirty ) && f['phoneNumber'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['phoneNumber'].errors && f['phoneNumber'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
-                                                </div> -->
+                                                </div>
 
                                             </div>
                                         </div>
@@ -149,7 +149,7 @@
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" [multiple]="true" formControlName="branches" (change)="onChangeBranch($event)" name='branches' class="" id="branches">
                                                     <ng-option *ngFor="let branch of branchesList" [value]="branch.id">
-                                                        {{lang=="ar"?branch.nameAr:branch.nameEn}}
+                                                        {{lang=="ar"?branch.companyNameAr:branch.companyNameEn}} -    {{lang=="ar"?branch.nameAr:branch.nameEn}} 
                                                     </ng-option>
                                                 </ng-select>
 
