@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import * as feather from 'feather-icons';
 import { LayoutService } from '../../../services/layout.service';
 import { NavService } from '../../../services/nav.service';
 import { fadeInAnimation } from '../../../data/router-animation/router-animation';
@@ -8,6 +7,8 @@ import { DOCUMENT } from '@angular/common';
 import * as chartData from '../../../../shared/data/dashboard/default'
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
+import { Subscription } from 'rxjs';
+import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -35,32 +36,46 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   model: NgbDateStruct;
   disabled = true;
+  subsList: Subscription[] = [];
 
   constructor(private route: ActivatedRoute, public navServices: NavService, calendar: NgbCalendar,
     private voucherTypeService: VoucherTypeServiceProxy,
+    private billTypeService: BillTypeServiceProxy,
+
     @Inject(DOCUMENT) private document: any,
     public layout: LayoutService) {
-     this.getVoucherTypes();
-      this.model = calendar.getToday();
-      this.elem = document.documentElement;
-      this.route.queryParams.subscribe((params) => {
-        this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
-      })
+    this.getVoucherTypes();
+    this.getBillTypes();
+
+    this.model = calendar.getToday();
+    this.elem = document.documentElement;
+    this.route.queryParams.subscribe((params) => {
+      this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
+    })
   }
+  //#region ngOnDestroy
+  ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  //#endregion
   startTime() {
     this.currentHour = this.currentHour % 12;
     this.currentHour = this.currentHour ? this.currentHour : 12;
     this.m = this.checkTime(this.m);
     this.time = this.currentHour + ":" + this.m + ' ' + this.ampm;
   }
-  
+
   checkTime(i) {
     if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
     return i;
   }
   ngAfterViewInit() {
     setTimeout(() => {
-     // feather.replace();
+      // feather.replace();
     });
   }
 
@@ -69,7 +84,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   get layoutClass() {
-    switch(this.layout.config.settings.layout){
+    switch (this.layout.config.settings.layout) {
       case "Dubai":
         return "compact-wrapper"
       case "London":
@@ -96,7 +111,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         return this.navServices.horizontal ? "horizontal-wrapper enterprice-type advance-layout" : "compact-wrapper enterprice-type advance-layout"
     }
   }
-  
+
   ngOnInit() {
     if (this.currentHour >= 0 && this.currentHour < 4) {
       this.greeting = 'Good Night'
@@ -109,13 +124,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
     this.startTime();
     document.getElementById('knob').append(this.knob);
-    document.getElementById('knob-right').append(this.knobRight); 
+    document.getElementById('knob-right').append(this.knobRight);
   }
 
 
   sidebarToggle() {
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
-    this.navServices.megaMenu  = false;
+    this.navServices.megaMenu = false;
     this.navServices.levelMenu = false;
   }
 
@@ -169,15 +184,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           console.log(res);
           if (res.success) {
             res.response.items.forEach(element => {
-              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/'+element.id, title:  this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
-              { queryParams: { voucherTypeId: element.id } }
+              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+                { queryParams: { voucherTypeId: element.id } }
               )
-             // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
-             this.navServices.voucherTypes.filter((value, index, self) => {
-              return index === self.findIndex(obj => (
-                obj.path === value.path && obj.title === value.title
-              ));
-            });
+              // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
+              this.navServices.voucherTypes.filter((value, index, self) => {
+                return index === self.findIndex(obj => (
+                  obj.path === value.path && obj.title === value.title
+                ));
+              });
             });
           }
           resolve();
@@ -190,7 +205,39 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         },
       });
 
-      //	this.subsList.push(sub);
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getBillTypes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.success) {
+            res.response.items.forEach(element => {
+              this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+                { queryParams: { billTypeId: element.id } }
+              )
+              this.navServices.billTypes.filter((value, index, self) => {
+                return index === self.findIndex(obj => (
+                  obj.path === value.path && obj.title === value.title
+                ));
+              });
+            });
+          }
+          resolve();
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
 
     });
 
