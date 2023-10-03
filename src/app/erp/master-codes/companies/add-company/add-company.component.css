@@ -1,1 +1,21 @@
-/*# sourceMappingURL=add-company.component.css.map */
+.img-company {
+  padding: 10px;
+  border: 2px dashed #ccc;
+  margin: 10px 0;
+  height: auto;
+}
+
+.upload-img {
+  height: 55px;
+  padding: 10px;
+  border: 2px dashed var(--bs-gray-500);
+  margin: 5px 0;
+}
+
+.align-items-center.d-flex.gap-3.justify-content-center.position-absolute.w-100 {
+  right: auto;
+  left: 0;
+}
+.align-items-center.d-flex.gap-3.justify-content-center.position-absolute.w-100 img {
+  width: 45px;
+}/*# sourceMappingURL=add-company.component.css.map */

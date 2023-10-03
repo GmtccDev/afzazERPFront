@@ -5,11 +5,12 @@ import { Router } from "@angular/router";
     providedIn: 'root'
 })
 export class UserService {
+    language: string;
     constructor(
         private router: Router
     ) { }
     getCurrentSystemLanguage(): string {
-      
+      debugger
         let language = localStorage.getItem('language');
         if (language) return language;
         else {
@@ -19,6 +20,15 @@ export class UserService {
     }
     setLanguage(language: string) {
         localStorage.setItem('language', language)
+        
+    }
+    getCurrentLanguage(): string {
+      
+       return this.language;
+    }
+    setCurrentLanguage(language: string) {
+      this.language=language;
+        
     }
     isLoggedIn(): boolean {
         
@@ -49,7 +59,7 @@ export class UserService {
     logout() {
         this.removeToken();
         this.removeRefreshToken();
-        localStorage.clear();
+      //  localStorage.clear();
         this.router.navigate(['/authentication/login'])
     }
   

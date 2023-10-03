@@ -5,6 +5,12 @@
     "createSuccessfully": "Created",
     "editSuccessfully": "Edited Successfully",
     "deleteSuccessfully": "Deleted Successfully",
+    "SameCodeExistsBefore":"Code Exist Before",
+    "emailNumberFoundBefore":"Email Exist Before",
+    "userNameFoundBefore":"User Name Exist Before",
+    "phoneNumberFoundBefore":"Phone Exist Before",
+    "can't-delete-some-records":"can't delete some records",
+    "can't-delete-record":"can't delete record",
     "general": {
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
@@ -337,6 +343,8 @@
     },
     "component-names": {
         "country-information": "Country information",
+        "modulesType": "Modules Type",
+        "search-roles": "filter permissions",
         "currency-information": "Currency Information",
         "business-information": "Buisness Information",
         "role-information": "Role Information",

@@ -5,6 +5,12 @@
     "createSuccessfully": "تم الاضافة",
     "editSuccessfully": "تم التعديل بنجاح",
     "deleteSuccessfully": "تم الحذف بنجاح",
+    "SameCodeExistsBefore":"الكود معرف سابقا",
+    "emailNumberFoundBefore":"الميل معرف سابقا",
+    "userNameFoundBefore":"الاسم معرف سابقا",
+    "phoneNumberFoundBefore":"الموبايل معرف سابقا",
+    "can't-delete-some-records":"لايمكن حذف بعض السجلات",
+    "can't-delete-record":"لا يمكن حذف السجل",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"
@@ -188,6 +194,8 @@
     },
     "component-names": {
         "country-information": "معلومات الدولة",
+        "modulesType": "حدد البرنامج",
+        "search-roles": "فلتر الصلاحيات",
         "business-information": "معلومات الانشطة",
         "currency-information": "بيانات العملة ",
         "role-information": "معلومات وظيفة المستخدم",

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
@@ -152,7 +152,7 @@ export class AddEditUserComponent implements OnInit {
       fullName: NAME_REQUIRED_VALIDATORS,
       email: EMAIL_VALIDATORS,
       //passWord:new FormControl(''),
-      phoneNumber: null,
+      phoneNumber:PHONE_VALIDATORS,
       roles: '',
       companies: undefined,
       branches: undefined

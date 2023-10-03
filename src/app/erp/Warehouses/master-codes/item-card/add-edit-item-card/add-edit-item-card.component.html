@@ -17,7 +17,7 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control"
                                                     [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
@@ -25,8 +25,7 @@
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}} </span>
                                                 </div>
 
@@ -34,7 +33,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="barcode" class="label-name">
-                                                {{'general.barcode'|translate}}</label>
+												{{'general.barcode'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control" name="barcode"
                                                     formControlName="barcode">
@@ -42,7 +41,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="nameAr" class="label-name">
-                                                {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control "
@@ -51,8 +50,7 @@
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
 
@@ -60,7 +58,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="nameEn" class="label-name">
-                                                {{'general.nameEn'|translate}}</label>
+												{{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control " name="nameEn"
@@ -69,9 +67,9 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="itemGroupId" class="label-name">
-                                                {{'item.item-group'|translate}}
+												{{'item.item-group'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="itemGroupId"
                                                     name='itemGroupId' class="" id="itemGroupId">
@@ -83,9 +81,7 @@
                                                 <div *ngIf="(f['itemGroupId'].touched || f['itemGroupId'].dirty ) && f['itemGroupId'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['itemGroupId'].errors && f['itemGroupId'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
+                                                    <span *ngIf="f['itemGroupId'].errors && f['itemGroupId'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
 
@@ -95,7 +91,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="item-type" class="label-name">{{'item.item-type'|translate}}
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="itemType"
                                                     [items]="itemTypeEnum" bindLabel="name" bindValue="id"
@@ -105,8 +101,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-6">
-                                            <label for="cost-calculate-method"
-                                                class="label-name">{{'item.cost-calculate-method'|translate}}
+                                            <label for="cost-calculate-method" class="label-name">{{'item.cost-calculate-method'|translate}}
                                             </label>
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="costCalculateMethod"
@@ -118,40 +113,38 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="notes" class="label-name">
-                                                {{'general.notes'|translate}}</label>
+												{{'general.notes'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <textarea style="width: 100%;" maxLength="500" formControlName="notes"
                                                     name='notes'></textarea>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-6 ">
-                                            <label for=""> {{'general.image'|translate}}</label>
+                                            <label for="" class="label-name"> {{'general.image'|translate}}</label>
                                             <img *ngIf="imagePath" width="150" height="150" [src]="imagePath">
-                                            <input class="form-control " (change)="onFileChange($event)" id=""
-                                                type="file">
+                                            <input class="form-control " (change)="onFileChange($event)" id="" type="file">
 
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="media">
                                                 <label class="label-name"> {{'general.status'|translate}}
-                                                </label>
-                                                <div class="icon-state media-body mx-5">
+												</label>
+                                                <div class="icon-state media-body">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
+                                        <nav ngbNav #nav="ngbNav" class="nav-tabs m-0">
                                             <li [ngbNavItem]="1">
                                                 <a ngbNavLink>{{'item.general-information'|translate}}</a>
                                                 <ng-template ngbNavContent>
                                                     <div class="row">
                                                         <div class="col-4 col-md-4">
-                                                            <label for="model"
-                                                                class="label-name">{{'item.model'|translate}}
+                                                            <label for="model" class="label-name">{{'item.model'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="text" class="form-control" name="model"
@@ -159,8 +152,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="manufacturer"
-                                                                class="label-name">{{'item.manufacturer'|translate}}
+                                                            <label for="manufacturer" class="label-name">{{'item.manufacturer'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="text" class="form-control"
@@ -168,8 +160,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="maxLimit"
-                                                                class="label-name">{{'item.maximum'|translate}}
+                                                            <label for="maxLimit" class="label-name">{{'item.maximum'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -177,8 +168,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="minLimit"
-                                                                class="label-name">{{'item.minimum'|translate}}
+                                                            <label for="minLimit" class="label-name">{{'item.minimum'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -186,8 +176,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="reorderLimit"
-                                                                class="label-name">{{'item.reorder-limit'|translate}}
+                                                            <label for="reorderLimit" class="label-name">{{'item.reorder-limit'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -195,8 +184,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="description"
-                                                                class="label-name">{{'general.description'|translate}}
+                                                            <label for="description" class="label-name">{{'general.description'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <textarea style="width: 100%;"
@@ -214,9 +202,9 @@
                                                     <div class="row">
                                                         <div class="col-4 col-md-4">
                                                             <label for="mainUnitId" class="label-name">
-                                                                {{'item.main-unit'|translate}}
+																{{'item.main-unit'|translate}}
 
-                                                            </label>
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="mainUnitId" name='mainUnitId'
@@ -233,8 +221,7 @@
 
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="sellingPrice"
-                                                                class="label-name">{{'item.selling-price'|translate}}
+                                                            <label for="sellingPrice" class="label-name">{{'item.selling-price'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -242,8 +229,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="consumerPrice"
-                                                                class="label-name">{{'item.consumer-price'|translate}}
+                                                            <label for="consumerPrice" class="label-name">{{'item.consumer-price'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -252,8 +238,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="minSellingPrice"
-                                                                class="label-name">{{'item.min-selling-price'|translate}}
+                                                            <label for="minSellingPrice" class="label-name">{{'item.min-selling-price'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -262,8 +247,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="openingCostPrice"
-                                                                class="label-name">{{'item.opening-cost-price'|translate}}
+                                                            <label for="openingCostPrice" class="label-name">{{'item.opening-cost-price'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -399,21 +383,19 @@
                                                 <ng-template ngbNavContent>
                                                     <div class="row">
                                                         <div class="col-4 col-md-4">
-                                                            <label for="hasExpiredDate"
-                                                                class="label-name">{{'item.has-expired-date'|translate}}
+                                                            <label for="hasExpiredDate" class="label-name">{{'item.has-expired-date'|translate}}
                                                             </label>
                                                             <div class="icon-state media-body mx-5">
                                                                 <label class="switch">
-                                                                    <input type="checkbox" class="form-control"
-                                                                        formControlName="hasExpiredDate"
-                                                                        name="hasExpiredDate">
-                                                                    <span class="switch-state"></span>
-                                                                </label>
+																	<input type="checkbox" class="form-control"
+																		formControlName="hasExpiredDate"
+																		name="hasExpiredDate">
+																	<span class="switch-state"></span>
+																</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="lifeTime"
-                                                                class="label-name">{{'item.life-time'|translate}}
+                                                            <label for="lifeTime" class="label-name">{{'item.life-time'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -421,8 +403,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="lifeTimeType"
-                                                                class="label-name">{{'item.life-time-type'|translate}}
+                                                            <label for="lifeTimeType" class="label-name">{{'item.life-time-type'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <ng-select class="custom" formControlName="lifeTimeType"
@@ -433,21 +414,19 @@
                                                         </div>
 
                                                         <div class="col-4 col-md-4">
-                                                            <label for="hasSerialNumber"
-                                                                class="label-name">{{'item.has-serial-number'|translate}}
+                                                            <label for="hasSerialNumber" class="label-name">{{'item.has-serial-number'|translate}}
                                                             </label>
                                                             <div class="icon-state media-body mx-5">
                                                                 <label class="switch">
-                                                                    <input type="checkbox" class="form-control"
-                                                                        formControlName="hasSerialNumber"
-                                                                        name="hasSerialNumber">
-                                                                    <span class="switch-state"></span>
-                                                                </label>
+																	<input type="checkbox" class="form-control"
+																		formControlName="hasSerialNumber"
+																		name="hasSerialNumber">
+																	<span class="switch-state"></span>
+																</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-4">
-                                                            <label for="quantity"
-                                                                class="label-name">{{'general.quantity'|translate}}
+                                                            <label for="quantity" class="label-name">{{'general.quantity'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -455,8 +434,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-2">
-                                                            <label for="warrantyPeriod"
-                                                                class="label-name">{{'item.warranty-period'|translate}}
+                                                            <label for="warrantyPeriod" class="label-name">{{'item.warranty-period'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -465,8 +443,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-4 col-md-2">
-                                                            <label for="warranty-type"
-                                                                class="label-name">{{'item.warranty-type'|translate}}
+                                                            <label for="warranty-type" class="label-name">{{'item.warranty-type'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <ng-select class="custom" formControlName="warrantyType"
@@ -476,8 +453,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-3 col-md-3">
-                                                            <label for="item-kind"
-                                                                class="label-name">{{'item.item-kind'|translate}}
+                                                            <label for="item-kind" class="label-name">{{'item.item-kind'|translate}}
                                                             </label>
                                                             <ul class="list-group">
                                                                 <li class="list-group-item"
@@ -490,8 +466,7 @@
                                                             </ul>
                                                         </div>
                                                         <div class="col-3 col-md-3">
-                                                            <label for="heightFactor"
-                                                                class="label-name">{{'item.height-factor'|translate}}
+                                                            <label for="heightFactor" class="label-name">{{'item.height-factor'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -499,8 +474,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-3 col-md-3">
-                                                            <label for="widthFactor"
-                                                                class="label-name">{{'item.width-factor'|translate}}
+                                                            <label for="widthFactor" class="label-name">{{'item.width-factor'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -508,8 +482,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-3 col-md-3">
-                                                            <label for="lengthFactor"
-                                                                class="label-name">{{'item.length-factor'|translate}}
+                                                            <label for="lengthFactor" class="label-name">{{'item.length-factor'|translate}}
                                                             </label>
                                                             <div class="input-group  popup">
                                                                 <input type="number" class="form-control"
@@ -631,8 +604,8 @@
                                                     <div class="row">
                                                         <div class="col-md-4 col-4">
                                                             <label for="salesAccountId" class="label-name">
-                                                                {{'general.sales-account'|translate}}
-                                                            </label>
+																{{'general.sales-account'|translate}}
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="salesAccountId"
@@ -650,8 +623,8 @@
                                                         </div>
                                                         <div class="col-md-4 col-4">
                                                             <label for="salesReturnsAccountId" class="label-name">
-                                                                {{'general.sales-return-account'|translate}}
-                                                            </label>
+																{{'general.sales-return-account'|translate}}
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="salesReturnsAccountId"
@@ -671,8 +644,8 @@
                                                         </div>
                                                         <div class="col-md-4 col-4">
                                                             <label for="purchasesAccountId" class="label-name">
-                                                                {{'general.purchases-account'|translate}}
-                                                            </label>
+																{{'general.purchases-account'|translate}}
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="purchasesAccountId"
@@ -690,8 +663,8 @@
                                                         </div>
                                                         <div class="col-md-4 col-4">
                                                             <label for="purchasesReturnsAccountId" class="label-name">
-                                                                {{'general.purchases-return-account'|translate}}
-                                                            </label>
+																{{'general.purchases-return-account'|translate}}
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="purchasesReturnsAccountId"
@@ -711,8 +684,8 @@
                                                         </div>
                                                         <div class="col-md-4 col-4">
                                                             <label for="salesCostAccountId" class="label-name">
-                                                                {{'general.sales-cost-account'|translate}}
-                                                            </label>
+																{{'general.sales-cost-account'|translate}}
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="salesCostAccountId"
@@ -732,8 +705,8 @@
                                                         </div>
                                                         <div class="col-md-4 col-4">
                                                             <label for="inventoryAccountId" class="label-name">
-                                                                {{'general.inventory-account'|translate}}
-                                                            </label>
+																{{'general.inventory-account'|translate}}
+															</label>
                                                             <div class="input-group  popup">
                                                                 <ng-select style="width:100%"
                                                                     formControlName="inventoryAccountId"

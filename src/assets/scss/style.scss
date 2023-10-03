@@ -659,6 +659,7 @@ html[dir=rtl] {
     h5,
     h6,
     span,
+    input,
     a {
         font-family: "Almarai", sans-serif !important;
     }
@@ -1069,4 +1070,57 @@ html[dir=ltr] {
 .input-group,
 .form-inline {
     width: 100% !important;
+}
+
+.modal-title {
+    font-size: 1.2rem;
+}
+
+@media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+        max-width: 500px;
+    }
+}
+
+html[dir=rtl] .validation.position-absolute.ng-star-inserted {
+    left: 0;
+    right: initial !important;
+}
+
+.tabulator-col-title {
+    text-transform: capitalize;
+}
+
+html[dir=ltr] .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-header-menu-button {
+    float: right;
+}
+
+.b-b-secondary {
+    border-bottom: 1px solid #47484f36 !important;
+}
+
+.check-item {
+    padding: 3px 0;
+}
+
+.nav-tabs .nav-link {
+    background-color: rgba(var(--theme-secondary), 0.1);
+    font-weight: 600;
+    letter-spacing: 0;
+    &.active,
+    .nav-tabs .nav-item.show .nav-link {
+        border-color: #c1c9d2 #c1c9d2 #fff !important;
+    }
+}
+
+.tab-content {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-top: -1px;
+}
+
+.nav-tabs .nav-link:hover {
+    background: var(--theme-deafult);
+    color: var(--theme-secondary);
 }

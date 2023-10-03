@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"add-company.component.css"}
+{"version":3,"sources":["add-company.component.scss","add-company.component.css"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,uBAAA;EACA,cAAA;EACA,YAAA;ACCJ;;ADEA;EACI,YAAA;EACA,aAAA;EACA,qCAAA;EACA,aAAA;ACCJ;;ADEA;EACI,WAAA;EACA,OAAA;ACCJ;ADAI;EACI,WAAA;ACER","file":"add-company.component.css"}

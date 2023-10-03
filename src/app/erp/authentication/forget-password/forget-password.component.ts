@@ -68,7 +68,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   }
   logout() {
-    this.userService.logout();
+    this.router.navigate(['/authentication/login'])
   }
   isLoggedIn() {
     return this.userService.isLoggedIn();
