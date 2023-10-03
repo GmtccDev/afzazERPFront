@@ -326,7 +326,7 @@ export class AddEditCustomerCardComponent implements OnInit {
     var inputDto = new CustomerCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.customerCardForm.value;
-      this.customerCardService.createCustomerCard(inputDto).subscribe({
+      let sub = this.customerCardService.createCustomerCard(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineCustomerCardForm();
@@ -341,6 +341,8 @@ export class AddEditCustomerCardComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   onSave() {

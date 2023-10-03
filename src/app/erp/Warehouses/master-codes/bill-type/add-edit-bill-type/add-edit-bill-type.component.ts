@@ -14,12 +14,13 @@ import { NotificationsAlertsService } from '../../../../../shared/common-service
 import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import {
- 
+
   BillKindArEnum,
   BillKindEnum,
   convertEnumToArray,
 
 } from '../../../../../shared/constants/enumrators/enums';
+import { navigateUrl } from 'src/app/shared/helper/helper-url';
 
 @Component({
   selector: 'app-add-edit-bill-type',
@@ -33,7 +34,6 @@ export class AddEditBillTypeComponent implements OnInit {
   warehouseEffectList: { nameAr: string; nameEn: string; value: string; }[];
   accountingEffectList: { nameAr: string; nameEn: string; value: string; }[];
   codingPolicyList: { nameAr: string; nameEn: string; value: string; }[];
-
   id: any = 0;
   routeCurrencyApi = 'Currency/get-ddl?'
   currenciesList: any;
@@ -77,7 +77,7 @@ export class AddEditBillTypeComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  
+
 
 
 
@@ -111,9 +111,9 @@ export class AddEditBillTypeComponent implements OnInit {
       this.getStores(),
       this.getCostCenters(),
       this.getPaymentMethods(),
-      this.getVendors(),
-      this.getProjects(),
-      this.getPrices()
+      // this.getVendors(),
+      // this.getProjects(),
+      // this.getPrices()
 
 
 
@@ -165,7 +165,7 @@ export class AddEditBillTypeComponent implements OnInit {
       id: 0,
       companyId: this.companyId,
       branchId: this.branchId,
-      billKind:'',
+      billKind: REQUIRED_VALIDATORS,
       billNameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(250)])],
       billNameEn: '',
       warehouseEffect: REQUIRED_VALIDATORS,
@@ -230,15 +230,16 @@ export class AddEditBillTypeComponent implements OnInit {
   }
 
   getBillTypeById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.billTypeService.getBillType(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.getBillType(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           this.billTypeForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
             branchId: res.response?.branchId,
-            billKind:res.response?.billKind,
+            billKind: res.response?.billKind,
             billNameAr: res.response?.billNameAr,
             billNameEn: res.response?.billNameEn,
             warehouseEffect: res.response?.warehouseEffect,
@@ -253,15 +254,15 @@ export class AddEditBillTypeComponent implements OnInit {
             calculatingTaxOnPriceAfterDeductionAndAddition: res.response?.calculatingTaxOnPriceAfterDeductionAndAddition,
             discountAffectsCostPrice: res.response?.discountAffectsCostPrice,
             additionAffectsCostPrice: res.response?.additionAffectsCostPrice,
-            defaultCurrencyId:res.response?.defaultCurrencyId,
+            defaultCurrencyId: res.response?.defaultCurrencyId,
             defaultUnitId: res.response?.defaultUnitId,
-            storeId:res.response?.storeId,
+            storeId: res.response?.storeId,
             costCenterId: res.response?.costCenterId,
             paymentMethodId: res.response?.paymentMethodId,
             vendorId: res.response?.vendorId,
             projectId: res.response?.projectId,
-            defaultPrice:res.response?.defaultPrice,
-            printImmediatelyAfterAddition:res.response?.printImmediatelyAfterAddition,
+            defaultPrice: res.response?.defaultPrice,
+            printImmediatelyAfterAddition: res.response?.printImmediatelyAfterAddition,
             printExpiryDates: res.response?.printExpiryDates,
             printItemsSpecifiers: res.response?.printItemsSpecifiers,
             printItemsImages: res.response?.printItemsImages
@@ -269,8 +270,9 @@ export class AddEditBillTypeComponent implements OnInit {
 
 
           });
+        
 
-         
+
         },
         error: (err: any) => {
           reject(err);
@@ -279,12 +281,13 @@ export class AddEditBillTypeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
-    return promise;
   }
 
-  
- 
+
+
   getBillKind() {
     if (this.lang == 'en') {
       this.billKinds = convertEnumToArray(BillKindEnum);
@@ -511,7 +514,7 @@ export class AddEditBillTypeComponent implements OnInit {
     });
 
   }
- 
+
   //#endregion
 
   //#region Helper Functions
@@ -556,19 +559,12 @@ export class AddEditBillTypeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.billTypeForm.value;
-
       let sub = this.billTypeService.createBillType(entity).subscribe({
         next: (result: any) => {
-          this.spinner.show();
-
           this.defineBillTypeForm();
-
           this.submited = false;
-          this.spinner.hide();
-          this.router.navigate([this.listUrl])
-            .then(() => {
-              window.location.reload();
-            });
+          navigateUrl(this.listUrl, this.router);
+
         },
         error: (err: any) => {
           reject(err);
@@ -577,10 +573,12 @@ export class AddEditBillTypeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   onSave() {
-    
+    debugger
     if (this.billTypeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -603,18 +601,14 @@ export class AddEditBillTypeComponent implements OnInit {
 
     return new Promise<void>((resolve, reject) => {
 
-      this.billTypeService.updateBillType(entityDb).subscribe({
+      let sub = this.billTypeService.updateBillType(entityDb).subscribe({
         next: (result: any) => {
-          this.spinner.show();
 
           this.defineBillTypeForm();
           this.submited = false;
-          this.spinner.hide();
 
-          this.router.navigate([this.listUrl])
-            .then(() => {
-              window.location.reload();
-            });
+          navigateUrl(this.listUrl, this.router);
+
         },
         error: (err: any) => {
           reject(err);
@@ -623,6 +617,8 @@ export class AddEditBillTypeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
 
@@ -631,9 +627,9 @@ export class AddEditBillTypeComponent implements OnInit {
     if (this.billTypeForm.valid) {
 
       this.spinner.show();
-      this.confirmUpdate().then(a=>{
+      this.confirmUpdate().then(a => {
         this.spinner.hide();
-      }).catch(e=>{
+      }).catch(e => {
         this.spinner.hide();
       });
     }
@@ -646,8 +642,8 @@ export class AddEditBillTypeComponent implements OnInit {
       return this.billTypeForm.markAllAsTouched();
     }
   }
-  
 
- 
+
+
 }
 
