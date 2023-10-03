@@ -43,9 +43,10 @@ export class LoginCompanyComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
     public router: Router, private userService: UserService, private translate: TranslateService) {
-debugger
+    debugger
     this.currentSystemLanguage = this.userService.getCurrentLanguage();
     this.translate.use(this.currentSystemLanguage);
+    this.userService.setLanguage(this.currentSystemLanguage)
     if (this.currentSystemLanguage === 'ar') {
       document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
     }
@@ -57,8 +58,10 @@ debugger
 
   ngOnInit() {
     debugger
-    this.companiesList = this.companies;
-    this.userService.logout();
+    //   this.companiesList = this.companies;
+    this.getCompanies();
+    this.userService.removeToken();
+    this.userService.removeRefreshToken();
   }
   //#region ngOnDestroy
   ngOnDestroy() {
@@ -76,7 +79,7 @@ debugger
     return new Promise<void>((resolve, reject) => {
       let sub = this.authService.getDdl().subscribe({
         next: (res) => {
-
+          debugger
           if (res.success) {
             this.companiesList = res.response;
 
@@ -150,7 +153,7 @@ debugger
         console.log(next);
 
         if (next.success == true) {
-          
+
           //   this.translate.use("en");
           let jwt = next.response.token;
           let jwtData = jwt.split('.')[1]
@@ -158,7 +161,7 @@ debugger
           let decodedJwtData = JSON.parse(decodedJwtJsonData)
           this.userService.setToken(jwt.toString());
           let Role = decodedJwtData.role;
-          
+
           localStorage.setItem("userId", decodedJwtData.userLoginId)
           this.userService.setUserName(decodedJwtData.fullName)
           this.userService.setBranchId(this.loginForm.value.branchId)
@@ -200,10 +203,10 @@ debugger
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
-          
+
           console.log('result data getbyid', res);
           if (res.response.value > 0) {
-            
+
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -224,9 +227,9 @@ debugger
   }
   getfiscalPeriodById(id: any) {
     return new Promise<void>((resolve, reject) => {
-    let sub =  this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
-          
+
           console.log('result data getbyid', res);
           this.fromDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.toDate);

@@ -5,6 +5,7 @@ import { map, delay, withLatestFrom } from 'rxjs/operators';
 // import { TranslateService } from '@ngx-translate/core';
 import {IdleService} from './shared/common-services/idle.service'
 import { UserService } from './shared/common-services/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +20,7 @@ export class AppComponent {
     map(v => v[1]),
   );
   
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,public router: Router,
     private loader: LoadingBarService,private idleService: IdleService, private userService: UserService) {
       
     // if (isPlatformBrowser(this.platformId)) {
@@ -30,7 +31,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.idleService.isIdle$.subscribe((isIdle) => {
       if (isIdle) {
-        this.userService.logout();
+        this.router.navigate(['/authentication/login'])
       }
     });
   }

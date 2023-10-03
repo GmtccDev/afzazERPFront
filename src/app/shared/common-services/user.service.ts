@@ -10,7 +10,7 @@ export class UserService {
         private router: Router
     ) { }
     getCurrentSystemLanguage(): string {
-      
+      debugger
         let language = localStorage.getItem('language');
         if (language) return language;
         else {
@@ -59,7 +59,7 @@ export class UserService {
     logout() {
         this.removeToken();
         this.removeRefreshToken();
-        localStorage.clear();
+      //  localStorage.clear();
         this.router.navigate(['/authentication/login'])
     }
   
