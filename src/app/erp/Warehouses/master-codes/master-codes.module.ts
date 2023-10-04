@@ -1,3 +1,4 @@
+import { SalesPersonCardServiceProxy } from './../Services/sales-person-card.service';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from '../../../shared/shared.module'
@@ -31,6 +32,8 @@ import { CustomerCardComponent } from './customer-card/customer-card.component';
 import { AddEditCustomerCardComponent } from './customer-card/add-edit-customer-card/add-edit-customer-card.component';
 import { BillTypeComponent } from './bill-type/bill-type.component';
 import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edit-bill-type.component';
+import { SalesPersonCardComponent } from './sales-person-card/sales-person-card.component';
+import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-person-card/add-sales-person-card.component';
 
 
 
@@ -40,7 +43,7 @@ import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edi
     , StoreCardComponent, AddEditStoreCardComponent, PaymentMethodComponent, AddEditPaymentMethodComponent
     , CustomerCardComponent, AddEditCustomerCardComponent, SupplierCardComponent, AddEditSupplierCardComponent
     , ItemCardComponent, AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent,
-    BillTypeComponent, AddEditBillTypeComponent
+    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, 
   ],
   imports: [
     CommonModule,
@@ -48,7 +51,7 @@ import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edi
     NzButtonModule,
     NzIconModule
   ],
-  providers: [PeriodServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
+  providers: [PeriodServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
   ]
 })
 export class MasterCodesModule { }

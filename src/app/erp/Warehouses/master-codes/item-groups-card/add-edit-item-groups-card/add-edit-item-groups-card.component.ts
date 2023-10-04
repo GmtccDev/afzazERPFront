@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { ItemGroupsCardServiceProxy } from '../../../Services/item-groups-card-service';
+import { ItemGroupsCardServiceProxy } from '../../../Services/item-groups-card.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
