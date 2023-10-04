@@ -154,9 +154,9 @@ export class NavService implements OnInit, OnDestroy {
 
 		{
 			title: this.translate.instant("component-names.users-permissions"), icon: 'users', type: 'sub', active: false, children: [
-
-				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link', active: true },
 				{ path: '/security/role/', title: this.translate.instant("component-names.roles-permissions"), type: 'link', active: true },
+				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link', active: true },
+			
 				//	{ path: '/security/permission/', title: this.translate.instant("component-names.permissions"), type: 'link', active: true },
 
 			]
