@@ -259,8 +259,15 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onCheck(id) {
 
-
-    this.listIds.push(id);
+debugger
+const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+if (index !== -1) {
+  this.listIds.splice(index, 1);
+} else {
+  const newItem = { id, isChecked: true };
+  this.listIds.push(newItem);
+}
+  //  this.listIds.push(id);
     this.sharedServices.changeButton({
       action: 'Delete',
       componentName: 'List',
@@ -270,7 +277,7 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   listIds: any[] = [];
   onDelete() {
     let item = new DeleteListUserCommand();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     let sub = this.userService.deleteListUser(item).subscribe(
       (resonse) => {
 
