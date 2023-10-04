@@ -294,6 +294,7 @@ export class AddSalesPersonCardComponent implements OnInit {
  
          if (currentBtn != null) {
            if (currentBtn.action == ToolbarActions.List) {
+            debugger
              this.sharedService.changeToolbarPath({
                listPath: this.listUrl,
              } as ToolbarPath);
