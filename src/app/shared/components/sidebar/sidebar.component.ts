@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Menu, NavService } from '../../services/nav.service';
 import { LayoutService } from '../../services/layout.service';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
+import { Subscription } from 'rxjs';
+import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,6 +18,7 @@ export class SidebarComponent {
   public menuItems: Menu[];
   public url: any;
   public fileurl: any;
+  subsList: Subscription[] = [];
 
   // For Horizontal Menu
   public margin: any = 0;
@@ -25,6 +28,8 @@ export class SidebarComponent {
 
   constructor(private router: Router, public navServices: NavService,
     private voucherTypeService: VoucherTypeServiceProxy,
+    private billTypeService: BillTypeServiceProxy,
+
     public layout: LayoutService) {
     
     let menu = localStorage.getItem("Menu");
@@ -114,7 +119,15 @@ export class SidebarComponent {
 
 
   }
-
+  //#region ngOnDestroy
+  ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  //#endregion
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.width = event.target.innerWidth - 500;
@@ -128,6 +141,8 @@ export class SidebarComponent {
   setNavActive(item) {
    
    this.getVoucherTypes();
+   this.getBillTypes();
+
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;
@@ -216,7 +231,39 @@ export class SidebarComponent {
         },
       });
 
-      //	this.subsList.push(sub);
+    	this.subsList.push(sub);
+
+    });
+
+  }
+  getBillTypes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.success) {
+            
+            const billTypes = res.response.items.map(element => ({
+              path: '/warehouses-operations/bill',
+              title: element.billNameAr,
+              type: 'link',
+              active: true
+            }));
+            this.navServices.billTypes=billTypes ;
+
+
+          }
+          resolve();
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+    	this.subsList.push(sub);
 
     });
 

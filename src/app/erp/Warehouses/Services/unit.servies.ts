@@ -98,7 +98,7 @@ export class UnitServiceProxy {
 
 
     getUnitTransactions(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Unit/get-ddl-warehouses-units-transactions?");
+        return this.http.get<any>(this.baseUrl + "/api/Unit/get-ddl-units-transactions?");
     }
 
     deleteEntity(entity: any): Observable<any> {

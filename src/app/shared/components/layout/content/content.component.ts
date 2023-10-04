@@ -7,6 +7,8 @@ import { fadeInAnimation } from '../../../data/router-animation/router-animation
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
+import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-content',
@@ -16,10 +18,13 @@ import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher
 })
 export class ContentComponent implements OnInit, AfterViewInit {
   lang = localStorage.getItem("language")
+  subsList: Subscription[] = [];
 
   constructor(private route: ActivatedRoute, private userService: UserService, private translate: TranslateService,
     public navServices: NavService, private router: Router,
     private voucherTypeService: VoucherTypeServiceProxy,
+    private billTypeService: BillTypeServiceProxy,
+
     public layout: LayoutService) {
     this.customizeLayoutType()
     // this.route.queryParams.subscribe((params) => {
@@ -27,6 +32,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
     //   this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
     // })
   }
+   //#region ngOnDestroy
+   ngOnDestroy() {
+    this.subsList.forEach((s) => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+  //#endregion
   getVoucherTypes() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -37,7 +51,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
               this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/'+element.id, title:this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
               { queryParams: { voucherTypeId: element.id } }
               )
-              // this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
               this.navServices.voucherTypes.filter((value, index, self) => {
                 return index === self.findIndex(obj => (
                   obj.path === value.path && obj.title === value.title
@@ -57,7 +70,41 @@ export class ContentComponent implements OnInit, AfterViewInit {
         },
       });
 
-      //	this.subsList.push(sub);
+      	this.subsList.push(sub);
+
+    });
+
+  }
+  getBillTypes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.success) {
+            res.response.items.forEach(element => {
+              this.navServices.billTypes.push({ path: '/warehouses-operations/bill/'+element.id, title:this.lang=="ar"? element.billNameAr:element.billNameEn, type: 'link', active: true },
+              { queryParams: { billTypeId: element.id } }
+              )
+              this.navServices.billTypes.filter((value, index, self) => {
+                return index === self.findIndex(obj => (
+                  obj.path === value.path && obj.title === value.title
+                ));
+              });
+            });
+
+
+          }
+          resolve();
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      	this.subsList.push(sub);
 
     });
 
@@ -65,7 +112,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
   customizeLayoutType() {
 
 
-    this.getVoucherTypes()
+    this.getVoucherTypes();
+    this.getBillTypes();
+
     // this.layout.config.settings.layout_type = "rtl";
     if (localStorage.getItem("language") == "ar") {
       // this.translate.setDefaultLang(localStorage.getItem("language"));

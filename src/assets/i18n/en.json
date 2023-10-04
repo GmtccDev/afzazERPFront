@@ -177,7 +177,8 @@
         "purchases-return-account": "Purchases Return Account",
         "sales-cost-account": "Sales Cost Account",
         "inventory-account": "Inventory Account",
-        "minute": "minute"
+        "minute": "minute",
+        "print":"Print"
     },
     "menu": {},
     "home": {
@@ -580,7 +581,22 @@
         "properties": "Properties",
         "has-expired-date": "Has Expired Date",
         "life-time": "Life Time",
-        "life-time-type": "Life Time Type"
+        "life-time-type": "Life Time Type",
+        "alternative-items":"Alternative Items",
+        "item-name": "Item",
+        "cost-price":"Cost Price",
+        "current-balance": "Current Balance",
+        "type":"Type",
+        "has-serial-number": "Serial Number",
+        "warranty-period": "Warranty Period",
+        "warranty-type": "Warranty Type",
+        "item-kind": "Item Kind",
+        "height-factor": "Height Factor",
+        "width-factor": "Width Factor",
+        "length-factor": "Length Factor",
+        "tranaction-factor": "Transaction Factor"
+
+
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",
@@ -608,7 +624,11 @@
         "vendor":"Vendor",
         "project":"Project",
         "payment-method":"Payment Method",
-        "default-price":"Default Price"
+        "default-price":"Default Price",
+        "print-immediately-after-addition":"Print Immediately After Addition",
+        "print-expiry-dates":"Print Expiry Dates",
+        "print-items-specifiers":"Print Items Specifiers",
+        "print-items-images":"Print Items Images"
 
     }
 }

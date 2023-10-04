@@ -12,6 +12,7 @@ import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../shared/helper/helper-url';
 import { RoleServiceProxy } from '../../services/role.servies'
 import { RoleDto } from '../../models/role';
+import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
 @Component({
   selector: 'app-add-edit-role',
   templateUrl: './add-edit-role.component.html',
@@ -42,13 +43,15 @@ export class AddEditRoleComponent implements OnInit {
   submited: boolean = false;
   modulesType: {}[];
   screensList: any;
+  applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; link: string; }[];
+	applicationsRoute: any[];
   constructor(
     private roleService: RoleServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private sharedServices: SharedService, private translate: TranslateService,
+    private sharedServices: SharedService, private translate: TranslateService,public service: SubscriptionService,
   ) {
     this.defineRoleForm();
   }
@@ -56,7 +59,8 @@ export class AddEditRoleComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getModulesType();
+    this.getLastSubscription();
+  //  this.getModulesType();
     this.spinner.show();
     this.getRouteData();
     this.changePath();
@@ -80,6 +84,55 @@ export class AddEditRoleComponent implements OnInit {
     });
   }
   //#endregion
+  getApplications() {
+		this.applications = [
+			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
+			{ descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
+			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
+			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
+			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
+			{ descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
+			{ descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: false, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
+
+		];
+	}
+  getLastSubscription() {
+
+		this.service.getLastSubscription().subscribe(
+			next => {
+				debugger
+
+				if (next.success == true) {
+					this.getApplications();
+					//   this.router.navigate(['/dashboard/default']);
+					if (next.response != null) {
+						this.applicationsRoute = [...next.response?.applications?.split(",")]
+						console.log(this.applicationsRoute);
+						for (var i = 0; i < this.applications.length; i++) {
+
+							var find = this.applicationsRoute.includes(this.applications[i].value);
+
+							if (find) {
+
+								this.applications[i].check = true;
+
+							}
+
+						}
+					}
+
+          this.modulesType = this.applications.filter(c => c.check == true)
+				}
+			},
+			error => {
+
+				//this.showLoader = false;
+				console.log(error)
+
+			}
+		)
+
+	}
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
@@ -275,6 +328,7 @@ export class AddEditRoleComponent implements OnInit {
     }
   }
   confirmUpdate() {
+    debugger
     this.roleForm.value.id = this.id;
     this.roleForm.value.permissions = this.permission;
     return new Promise<void>((resolve, reject) => {

@@ -29,6 +29,8 @@ export class NavService implements OnInit, OnDestroy {
 	voucherType: any[] = [];
 	subsList: Subscription[] = [];
 	voucherTypes: any = [];
+	billTypes: any = [];
+
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
@@ -54,12 +56,6 @@ export class NavService implements OnInit, OnDestroy {
 
 	constructor(private router: Router, private translate: TranslateService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
-		//	this.getVoucherTypes();
-
-		// this.voucherTypes.push(
-		// 	 { path: '/accounting-operations/vouchers', title: this.translate.instant("component-names.vouchers"), type: 'link', active: true },
-
-		// )
 		this.voucherTypes.push(
 			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 			{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
@@ -96,7 +92,6 @@ export class NavService implements OnInit, OnDestroy {
 
 	//#region ngOnInit
 	ngOnInit(): void {
-		;
 		// this.getVoucherTypes();
 	}
 	//#endregion
@@ -112,10 +107,7 @@ export class NavService implements OnInit, OnDestroy {
 	}
 
 	getVoucherTypes() {
-		;
 		return new Promise<void>((resolve, reject) => {
-			;
-
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
 
@@ -125,7 +117,6 @@ export class NavService implements OnInit, OnDestroy {
 
 						this.voucherType = res.response.items
 						this.voucherType.forEach(element => {
-							;
 							this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
 
 						});
@@ -163,9 +154,9 @@ export class NavService implements OnInit, OnDestroy {
 
 		{
 			title: this.translate.instant("component-names.users-permissions"), icon: 'users', type: 'sub', active: false, children: [
-
-				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link', active: true },
 				{ path: '/security/role/', title: this.translate.instant("component-names.roles-permissions"), type: 'link', active: true },
+				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link', active: true },
+			
 				//	{ path: '/security/permission/', title: this.translate.instant("component-names.permissions"), type: 'link', active: true },
 
 			]
@@ -265,6 +256,14 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/warehouses-master-codes/billType', title: this.translate.instant("component-names.bill-types"), type: 'link', active: true },
 
 			]
+		},
+		{
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'Operations', active: false, children:
+				this.billTypes,
+			
+
+
+
 		}
 
 

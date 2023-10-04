@@ -29,7 +29,7 @@ export class AddEditSupplierCardComponent implements OnInit {
   branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
-  lang:any = localStorage.getItem("language")
+  lang: any = localStorage.getItem("language")
   routeAccountApi = 'Account/get-ddl?'
   accountsList: any;
   routeApiCountry = 'Country/get-ddl?'
@@ -326,7 +326,7 @@ export class AddEditSupplierCardComponent implements OnInit {
     var inputDto = new SupplierCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.supplierCardForm.value;
-      this.supplierCardService.createSupplierCard(inputDto).subscribe({
+      let sub = this.supplierCardService.createSupplierCard(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineSupplierCardForm();
@@ -341,6 +341,8 @@ export class AddEditSupplierCardComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   onSave() {
@@ -402,6 +404,6 @@ export class AddEditSupplierCardComponent implements OnInit {
 }
 
 
-  //#endregion
+//#endregion
 
 

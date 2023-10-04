@@ -17,6 +17,7 @@ import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum, WarrantyTypeEnum, WarrantyTypeArEnum, AccountClassificationsEnum } from '../../../../../shared/constants/enumrators/enums';
 import { environment } from 'src/environments/environment';
 import { UnitServiceProxy } from '../../../Services/unit.servies';
+import { UnitDto, UnitTransactionDto } from '../../../models/unit';
 
 @Component({
   selector: 'app-add-edit-item-card',
@@ -42,7 +43,7 @@ export class AddEditItemCardComponent implements OnInit {
   filterUnitTransactionsList: any;
 
 
-  routeItemGroupApi = 'ItemGroup/get-ddl?'
+  routeItemGroupApi = 'ItemGroupsCard/get-ddl?'
   itemGroupsList: any;
 
   routeUnitApi = 'Unit/get-ddl?'
@@ -60,6 +61,9 @@ export class AddEditItemCardComponent implements OnInit {
   itemCardUnit: ItemCardUnitDto[] = [];
   itemCardAlternative: ItemCardAlternativeDto[] = [];
   selectedItemCardAlternative: ItemCardAlternativeDto = new ItemCardAlternativeDto();
+
+  unit: UnitTransactionDto[] = [];
+  selectedUnit: UnitTransactionDto = new UnitTransactionDto();
 
 
   //ItemCard: ItemCardDto[] = [];
@@ -121,14 +125,14 @@ export class AddEditItemCardComponent implements OnInit {
       this.getMainUnits(),
       this.getUnitTransactions(),
       this.getAccounts(),
-      this.getItems()
+      //this.getItems()
 
 
     ]).then(a => {
       this.getRouteData();
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
-        this.getItemCardCode();
+        //this.getItemCardCode();
       }
       this.changePath();
       this.listenToClickedButton();
@@ -398,6 +402,7 @@ export class AddEditItemCardComponent implements OnInit {
           if (res.success) {
             this.mainUnitsList = res.response.filter(x => x.isActive == true);
 
+
           }
 
           resolve();
@@ -665,26 +670,31 @@ export class AddEditItemCardComponent implements OnInit {
   }
   getUnitsByMainUnitId(mainUnitId: any) {
     debugger
-    this.itemCardUnit = [];
-    this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.warehousesUnitMasterId == mainUnitId);
-    this.filterUnitTransactionsList.forEach(element => {
-      //  let unitName=this.unitsList.filter(x=>x.id==element.warehousesUnitDetailId);
-      this.itemCardUnit.push(
-        {
-          unitId: element.warehousesUnitDetailId,
-          unitName: element.warehousesUnitDetailId,
-          id: 0,
-          itemCardId: 0,
-          transactionFactor: element.transactionFactor,
-          sellingPrice: 0,
-          minSellingPrice: 0,
-          consumerPrice: 0,
-          openingCostPrice: 0
-        }
-      )
-    });
+    this.unitsList=this.unitTransactionsList.filter(x=>x.unitMasterId==mainUnitId);
+    // this.itemCardUnit = [];
+    // this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.warehousesUnitMasterId == mainUnitId);
+    // this.filterUnitTransactionsList.forEach(element => {
+    //   //  let unitName=this.unitsList.filter(x=>x.id==element.warehousesUnitDetailId);
+    //   this.itemCardUnit.push(
+    //     {
+    //       unitId: element.warehousesUnitDetailId,
+    //       unitName: element.warehousesUnitDetailId,
+    //       id: 0,
+    //       itemCardId: 0,
+    //       transactionFactor: element.transactionFactor,
+    //       sellingPrice: 0,
+    //       minSellingPrice: 0,
+    //       consumerPrice: 0,
+    //       openingCostPrice: 0
+    //     }
+    //   )
+    // });
 
 
+  }
+  getUnitDetail(unitId:any)
+  {
+    this.selectedUnit.transactionFactor=this.unitsList.transactionFactor;
   }
 
   addItem() {
