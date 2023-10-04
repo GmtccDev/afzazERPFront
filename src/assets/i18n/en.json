@@ -5,6 +5,12 @@
     "createSuccessfully": "Created",
     "editSuccessfully": "Edited Successfully",
     "deleteSuccessfully": "Deleted Successfully",
+    "SameCodeExistsBefore":"Code Exist Before",
+    "emailNumberFoundBefore":"Email Exist Before",
+    "userNameFoundBefore":"User Name Exist Before",
+    "phoneNumberFoundBefore":"Phone Exist Before",
+    "can't-delete-some-records":"can't delete some records",
+    "can't-delete-record":"can't delete record",
     "general": {
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
@@ -117,6 +123,7 @@
         "accounts": "Accounts",
         "default-account": "Default Account",
         "default-currency": "Default Currency",
+        "default-unit": "Default Unit",
         "currency": "Currency",
         "balance": "Balance",
         "need-review": "Need Review",
@@ -170,7 +177,8 @@
         "purchases-return-account": "Purchases Return Account",
         "sales-cost-account": "Sales Cost Account",
         "inventory-account": "Inventory Account",
-        "minute": "minute"
+        "minute": "minute",
+        "print":"Print"
     },
     "menu": {},
     "home": {
@@ -335,6 +343,8 @@
     },
     "component-names": {
         "country-information": "Country information",
+        "modulesType": "Modules Type",
+        "search-roles": "filter permissions",
         "currency-information": "Currency Information",
         "business-information": "Buisness Information",
         "role-information": "Role Information",
@@ -572,14 +582,54 @@
         "properties": "Properties",
         "has-expired-date": "Has Expired Date",
         "life-time": "Life Time",
-        "life-time-type": "Life Time Type"
+        "life-time-type": "Life Time Type",
+        "alternative-items":"Alternative Items",
+        "item-name": "Item",
+        "cost-price":"Cost Price",
+        "current-balance": "Current Balance",
+        "type":"Type",
+        "has-serial-number": "Serial Number",
+        "warranty-period": "Warranty Period",
+        "warranty-type": "Warranty Type",
+        "item-kind": "Item Kind",
+        "height-factor": "Height Factor",
+        "width-factor": "Width Factor",
+        "length-factor": "Length Factor",
+        "tranaction-factor": "Transaction Factor"
+
+
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",
         "bill-type": "Bill Type",
         "add-bill-type": "Add Bill Type",
         "update-bill-type": "Update Bill Type",
-        "basic-properties": "Basic Properties",
-        "warehouse-effect": "Warehouse Effect"
+        "basic-properties":"Basic Properties",
+        "affect-on-cost-price":"Affect On Cost Price",
+        "accounting-effect":"Accounting Effect",
+        "post-to-accounts-automatically":"Posting to the accounts automatically",
+        "warehouse-effect":"Warehouse Effect",
+        "coding-policy":"Coding Policy",
+        "other-options":"Other Options",
+        "confirm-cost-center":"Confirm Cost Center",
+        "confirm-analytical-code":"Confirm Analytical Code",
+        "additional-options":"Additional Options",
+        "not-calculating-tax":"Not Calculating Tax",
+        "calculating-value-added-tax-after-luxury-tax":"Calculating Value Added Tax After Luxury Tax",
+        "calculating-tax-on-price-after-deduction-and-addition":"Calculating Tax On Price After Deduction And Addition",
+        "discount-affects-cost-price":"Discount Affects Cost Price",
+        "addition-affects-cost-price":"Addition Affects Cost Price",
+        "default-values":"Default Values",
+        "store":"Store",
+        "cost-center":"Cost Center",
+        "vendor":"Vendor",
+        "project":"Project",
+        "payment-method":"Payment Method",
+        "default-price":"Default Price",
+        "print-immediately-after-addition":"Print Immediately After Addition",
+        "print-expiry-dates":"Print Expiry Dates",
+        "print-items-specifiers":"Print Items Specifiers",
+        "print-items-images":"Print Items Images"
+
     }
 }

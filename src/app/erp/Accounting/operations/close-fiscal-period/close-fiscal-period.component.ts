@@ -59,18 +59,12 @@ export class CloseFiscalPeriodComponent implements OnInit {
     private publicService: PublicService,
     private router: Router,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
     private dateService: DateCalculation,
-    private spinnerService: NgxSpinnerService,
     private alertsService: NotificationsAlertsService,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-
-
-
-
   ) {
     this.defineCloseFiscalPeriodForm();
   }

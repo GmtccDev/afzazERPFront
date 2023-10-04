@@ -5,6 +5,12 @@
     "createSuccessfully": "تم الاضافة",
     "editSuccessfully": "تم التعديل بنجاح",
     "deleteSuccessfully": "تم الحذف بنجاح",
+    "SameCodeExistsBefore":"الكود معرف سابقا",
+    "emailNumberFoundBefore":"الميل معرف سابقا",
+    "userNameFoundBefore":"الاسم معرف سابقا",
+    "phoneNumberFoundBefore":"الموبايل معرف سابقا",
+    "can't-delete-some-records":"لايمكن حذف بعض السجلات",
+    "can't-delete-record":"لا يمكن حذف السجل",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"
@@ -188,9 +194,11 @@
     },
     "component-names": {
         "country-information": "معلومات الدولة",
+        "modulesType": "حدد البرنامج",
+        "search-roles": "فلتر الصلاحيات",
         "business-information": "معلومات الانشطة",
         "currency-information": "بيانات العملة ",
-        "role-information": "معلومات وظيفة المستخدم",
+        "role-information": "الأدوار والصلاحيات ",
         "countries": "الدول",
         "business": "الانشطة",
         "role": "الأدوار",
@@ -268,10 +276,9 @@
         "add-item": "اضافة صنف",
         "item-groups-card": "بطاقة مجموعة اصناف",
         "item-groups-card-information": "معلومات بطاقة مجموعة اصناف",
-        "bill-types": "أنواع الفواتير",
-        "sales-person-card":"بطاقة المندوب"
+        "sales-person-card":"بطاقة المندوب",
 
-
+        "bill-types": "أنماط الفواتير"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -326,6 +333,7 @@
         "accounts": "الحسابات",
         "default-account": "الحساب الافتراضى",
         "default-currency": "العملة الافتراضية",
+        "default-unit": "الوحدة الافتراضية",
         "currency": "العملة",
         "need-review": "تحتاج للمراجعة",
         "print-options": "خيارات الطباعة",
@@ -385,8 +393,8 @@
         "purchases-return-account": "حساب مرتجع المشتريات",
         "sales-cost-account": "حساب تكلفة المبيعات",
         "inventory-account": "حساب المخزون",
-        "minute": "دقيقة"
-
+        "minute": "دقيقة",
+        "print": "الطباعة"
     },
     "menu": {},
     "currency": {
@@ -569,7 +577,37 @@
         "type": "النوع",
         "current-balance": "الرصيد الحالى"
 
-
-
+    },
+    "bill-type": {
+        "bill-type-information": "معلومات نمط الفاتورة",
+        "bill-type": "نمط الفاتورة",
+        "add-bill-type": "اضافة نمط فاتورة",
+        "update-bill-type": "تحديث نمط الفاتورة",
+        "basic-properties": "خصائص أساسية",
+        "affect-on-cost-price": "تؤثر على سعر التكلفة",
+        "accounting-effect": "التأثير المحاسبي",
+        "post-to-accounts-automatically": "ترحيل الى الحسابات بشكل ألى",
+        "warehouse-effect": "التأثير المستودعى",
+        "coding-policy": "سياسة الترميز",
+        "other-options": "خيارات أخرى",
+        "confirm-cost-center": "تأكيد مركز التكلفة",
+        "confirm-analytical-code": "تأكيد الكود التحليلى",
+        "additional-options": "خيارات أضافية",
+        "not-calculating-tax": "عدم أحتساب الضريبة",
+        "calculating-value-added-tax-after-luxury-tax": "أحتساب ضريبة القيمة المضافة بعد ضريبة الرفاهية",
+        "calculating-tax-on-price-after-deduction-and-addition": "أحتساب ضريبة على السعر بعد الخصم و الأضافة",
+        "discount-affects-cost-price": "الخصم يؤثر على سعر التكلفة",
+        "addition-affects-cost-price": "الأضافة يؤثر على سعر التكلفة",
+        "default-values": "القيم الأفتراضية",
+        "store": "المستودع",
+        "cost-center": " مركز التكلفة",
+        "vendor": "المندوب",
+        "project": "المشروع",
+        "payment-method": "طريقة الدفع",
+        "default-price": "السعر الأفتراضى",
+        "print-immediately-after-addition": "طباعة مباشرة بعد الاضافة",
+        "print-expiry-dates": "طباعة تواريخ الصلاحية",
+        "print-items-specifiers": "طباعة محددات الأصناف",
+        "print-items-images": "طباعة صور الاصناف"
     }
 }

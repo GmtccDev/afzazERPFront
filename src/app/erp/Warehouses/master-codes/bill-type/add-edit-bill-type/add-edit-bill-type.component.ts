@@ -14,12 +14,13 @@ import { NotificationsAlertsService } from '../../../../../shared/common-service
 import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import {
- 
+
   BillKindArEnum,
   BillKindEnum,
   convertEnumToArray,
 
 } from '../../../../../shared/constants/enumrators/enums';
+import { navigateUrl } from 'src/app/shared/helper/helper-url';
 
 @Component({
   selector: 'app-add-edit-bill-type',
@@ -31,14 +32,37 @@ export class AddEditBillTypeComponent implements OnInit {
   billTypeForm!: FormGroup;
   billKinds: ICustomEnum[] = [];
   warehouseEffectList: { nameAr: string; nameEn: string; value: string; }[];
-
-  journalList: any;
+  accountingEffectList: { nameAr: string; nameEn: string; value: string; }[];
+  codingPolicyList: { nameAr: string; nameEn: string; value: string; }[];
   id: any = 0;
+  routeCurrencyApi = 'Currency/get-ddl?'
+  currenciesList: any;
 
-  currnetUrl;
-  public show: boolean = false;
-  lang = localStorage.getItem("language")
-  accountClassification: [] = [];
+  routeUnitApi = 'Unit/get-ddl?'
+  unitsList: any;
+
+  routeStoreApi = 'StoreCard/get-ddl?'
+  storesList: any;
+
+  routeCostCenterApi = 'CostCenter/get-ddl?'
+  costCentersList: any;
+
+  routePaymentMethodApi = 'PaymentMethod/get-ddl?'
+  paymentMethodsList: any;
+
+  routeVendorApi = 'Vendor/get-ddl?'
+  vendorsList: any;
+
+  routeProjectApi = 'Project/get-ddl?'
+  projectsList: any;
+
+  routePriceApi = 'Price/get-ddl?'
+  pricesList: any;
+
+  lang = localStorage.getItem("language");
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
+
   addUrl: string = '/warehouses-master-codes/billType/add-billType';
   updateUrl: string = '/warehouses-master-codes/billType/update-billType/';
   listUrl: string = '/warehouses-master-codes/billType';
@@ -53,16 +77,8 @@ export class AddEditBillTypeComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  showSearchJournalModal = false;
-  showSearchAccountModal = false;
-  showSearchCurrencyModal = false;
 
-  routeJournalApi = "journal/get-ddl?"
-  routeCurrencyApi = "currency/get-ddl?"
 
-  
-  companyId: any = localStorage.getItem("companyId");
-  branchId: any = localStorage.getItem("branchId");
 
 
   constructor(
@@ -84,10 +100,24 @@ export class AddEditBillTypeComponent implements OnInit {
   ngOnInit(): void {
     this.getBillKind();
     this.getWarehouseEffect();
+    this.getAccountingEffect();
+    this.getCodingPolicy();
+
 
     this.spinner.show();
     Promise.all([
-      this.getJournal()
+      this.getCurrencies(),
+      this.getUnits(),
+      this.getStores(),
+      this.getCostCenters(),
+      this.getPaymentMethods(),
+      // this.getVendors(),
+      // this.getProjects(),
+      // this.getPrices()
+
+
+
+
 
     ]).then(a => {
       this.getRouteData();
@@ -135,7 +165,7 @@ export class AddEditBillTypeComponent implements OnInit {
       id: 0,
       companyId: this.companyId,
       branchId: this.branchId,
-      billKind:'',
+      billKind: REQUIRED_VALIDATORS,
       billNameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(250)])],
       billNameEn: '',
       warehouseEffect: REQUIRED_VALIDATORS,
@@ -200,15 +230,16 @@ export class AddEditBillTypeComponent implements OnInit {
   }
 
   getBillTypeById(id: any) {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.billTypeService.getBillType(id).subscribe({
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.getBillType(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           this.billTypeForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
             branchId: res.response?.branchId,
-            billKind:res.response?.billKind,
+            billKind: res.response?.billKind,
             billNameAr: res.response?.billNameAr,
             billNameEn: res.response?.billNameEn,
             warehouseEffect: res.response?.warehouseEffect,
@@ -223,15 +254,15 @@ export class AddEditBillTypeComponent implements OnInit {
             calculatingTaxOnPriceAfterDeductionAndAddition: res.response?.calculatingTaxOnPriceAfterDeductionAndAddition,
             discountAffectsCostPrice: res.response?.discountAffectsCostPrice,
             additionAffectsCostPrice: res.response?.additionAffectsCostPrice,
-            defaultCurrencyId:res.response?.defaultCurrencyId,
+            defaultCurrencyId: res.response?.defaultCurrencyId,
             defaultUnitId: res.response?.defaultUnitId,
-            storeId:res.response?.storeId,
+            storeId: res.response?.storeId,
             costCenterId: res.response?.costCenterId,
             paymentMethodId: res.response?.paymentMethodId,
             vendorId: res.response?.vendorId,
             projectId: res.response?.projectId,
-            defaultPrice:res.response?.defaultPrice,
-            printImmediatelyAfterAddition:res.response?.printImmediatelyAfterAddition,
+            defaultPrice: res.response?.defaultPrice,
+            printImmediatelyAfterAddition: res.response?.printImmediatelyAfterAddition,
             printExpiryDates: res.response?.printExpiryDates,
             printItemsSpecifiers: res.response?.printItemsSpecifiers,
             printItemsImages: res.response?.printItemsImages
@@ -239,28 +270,8 @@ export class AddEditBillTypeComponent implements OnInit {
 
 
           });
+        
 
-         
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-    });
-    return promise;
-  }
-  getJournal() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.journalList = res.response;
-
-          }
-          resolve();
 
         },
         error: (err: any) => {
@@ -270,12 +281,13 @@ export class AddEditBillTypeComponent implements OnInit {
           console.log('complete');
         },
       });
-
       this.subsList.push(sub);
-    });
 
+    });
   }
- 
+
+
+
   getBillKind() {
     if (this.lang == 'en') {
       this.billKinds = convertEnumToArray(BillKindEnum);
@@ -293,7 +305,216 @@ export class AddEditBillTypeComponent implements OnInit {
 
     ];
   }
- 
+  getAccountingEffect() {
+    this.accountingEffectList = [
+      { nameAr: 'لا تولد سند قيد', nameEn: 'No generate entry', value: '1' },
+      { nameAr: 'لا تولد سند قيد تلقائي', nameEn: 'No generate entry automatically', value: '2' },
+      { nameAr: ' تولد سند قيد تلقائي', nameEn: 'Generate entry automatically', value: '3' },
+
+    ];
+  }
+
+  getCodingPolicy() {
+    this.codingPolicyList = [
+      { nameAr: 'يدوي', nameEn: 'Manual', value: '1' },
+      { nameAr: 'آلي', nameEn: 'Automatic', value: '2' },
+      { nameAr: 'آلي على حسب المستخدم', nameEn: 'Automatic depending on the user', value: '3' },
+
+    ];
+  }
+  getCurrencies() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.currenciesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getUnits() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeUnitApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.unitsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getStores() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeStoreApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.storesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCostCenters() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCostCenterApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.costCentersList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getPaymentMethods() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routePaymentMethodApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.paymentMethodsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getVendors() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeVendorApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.vendorsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getProjects() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeProjectApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.projectsList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getPrices() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routePriceApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.pricesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+
   //#endregion
 
   //#region Helper Functions
@@ -338,19 +559,12 @@ export class AddEditBillTypeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.billTypeForm.value;
-
       let sub = this.billTypeService.createBillType(entity).subscribe({
         next: (result: any) => {
-          this.spinner.show();
-
           this.defineBillTypeForm();
-
           this.submited = false;
-          this.spinner.hide();
-          this.router.navigate([this.listUrl])
-            .then(() => {
-              window.location.reload();
-            });
+          navigateUrl(this.listUrl, this.router);
+
         },
         error: (err: any) => {
           reject(err);
@@ -359,10 +573,12 @@ export class AddEditBillTypeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   onSave() {
-    
+    debugger
     if (this.billTypeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -385,18 +601,14 @@ export class AddEditBillTypeComponent implements OnInit {
 
     return new Promise<void>((resolve, reject) => {
 
-      this.billTypeService.updateBillType(entityDb).subscribe({
+      let sub = this.billTypeService.updateBillType(entityDb).subscribe({
         next: (result: any) => {
-          this.spinner.show();
 
           this.defineBillTypeForm();
           this.submited = false;
-          this.spinner.hide();
 
-          this.router.navigate([this.listUrl])
-            .then(() => {
-              window.location.reload();
-            });
+          navigateUrl(this.listUrl, this.router);
+
         },
         error: (err: any) => {
           reject(err);
@@ -405,6 +617,8 @@ export class AddEditBillTypeComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
 
@@ -413,9 +627,9 @@ export class AddEditBillTypeComponent implements OnInit {
     if (this.billTypeForm.valid) {
 
       this.spinner.show();
-      this.confirmUpdate().then(a=>{
+      this.confirmUpdate().then(a => {
         this.spinner.hide();
-      }).catch(e=>{
+      }).catch(e => {
         this.spinner.hide();
       });
     }
@@ -429,6 +643,7 @@ export class AddEditBillTypeComponent implements OnInit {
     }
   }
 
- 
+
+
 }
 

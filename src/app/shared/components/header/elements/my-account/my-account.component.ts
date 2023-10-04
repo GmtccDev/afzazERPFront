@@ -28,7 +28,7 @@ export class MyAccountComponent implements OnInit {
 
 
 	logoutFunc() {
-		localStorage.clear();
+		//localStorage.clear();
 		this.router.navigate(['/auth/login']);
 	}
 

@@ -18,9 +18,9 @@
 
                                         <div class="col-md-4 col-4">
                                             <label for="parentId" class="label-name">
-                                                {{'general.parent'|translate}}
+												{{'general.parent'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="parentId" name='parentId' class="" id="parentId">
                                                     <ng-option *ngFor="let costCenter of costCenterList" [value]="costCenter.id">
@@ -38,28 +38,28 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}} </span>
+														{{'error.required'|translate}} </span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="nameAr" class="label-name">
-                                                {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -80,9 +80,9 @@
 
                                         <div class="col-md-4 col-4">
                                             <label for="companyId" class="label-name">
-                                                {{'component-names.companies'|translate}}
+												{{'component-names.companies'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="companyId" name='companyId' class="" id="companyId">
                                                     <ng-option *ngFor="let company of companyList" [value]="company.id">
@@ -96,7 +96,7 @@
 
                                         <div class="col-md-2 col-2">
                                             <button class="btn btn-rounded btn-dark" (click)="showSearchModalCompanyy=true" type="button"><i
-                                                    class="fa fa-search"></i></button>
+													class="fa fa-search"></i></button>
                                         </div>
 
 
@@ -104,12 +104,12 @@
                                         <div class="col-12 col-md-6">
                                             <div class="media">
                                                 <label class="label-name"> {{'general.status'|translate}} </label>
-                                                <div class="icon-state media-body mx-5">
+                                                <div class="icon-state media-body">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
                                                 </div>
                                             </div>
                                         </div>

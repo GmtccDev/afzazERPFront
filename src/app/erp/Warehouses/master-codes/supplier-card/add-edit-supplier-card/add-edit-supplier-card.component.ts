@@ -25,9 +25,11 @@ import { CountryServiceProxy } from '../../../../master-codes/services/country.s
 export class AddEditSupplierCardComponent implements OnInit {
   //#region Main Declarations
   supplierCardForm!: FormGroup;
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
-  lang:any = localStorage.getItem("language")
+  lang: any = localStorage.getItem("language")
   routeAccountApi = 'Account/get-ddl?'
   accountsList: any;
   routeApiCountry = 'Country/get-ddl?'
@@ -148,6 +150,8 @@ export class AddEditSupplierCardComponent implements OnInit {
     this.supplierCardForm = this.fb.group({
       id: 0,
       code: CODE_REQUIRED_VALIDATORS,
+      companyId: this.companyId,
+      branchId: this.branchId,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
       nameEn: '',
       address: REQUIRED_VALIDATORS,
@@ -176,6 +180,8 @@ export class AddEditSupplierCardComponent implements OnInit {
           this.supplierCardForm.setValue({
             id: res.response?.id,
             code: res.response?.code,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             address: res.response?.address,
@@ -320,7 +326,7 @@ export class AddEditSupplierCardComponent implements OnInit {
     var inputDto = new SupplierCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.supplierCardForm.value;
-      this.supplierCardService.createSupplierCard(inputDto).subscribe({
+      let sub = this.supplierCardService.createSupplierCard(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineSupplierCardForm();
@@ -335,6 +341,8 @@ export class AddEditSupplierCardComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   onSave() {
@@ -396,6 +404,6 @@ export class AddEditSupplierCardComponent implements OnInit {
 }
 
 
-  //#endregion
+//#endregion
 
 

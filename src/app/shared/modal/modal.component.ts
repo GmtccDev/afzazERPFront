@@ -7,7 +7,7 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@
 //     <div class="modal-header">
 //       <h4 class="modal-title">Hi there!</h4>
 //       <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        
+
 //       </button>
 //     </div>
 //     <div class="modal-body">
@@ -28,7 +28,7 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@
 //     <div class="modal-header">
 //       <h4 class="modal-title">Hi there!</h4>
 //       <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        
+
 //       </button>
 //     </div>
 //     <div class="modal-body">
@@ -55,7 +55,7 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@
 //     <div class="modal-header">
 //       <h4 class="modal-title">Hi there!</h4>
 //       <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        
+
 //       </button>
 //     </div>
 //     <div class="modal-body">
@@ -71,78 +71,78 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@
 // }
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [NgbModalConfig, NgbModal]
+	selector: 'app-modal',
+	templateUrl: './modal.component.html',
+	styleUrls: ['./modal.component.scss'],
+	encapsulation: ViewEncapsulation.None,
+	providers: [NgbModalConfig, NgbModal]
 })
 export class ModalComponent implements OnInit {
 
-  ngOnInit() { }
+	ngOnInit() { }
 
-  closeResult: string;
+	closeResult: string;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal) {
-  	// customize default values of modals used by this component tree
-    config.backdrop = 'static';
-    config.keyboard = false;
+	constructor(config: NgbModalConfig, private modalService: NgbModal) {
+		// customize default values of modals used by this component tree
+		config.backdrop = 'static';
+		config.keyboard = false;
 
-  }
+	}
 
-  open(content) {
-    
-    console.log("contetn---------",content)
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log(" modalService content",content)
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+	open(content) {
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
+		console.log("contetn---------", content)
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+			console.log(" modalService content", content)
+			this.closeResult = `Closed with: ${result}`;
+		}, (reason) => {
+			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+		});
+	}
 
-  openModal() {
-    // const modalRef = this.modalService.open(NgbdModalContent);
-    // modalRef.componentInstance.name = 'World';
-  }
+	private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
+	}
 
-  openBackDropCustomClass(content) {
-    this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
-  }
+	openModal() {
+		// const modalRef = this.modalService.open(NgbdModalContent);
+		// modalRef.componentInstance.name = 'World';
+	}
 
-  openWindowCustomClass(content) {
-    this.modalService.open(content, { windowClass: 'dark-modal' });
-  }
+	openBackDropCustomClass(content) {
+		this.modalService.open(content, { backdropClass: 'light-blue-backdrop' });
+	}
 
-  openSm(content) {
-    this.modalService.open(content, { size: 'sm' });
-  }
+	openWindowCustomClass(content) {
+		this.modalService.open(content, { windowClass: 'dark-modal' });
+	}
 
-  openLg(content) {
-    this.modalService.open(content, { size: 'lg' });
-  }
+	openSm(content) {
+		this.modalService.open(content, { size: 'sm' });
+	}
 
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
-  }
+	openLg(content) {
+		this.modalService.open(content, { size: 'lg' });
+	}
 
-  // openStackedModal() {
-  //   this.modalService.open(NgbdModal1Content);
-  // }
+	openVerticallyCentered(content) {
+		this.modalService.open(content, { centered: true });
+	}
 
-  openCustomModal(content) {
-    this.modalService.open(content);
-  }
-  
+	// openStackedModal() {
+	//   this.modalService.open(NgbdModal1Content);
+	// }
+
+	openCustomModal(content) {
+		this.modalService.open(content);
+	}
+
 }
 

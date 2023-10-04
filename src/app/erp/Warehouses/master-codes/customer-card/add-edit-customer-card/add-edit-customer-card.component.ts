@@ -25,6 +25,8 @@ import { CountryServiceProxy } from '../../../../master-codes/services/country.s
 export class AddEditCustomerCardComponent implements OnInit {
   //#region Main Declarations
   customerCardForm!: FormGroup;
+  companyId: any = localStorage.getItem("companyId");
+  branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
   lang:any = localStorage.getItem("language")
@@ -147,6 +149,8 @@ export class AddEditCustomerCardComponent implements OnInit {
   defineCustomerCardForm() {
     this.customerCardForm = this.fb.group({
       id: 0,
+      companyId: this.companyId,
+      branchId: this.branchId,
       code: CODE_REQUIRED_VALIDATORS,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
       nameEn: '',
@@ -175,6 +179,8 @@ export class AddEditCustomerCardComponent implements OnInit {
           resolve();
           this.customerCardForm.setValue({
             id: res.response?.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
             code: res.response?.code,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
@@ -320,7 +326,7 @@ export class AddEditCustomerCardComponent implements OnInit {
     var inputDto = new CustomerCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.customerCardForm.value;
-      this.customerCardService.createCustomerCard(inputDto).subscribe({
+      let sub = this.customerCardService.createCustomerCard(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineCustomerCardForm();
@@ -335,6 +341,8 @@ export class AddEditCustomerCardComponent implements OnInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+
     });
   }
   onSave() {

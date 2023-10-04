@@ -2,6 +2,8 @@
 import { IPagedListMetaData } from '../../../shared/interfaces/paged-list-meta-data';
 export class CustomerCardDto {
     id: number;
+    companyId: number;
+    branchId: number;
     code: string;
     nameAr: string;
     nameEn: string;

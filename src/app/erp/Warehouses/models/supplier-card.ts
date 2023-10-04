@@ -3,6 +3,8 @@ import { IPagedListMetaData } from '../../../shared/interfaces/paged-list-meta-d
 export class SupplierCardDto {
     id: number;
     code: string;
+    companyId: number;
+    branchId: number;
     nameAr: string;
     nameEn: string;
     phone: string;
