@@ -444,7 +444,7 @@ button.arabic.btn.font-secondary.p-0.ng-star-inserted {
 
 .show-hide span,
 .show-hide span.show {
-    font: normal normal normal 14px/1 FontAwesome;
+    font: normal normal normal 14px/1 FontAwesome !important;
     &:before {
         content: "\f070";
     }
@@ -651,7 +651,11 @@ footer.footer.general-footer {
 html[dir=rtl] body,
 html[dir=rtl] .btn,
 html[dir=rtl] {
-    h1,
+    button,
+    input,
+    optgroup,
+    select,
+    textarea h1,
     h2,
     p,
     h3,
@@ -1123,4 +1127,44 @@ html[dir=ltr] .tabulator .tabulator-header .tabulator-col .tabulator-col-content
 .nav-tabs .nav-link:hover {
     background: var(--theme-deafult);
     color: var(--theme-secondary);
+}
+
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+    border-width: 1px;
+}
+
+.table td {
+    padding: 0px;
+}
+
+.table-container {
+    padding: 2rem 0.1rem;
+    input.form-control,
+    select.form-control,
+    textarea.form-control {
+        border-radius: 0 !important;
+    }
+}
+
+.form-control {
+    -webkit-appearance: auto !important;
+    appearance: auto !important;
+}
+
+.ng-placeholder {
+    font-family: 'FontAwesome';
+    &:before {
+        content: "\f107";
+        color: #6e6f71;
+    }
+}
+
+.ng-select .ng-select-container .ng-value-container {
+    align-items: center;
+    gap: 5px;
 }

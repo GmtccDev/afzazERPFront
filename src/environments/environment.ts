@@ -1,5 +1,5 @@
 export const environment = {
-	apiUrl: "http://localhost:5030",
+	apiUrl: "http://195.88.87.244:9188",
 	production: false,
 	timeoutInMinutes: 5
 
