@@ -218,6 +218,9 @@ export class AddCountryComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getCountryCode();
+          }
         }
       },
     });

@@ -11,6 +11,7 @@
     "phoneNumberFoundBefore":"الموبايل معرف سابقا",
     "can't-delete-some-records":"لايمكن حذف بعض السجلات",
     "can't-delete-record":"لا يمكن حذف السجل",
+    "NotAuthorized":"ليس لديك صلاحية",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"

@@ -11,6 +11,7 @@
     "phoneNumberFoundBefore":"Phone Exist Before",
     "can't-delete-some-records":"can't delete some records",
     "can't-delete-record":"can't delete record",
+    "NotAuthorized":"NotAuthorized",
     "general": {
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
