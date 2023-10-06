@@ -236,7 +236,13 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 	openCompanies() { }
 	onCheck(id) {
 
-		this.listIds.push(id);
+		  const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    if (index !== -1) {
+      this.listIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listIds.push(newItem);
+    }
 		this.sharedServices.changeButton({
 			action: 'Delete',
 			componentName: 'List',
@@ -308,7 +314,7 @@ export class CompaniesComponent implements OnInit, OnDestroy, AfterViewInit {
 	onDelete() {
 
 		let item = new DeleteListCompanyCommand();
-		item.ids = this.listIds;
+		item.ids = this.listIds.map(item => item.id);
 		const input = {
 			tableName: "Companies",
 			ids: this.listIds,

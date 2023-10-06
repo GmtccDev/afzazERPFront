@@ -238,8 +238,6 @@ export class RolesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onCheck(id) {
-
-
     const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);

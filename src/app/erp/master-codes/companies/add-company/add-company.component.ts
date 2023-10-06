@@ -321,8 +321,11 @@ export class AddCompanyComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("company.add-company");
             this.defineCompanyForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getCompanyCode();
           }
         }
       },

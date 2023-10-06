@@ -279,8 +279,11 @@ export class AddEditAccountGroupsComponent implements OnInit {
             this.toolbarPathData.componentAdd = 'account-groups.add-account-group';
             this.defineaccountGroupForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getaccountGroupCode();
           }
         }
       },

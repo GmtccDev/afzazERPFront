@@ -538,8 +538,11 @@ export class AddEditIssuingChequeComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("issuing-cheque.add-issuing-cheque");
             this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getIssuingChequeCode();
           }
         }
       },

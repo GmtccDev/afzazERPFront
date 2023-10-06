@@ -246,7 +246,13 @@ export class PeriodComponent implements OnInit, OnDestroy, AfterViewInit {
   openPeriods() { }
   onCheck(id) {
 
-    this.listIds.push(id);
+      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    if (index !== -1) {
+      this.listIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listIds.push(newItem);
+    }
     this.sharedServices.changeButton({
       action: 'Delete',
       componentName: 'List',
@@ -318,7 +324,7 @@ export class PeriodComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
     let item = new DeleteListPeriodCommand();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     const input={
       tableName:"Periods",
       ids: this.listIds,

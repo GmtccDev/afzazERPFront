@@ -437,8 +437,11 @@ export class AddEditVoucherTypeComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("voucher-type.add-voucher-type");
             this.defineVoucherTypeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+          // this.get();
           }
         }
       },

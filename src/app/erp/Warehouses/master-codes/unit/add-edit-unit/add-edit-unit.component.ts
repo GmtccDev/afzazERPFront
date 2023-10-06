@@ -227,8 +227,11 @@ export class AddEditUnitComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("unit.add-unit");
             this.defineUnitForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getUnitCode();
           }
         }
       },

@@ -245,8 +245,11 @@ export class AddEditAccountClassificationComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("account-classification.add-account-classification");
             this.defineaccountClassificationForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getaccountClassificationCode();
           }
         }
       },

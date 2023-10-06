@@ -341,8 +341,11 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
             this.toolbarPathData.componentAdd = 'store-cards.add-store-card';
             this.defineitemGroupsCardForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getitemGroupsCardCode();
           }
         }
       },

@@ -278,7 +278,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
   onDelete() {
 
     let item = new DeleteListItemGroupsCard();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     let sub = this.itemGroupsCardService.deleteListItemGroupsCard(item).subscribe(
       (resonse) => {
 

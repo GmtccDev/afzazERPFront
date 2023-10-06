@@ -277,8 +277,11 @@ export class AddEditRoleComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-role");
             this.defineRoleForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getRoleCode();
           }
         }
       },

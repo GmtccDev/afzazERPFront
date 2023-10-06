@@ -278,7 +278,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
     let item = new DeleteListCostCenterCommand();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     let sub = this.costCenterService.deleteListCostCenter(item).subscribe(
       (resonse) => {
 

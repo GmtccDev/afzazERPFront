@@ -220,7 +220,13 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   openBankAccountes() { }
   onCheck(id) {
 
-    this.listIds.push(id);
+      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    if (index !== -1) {
+      this.listIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listIds.push(newItem);
+    }
     this.sharedServices.changeButton({
       action: 'Delete',
       componentName: 'List',
