@@ -243,6 +243,9 @@ export class AddEditAccountClassificationComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("account-classification.add-account-classification");
+            if (this.accountClassificationForm.value.code != null) {
+              this.getaccountClassificationCode()
+            }
             this.defineaccountClassificationForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

@@ -202,7 +202,7 @@ export class AddEditJournalsComponent implements OnInit {
     let sub = this.SharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-debugger
+
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.SharedServices.changeToolbarPath({
@@ -213,6 +213,9 @@ debugger
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("journal.add-journal");
+            if (this.journalForm.value.code != null) {
+              this.getJournalCode()
+            }
             this.defineJournalForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

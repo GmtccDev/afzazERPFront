@@ -261,6 +261,9 @@ export class AddEditPaymentMethodComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-payment-method');
+            if (this.paymentMethodForm.value.code != null) {
+              this.getPaymentMethodCode()
+            }
             this.definePaymentMethodForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

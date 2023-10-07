@@ -237,6 +237,9 @@ export class AddEditPeriodComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-period');
+            if (this.periodForm.value.code != null) {
+              this.getPeriodCode()
+            }
             this.definePeriodForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

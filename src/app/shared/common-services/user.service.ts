@@ -10,7 +10,7 @@ export class UserService {
         private router: Router
     ) { }
     getCurrentSystemLanguage(): string {
-      debugger
+      
         let language = localStorage.getItem('language');
         if (language) return language;
         else {

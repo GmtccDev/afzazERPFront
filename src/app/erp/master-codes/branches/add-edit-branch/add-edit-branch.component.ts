@@ -312,6 +312,9 @@ export class AddEditBranchComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("branch.add-branch");
+            if (this.branchForm.value.code != null) {
+              this.getbranchCode()
+            }
             this.defineBranchForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

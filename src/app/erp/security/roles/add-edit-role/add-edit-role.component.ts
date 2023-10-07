@@ -100,7 +100,7 @@ export class AddEditRoleComponent implements OnInit {
 
 		this.service.getLastSubscription().subscribe(
 			next => {
-				debugger
+				
 
 				if (next.success == true) {
 					this.getApplications();
@@ -331,7 +331,7 @@ export class AddEditRoleComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    debugger
+    
     this.roleForm.value.id = this.id;
     this.roleForm.value.permissions = this.permission;
     return new Promise<void>((resolve, reject) => {
@@ -415,7 +415,7 @@ export class AddEditRoleComponent implements OnInit {
     ];
   }
   onChange(event) {
-    debugger
+    
     if (this.screensList != undefined) {
 
       this.screens = this.screensList.filter(x => x.moduleType == Number(event));

@@ -309,6 +309,9 @@ export class AddEditCustomerCardComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-customer-card');
+            if (this.customerCardForm.value.code != null) {
+              this.getCustomerCardCode()
+            }
             this.defineCustomerCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

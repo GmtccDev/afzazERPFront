@@ -94,7 +94,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 
 		let monthFrom;
 		let monthTo;
-     debugger
+     
 	 if (this.fromDate == undefined || this.fromDate == null) {
 
 		monthFrom = Number(this.fromDate.month + 1)
@@ -161,7 +161,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 	};
 
 	OnFilter(e: { fromDate; toDate;entriesStatusId, branchId,level}) {
-		debugger
+		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.branchId = e.branchId;
@@ -215,7 +215,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 				next: (res: any) => {
 					;
 					console.log("result data getbyid", res);
-					debugger;
+					;
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 				},

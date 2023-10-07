@@ -161,6 +161,7 @@ export class AddBusinessComponent implements OnInit {
 
   }
   getBusinessCode() {
+
     return new Promise<void>((resolve, reject) => {
       let sub = this.businessService.getLastCode().subscribe({
 
@@ -211,13 +212,17 @@ export class AddBusinessComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("business.add-business");
+            debugger
+            if (this.businessFieldForm.value.code != null) {
+              this.getBusinessCode()
+            }
             this.defineBusinessForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getBusinessCode();
+            this.getBusinessCode();
           }
         }
       },

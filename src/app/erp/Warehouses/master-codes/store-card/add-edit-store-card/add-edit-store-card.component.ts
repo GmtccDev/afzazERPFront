@@ -285,6 +285,9 @@ export class AddEditStoreCardComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'store-cards.add-store-card';
+            if (this.storeCardForm.value.code != null) {
+              this.getstoreCardCode()
+            }
             this.definestoreCardForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

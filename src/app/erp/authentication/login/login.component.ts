@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     private modelService: NgbModal,
     private spinner: NgxSpinnerService,
     public router: Router, private userService: UserService, private translate: TranslateService) {
-debugger
+
     this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
     this.userService.setCurrentLanguage(this.currentSystemLanguage );
     this.translate.use(this.currentSystemLanguage);
@@ -147,7 +147,7 @@ debugger
         console.log(next);
 
         if (next.success == true) {
-debugger
+
           //   this.translate.use("en");
           // let jwt = next.response.token;
           // let jwtData = jwt.split('.')[1]
@@ -159,7 +159,7 @@ debugger
           // localStorage.setItem("userName",decodedJwtData.fullName)
 
           const modalRef = this.modelService.open(LoginCompanyComponent);
-          debugger
+          
           modalRef.componentInstance.name = 'World';
           modalRef.componentInstance.userName = this.loginForm.value.userName;
           modalRef.componentInstance.password = this.loginForm.value.password;

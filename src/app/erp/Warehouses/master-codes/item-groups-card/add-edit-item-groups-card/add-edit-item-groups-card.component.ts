@@ -339,6 +339,9 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'store-cards.add-store-card';
+            if (this.itemGroupsCardForm.value.code != null) {
+              this.getitemGroupsCardCode()
+            }
             this.defineitemGroupsCardForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

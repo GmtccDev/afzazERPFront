@@ -182,7 +182,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.SharedService.changeButton(this.toolbarData);
   }
   doCopyEvent() {
-    debugger
+    
     this.checkButtonClicked('Copy');
     (this.toolbarData.action = 'Copy'),
       this.SharedService.changeButton(this.toolbarData);

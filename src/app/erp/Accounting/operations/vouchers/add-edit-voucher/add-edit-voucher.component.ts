@@ -810,7 +810,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   deleteItem(index) {
-    debugger
+    
     this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
     this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
     let currencyConversionFactor;
@@ -1074,7 +1074,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.voucherForm.value.currencyId).subscribe({
         next: (res: any) => {
-          debugger
+          
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = 1 / currencyModel.transactionFactor;

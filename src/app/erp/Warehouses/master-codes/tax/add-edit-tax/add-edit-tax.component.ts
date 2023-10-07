@@ -207,7 +207,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       let sub = this.taxService.getLastCode().subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.taxForm.patchValue({
             code: res.response
           });
@@ -259,7 +259,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    debugger
+    
     this.taxDetail.push({
       id: 0,
       taxId: this.selectedTaxDetail?.taxId ?? 0,
@@ -269,13 +269,13 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
     });
 
-    debugger
+    
     this.taxMaster!.taxDetail = this.taxDetail;
     this.clearSelectedItemData();
 
   }
   deleteItem(index) {
-    debugger
+    
     if (this.taxDetail.length) {
       if (this.taxDetail.length == 1) {
         this.taxDetail = [];
@@ -319,7 +319,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.taxService.createTax(this.taxMaster).subscribe({
         next: (result: any) => {
           this.defineTaxForm();
@@ -392,7 +392,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-    debugger
+    
     if (this.taxForm.valid) {
       if (this.taxMaster.taxDetail.length == 0) {
         this.errorMessage = this.translate.instant("tax.tax-details-required");
@@ -437,7 +437,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
             this.defineTaxForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
-            debugger
+            
             this.onUpdate();
           }
         }

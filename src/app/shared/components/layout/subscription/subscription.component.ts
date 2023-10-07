@@ -136,7 +136,7 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 
 		this.service.getLastSubscription().subscribe(
 			next => {
-				debugger
+				
 
 				if (next.success == true) {
 					this.getApplications();

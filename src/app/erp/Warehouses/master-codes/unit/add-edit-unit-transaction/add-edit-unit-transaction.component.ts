@@ -201,7 +201,7 @@ export class AddEditUnitTransactionComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    debugger
+    
     var inputDto = new EditUnitTransaction()
     return new Promise<void>((resolve, reject) => {
 
@@ -210,14 +210,14 @@ export class AddEditUnitTransactionComponent implements OnInit {
       inputDto.inputDto.id = this.id;
       let sub = this.unitService.updateUnitTransaction(inputDto).subscribe({
         next: (result: any) => {
-          debugger
+          
           this.response = { ...result.response };
           this.defineUnitTransactionForm();
           this.submited = false;
           this.activeModal.close(this.unitMasterId);
           this.spinner.hide();
 
-          debugger
+          
 
         },
         error: (err: any) => {
@@ -236,10 +236,10 @@ export class AddEditUnitTransactionComponent implements OnInit {
     if (this.unitTransactionForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
-        debugger
+        
         this.spinner.hide();
       }).catch(e => {
-        debugger
+        
         this.spinner.hide();
       });
     }

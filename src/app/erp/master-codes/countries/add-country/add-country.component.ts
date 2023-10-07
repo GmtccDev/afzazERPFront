@@ -213,6 +213,9 @@ export class AddCountryComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("country.add-country");
+            if (this.countriesForm.value.code != null) {
+              this.getCountryCode()
+            }
             this.defineCountryForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

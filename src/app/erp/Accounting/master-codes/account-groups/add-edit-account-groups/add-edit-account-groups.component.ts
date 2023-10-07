@@ -277,6 +277,9 @@ export class AddEditAccountGroupsComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'account-groups.add-account-group';
+            if (this.accountGroupForm.value.code != null) {
+              this.getaccountGroupCode()
+            }
             this.defineaccountGroupForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

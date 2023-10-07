@@ -183,7 +183,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	};
 
 	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
-		debugger
+		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;

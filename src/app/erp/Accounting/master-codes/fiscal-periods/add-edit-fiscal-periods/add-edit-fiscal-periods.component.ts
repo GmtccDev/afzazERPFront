@@ -233,6 +233,9 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("fiscal-period.add-fiscal-period");
+            if (this.fiscalPeriodForm.value.code != null) {
+              this.getfiscalPeriodCode()
+            }
             this.definefiscalPeriodForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {

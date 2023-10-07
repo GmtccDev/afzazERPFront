@@ -149,7 +149,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          debugger
+          
           console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
           if (res.success) {
