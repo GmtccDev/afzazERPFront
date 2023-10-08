@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card mb-3 mt-3">
+                <div class="card">
                     <div class="card-body">
                         <form [formGroup]="billTypeForm" id="billTypeSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
@@ -64,17 +64,13 @@
                                                         <label for="warehouses-effect" class="label-name">{{'bill-type.warehouse-effect'|translate}}
 														</label>
                                                         <ul class="list-group">
-                                                            <li class="list-group-item"
-                                                                *ngFor="let item of warehouseEffectList">
-                                                                <input type="radio" formControlName="warehouseEffect"
-                                                                    name="warehouseEffect" value="{{item.value}}" />
-                                                                {{lang=="ar"?item.nameAr:item.nameEn}}
+                                                            <li class="list-group-item" *ngFor="let item of warehouseEffectList">
+                                                                <input type="radio" formControlName="warehouseEffect" name="warehouseEffect" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
 
                                                             </li>
                                                         </ul>
                                                         <br/>
-                                                        <div *ngIf="(f['warehouseEffect'].touched || f['warehouseEffect'].dirty ) && f['warehouseEffect'].invalid"
-                                                            class="validation alert-danger position-absolute">
+                                                        <div *ngIf="(f['warehouseEffect'].touched || f['warehouseEffect'].dirty ) && f['warehouseEffect'].invalid" class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
                                                             <span *ngIf="f['warehouseEffect'].errors && f['warehouseEffect'].errors['required']" class="f-12 ng-star-inserted text-white">
 																{{'error.required'|translate}}</span>
@@ -91,8 +87,7 @@
                                                             </li>
                                                         </ul>
                                                         <br/>
-                                                        <div *ngIf="(f['accountingEffect'].touched || f['accountingEffect'].dirty ) && f['accountingEffect'].invalid"
-                                                            class="validation alert-danger position-absolute">
+                                                        <div *ngIf="(f['accountingEffect'].touched || f['accountingEffect'].dirty ) && f['accountingEffect'].invalid" class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
                                                             <span *ngIf="f['accountingEffect'].errors && f['accountingEffect'].errors['required']" class="f-12 ng-star-inserted text-white">
 																{{'error.required'|translate}}</span>
@@ -136,8 +131,7 @@
                                                             </li>
                                                         </ul>
                                                         <br/>
-                                                        <div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid"
-                                                            class="validation alert-danger position-absolute">
+                                                        <div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid" class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
                                                             <span *ngIf="f['codingPolicy'].errors && f['codingPolicy'].errors['required']" class="f-12 ng-star-inserted text-white">
 																{{'error.required'|translate}}</span>
@@ -268,7 +262,7 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="defaultCurrencyId" name='defaultCurrencyId' class="" id="defaultCurrencyId" >
+                                                            <ng-select style="width:100%" formControlName="defaultCurrencyId" name='defaultCurrencyId' class="" id="defaultCurrencyId">
                                                                 <ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
                                                                     {{lang=="ar" ? currency.nameAr:currency.nameEn}}
                                                                 </ng-option>
@@ -284,11 +278,8 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%"
-                                                                formControlName="defaultUnitId" name='defaultUnitId'
-                                                                class="" id="defaultUnitId">
-                                                                <ng-option *ngFor="let unit of unitsList"
-                                                                    [value]="unit.id">
+                                                            <ng-select style="width:100%" formControlName="defaultUnitId" name='defaultUnitId' class="" id="defaultUnitId">
+                                                                <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
                                                                     {{lang=="ar" ? unit.nameAr:unit.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>
@@ -303,10 +294,8 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="storeId"
-                                                                name='storeId' class="" id="storeId">
-                                                                <ng-option *ngFor="let store of storesList"
-                                                                    [value]="store.id">
+                                                            <ng-select style="width:100%" formControlName="storeId" name='storeId' class="" id="storeId">
+                                                                <ng-option *ngFor="let store of storesList" [value]="store.id">
                                                                     {{lang=="ar" ? store.nameAr:store.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>
@@ -321,10 +310,8 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="costCenterId"
-                                                                name='costCenterId' class="" id="costCenterId">
-                                                                <ng-option *ngFor="let costCenter of costCentersList"
-                                                                    [value]="costCenter.id">
+                                                            <ng-select style="width:100%" formControlName="costCenterId" name='costCenterId' class="" id="costCenterId">
+                                                                <ng-option *ngFor="let costCenter of costCentersList" [value]="costCenter.id">
                                                                     {{lang=="ar" ? costCenter.nameAr:costCenter.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>
@@ -339,10 +326,8 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="vendorId"
-                                                                name='vendorId' class="" id="vendorId">
-                                                                <ng-option *ngFor="let vendor of vendorsList"
-                                                                    [value]="vendor.id">
+                                                            <ng-select style="width:100%" formControlName="vendorId" name='vendorId' class="" id="vendorId">
+                                                                <ng-option *ngFor="let vendor of vendorsList" [value]="vendor.id">
                                                                     {{lang=="ar" ? vendor.nameAr:vendor.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>
@@ -358,14 +343,9 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%"
-                                                                formControlName="paymentMethodId" name='paymentMethodId'
-                                                                class="" id="paymentMethodId">
-                                                                <ng-option
-                                                                    *ngFor="let paymentMethod of paymentMethodsList"
-                                                                    [value]="paymentMethod.id">
-                                                                    {{lang=="ar" ?
-                                                                    paymentMethod.nameAr:paymentMethod.nameEn}}
+                                                            <ng-select style="width:100%" formControlName="paymentMethodId" name='paymentMethodId' class="" id="paymentMethodId">
+                                                                <ng-option *ngFor="let paymentMethod of paymentMethodsList" [value]="paymentMethod.id">
+                                                                    {{lang=="ar" ? paymentMethod.nameAr:paymentMethod.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>
 
@@ -380,10 +360,8 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="projectId"
-                                                                name='projectId' class="" id="projectId">
-                                                                <ng-option *ngFor="let project of projectsList"
-                                                                    [value]="project.id">
+                                                            <ng-select style="width:100%" formControlName="projectId" name='projectId' class="" id="projectId">
+                                                                <ng-option *ngFor="let project of projectsList" [value]="project.id">
                                                                     {{lang=="ar" ? project.nameAr:project.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>
@@ -399,10 +377,8 @@
 
 														</label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="defaultPrice"
-                                                                name='defaultPrice' class="" id="defaultPrice">
-                                                                <ng-option *ngFor="let price of pricesList"
-                                                                    [value]="price.id">
+                                                            <ng-select style="width:100%" formControlName="defaultPrice" name='defaultPrice' class="" id="defaultPrice">
+                                                                <ng-option *ngFor="let price of pricesList" [value]="price.id">
                                                                     {{lang=="ar" ? price.nameAr:price.nameEn}}
                                                                 </ng-option>
                                                             </ng-select>

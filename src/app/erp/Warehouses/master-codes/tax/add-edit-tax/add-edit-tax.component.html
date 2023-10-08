@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card mb-3 mt-3">
+                <div class="card">
                     <div class="card-body">
                         <form [formGroup]="taxForm" id="taxSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
@@ -35,11 +35,8 @@
                                                 {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control "
-                                                    [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-                                                    name="nameAr" formControlName="nameAr">
-                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control " [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
@@ -52,9 +49,8 @@
                                                 {{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control " name="nameEn"
-                                                    formControlName="nameEn">
-                                               
+                                                <input type="text" class="form-control " name="nameEn" formControlName="nameEn">
+
 
                                             </div>
                                         </div>

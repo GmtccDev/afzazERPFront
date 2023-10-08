@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card mb-3 mt-3">
+                <div class="card">
                     <div class="card-body">
                         <form [formGroup]="voucherForm" id="voucherSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
@@ -14,128 +14,101 @@
                                     <h3>{{'voucher.voucher-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12 ">
                                             <label for="code" class="label-name">
-                                                {{'general.code'|translate}}
-                                            </label>
+												{{'general.code'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
-                                                    name="code" formControlName="code">
-                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12">
                                             <label for="voucherDate" class="label-name">
-                                                {{'general.date'|translate}}
-                                            </label>
+												{{'general.date'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <app-full-date name="voucherDate" formControlName="voucherDate"
-                                                    [(ngModel)]="voucherDate" ngDefaultControl
-                                                    [selectedDate]="voucherDate"
-                                                    (OnDateSelect)="getVoucherDate($event)"></app-full-date>
+                                                <app-full-date name="voucherDate" formControlName="voucherDate" [(ngModel)]="voucherDate" ngDefaultControl [selectedDate]="voucherDate" (OnDateSelect)="getVoucherDate($event)"></app-full-date>
 
-                                                <div *ngIf="(f['voucherDate'].touched || f['voucherDate'].dirty ) && f['voucherDate'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <div *ngIf="(f['voucherDate'].touched || f['voucherDate'].dirty ) && f['voucherDate'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['voucherDate'].errors && f['voucherDate'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['voucherDate'].errors && f['voucherDate'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12">
                                             <label for="voucherTotal" class="label-name">
-                                                {{'voucher.voucher-total'|translate}}
-                                            </label>
+												{{'voucher.voucher-total'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['voucherTotal'].errors || f['voucherTotal'].invalid}"
-                                                    name="voucherTotal" formControlName="voucherTotal" [(ngModel)]="voucherTotal">
-                                                <div *ngIf="(f['voucherTotal'].touched || f['voucherTotal'].dirty ) && f['voucherTotal'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['voucherTotal'].errors || f['voucherTotal'].invalid}" name="voucherTotal" formControlName="voucherTotal" [(ngModel)]="voucherTotal">
+                                                <div *ngIf="(f['voucherTotal'].touched || f['voucherTotal'].dirty ) && f['voucherTotal'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['voucherTotal'].errors && f['voucherTotal'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['voucherTotal'].errors && f['voucherTotal'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-3">
                                             <label for="currencyFactor" class="label-name">
-                                                {{'currency.transaction-factor'|translate}}</label>
+												{{'currency.transaction-factor'|translate}}</label>
                                             <div class="input-group form-group">
-                                                <input type="number"  [(ngModel)]="currencyFactor" required class="form-control required"
-                                                    formControlName="currencyFactor" name="currencyFactor" style="width: 70px;" disabled="true">
+                                                <input type="number" [(ngModel)]="currencyFactor" required class="form-control required" formControlName="currencyFactor" name="currencyFactor" style="width: 70px;" disabled="true">
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-3">
                                             <label for="currencyId" class="label-name">{{'general.currency'|translate}}
-                                            </label>
+											</label>
                                             <span class="text-danger">*</span>
 
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="currencyId"
-                                                    name='currencyId' class="" id="currencyId" [(ngModel)]="currencyId" (change)="getAmount()">
-                                                    <ng-option *ngFor="let currency of currenciesList"
-                                                        [value]="currency.id">
+                                                <ng-select style="width:100%" formControlName="currencyId" name='currencyId' class="" id="currencyId" [(ngModel)]="currencyId" (change)="getAmount()">
+                                                    <ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
                                                         {{lang=="ar"?currency.nameAr:currency.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
 
-                                                <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
 
                                             </div>
                                         </div>
                                         <div class="col-md-1 col-md-1">
-                                            <button class="btn btn-rounded btn-dark"
-                                                (click)="showSearchCurrencyModal=true" type="button"><i
-                                                    class="fa fa-search"></i></button>
+                                            <button class="btn btn-rounded btn-dark" (click)="showSearchCurrencyModal=true" type="button"><i
+													class="fa fa-search"></i></button>
                                         </div>
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12">
                                             <label for="voucherTotalLocal" class="label-name">
-                                                {{'voucher.voucher-total-local'|translate}}
-                                            </label>
+												{{'voucher.voucher-total-local'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['voucherTotalLocal'].errors || f['voucherTotalLocal'].invalid}"
-                                                    name="voucherTotalLocal" formControlName="voucherTotalLocal" [(ngModel)]="voucherTotalLocal">
-                                                <div *ngIf="(f['voucherTotalLocal'].touched || f['voucherTotalLocal'].dirty ) && f['voucherTotalLocal'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['voucherTotalLocal'].errors || f['voucherTotalLocal'].invalid}" name="voucherTotalLocal" formControlName="voucherTotalLocal" [(ngModel)]="voucherTotalLocal">
+                                                <div *ngIf="(f['voucherTotalLocal'].touched || f['voucherTotalLocal'].dirty ) && f['voucherTotalLocal'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['voucherTotalLocal'].errors && f['voucherTotalLocal'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['voucherTotalLocal'].errors && f['voucherTotalLocal'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -144,45 +117,36 @@
 
                                         <div class="col-md-3 col-3">
                                             <label for="cashAccountId" class="label-name">
-                                                {{'general.cash-account'|translate}}
-                                            </label>
+												{{'general.cash-account'|translate}}
+											</label>
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="cashAccountId"
-                                                    name='cashAccountId' class="" id="cashAccountId"
-                                                    [(ngModel)]="cashAccountId">
-                                                    <ng-option *ngFor="let account of cashAccountsList"
-                                                        [value]="account.id">
+                                                <ng-select style="width:100%" formControlName="cashAccountId" name='cashAccountId' class="" id="cashAccountId" [(ngModel)]="cashAccountId">
+                                                    <ng-option *ngFor="let account of cashAccountsList" [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
-                                                <div *ngIf="(f['cashAccountId'].touched || f['cashAccountId'].dirty ) && f['cashAccountId'].invalid"
-                                                    class="validation alert-danger position-absolute">
+                                                <div *ngIf="(f['cashAccountId'].touched || f['cashAccountId'].dirty ) && f['cashAccountId'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['cashAccountId'].errors && f['cashAccountId'].errors['required']"
-                                                        class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+                                                    <span *ngIf="f['cashAccountId'].errors && f['cashAccountId'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
 
                                         </div>
                                         <div class="col-md-1 col-md-1">
-                                            <button class="btn btn-rounded btn-dark"
-                                                (click)="showSearchCashAccountModal=true" type="button"><i
-                                                    class="fa fa-search"></i></button>
+                                            <button class="btn btn-rounded btn-dark" (click)="showSearchCashAccountModal=true" type="button"><i
+													class="fa fa-search"></i></button>
                                         </div>
 
                                         <div class="col-md-3 col-3">
                                             <label for="costCenterId" class="label-name">
-                                                {{'general.cost-center'|translate}}
-                                            </label>
+												{{'general.cost-center'|translate}}
+											</label>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="costCenterId"
-                                                    name='costCenterId' class="" id="costCenterId">
-                                                    <ng-option *ngFor="let costCenter of costCentersList"
-                                                        [value]="costCenter.id">
+                                                <ng-select style="width:100%" formControlName="costCenterId" name='costCenterId' class="" id="costCenterId">
+                                                    <ng-option *ngFor="let costCenter of costCentersList" [value]="costCenter.id">
                                                         {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
@@ -191,22 +155,20 @@
 
                                         </div>
                                         <div class="col-md-1 col-md-1">
-                                            <button class="btn btn-rounded btn-dark"
-                                                (click)="showSearchCostCenterModal=true" type="button"><i
-                                                    class="fa fa-search"></i></button>
+                                            <button class="btn btn-rounded btn-dark" (click)="showSearchCostCenterModal=true" type="button"><i
+													class="fa fa-search"></i></button>
                                         </div>
 
 
-                                    
 
-                                       
 
-                                        <div class="col-md-4 col-4">
+
+
+                                        <div class="col-md-6 col-12">
                                             <label for="description" class="label-name">
-                                                {{'general.description'|translate}}</label>
+												{{'general.description'|translate}}</label>
                                             <div class="form-group position-relative">
-                                                <textarea class="form-control icon-branch" name="description"
-                                                    formControlName="description">
+                                                <textarea class="form-control icon-branch" name="description" formControlName="description">
                                                 </textarea>
                                             </div>
                                         </div>
@@ -220,8 +182,7 @@
                                                 <li ngbNavItem [destroyOnHide]="false">
                                                     <a ngbNavLink> {{'general.details' |translate}}</a>
                                                     <ng-template ngbNavContent>
-                                                        <table class="table table-bordered table-responsive text-center"
-                                                            style="overflow-y: scroll !important;height: 200px;">
+                                                        <table class="table table-bordered table-responsive text-center" style="overflow-y: scroll !important;height: 200px;">
                                                             <thead>
                                                                 <th>#</th>
                                                                 <th *ngIf="voucherkindId==1">
@@ -249,163 +210,86 @@
                                                             <tr *ngFor="let item of voucherDetail; let i= index;">
                                                                 <td> {{i+1}}</td>
                                                                 <td *ngIf="voucherkindId==1">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="voucherDetail[i].debit"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                         min="0"
-                                                                        class="form-control"
-                                                                        (change)="getAddedValueAfterConversion()">
+                                                                    <input type="number" [(ngModel)]="voucherDetail[i].debit" [ngModelOptions]="{standalone: true}" min="0" class="form-control" (change)="getAddedValueAfterConversion()">
                                                                 </td>
                                                                 <td *ngIf="voucherkindId==2">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="voucherDetail[i].credit"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                         min="0"
-                                                                        class="form-control"
-                                                                        (change)="getAddedValueAfterConversion()">
+                                                                    <input type="number" [(ngModel)]="voucherDetail[i].credit" [ngModelOptions]="{standalone: true}" min="0" class="form-control" (change)="getAddedValueAfterConversion()">
                                                                 </td>
                                                                 <td style="width:100px;" *ngIf="enableMultiCurrencies">
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="voucherDetail[i].currencyNameAr"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCurrencySearchDialog(i)">
+                                                                    <input type="text" class="form-control" placeholder="{{'general.search'|translate}}" [(ngModel)]="voucherDetail[i].currencyNameAr" [ngModelOptions]="{standalone: true}" (keydown.Enter)="openCurrencySearchDialog(i)">
 
 
                                                                 </td>
                                                                 <td *ngIf="enableMultiCurrencies">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="voucherDetail[i].currencyConversionFactor"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control"
-                                                                        (change)="getAddedValueAfterConversion(i)">
+                                                                    <input type="number" [(ngModel)]="voucherDetail[i].currencyConversionFactor" [ngModelOptions]="{standalone: true}" min="0" class="form-control" (change)="getAddedValueAfterConversion(i)">
 
                                                                 </td>
 
                                                                 <td *ngIf="voucherkindId==1 && enableMultiCurrencies">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="voucherDetail[i].debitLocal"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control">
+                                                                    <input type="number" [(ngModel)]="voucherDetail[i].debitLocal" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
                                                                 </td>
                                                                 <td *ngIf="voucherkindId==2 && enableMultiCurrencies">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="voucherDetail[i].creditLocal"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control">
+                                                                    <input type="number" [(ngModel)]="voucherDetail[i].creditLocal" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
                                                                 </td>
                                                                 <td>
-                                                                    <ng-select class="custom"
-                                                                        [(ngModel)]="voucherDetail[i].beneficiaryTypeId"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        [items]="beneficiaryTypesEnum" bindLabel="name"
-                                                                        bindValue="id" style="width:100%"></ng-select>
+                                                                    <ng-select class="custom" [(ngModel)]="voucherDetail[i].beneficiaryTypeId" [ngModelOptions]="{standalone: true}" [items]="beneficiaryTypesEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
                                                                 </td>
                                                                 <td>
 
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="voucherDetail[i].beneficiaryAccountNameAr"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openBeneficiaryAccountSearchDialog(i)">
+                                                                    <input type="text" class="form-control" placeholder="{{'general.search'|translate}}" [(ngModel)]="voucherDetail[i].beneficiaryAccountNameAr" [ngModelOptions]="{standalone: true}" (keydown.Enter)="openBeneficiaryAccountSearchDialog(i)">
 
 
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="voucherDetail[i].costCenterNameAr"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCostCenterSearchDialog(i)">
+                                                                    <input type="text" class="form-control" placeholder="{{'general.search'|translate}}" [(ngModel)]="voucherDetail[i].costCenterNameAr" [ngModelOptions]="{standalone: true}" (keydown.Enter)="openCostCenterSearchDialog(i)">
 
 
                                                                 </td>
                                                                 <td>
                                                                     <!-- <button class="btn btn-danger px-3" (click)="deleteItem(i)" type="button">
-                                                                       
+
                                                                         <i class="las la-trash-alt"></i>
                                                                     </button> -->
 
-                                                                    <input type="button" class="btn btn-warning px-3"
-                                                                        value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
+                                                                    <input type="button" class="btn btn-warning px-3" value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
                                                                 </td>
                                                             </tr>
 
                                                             <tr>
                                                                 <td>{{voucherDetail.length + 1}}</td>
                                                                 <td *ngIf="voucherkindId==1">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedVoucherDetail.debit"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        min="0"
-                                                                        class="form-control"
-                                                                        (change)="getValueAfterConversion()">
+                                                                    <input type="number" [(ngModel)]="selectedVoucherDetail.debit" [ngModelOptions]="{standalone: true}" min="0" class="form-control" (change)="getValueAfterConversion()">
                                                                 </td>
                                                                 <td *ngIf="voucherkindId==2">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedVoucherDetail.credit"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                         min="0"
-                                                                        class="form-control"
-                                                                        (change)="getCreditAfterConversion()">
+                                                                    <input type="number" [(ngModel)]="selectedVoucherDetail.credit" [ngModelOptions]="{standalone: true}" min="0" class="form-control" (change)="getCreditAfterConversion()">
                                                                 </td>
                                                                 <td style="width:100px;" *ngIf="enableMultiCurrencies">
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedVoucherDetail.currencyNameAr"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCurrencySearchDialog(-1)">
+                                                                    <input type="text" class="form-control" placeholder="{{'general.search'|translate}}" [(ngModel)]="selectedVoucherDetail.currencyNameAr" [ngModelOptions]="{standalone: true}" (keydown.Enter)="openCurrencySearchDialog(-1)">
 
 
                                                                 </td>
                                                                 <td *ngIf="enableMultiCurrencies">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedVoucherDetail.currencyConversionFactor"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control"
-                                                                        (change)="getValueAfterConversion()">
+                                                                    <input type="number" [(ngModel)]="selectedVoucherDetail.currencyConversionFactor" [ngModelOptions]="{standalone: true}" min="0" class="form-control" (change)="getValueAfterConversion()">
 
                                                                 </td>
 
                                                                 <td *ngIf="voucherkindId==1 && enableMultiCurrencies">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedVoucherDetail.debitLocal"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control">
+                                                                    <input type="number" [(ngModel)]="selectedVoucherDetail.debitLocal" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
                                                                 </td>
                                                                 <td *ngIf="voucherkindId==2 && enableMultiCurrencies">
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedVoucherDetail.creditLocal"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control">
+                                                                    <input type="number" [(ngModel)]="selectedVoucherDetail.creditLocal" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
                                                                 </td>
                                                                 <td>
-                                                                    <ng-select class="custom"
-                                                                        [(ngModel)]="selectedVoucherDetail.beneficiaryTypeId"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        [items]="beneficiaryTypesEnum" bindLabel="name"
-                                                                        bindValue="id" style="width:100%"
-                                                                        
-                                                                        ></ng-select>
+                                                                    <ng-select class="custom" [(ngModel)]="selectedVoucherDetail.beneficiaryTypeId" [ngModelOptions]="{standalone: true}" [items]="beneficiaryTypesEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
                                                                 </td>
                                                                 <td>
 
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedVoucherDetail.beneficiaryAccountNameAr"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openBeneficiaryAccountSearchDialog(-1)"
-                                                                       
-                                                                        >
+                                                                    <input type="text" class="form-control" placeholder="{{'general.search'|translate}}" [(ngModel)]="selectedVoucherDetail.beneficiaryAccountNameAr" [ngModelOptions]="{standalone: true}" (keydown.Enter)="openBeneficiaryAccountSearchDialog(-1)">
 
 
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedVoucherDetail.costCenterNameAr"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCostCenterSearchDialog(-1)">
+                                                                    <input type="text" class="form-control" placeholder="{{'general.search'|translate}}" [(ngModel)]="selectedVoucherDetail.costCenterNameAr" [ngModelOptions]="{standalone: true}" (keydown.Enter)="openCostCenterSearchDialog(-1)">
 
 
                                                                 </td>
@@ -415,8 +299,7 @@
 
                                                                         <i class="las la-plus"></i>
                                                                     </button> -->
-                                                                    <input type="button" class="btn btn-primary px-3"
-                                                                        (click)="addItem()" value="{{'buttons.add'|translate}}">
+                                                                    <input type="button" class="btn btn-primary px-3" (click)="addItem()" value="{{'buttons.add'|translate}}">
 
                                                                 </td>
                                                             </tr>
@@ -440,14 +323,11 @@
     </div>
 </section>
 
-<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeAccountApi"
-    (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
+<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeAccountApi" (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
 </app-public-search-modal>
-<app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi"
-    (emitClose)="showSearchCostCenterModal = false;" (emitSearch)="onSelectCostCenter($event)">
+<app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi" (emitClose)="showSearchCostCenterModal = false;" (emitSearch)="onSelectCostCenter($event)">
 </app-public-search-modal>
 
 
-<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi"
-    (emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
+<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi" (emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
 </app-public-search-modal>
