@@ -1,13 +1,13 @@
 <form class="form-inline">
     <div class="form-group">
-        <div class="input-group sniper-date" dir="ltr">
+        <div class="input-group sniper-date">
 
 
             <input class="form-control" style="text-align: center;padding-left: 0px;padding-right: 0px;" placeholder="yyyy/mm/dd" name="d" #c="ngModel" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)" (keydown)="onKeyDown($event)"
                 (change)="dateChange(c, d)" #inputGDate>
-            <button class="btn btn-outline-secondary calendar" (click)="ChangeType()" type="button">{{'general.gregorian'|translate}}</button>
-            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
-        class="fa fa-calendar"></i></button>
+            <button class="btn btn-outline-secondary calendar0" (click)="ChangeType()" type="button">{{'general.gregorian'|translate}}</button>
+            <button class="btn btn-outline-secondary calendar0" (click)="d.toggle()" type="button"><i
+					class="fa fa-calendar"></i></button>
 
         </div>
     </div>

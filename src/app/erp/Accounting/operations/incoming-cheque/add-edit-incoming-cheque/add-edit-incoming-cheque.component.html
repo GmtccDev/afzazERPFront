@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card mb-3 mt-3">
+                <div class="card">
                     <div class="card-body">
 
                         <form [formGroup]="incomingChequeForm" id="incomingChequeSubmit" class="tabs-form">
@@ -21,7 +21,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -32,37 +32,34 @@
 
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="col-md-6 col-12 ">
                                             <label for="code" class="label-name">
 												{{'component-names.account'|translate}}
 											</label><span class="text-danger">*</span>
-                                            <div class="col-sm-6">
-                                                <div class="input-group form-group">
-                                                    <div class="input-group form-group">
 
-                                                        <select required class="form-control required" name="accountId" formControlName="accountId">
+                                            <div class="input-group form-group">
 
-															<option *ngFor="let account of accountList"
-																[value]="account.id">
-																{{lang=="ar"?account.nameAr:account.nameEn}}
-															</option>
+                                                <select required class="form-control required" name="accountId" formControlName="accountId">
 
-														</select>
+													<option *ngFor="let account of accountList" [value]="account.id">
+														{{lang=="ar"?account.nameAr:account.nameEn}}
+													</option>
 
-                                                        <!-- <div class="input-group-prepend">
+												</select>
+
+                                                <!-- <div class="input-group-prepend">
                                                             <button (click)="ClickAccount(i)"
                                                                 class="btn btn-rounded btn-dark"
                                                                 type="button"><i
                                                                     class="fa fa-search"></i></button>
                                                         </div> -->
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6 col-12">
                                             <label for="date" class="label-name">
 												{{'general.date'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class=" position-relative">
                                                 <app-full-date name="date" formControlName="date" [(ngModel)]="date" ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"></app-full-date>
                                                 <!-- <input type="date" [(ngModel)]="date" class="form-control " name="date"
                                                     formControlName="date"  ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"> -->
@@ -77,7 +74,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
-                                            <div class="form-group position-relative">
+                                            <div class=" position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
 
@@ -87,7 +84,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="dueDate" class="label-name">
 												{{'general.dueDate'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class=" position-relative">
                                                 <app-full-date name="dueDate" formControlName="dueDate" [(ngModel)]="dueDate" ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"></app-full-date>
                                                 <!-- <input type="date" [(ngModel)]="dueDate" class="form-control " name="dueDate"
                                                     formControlName="dueDate"  ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"> -->
@@ -99,28 +96,28 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6 col-12">
                                             <label for="amountLocal" class="label-name">
 												{{'general.amount-local'|translate}}</label><span class="text-danger">*</span>
                                             <div class="input-group form-group">
                                                 <input type="number" [(ngModel)]="amountLocal" required class="form-control required" formControlName="amountLocal" name="amountLocal" style="width: 70px;" disabled="true">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6 col-12">
                                             <label for="currencyFactor" class="label-name">
 												{{'currency.transaction-factor'|translate}}</label>
                                             <div class="input-group form-group">
                                                 <input type="number" [(ngModel)]="currencyFactor" required class="form-control required" formControlName="currencyFactor" name="currencyFactor" style="width: 70px;" disabled="true">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6 col-12">
                                             <label for="amount" class="label-name">
 												{{'general.amount'|translate}}</label><span class="text-danger">*</span>
                                             <div class="input-group form-group">
                                                 <input type="number" [(ngModel)]="amount" required class="form-control required" formControlName="amount" name="amount" style="width: 70px;" disabled="true">
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12">
                                             <label for="currencyId" class="label-name">
 												{{'component-names.currencies'|translate}}
 											</label>
@@ -140,10 +137,7 @@
                                             </div>
 
                                         </div>
-
-
-                                        <hr class="mt-3 mb-3 p-0">
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-6 d-flex align-items-end">
                                             <div class="media">
                                                 <label class="label-name"> {{'general.status'|translate}}
 												</label>
@@ -158,191 +152,159 @@
                                         </div>
 
 
+
+
+
                                     </div>
 
                                 </div>
+                            </div>
 
-                                <div formArrayName="incomingChequeDetail" style="width: 100% ; overflow-x: scroll;">
-                                    <div style="width: 1500px;">
-                                        <table class="table table-sm m-b-0 table-broder ">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <!-- <th># </th> -->
-                                                    <th style="width: 15%;">{{'general.account-number'|translate}}</th>
-                                                    <th style="width: 10%;">{{'general.amount'|translate}}</th>
-                                                    <th style="width: 10%;">{{'general.beneficiary-type'|translate}}
-                                                    </th>
-                                                    <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
-                                                    <th style="width: 15%;">{{'general.currency'|translate}}</th>
-                                                    <th style="width: 10%;">
-                                                        {{'general.currency-conversion-factor'|translate}}</th>
+                            <div formArrayName="incomingChequeDetail" style="width: 100% ; overflow-x: scroll;">
+                                <div style="width: 1500px;" class="table-container">
+                                    <table class="table table-sm m-b-0 table-broder ">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <!-- <th># </th> -->
+                                                <th style="width: 15%;">{{'general.account-number'|translate}}</th>
+                                                <th style="width: 10%;">{{'general.amount'|translate}}</th>
+                                                <th style="width: 10%;">{{'general.beneficiary-type'|translate}}
+                                                </th>
+                                                <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
+                                                <th style="width: 15%;">{{'general.currency'|translate}}</th>
+                                                <th style="width: 10%;">
+                                                    {{'general.currency-conversion-factor'|translate}}</th>
 
-                                                    <th style="width: 10%;">{{'general.balance'|translate}}</th>
-                                                    <th style="width: 15%;">{{'general.description'|translate}}</th>
-                                                    <th style="width: 1%;">{{'general.procedures'|translate}}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let row of incomingChequeForm.get('incomingChequeDetail')['controls']; let i = index" [formGroupName]="i">
-                                                    <!-- <td> -->
-                                                    <!-- {{ i+1 }} -->
-                                                    <!-- <input type="text"
+                                                <th style="width: 10%;">{{'general.balance'|translate}}</th>
+                                                <th style="width: 15%;">{{'general.description'|translate}}</th>
+                                                <th style="width: 1%;">{{'general.procedures'|translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of incomingChequeForm.get('incomingChequeDetail')['controls']; let i = index" [formGroupName]="i">
+                                                <!-- <td> -->
+                                                <!-- {{ i+1 }} -->
+                                                <!-- <input type="text"
                                                             style="border: none; border-color: transparent;" hidden
                                                             formControlName="iCDetailSerial" name="iCDetailSerial"> -->
-                                                    <!-- </td> -->
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <div class="input-group form-group">
+                                                <!-- </td> -->
+                                                <td>
 
-                                                                        <select required class="form-control required" name="accountId" formControlName="accountId">
 
-																			<option *ngFor="let account of accountList"
-																				[value]="account.id">
-																				{{lang=="ar"?account.nameAr:account.nameEn}}
-																			</option>
+                                                    <select required class="form-control required" name="accountId" formControlName="accountId">
 
-																		</select>
+														<option *ngFor="let account of accountList"
+															[value]="account.id">
+															{{lang=="ar"?account.nameAr:account.nameEn}}
+														</option>
 
-                                                                        <!-- <div class="input-group-prepend">
+													</select>
+
+                                                    <!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickAccount(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
                                                                         </div> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
 
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <input type="number" required class="form-control required" (keypress)="numberOnly($event,i)" (input)="onInput($event.target.value,i)" formControlName="amount" name="amount" style="width: 70px;">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                </td>
 
-                                                    </td>
+                                                <td>
 
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <div class="input-group form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" required class="form-control required" (keypress)="numberOnly($event,i)" (input)="onInput($event.target.value,i)" formControlName="amount" name="amount" style="width: 70px;">
+                                                    </div>
 
-                                                                        <select class="form-control" name="beneficiaryTypeId" formControlName="beneficiaryTypeId" [ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}">
+                                                </td>
+
+                                                <td>
 
 
-																			<option
-																				*ngFor="let  beneficiary of beneficiaryTypesEnum"
-																				[value]="beneficiary.id">
-																				{{beneficiary.name}}
-																			</option>
-																		</select>
+                                                    <select class="form-control" name="beneficiaryTypeId" formControlName="beneficiaryTypeId" [ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}">
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <div class="input-group form-group">
 
-                                                                        <select required class="form-control required" name="beneficiaryAccountId" formControlName="beneficiaryAccountId">
+														<option *ngFor="let  beneficiary of beneficiaryTypesEnum"
+															[value]="beneficiary.id">
+															{{beneficiary.name}}
+														</option>
+													</select>
 
-																			<option *ngFor="let account of accountList"
-																				[value]="account.id">
-																				{{lang=="ar"?account.nameAr:account.nameEn}}
-																			</option>
 
-																		</select>
+                                                </td>
+                                                <td>
 
-                                                                        <!-- <div class="input-group-prepend">
+
+                                                    <select required class="form-control required" name="beneficiaryAccountId" formControlName="beneficiaryAccountId">
+
+														<option *ngFor="let account of accountList"
+															[value]="account.id">
+															{{lang=="ar"?account.nameAr:account.nameEn}}
+														</option>
+
+													</select>
+
+                                                    <!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickAccount(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
                                                                         </div> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="input-group form-group">
-                                                                        <div class="input-group form-group">
 
-                                                                            <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+                                                </td>
+                                                <td>
 
 
-																				<option
-																					*ngFor="let currency of currencyList"
-																					[value]="currency.id">
-																					{{lang=="ar"?currency.nameAr:currency.nameEn}}
-																				</option>
-																			</select>
+                                                    <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <input type="number" required class="form-control required" disabled="disabled" formControlName="transactionFactor" name="transactionFactor" style="width: 70px;">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+														<option *ngFor="let currency of currencyList"
+															[value]="currency.id">
+															{{lang=="ar"?currency.nameAr:currency.nameEn}}
+														</option>
+													</select>
 
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                                <div class="input-group form-group">
-                                                                    <input type="number" required class="form-control required" disabled="disabled" formControlName="currencyLocal" name="currencyLocal" style="width: 70px;">
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <textarea style="width: 100%;" formControlName="notes" name='notes'></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-square btn-danger btn-sm waves-effect waves-light" (click)="onDeleteRow(i)"> <i
-																class="icofont icofont-ui-delete"></i>{{'buttons.delete'|translate}}
-														</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </td>
+                                                <td>
+
+                                                    <div class="input-group ">
+                                                        <input type="number" required class="form-control required" disabled="disabled" formControlName="transactionFactor" name="transactionFactor" style="width: 70px;">
+                                                    </div>
+
+                                                </td>
+                                                <td>
+
+                                                    <div class="input-group ">
+                                                        <input type="number" required class="form-control required" disabled="disabled" formControlName="currencyLocal" name="currencyLocal" style="width: 70px;">
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <textarea class="form-control" formControlName="notes" name='notes'></textarea>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-table btn-danger" (click)="onDeleteRow(i)"> <i
+															class="icofont icofont-ui-delete"></i>{{'buttons.delete'|translate}}
+													</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-
-
                             </div>
-                            <br>
 
-                            <button type="button" (click)="initGroup()" class="btn btn-rounded btn-success">{{'general.add-new-row'|translate}}
+
+
+
+                            <button type="button" (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2 mb-3 mt-3">{{'general.add-new-row'|translate}}
 							</button>
-                            <div class="row" *ngIf="incomingChequeForm.value.id>0">
-                                <h1>{{'incoming-cheque.cheque-details-status'|translate}}</h1>
-                                <div formArrayName="incomingChequeStatusDetail" style="width: 100% ; overflow-x: scroll;">
-                                    <div>
+                            <div class="wrapper-title mt-5">
+                                <h3>{{'incoming-cheque.cheque-details-status'|translate}}</h3>
+                                <hr>
+                                <div class="row" *ngIf="incomingChequeForm.value.id>0">
+
+                                    <div formArrayName="incomingChequeStatusDetail">
+
                                         <table class="table table-sm m-b-0 table-broder ">
                                             <thead class="thead-light">
                                                 <tr>
@@ -354,32 +316,28 @@
                                             <tbody>
                                                 <tr *ngFor="let row of incomingChequeForm.get('incomingChequeStatusDetail')['controls']; let i = index" [formGroupName]="i">
                                                     <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="input-group form-group">
-                                                                    <input type="text" class="form-control " disabled="disabled" formControlName="date" name="date">
-                                                                </div>
-                                                            </div>
+
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control " disabled="disabled" formControlName="date" name="date">
                                                         </div>
+
 
                                                     </td>
                                                     <td>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="input-group form-group">
-                                                                    <input type="text" class="form-control " disabled="disabled" formControlName="statusName" name="statusName">
-                                                                </div>
-                                                            </div>
+
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control " disabled="disabled" formControlName="statusName" name="statusName">
+
                                                         </div>
                                                     </td>
 
                                                 </tr>
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
