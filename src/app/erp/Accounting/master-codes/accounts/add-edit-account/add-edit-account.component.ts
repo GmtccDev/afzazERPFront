@@ -559,6 +559,9 @@ export class AddEditAccountComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'Add account';
+            if (this.accountForm.value.code != null) {
+              this.getaccountCode()
+            }
             this.defineaccountForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {

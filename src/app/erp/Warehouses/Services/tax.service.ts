@@ -29,7 +29,7 @@ export class TaxServiceProxy {
     }
 
     createTax(warehousesTax: any): Observable<any> {
-         debugger
+         
         return this.http.post<any>(environment.apiUrl + "/api/Tax/create?", warehousesTax);
     }
   

@@ -39,7 +39,7 @@ export class PublicSearchModalComponent implements OnInit {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.publicService.getDdl(this.routeApi).subscribe({
 				next: (res) => {
-					debugger
+					
 					if (res.success) {
 						this.dataSource.data = res.response;
 

@@ -316,10 +316,16 @@ export class AddEditCostCenterComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'Add costCenter';
+            if (this.costCenterForm.value.code != null) {
+              this.getCostCenterCode()
+            }
             this.definecostCenterForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getCostCenterCode();
           }
         }
       },

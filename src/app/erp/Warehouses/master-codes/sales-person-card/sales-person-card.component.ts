@@ -1,56 +1,50 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteListSalesPersonCard } from './../../models/sales-person-card';
+import { Component, OnInit } from '@angular/core';
+import { SupplierCardDto } from '../../models/supplier-card';
+import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
+import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { Subscription } from 'rxjs';
-import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
-import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
-import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
-import { VoucherServiceProxy } from '../../services/voucher.service';
-import { SharedService } from '../../../../shared/common-services/shared-service';
-import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
-import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
+import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
+import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
+import { SalesPersonCardServiceProxy } from '../../Services/sales-person-card.service';
+import { Router } from '@angular/router';
+import { SharedService } from 'src/app/shared/common-services/shared-service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
-  selector: 'app-vouchers',
-  templateUrl: './vouchers.component.html',
-  styleUrls: ['./vouchers.component.scss']
+  selector: 'app-sales-person-card',
+  templateUrl: './sales-person-card.component.html',
+  styleUrls: ['./sales-person-card.component.scss']
 })
-export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SalesPersonCardComponent implements OnInit {
 
   //#region Main Declarations
-  vouchers: any[] = [];
-  voucherType: any[] = [];
-  voucherTypeId: any;
-
+  salesPersons: SupplierCardDto[] = [];
   currnetUrl: any;
-  queryParams: any;
-  sub: any;
-
-  addUrl: string = '/accounting-operations/vouchers/add-voucher/';
-  updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
-  listUrl: string = '/accounting-operations/vouchers/';
+  addUrl: string = '/warehouses-master-codes/sales-person-card/add-sales-person-card';
+  updateUrl: string = '/warehouses-master-codes/sales-person-card/update-sales-person-card/';
+  listUrl: string = '/warehouses-master-codes/sales-person-card';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.vouchers"),
+    componentList: this.translate.instant("component-names.sales-person-card"),
     componentAdd: '',
 
   };
-  listIds: any[] = [];
 
+  listIds: any[] = [];
   //#endregion
 
   //#region Constructor
   constructor(
-    private voucherService: VoucherServiceProxy,
+    private salesPersonCardService: SalesPersonCardServiceProxy,
     private router: Router,
-    private route: ActivatedRoute,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
@@ -64,17 +58,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    //  this.defineGridColumn();
-    let sub = this.route.params.subscribe(params => {
-      if (params['voucherTypeId'] != null) {
-        this.voucherTypeId = +params['voucherTypeId'];
-
-
-      }
-    })
-    this.subsList.push(sub);
+    // this.defineGridColumn();
+    
     this.spinner.show();
-    Promise.all([this.getVouchers()])
+    Promise.all([this.getsalesPersons()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -83,14 +70,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       }).catch(err => {
         this.spinner.hide();
       })
-
-
-
-
   }
 
   ngAfterViewInit(): void {
 
+   
 
 
   }
@@ -121,42 +105,18 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getVoucherTypes(id) {
+  getsalesPersons() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherService.getVoucher(id).subscribe({
+      let sub = this.salesPersonCardService.allSalesPersonCard(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
+
+          this.toolbarPathData.componentList = this.translate.instant("component-names.sales-person-card");
           if (res.success) {
-            this.voucherType = res.response.items
+            this.salesPersons = res.response.items
 
           }
-          resolve();
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
 
-      this.subsList.push(sub);
-    });
-
-  }
-  getVouchers() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          
-          console.log(res);
-          this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
-          if (res.success) {
-            
-            this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
-
-          }
           resolve();
 
         },
@@ -177,20 +137,14 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region CRUD Operations
   delete(id: any) {
-    this.voucherService.deleteVoucher(id).subscribe((resonse) => {
-      console.log('delete response', resonse);
-      this.getVouchers();
-      this.router.navigate([this.listUrl + this.voucherTypeId])
-        .then(() => {
-          window.location.reload();
-        });
+    this.salesPersonCardService.deleteSalesPersonCard(id).subscribe((resonse) => {
+      this.getsalesPersons();
     });
   }
   edit(id: string) {
-    
     this.router.navigate([
-      '/accounting-operations/vouchers/update-voucher/',
-      this.voucherTypeId, id,
+      '/warehouses-master-codes/sales-person-card/update-sales-person-card',
+      id,
     ]);
   }
 
@@ -207,15 +161,17 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        
         this.spinner.show();
-        let sub = this.voucherService.deleteVoucher(id).subscribe(
+        const input={
+          tableName:"supplierCards",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.salesPersonCardService.deleteEntity(input).subscribe(
           (resonse) => {
-            this.getVouchers();
-            this.router.navigate([this.listUrl + this.voucherTypeId])
-              .then(() => {
-                //   window.location.reload();
-              });
+
+            this.getsalesPersons();
+
           });
         this.subsList.push(sub);
         this.spinner.hide();
@@ -230,39 +186,30 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   sortByCols: any[] = [];
   searchFilters: any;
   groupByCols: string[] = [];
-  lang: string = localStorage.getItem("language");
-  branchId: string = localStorage.getItem("branchId");
-  companyId: string = localStorage.getItem("companyId");
-
+  lang = localStorage.getItem("language");
   columnNames = [
+    this.lang == 'ar'
+      ? { title: ' الاسم', field: 'nameAr' } :
+      { title: ' Name  ', field: 'nameEn' },
+
     {
-      title: this.lang == 'ar' ? ' كود' : 'Code ',
+      title: this.lang == 'ar' ? ' الكود' : 'Code ',
       field: 'code',
     },
     {
-      title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'voucherDate',
+      title: this.lang == 'ar' ? 'الهاتف' : 'Phone',
+      field: 'phone',
     },
     {
-      title: this.lang == 'ar' ? 'اجمالى قيمة السند محلى' : 'Voucher Total Local',
-      field: 'voucherTotalLocal',
+      title: this.lang == 'ar' ? 'البريد الالكترونى' : 'Email',
+      field: 'email',
     },
     {
-      title: this.lang == 'ar' ? 'الوصف' : 'Description',
-      field: 'description',
+      title: this.lang == 'ar' ? 'رقم الحساب' : 'Account Number',
+      field: 'accountId',
     },
-
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-    //   field: 'createdAt',
-    // },
-
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-    //   field: 'updatedAt',
-    // },
-
-
+ 
+   
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -275,14 +222,18 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
+        { field: 'nameEn', type: 'like', value: searchTxt },
+        { field: 'nameAr', type: 'like', value: searchTxt },
         { field: 'code', type: 'like', value: searchTxt },
-        { field: 'voucherTotal', type: 'like', value: searchTxt },
+        { field: 'phone', type: 'like', value: searchTxt },
+        { field: 'email', type: 'like', value: searchTxt },
+        { field: 'accountId', type: 'like', value: searchTxt }
+
         ,
       ],
     ];
   }
 
-  openVoucherTypes() { }
   onCheck(id) {
 
       const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
@@ -299,6 +250,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     } as ToolbarData);
   }
   onEdit(id) {
+
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -308,6 +260,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.router.navigate(['warehouses-master-codes/sales-person-card/update-sales-person-card/' + id])
     }
 
   }
@@ -315,7 +268,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
-        
         this.edit(event.item.id);
         this.sharedServices.changeButton({
           action: 'Update',
@@ -324,6 +276,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.router.navigate(['warehouses-master-codes/sales-person-card/update-sales-person-card/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -348,10 +301,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           if (currentBtn.action == ToolbarActions.List) {
 
           } else if (currentBtn.action == ToolbarActions.New) {
-
-            this.router.navigate([this.addUrl + this.voucherTypeId]);
-            //  this.router.navigate(['/control-panel/accounting/update-account', id]);
-
+            this.router.navigate([this.addUrl]);
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
             this.onDelete();
@@ -362,17 +312,26 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    var ids = this.listIds;
-    let sub = this.voucherService.deleteListVoucher(ids).subscribe(
+
+    let item = new DeleteListSalesPersonCard();
+    item.ids = this.listIds.map(item => item.id);
+    const input={
+      tableName:"SalesPersonCards",
+      ids: this.listIds,
+      idName:"Id"
+    };
+    let sub = this.salesPersonCardService.deleteListEntity(input).subscribe(
       (resonse) => {
-        this.router.navigate([this.listUrl + this.voucherTypeId])
-          .then(() => {
-            window.location.reload();
-          });
-        this.getVouchers();
+
+        //reloadPage()
+        this.getsalesPersons();
         this.listIds = [];
       });
     this.subsList.push(sub);
   }
-  //#endregion
+  
+
+
+
+
 }

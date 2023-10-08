@@ -11,6 +11,7 @@
     "phoneNumberFoundBefore":"الموبايل معرف سابقا",
     "can't-delete-some-records":"لايمكن حذف بعض السجلات",
     "can't-delete-record":"لا يمكن حذف السجل",
+    "NotAuthorized":"ليس لديك صلاحية",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"
@@ -276,6 +277,9 @@
         "add-item": "اضافة صنف",
         "item-groups-card": "بطاقة مجموعة اصناف",
         "item-groups-card-information": "معلومات بطاقة مجموعة اصناف",
+        "sales-person-card":"بطاقة المندوب",
+        "sales-person-card-information": "معلومات بطاقة المندوب",
+
         "bill-types": "أنماط الفواتير"
     },
     "general": {

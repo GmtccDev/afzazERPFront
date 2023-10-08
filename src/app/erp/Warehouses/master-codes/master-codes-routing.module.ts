@@ -20,6 +20,8 @@ import { AddEditCustomerCardComponent } from './customer-card/add-edit-customer-
 import { CustomerCardComponent } from './customer-card/customer-card.component';
 import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edit-bill-type.component';
 import { BillTypeComponent } from './bill-type/bill-type.component';
+import { SalesPersonCardComponent } from './sales-person-card/sales-person-card.component';
+import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-person-card/add-sales-person-card.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -57,6 +59,9 @@ const routes: Routes = [
 			{ path: 'billType', component: BillTypeComponent },
 			{ path: 'billType/add-billType', component: AddEditBillTypeComponent },
 			{ path: 'billType/update-billType/:id', component: AddEditBillTypeComponent },
+			{ path: 'sales-person-card', component: SalesPersonCardComponent },
+			{ path: 'sales-person-card/add-sales-person-card', component: AddSalesPersonCardComponent },
+			{ path: 'sales-person-card/update-sales-person-card/:id', component: AddSalesPersonCardComponent },
 		]
 	}
 ];

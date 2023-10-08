@@ -216,7 +216,13 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
   openUnits() { }
   onCheck(id) {
 
-    this.listIds.push(id);
+      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    if (index !== -1) {
+      this.listIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listIds.push(newItem);
+    }
     this.sharedService.changeButton({
       action: 'Delete',
       componentName: 'List',
@@ -288,7 +294,7 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
     let item = new DeleteListUnit();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     const input = {
       tableName: "Units",
       ids: this.listIds,

@@ -276,7 +276,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
     let item = new DeleteListAccountCommand();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     let sub = this.accountService.deleteListAccount(item).subscribe(
       (resonse) => {
 

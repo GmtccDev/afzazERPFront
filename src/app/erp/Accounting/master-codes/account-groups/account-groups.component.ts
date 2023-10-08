@@ -280,7 +280,7 @@ export class AccountGroupsComponent implements OnInit, OnDestroy, AfterViewInit 
   onDelete() {
 
     let item = new DeleteListAccountGroupCommand();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     let sub = this.accountGroupService.deleteListAccountGroup(item).subscribe(
       (resonse) => {
 

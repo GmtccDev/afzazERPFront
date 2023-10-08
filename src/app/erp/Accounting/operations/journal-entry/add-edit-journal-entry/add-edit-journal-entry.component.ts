@@ -536,11 +536,17 @@ export class AddEditJournalEntryComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
+            if (this.journalEntryForm.value.code != null) {
+              this.getjournalEntryCode()
+            }
             this.toolbarPathData.componentAdd = 'Add journalEntry';
             this.definejournalEntryForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getjournalEntryCode();
           }
         }
       },

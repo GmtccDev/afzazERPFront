@@ -234,7 +234,7 @@ export class AddEditBillTypeComponent implements OnInit {
       let sub = this.billTypeService.getBillType(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.billTypeForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -543,10 +543,16 @@ export class AddEditBillTypeComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("bill-type.add-bill-type");
+            if (this.billTypeForm.value.code != null) {
+             // this.getbi()
+            }
             this.defineBillTypeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+          // this.getbi();
           }
         }
       },
@@ -578,7 +584,7 @@ export class AddEditBillTypeComponent implements OnInit {
     });
   }
   onSave() {
-    debugger
+    
     if (this.billTypeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {

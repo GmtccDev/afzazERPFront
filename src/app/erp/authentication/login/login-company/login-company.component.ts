@@ -43,7 +43,7 @@ export class LoginCompanyComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
     public router: Router, private userService: UserService, private translate: TranslateService) {
-    debugger
+    
     this.currentSystemLanguage = this.userService.getCurrentLanguage();
     this.translate.use(this.currentSystemLanguage);
     this.userService.setLanguage(this.currentSystemLanguage)
@@ -57,7 +57,7 @@ export class LoginCompanyComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
+    
     //   this.companiesList = this.companies;
     this.getCompanies();
     this.userService.removeToken();
@@ -79,7 +79,7 @@ export class LoginCompanyComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.authService.getDdl().subscribe({
         next: (res) => {
-          debugger
+          
           if (res.success) {
             this.companiesList = res.response;
 

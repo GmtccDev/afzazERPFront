@@ -520,10 +520,16 @@ export class AddEditItemCardComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-item');
+            if (this.itemCardForm.value.code != null) {
+              this.getItemCardCode()
+            }
             this.defineItemCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getItemCardCode();
           }
         }
       },
@@ -642,12 +648,12 @@ export class AddEditItemCardComponent implements OnInit {
   }
   getUnitTransactions() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.unitService.getUnitTransactions().subscribe({
         next: (res) => {
 
           if (res.success) {
-            debugger
+            
             this.unitTransactionsList = res.response;
 
           }
@@ -669,7 +675,7 @@ export class AddEditItemCardComponent implements OnInit {
 
   }
   getUnitsByMainUnitId(mainUnitId: any) {
-    debugger
+    
     this.unitsList=this.unitTransactionsList.filter(x=>x.unitMasterId==mainUnitId);
     // this.itemCardUnit = [];
     // this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.warehousesUnitMasterId == mainUnitId);
@@ -698,7 +704,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
 
   addItem() {
-    debugger
+    
     this.itemCardAlternative.push({
       id: 0,
       itemCardId: 0,
@@ -709,7 +715,7 @@ export class AddEditItemCardComponent implements OnInit {
       currentBalance: this.selectedItemCardAlternative.currentBalance?? 0
     });
 
-    debugger
+    
     this.itemCard!.itemCardAlternatives = this.itemCardAlternative;
     this.clearSelectedItemData();
 
@@ -728,7 +734,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
 
   deleteItem(index) {
-    debugger
+    
     if (this.itemCardAlternative.length) {
       if (this.itemCardAlternative.length == 1) {
         this.itemCardAlternative = [];

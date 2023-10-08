@@ -285,7 +285,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   get incomingChequeDetailList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
   initGroup() {
-    debugger
+    
     this.counter += 1;
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
     if(incomingChequeDetail.length>0)
@@ -340,7 +340,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.incomingChequeForm.value.currencyId).subscribe({
         next: (res: any) => {
-          debugger
+          
           
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
@@ -539,10 +539,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("incoming-cheque.add-incoming-cheque");
+            if (this.incomingChequeForm.value.code != null) {
+              this.getIncomingChequeCode()
+            }
             this.defineIncomingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getIncomingChequeCode();
           }
         }
       },
@@ -640,11 +646,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.currencyFactor = 0;
     this.currencyId=null;
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -655,7 +661,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
           }
           else {
-            debugger
+            
             let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
             //(x => x.id == event.target.value);
 
@@ -666,7 +672,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             faControl['controls'].iCDetailSerial.setValue(index + 1);
 
           }
-          debugger
+          
           let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
 
           if (incomingChequeDetail.length > 0) {
@@ -826,7 +832,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            debugger
+            
             this.currencyList = res.response;
 
           }

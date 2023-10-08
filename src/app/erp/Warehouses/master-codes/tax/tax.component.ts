@@ -116,7 +116,7 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.taxService.allTaxes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          debugger
+          
           console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.taxes");
           if (res.success) {
@@ -234,7 +234,13 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onCheck(id) {
 
-    this.listIds.push(id);
+      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    if (index !== -1) {
+      this.listIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listIds.push(newItem);
+    }
     this.sharedServices.changeButton({
       action: 'Delete',
       componentName: 'List',

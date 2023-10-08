@@ -11,7 +11,7 @@ import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import {ItemGroupsCardServiceProxy} from '../../Services/item-groups-card-service'
+import {ItemGroupsCardServiceProxy} from '../../Services/item-groups-card.service'
 import {ItemGroupsCardDto,DeleteListItemGroupsCard, TreeNodeInterface} from '../../models/item-groups-card'
 
 @Component({
@@ -278,7 +278,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
   onDelete() {
 
     let item = new DeleteListItemGroupsCard();
-    item.ids = this.listIds;
+    item.ids = this.listIds.map(item => item.id);
     let sub = this.itemGroupsCardService.deleteListItemGroupsCard(item).subscribe(
       (resonse) => {
 

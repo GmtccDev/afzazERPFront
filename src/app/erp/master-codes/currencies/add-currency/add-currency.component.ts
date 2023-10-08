@@ -233,10 +233,16 @@ export class AddCurrencyComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("currency.add-currency");
+            if (this.currenciesForm.value.code != null) {
+              this.getCurrencyCode()
+            }
             this.defineCurrencyForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getCurrencyCode();
           }
         }
       },

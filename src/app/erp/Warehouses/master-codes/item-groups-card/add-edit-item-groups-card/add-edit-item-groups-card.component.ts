@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { ItemGroupsCardServiceProxy } from '../../../Services/item-groups-card-service';
+import { ItemGroupsCardServiceProxy } from '../../../Services/item-groups-card.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
@@ -339,10 +339,16 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'store-cards.add-store-card';
+            if (this.itemGroupsCardForm.value.code != null) {
+              this.getitemGroupsCardCode()
+            }
             this.defineitemGroupsCardForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          }else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+          }
+          else if (currentBtn.action == ToolbarActions.Copy) {
+           this.getitemGroupsCardCode();
           }
         }
       },

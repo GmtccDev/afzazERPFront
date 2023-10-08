@@ -280,7 +280,7 @@ export class StoreCardComponent implements OnInit, OnDestroy, AfterViewInit {
 	onDelete() {
 
 		let item = new DeleteListStoreCard();
-		item.ids = this.listIds;
+		item.ids = this.listIds.map(item => item.id);
 		let sub = this.storeCardService.deleteListStoreCard(item).subscribe(
 			(resonse) => {
 
