@@ -1200,3 +1200,8 @@ textarea.form-control {
         color: var(--theme-secondary);
     }
 }
+
+.nav-tabs,
+.nav-pills {
+    margin-bottom: 0px !important;
+}

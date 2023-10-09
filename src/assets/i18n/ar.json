@@ -5,13 +5,13 @@
     "createSuccessfully": "تم الاضافة",
     "editSuccessfully": "تم التعديل بنجاح",
     "deleteSuccessfully": "تم الحذف بنجاح",
-    "SameCodeExistsBefore":"الكود معرف سابقا",
-    "emailNumberFoundBefore":"الميل معرف سابقا",
-    "userNameFoundBefore":"الاسم معرف سابقا",
-    "phoneNumberFoundBefore":"الموبايل معرف سابقا",
-    "can't-delete-some-records":"لايمكن حذف بعض السجلات",
-    "can't-delete-record":"لا يمكن حذف السجل",
-    "NotAuthorized":"ليس لديك صلاحية",
+    "SameCodeExistsBefore": "الكود معرف سابقا",
+    "emailNumberFoundBefore": "الميل معرف سابقا",
+    "userNameFoundBefore": "الاسم معرف سابقا",
+    "phoneNumberFoundBefore": "الموبايل معرف سابقا",
+    "can't-delete-some-records": "لايمكن حذف بعض السجلات",
+    "can't-delete-record": "لا يمكن حذف السجل",
+    "NotAuthorized": "ليس لديك صلاحية",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"
@@ -277,7 +277,7 @@
         "add-item": "اضافة صنف",
         "item-groups-card": "بطاقة مجموعة اصناف",
         "item-groups-card-information": "معلومات بطاقة مجموعة اصناف",
-        "sales-person-card":"بطاقة المندوب",
+        "sales-person-card": "بطاقة المندوب",
         "sales-person-card-information": "معلومات بطاقة المندوب",
 
         "bill-types": "أنماط الفواتير"
@@ -307,6 +307,7 @@
         "email-required": "أدخل بريدك الاليكترونى",
         "gmtcc-address": "المملكة العربية السعودية",
         "search": "بحث",
+        "actions": "الأجراءات",
         "phone-number": "رقم الهاتف",
         "Email-ID": "البريد الالكترونى",
         "password": "كلمة المرور",
