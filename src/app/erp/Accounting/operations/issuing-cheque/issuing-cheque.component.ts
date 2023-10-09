@@ -350,7 +350,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
         this.spinner.show();
-        let sub = this.issuingChequeService.generateEntryActions(id, 2).subscribe({
+        let sub = this.issuingChequeService.collect(id).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
@@ -382,7 +382,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
         this.spinner.show();
-        let sub=this.issuingChequeService.generateEntryActions(id, 3).subscribe({
+        let sub=this.issuingChequeService.reject(id).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.reject-cheque-done"),

@@ -516,7 +516,12 @@
         "collected": "تم التحصيل",
         "rejected": "تم الرفض",
         "cheque-details-status": "تقاصيل حالة الشيك",
-        "can-not-add-more-than-one-detail": "لا يمكنك اضافة أكثر من واحد تفاصيل للشيك"
+        "can-not-add-more-than-one-detail": "لا يمكنك اضافة أكثر من واحد تفاصيل للشيك",
+        "confirm-collect": "هل أنت متأكد من تحصيل هذا الشيك؟",
+        "collect": "تحصيل",
+        "confirm-reject": "هل أنت متأكد من رفض هذا الشيك؟",
+        "reject": "رفض"
+        
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"

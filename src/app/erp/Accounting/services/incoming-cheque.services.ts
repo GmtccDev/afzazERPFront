@@ -88,6 +88,24 @@ export class IncomingChequeServiceProxy {
         , { params: params }
         );
     }
+    collect(id: any): Observable<any> {
+        
+        let params = new HttpParams();
+        params = params.append('Id', id);
+
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/Collect?Id="+id
+        , { params: params }
+        );
+    }
+    reject(id: any): Observable<any> {
+        
+        let params = new HttpParams();
+        params = params.append('Id', id);
+
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/Reject?Id="+id
+        , { params: params }
+        );
+    }
     deleteEntity(entity: any): Observable<any> {
 
         return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteEntity?", entity);

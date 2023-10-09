@@ -88,7 +88,6 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
           
-          console.log('result data getbyid', res);
           if (res.response.value > 0) {
             
             this.facialPeriodId = res.response.value;

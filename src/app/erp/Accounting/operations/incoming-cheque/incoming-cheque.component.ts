@@ -60,22 +60,22 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   //#region ngOnInit
   ngOnInit(): void {
-  //  this.defineGridColumn();
+    //  this.defineGridColumn();
     this.spinner.show();
     Promise.all([this.getIncomingChequees()])
-    .then(a=>{
-      this.spinner.hide();
-      this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-      this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.listenToClickedButton();
-    }).catch(err=>{
-      this.spinner.hide();
-    })
+      .then(a => {
+        this.spinner.hide();
+        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeToolbarPath(this.toolbarPathData);
+        this.listenToClickedButton();
+      }).catch(err => {
+        this.spinner.hide();
+      })
   }
 
   ngAfterViewInit(): void {
 
-    
+
 
   }
 
@@ -109,8 +109,8 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     return new Promise<void>((resolve, reject) => {
       let sub = this.incomingChequeService.allIncomingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          
-        
+
+
           this.toolbarPathData.componentList = this.translate.instant("component-names.incomingCheque");
           if (res.success) {
             this.incomingCheque = res.response.items
@@ -143,7 +143,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
   edit(id: string) {
-    
+
     this.router.navigate([
       '/accounting-operations/incomingCheque/update-incomingCheque',
       id,
@@ -251,7 +251,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   openIncomingChequees() { }
   onCheck(id) {
 
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {
@@ -265,7 +265,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     } as ToolbarData);
   }
   onEdit(id) {
-    
+
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -280,7 +280,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
   onMenuActionSelected(event: ITabulatorActionsSelected) {
-    
+
     if (event != null) {
       if (event.actionName == 'Edit') {
         this.edit(event.item.id);
@@ -351,7 +351,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
       if (rs == 'Confirm') {
         this.spinner.show();
 
-       let sub= this.incomingChequeService.generateEntryActions(id, 2).subscribe({
+        let sub = this.incomingChequeService.collect(id).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
@@ -385,7 +385,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
       if (rs == 'Confirm') {
         this.spinner.show();
 
-        let sub = this.incomingChequeService.generateEntryActions(id, 3).subscribe({
+        let sub = this.incomingChequeService.reject(id).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
