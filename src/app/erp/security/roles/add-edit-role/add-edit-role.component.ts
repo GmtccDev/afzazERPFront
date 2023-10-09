@@ -41,7 +41,7 @@ export class AddEditRoleComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
-  modulesType: {}[];
+  modulesType: any;
   screensList: any;
   applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; link: string; }[];
 	applicationsRoute: any[];
@@ -100,7 +100,7 @@ export class AddEditRoleComponent implements OnInit {
 
 		this.service.getLastSubscription().subscribe(
 			next => {
-				
+				debugger
 
 				if (next.success == true) {
 					this.getApplications();
@@ -206,6 +206,12 @@ export class AddEditRoleComponent implements OnInit {
           this.permission = res.response?.permissions?.items;
           this.screens = res.response?.screens;
           this.screensList = res.response?.screens;
+          debugger
+          const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
+          this.permission = res.response?.permissions?.items;
+          this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+          this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+        
 
         },
         error: (err: any) => {
@@ -233,6 +239,11 @@ export class AddEditRoleComponent implements OnInit {
 
           this.permission = res.response.permissions
           this.screens = res.response.screens;
+          const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
+          this.permission = res.response?.permissions?.items;
+          this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+        //  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+        
 
         },
         error: (err: any) => {
@@ -331,7 +342,7 @@ export class AddEditRoleComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    
+    debugger
     this.roleForm.value.id = this.id;
     this.roleForm.value.permissions = this.permission;
     return new Promise<void>((resolve, reject) => {
@@ -415,7 +426,7 @@ export class AddEditRoleComponent implements OnInit {
     ];
   }
   onChange(event) {
-    
+    debugger
     if (this.screensList != undefined) {
 
       this.screens = this.screensList.filter(x => x.moduleType == Number(event));
