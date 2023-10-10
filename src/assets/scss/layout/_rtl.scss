@@ -1817,10 +1817,10 @@
     form .row {
         .input-group>.form-control:not(:last-child),
         .input-group>.form-select:not(:last-child) {
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
         }
     }
     .form-check {
@@ -2354,9 +2354,9 @@
                 margin-left: unset;
                 width: calc(100% - 280px);
                 &.close_icon {
-                    margin-right: 100px;
+                    margin-right: 68px;
                     margin-left: unset;
-                    width: calc(100% - 100px);
+                    width: calc(100% - 68px);
                 }
             }
         }
@@ -5024,3 +5024,11 @@ html[dir="rtl"] {
 /**=====================
     60. RTL CSS Ends
 ==========================**/
+
+.input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-radius: .25rem 0 0 .25rem !important;
+    -webkit-border-radius: .25rem 0 0 .25rem !important;
+    -moz-border-radius: .25rem 0 0 .25rem !important;
+    -ms-border-radius: .25rem 0 0 .25rem !important;
+    -o-border-radius: .25rem 0 0 .25rem !important;
+}

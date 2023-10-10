@@ -9,6 +9,7 @@ import { NavService } from '../../../services/nav.service';
 import { fadeInAnimation } from '../../../data/router-animation/router-animation';
 import * as chartData from '../../../../shared/data/dashboard/default'
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import * as feather from 'feather-icons';
 @Component({
 	selector: 'app-subscription',
 	templateUrl: './subscription.component.html',
@@ -136,7 +137,7 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 
 		this.service.getLastSubscription().subscribe(
 			next => {
-				
+
 
 				if (next.success == true) {
 					this.getApplications();
