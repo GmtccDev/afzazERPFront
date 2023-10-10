@@ -146,7 +146,7 @@ export class NavService implements OnInit, OnDestroy {
 
 
 		{
-			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'briefcase', active: true,
 		},
 		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
@@ -156,14 +156,14 @@ export class NavService implements OnInit, OnDestroy {
 			title: this.translate.instant("component-names.users-permissions"), icon: 'users', type: 'sub', active: false, children: [
 				{ path: '/security/role/', title: this.translate.instant("component-names.roles-permissions"), type: 'link', active: true },
 				{ path: '/security/user', title: this.translate.instant("component-names.user"), type: 'link', active: true },
-			
+
 				//	{ path: '/security/permission/', title: this.translate.instant("component-names.permissions"), type: 'link', active: true },
 
 			]
 		},
 
 		{
-			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'layers', active: false, children: [
 				{ path: '/master-codes/countries', title: this.translate.instant("component-names.countries"), type: 'link', active: true },
 				{ path: '/master-codes/business/', title: this.translate.instant("component-names.business"), type: 'link', active: true },
 				{ path: '/master-codes/currencies/', title: this.translate.instant("component-names.currencies"), type: 'link', active: true },
@@ -180,14 +180,14 @@ export class NavService implements OnInit, OnDestroy {
 
 
 		{
-			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'briefcase', active: true,
 		},
 		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
 
 		{
-			title: this.translate.instant("component-names.configurations"), type: 'sub', icon: 'MasterCode', active: false, children: [
+			title: this.translate.instant("component-names.configurations"), type: 'sub', icon: 'settings', active: false, children: [
 
 				{ path: '/configurations/accounting-configurations/', title: this.translate.instant("component-names.configurations"), type: 'link', active: true },
 			]
@@ -195,7 +195,7 @@ export class NavService implements OnInit, OnDestroy {
 		},
 
 		{
-			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'layers', active: false, children: [
 				{ path: '/accounting-master-codes/journal', title: this.translate.instant("component-names.journal"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/fiscalPeriod', title: this.translate.instant("component-names.fiscalPeriod"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountGroup', title: this.translate.instant("component-names.accountGroup"), type: 'link', active: true },
@@ -208,7 +208,7 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'Operations', active: false, children:
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children:
 				this.voucherTypes,
 			// [
 			// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
@@ -218,7 +218,7 @@ export class NavService implements OnInit, OnDestroy {
 
 		},
 		{
-			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'Reports', active: false, children: [
+			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'clipboard', active: false, children: [
 				{ path: '/accounting-reports/budgetReport', title: this.translate.instant("component-names.budget-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/incomeStatementReport', title: this.translate.instant("component-names.income-statement-report"), type: 'link', active: true },
 				{ path: '/accounting-reports/vouchersTransactionsReport', title: this.translate.instant("component-names.vouchers-transactions-report"), type: 'link', active: true },
@@ -230,20 +230,20 @@ export class NavService implements OnInit, OnDestroy {
 
 			]
 		}
-		
+
 
 
 	];
 	MENUITEMSWarehouses: Menu[] = [
 		{
-			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'home', active: true,
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'briefcase', active: true,
 		},
 		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
 
 		{
-			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'MasterCode', active: false, children: [
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'layers', active: false, children: [
 				{ path: '/warehouses-master-codes/period', title: this.translate.instant("component-names.period"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/unit', title: this.translate.instant("component-names.units"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/tax', title: this.translate.instant("component-names.taxes"), type: 'link', active: true },
@@ -259,9 +259,9 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'Operations', active: false, children:
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children:
 				this.billTypes,
-			
+
 
 
 

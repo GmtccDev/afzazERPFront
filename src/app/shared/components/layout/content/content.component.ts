@@ -11,168 +11,168 @@ import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss'],
-  animations: [fadeInAnimation]
+	selector: 'app-content',
+	templateUrl: './content.component.html',
+	styleUrls: ['./content.component.scss'],
+	animations: [fadeInAnimation]
 })
 export class ContentComponent implements OnInit, AfterViewInit {
-  lang = localStorage.getItem("language")
-  subsList: Subscription[] = [];
+	lang = localStorage.getItem("language")
+	subsList: Subscription[] = [];
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private translate: TranslateService,
-    public navServices: NavService, private router: Router,
-    private voucherTypeService: VoucherTypeServiceProxy,
-    private billTypeService: BillTypeServiceProxy,
+	constructor(private route: ActivatedRoute, private userService: UserService, private translate: TranslateService,
+		public navServices: NavService, private router: Router,
+		private voucherTypeService: VoucherTypeServiceProxy,
+		private billTypeService: BillTypeServiceProxy,
 
-    public layout: LayoutService) {
-    this.customizeLayoutType()
-    // this.route.queryParams.subscribe((params) => {
-    //   
-    //   this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
-    // })
-  }
-   //#region ngOnDestroy
-   ngOnDestroy() {
-    this.subsList.forEach((s) => {
-      if (s) {
-        s.unsubscribe();
-      }
-    });
-  }
-  //#endregion
-  getVoucherTypes() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res.success) {
-            res.response.items.forEach(element => {
-              this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/'+element.id, title:this.lang=="ar"? element.voucherNameAr:element.voucherNameEn, type: 'link', active: true },
-              { queryParams: { voucherTypeId: element.id } }
-              )
-              this.navServices.voucherTypes.filter((value, index, self) => {
-                return index === self.findIndex(obj => (
-                  obj.path === value.path && obj.title === value.title
-                ));
-              });
-            });
-
-
-          }
-          resolve();
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-
-      	this.subsList.push(sub);
-
-    });
-
-  }
-  getBillTypes() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res.success) {
-            res.response.items.forEach(element => {
-              this.navServices.billTypes.push({ path: '/warehouses-operations/bill/'+element.id, title:this.lang=="ar"? element.billNameAr:element.billNameEn, type: 'link', active: true },
-              { queryParams: { billTypeId: element.id } }
-              )
-              this.navServices.billTypes.filter((value, index, self) => {
-                return index === self.findIndex(obj => (
-                  obj.path === value.path && obj.title === value.title
-                ));
-              });
-            });
+		public layout: LayoutService) {
+		this.customizeLayoutType()
+		// this.route.queryParams.subscribe((params) => {
+		//
+		//   this.layout.config.settings.layout = params.layout ? params.layout : this.layout.config.settings.layout
+		// })
+	}
+	//#region ngOnDestroy
+	ngOnDestroy() {
+		this.subsList.forEach((s) => {
+			if (s) {
+				s.unsubscribe();
+			}
+		});
+	}
+	//#endregion
+	getVoucherTypes() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+				next: (res) => {
+					console.log(res);
+					if (res.success) {
+						res.response.items.forEach(element => {
+							this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+								{ queryParams: { voucherTypeId: element.id } }
+							)
+							this.navServices.voucherTypes.filter((value, index, self) => {
+								return index === self.findIndex(obj => (
+									obj.path === value.path && obj.title === value.title
+								));
+							});
+						});
 
 
-          }
-          resolve();
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
+					}
+					resolve();
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					console.log('complete');
+				},
+			});
 
-      	this.subsList.push(sub);
+			this.subsList.push(sub);
 
-    });
+		});
 
-  }
-  customizeLayoutType() {
+	}
+	getBillTypes() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+				next: (res) => {
+					console.log(res);
+					if (res.success) {
+						res.response.items.forEach(element => {
+							this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+								{ queryParams: { billTypeId: element.id } }
+							)
+							this.navServices.billTypes.filter((value, index, self) => {
+								return index === self.findIndex(obj => (
+									obj.path === value.path && obj.title === value.title
+								));
+							});
+						});
 
 
-    this.getVoucherTypes();
-    this.getBillTypes();
+					}
+					resolve();
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					console.log('complete');
+				},
+			});
 
-    // this.layout.config.settings.layout_type = "rtl";
-    if (localStorage.getItem("language") == "ar") {
-      // this.translate.setDefaultLang(localStorage.getItem("language"));
-      this.layout.config.settings.layout_type = "rtl";
-      document.getElementsByTagName('html')[0].setAttribute('dir', "rtl");
-    } else {
-      this.translate.setDefaultLang("en");
-      this.layout.config.settings.layout_type = "ltr";
-      document.getElementsByTagName('html')[0].removeAttribute('dir');
-    }
-    //     const currentRoute = this.router.url;
+			this.subsList.push(sub);
 
-    // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    // 	this.router.navigate([currentRoute]); // navigate to same route
-    // }); 
-  }
+		});
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      // feather.replace();
-    });
-  }
+	}
+	customizeLayoutType() {
 
-  public getRouterOutletState(outlet) {
-    return outlet.isActivated ? outlet.activatedRoute : '';
-  }
 
-  get layoutClass() {
-    switch (this.layout.config.settings.layout) {
-      case "Dubai":
-        return "compact-wrapper"
-      case "London":
-        return "only-body"
-      case "Seoul":
-        return "compact-wrapper modern-type"
-      case "LosAngeles":
-        return this.navServices.horizontal ? "horizontal-wrapper material-type" : "compact-wrapper material-type"
-      case "Paris":
-        return "compact-wrapper dark-sidebar"
-      case "Tokyo":
-        return "compact-sidebar"
-      case "Madrid":
-        return "compact-wrapper color-sidebar"
-      case "Moscow":
-        return "compact-sidebar compact-small"
-      case "NewYork":
-        return "compact-wrapper box-layout"
-      case "Singapore":
-        return this.navServices.horizontal ? "horizontal-wrapper enterprice-type" : "compact-wrapper enterprice-type"
-      case "Rome":
-        return "compact-sidebar compact-small material-icon"
-      case "Barcelona":
-        return this.navServices.horizontal ? "horizontal-wrapper enterprice-type advance-layout" : "compact-wrapper enterprice-type advance-layout"
-    }
-  }
+		this.getVoucherTypes();
+		this.getBillTypes();
 
-  ngOnInit() {
+		// this.layout.config.settings.layout_type = "rtl";
+		if (localStorage.getItem("language") == "ar") {
+			// this.translate.setDefaultLang(localStorage.getItem("language"));
+			this.layout.config.settings.layout_type = "rtl";
+			document.getElementsByTagName('html')[0].setAttribute('dir', "rtl");
+		} else {
+			this.translate.setDefaultLang("en");
+			this.layout.config.settings.layout_type = "ltr";
+			document.getElementsByTagName('html')[0].removeAttribute('dir');
+		}
+		//     const currentRoute = this.router.url;
 
-  }
+		// this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+		// 	this.router.navigate([currentRoute]); // navigate to same route
+		// });
+	}
+
+	ngAfterViewInit() {
+		setTimeout(() => {
+			// feather.replace();
+		});
+	}
+
+	public getRouterOutletState(outlet) {
+		return outlet.isActivated ? outlet.activatedRoute : '';
+	}
+
+	get layoutClass() {
+		switch (this.layout.config.settings.layout) {
+			case "Dubai":
+				return "compact-wrapper"
+			case "London":
+				return "only-body"
+			case "Seoul":
+				return "compact-wrapper modern-type"
+			case "LosAngeles":
+				return this.navServices.horizontal ? "horizontal-wrapper material-type" : "compact-wrapper material-type"
+			case "Paris":
+				return "compact-wrapper dark-sidebar"
+			case "Tokyo":
+				return "compact-sidebar"
+			case "Madrid":
+				return "compact-wrapper color-sidebar"
+			case "Moscow":
+				return "compact-sidebar compact-small"
+			case "NewYork":
+				return "compact-wrapper box-layout"
+			case "Singapore":
+				return this.navServices.horizontal ? "horizontal-wrapper enterprice-type" : "compact-wrapper enterprice-type"
+			case "Rome":
+				return "compact-sidebar compact-small material-icon"
+			case "Barcelona":
+				return this.navServices.horizontal ? "horizontal-wrapper enterprice-type advance-layout" : "compact-wrapper enterprice-type advance-layout"
+		}
+	}
+
+	ngOnInit() {
+
+	}
 
 }
