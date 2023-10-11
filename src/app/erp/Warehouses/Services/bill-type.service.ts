@@ -59,7 +59,6 @@ export class BillTypeServiceProxy {
 
         return this.http.get<any>(this.baseUrl + "/api/BillType/all?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/BillType/GetBillTypes");
     }
 
 

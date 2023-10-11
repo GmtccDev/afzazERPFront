@@ -179,7 +179,17 @@
         "sales-cost-account": "Sales Cost Account",
         "inventory-account": "Inventory Account",
         "minute": "minute",
-        "print": "Print"
+        "print": "Print",
+        "delivery-date":"Delivery Date",
+        "pay-way":"Pay Way",
+        "ship-method":"Ship Method",
+        "ship-kind":"Ship Kind",
+        "reference":"Reference",
+        "reference-no":"Reference No",
+        "fetch":"Fetch",
+        "sales-person":"Sales Person",
+        "supplier-account":"Supplier Account"
+
     },
     "menu": {},
     "home": {
@@ -431,7 +441,8 @@
         "tax-information": "Tax Information",
         "bill-types": "Bill Types",
         "sales-person-card": "Sales Person Card",
-        "sales-person-card-information": "Sales Person Card Information"
+        "sales-person-card-information": "Sales Person Card Information",
+        "bills":"Bills"
 
     },
     "language": {
@@ -632,6 +643,18 @@
         "print-expiry-dates": "Print Expiry Dates",
         "print-items-specifiers": "Print Items Specifiers",
         "print-items-images": "Print Items Images"
+
+    },
+    "bill": {
+        "bill-information": "Bill Information",
+        "add-bill": "Add Bill",
+        "update-bill": "Update Bill",
+        "bill": "Bill",
+        "supplier":"Supplier",
+        "customer":"Customer",
+        "supplier-reference":"Supplier Reference",
+        "store":"Store",
+        "transaction-factor": "Transaction Factor"
 
     }
 }
