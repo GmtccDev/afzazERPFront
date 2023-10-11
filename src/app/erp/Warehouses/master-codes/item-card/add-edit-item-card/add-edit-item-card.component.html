@@ -1,592 +1,774 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-item-card">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form [formGroup]="itemCardForm" id="itemCardSubmit" class="tabs-form">
-                            <div class="main-Item">
-                                <div class="wrapper-title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<form [formGroup]="itemCardForm" id="itemCardSubmit" class="tabs-form">
+							<div class="main-Item">
+								<div class="wrapper-title">
 
-                                    <h3>{{'component-names.item-information'|translate}}</h3>
-                                    <hr>
-                                    <div class="row align-items-center">
+									<h3>{{'component-names.item-information'|translate}}</h3>
+									<hr>
+									<div class="row align-items-center">
 
-                                        <div class="col-md-6 col-12">
-                                            <label for="code" class="label-name">
+										<div class="col-md-6 col-12">
+											<label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
-                                                <input type="text" class="form-control" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
-                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
+											<div class="form-group position-relative">
+												<input type="text" class="form-control"
+													[ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
+													name="code" formControlName="code">
+												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['code'].errors && f['code'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}} </span>
-                                                </div>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="barcode" class="label-name">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="barcode" class="label-name">
 												{{'general.barcode'|translate}}</label>
-                                            <div class="form-group position-relative">
-                                                <input type="text" class="form-control" name="barcode" formControlName="barcode">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="nameAr" class="label-name">
+											<div class="form-group position-relative">
+												<input type="text" class="form-control" name="barcode"
+													formControlName="barcode">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control " [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr" maxlength="250">
-                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
+												<input type="text" class="form-control "
+													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
+													name="nameAr" formControlName="nameAr" maxlength="250">
+												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-                                                </div>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="nameEn" class="label-name">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="nameEn" class="label-name">
 												{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group position-relative">
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control " name="nameEn" formControlName="nameEn" maxlength="250">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="itemGroupId" class="label-name">
+												<input type="text" class="form-control " name="nameEn"
+													formControlName="nameEn" maxlength="250">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="itemGroupId" class="label-name">
 												{{'item.item-group'|translate}}
 
 											</label>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="itemGroupId" name='itemGroupId' class="" id="itemGroupId">
-                                                    <ng-option *ngFor="let itemGroup of itemGroupsList" [value]="itemGroup.id">
-                                                        {{lang=="ar" ? itemGroup.nameAr:itemGroup.nameEn}}
-                                                    </ng-option>
-                                                </ng-select>
-                                                <div *ngIf="(f['itemGroupId'].touched || f['itemGroupId'].dirty ) && f['itemGroupId'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['itemGroupId'].errors && f['itemGroupId'].errors['required']" class="f-12 ng-star-inserted text-white">
+											<div class="input-group  popup">
+												<ng-select style="width:100%" formControlName="itemGroupId"
+													name='itemGroupId' class="" id="itemGroupId">
+													<ng-option *ngFor="let itemGroup of itemGroupsList"
+														[value]="itemGroup.id">
+														{{lang=="ar" ? itemGroup.nameAr:itemGroup.nameEn}}
+													</ng-option>
+												</ng-select>
+												<div *ngIf="(f['itemGroupId'].touched || f['itemGroupId'].dirty ) && f['itemGroupId'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['itemGroupId'].errors && f['itemGroupId'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-                                                </div>
+												</div>
 
-                                            </div>
+											</div>
 
-                                        </div>
+										</div>
 
-                                        <div class="col-12 col-md-6">
-                                            <label for="item-type" class="label-name">{{'item.item-type'|translate}}
+										<div class="col-12 col-md-6">
+											<label for="item-type" class="label-name">{{'item.item-type'|translate}}
 											</label>
-                                            <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="itemType" [items]="itemTypeEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+											<div class="input-group  popup">
+												<ng-select class="custom" formControlName="itemType"
+													[items]="itemTypeEnum" bindLabel="name" bindValue="id"
+													style="width:100%"></ng-select>
 
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <div class="col-12 col-md-6">
-                                            <label for="cost-calculate-method" class="label-name">{{'item.cost-calculate-method'|translate}}
+										<div class="col-12 col-md-6">
+											<label for="cost-calculate-method"
+												class="label-name">{{'item.cost-calculate-method'|translate}}
 											</label>
-                                            <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="costCalculateMethod" [items]="costCalculateMethodsEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+											<div class="input-group  popup">
+												<ng-select class="custom" formControlName="costCalculateMethod"
+													[items]="costCalculateMethodsEnum" bindLabel="name" bindValue="id"
+													style="width:100%"></ng-select>
 
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <div class="col-md-6 col-12">
-                                            <label for="notes" class="label-name">
+										<div class="col-md-6 col-12">
+											<label for="notes" class="label-name">
 												{{'general.notes'|translate}}</label>
-                                            <div class="form-group position-relative">
-                                                <textarea class="form-control" maxLength="500" formControlName="notes" name='notes'></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-md-6 ">
-                                            <label for="" class="label-name"> {{'general.image'|translate}}</label>
-                                            <img *ngIf="imagePath" width="150" height="150" [src]="imagePath">
-                                            <input class="form-control " (change)="onFileChange($event)" id="" type="file">
+											<div class="form-group position-relative">
+												<textarea class="form-control" maxLength="500" formControlName="notes"
+													name='notes'></textarea>
+											</div>
+										</div>
+										<div class="col-6 col-md-6 ">
+											<label for="" class="label-name"> {{'general.image'|translate}}</label>
+											<img *ngIf="imagePath" width="150" height="150" [src]="imagePath">
+											<input class="form-control " (change)="onFileChange($event)" id=""
+												type="file">
 
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="media">
-                                                <label class="label-name"> {{'general.status'|translate}}
+										</div>
+										<div class="col-md-6 col-12">
+											<div class="media">
+												<label class="label-name"> {{'general.status'|translate}}
 												</label>
-                                                <div class="icon-state media-body">
-                                                    <label class="switch">
+												<div class="icon-state media-body">
+													<label class="switch">
 														<input type="checkbox" class="form-control" name="isActive"
 															formControlName="isActive">
 														<span class="switch-state"></span>
 													</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <nav ngbNav #nav="ngbNav" class="nav-tabs m-0">
-                                            <li [ngbNavItem]="1">
-                                                <a ngbNavLink>{{'item.general-information'|translate}}</a>
-                                                <ng-template ngbNavContent>
-                                                    <div class="row">
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="model" class="label-name">{{'item.model'|translate}}
+												</div>
+											</div>
+										</div>
+										<nav ngbNav #nav="ngbNav" class="nav-tabs m-0">
+											<li [ngbNavItem]="1">
+												<a ngbNavLink>{{'item.general-information'|translate}}</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="col-4 col-md-4">
+															<label for="model"
+																class="label-name">{{'item.model'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="text" class="form-control" name="model" formControlName="model">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="manufacturer" class="label-name">{{'item.manufacturer'|translate}}
+															<div class="input-group  popup">
+																<input type="text" class="form-control" name="model"
+																	formControlName="model">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="manufacturer"
+																class="label-name">{{'item.manufacturer'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="text" class="form-control" name="manufacturer" formControlName="manufacturer">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="maxLimit" class="label-name">{{'item.maximum'|translate}}
+															<div class="input-group  popup">
+																<input type="text" class="form-control"
+																	name="manufacturer" formControlName="manufacturer">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="maxLimit"
+																class="label-name">{{'item.maximum'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="maxLimit" formControlName="maxLimit">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="minLimit" class="label-name">{{'item.minimum'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="maxLimit" formControlName="maxLimit">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="minLimit"
+																class="label-name">{{'item.minimum'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="minLimit" formControlName="minLimit">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="reorderLimit" class="label-name">{{'item.reorder-limit'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="minLimit" formControlName="minLimit">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="reorderLimit"
+																class="label-name">{{'item.reorder-limit'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="reorderLimit" formControlName="reorderLimit">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="description" class="label-name">{{'general.description'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="reorderLimit" formControlName="reorderLimit">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="description"
+																class="label-name">{{'general.description'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <textarea class="form-control" formControlName="description" maxLength="250" name='description'></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+															<div class="input-group  popup">
+																<textarea class="form-control"
+																	formControlName="description" maxLength="250"
+																	name='description'></textarea>
+															</div>
+														</div>
+													</div>
 
-                                                </ng-template>
-                                            </li>
-                                            <li [ngbNavItem]="2">
-                                                <a ngbNavLink>{{'item.units'|translate}}</a>
-                                                <ng-template ngbNavContent>
-                                                    <div class="row">
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="mainUnitId" class="label-name">
+												</ng-template>
+											</li>
+											<li [ngbNavItem]="2">
+												<a ngbNavLink>{{'item.units'|translate}}</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="col-4 col-md-4">
+															<label for="mainUnitId" class="label-name">
 																{{'item.main-unit'|translate}}
 
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="mainUnitId" name='mainUnitId' class="" id="mainUnitId" (change)="getUnitsByMainUnitId(itemCardForm.value.mainUnitId)">
-                                                                    <ng-option *ngFor="let unit of mainUnitsList" [value]="unit.id">
-                                                                        {{lang=="ar" ? unit.nameAr:unit.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="mainUnitId" name='mainUnitId'
+																	class="" id="mainUnitId"
+																	(change)="getUnitsByMainUnitId(itemCardForm.value.mainUnitId)">
+																	<ng-option *ngFor="let unit of mainUnitsList"
+																		[value]="unit.id">
+																		{{lang=="ar" ? unit.nameAr:unit.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                                            </div>
+															</div>
 
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="sellingPrice" class="label-name">{{'item.selling-price'|translate}}
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="sellingPrice"
+																class="label-name">{{'item.selling-price'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="sellingPrice" formControlName="sellingPrice">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="consumerPrice" class="label-name">{{'item.consumer-price'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="sellingPrice" formControlName="sellingPrice">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="consumerPrice"
+																class="label-name">{{'item.consumer-price'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="consumerPrice" formControlName="consumerPrice">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="minSellingPrice" class="label-name">{{'item.min-selling-price'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="consumerPrice"
+																	formControlName="consumerPrice">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="minSellingPrice"
+																class="label-name">{{'item.min-selling-price'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="minSellingPrice" formControlName="minSellingPrice">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="openingCostPrice" class="label-name">{{'item.opening-cost-price'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="minSellingPrice"
+																	formControlName="minSellingPrice">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="openingCostPrice"
+																class="label-name">{{'item.opening-cost-price'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="openingCostPrice" formControlName="openingCostPrice">
-                                                            </div>
-                                                        </div>
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="openingCostPrice"
+																	formControlName="openingCostPrice">
+															</div>
+														</div>
 
-                                                    </div>
-                                                    <div class="row">
-                                                        <table class="table table-bordered table-responsive text-center" style="overflow-y: scroll !important;">
-                                                            <thead>
-                                                                <th>#</th>
-                                                                <th>{{'item.unit'|translate}}</th>
-                                                                <th>{{'item.tranaction-factor'|translate}}</th>
-                                                                <th>{{'item.selling-price'|translate}}</th>
-                                                                <th>{{'item.min-selling-price'|translate}}</th>
-                                                                <th>{{'item.consumer-price'|translate}}</th>
-                                                                <th>{{'item.opening-cost-price'|translate}}</th>
-
-
-                                                            </thead>
-
-                                                            <tr *ngFor="let item of unit; let i= index;">
-                                                                <td> {{i+1}}</td>
-                                                                <td>
-                                                                    <ng-select style="width:100%" [(ngModel)]="unit[i].unitId" [ngModelOptions]="{standalone: true}" class="">
-                                                                        <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
-                                                                            {{lang=="ar" ? unit.nameAr:unit.nameEn}}
-                                                                        </ng-option>
-                                                                    </ng-select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="unit[i].transactionFactor" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="unit[i].sellingPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="unit[i].minSellingPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="unit[i].consumerPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="unit[i].openingCostPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="button" class="btn btn-danger " value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
-                                                                </td>
+													</div>
+													<div class="row">
+														<table class="table table-bordered table-responsive text-center"
+															style="overflow-y: scroll !important;">
+															<thead>
+																<th>#</th>
+																<th>{{'item.unit'|translate}}</th>
+																<th>{{'item.tranaction-factor'|translate}}</th>
+																<th>{{'item.selling-price'|translate}}</th>
+																<th>{{'item.min-selling-price'|translate}}</th>
+																<th>{{'item.consumer-price'|translate}}</th>
+																<th>{{'item.opening-cost-price'|translate}}</th>
 
 
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{unit.length + 1}}</td>
-                                                                <td>
-                                                                    <ng-select style="width:100%" [(ngModel)]="selectedUnit.unitId" [ngModelOptions]="{standalone: true}" class="" (change)="getUnitDetail(selectedUnit.unitId)">
-                                                                        <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
-                                                                            {{lang=="ar" ? unit.nameAr:unit.nameEn}}
-                                                                        </ng-option>
-                                                                    </ng-select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedUnit.transactionFactor" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedUnit.sellingPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedUnit.minSellingPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedUnit.consumerPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedUnit.openingCostPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
+															</thead>
 
-                                                                    <input type="button" class="btn btn-primary" (click)="addItem()" value="{{'buttons.add'|translate}}">
+															<tr *ngFor="let item of unit; let i= index;">
+																<td> {{i+1}}</td>
+																<td>
+																	<ng-select style="width:100%"
+																		[(ngModel)]="unit[i].unitId"
+																		[ngModelOptions]="{standalone: true}" class="">
+																		<ng-option *ngFor="let unit of unitsList"
+																			[value]="unit.id">
+																			{{lang=="ar" ? unit.nameAr:unit.nameEn}}
+																		</ng-option>
+																	</ng-select>
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="unit[i].transactionFactor"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="unit[i].sellingPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="unit[i].minSellingPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="unit[i].consumerPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="unit[i].openingCostPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="button"
+																		class="btn btn-danger btn-table "
+																		value="{{'buttons.delete'|translate}}"
+																		(click)="deleteItem(i)">
+																</td>
 
-                                                                </td>
+
+															</tr>
+															<tr>
+																<td>{{unit.length + 1}}</td>
+																<td>
+																	<ng-select style="width:100%"
+																		[(ngModel)]="selectedUnit.unitId"
+																		[ngModelOptions]="{standalone: true}" class=""
+																		(change)="getUnitDetail(selectedUnit.unitId)">
+																		<ng-option *ngFor="let unit of unitsList"
+																			[value]="unit.id">
+																			{{lang=="ar" ? unit.nameAr:unit.nameEn}}
+																		</ng-option>
+																	</ng-select>
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedUnit.transactionFactor"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedUnit.sellingPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedUnit.minSellingPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedUnit.consumerPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedUnit.openingCostPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+
+																	<input type="button" class="btn btn-primary"
+																		(click)="addItem()"
+																		value="{{'buttons.add'|translate}}">
+
+																</td>
 
 
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </ng-template>
-                                            </li>
-                                            <li [ngbNavItem]="3">
-                                                <a ngbNavLink>{{'item.properties'|translate}}</a>
-                                                <ng-template ngbNavContent>
-                                                    <div class="row">
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="hasExpiredDate" class="label-name">{{'item.has-expired-date'|translate}}
+															</tr>
+														</table>
+													</div>
+												</ng-template>
+											</li>
+											<li [ngbNavItem]="3">
+												<a ngbNavLink>{{'item.properties'|translate}}</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="col-4 col-md-4">
+															<label for="hasExpiredDate"
+																class="label-name">{{'item.has-expired-date'|translate}}
 															</label>
-                                                            <div class="icon-state media-body mx-5">
-                                                                <label class="switch">
+															<div class="icon-state media-body mx-5">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		formControlName="hasExpiredDate"
 																		name="hasExpiredDate">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="lifeTime" class="label-name">{{'item.life-time'|translate}}
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="lifeTime"
+																class="label-name">{{'item.life-time'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="lifeTime" formControlName="lifeTime">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="lifeTimeType" class="label-name">{{'item.life-time-type'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="lifeTime" formControlName="lifeTime">
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="lifeTimeType"
+																class="label-name">{{'item.life-time-type'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select class="custom" formControlName="lifeTimeType" [items]="lifeTimeTypeEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+															<div class="input-group  popup">
+																<ng-select class="custom" formControlName="lifeTimeType"
+																	[items]="lifeTimeTypeEnum" bindLabel="name"
+																	bindValue="id" style="width:100%"></ng-select>
 
-                                                            </div>
-                                                        </div>
+															</div>
+														</div>
 
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="hasSerialNumber" class="label-name">{{'item.has-serial-number'|translate}}
+														<div class="col-4 col-md-4">
+															<label for="hasSerialNumber"
+																class="label-name">{{'item.has-serial-number'|translate}}
 															</label>
-                                                            <div class="icon-state media-body mx-5">
-                                                                <label class="switch">
+															<div class="icon-state media-body mx-5">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		formControlName="hasSerialNumber"
 																		name="hasSerialNumber">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-4">
-                                                            <label for="quantity" class="label-name">{{'general.quantity'|translate}}
+															</div>
+														</div>
+														<div class="col-4 col-md-4">
+															<label for="quantity"
+																class="label-name">{{'general.quantity'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="quantity" formControlName="quantity">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-2">
-                                                            <label for="warrantyPeriod" class="label-name">{{'item.warranty-period'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="quantity" formControlName="quantity">
+															</div>
+														</div>
+														<div class="col-4 col-md-2">
+															<label for="warrantyPeriod"
+																class="label-name">{{'item.warranty-period'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="warrantyPeriod" formControlName="warrantyPeriod">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 col-md-2">
-                                                            <label for="warranty-type" class="label-name">{{'item.warranty-type'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="warrantyPeriod"
+																	formControlName="warrantyPeriod">
+															</div>
+														</div>
+														<div class="col-4 col-md-2">
+															<label for="warranty-type"
+																class="label-name">{{'item.warranty-type'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select class="custom" formControlName="warrantyType" [items]="warrantyTypeEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+															<div class="input-group  popup">
+																<ng-select class="custom" formControlName="warrantyType"
+																	[items]="warrantyTypeEnum" bindLabel="name"
+																	bindValue="id" style="width:100%"></ng-select>
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-3 col-md-3">
-                                                            <label for="item-kind" class="label-name">{{'item.item-kind'|translate}}
+															</div>
+														</div>
+														<div class="col-3 col-md-3">
+															<label for="item-kind"
+																class="label-name">{{'item.item-kind'|translate}}
 															</label>
-                                                            <ul class="list-group">
-                                                                <li class="list-group-item" *ngFor="let item of itemKindList">
-                                                                    <input type="radio" formControlName="itemKind" name="itemKind" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
+															<ul class="list-group">
+																<li class="list-group-item"
+																	*ngFor="let item of itemKindList">
+																	<input type="radio" formControlName="itemKind"
+																		name="itemKind" value="{{item.value}}" />
+																	{{lang=="ar"?item.nameAr:item.nameEn}}
 
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-3 col-md-3">
-                                                            <label for="heightFactor" class="label-name">{{'item.height-factor'|translate}}
+																</li>
+															</ul>
+														</div>
+														<div class="col-3 col-md-3">
+															<label for="heightFactor"
+																class="label-name">{{'item.height-factor'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="heightFactor" formControlName="heightFactor">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-3 col-md-3">
-                                                            <label for="widthFactor" class="label-name">{{'item.width-factor'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="heightFactor" formControlName="heightFactor">
+															</div>
+														</div>
+														<div class="col-3 col-md-3">
+															<label for="widthFactor"
+																class="label-name">{{'item.width-factor'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="widthFactor" formControlName="widthFactor">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-3 col-md-3">
-                                                            <label for="lengthFactor" class="label-name">{{'item.length-factor'|translate}}
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="widthFactor" formControlName="widthFactor">
+															</div>
+														</div>
+														<div class="col-3 col-md-3">
+															<label for="lengthFactor"
+																class="label-name">{{'item.length-factor'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <input type="number" class="form-control" name="lengthFactor" formControlName="lengthFactor">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                            </li>
-                                            <li [ngbNavItem]="4">
-                                                <a ngbNavLink>{{'item.alternative-items'|translate}}</a>
-                                                <ng-template ngbNavContent>
-                                                    <div class="row">
-                                                        <table class="table table-bordered table-responsive text-center" style="overflow-y: scroll !important;">
-                                                            <thead>
-                                                                <th>#</th>
-                                                                <th>{{'item.item-name'|translate}}</th>
-                                                                <th>{{'item.cost-price'|translate}}</th>
-                                                                <th>{{'item.selling-price'|translate}}</th>
-                                                                <th>{{'item.type'|translate}}</th>
-                                                                <th>{{'item.current-balance'|translate}}</th>
+															<div class="input-group  popup">
+																<input type="number" class="form-control"
+																	name="lengthFactor" formControlName="lengthFactor">
+															</div>
+														</div>
+													</div>
+												</ng-template>
+											</li>
+											<li [ngbNavItem]="4">
+												<a ngbNavLink>{{'item.alternative-items'|translate}}</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<table class="table table-bordered table-responsive text-center"
+															style="overflow-y: scroll !important;">
+															<thead>
+																<th>#</th>
+																<th>{{'item.item-name'|translate}}</th>
+																<th>{{'item.cost-price'|translate}}</th>
+																<th>{{'item.selling-price'|translate}}</th>
+																<th>{{'item.type'|translate}}</th>
+																<th>{{'item.current-balance'|translate}}</th>
 
 
-                                                            </thead>
-                                                            <tr *ngFor="let item of itemCardAlternative; let i= index;">
-                                                                <td> {{i+1}}</td>
-                                                                <td></td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="itemCardAlternative[i].costPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="itemCardAlternative[i].sellingPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
+															</thead>
+															<tr *ngFor="let item of itemCardAlternative; let i= index;">
+																<td> {{i+1}}</td>
+																<td></td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="itemCardAlternative[i].costPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="itemCardAlternative[i].sellingPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
 
-                                                                    <ng-select class="custom" [(ngModel)]="itemCardAlternative[i].alternativeType" [items]="itemAlternativeTypeList" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="itemCardAlternative[i].currentBalance" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="button" class="btn btn-danger" value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
-                                                                </td>
-
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{itemCardAlternative.length + 1}}</td>
-                                                                <td>
-                                                                    <ng-select style="width:100%" [(ngModel)]="selectedItemCardAlternative.alternativeItemId" [ngModelOptions]="{standalone: true}" class="">
-                                                                        <ng-option *ngFor="let item of itemsList" [value]="item.id">
-                                                                            {{lang=="ar" ? item.nameAr:item.nameEn}}
-                                                                        </ng-option>
-                                                                    </ng-select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedItemCardAlternative.costPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedItemCardAlternative.sellingPrice" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-
-                                                                    <ng-select class="custom" [(ngModel)]="selectedItemCardAlternative.alternativeType" [ngModelOptions]="{standalone: true}" [items]="itemAlternativeTypeList" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" [(ngModel)]="selectedItemCardAlternative.currentBalance" [ngModelOptions]="{standalone: true}" min="0" class="form-control">
-                                                                </td>
-                                                                <td>
-
-                                                                    <input type="button" class="btn btn-primary" (click)="addItem()" value="{{'buttons.add'|translate}}">
-
-                                                                </td>
+																	<ng-select class="custom"
+																		[(ngModel)]="itemCardAlternative[i].alternativeType"
+																		[items]="itemAlternativeTypeList"
+																		bindLabel="name" bindValue="id"
+																		style="width:100%"></ng-select>
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="itemCardAlternative[i].currentBalance"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="border-0 m-0 w-100">
+																</td>
+																<td>
+																	<input type="button"
+																		class="btn btn-danger btn-table"
+																		value="{{'buttons.delete'|translate}}"
+																		(click)="deleteItem(i)">
+																</td>
 
 
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </ng-template>
-                                            </li>
-                                            <li [ngbNavItem]="5">
-                                                <a ngbNavLink>{{'general.accounts'|translate}}</a>
-                                                <ng-template ngbNavContent>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-4">
-                                                            <label for="salesAccountId" class="label-name">
+															</tr>
+															<tr>
+																<td>{{itemCardAlternative.length + 1}}</td>
+																<td>
+																	<ng-select style="width:100%"
+																		[(ngModel)]="selectedItemCardAlternative.alternativeItemId"
+																		[ngModelOptions]="{standalone: true}" class="">
+																		<ng-option *ngFor="let item of itemsList"
+																			[value]="item.id">
+																			{{lang=="ar" ? item.nameAr:item.nameEn}}
+																		</ng-option>
+																	</ng-select>
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedItemCardAlternative.costPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedItemCardAlternative.sellingPrice"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+
+																	<ng-select class="custom"
+																		[(ngModel)]="selectedItemCardAlternative.alternativeType"
+																		[ngModelOptions]="{standalone: true}"
+																		[items]="itemAlternativeTypeList"
+																		bindLabel="name" bindValue="id"
+																		style="width:100%"></ng-select>
+																</td>
+																<td>
+																	<input type="number"
+																		[(ngModel)]="selectedItemCardAlternative.currentBalance"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="form-control">
+																</td>
+																<td>
+
+																	<input type="button" class="btn btn-primary"
+																		(click)="addItem()"
+																		value="{{'buttons.add'|translate}}">
+
+																</td>
+
+
+															</tr>
+														</table>
+													</div>
+												</ng-template>
+											</li>
+											<li [ngbNavItem]="5">
+												<a ngbNavLink>{{'general.accounts'|translate}}</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="col-md-4 col-4">
+															<label for="salesAccountId" class="label-name">
 																{{'general.sales-account'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="salesAccountId" name='salesAccountId' class="" id="salesAccountId">
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="salesAccountId"
+																	name='salesAccountId' class="" id="salesAccountId">
 
-                                                                    <ng-option *ngFor="let account of salesAccountsList" [value]="account.id">
-                                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
+																	<ng-option *ngFor="let account of salesAccountsList"
+																		[value]="account.id">
+																		{{lang=="ar"?account.nameAr:account.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                                            </div>
+															</div>
 
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <label for="salesReturnsAccountId" class="label-name">
+														</div>
+														<div class="col-md-4 col-4">
+															<label for="salesReturnsAccountId" class="label-name">
 																{{'general.sales-return-account'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="salesReturnsAccountId" name='salesReturnsAccountId' class="" id="salesReturnsAccountId">
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="salesReturnsAccountId"
+																	name='salesReturnsAccountId' class=""
+																	id="salesReturnsAccountId">
 
-                                                                    <ng-option *ngFor="let account of salesReturnsAccountsList" [value]="account.id">
-                                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
+																	<ng-option
+																		*ngFor="let account of salesReturnsAccountsList"
+																		[value]="account.id">
+																		{{lang=="ar"?account.nameAr:account.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                                            </div>
+															</div>
 
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <label for="purchasesAccountId" class="label-name">
+														</div>
+														<div class="col-md-4 col-4">
+															<label for="purchasesAccountId" class="label-name">
 																{{'general.purchases-account'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="purchasesAccountId" name='purchasesAccountId' class="" id="purchasesAccountId">
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="purchasesAccountId"
+																	name='purchasesAccountId' class=""
+																	id="purchasesAccountId">
 
-                                                                    <ng-option *ngFor="let account of purchasesAccountsList" [value]="account.id">
-                                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
-                                                            </div>
+																	<ng-option
+																		*ngFor="let account of purchasesAccountsList"
+																		[value]="account.id">
+																		{{lang=="ar"?account.nameAr:account.nameEn}}
+																	</ng-option>
+																</ng-select>
+															</div>
 
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <label for="purchasesReturnsAccountId" class="label-name">
+														</div>
+														<div class="col-md-4 col-4">
+															<label for="purchasesReturnsAccountId" class="label-name">
 																{{'general.purchases-return-account'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="purchasesReturnsAccountId" name='purchasesReturnsAccountId' class="" id="purchasesReturnsAccountId">
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="purchasesReturnsAccountId"
+																	name='purchasesReturnsAccountId' class=""
+																	id="purchasesReturnsAccountId">
 
-                                                                    <ng-option *ngFor="let account of purchasesReturnsAccountsList" [value]="account.id">
-                                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
+																	<ng-option
+																		*ngFor="let account of purchasesReturnsAccountsList"
+																		[value]="account.id">
+																		{{lang=="ar"?account.nameAr:account.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                                            </div>
+															</div>
 
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <label for="salesCostAccountId" class="label-name">
+														</div>
+														<div class="col-md-4 col-4">
+															<label for="salesCostAccountId" class="label-name">
 																{{'general.sales-cost-account'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="salesCostAccountId" name='salesCostAccountId' class="" id="salesCostAccountId">
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="salesCostAccountId"
+																	name='salesCostAccountId' class=""
+																	id="salesCostAccountId">
 
-                                                                    <ng-option *ngFor="let account of salesCostAccountsList" [value]="account.id">
-                                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
+																	<ng-option
+																		*ngFor="let account of salesCostAccountsList"
+																		[value]="account.id">
+																		{{lang=="ar"?account.nameAr:account.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                                            </div>
+															</div>
 
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <label for="inventoryAccountId" class="label-name">
+														</div>
+														<div class="col-md-4 col-4">
+															<label for="inventoryAccountId" class="label-name">
 																{{'general.inventory-account'|translate}}
 															</label>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="inventoryAccountId" name='inventoryAccountId' class="" id="inventoryAccountId">
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="inventoryAccountId"
+																	name='inventoryAccountId' class=""
+																	id="inventoryAccountId">
 
-                                                                    <ng-option *ngFor="let account of inventoryAccountsList" [value]="account.id">
-                                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
-
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                            </li>
-
-                                        </nav>
-                                        <div [ngbNavOutlet]="nav" class=""></div>
+																	<ng-option
+																		*ngFor="let account of inventoryAccountsList"
+																		[value]="account.id">
+																		{{lang=="ar"?account.nameAr:account.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+															</div>
+
+														</div>
+													</div>
+												</ng-template>
+											</li>
+
+										</nav>
+										<div [ngbNavOutlet]="nav" class=""></div>
+
+
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>

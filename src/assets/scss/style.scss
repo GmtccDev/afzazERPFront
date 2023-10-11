@@ -1213,3 +1213,35 @@ textarea.form-control {
     -ms-border-radius: 0 !important;
     -o-border-radius: 0 !important;
 }
+
+.table.table-broder {
+    .form-group {
+        margin: 0 !important
+    }
+}
+
+.ant-table-content {
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    td,
+    th {
+        border: 1px solid #d9dade !important;
+        padding: 5px 10px !important;
+    }
+}
+
+button.ant-table-row-expand-icon.ng-star-inserted.ant-table-row-expand-icon-collapsed {
+    background: #4bc2f1;
+    color: #fff;
+}
+
+.ant-btn-primary,
+.ant-btn {
+    span {
+        color: #fff !important;
+    }
+    border-color: #293176;
+    background: #293176;
+}
