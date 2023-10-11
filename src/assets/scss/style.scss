@@ -1200,3 +1200,48 @@ textarea.form-control {
         color: var(--theme-secondary);
     }
 }
+
+.nav-tabs,
+.nav-pills {
+    margin-bottom: 0px !important;
+}
+
+.input-group.sniper-date button.btn.btn-outline-secondary.calendar0 {
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+}
+
+.table.table-broder {
+    .form-group {
+        margin: 0 !important
+    }
+}
+
+.ant-table-content {
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    td,
+    th {
+        border: 1px solid #d9dade !important;
+        padding: 5px 10px !important;
+    }
+}
+
+button.ant-table-row-expand-icon.ng-star-inserted.ant-table-row-expand-icon-collapsed {
+    background: #4bc2f1;
+    color: #fff;
+}
+
+.ant-btn-primary,
+.ant-btn {
+    span {
+        color: #fff !important;
+    }
+    border-color: #293176;
+    background: #293176;
+}
