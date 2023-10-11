@@ -138,7 +138,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       this.getGeneralConfigurationsOfMainCurrency(),
       this.getGeneralConfigurationsOfMultiCurrency(),
       this.getCurrencies(),
-      this.getCurrenciesTransactions(),
+     // this.getCurrenciesTransactions(),
       this.getAccounts(),
       this.getCostCenters(),
 
@@ -515,16 +515,17 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getCurrenciesTransactions() {
-
+  debugger
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyService.getCurrenciesTransactions().subscribe({
         next: (res) => {
-          if (res.success) {
+          resolve();
 
+          if (res.success) {
+             debugger
             this.currencyTransactionList = res.response;
 
           }
-          resolve();
 
         },
         error: (err: any) => {

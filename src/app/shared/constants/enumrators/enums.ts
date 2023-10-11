@@ -180,3 +180,37 @@ export enum BillKindArEnum {
 
 
 }
+export enum PayWayEnum {
+  
+   Cash = 1,
+   Credit = 2,
+   Installment  = 3
+
+}
+export enum PayWayArEnum {
+  
+  نقدي = 1,
+  أجل = 2,
+  تقسيط  = 3
+
+}
+export enum ShipMethodEnum {
+  
+  FOB = 1,
+  EX_Work = 2,
+  CF  = 3,
+  CIF=4
+
+}
+export enum ShipKindEnum {
+  
+  All = 1,
+  Part = 2
+
+}
+export enum ShipKindArEnum {
+  
+  كلى = 1,
+  جزئي = 2
+
+}

@@ -126,6 +126,20 @@ const routes: Routes = [
 
 	}
 	,
+	{
+		path: 'warehouses-operations',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('./erp/Warehouses/operations/operations.module').then(m => m.OperationsModule)
+			}
+		]
+
+	}
+	,
 
 	{
 		path: '**',
