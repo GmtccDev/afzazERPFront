@@ -62,6 +62,9 @@ const routes: Routes = [
 			{ path: 'sales-person-card', component: SalesPersonCardComponent },
 			{ path: 'sales-person-card/add-sales-person-card', component: AddSalesPersonCardComponent },
 			{ path: 'sales-person-card/update-sales-person-card/:id', component: AddSalesPersonCardComponent },
+			{ path: 'sales-person-commission-card', component: SalesPersonCardComponent },
+			{ path: 'sales-person-commission-card/add-sales-person-commission-card', component: AddSalesPersonCardComponent },
+			{ path: 'sales-person-commission-card/update-sales-commission-person-commission-card/:id', component: AddSalesPersonCardComponent },
 		]
 	}
 ];

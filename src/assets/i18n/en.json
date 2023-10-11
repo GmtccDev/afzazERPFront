@@ -431,7 +431,8 @@
         "tax-information": "Tax Information",
         "bill-types": "Bill Types",
         "sales-person-card":"Sales Person Card",
-        "sales-person-card-information": "Sales Person Card Information"
+        "sales-person-card-information": "Sales Person Card Information",
+        "sales-person-commission":"Sales Person Commission"
 
     },
     "language": {
