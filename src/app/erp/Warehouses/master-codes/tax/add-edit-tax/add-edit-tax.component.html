@@ -151,7 +151,7 @@
 
 
                                                                 <td>
-                                                                    <input type="button" class="btn btn-danger" value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
+                                                                    <input type="button" class="btn btn-danger btn-table" value="{{'buttons.delete'|translate}}" (click)="deleteItem(i)">
                                                                 </td>
                                                             </tr>
 
@@ -168,12 +168,12 @@
 
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" [(ngModel)]="selectedTaxDetail.taxRatio" [ngModelOptions]="{standalone: true}" min="0" class="form-control ">
+                                                                    <input type="number" [(ngModel)]="selectedTaxDetail.taxRatio" [ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
                                                                 </td>
 
                                                                 <td>
 
-                                                                    <input type="button" class="btn btn-primary " (click)="addItem()" value="{{'buttons.add'|translate}}">
+                                                                    <input type="button" class="btn btn-primary btn-table " (click)="addItem()" value="{{'buttons.add'|translate}}">
 
                                                                 </td>
                                                             </tr>

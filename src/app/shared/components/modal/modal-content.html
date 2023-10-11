@@ -1,39 +1,42 @@
 <div class="modal-header">
-    <h4 class="modal-title text-capitalize">{{'general.choose-template'|translate}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
-  </button>
+	<h4 class="modal-title text-capitalize">{{'general.choose-template'|translate}}</h4>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
 </div>
 <div class="modal-body">
 
-    <hr>
-    <table>
-        <thead>
-            <th>{{'general.template-name'|translate}}</th>
+	<hr>
+	<table>
+		<thead>
+			<th>{{'general.template-name'|translate}}</th>
 
-            <th></th>
-            <th></th>
-            <th></th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of reportList">
-                <td>{{item.fileName}}</td>
-                <td>
-                    <button class="btn btn-primary" (click)="viewRpt(item)">{{'buttons.show'|translate}}</button>
-                </td>
-                <td>
-                    <button class="btn btn-primary" (click)="designRpt(item)" hidden>{{'buttons.design'|translate}}</button>
-                </td>
-                <td>
-                    <button class="btn btn-secondary" (click)="setAsDefaultRpt(item)">{{'buttons.default'|translate}}</button>
-                </td>
-                <td *ngIf="item.isBasic!=true">
-                    <button class="btn btn-danger" (click)="deleteRpt(item)">{{'buttons.delete'|translate}}</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+			<th></th>
+			<th></th>
+			<th></th>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of reportList">
+				<td>{{item.fileName}}</td>
+				<td>
+					<button class="btn btn-primary" (click)="viewRpt(item)">{{'buttons.show'|translate}}</button>
+				</td>
+				<td>
+					<button class="btn btn-primary" (click)="designRpt(item)"
+						hidden>{{'buttons.design'|translate}}</button>
+				</td>
+				<td>
+					<button class="btn btn-secondary"
+						(click)="setAsDefaultRpt(item)">{{'buttons.default'|translate}}</button>
+				</td>
+				<td *ngIf="item.isBasic!=true">
+					<button class="btn btn-danger btn-table"
+						(click)="deleteRpt(item)">{{'buttons.delete'|translate}}</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="close()">{{'buttons.close'|translate}}</button>
+	<button type="button" class="btn btn-secondary" (click)="close()">{{'buttons.close'|translate}}</button>
 </div>
