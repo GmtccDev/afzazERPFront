@@ -53,7 +53,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = "Account/get-ddl?"
+  routeAccountApi = 'Account/GetLeafAccounts?'
   journalList: any;
   costCenterList: any;
   currencyList: any;

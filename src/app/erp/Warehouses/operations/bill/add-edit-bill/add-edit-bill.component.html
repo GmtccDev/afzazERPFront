@@ -362,7 +362,7 @@
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="supplierAccountId"
                                                     name='supplierAccountId' id="supplierAccountId">
-                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                    <ng-option *ngFor="let account of supplierAccountsList"
                                                         [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </ng-option>
@@ -370,7 +370,7 @@
 
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
-                                                        (click)="showSearchCashAccountModal=true" type="button"><i
+                                                        (click)="showSearchSupplierAccountModal=true" type="button"><i
                                                             class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -384,7 +384,7 @@
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="salesAccountId"
                                                     name='salesAccountId' id="salesAccountId">
-                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                    <ng-option *ngFor="let account of salesAccountsList"
                                                         [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </ng-option>
@@ -392,7 +392,7 @@
 
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
-                                                        (click)="showSearchCashAccountModal=true" type="button"><i
+                                                        (click)="showSearchSalesAccountModal=true" type="button"><i
                                                             class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -405,7 +405,7 @@
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="salesReturnAccountId"
                                                     name='salesReturnAccountId' id="salesReturnAccountId">
-                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                    <ng-option *ngFor="let account of salesReturnAccountsList"
                                                         [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </ng-option>
@@ -413,7 +413,7 @@
 
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
-                                                        (click)="showSearchCashAccountModal=true" type="button"><i
+                                                        (click)="showSearchSalesReturnAccountModal=true" type="button"><i
                                                             class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -427,7 +427,7 @@
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="purchasesAccountId"
                                                     name='purchasesAccountId' id="purchasesAccountId">
-                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                    <ng-option *ngFor="let account of purchasesAccountsList"
                                                         [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </ng-option>
@@ -435,7 +435,7 @@
 
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
-                                                        (click)="showSearchCashAccountModal=true" type="button"><i
+                                                        (click)="showSearchPurchasesAccountModal=true" type="button"><i
                                                             class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -449,7 +449,7 @@
                                                 <ng-select class="flex-grow-1"
                                                     formControlName="purchasesReturnAccountId"
                                                     name='purchasesReturnAccountId' id="purchasesReturnAccountId">
-                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                    <ng-option *ngFor="let account of purchasesReturnAccountsList"
                                                         [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </ng-option>
@@ -457,7 +457,7 @@
 
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
-                                                        (click)="showSearchCashAccountModal=true" type="button"><i
+                                                        (click)="showSearchPurchasesReturnAccountModal=true" type="button"><i
                                                             class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -483,9 +483,33 @@
 <app-public-search-modal [isVisible]="showSearchCustomerModal" [routeApi]="routeCustomerApi"
     (emitClose)="showSearchCustomerModal = false;" (emitSearch)="onSelectCustomer($event)">
 </app-public-search-modal>
-<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeAccountApi"
+<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeCashAccountApi"
     (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
 </app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchSupplierAccountModal" [routeApi]="routeSupplierAccountApi"
+    (emitClose)="showSearchSupplierAccountModal = false;" (emitSearch)="onSelectSupplierAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchSalesAccountModal" [routeApi]="routeSalesAccountApi"
+    (emitClose)="showSearchSalesAccountModal = false;" (emitSearch)="onSelectSalesAccount($event)">
+</app-public-search-modal>
+
+
+<app-public-search-modal [isVisible]="showSearchSalesReturnAccountModal" [routeApi]="routeSalesAccountApi"
+    (emitClose)="showSearchSalesReturnAccountModal = false;" (emitSearch)="onSelectSalesReturnAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchPurchasesAccountModal" [routeApi]="routePurchasesAccountApi"
+    (emitClose)="showSearchPurchasesAccountModal = false;" (emitSearch)="onSelectPurchasesAccount($event)">
+</app-public-search-modal>
+
+
+<app-public-search-modal [isVisible]="showSearchPurchasesReturnAccountModal" [routeApi]="routePurchasesAccountApi"
+    (emitClose)="showSearchPurchasesReturnAccountModal = false;" (emitSearch)="onSelectPurchasesReturnAccount($event)">
+</app-public-search-modal>
+
+
 <app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi"
     (emitClose)="showSearchCostCenterModal = false;" (emitSearch)="onSelectCostCenter($event)">
 </app-public-search-modal>

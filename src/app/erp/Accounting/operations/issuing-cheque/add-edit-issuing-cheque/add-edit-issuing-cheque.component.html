@@ -37,8 +37,6 @@
 												{{'component-names.account'|translate}}
 											</label><span class="text-danger">*</span>
 
-
-
                                             <select required class="form-control required" name="accountId" formControlName="accountId">
 
 												<option *ngFor="let account of accountList" [value]="account.id">
@@ -192,7 +190,7 @@
 
                                                         <select required class="form-control required" name="accountId" formControlName="accountId">
 
-															<option *ngFor="let account of accountList"
+															<option *ngFor="let account of accountDetailsList"
 																[value]="account.id">
 																{{lang=="ar"?account.nameAr:account.nameEn}}
 															</option>
@@ -235,7 +233,7 @@
 
                                                         <select required class="form-control required" name="beneficiaryAccountId" formControlName="beneficiaryAccountId">
 
-															<option *ngFor="let account of accountList"
+															<option *ngFor="let account of beneficiaryAccountList"
 																[value]="account.id">
 																{{lang=="ar"?account.nameAr:account.nameEn}}
 															</option>
