@@ -15,7 +15,7 @@
                                     <h3>{{'bill-type.bill-type-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12 offset-6">
                                             <label for="billKind" class="label-name">
 												{{'bill-type.bill-type'|translate}}
 
@@ -30,7 +30,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12">
                                             <label for="billNameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label>
                                             <span class="text-danger">*</span>
@@ -45,7 +45,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-4">
+                                        <div class="col-md-6 col-12">
                                             <label for="billNameEn" class="label-name">{{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control icon-branch" name="billNameEn" formControlName="billNameEn">
@@ -59,7 +59,7 @@
                                         <li [ngbNavItem]="1">
                                             <a ngbNavLink>{{'bill-type.basic-properties'|translate}}</a>
                                             <ng-template ngbNavContent>
-                                                <div class="row">
+                                                <div class="row g-3">
                                                     <div class="col-6 col-md-6">
                                                         <label for="warehouses-effect" class="label-name">{{'bill-type.warehouse-effect'|translate}}
 														</label>
@@ -69,7 +69,7 @@
 
                                                             </li>
                                                         </ul>
-                                                        <br/>
+                                                        <br />
                                                         <div *ngIf="(f['warehouseEffect'].touched || f['warehouseEffect'].dirty ) && f['warehouseEffect'].invalid" class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
                                                             <span *ngIf="f['warehouseEffect'].errors && f['warehouseEffect'].errors['required']" class="f-12 ng-star-inserted text-white">
@@ -86,7 +86,7 @@
 
                                                             </li>
                                                         </ul>
-                                                        <br/>
+                                                        <br />
                                                         <div *ngIf="(f['accountingEffect'].touched || f['accountingEffect'].dirty ) && f['accountingEffect'].invalid" class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
                                                             <span *ngIf="f['accountingEffect'].errors && f['accountingEffect'].errors['required']" class="f-12 ng-star-inserted text-white">
@@ -96,29 +96,33 @@
 
                                                     </div>
                                                     <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.affect-on-cost-price'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="affectOnCostPrice"
-																	formControlName="affectOnCostPrice">
-																<span class="switch-state"></span>
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.affect-on-cost-price'|translate}}
 															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="affectOnCostPrice"
+																		formControlName="affectOnCostPrice">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.post-to-accounts-automatically'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="postingToAccountsAutomatically"
-																	formControlName="postingToAccountsAutomatically">
-																<span class="switch-state"></span>
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.post-to-accounts-automatically'|translate}}
 															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="postingToAccountsAutomatically"
+																		formControlName="postingToAccountsAutomatically">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-6">
@@ -130,7 +134,7 @@
 
                                                             </li>
                                                         </ul>
-                                                        <br/>
+                                                        <br />
                                                         <div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid" class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
                                                             <span *ngIf="f['codingPolicy'].errors && f['codingPolicy'].errors['required']" class="f-12 ng-star-inserted text-white">
@@ -147,7 +151,7 @@
                                                         <label class="col-form-label m-r-10">
 															{{'bill-type.confirm-cost-center'|translate}}
 														</label>
-                                                        <div class="icon-state media-body mx-5">
+                                                        <div class="icon-state media-body ">
                                                             <label class="switch">
 																<input type="checkbox" class="form-control"
 																	name="confirmCostCenter"
@@ -158,7 +162,7 @@
                                                         <label class="col-form-label m-r-10">
 															{{'bill-type.confirm-analytical-code'|translate}}
 														</label>
-                                                        <div class="icon-state media-body mx-5">
+                                                        <div class="icon-state media-body ">
                                                             <label class="switch">
 																<input type="checkbox" class="form-control"
 																	name="confirmAnalyticalCode"
@@ -174,76 +178,86 @@
                                         <li [ngbNavItem]="2">
                                             <a ngbNavLink>{{'bill-type.additional-options'|translate}}</a>
                                             <ng-template ngbNavContent>
-                                                <div class="row">
-                                                    <div class="col-4 col-md-4">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.not-calculating-tax'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="notCalculatingTax"
-																	formControlName="notCalculatingTax">
-																<span class="switch-state"></span>
+                                                <div class="row g-3">
+                                                    <div class="col-6 col-md-6">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.not-calculating-tax'|translate}}
 															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="notCalculatingTax"
+																		formControlName="notCalculatingTax">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-4 col-md-4">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.calculating-value-added-tax-after-luxury-tax'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="calculatingValueAddedTaxAfterLuxuryTax"
-																	formControlName="calculatingValueAddedTaxAfterLuxuryTax">
-																<span class="switch-state"></span>
+                                                    <div class="col-6 col-md-6">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.calculating-value-added-tax-after-luxury-tax'|translate}}
 															</label>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="col-4 col-md-4">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.calculating-tax-on-price-after-deduction-and-addition'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="calculatingTaxOnPriceAfterDeductionAndAddition"
-																	formControlName="calculatingTaxOnPriceAfterDeductionAndAddition">
-																<span class="switch-state"></span>
-															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="calculatingValueAddedTaxAfterLuxuryTax"
+																		formControlName="calculatingValueAddedTaxAfterLuxuryTax">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
 
                                                     </div>
 
-                                                    <div class="col-4 col-md-4">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.discount-affects-cost-price'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="discountAffectsCostPrice"
-																	formControlName="discountAffectsCostPrice">
-																<span class="switch-state"></span>
+                                                    <div class="col-6 col-md-6">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.calculating-tax-on-price-after-deduction-and-addition'|translate}}
 															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="calculatingTaxOnPriceAfterDeductionAndAddition"
+																		formControlName="calculatingTaxOnPriceAfterDeductionAndAddition">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-4 col-md-4">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.addition-affects-cost-price'|translate}}
-														</label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="additionAffectsCostPrice"
-																	formControlName="additionAffectsCostPrice">
-																<span class="switch-state"></span>
+
+                                                    <div class="col-6 col-md-6">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.discount-affects-cost-price'|translate}}
 															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="discountAffectsCostPrice"
+																		formControlName="discountAffectsCostPrice">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-6 col-md-6">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.addition-affects-cost-price'|translate}}
+															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="additionAffectsCostPrice"
+																		formControlName="additionAffectsCostPrice">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -255,8 +269,8 @@
                                         <li [ngbNavItem]="3">
                                             <a ngbNavLink>{{'bill-type.default-values'|translate}}</a>
                                             <ng-template ngbNavContent>
-                                                <div class="row">
-                                                    <div class="col-4 col-md-4">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="defaultCurrencyId" class="label-name">
 															{{'general.default-currency'|translate}}
 
@@ -272,7 +286,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="defaultUnitId" class="label-name">
 															{{'general.default-unit'|translate}}
 
@@ -288,7 +302,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="storeId" class="label-name">
 															{{'bill-type.store'|translate}}
 
@@ -304,7 +318,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="costCenterId" class="label-name">
 															{{'bill-type.cost-center'|translate}}
 
@@ -320,7 +334,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="vendorId" class="label-name">
 															{{'bill-type.vendor'|translate}}
 
@@ -337,7 +351,7 @@
 
                                                     </div>
 
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="paymentMethodId" class="label-name">
 															{{'bill-type.payment-method'|translate}}
 
@@ -354,7 +368,7 @@
 
                                                     </div>
 
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="projectId" class="label-name">
 															{{'bill-type.project'|translate}}
 
@@ -371,7 +385,7 @@
 
                                                     </div>
 
-                                                    <div class="col-4 col-md-4">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="defaultPrice" class="label-name">
 															{{'bill-type.default-price'|translate}}
 
@@ -394,57 +408,66 @@
                                         <li [ngbNavItem]="4">
                                             <a ngbNavLink>{{'general.print'|translate}}</a>
                                             <ng-template ngbNavContent>
-                                                <div class="row">
+                                                <div class="row g-3">
                                                     <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-                                                            {{'bill-type.print-immediately-after-addition'|translate}}
-                                                        </label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="printImmediatelyAfterAddition"
-                                                                    formControlName="printImmediatelyAfterAddition">
-                                                                <span class="switch-state"></span>
-                                                            </label>
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.print-immediately-after-addition'|translate}}
+															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="printImmediatelyAfterAddition"
+																		formControlName="printImmediatelyAfterAddition">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-                                                            {{'bill-type.print-expiry-dates'|translate}}
-                                                        </label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="printExpiryDates"
-                                                                    formControlName="printExpiryDates">
-                                                                <span class="switch-state"></span>
-                                                            </label>
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.print-expiry-dates'|translate}}
+															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="printExpiryDates"
+																		formControlName="printExpiryDates">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-                                                            {{'bill-type.print-items-specifiers'|translate}}
-                                                        </label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="printItemsSpecifiers"
-                                                                    formControlName="printItemsSpecifiers">
-                                                                <span class="switch-state"></span>
-                                                            </label>
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.print-items-specifiers'|translate}}
+															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="printItemsSpecifiers"
+																		formControlName="printItemsSpecifiers">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-                                                            {{'bill-type.print-items-images'|translate}}
-                                                        </label>
-                                                        <div class="icon-state media-body mx-5">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="printItemsImages"
-                                                                    formControlName="printItemsImages">
-                                                                <span class="switch-state"></span>
-                                                            </label>
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.print-items-images'|translate}}
+															</label>
+                                                            <div class="icon-state media-body ">
+
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="printItemsImages"
+																		formControlName="printItemsImages">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

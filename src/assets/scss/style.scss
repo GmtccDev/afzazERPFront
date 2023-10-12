@@ -1245,3 +1245,7 @@ button.ant-table-row-expand-icon.ng-star-inserted.ant-table-row-expand-icon-coll
     border-color: #293176;
     background: #293176;
 }
+
+.toast-error {
+    background-color: var(--bs-danger) !important;
+}
