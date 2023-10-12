@@ -54,7 +54,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
   showSearchModal = false;
   parentId: any;
   routeApi = 'ItemGroupsCard/get-ddl?'
-  routeUnitApi = 'WarehousesUnit/get-ddl?'
+  routeUnitApi = 'Unit/get-ddl?'
   itemTypeEnum: ICustomEnum[] = [];
   costCalculateMethodsEnum: ICustomEnum[] = [];
   unitsList: any;

@@ -1,0 +1,833 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-bills">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="billForm" id="billSubmit" class="tabs-form">
+                            <div class="main-branch ranoo">
+                                <div class="wrapper-title">
+                                    <h3>{{'bill.bill-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row ">
+                                        <div class="col-md-6 col-12 ">
+                                            <label for="code" class="label-name">
+                                                {{'general.code'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch"
+                                                    [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
+                                                    name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="date" class="label-name">
+                                                {{'general.date'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <app-full-date name="date" formControlName="date" [(ngModel)]="date"
+                                                    ngDefaultControl [selectedDate]="date"
+                                                    (OnDateSelect)="getDate($event)"></app-full-date>
+
+                                                <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['date'].errors && f['date'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="deliveryDate" class="label-name">
+                                                {{'general.delivery-date'|translate}}
+                                            </label>
+                                            <div class="form-group position-relative">
+                                                <app-full-date name="deliveryDate" formControlName="deliveryDate"
+                                                    [(ngModel)]="deliveryDate" ngDefaultControl
+                                                    [selectedDate]="deliveryDate"
+                                                    (OnDateSelect)="getDeliveryDate($event)"></app-full-date>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="supplierId" class="label-name">
+                                                {{'bill.supplier'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="supplierId"
+                                                    name='supplierId' id="supplierId">
+                                                    <ng-option *ngFor="let supplier of suppliersList"
+                                                        [value]="supplier.id">
+                                                        {{lang=="ar"?supplier.nameAr:supplier.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchSupplierModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="supplierReference"
+                                                class="label-name">{{'bill.supplier-reference'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="text" class="form-control icon-branch"
+                                                    name="supplierReference" formControlName="supplierReference">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="customerId" class="label-name">
+                                                {{'bill.customer'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="customerId"
+                                                    name='customerId' id="customerId">
+                                                    <ng-option *ngFor="let customer of customersList"
+                                                        [value]="customer.id">
+                                                        {{lang=="ar"?customer.nameAr:customer.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchCustomerModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="payWay" class="label-name">
+                                                {{'general.pay-way'|translate}}
+                                            </label>
+                                            <span class="text-danger">*</span>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="payWay" [items]="payWaysEnum"
+                                                    bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+                                                <div *ngIf="(f['payWay'].touched || f['payWay'].dirty ) && f['payWay'].invalid"
+                                                    class="alert alert-danger">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['payWay'].errors && f['payWay'].errors['required']">
+                                                        {{'validation-messages.required-field'|translate}}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="shipMethod" class="label-name">
+                                                {{'general.ship-method'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="shipMethod"
+                                                    [items]="shipMethodsEnum" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="shipKind" class="label-name">
+                                                {{'general.ship-kind'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="shipKind"
+                                                    [items]="shipKindsEnum" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="referenceId" class="label-name">
+                                                {{'general.reference'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="referenceId"
+                                                    name='referenceId' id="referenceId"
+                                                    (change)="getBillsByReferenceId(billForm.value.referenceId)">
+                                                    <ng-option *ngFor="let billType of billTypesList"
+                                                        [value]="billType.id">
+                                                        {{lang=="ar"?billType.billNameAr:billType.billNameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-4 col-12">
+                                            <label for="referenceNo" class="label-name">
+                                                {{'general.reference-no'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="referenceNo"
+                                                    name='referenceNo' id="referenceNo">
+                                                    <ng-option *ngFor="let bill of filterBillsList" [value]="bill.id">
+                                                        {{bill.code}}
+                                                    </ng-option>
+                                                </ng-select>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-2 col-12">
+                                            <br>
+                                            <button class="btn btn-success" type="button">
+                                                {{'general.fetch'|translate}}
+                                            </button>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="salesPersonId" class="label-name">
+                                                {{'general.sales-person'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="salesPersonId"
+                                                    name='salesPersonId' id="salesPersonId">
+                                                    <ng-option *ngFor="let salesPerson of salesPersonsList"
+                                                        [value]="salesPerson.id">
+                                                        {{lang=="ar"?salesPerson.nameAr:salesPerson.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchSalesPersonModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="storeId" class="label-name">
+                                                {{'bill.store'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="storeId" name='storeId'
+                                                    id="storeId">
+                                                    <ng-option *ngFor="let store of storesList" [value]="store.id">
+                                                        {{lang=="ar"?store.nameAr:store.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchStoreModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="currencyId" class="label-name">{{'general.currency'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="currencyId"
+                                                    name='currencyId' id="currencyId" [(ngModel)]="currencyId"
+                                                    (change)="getCurrencyFactor(billForm.value.currencyId)">
+                                                    <ng-option *ngFor="let currency of currenciesList"
+                                                        [value]="currency.id">
+                                                        {{lang=="ar"?currency.nameAr:currency.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchCurrencyModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-2 col-12">
+                                            <label for="currencyExchangeTransaction"
+                                                class="label-name">{{'bill.transaction-factor'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="text" class="form-control icon-branch"
+                                                    name="currencyExchangeTransaction"
+                                                    formControlName="currencyExchangeTransaction"
+                                                    [(ngModel)]="currencyExchangeTransaction">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="projectId" class="label-name">{{'general.project'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="projectId"
+                                                    name='projectId' id="projectId">
+                                                    <ng-option *ngFor="let project of projectsList"
+                                                        [value]="project.id">
+                                                        {{lang=="ar"?project.nameAr:project.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchProjectModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="costCenterId" class="label-name">
+                                                {{'general.cost-center'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="costCenterId"
+                                                    name='costCenterId' id="costCenterId">
+                                                    <ng-option *ngFor="let costCenter of costCentersList"
+                                                        [value]="costCenter.id">
+                                                        {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchCostCenterModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="notes" class="label-name">
+                                                {{'general.notes'|translate}}
+                                            </label>
+                                            <textarea class="form-control" formControlName="notes"
+                                                name='notes'></textarea>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="cashAccountId" class="label-name">
+                                                {{'general.cash-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="cashAccountId"
+                                                    name='cashAccountId' id="cashAccountId" [(ngModel)]="cashAccountId">
+                                                    <ng-option *ngFor="let account of cashAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchCashAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="supplierAccountId" class="label-name">
+                                                {{'general.supplier-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="supplierAccountId"
+                                                    name='supplierAccountId' id="supplierAccountId">
+                                                    <ng-option *ngFor="let account of supplierAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchSupplierAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="salesAccountId" class="label-name">
+                                                {{'general.sales-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="salesAccountId"
+                                                    name='salesAccountId' id="salesAccountId">
+                                                    <ng-option *ngFor="let account of salesAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchSalesAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="salesReturnAccountId" class="label-name">
+                                                {{'general.sales-return-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="salesReturnAccountId"
+                                                    name='salesReturnAccountId' id="salesReturnAccountId">
+                                                    <ng-option *ngFor="let account of salesReturnAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchSalesReturnAccountModal=true"
+                                                        type="button"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="purchasesAccountId" class="label-name">
+                                                {{'general.purchases-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="purchasesAccountId"
+                                                    name='purchasesAccountId' id="purchasesAccountId">
+                                                    <ng-option *ngFor="let account of purchasesAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchPurchasesAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="purchasesReturnAccountId" class="label-name">
+                                                {{'general.purchases-return-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1"
+                                                    formControlName="purchasesReturnAccountId"
+                                                    name='purchasesReturnAccountId' id="purchasesReturnAccountId">
+                                                    <ng-option *ngFor="let account of purchasesReturnAccountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchPurchasesReturnAccountModal=true"
+                                                        type="button"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col gap-12 grid grid-cols-12 ">
+                                            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                                                <li ngbNavItem [destroyOnHide]="false">
+                                                    <a ngbNavLink> {{'bill.items' |translate}}</a>
+                                                    <ng-template ngbNavContent>
+                                                        <table class="table table-responsive text-center"
+                                                            style="overflow-y: scroll !important;">
+                                                            <thead>
+                                                                <th>#</th>
+                                                                <th>
+                                                                    {{'bill.item'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.unit'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.quantity'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.price'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.total-before-tax'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.tax-ratio'|translate}}%
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.tax-value'|translate}}
+                                                                </th>
+
+                                                                <th>
+                                                                    {{'general.discount-ratio'|translate}}%
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.discount-value'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.total'|translate}}
+                                                                </th>
+
+                                                                <th>
+                                                                    {{'general.notes'|translate}}
+                                                                </th>
+
+                                                                <th></th>
+                                                            </thead>
+                                                            <tr *ngFor="let item of billItem; let i= index;">
+                                                                <td> {{i+1}}</td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="{{'general.search'|translate}}"
+                                                                        [(ngModel)]="billItem[i].itemNameAr"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (keydown.Enter)="openItemSearchDialog(i)">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="{{'general.search'|translate}}"
+                                                                        [(ngModel)]="billItem[i].unitNameAr"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (keydown.Enter)="openUnitSearchDialog(i)">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="billItem[i].quantity"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeQuantityOrPriceAdded(i)">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" [(ngModel)]="billItem[i].price"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeQuantityOrPriceAdded(i)">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" disabled
+                                                                        [(ngModel)]="billItem[i].totalBeforeTax"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="billItem[i].taxRatio"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeTaxOrDiscountRatioAdded(i)">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="billItem[i].taxValue"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="billItem[i].discountRatio"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeTaxOrDiscountRatioAdded(i)">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="billItem[i].discountValue"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" disabled
+                                                                        [(ngModel)]="billItem[i].total"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="text" [(ngModel)]="billItem[i].notes"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        class="form-control">
+
+                                                                </td>
+                                                                <td
+                                                                    class="align-items-center d-flex justify-content-center gap-1">
+                                                                    <button type="button"
+                                                                        class="btn btn-secondary px-3 "
+                                                                        (click)="updateItemData(item)"><i
+                                                                            class="fa fa-edit"></i></button>
+                                                                    <button class="btn btn-danger px-3"
+                                                                        (click)="deleteItem(i)" type="button">
+                                                                        {{'buttons.delete' | translate}}
+                                                                    </button>
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>{{billItem.length + 1}}</td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="{{'general.search'|translate}}"
+                                                                        [(ngModel)]="selectedBillItem.itemNameAr"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (keydown.Enter)="openItemSearchDialog(-1)">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="{{'general.search'|translate}}"
+                                                                        [(ngModel)]="selectedBillItem.unitNameAr"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (keydown.Enter)="openUnitSearchDialog(-1)">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.quantity"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeQuantityOrPrice()">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.price"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeQuantityOrPrice()">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" disabled
+                                                                        [(ngModel)]="selectedBillItem.totalBeforeTax"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.taxRatio"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeTaxOrDiscountRatio()">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.taxValue"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.discountRatio"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control"
+                                                                        (change)="onChangeTaxOrDiscountRatio()">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.discountValue"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" disabled
+                                                                        [(ngModel)]="selectedBillItem.total"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="text"
+                                                                        [(ngModel)]="selectedBillItem.notes"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        class="form-control">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="button" class="btn btn-primary"
+                                                                        (click)="addItem()"
+                                                                        value="{{'buttons.add'|translate}}">
+
+                                                                </td>
+
+                                                            </tr>
+
+
+                                                        </table>
+
+                                                    </ng-template>
+                                                </li>
+
+
+                                            </ul>
+                                            <div [ngbNavOutlet]="nav" class=""></div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <label for="total" class="label-name">{{'general.total'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" disabled class="form-control icon-branch"
+                                                    name="total" formControlName="total" [(ngModel)]="total">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="tax" class="label-name">{{'general.tax'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number"  class="form-control icon-branch"
+                                                    name="tax" formControlName="tax" [(ngModel)]="tax">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="discount"
+                                                class="label-name">{{'general.discount'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number"  class="form-control icon-branch"
+                                                    name="discount" formControlName="discount" [(ngModel)]="discount">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="net" class="label-name">{{'general.net'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" disabled class="form-control icon-branch"
+                                                    name="net" formControlName="net" [(ngModel)]="net">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="paid" class="label-name">{{'general.paid'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control icon-branch" name="paid"
+                                                    formControlName="paid" [(ngModel)]="paid">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="remaining"
+                                                class="label-name">{{'general.remaining'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" disabled class="form-control icon-branch"
+                                                    name="remaining" formControlName="remaining"
+                                                    [(ngModel)]="remaining">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-public-search-modal [isVisible]="showSearchSupplierModal" [routeApi]="routeSupplierApi"
+    (emitClose)="showSearchSupplierModal = false;" (emitSearch)="onSelectSupplier($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchCustomerModal" [routeApi]="routeCustomerApi"
+    (emitClose)="showSearchCustomerModal = false;" (emitSearch)="onSelectCustomer($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeCashAccountApi"
+    (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchSupplierAccountModal" [routeApi]="routeSupplierAccountApi"
+    (emitClose)="showSearchSupplierAccountModal = false;" (emitSearch)="onSelectSupplierAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchSalesAccountModal" [routeApi]="routeSalesAccountApi"
+    (emitClose)="showSearchSalesAccountModal = false;" (emitSearch)="onSelectSalesAccount($event)">
+</app-public-search-modal>
+
+
+<app-public-search-modal [isVisible]="showSearchSalesReturnAccountModal" [routeApi]="routeSalesAccountApi"
+    (emitClose)="showSearchSalesReturnAccountModal = false;" (emitSearch)="onSelectSalesReturnAccount($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchPurchasesAccountModal" [routeApi]="routePurchasesAccountApi"
+    (emitClose)="showSearchPurchasesAccountModal = false;" (emitSearch)="onSelectPurchasesAccount($event)">
+</app-public-search-modal>
+
+
+<app-public-search-modal [isVisible]="showSearchPurchasesReturnAccountModal" [routeApi]="routePurchasesAccountApi"
+    (emitClose)="showSearchPurchasesReturnAccountModal = false;" (emitSearch)="onSelectPurchasesReturnAccount($event)">
+</app-public-search-modal>
+
+
+<app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi"
+    (emitClose)="showSearchCostCenterModal = false;" (emitSearch)="onSelectCostCenter($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi"
+    (emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchSalesPersonModal" [routeApi]="routeSalesPersonApi"
+    (emitClose)="showSearchSalesPersonModal = false;" (emitSearch)="onSelectSalesPerson($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchStoreModal" [routeApi]="routeStoreApi"
+    (emitClose)="showSearchStoreModal = false;" (emitSearch)="onSelectStore($event)">
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchProjectModal" [routeApi]="routeProjectApi"
+    (emitClose)="showSearchProjectModal = false;" (emitSearch)="onSelectProject($event)">
+</app-public-search-modal>

@@ -61,7 +61,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = "Account/get-ddl?"
+  routeAccountApi = 'Account/GetLeafAccounts?'
   journalList: any;
   costCenterList: any;
   currencyList: any;
@@ -69,6 +69,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   fiscalPeriodList: any;
   counter: number = 0;
   accountList: any;
+  accountDetailsList: any;
+  beneficiaryAccountList: any;
+
   index: any;
   totalamount: number;
   totalDebit: number;
@@ -772,19 +775,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
       return this.incomingChequeForm.markAllAsTouched();
     }
   }
-
-
   getAccount() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-
           if (res.success) {
             this.accountList = res.response;
+            this.accountDetailsList = res.response;
+            this.beneficiaryAccountList = res.response;
 
           }
-
-
           resolve();
 
         },

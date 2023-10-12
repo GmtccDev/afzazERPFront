@@ -281,7 +281,10 @@
         "sales-person-card-information": "معلومات بطاقة المندوب",
         "sales-person-commission":"عمولات المناديب",
         "bill-types": "أنماط الفواتير",
-        "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب"
+        "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
+        "bills":"الفواتير"
+
+
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -290,6 +293,7 @@
         "barcode": "الباركود",
         "currencySymbol": "رمز العملة",
         "unit-symbol": "رمز الوحدة",
+        "unit": "الوحدة",
         "home": " الرئيسية",
         "about-us": "عن الشركة",
         "recently-added": "المضافة حديثا",
@@ -391,6 +395,19 @@
         "required": "هذا الحقل مطلوب",
         "image": "الصورة",
         "quantity": "الكمية",
+        "price": "السعر",
+        "tax": "الضريبة",
+        "discount": "الخصم",
+        "total": "الأجمالى",
+        "sub-total":"الأجمالى الجزئي",
+        "total-before-tax":"الأجمالى قبل الضريبة",
+        "tax-ratio": "نسبة الضريبة",
+        "tax-value": "قيمة الضريبة",
+        "discount-ratio": "نسبة الخصم",
+        "discount-value": "قيمة الخصم",
+        "net": "الصافى",
+        "remaining": "المتبقى",
+        "paid": "المدفوع",
         "sales-account": "حساب المبيعات",
         "sales-return-account": "حساب مرتجع المبيعات",
         "purchases-account": "حساب المشتريات",
@@ -398,7 +415,18 @@
         "sales-cost-account": "حساب تكلفة المبيعات",
         "inventory-account": "حساب المخزون",
         "minute": "دقيقة",
-        "print": "الطباعة"
+        "print": "الطباعة",
+      
+        "delivery-date":"تاريخ التوصيل",
+        "pay-way":"طريقة الدفع",
+        "ship-method":"طريقة الشحن",
+        "ship-kind":"نوع الشحن",
+        "reference":"المرجع",
+        "reference-no":"رقم المرجع",
+        "fetch":"أسترجاع",
+        "sales-person":"مندوب المبيعات",
+        "supplier-account":"حساب المورد",
+        "project": "المشروع"
        
          
     },
@@ -411,6 +439,10 @@
         "target":"المستهدف",
         "achieved-rarget-ratio":"قيمة العمولة في حالة تحقيق المستهدف",
         "not-achieved-rarget-ratio":"قيمة العمولة في حالة عدم تحقيق المستهدف"
+      
+
+
+
     },
     "currency": {
         "transaction-date": "تاريخ المعامل ",
@@ -628,6 +660,26 @@
         "print-immediately-after-addition": "طباعة مباشرة بعد الاضافة",
         "print-expiry-dates": "طباعة تواريخ الصلاحية",
         "print-items-specifiers": "طباعة محددات الأصناف",
-        "print-items-images": "طباعة صور الاصناف"
+        "print-items-images": "طباعة صور الاصناف",
+        "transaction-factor": " معامل التحويل "
+
+    },
+    "bill": {
+        "bill-information": "معلومات الفاتورة",
+        "add-bill": "اضافة الفاتورة",
+        "update-bill": "تحديث الفاتورة",
+        "bill": "الفاتورة",
+        "supplier":"المورد",
+        "customer":"العميل",
+        "supplier-reference":"مرجع المورد",
+        "store":"المستودع",
+        "transaction-factor": " معامل التحويل ",
+        "items":"الأصناف",
+        "item":"الصنف",
+        "item-description":"وصف الصنف"
+
+
+
     }
+
 }

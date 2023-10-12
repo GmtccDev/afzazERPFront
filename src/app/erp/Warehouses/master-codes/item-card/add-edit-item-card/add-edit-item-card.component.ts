@@ -542,6 +542,7 @@ export class AddEditItemCardComponent implements OnInit {
   confirmSave() {
     var inputDto = new ItemCardDto()
     return new Promise<void>((resolve, reject) => {
+      debugger
       inputDto = this.itemCardForm.value;
       this.itemCardService.createItemCard(inputDto).subscribe({
         next: (result: any) => {
@@ -678,9 +679,9 @@ export class AddEditItemCardComponent implements OnInit {
     
     this.unitsList=this.unitTransactionsList.filter(x=>x.unitMasterId==mainUnitId);
     // this.itemCardUnit = [];
-    // this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.warehousesUnitMasterId == mainUnitId);
+    // this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.MasterId == mainUnitId);
     // this.filterUnitTransactionsList.forEach(element => {
-    //   //  let unitName=this.unitsList.filter(x=>x.id==element.warehousesUnitDetailId);
+    //   //  let unitName=this.unitsList.filter(x=>x.id==element.DetailId);
     //   this.itemCardUnit.push(
     //     {
     //       unitId: element.warehousesUnitDetailId,

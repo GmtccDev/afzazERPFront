@@ -60,13 +60,15 @@ export class AddEditIssuingChequeComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = "Account/get-ddl?"
+  routeAccountApi = 'Account/GetLeafAccounts?'
   journalList: any;
   costCenterList: any;
   currencyList: any;
   fiscalPeriodList: any;
   counter: number;
   accountList: any;
+  accountDetailsList: any;
+  beneficiaryAccountList: any;
   index: any;
   totalamount: number;
   totalDebit: number;
@@ -334,11 +336,11 @@ export class AddEditIssuingChequeComponent implements OnInit {
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.issuingChequeForm.value.currencyId).subscribe({
         next: (res: any) => {
-          
+
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = 1 / currencyModel.transactionFactor;
-          this.amount =(1 / currencyModel.transactionFactor) * this.amountLocal;
+          this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
         }
       })
       this.subsList.push(sub);
@@ -541,11 +543,11 @@ export class AddEditIssuingChequeComponent implements OnInit {
             }
             this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getIssuingChequeCode();
+            this.getIssuingChequeCode();
           }
         }
       },
@@ -640,11 +642,11 @@ export class AddEditIssuingChequeComponent implements OnInit {
     this.currencyFactor = 0;
     this.currencyId = null;
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -665,12 +667,12 @@ export class AddEditIssuingChequeComponent implements OnInit {
           let issuingChequeDetail = this.issuingChequeForm.get('issuingChequeDetail') as FormArray;
           if (issuingChequeDetail.length > 0) {
             this.amountLocal = this.amountLocal + this.issuingChequeForm.get('issuingChequeDetail').value[index].currencyLocal;
-            if (event.target.value== this.mainCurrencyId) {
+            if (event.target.value == this.mainCurrencyId) {
               this.amount = this.amountLocal;
 
             }
             else {
-              let currencyModel =this.currency.find(x => x.id == event.target.value);
+              let currencyModel = this.currency.find(x => x.id == event.target.value);
               this.amount = currencyModel.transactionFactor * this.amountLocal;
 
             }
@@ -765,13 +767,12 @@ export class AddEditIssuingChequeComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-
           if (res.success) {
             this.accountList = res.response;
+            this.accountDetailsList = res.response;
+            this.beneficiaryAccountList = res.response;
 
           }
-
-
           resolve();
 
         },
