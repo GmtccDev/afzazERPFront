@@ -14,7 +14,7 @@
 
                                     <h3>{{'bill-type.bill-type-information'|translate}}</h3>
                                     <hr>
-                                    <div class="row ">
+                                    <div class="row g-3 ">
                                         <div class="col-md-6 col-12 offset-6">
                                             <label for="billKind" class="label-name">
 												{{'bill-type.bill-type'|translate}}
@@ -96,6 +96,24 @@
 
                                                     </div>
                                                     <div class="col-6 col-md-6">
+                                                        <label for="coding-policy" class="label-name">{{'bill-type.coding-policy'|translate}}
+														</label>
+                                                        <ul class="d-flex flex-row list-group accounting-effect">
+                                                            <li class="list-group-item border-0" *ngFor="let item of codingPolicyList">
+                                                                <input type="radio" formControlName="codingPolicy" name="codingPolicy" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
+
+                                                            </li>
+                                                        </ul>
+                                                        <div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid" class="validation alert-danger position-absolute">
+                                                            <i class="fa fa-close "></i>
+                                                            <span *ngIf="f['codingPolicy'].errors && f['codingPolicy'].errors['required']" class="f-12 ng-star-inserted text-white">
+																{{'error.required'|translate}}</span>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <hr>
+                                                    <div class="col-6 col-md-6">
                                                         <div class="media">
                                                             <label class="label-name">
 																{{'bill-type.affect-on-cost-price'|translate}}
@@ -125,52 +143,45 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <label for="coding-policy" class="label-name">{{'bill-type.coding-policy'|translate}}
-														</label>
-                                                        <ul class="list-group">
-                                                            <li class="list-group-item" *ngFor="let item of codingPolicyList">
-                                                                <input type="radio" formControlName="codingPolicy" name="codingPolicy" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
-
-                                                            </li>
-                                                        </ul>
-                                                        <br />
-                                                        <div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid" class="validation alert-danger position-absolute">
-                                                            <i class="fa fa-close "></i>
-                                                            <span *ngIf="f['codingPolicy'].errors && f['codingPolicy'].errors['required']" class="f-12 ng-star-inserted text-white">
-																{{'error.required'|translate}}</span>
-                                                        </div>
 
 
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.other-options'|translate}}
-														</label>
-                                                        <br>
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.confirm-cost-center'|translate}}
-														</label>
-                                                        <div class="icon-state media-body ">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="confirmCostCenter"
-																	formControlName="confirmCostCenter">
-																<span class="switch-state"></span>
+
+                                                    <label class="label-name">
+														{{'bill-type.other-options'|translate}}
+													</label>
+
+
+                                                    <div class=" col-md-6 col-12">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.confirm-cost-center'|translate}}
 															</label>
-                                                        </div>
-                                                        <label class="col-form-label m-r-10">
-															{{'bill-type.confirm-analytical-code'|translate}}
-														</label>
-                                                        <div class="icon-state media-body ">
-                                                            <label class="switch">
-																<input type="checkbox" class="form-control"
-																	name="confirmAnalyticalCode"
-																	formControlName="confirmAnalyticalCode">
-																<span class="switch-state"></span>
-															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="confirmCostCenter"
+																		formControlName="confirmCostCenter">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class=" col-md-6 col-12">
+                                                        <div class="media">
+                                                            <label class="label-name">
+																{{'bill-type.confirm-analytical-code'|translate}}
+															</label>
+                                                            <div class="icon-state media-body ">
+                                                                <label class="switch">
+																	<input type="checkbox" class="form-control"
+																		name="confirmAnalyticalCode"
+																		formControlName="confirmAnalyticalCode">
+																	<span class="switch-state"></span>
+																</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
 
                                             </ng-template>
