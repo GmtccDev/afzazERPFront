@@ -45,16 +45,20 @@ export class BillItem {
     id: number;
     billId: number;
     itemId: number;
-    itemDescription: string | undefined;
+    unitId: number | undefined;
     quantity: number;
     price: number;
-    tax: number | undefined;
-    discount: number | undefined;
-    subTotal: number | undefined;
+    totalBeforeTax: number | undefined;
+    taxRatio: number | undefined;
+    taxValue: number | undefined;
+    discountRatio: number | undefined;
+    discountValue: number | undefined;
     total: number | undefined;
     notes: string | undefined;
-    storeId: number;
-
+    itemNameAr:string;
+    itemNameEn:string;
+    unitNameAr:string;
+    unitNameEn:string;
 
 
 

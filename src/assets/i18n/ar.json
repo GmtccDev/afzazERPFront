@@ -291,6 +291,7 @@
         "barcode": "الباركود",
         "currencySymbol": "رمز العملة",
         "unit-symbol": "رمز الوحدة",
+        "unit": "الوحدة",
         "home": " الرئيسية",
         "about-us": "عن الشركة",
         "recently-added": "المضافة حديثا",
@@ -392,6 +393,19 @@
         "required": "هذا الحقل مطلوب",
         "image": "الصورة",
         "quantity": "الكمية",
+        "price": "السعر",
+        "tax": "الضريبة",
+        "discount": "الخصم",
+        "total": "الأجمالى",
+        "sub-total":"الأجمالى الجزئي",
+        "total-before-tax":"الأجمالى قبل الضريبة",
+        "tax-ratio": "نسبة الضريبة",
+        "tax-value": "قيمة الضريبة",
+        "discount-ratio": "نسبة الخصم",
+        "discount-value": "قيمة الخصم",
+        "net": "الصافى",
+        "remaining": "المتبقى",
+        "paid": "المدفوع",
         "sales-account": "حساب المبيعات",
         "sales-return-account": "حساب مرتجع المبيعات",
         "purchases-account": "حساب المشتريات",
@@ -644,7 +658,12 @@
         "customer":"العميل",
         "supplier-reference":"مرجع المورد",
         "store":"المستودع",
-        "transaction-factor": " معامل التحويل "
+        "transaction-factor": " معامل التحويل ",
+        "items":"الأصناف",
+        "item":"الصنف",
+        "item-description":"وصف الصنف"
+
+
 
     }
 
