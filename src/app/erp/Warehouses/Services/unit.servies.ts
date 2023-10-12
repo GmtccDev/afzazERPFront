@@ -72,7 +72,7 @@ export class UnitServiceProxy {
     deleteUnit(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Unit/delete-warehousesUnit", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/Unit/delete", { params: params });
     }
 
     deleteListUnitTransaction(customer: any): Observable<any> {
@@ -98,7 +98,7 @@ export class UnitServiceProxy {
 
 
     getUnitTransactions(): Observable<any> {
-        return this.http.get<any>(this.baseUrl + "/api/Unit/get-ddl-units-transactions?");
+        return this.http.get<any>(this.baseUrl + "/api/Unit/getUnitTransactions?");
     }
 
     deleteEntity(entity: any): Observable<any> {

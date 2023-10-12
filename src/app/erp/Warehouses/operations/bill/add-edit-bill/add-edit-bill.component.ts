@@ -36,6 +36,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   billForm: FormGroup = new FormGroup({});
   currencyId: any;
   cashAccountId: any;
+  supplierAccountId: any;
+  salesAccountsList: any;
+  salesReturnAccountsList: any;
+  purchasesAccountsList: any;
+  purchasesReturnAccountsList: any;
+  supplierAccountsList: any;
   date!: DateModel;
   deliveryDate: DateModel;
   bill: Bill = new Bill();
@@ -49,7 +55,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   errorMessage = '';
   errorClass = '';
   lang = localStorage.getItem("language")
-  routeAccountApi = 'Account/get-ddl?'
+  routeCashAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Cash
+  routeSalesAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Sales
+  routeSupplierAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Supplier
+  routePurchasesAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Purchases
+
+
+
+
+
   routeCurrencyApi = "currency/get-ddl?"
   routeCostCenterApi = 'CostCenter/get-ddl?'
 
@@ -72,7 +86,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   billTypesList: any;
   billsList: any;
   filterBillsList: any;
-  salesPersonsList:any;
+  salesPersonsList: any;
   storesList: any;
   projectsList: any;
 
@@ -89,6 +103,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchSupplierModal = false;
   showSearchCustomerModal = false;
   showSearchCashAccountModal = false;
+  showSearchSupplierAccountModal = false;
+  showSearchSalesAccountModal = false;
+  showSearchSalesReturnAccountModal = false;
+  showSearchPurchasesAccountModal = false;
+  showSearchPurchasesReturnAccountModal = false;
+
   showSearchCostCenterModal = false;
   showSearchCurrencyModal = false;
   showSearchSalesPersonModal = false;
@@ -147,13 +167,17 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getCustomers(),
       this.getCurrencies(),
       this.getCurrenciesTransactions(),
-      this.getAccounts(),
+      this.getCashAccounts(),
+      this.getSupplierAccounts(),
+      this.getSalesAccounts(),
+      this.getPurchasesAccounts(),
+
       this.getCostCenters(),
       this.getBillTypes(),
       this.getBills(),
       this.getSalesPersons(),
       this.getStores(),
-     // this.getProjects(),
+      // this.getProjects(),
 
 
 
@@ -294,7 +318,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getBillTypeById(id) {
-    this.billType=this.billTypesList.filter(x=>x.id==id);
+    this.billType = this.billTypesList.filter(x => x.id == id);
     if (this.id == 0) {
       //this.getBillCode();
 
@@ -335,8 +359,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   getShipMethods() {
 
-      this.shipMethodsEnum = convertEnumToArray(ShipMethodEnum);
-    
+    this.shipMethodsEnum = convertEnumToArray(ShipMethodEnum);
+
   }
   getShipKinds() {
 
@@ -439,18 +463,53 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   //   });
 
   // }
-  getAccounts() {
+  getCashAccounts() {
     debugger
     return new Promise<void>((resolve, reject) => {
-      let sub = this.accountService.getLeafAccounts().subscribe({
+      // let sub = this.accountService.getLeafAccounts().subscribe({
+      //   next: (res) => {
+      //     debugger
+      //     if (res.success) {
+      //       this.cashAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Cash);
+
+      //     }
+
+
+      //     resolve();
+
+      //   },
+      //   error: (err: any) => {
+      //     reject(err);
+      //   },
+      //   complete: () => {
+      //     console.log('complete');
+      //   },
+      // });
+      // let sub = this.accountService.getLeafAccountsByAccountClassificationId(AccountClassificationsEnum.Cash).subscribe({
+      //   next: (res) => {
+      //     debugger
+      //     if (res.success) {
+      //       this.cashAccountsList = res.response;
+
+      //     }
+
+
+      //     resolve();
+
+      //   },
+      //   error: (err: any) => {
+      //     reject(err);
+      //   },
+      //   complete: () => {
+      //     console.log('complete');
+      //   },
+      // });
+      let sub = this.publicService.getDdl(this.routeCashAccountApi).subscribe({
         next: (res) => {
-          debugger
           if (res.success) {
-            this.cashAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true && x.accountClassificationId == AccountClassificationsEnum.Cash);
+            this.cashAccountsList = res.response;
 
           }
-
-
           resolve();
 
         },
@@ -461,7 +520,74 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           console.log('complete');
         },
       });
+      this.subsList.push(sub);
+    });
 
+  }
+  getSupplierAccounts() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeSupplierAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.supplierAccountsList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+    });
+
+  }
+  getSalesAccounts() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeSalesAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.salesAccountsList = res.response;
+            this.salesReturnAccountsList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+    });
+
+  }
+  getPurchasesAccounts() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routePurchasesAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.purchasesAccountsList = res.response;
+            this.purchasesReturnAccountsList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
       this.subsList.push(sub);
     });
 
@@ -630,9 +756,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
 
   }
-  getBillsByReferenceId(referenceId:any)
-  {
-   this.filterBillsList=this.billsList.filter(x=>x.billTypeId==referenceId);
+  getBillsByReferenceId(referenceId: any) {
+    this.filterBillsList = this.billsList.filter(x => x.billTypeId == referenceId);
   }
   getSalesPersons() {
     return new Promise<void>((resolve, reject) => {
@@ -879,6 +1004,26 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   onSelectCashAccount(event) {
     this.billForm.controls.cashAccountId.setValue(event.id);
     this.showSearchCashAccountModal = false;
+  }
+  onSelectSupplierAccount(event) {
+    this.billForm.controls.supplierAccountId.setValue(event.id);
+    this.showSearchSupplierAccountModal = false;
+  }
+  onSelectSalesAccount(event) {
+    this.billForm.controls.salesAccountId.setValue(event.id);
+    this.showSearchSalesAccountModal = false;
+  }
+  onSelectSalesReturnAccount(event) {
+    this.billForm.controls.salesReturnAccountId.setValue(event.id);
+    this.showSearchSalesReturnAccountModal = false;
+  }
+  onSelectPurchasesAccount(event) {
+    this.billForm.controls.purchasesAccountId.setValue(event.id);
+    this.showSearchPurchasesAccountModal = false;
+  }
+  onSelectPurchasesReturnAccount(event) {
+    this.billForm.controls.purchasesReturnAccountId.setValue(event.id);
+    this.showSearchPurchasesReturnAccountModal = false;
   }
   onSelectCostCenter(event) {
     this.billForm.controls.costCenterId.setValue(event.id);
@@ -1216,7 +1361,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             //this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           // this.getBillCode();
+            // this.getBillCode();
           }
         }
       },

@@ -138,7 +138,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       this.getGeneralConfigurationsOfMainCurrency(),
       this.getGeneralConfigurationsOfMultiCurrency(),
       this.getCurrencies(),
-     // this.getCurrenciesTransactions(),
+      this.getCurrenciesTransactions(),
       this.getAccounts(),
       this.getCostCenters(),
 

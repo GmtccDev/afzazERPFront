@@ -54,7 +54,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = "Account/get-ddl?"
+  routeAccountApi = 'Account/GetLeafAccounts?'
   journalList: any;
   costCenterList: any;
   currencyList: any;
@@ -75,7 +75,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   branchId: string = this.userService.getBranchId();
   companyId: string = this.userService.getCompanyId();
   constructor(
-    private journalEntryService: JournalEntryServiceProxy,private userService:UserService,
+    private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -542,11 +542,11 @@ export class AddEditJournalEntryComponent implements OnInit {
             this.toolbarPathData.componentAdd = 'Add journalEntry';
             this.definejournalEntryForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getjournalEntryCode();
+            this.getjournalEntryCode();
           }
         }
       },
@@ -735,7 +735,7 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.accountList = res.response.filter(c => c.isLeafAccount == true);
+            this.accountList = res.response;
 
           }
 
