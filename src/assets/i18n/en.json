@@ -97,6 +97,8 @@
         "purchase-price-required": "Purchase Price is required",
         "is-taxable": "Is Taxable",
         "tax-ratio": "Tax Ratio",
+        "tax-value": "Tax Value",
+
         "owner": "Owner",
         "owner-required": "Owner is required",
         "loading": "loading",
@@ -172,6 +174,18 @@
         "responsible-person": "The Responsible Person",
         "image": "Image",
         "quantity": "Quantity",
+        "price": "Price",
+        "tax": "Tax",
+        "discount": "Discount",
+        "discount-ratio": "Discount Ratio",
+        "discount-value": "Discount Value",
+
+        "total": "Total",
+        "net": "Net",
+        "remaining": "Remaining",
+        "paid": "Paid",
+        "sub-total":"Sub Total",
+        "total-before-tax":"Total Before Tax",
         "sales-account": "Sales Account",
         "sales-return-account": "Sales Return Account",
         "purchases-account": "Purchases Account",
@@ -654,7 +668,11 @@
         "customer":"Customer",
         "supplier-reference":"Supplier Reference",
         "store":"Store",
-        "transaction-factor": "Transaction Factor"
+        "transaction-factor": "Transaction Factor",
+        "items":"Items",
+        "item":"Item",
+        "item-description":"Item Description"
+        
 
     }
 }
