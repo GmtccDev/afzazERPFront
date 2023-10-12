@@ -47,7 +47,7 @@ export class AddEditBankAccountComponent implements OnInit {
   routeApi = 'Company/get-ddl?'
   routeApiCountry = 'Country/get-ddl?'
   accountList: any;
-  routeAccountApi = "account/get-ddl?"
+  routeAccountApi = "Account/GetLeafAccounts?"
   constructor(
     private bankAccountService: BankAccountServiceProxy,
     private router: Router,

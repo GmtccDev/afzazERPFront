@@ -77,7 +77,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   routeCurrencyApi = "currency/get-ddl?"
 
   routefiscalPeriodApi = "fiscalPeriod/get-ddl?"
-  routeAccountApi = "account/get-ddl?"
+  routeCashAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Cash
   companyId: string = localStorage.getItem("companyId");
   branchId: string = localStorage.getItem("branchId");
 
@@ -108,7 +108,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     this.spinner.show();
     Promise.all([
       this.getJournal(),
-      this.getAccounts(),
+      this.getCashAccounts(),
       this.getCurrencies()
 
     ]).then(a => {
@@ -301,9 +301,9 @@ export class AddEditVoucherTypeComponent implements OnInit {
     });
 
   }
-  getAccounts() {
+  getCashAccounts() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+      let sub = this.publicService.getDdl(this.routeCashAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
             this.cashAccountList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true && x.accountClassificationId == AccountClassificationsEnum.Cash);
