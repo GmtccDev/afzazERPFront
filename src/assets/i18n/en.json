@@ -180,8 +180,17 @@
         "inventory-account": "Inventory Account",
         "minute": "minute",
         "print": "Print"
+    
     },
-    "menu": {},
+    "sales-person-commission": {
+        "sales-person":"Sales Person",
+        "commission-calculate-method":"Commission Calculate Method",
+        "commission-type":"Commission Type",
+        "commission-on":"Commission on ",
+        "target":"Target",
+        "achieved-rarget-ratio":"Value of commission if target achieved ",
+        "not-achieved-rarget-ratio":"Value of commission if target not achieved "
+    },
     "home": {
         "enter-keyword": "Enter keyword",
         "property-type": "Property Type",
@@ -434,7 +443,8 @@
 
         "sales-person-commission":"Sales Person Commission",
 
-        "sales-person-card-information": "Sales Person Card Information"
+        "sales-person-card-information": "Sales Person Card Information",
+        "sales-person-commission-card-information": "Sales Person Commission Card Information"
 
     },
     "language": {

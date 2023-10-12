@@ -1,3 +1,4 @@
+import { SalesPersonCommissionCardComponent } from './sales-person-commission-card/sales-person-commission-card.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PeriodComponent } from './period/period.component';
@@ -22,6 +23,7 @@ import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edi
 import { BillTypeComponent } from './bill-type/bill-type.component';
 import { SalesPersonCardComponent } from './sales-person-card/sales-person-card.component';
 import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-person-card/add-sales-person-card.component';
+import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -62,9 +64,9 @@ const routes: Routes = [
 			{ path: 'sales-person-card', component: SalesPersonCardComponent },
 			{ path: 'sales-person-card/add-sales-person-card', component: AddSalesPersonCardComponent },
 			{ path: 'sales-person-card/update-sales-person-card/:id', component: AddSalesPersonCardComponent },
-			{ path: 'sales-person-commission-card', component: SalesPersonCardComponent },
-			{ path: 'sales-person-commission-card/add-sales-person-commission-card', component: AddSalesPersonCardComponent },
-			{ path: 'sales-person-commission-card/update-sales-commission-person-commission-card/:id', component: AddSalesPersonCardComponent },
+			{ path: 'sales-person-commission-card', component: SalesPersonCommissionCardComponent },
+			{ path: 'sales-person-commission-card/add-sales-person-commission-card', component: AddSalesPersonCommissionCardComponent },
+			{ path: 'sales-person-commission-card/update-sales-person-commission-card/:id', component: AddSalesPersonCommissionCardComponent },
 		]
 	}
 ];

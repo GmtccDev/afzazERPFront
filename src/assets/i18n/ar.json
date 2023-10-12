@@ -280,7 +280,8 @@
         "sales-person-card": "بطاقة المندوب",
         "sales-person-card-information": "معلومات بطاقة المندوب",
         "sales-person-commission":"عمولات المناديب",
-        "bill-types": "أنماط الفواتير"
+        "bill-types": "أنماط الفواتير",
+        "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -398,8 +399,19 @@
         "inventory-account": "حساب المخزون",
         "minute": "دقيقة",
         "print": "الطباعة"
+       
+         
     },
-    "menu": {},
+
+    "sales-person-commission": {
+        "sales-person":"المندوب",
+        "commission-calculate-method":"طريقة احتساب العمولة",
+        "commission-type":"نوع العمولة",
+        "commission-on":"العمولة على ",
+        "target":"المستهدف",
+        "achieved-rarget-ratio":"قيمة العمولة في حالة تحقيق المستهدف",
+        "not-achieved-rarget-ratio":"قيمة العمولة في حالة عدم تحقيق المستهدف"
+    },
     "currency": {
         "transaction-date": "تاريخ المعامل ",
         "transaction-factor": " معامل التحويل ",

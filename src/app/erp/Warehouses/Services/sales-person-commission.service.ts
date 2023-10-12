@@ -28,17 +28,17 @@ export class SalesPersonCommissionServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createSalesPersonCommission(SalesPersonCard: any): Observable<any> {
+    createSalesPersonCommission(SalesPersonCommissionCard: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/SalesPersonCommission/add?", SalesPersonCard);
+        return this.http.post<any>(environment.apiUrl + "/api/SalesPersonCommission/add?", SalesPersonCommissionCard);
     }
     
    
-    deleteListSalesPersonCommission(SalesPersonCard: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/SalesPersonCommission/deleteList?", SalesPersonCard);
+    deleteListSalesPersonCommission(SalesPersonCommissionCard: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/SalesPersonCommission/deleteList?", SalesPersonCommissionCard);
     }
-    updateSalesPersonCommission(SalesPersonCard: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/SalesPersonCommission/edit?", SalesPersonCard);
+    updateSalesPersonCommission(SalesPersonCommissionCard: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/SalesPersonCommission/edit?", SalesPersonCommissionCard);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(environment.apiUrl + "/api/SalesPersonCommission/get-ddl?");

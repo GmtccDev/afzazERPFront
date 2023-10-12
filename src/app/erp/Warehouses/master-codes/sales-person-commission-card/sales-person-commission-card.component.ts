@@ -24,10 +24,11 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
 
   //#region Main Declarations
   salesPersonsCommissions: SalesPersonCommissionCardDto[] = [];
+  
   currnetUrl: any;
   addUrl: string = '/warehouses-master-codes/sales-person-commission-card/add-sales-person-commission-card';
   updateUrl: string = '/warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/';
-  listUrl: string = '/warehouses-master-codes/sales-person-card';
+  listUrl: string = '/warehouses-master-codes/sales-person-commission-card';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
@@ -110,7 +111,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
       let sub = this.salesPersonCommissionServiceProxy.allSalesPersonCommission(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.sales-person-card");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.sales-person-commission");
           if (res.success) {
             this.salesPersonsCommissions = res.response.items
 
@@ -188,25 +189,23 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
   groupByCols: string[] = [];
   lang = localStorage.getItem("language");
   columnNames = [
-    this.lang == 'ar'
-      ? { title: ' الاسم', field: 'nameAr' } :
-      { title: ' Name  ', field: 'nameEn' },
+
 
     {
       title: this.lang == 'ar' ? ' الكود' : 'Code ',
       field: 'code',
     },
     {
-      title: this.lang == 'ar' ? 'الهاتف' : 'Phone',
-      field: 'phone',
+      title: this.lang == 'ar' ? 'الهاتف' : 'Calculation Method',
+      field: 'calculationMethod',
     },
     {
-      title: this.lang == 'ar' ? 'البريد الالكترونى' : 'Email',
-      field: 'email',
+      title: this.lang == 'ar' ? 'نوع العمولة' : 'type',
+      field: 'type',
     },
     {
-      title: this.lang == 'ar' ? 'رقم الحساب' : 'Account Number',
-      field: 'accountId',
+      title: this.lang == 'ar' ? 'المستهدف' : 'Target',
+      field: 'target',
     },
  
    
@@ -222,12 +221,11 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
-        { field: 'nameEn', type: 'like', value: searchTxt },
-        { field: 'nameAr', type: 'like', value: searchTxt },
+ 
         { field: 'code', type: 'like', value: searchTxt },
-        { field: 'phone', type: 'like', value: searchTxt },
-        { field: 'email', type: 'like', value: searchTxt },
-        { field: 'accountId', type: 'like', value: searchTxt }
+        { field: 'calculationMethod', type: 'like', value: searchTxt },
+        { field: 'type', type: 'like', value: searchTxt },
+        { field: 'target', type: 'like', value: searchTxt }
 
         ,
       ],
@@ -260,7 +258,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['warehouses-master-codes/sales-person-card/update-sales-person-card/' + id])
+      this.router.navigate(['warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/' + id])
     }
 
   }
@@ -276,7 +274,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['warehouses-master-codes/sales-person-card/update-sales-person-card/' + event.item.id])
+        this.router.navigate(['warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -316,7 +314,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
     let item = new DeleteListSalesPersonCard();
     item.ids = this.listIds.map(item => item.id);
     const input={
-      tableName:"SalesPersonCards",
+      tableName:"SalesPersonsCommissions",
       ids: this.listIds,
       idName:"Id"
     };

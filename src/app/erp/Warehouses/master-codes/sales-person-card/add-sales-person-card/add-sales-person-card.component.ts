@@ -1,5 +1,5 @@
 import { SalesPersonCardServiceProxy } from './../../../Services/sales-person-card.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CountryDto } from 'src/app/erp/master-codes/models/country';
 import { SalesPersonCardDto } from '../../../models/sales-person-card';
@@ -21,7 +21,7 @@ import { CODE_REQUIRED_VALIDATORS, PHONE_VALIDATORS, REQUIRED_VALIDATORS } from 
   templateUrl: './add-sales-person-card.component.html',
   styleUrls: ['./add-sales-person-card.component.scss']
 })
-export class AddSalesPersonCardComponent implements OnInit {
+export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
 
    //#region Main Declarations
    salesPersonCardForm!: FormGroup;
@@ -93,7 +93,7 @@ export class AddSalesPersonCardComponent implements OnInit {
        if (params['id'] != null) {
          this.id = +params['id'];
          if (this.id > 0) {
-           this.getSupplierCardById(this.id).then(a => {
+           this.getSalesPersonCardId(this.id).then(a => {
              this.spinner.hide();
  
            }).catch(err => {
@@ -168,7 +168,7 @@ export class AddSalesPersonCardComponent implements OnInit {
    //#endregion
  
    //#region CRUD Operations
-   getSupplierCardById(id: any) {
+   getSalesPersonCardId(id: any) {
      return new Promise<void>((resolve, reject) => {
        let sub = this.salesPersonCardService.getSalesPersonCard(id).subscribe({
          next: (res: any) => {

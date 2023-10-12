@@ -8,6 +8,7 @@ export class SalesPersonCommissionCardDto {
     type: number;
     target: number;
     commissonOn: number;
+    isActive:boolean;
     achievedTargetRatio: number;
     notAchievedTargetRatio: number;
 }

@@ -1,5 +1,5 @@
 import { DeleteListSalesPersonCard, SalesPersonCardDto } from './../../models/sales-person-card';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SupplierCardDto } from '../../models/supplier-card';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './sales-person-card.component.html',
   styleUrls: ['./sales-person-card.component.scss']
 })
-export class SalesPersonCardComponent implements OnInit {
+export class SalesPersonCardComponent implements OnInit,OnDestroy {
 
   //#region Main Declarations
   salesPersons: SalesPersonCardDto[] = [];
