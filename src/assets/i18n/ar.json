@@ -279,7 +279,9 @@
         "item-groups-card-information": "معلومات بطاقة مجموعة اصناف",
         "sales-person-card": "بطاقة المندوب",
         "sales-person-card-information": "معلومات بطاقة المندوب",
+        "sales-person-commission":"عمولات المناديب",
         "bill-types": "أنماط الفواتير",
+        "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
         "bills":"الفواتير"
 
 
@@ -414,6 +416,7 @@
         "inventory-account": "حساب المخزون",
         "minute": "دقيقة",
         "print": "الطباعة",
+      
         "delivery-date":"تاريخ التوصيل",
         "pay-way":"طريقة الدفع",
         "ship-method":"طريقة الشحن",
@@ -424,11 +427,23 @@
         "sales-person":"مندوب المبيعات",
         "supplier-account":"حساب المورد",
         "project": "المشروع"
+       
+         
+    },
+
+    "sales-person-commission": {
+        "sales-person":"المندوب",
+        "commission-calculate-method":"طريقة احتساب العمولة",
+        "commission-type":"نوع العمولة",
+        "commission-on":"العمولة على ",
+        "target":"المستهدف",
+        "achieved-rarget-ratio":"قيمة العمولة في حالة تحقيق المستهدف",
+        "not-achieved-rarget-ratio":"قيمة العمولة في حالة عدم تحقيق المستهدف"
+      
 
 
 
     },
-    "menu": {},
     "currency": {
         "transaction-date": "تاريخ المعامل ",
         "transaction-factor": " معامل التحويل ",

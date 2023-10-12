@@ -193,7 +193,7 @@
         "sales-cost-account": "Sales Cost Account",
         "inventory-account": "Inventory Account",
         "minute": "minute",
-        "print": "Print",
+       "print": "Print",
         "delivery-date":"Delivery Date",
         "pay-way":"Pay Way",
         "ship-method":"Ship Method",
@@ -203,9 +203,19 @@
         "fetch":"Fetch",
         "sales-person":"Sales Person",
         "supplier-account":"Supplier Account"
+    
+    },
+    "sales-person-commission": {
+        "sales-person":"Sales Person",
+        "commission-calculate-method":"Commission Calculate Method",
+        "commission-type":"Commission Type",
+        "commission-on":"Commission on ",
+        "target":"Target",
+        "achieved-rarget-ratio":"Value of commission if target achieved ",
+        "not-achieved-rarget-ratio":"Value of commission if target not achieved "
+      
 
     },
-    "menu": {},
     "home": {
         "enter-keyword": "Enter keyword",
         "property-type": "Property Type",
@@ -454,7 +464,9 @@
         "item-groups-card-information": " Item Groups Card Information",
         "tax-information": "Tax Information",
         "bill-types": "Bill Types",
-        "sales-person-card": "Sales Person Card",
+        "sales-person-card":"Sales Person Card",
+        "sales-person-commission":"Sales Person Commission",
+        "sales-person-commission-card-information": "Sales Person Commission Card Information",
         "sales-person-card-information": "Sales Person Card Information",
         "bills":"Bills"
 
