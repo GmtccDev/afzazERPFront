@@ -16,7 +16,7 @@
                                     <div class="col-12 col-md-6 offset-6">
                                         <label for="code" class="label-name">
                                             {{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                        <div class="form-group position-relative">
+                                        <div class="form-group0 position-relative">
 
                                             <input type="text" class="form-control icon-user" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
                                             <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -31,7 +31,7 @@
                                     <div class="col-md-6 col-12">
                                         <label for="nameAr" class="label-name">
                                             {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-                                        <div class="form-group position-relative">
+                                        <div class="form-group0 position-relative">
 
                                             <input type="text" class="form-control icon-user" [ngClass]="{'is-invalid': (f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
                                             <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
@@ -45,7 +45,7 @@
                                     <!-- <div class="col-md-6 col-12">
                       <label for="nameEn" class="label-name">
                         {{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
-                      <div class="form-group position-relative">
+                      <div class="form-group0 position-relative">
 
                         <input type="text" class="form-control icon-user" name="nameEn" formControlName="nameEn">
                         <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid"

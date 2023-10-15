@@ -1,128 +1,109 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-body">
-						<form [formGroup]="periodForm" id="periodSubmit" class="tabs-form">
-							<div class="main-customer">
-								<div class="wrapper-title">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="periodForm" id="periodSubmit" class="tabs-form">
+                            <div class="main-customer">
+                                <div class="wrapper-title">
 
-									<h3>{{'component-names.period-information'|translate}}</h3>
-									<hr>
-									<div class="row align-items-center">
+                                    <h3>{{'component-names.period-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row align-items-center">
 
-										<div class="col-md-6 col-12 offset-6">
-											<label for="code" class="label-name">
+                                        <div class="col-md-6 col-12 offset-6">
+                                            <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
-												<input type="text" class="form-control "
-													[ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
-													name="code" formControlName="code">
-												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['code'].errors && f['code'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control " [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}} </span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameAr" class="label-name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
-												<input type="text" class="form-control "
-													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-													name="nameAr" formControlName="nameAr">
-												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control " [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameEn" class="label-name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameEn" class="label-name">
 												{{'general.nameEn'|translate}}</label>
-											<div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
-												<input type="text" class="form-control " name="nameEn"
-													formControlName="nameEn">
+                                                <input type="text" class="form-control " name="nameEn" formControlName="nameEn">
 
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="fromDate" class="label-name">
-												{{'general.fromDate'|translate}}</label><span
-												class="text-danger">*</span>
-											<div class="form-group position-relative">
-												<app-full-date name="fromDate" formControlName="fromDate"
-													[(ngModel)]="fromDate" ngDefaultControl [selectedDate]="fromDate"
-													(OnDateSelect)="getFromDate($event)"></app-full-date>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="fromDate" class="label-name">
+												{{'general.fromDate'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group0 position-relative">
+                                                <app-full-date name="fromDate" formControlName="fromDate" [(ngModel)]="fromDate" ngDefaultControl [selectedDate]="fromDate" (OnDateSelect)="getFromDate($event)"></app-full-date>
 
-												<div *ngIf="(f['fromDate'].touched || f['fromDate'].dirty ) && f['fromDate'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span
-														*ngIf="f['fromDate'].errors && f['fromDate'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <div *ngIf="(f['fromDate'].touched || f['fromDate'].dirty ) && f['fromDate'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['fromDate'].errors && f['fromDate'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="toDate" class="label-name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="toDate" class="label-name">
 												{{'general.toDate'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
-												<app-full-date name="toDate" formControlName="toDate"
-													[(ngModel)]="toDate" ngDefaultControl [selectedDate]="toDate"
-													(OnDateSelect)="getToDate($event)"></app-full-date>
+                                            <div class="form-group0 position-relative">
+                                                <app-full-date name="toDate" formControlName="toDate" [(ngModel)]="toDate" ngDefaultControl [selectedDate]="toDate" (OnDateSelect)="getToDate($event)"></app-full-date>
 
-												<div *ngIf="(f['toDate'].touched || f['toDate'].dirty ) && f['toDate'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['toDate'].errors && f['toDate'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <div *ngIf="(f['toDate'].touched || f['toDate'].dirty ) && f['toDate'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['toDate'].errors && f['toDate'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
+                                            </div>
+                                        </div>
 
-										<div class="col-md-6 col-12">
-											<div class="media">
-												<label class="label-name"> {{'general.status'|translate}}
+                                        <div class="col-md-6 col-12">
+                                            <div class="media">
+                                                <label class="label-name"> {{'general.status'|translate}}
 												</label>
-												<div class="icon-state media-body">
-													<label class="switch">
+                                                <div class="icon-state media-body">
+                                                    <label class="switch">
 														<input type="checkbox" class="form-control" name="isActive"
 															formControlName="isActive">
 														<span class="switch-state"></span>
 													</label>
-												</div>
-											</div>
-										</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

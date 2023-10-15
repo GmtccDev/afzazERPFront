@@ -17,10 +17,10 @@
                                     <div class="row">
                                         <div class="col-md-6 col-12">
                                             <label for="closeDate" class="label-name">
-												{{'general.date'|translate}}
-											</label>
+                                                {{'general.date'|translate}}
+                                            </label>
                                             <span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <app-full-date name="closeDate" formControlName="closeDate" [(ngModel)]="closeDate" ngDefaultControl [selectedDate]="closeDate" (OnDateSelect)="getCloseDate($event)"></app-full-date>
 
@@ -28,7 +28,7 @@
                                                 <div *ngIf="(f['closeDate'].touched || f['closeDate'].dirty ) && f['closeDate'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['closeDate'].errors && f['closeDate'].errors['required']" class="f-12 ng-star-inserted text-white">
-														{{'error.required'|translate}}</span>
+                                                        {{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -36,7 +36,7 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="fiscalPeriodId" class="label-name">{{'component-names.fiscalPeriod'|translate}}
-											</label>
+                                            </label>
                                             <span class="text-danger">*</span>
 
                                             <div class="input-group  popup">
@@ -49,7 +49,7 @@
                                                 <div *ngIf="(f['fiscalPeriodId'].touched || f['fiscalPeriodId'].dirty ) && f['fiscalPeriodId'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['fiscalPeriodId'].errors && f['fiscalPeriodId'].errors['required']" class="f-12 ng-star-inserted text-white">
-														{{'error.required'|translate}}</span>
+                                                        {{'error.required'|translate}}</span>
                                                 </div>
 
 

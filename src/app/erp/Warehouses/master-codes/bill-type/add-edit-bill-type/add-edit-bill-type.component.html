@@ -34,7 +34,7 @@
                                             <label for="billNameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label>
                                             <span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['billNameAr'].errors || f['billNameAr'].invalid}" name="billNameAr" formControlName="billNameAr">
                                                 <div *ngIf="(f['billNameAr'].touched || f['billNameAr'].dirty ) && f['billNameAr'].invalid" class="validation alert-danger position-absolute">
@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="billNameEn" class="label-name">{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
                                                 <input type="text" class="form-control icon-branch" name="billNameEn" formControlName="billNameEn">
 
                                             </div>

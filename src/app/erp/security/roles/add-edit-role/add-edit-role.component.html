@@ -1,155 +1,140 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card mb-3">
-					<div class="card-body">
-						<form [formGroup]="roleForm" id="BusinessSubmit" class="tabs-form">
-							<div class="main-customer">
-								<div class="wrapper-title">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form [formGroup]="roleForm" id="BusinessSubmit" class="tabs-form">
+                            <div class="main-customer">
+                                <div class="wrapper-title">
 
-									<h3>{{'component-names.role-information'|translate}}</h3>
-									<hr>
-									<div class="row align-items-center">
+                                    <h3>{{'component-names.role-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row align-items-center">
 
-										<div class="col-12 col-md-6 offset-6">
-											<label for="code" class="label-name">
+                                        <div class="col-12 col-md-6 offset-6">
+                                            <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
-												<input type="text" class="form-control icon-user"
-													[ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
-													name="code" formControlName="code">
-												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['code'].errors && f['code'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control icon-user" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}} </span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameAr" class="label-name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
-												<input type="text" class="form-control icon-user"
-													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-													name="nameAr" formControlName="nameAr">
-												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control icon-user" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameEn"
-												class="label-name">{{'general.nameEn'|translate}}</label><span
-												class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group0 position-relative">
 
-												<input type="text" class="form-control icon-user" name="nameEn"
-													formControlName="nameEn">
-												<div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control icon-user" name="nameEn" formControlName="nameEn">
+                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<div class="media">
-												<label class="label-name"> {{'general.status'|translate}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="media">
+                                                <label class="label-name"> {{'general.status'|translate}}
 												</label>
-												<div class="icon-state media-body">
-													<label class="switch">
+                                                <div class="icon-state media-body">
+                                                    <label class="switch">
 														<input type="checkbox" class="form-control" name="isActive"
 															formControlName="isActive">
 														<span class="switch-state"></span>
 													</label>
-												</div>
-											</div>
-										</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-									</div>
-								</div>
-							</div>
-						</form>
-						<hr>
-						<div>
-							<div class="wrapper-title">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        <div>
+                            <div class="wrapper-title">
 
-								<h3>{{'component-names.roles-permissions'|translate}}</h3>
-								<hr>
-								<div class="row ">
-									<div class="col-md-6 col-12">
-										<label for="" class="label-name">
+                                <h3>{{'component-names.roles-permissions'|translate}}</h3>
+                                <hr>
+                                <div class="row g-2">
+                                    <div class="col-md-6 col-12">
+                                        <label for="" class="label-name">
 											{{'component-names.modulesType'|translate}}</label>
-										<ng-select style="width:100%" (change)="onChange($event)">
-											<ng-option *ngFor="let module of modulesType" [value]="module.value">
-												{{lang=="ar"?module.descriptionAr:module.descriptionEn}}
-											</ng-option>
-										</ng-select>
+                                        <ng-select style="width:100%" (change)="onChange($event)">
+                                            <ng-option *ngFor="let module of modulesType" [value]="module.value">
+                                                {{lang=="ar"?module.descriptionAr:module.descriptionEn}}
+                                            </ng-option>
+                                        </ng-select>
 
-									</div>
-									<div class="col-md-6 col-12">
-										<label for="" class="label-name">
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <label for="" class="label-name">
 											{{'component-names.search-roles'|translate}}</label>
-										<input class="form-control" autocomplete="off" type="text" placeholder=""
-											[(ngModel)]="searchText" />
-									</div>
+                                        <input class="form-control" autocomplete="off" type="text" placeholder="" [(ngModel)]="searchText" />
+                                    </div>
 
-									<div class="col-md-12 col-12">
-										<div class="py-3">
-											<input type="checkbox" name="list_name" [checked]="masterSelected"
-												value="m1" (change)="checkUncheckAll($event)" /> &nbsp;&nbsp;
-											<strong> {{'general.selectUnselect'|translate}} </strong>
-										</div>
-									</div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="py-3">
+                                            <input type="checkbox" name="list_name" [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)" /> &nbsp;&nbsp;
+                                            <strong> {{'general.selectUnselect'|translate}} </strong>
+                                        </div>
+                                    </div>
 
 
-									<div *ngFor="let option of screens| filter:searchText;" class="col-md-4">
-										<div class="item-permissions">
-											<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
-												{{lang=="ar"?option.screenNameAr:option.screenNameEn}}
-											</h6>
-											<div class="check-item" *ngFor="let item of option.permissions;">
-												<label>
+                                    <div *ngFor="let option of screens| filter:searchText;" class="col-md-4">
+                                        <div class="item-permissions">
+                                            <h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+                                                {{lang=="ar"?option.screenNameAr:option.screenNameEn}}
+                                            </h6>
+                                            <div class="check-item" *ngFor="let item of option.permissions;">
+                                                <label>
 													<input type="checkbox" name="options" value="{{item.id}}"
 														[(ngModel)]="item.isChecked"
 														(change)="updateCheckedOptions(item, $event)" />
 
 													{{lang=="ar"?item.actionNameAr:item.actionNameEn}}
 												</label>
-											</div>
-										</div>
+                                            </div>
+                                        </div>
 
-									</div>
-								</div>
-							</div>
+                                    </div>
+                                </div>
+                            </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!--
+        <!--
         <div id="ex-table-div"></div> -->
 
-	</div>
+    </div>
 
 </section>

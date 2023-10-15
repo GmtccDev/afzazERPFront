@@ -414,7 +414,7 @@
                         li {
                             .profile-media {
                                 .media-body {
-                                    margin-right: 15px;
+                                    margin-right: 10px;
                                     margin-left: unset;
                                 }
                             }
@@ -4768,7 +4768,8 @@
             &.compact-sidebar {
                 .nav-right {
                     .nav-menus {
-                        margin-left: 37px;
+                        // margin-left: 37px;
+                        margin-left: 0px;
                     }
                 }
                 .page-header {

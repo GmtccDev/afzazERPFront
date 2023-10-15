@@ -13,14 +13,14 @@
                 <div class="modal-header">
                     <h4 class="modal-title text-capitalize">{{ 'currency.currency-transactions'|translate}}</h4>
                     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-						<span aria-hidden="true">&times;</span>
-					</button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="row ">
                         <div class="col-12 col-md-12">
                             <label for="transactionDate" class="label-name">{{'currency.transaction-date'|translate}}</label>
-                            <div class="form-group position-relative">
+                            <div class="form-group0 position-relative">
 
                                 <input type="date" class="form-control icon-currency" name="transactionDate" formControlName="transactionDate">
 
@@ -29,7 +29,7 @@
 
                         <div class="col-12 col-md-12">
                             <label for="transactionFactor" class="label-name">{{'currency.transaction-factor'|translate}}</label>
-                            <div class="form-group position-relative">
+                            <div class="form-group0 position-relative">
 
                                 <input type="number" class="form-control icon-currency" name="transactionFactor" formControlName="transactionFactor">
 
@@ -40,9 +40,9 @@
 
                         <div class="col-md-12 col-12">
                             <label for="countryId" class="label-name">
-								{{'component-names.currency-information'|translate}}
-								<span class="text-danger">*</span>
-							</label>
+                                {{'component-names.currency-information'|translate}}
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="input-group  popup">
                                 <ng-select style="width:100%" formControlName="currencyDetailId" name='currencyDetailId' class="" id="currencyDetailId">
                                     <ng-option *ngFor="let curreny of currenciesList" [value]="curreny.id">
@@ -58,7 +58,7 @@
         </div>
         <div class="modal-footer">
             <button (click)="save()" type="submit" class="btn btn-primary "> {{
-				'toolbar.save'|translate}}</button>
+                'toolbar.save'|translate}}</button>
         </div>
 
     </form>

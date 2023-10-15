@@ -19,7 +19,7 @@
                                         <div class="col-12 col-md-6 offset-6">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -33,7 +33,7 @@
                                         <div class="col-12 col-md-6">
                                             <label for="nameAr" class="label-name">
                                                 {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
                                                 <!-- <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
@@ -60,7 +60,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="address" class="label-name">{{'general.address-information'|translate}}</label>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <input type="text" class="form-control icon-company" name="address" formControlName="address">
 
@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="phoneNumber" class="label-name">{{'general.mobile-number'|translate}}</label>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="phoneNumber" formControlName="phoneNumber">
 
