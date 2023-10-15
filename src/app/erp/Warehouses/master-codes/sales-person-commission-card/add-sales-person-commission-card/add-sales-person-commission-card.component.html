@@ -1,0 +1,159 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-units">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="salesPersonCommissionCardForm" id="salesPersonCommissionCardForm" class="tabs-form">
+                            <div class="main-supplier">
+                                <div class="wrapper-title">
+
+                                    <h3>{{'component-names.sales-person-commission-card-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row align-items-center">
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="code" class="label-name">
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+                                                <input type="text" class="form-control" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}} </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <label for="countryId" class="label-name">
+												{{'sales-person-commission.sales-person'|translate}}
+
+											</label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="salesPersonId" name='salesPersonId' class="" id="salesPersonId">
+                                                    <ng-option *ngFor="let salesPerson of salesPersons" [value]="salesPerson.id">
+                                                        {{lang=="ar" ? salesPerson.nameAr:salesPerson.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+                        
+                                            </div>
+
+                                        </div>
+                                        
+										<div class="col-12 col-md-6">
+											<label for="cost-calculate-method"
+												class="label-name">{{'sales-person-commission.commission-calculate-method'|translate}}
+											</label>
+											<div class="input-group  popup">
+												
+
+                                                    <ng-select style="width:100%" formControlName="calculationMethod" name='calculationMethod' class="" id="calculationMethod">
+                                                        <ng-option *ngFor="let item of calculationMethodsList" [value]="item.id">
+                                                            {{lang=="ar" ? item.nameAr:item.nameEn}}
+                                                        </ng-option>
+                                                    </ng-select>
+
+											</div>
+										</div>
+                                        
+										<div class="col-12 col-md-6">
+											<label for="code" class="label-name">
+												{{'sales-person-commission.target'|translate}}</label>
+											<div class="form-group position-relative">
+												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+												<input type="number" class="form-control icon-branch"
+													name="target" formControlName="target">
+
+
+											</div>
+										</div>
+                                        <div class="col-12 col-md-6">
+											<label for="cost-calculate-method"
+												class="label-name">{{'sales-person-commission.commission-type'|translate}}
+											</label>
+											<div class="input-group  popup">
+												
+
+                                                    <ng-select style="width:100%" formControlName="type" name='type' class="" id="type">
+                                                        <ng-option *ngFor="let item of commissionTypeList"  [value]="item.id">
+                                                            {{lang=="ar" ? item.nameAr:item.nameEn}}
+                                                        </ng-option>
+                                                    </ng-select>
+
+											</div>
+										</div>
+                                        <div class="card-body">
+                                            <label for="cycle" class="label-name">
+                                                {{ 'sales-person-commission.commission-on' | translate }}
+                                            </label>
+                                            <div>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item" *ngFor="let item of commissionOnList">
+                                                        <input type="radio" formControlName="commissionOn" name="commissionOn" [value]="1" [checked]="1" /> {{ lang == 'ar' ? item.nameAr : item.nameEn }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="">
+											<label for="code" class="label-name">
+												{{'sales-person-commission.achieved-rarget-ratio'|translate}}</label>
+											<div class="form-group position-relative">
+												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+												<input type="number" class="form-control icon-branch"
+													name="achievedTargetRatio" formControlName="achievedTargetRatio">
+
+
+											</div>
+										</div>
+                                        <div class="">
+											<label for="code" class="label-name">
+												{{'sales-person-commission.not-achieved-rarget-ratio'|translate}}</label>
+											<div class="form-group position-relative">
+												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+												<input type="number" class="form-control icon-branch"
+													name="notAchievedTargetRatio" formControlName="notAchievedTargetRatio">
+
+
+											</div>
+										</div>
+                                        
+                
+                                        
+   
+
+          
+                                    
+                                       
+                                    
+
+                                  
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="media">
+                                                <label class="label-name"> {{'general.status'|translate}}
+												</label>
+                                                <div class="icon-state media-body mx-5">
+                                                    <label class="switch">
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

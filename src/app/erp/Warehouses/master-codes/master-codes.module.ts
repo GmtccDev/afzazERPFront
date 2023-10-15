@@ -1,3 +1,4 @@
+import { SalesPersonCommissionServiceProxy } from './../Services/sales-person-commission.service';
 import { SalesPersonCardServiceProxy } from './../Services/sales-person-card.service';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -34,6 +35,8 @@ import { BillTypeComponent } from './bill-type/bill-type.component';
 import { AddEditBillTypeComponent } from './bill-type/add-edit-bill-type/add-edit-bill-type.component';
 import { SalesPersonCardComponent } from './sales-person-card/sales-person-card.component';
 import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-person-card/add-sales-person-card.component';
+import { SalesPersonCommissionCardComponent } from './sales-person-commission-card/sales-person-commission-card.component';
+import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
 
 
 
@@ -43,7 +46,7 @@ import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-perso
     , StoreCardComponent, AddEditStoreCardComponent, PaymentMethodComponent, AddEditPaymentMethodComponent
     , CustomerCardComponent, AddEditCustomerCardComponent, SupplierCardComponent, AddEditSupplierCardComponent
     , ItemCardComponent, AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent,
-    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, 
+    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, 
   ],
   imports: [
     CommonModule,
@@ -51,7 +54,7 @@ import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-perso
     NzButtonModule,
     NzIconModule
   ],
-  providers: [PeriodServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
+  providers: [PeriodServiceProxy,SalesPersonCommissionServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
   ]
 })
 export class MasterCodesModule { }

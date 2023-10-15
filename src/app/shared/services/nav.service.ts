@@ -251,10 +251,12 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/warehouses-master-codes/paymentMethod', title: this.translate.instant("component-names.payment-method"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/customerCard', title: this.translate.instant("component-names.customer-card"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/supplierCard', title: this.translate.instant("component-names.supplier-card"), type: 'link', active: true },
-				{ path: '/warehouses-master-codes/itemCard', title: this.translate.instant("component-names.item-card"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/itemGroupsCard', title: this.translate.instant("component-names.item-groups-card"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/itemCard', title: this.translate.instant("component-names.item-card"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/billType', title: this.translate.instant("component-names.bill-types"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/sales-person-card', title: this.translate.instant("component-names.sales-person-card"), type: 'link', active: true },
+				{ path: '/warehouses-master-codes/sales-person-commission-card', title: this.translate.instant("component-names.sales-person-commission"), type: 'link', active: true },
+
 
 			]
 		},

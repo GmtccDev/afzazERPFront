@@ -1,38 +1,39 @@
-import { DeleteListSalesPersonCard, SalesPersonCardDto } from './../../models/sales-person-card';
+import { SalesPersonCommissionCardDto } from './../../models/sales-person-commission-card';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SupplierCardDto } from '../../models/supplier-card';
-import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { TranslateService } from '@ngx-translate/core';
-import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
-import { Subscription } from 'rxjs';
-import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
-import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
-import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
-import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
-import { SalesPersonCardServiceProxy } from '../../Services/sales-person-card.service';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SharedService } from 'src/app/shared/common-services/shared-service';
+import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
+import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
+import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
+import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
+import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
+import { SalesPersonCommissionServiceProxy } from '../../Services/sales-person-commission.service';
+import { Subscription } from 'rxjs';
+import { DeleteListSalesPersonCard } from '../../models/sales-person-card';
 
 @Component({
-  selector: 'app-sales-person-card',
-  templateUrl: './sales-person-card.component.html',
-  styleUrls: ['./sales-person-card.component.scss']
+  selector: 'app-sales-person-commission-card',
+  templateUrl: './sales-person-commission-card.component.html',
+  styleUrls: ['./sales-person-commission-card.component.scss']
 })
-export class SalesPersonCardComponent implements OnInit,OnDestroy {
+export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
 
   //#region Main Declarations
-  salesPersons: SalesPersonCardDto[] = [];
+  salesPersonsCommissions: SalesPersonCommissionCardDto[] = [];
+  
   currnetUrl: any;
-  addUrl: string = '/warehouses-master-codes/sales-person-card/add-sales-person-card';
-  updateUrl: string = '/warehouses-master-codes/sales-person-card/update-sales-person-card/';
-  listUrl: string = '/warehouses-master-codes/sales-person-card';
+  addUrl: string = '/warehouses-master-codes/sales-person-commission-card/add-sales-person-commission-card';
+  updateUrl: string = '/warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/';
+  listUrl: string = '/warehouses-master-codes/sales-person-commission-card';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.sales-person-card"),
+    componentList: this.translate.instant("component-names.sales-person-commission"),
     componentAdd: '',
 
   };
@@ -42,7 +43,7 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
 
   //#region Constructor
   constructor(
-    private salesPersonCardService: SalesPersonCardServiceProxy,
+    private salesPersonCommissionServiceProxy: SalesPersonCommissionServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
     private modalService: NgbModal,
@@ -61,7 +62,7 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
     // this.defineGridColumn();
     
     this.spinner.show();
-    Promise.all([this.getsalesPersons()])
+    Promise.all([this.getSalesPersonsCommissions()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -105,14 +106,14 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  getsalesPersons() {
+  getSalesPersonsCommissions() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.salesPersonCardService.allSalesPersonCard(undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.salesPersonCommissionServiceProxy.allSalesPersonCommission(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.sales-person-card");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.sales-person-commission");
           if (res.success) {
-            this.salesPersons = res.response.items
+            this.salesPersonsCommissions = res.response.items
 
           }
 
@@ -137,13 +138,13 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
 
   //#region CRUD Operations
   delete(id: any) {
-    this.salesPersonCardService.deleteSalesPersonCard(id).subscribe((resonse) => {
-      this.getsalesPersons();
+    this.salesPersonCommissionServiceProxy.deleteSalesPersonCommission(id).subscribe((resonse) => {
+      this.getSalesPersonsCommissions();
     });
   }
   edit(id: string) {
     this.router.navigate([
-      '/warehouses-master-codes/sales-person-card/update-sales-person-card',
+      '/warehouses-master-codes/sales-person-card/update-sales-person-commission-card',
       id,
     ]);
   }
@@ -163,14 +164,14 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
       if (rs == 'Confirm') {
         this.spinner.show();
         const input={
-          tableName:"supplierCards",
+          tableName:"SalesPersonsCommissions",
           id:id,
           idName:"Id"
         };
-        let sub = this.salesPersonCardService.deleteEntity(input).subscribe(
+        let sub = this.salesPersonCommissionServiceProxy.deleteEntity(input).subscribe(
           (resonse) => {
 
-            this.getsalesPersons();
+            this.getSalesPersonsCommissions();
 
           });
         this.subsList.push(sub);
@@ -188,25 +189,23 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
   groupByCols: string[] = [];
   lang = localStorage.getItem("language");
   columnNames = [
-    this.lang == 'ar'
-      ? { title: ' الاسم', field: 'nameAr' } :
-      { title: ' Name  ', field: 'nameEn' },
+
 
     {
       title: this.lang == 'ar' ? ' الكود' : 'Code ',
       field: 'code',
     },
     {
-      title: this.lang == 'ar' ? 'الهاتف' : 'Phone',
-      field: 'phone',
+      title: this.lang == 'ar' ? 'الهاتف' : 'Calculation Method',
+      field: 'calculationMethod',
     },
     {
-      title: this.lang == 'ar' ? 'البريد الالكترونى' : 'Email',
-      field: 'email',
+      title: this.lang == 'ar' ? 'نوع العمولة' : 'type',
+      field: 'type',
     },
     {
-      title: this.lang == 'ar' ? 'رقم الحساب' : 'Account Number',
-      field: 'accountId',
+      title: this.lang == 'ar' ? 'المستهدف' : 'Target',
+      field: 'target',
     },
  
    
@@ -222,12 +221,11 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
-        { field: 'nameEn', type: 'like', value: searchTxt },
-        { field: 'nameAr', type: 'like', value: searchTxt },
+ 
         { field: 'code', type: 'like', value: searchTxt },
-        { field: 'phone', type: 'like', value: searchTxt },
-        { field: 'email', type: 'like', value: searchTxt },
-        { field: 'accountId', type: 'like', value: searchTxt }
+        { field: 'calculationMethod', type: 'like', value: searchTxt },
+        { field: 'type', type: 'like', value: searchTxt },
+        { field: 'target', type: 'like', value: searchTxt }
 
         ,
       ],
@@ -260,7 +258,7 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['warehouses-master-codes/sales-person-card/update-sales-person-card/' + id])
+      this.router.navigate(['warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/' + id])
     }
 
   }
@@ -276,7 +274,7 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['warehouses-master-codes/sales-person-card/update-sales-person-card/' + event.item.id])
+        this.router.navigate(['warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -316,22 +314,20 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
     let item = new DeleteListSalesPersonCard();
     item.ids = this.listIds.map(item => item.id);
     const input={
-      tableName:"SalesPersonCards",
+      tableName:"SalesPersonsCommissions",
       ids: this.listIds,
       idName:"Id"
     };
-    let sub = this.salesPersonCardService.deleteListEntity(input).subscribe(
+    let sub = this.salesPersonCommissionServiceProxy.deleteListEntity(input).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getsalesPersons();
+        this.getSalesPersonsCommissions();
         this.listIds = [];
       });
     this.subsList.push(sub);
   }
   
-
-
 
 
 }
