@@ -20,11 +20,12 @@ import { Injectable } from "@angular/core";
   
     constructor() {}
     public changeButton(toolbarData: ToolbarData) {
-  
+      debugger
       
       this.buttonSource.next(toolbarData);
     }
     public getClickedbutton(): Observable<ToolbarData> {
+   
       return this.buttonSource.asObservable();
     }
     public changeButtonApperance(toolbarButtons: ToolbarButtonsAppearance) {

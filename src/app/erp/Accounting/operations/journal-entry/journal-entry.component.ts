@@ -309,8 +309,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onDelete() {
 
-
-    var ids = this.listIds;
+    var ids =  this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 

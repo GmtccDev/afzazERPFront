@@ -214,3 +214,25 @@ export enum ShipKindArEnum {
   جزئي = 2
 
 }
+export enum CommissionTypeArEnum {
+   شهرية= 1,
+   'ربع شهرية'= 2,
+   "نصف سنوية"= 3 ,
+   "سنوي"= 4,
+}
+export enum CommissionTypeEnum {
+   Monthly= 1,
+   Quarterly= 2,
+  'semi annual'= 3 ,
+   annualy = 4,
+}
+export enum calculationMethodsArEnum{
+ 'قيمة ثابتة '=1,
+ 'تحسب بناء على عمر التحصيل'= 2,
+
+}
+export enum calculationMethodsEnum{
+  'Fix Amount'=1,
+  'As per age of collection'= 2,
+ 
+ }

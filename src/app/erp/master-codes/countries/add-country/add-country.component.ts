@@ -20,7 +20,7 @@ import { navigateUrl } from 'src/app/shared/helper/helper-url';
 export class AddCountryComponent implements OnInit {
   //#region Main Declarations
   countriesForm!: FormGroup;
-  sub: any;
+
   url: any;
   id: any = 0;
   currnetUrl;
@@ -40,6 +40,8 @@ export class AddCountryComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+
+  
   constructor(
     private countryService: CountryServiceProxy,
     private router: Router,
@@ -102,6 +104,7 @@ export class AddCountryComponent implements OnInit {
         }
       }
       else {
+        debugger
         this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
         this.spinner.hide();
       }
@@ -146,10 +149,7 @@ export class AddCountryComponent implements OnInit {
             code: res.response?.code,
             isActive: res.response?.isActive
           });
-          console.log(
-            'this.countriesForm.value set value',
-            this.countriesForm.value
-          );
+    
         },
         error: (err: any) => {
           reject(err);
@@ -202,7 +202,7 @@ export class AddCountryComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-
+       
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.sharedServices.changeToolbarPath({
@@ -212,7 +212,9 @@ export class AddCountryComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
+
             this.toolbarPathData.componentAdd = this.translate.instant("country.add-country");
+            debugger
             if (this.countriesForm.value.code != null) {
               this.getCountryCode()
             }
