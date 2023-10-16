@@ -14,6 +14,7 @@ export class AppConfigService{
     }
     loadConfig()
     {
+        debugger
         return  new Promise<void>((resolve, reject) => {
             this.http.get<IAppConfig>("assets/config/api-config.json").toPromise().then(appConfig=>{
                 AppConfigService.appCongif  ={...appConfig};
