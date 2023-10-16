@@ -409,9 +409,9 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       });
     }
     else {
-      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      // this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      // this.errorClass = 'errorMessage';
+      // this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return this.taxForm.markAllAsTouched();
 
     }

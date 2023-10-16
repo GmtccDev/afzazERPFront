@@ -470,7 +470,7 @@
         "endOfYear": "نهاية العام",
         "accountReceivables": "حساب أوراق القبض",
         "idleTime": "وقت الخمول",
-        "account-exchange": "تبادل الحساب"
+        "account-exchange": "حساب أوراق الدفع"
     },
     "fiscal-period-status": {
         "Opened": "مفتوحة",

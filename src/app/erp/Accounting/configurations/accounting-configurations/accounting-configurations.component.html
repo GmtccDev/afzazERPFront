@@ -202,12 +202,12 @@
 
 
 
-    <app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi" (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccount($event)">
+    <app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeAccountApi" (emitClose)="showSearchModal = false;" (emitSearch)="onSelectAccount($event)">
     </app-public-search-modal>
 
-    <app-public-search-modal [isVisible]="showSearchModalAccountReceivables" [routeApi]="routeApi" (emitClose)="showSearchModalAccountReceivables = false;" (emitSearch)="onSelectAccountReceivables($event)">
+    <app-public-search-modal [isVisible]="showSearchModalAccountReceivables" [routeApi]="routeAccountApi" (emitClose)="showSearchModalAccountReceivables = false;" (emitSearch)="onSelectAccountReceivables($event)">
     </app-public-search-modal>
-    <app-public-search-modal [isVisible]="showSearchModalAccountExchange" [routeApi]="routeApi" (emitClose)="showSearchModalAccountExchange = false;" (emitSearch)="onSelectAccountExchange($event)">
+    <app-public-search-modal [isVisible]="showSearchModalAccountExchange" [routeApi]="routeAccountApi" (emitClose)="showSearchModalAccountExchange = false;" (emitSearch)="onSelectAccountExchange($event)">
     </app-public-search-modal>
 
 </div>
