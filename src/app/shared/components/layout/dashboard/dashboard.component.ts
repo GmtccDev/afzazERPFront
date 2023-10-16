@@ -8,8 +8,8 @@ import * as chartData from '../../../../shared/data/dashboard/default'
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 import { Subscription } from 'rxjs';
-import * as feather from 'feather-icons';
 import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -38,11 +38,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 	model: NgbDateStruct;
 	disabled = true;
 	subsList: Subscription[] = [];
+	voucherTypes: any = [];
+	depositVouchers: any = [];
+	WithdrawalVouchers: any = [];
+	billTypes: any = [];
+	salesBills: any = [];
+	purchasesBills: any = [];
+	salesReturnBills: any = [];
+	purchasesReturnBills: any = [];
+	firstPeriodGoodsBills: any = [];
+
 
 	constructor(private route: ActivatedRoute, public navServices: NavService, calendar: NgbCalendar,
 		private voucherTypeService: VoucherTypeServiceProxy,
 		private billTypeService: BillTypeServiceProxy,
-
+		private translate: TranslateService,
 		@Inject(DOCUMENT) private document: any,
 		public layout: LayoutService) {
 		this.getVoucherTypes();
@@ -184,17 +194,48 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				next: (res) => {
 					console.log(res);
 					if (res.success) {
-						res.response.items.forEach(element => {
-							this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-								{ queryParams: { voucherTypeId: element.id } }
-							)
-							// this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers', element.voucherNameAr, type: 'link', active: true },)
-							this.navServices.voucherTypes.filter((value, index, self) => {
-								return index === self.findIndex(obj => (
-									obj.path === value.path && obj.title === value.title
-								));
+						debugger
+						this.voucherTypes = res.response.items
+						this.depositVouchers = this.voucherTypes.filter(x => x.voucherKindId == 1);
+						this.WithdrawalVouchers = this.voucherTypes.filter(x => x.voucherKindId == 2);
+
+						if (this.depositVouchers.length > 0) {
+							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'link', active: true }),
+								this.depositVouchers.forEach(element => {
+									this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+										{ queryParams: { voucherTypeId: element.id } })
+									this.navServices.voucherTypes.filter((value, index, self) => {
+										return index === self.findIndex(obj => (
+											obj.path === value.path && obj.title === value.title
+										));
+									});
+								});
+
+						}
+						if (this.WithdrawalVouchers.length > 0) {
+							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'link', active: true }),
+							this.WithdrawalVouchers.forEach(element => {
+								this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+									{ queryParams: { voucherTypeId: element.id } })
+								this.navServices.voucherTypes.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
 							});
-						});
+						}
+
+						// res.response.items.forEach(element => {
+						// 	debugger
+						// 	this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+						// 		{ queryParams: { voucherTypeId: element.id } }
+						// 	)
+						// 	this.navServices.voucherTypes.filter((value, index, self) => {
+						// 		return index === self.findIndex(obj => (
+						// 			obj.path === value.path && obj.title === value.title
+						// 		));
+						// 	});
+						// });
 					}
 					resolve();
 				},
@@ -217,16 +258,90 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				next: (res) => {
 					console.log(res);
 					if (res.success) {
-						res.response.items.forEach(element => {
-							this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
-								{ queryParams: { billTypeId: element.id } }
-							)
-							this.navServices.billTypes.filter((value, index, self) => {
-								return index === self.findIndex(obj => (
-									obj.path === value.path && obj.title === value.title
-								));
-							});
-						});
+						this.billTypes = res.response.items
+						this.salesBills = this.billTypes.filter(x => x.billKind == 1);
+						this.purchasesBills = this.billTypes.filter(x => x.billKind == 2);
+						this.salesReturnBills = this.billTypes.filter(x => x.billKind == 3);
+						this.purchasesReturnBills = this.billTypes.filter(x => x.billKind == 4);
+						this.firstPeriodGoodsBills = this.billTypes.filter(x => x.billKind == 5);
+
+
+						if (this.salesBills.length > 0) {
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'link', active: true }),
+								this.salesBills.forEach(element => {
+									this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+										{ queryParams: { billTypeId: element.id } })
+									this.navServices.billTypes.filter((value, index, self) => {
+										return index === self.findIndex(obj => (
+											obj.path === value.path && obj.title === value.title
+										));
+									});
+								});
+
+						}
+						if (this.purchasesBills.length > 0) {
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-bills"), type: 'link', active: true }),
+								this.purchasesBills.forEach(element => {
+									this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+										{ queryParams: { billTypeId: element.id } })
+									this.navServices.billTypes.filter((value, index, self) => {
+										return index === self.findIndex(obj => (
+											obj.path === value.path && obj.title === value.title
+										));
+									});
+								});
+
+						}
+						if (this.salesReturnBills.length > 0) {
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-return-bills"), type: 'link', active: true }),
+								this.salesReturnBills.forEach(element => {
+									this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+										{ queryParams: { billTypeId: element.id } })
+									this.navServices.billTypes.filter((value, index, self) => {
+										return index === self.findIndex(obj => (
+											obj.path === value.path && obj.title === value.title
+										));
+									});
+								});
+
+						}
+						if (this.purchasesReturnBills.length > 0) {
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-return-bills"), type: 'link', active: true }),
+								this.purchasesReturnBills.forEach(element => {
+									this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+										{ queryParams: { billTypeId: element.id } })
+									this.navServices.billTypes.filter((value, index, self) => {
+										return index === self.findIndex(obj => (
+											obj.path === value.path && obj.title === value.title
+										));
+									});
+								});
+
+						}
+						if (this.firstPeriodGoodsBills.length > 0) {
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'link', active: true }),
+								this.firstPeriodGoodsBills.forEach(element => {
+									this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+										{ queryParams: { billTypeId: element.id } })
+									this.navServices.billTypes.filter((value, index, self) => {
+										return index === self.findIndex(obj => (
+											obj.path === value.path && obj.title === value.title
+										));
+									});
+								});
+
+						}
+						
+						// res.response.items.forEach(element => {
+						// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+						// 		{ queryParams: { billTypeId: element.id } }
+						// 	)
+						// 	this.navServices.billTypes.filter((value, index, self) => {
+						// 		return index === self.findIndex(obj => (
+						// 			obj.path === value.path && obj.title === value.title
+						// 		));
+						// 	});
+						// });
 					}
 					resolve();
 				},
