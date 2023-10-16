@@ -141,7 +141,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private publicService: PublicService,
-    // private billService: BillService,
+    private billService: BillService,
     private dateService: DateCalculation,
     private currencyService: CurrencyServiceProxy,
     private billTypeService: BillTypeServiceProxy,
@@ -330,7 +330,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   getBillTypeById(id) {
     this.billType = this.billTypesList.filter(x => x.id == id);
     if (this.id == 0) {
-      //this.getBillCode();
+       this.getBillCode();
 
     }
     // return new Promise<void>((resolve, reject) => {
@@ -451,28 +451,30 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   // }
 
 
-  // getBillCode() {
-  //   return new Promise<void>((resolve, reject) => {
-  //     let sub = this.billService.getWithResponse("getLastCode").subscribe({
-  //       next: (res: any) => {
-  //         resolve();
-  //         this.billForm.patchValue({
-  //           code: res.response
-  //         });
+  getBillCode() {
+    return new Promise<void>((resolve, reject) => {
+      debugger
+      let sub = this.billService.getWithResponse("getLastCode").subscribe({
+        next: (res: any) => {
+          debugger
+          resolve();
+          this.billForm.patchValue({
+            code: res.response
+          });
 
-  //       },
-  //       error: (err: any) => {
-  //         reject(err);
-  //       },
-  //       complete: () => {
-  //         console.log('complete');
-  //       },
-  //     });
-  //     this.subsList.push(sub);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
-  //   });
+    });
 
-  // }
+  }
   getCashAccounts() {
     debugger
     return new Promise<void>((resolve, reject) => {

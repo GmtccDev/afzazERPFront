@@ -109,7 +109,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private voucherDetailsService: VoucherDetailsServiceProxy,
     private dateService: DateCalculation,
     private currencyService: CurrencyServiceProxy,
-
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private searchDialog: SearchDialogService,
@@ -167,8 +166,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
 
         if (this.id) {
+          debugger
           this.getVoucherById(this.id).then(a => {
-            this.getVoucherDetailsById(this.id);
 
             this.spinner.hide();
 
@@ -289,13 +288,13 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherService.getVoucher(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           this.voucherForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
             branchId: res.response?.branchId,
             voucherTypeId: res.response?.voucherTypeId,
             code: res.response?.code,
-            // voucherDate: formatDate(res.response?.voucherDate),
             voucherDate: this.dateService.getDateForCalender(res.response?.voucherDate),
             cashAccountId: res.response?.cashAccountId,
             costCenterId: res.response?.costCenterId,
@@ -309,10 +308,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           });
           this.voucherTotal = res.response?.voucherTotal;
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
-          console.log(
-            'this.voucherForm.value set value',
-            this.voucherForm.value
-          );
+          debugger
+          this.voucher.voucherDetail=res.response.voucherDetail;
+          this.voucherDetail=res.response.voucherDetail;
+                
+         
         },
         error: (err: any) => {
           reject(err);
@@ -330,6 +330,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherDetailsService.allVoucherDetails(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           res = res.response.items.filter(x => x.voucherId == id)
           res.forEach(element => {
 
@@ -988,14 +989,15 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-    if (this.voucher.voucherDetail.length == 0) {
-      this.errorMessage = this.translate.instant("voucher.voucher-details-required");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
+    
 
     if (this.voucherForm.valid) {
+      if (this.voucher.voucherDetail.length == 0) {
+        this.errorMessage = this.translate.instant("voucher.voucher-details-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.setInputData();
       this.spinner.show();
       this.confirmUpdate().then(a => {
@@ -1009,9 +1011,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     }
     else {
-      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      //this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      //this.errorClass = 'errorMessage';
+      //this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return this.voucherForm.markAllAsTouched();
 
     }

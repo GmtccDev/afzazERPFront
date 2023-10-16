@@ -533,7 +533,10 @@
         "create-financial-entry": "Create Financial Entry",
         "default-beneficiary": "Default Beneficiary Type",
         "add-voucher-type": "Add Voucher Type",
-        "update-voucher-type": "Update Voucher Type"
+        "update-voucher-type": "Update Voucher Type",
+        "deposit-vouchers":"[Deposit Vouchers]",
+        "withdrawal-vouchers":"[Withdrawal Vouchers]"
+
     },
     "message-title": {
         "done": "Done",
@@ -668,7 +671,14 @@
         "print-immediately-after-addition": "Print Immediately After Addition",
         "print-expiry-dates": "Print Expiry Dates",
         "print-items-specifiers": "Print Items Specifiers",
-        "print-items-images": "Print Items Images"
+        "print-items-images": "Print Items Images",
+        "sales-bills" : "[Sales Bills]",
+        "purchases-bills" : "[Purchases Bills]",
+        "sales-return-bills":"[Sales Return Bills]",
+        "purchases-return-bills":"[Purchases Return Bills]",
+        "first-period-goods-bills":"[First Period Goods Bills]"
+
+
 
     },
     "bill": {
