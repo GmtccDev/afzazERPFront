@@ -525,7 +525,9 @@
         "create-financial-entry": "انشاء قيد مالى",
         "default-beneficiary": "نوع المستفيد الافتراضى",
         "add-voucher-type": "اضافة نمط سند",
-        "update-voucher-type": "تحديث نمط السند"
+        "update-voucher-type": "تحديث نمط السند",
+        "deposit-vouchers":"[سندات القبض]",
+        "withdrawal-vouchers":"[سندات الصرف]"
     },
     "message-title": {
         "done": "نجاح",
@@ -661,7 +663,12 @@
         "print-expiry-dates": "طباعة تواريخ الصلاحية",
         "print-items-specifiers": "طباعة محددات الأصناف",
         "print-items-images": "طباعة صور الاصناف",
-        "transaction-factor": " معامل التحويل "
+        "transaction-factor": " معامل التحويل ",
+        "sales-bills" : "[فواتير المبيعات]",
+        "purchases-bills" : "[فواتير المشتريات]",
+        "sales-return-bills":"[فواتير مرتجع المبيعات]",
+        "purchases-return-bills":"[فواتير مرتجع المشتريات]",
+        "first-period-goods-bills":"[فواتير بضاعة أول المدة]"
 
     },
     "bill": {
