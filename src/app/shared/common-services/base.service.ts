@@ -87,6 +87,7 @@ export class BaseService<T>
     }
 
     getWithResponse<M>(url: string) {
+        debugger
         this.apiHeaders = this.apiHeaders.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
         return this.http.get<ResponseResult<M>>(this.getFullURL(url), { headers: this.apiHeaders });
     }

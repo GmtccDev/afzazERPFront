@@ -544,6 +544,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
             this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
+            debugger
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
@@ -729,7 +730,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     });
   }
   onUpdate() {
-
+    debugger
     console.log("getRawValue=>", this.issuingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
@@ -757,7 +758,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
         this.spinner.hide();
       });
     } else {
-
+      debugger
       return this.issuingChequeForm.markAllAsTouched();
     }
   }
