@@ -15,6 +15,8 @@ export class BillType {
     notCalculatingTax: boolean | undefined;
     calculatingValueAddedTaxAfterLuxuryTax: boolean | undefined;
     calculatingTaxOnPriceAfterDeductionAndAddition: boolean | undefined;
+    calculatingTaxManual: boolean | undefined;
+    manuallyTaxType: number | undefined;
     discountAffectsCostPrice: boolean | undefined;
     additionAffectsCostPrice: boolean | undefined;
     defaultCurrencyId: number | undefined;

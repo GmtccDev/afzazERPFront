@@ -5,14 +5,12 @@ import { AppConfigService } from './app-config.service';
 import { ResponseResult, ResponseData } from '../model/ResponseResult';
 import { stringIsNullOrEmpty } from '../../shared/helper/helper';
 
-
-
-
 @Injectable({
     providedIn: 'root'
 })
 export class BaseService<T>
 {
+    
     domainName?: string = AppConfigService.appCongif.url;
     public path: string = "";
     subscription: Subscription = new Subscription;

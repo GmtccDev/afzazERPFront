@@ -676,7 +676,9 @@
         "purchases-bills" : "[Purchases Bills]",
         "sales-return-bills":"[Sales Return Bills]",
         "purchases-return-bills":"[Purchases Return Bills]",
-        "first-period-goods-bills":"[First Period Goods Bills]"
+        "first-period-goods-bills":"[First Period Goods Bills]",
+        "calculating-tax-manual":"Calculating Tax Manual"
+        
 
 
 

@@ -14,7 +14,7 @@ import { DateConverterService } from '../../../shared/services/date-services/dat
 import { NgSelectModule } from '@ng-select/ng-select';
 import {BillComponent} from 'src/app/erp/Warehouses/operations/bill/bill.component'
 import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component'
-import { BillService } from '../services/bill.service';
+import { BillServiceProxy } from '../services/bill.service';
 
 
 

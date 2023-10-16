@@ -668,7 +668,9 @@
         "purchases-bills" : "[فواتير المشتريات]",
         "sales-return-bills":"[فواتير مرتجع المبيعات]",
         "purchases-return-bills":"[فواتير مرتجع المشتريات]",
-        "first-period-goods-bills":"[فواتير بضاعة أول المدة]"
+        "first-period-goods-bills":"[فواتير بضاعة أول المدة]",
+        "calculating-tax-manual":"أحتساب الضريبة يدويا"
+
 
     },
     "bill": {

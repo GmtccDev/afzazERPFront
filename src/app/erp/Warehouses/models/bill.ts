@@ -29,9 +29,11 @@ export class Bill {
     purchasesAccountId: number | undefined;
     purchasesReturnAccountId: number | undefined;
     total: number | undefined;
-    tax: number | undefined;
-    discount: number | undefined;
-    discountAccountId: number | undefined;
+    taxRatio: number | undefined;
+    taxValue: number | undefined;
+
+    // discount: number | undefined;
+    // discountAccountId: number | undefined;
     net: number | undefined;
     paid: number | undefined;
     paidAccountId: number | undefined;
