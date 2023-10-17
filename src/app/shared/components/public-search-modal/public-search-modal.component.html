@@ -12,7 +12,8 @@
 
 			<div class="example-header">
 				<mat-form-field>
-					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'search' | translate}}">
+					<input dir="rtl" matInput (keyup)="applyFilter($event.target.value)"
+						placeholder="{{ 'general.search' | translate}}">
 				</mat-form-field>
 			</div>
 

@@ -80,6 +80,11 @@ export class VoucherServiceProxy {
     getLastCode(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Voucher/getLastCode?");
     }
+    getLastCodeByTypeId(typeId:any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('typeId', typeId);
+        return this.http.get<any>(this.baseUrl + "/api/Voucher/getLastCodeByTypeId", { params: params });
+    }
     deleteVoucher(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
