@@ -464,12 +464,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   getBillCode() {
     return new Promise<void>((resolve, reject) => {
       debugger
-      let sub = this.billService.getLastCode().subscribe({
+      let sub = this.billService.getLastCodeByTypeId(this.billTypeId).subscribe({
         next: (res: any) => {
           debugger
           resolve();
           this.billForm.patchValue({
-            code: res.response
+            code: res.response.data
           });
 
         },
