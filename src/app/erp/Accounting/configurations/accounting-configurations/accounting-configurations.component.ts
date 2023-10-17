@@ -43,7 +43,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   submited: boolean = false;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   cycleList: { nameAr: string; nameEn: string; value: string; }[];
-  routeApi = 'Account/get-ddl?'
+  routeAccountApi = 'Account/GetLeafAccounts?'
   routeApiPeriod = 'FiscalPeriod/get-ddl?'
   accountList: any;
   showSearchModal: boolean;
@@ -158,7 +158,7 @@ export class AccountingConfigurationsComponent implements OnInit {
   }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeApi).subscribe({
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
 
           if (res.success) {
@@ -245,6 +245,7 @@ export class AccountingConfigurationsComponent implements OnInit {
             this.accountId = this.generalConfiguration.find(c => c.id == 5).value;
             this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 6).value);
             this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 7).value;
+            this.accountExchangeId = this.generalConfiguration.find(c => c.id == 8).value;
             this.idleTime= Number(this.generalConfiguration.find(c => c.id == 10001).value);
           }
 
@@ -355,6 +356,9 @@ export class AccountingConfigurationsComponent implements OnInit {
             }
             else if (s.id == 7) {
               s.value = this.accountingPeriodId + "";
+            }
+            else if (s.id == 8) {
+              s.value = this.accountExchangeId + "";
             }
             else if (s.id == 10001) {
               s.value = this.idleTime + "";

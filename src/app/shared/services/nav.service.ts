@@ -30,6 +30,9 @@ export class NavService implements OnInit, OnDestroy {
 	voucherType: any[] = [];
 	subsList: Subscription[] = [];
 	voucherTypes: any = [];
+	depositVouchers: any = [];
+	WithdrawalVouchers: any = [];
+
 	billTypes: any = [];
 	subdomain=localStorage.getItem('subDomain');
 	private unsubscriber: Subject<any> = new Subject();
@@ -113,16 +116,30 @@ export class NavService implements OnInit, OnDestroy {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-
-
 					console.log(res);
 					if (res.success) {
-
+                        debugger
 						this.voucherType = res.response.items
-						this.voucherType.forEach(element => {
-							this.voucherTypes += "{path:'/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
+						this.depositVouchers=this.voucherType.filter(x => x.voucherKindId == 1);
+						this.WithdrawalVouchers=this.voucherType.filter(x => x.voucherKindId == 2);
 
-						});
+						if (this.depositVouchers.length > 0) {
+							this.voucherTypes +=this.translate.instant("voucher-type.deposit-vouchers");
+						//	this.voucherTypes.push(
+						//		{ path: '', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true })
+							this.depositVouchers.forEach(element => {
+								this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
+
+							});
+						}
+						if (this.WithdrawalVouchers.length > 0) {
+							this.voucherTypes +=this.translate.instant("voucher-type.Withdrawal-vouchers");
+							this.WithdrawalVouchers.forEach(element => {
+								this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
+
+							});
+						}
+
 
 					}
 					resolve();
