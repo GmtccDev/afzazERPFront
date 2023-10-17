@@ -70,6 +70,11 @@ export class BillServiceProxy {
     getLastCode(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Bill/getLastCode?");
     }
+    getLastCodeByTypeId(typeId:any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('typeId', typeId);
+        return this.http.get<any>(this.baseUrl + "/api/Bill/getLastCodeByTypeId", { params: params });
+    }
     deleteBill(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
