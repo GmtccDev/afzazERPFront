@@ -515,14 +515,14 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getCurrenciesTransactions() {
-  debugger
+  
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyService.getCurrenciesTransactions().subscribe({
         next: (res) => {
           resolve();
 
           if (res.success) {
-             debugger
+             
             this.currencyTransactionList = res.response;
 
           }

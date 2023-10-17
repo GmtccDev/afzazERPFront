@@ -128,9 +128,10 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 		];
 	}
 	openLink(object) {
-
+		debugger
+	let	subdomain=localStorage.getItem('subDomain');
 		localStorage.setItem("Menu", object.value)
-		this.router.navigate([object.link]);
+		this.router.navigate([subdomain+""+object.link]);
 
 	}
 	getLastSubscription() {

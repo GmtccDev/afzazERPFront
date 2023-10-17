@@ -327,7 +327,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
   }
   confirmSave() {
 
-    debugger
+    
     var inputDto = new SalesPersonCommissionCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.salesPersonCommissionCardForm.value;
@@ -361,7 +361,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     }
   }
   confirmUpdate() {
-    debugger
+    
     console.log("this.salesPersonCommissionCardForm.value",this.salesPersonCommissionCardForm.value)
     var inputDto = new SalesPersonCommissionCardDto()
     return new Promise<void>((resolve, reject) => {

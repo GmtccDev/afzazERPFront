@@ -61,7 +61,7 @@
 					</div>
 				</a>
 				<!-- Link -->
-				<a [routerLink]="!menuItem.type ? null : [menuItem.path]" routerLinkActive="active"
+				<a [routerLink]="!menuItem.type ? null : [subdomain+menuItem.path]" routerLinkActive="active"
 					class="sidebar-link sidebar-title" [class.link-nav]="!menuItem.children"
 					[ngClass]="{active: menuItem.active}" *ngIf="menuItem.type === 'link'">
 					<app-feather-icons [icon]="menuItem.icon"></app-feather-icons><span>{{menuItem.title |
@@ -72,7 +72,7 @@
 					</div>
 				</a>
 				<!-- External Link -->
-				<a href="{{ !menuItem.type ? null : menuItem.path }}" class="sidebar-link sidebar-title"
+				<a href="{{ !menuItem.type ? null : subdomain+menuItem.path }}" class="sidebar-link sidebar-title"
 					[class.link-nav]="!menuItem.children" [ngClass]="{active: menuItem.active}"
 					*ngIf="menuItem.type === 'extLink'">
 					<app-feather-icons [icon]="menuItem.icon"></app-feather-icons><span>{{menuItem.title |
@@ -83,7 +83,7 @@
 					</div>
 				</a>
 				<!-- External Tab Link -->
-				<a href="{{ !menuItem.type ? null : menuItem.path }}" target="_blank" class="sidebar-link sidebar-title"
+				<a href="{{ !menuItem.type ? null : subdomain+menuItem.path }}" target="_blank" class="sidebar-link sidebar-title"
 					[class.link-nav]="!menuItem.children" [ngClass]="{active: menuItem.active}"
 					*ngIf="menuItem.type === 'extTabLink'">
 					<app-feather-icons [icon]="menuItem.icon"></app-feather-icons><span>{{menuItem.title }}</span>
@@ -107,21 +107,21 @@
 							</div>
 						</a>
 						<!-- Link -->
-						<a class="submenu-title" [routerLink]="!childrenItem.type ? null : [childrenItem.path]"
+						<a class="submenu-title" [routerLink]="!childrenItem.type ? null : [subdomain+childrenItem.path]"
 							*ngIf="childrenItem.type === 'link'" routerLinkActive="active"
 							[routerLinkActiveOptions]="{exact: true}">
 							<span>{{childrenItem.title | translate}}</span>
 							<i class="fa fa-angle-down pull-right" *ngIf="childrenItem.children"></i>
 						</a>
 						<!-- External Link -->
-						<a class="submenu-title" href="{{ !childrenItem.type ? null : childrenItem.path }}"
+						<a class="submenu-title" href="{{ !childrenItem.type ? null : subdomain+childrenItem.path }}"
 							*ngIf="childrenItem.type === 'extLink'" routerLinkActive="active"
 							[routerLinkActiveOptions]="{exact: true}">
 							<span>{{childrenItem.title | translate}}</span>
 							<i class="fa fa-angle-down pull-right" *ngIf="childrenItem.children"></i>
 						</a>
 						<!-- External Tab Link -->
-						<a class="submenu-title" href="{{ !childrenItem.type ? null : childrenItem.path }}"
+						<a class="submenu-title" href="{{ !childrenItem.type ? null : subdomain+childrenItem.path }}"
 							target="_blank" *ngIf="childrenItem.type === 'extTabLink'">
 							<span>{{childrenItem.title | translate}}</span>
 							<i class="fa fa-angle-down pull-right" *ngIf="childrenItem.children"></i>
@@ -134,19 +134,19 @@
 							<li *ngFor="let childrenSubItem of childrenItem.children"
 								[ngClass]="{active: childrenSubItem.active}">
 								<!-- Link -->
-								<a [routerLink]="!childrenSubItem.type ? null : [childrenSubItem.path]"
+								<a [routerLink]="!childrenSubItem.type ? null : [subdomain+childrenSubItem.path]"
 									*ngIf="childrenSubItem.type === 'link'" routerLinkActive="active"
 									[routerLinkActiveOptions]="{exact: true}">
 									<span> {{childrenSubItem.title | translate}}</span>
 								</a>
 								<!-- External Link -->
-								<a href="{{ !childrenSubItem.type ? null : childrenSubItem.path }}"
+								<a href="{{ !childrenSubItem.type ? null : subdomain+childrenSubItem.path }}"
 									*ngIf="childrenSubItem.type === 'extLink'" routerLinkActive="active"
 									[routerLinkActiveOptions]="{exact: true}">
 									<span>{{childrenSubItem.title | translate}}</span>
 								</a>
 								<!-- External Tab Link -->
-								<a href="{{ !childrenSubItem.type ? null : childrenSubItem.path }}" target="_blank"
+								<a href="{{ !childrenSubItem.type ? null :subdomain+childrenSubItem.path }}" target="_blank"
 									*ngIf="childrenSubItem.type === 'extTabLink'">
 									<span>{{childrenSubItem.title | translate}}</span>
 								</a>

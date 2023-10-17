@@ -4,6 +4,7 @@ import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
+import { UserService } from '../common-services/user.service';
 
 
 // Menu
@@ -30,11 +31,11 @@ export class NavService implements OnInit, OnDestroy {
 	subsList: Subscription[] = [];
 	voucherTypes: any = [];
 	billTypes: any = [];
-
+	subdomain=localStorage.getItem('subDomain');
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
-	// Search Box
+	// Search BoxF
 	public search: boolean = false;
 
 	// Language
@@ -54,8 +55,10 @@ export class NavService implements OnInit, OnDestroy {
 	// Full screen
 	public fullScreen: boolean = false;
 
-	constructor(private router: Router, private translate: TranslateService,
+	constructor(private router: Router, private translate: TranslateService, userService: UserService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
+			
+		console.log(this.subdomain)
 		this.voucherTypes.push(
 			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 			{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
@@ -117,7 +120,7 @@ export class NavService implements OnInit, OnDestroy {
 
 						this.voucherType = res.response.items
 						this.voucherType.forEach(element => {
-							this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
+							this.voucherTypes += "{path:'/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
 
 						});
 
