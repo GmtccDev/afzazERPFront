@@ -18,7 +18,7 @@
 												{{'general.code'|translate}}
 											</label>
                                             <span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -35,7 +35,7 @@
 												{{'general.date'|translate}}
 											</label>
                                             <span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <app-full-date name="date" formControlName="date" [(ngModel)]="date" ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"></app-full-date>
 
@@ -52,7 +52,7 @@
                                             <label for="deliveryDate" class="label-name">
 												{{'general.delivery-date'|translate}}
 											</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <app-full-date name="deliveryDate" formControlName="deliveryDate" [(ngModel)]="deliveryDate" ngDefaultControl [selectedDate]="deliveryDate" (OnDateSelect)="getDeliveryDate($event)"></app-full-date>
                                             </div>
                                         </div>
@@ -79,7 +79,7 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="supplierReference" class="label-name">{{'bill.supplier-reference'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <input type="text" class="form-control icon-branch" name="supplierReference" formControlName="supplierReference">
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="payWay" [items]="payWaysEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['payWay'].touched || f['payWay'].dirty ) && f['payWay'].invalid" class="alert alert-danger">
+                                                <div *ngIf="(f['payWay'].touched || f['payWay'].dirty ) && f['payWay'].invalid" class="alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['payWay'].errors && f['payWay'].errors['required']">
 														{{'validation-messages.required-field'|translate}}</span>

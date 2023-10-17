@@ -1,51 +1,55 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
 
-                        <form [formGroup]="issuingChequeForm" id="issuingChequeFormSubmit" class="tabs-form">
-                            <div class="main-branch ranoo">
-                                <div class="wrapper-title">
+						<form [formGroup]="issuingChequeForm" id="issuingChequeFormSubmit" class="tabs-form">
+							<div class="main-branch ranoo">
+								<div class="wrapper-title">
 
-                                    <h3>{{'component-names.issuing-cheque-information'|translate}}</h3>
-                                    <hr>
-                                    <div class="row ">
+									<h3>{{'component-names.issuing-cheque-information'|translate}}</h3>
+									<hr>
+									<div class="row ">
 
 
-                                        <div class="col-12 col-md-6">
-                                            <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
-                                                <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
-                                                <input type="text" class="form-control icon-branch" name="code" formControlName="code">
-                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}} </span>
-                                                </div>
+										<div class="col-12 col-md-6">
+											<label for="code" class="label-name">
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
+												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+												<input type="text" class="form-control icon-branch" name="code"
+													formControlName="code">
+												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['code'].errors && f['code'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}} </span>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="code" class="label-name">
-                                                {{'component-names.account'|translate}}
-                                            </label><span class="text-danger">*</span>
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="code" class="label-name">
+												{{'component-names.account'|translate}}
+											</label><span class="text-danger">*</span>
 
-                                            <select required class="form-control required" name="accountId" formControlName="accountId">
+											<select required class="form-control required" name="accountId"
+												formControlName="accountId">
 
-                                                <option *ngFor="let account of accountList" [value]="account.id">
-                                                    {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                </option>
+												<option *ngFor="let account of accountList" [value]="account.id">
+													{{lang=="ar"?account.nameAr:account.nameEn}}
+												</option>
 
-                                            </select>
+											</select>
 
-                                            <!-- <div class="input-group-prepend">
+											<!-- <div class="input-group-prepend">
                                                             <button (click)="ClickAccount(i)"
                                                                 class="btn btn-rounded btn-dark"
                                                                 type="button"><i
@@ -53,296 +57,346 @@
                                                         </div> -->
 
 
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="date" class="label-name">
-                                                {{'general.date'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="position-relative">
-                                                <app-full-date name="date" formControlName="date" [(ngModel)]="date" ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"></app-full-date>
-                                                <!-- <input type="date" [(ngModel)]="date" class="form-control " name="date"
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="date" class="label-name">
+												{{'general.date'|translate}}</label><span class="text-danger">*</span>
+											<div class="position-relative">
+												<app-full-date name="date" formControlName="date" [(ngModel)]="date"
+													ngDefaultControl [selectedDate]="date"
+													(OnDateSelect)="getDate($event)"></app-full-date>
+												<!-- <input type="date" [(ngModel)]="date" class="form-control " name="date"
                                                     formControlName="date"  ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"> -->
-                                                <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['date'].errors && f['date'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
+												<div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['date'].errors && f['date'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
 
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <div class="col-12 col-md-6">
-                                            <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
-                                            <div class=" position-relative">
+										<div class="col-12 col-md-6">
+											<label for="notes" class="label-name">{{'general.notes'|translate}}</label>
+											<div class=" position-relative">
 
-                                                <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
+												<input type="text" class="form-control icon-branch" name="notes"
+													formControlName="notes">
 
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <div class="col-md-6 col-12">
-                                            <label for="dueDate" class="label-name">
-                                                {{'general.dueDate'|translate}}</label><span class="text-danger">*</span>
-                                            <div class=" position-relative">
-                                                <app-full-date name="dueDate" formControlName="dueDate" [(ngModel)]="dueDate" ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"></app-full-date>
-                                                <!-- <input type="date" [(ngModel)]="dueDate" class="form-control " name="dueDate"
+										<div class="col-md-6 col-12">
+											<label for="dueDate" class="label-name">
+												{{'general.dueDate'|translate}}</label><span
+												class="text-danger">*</span>
+											<div class=" position-relative">
+												<app-full-date name="dueDate" formControlName="dueDate"
+													[(ngModel)]="dueDate" ngDefaultControl [selectedDate]="dueDate"
+													(OnDateSelect)="getDueDate($event)"></app-full-date>
+												<!-- <input type="date" [(ngModel)]="dueDate" class="form-control " name="dueDate"
                                                     formControlName="dueDate"  ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"> -->
-                                                <div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['dueDate'].errors && f['dueDate'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
+												<div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['dueDate'].errors && f['dueDate'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="amountLocal" class="label-name">
-                                                {{'general.amount-local'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="input-group">
-                                                <input type="number" [(ngModel)]="amountLocal" required class="form-control required" formControlName="amountLocal" name="amountLocal" style="width: 70px;" disabled="true">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="currencyFactor" class="label-name">
-                                                {{'currency.transaction-factor'|translate}}</label>
-                                            <div class="input-group ">
-                                                <input type="number" [(ngModel)]="currencyFactor" required class="form-control required" formControlName="currencyFactor" name="currencyFactor" style="width: 70px;" disabled="true">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="amount" class="label-name">
-                                                {{'general.amount'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="input-group ">
-                                                <input type="number" [(ngModel)]="amount" required class="form-control required" formControlName="amount" name="amount" style="width: 70px;" disabled="true">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="currencyId" class="label-name">
-                                                {{'component-names.currencies'|translate}}
-                                            </label>
-                                            <span class="text-danger">*</span>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" [(ngModel)]="currencyId" formControlName="currencyId" (change)="getAmount()" name='currencyId' class="" id="currencyId">
-                                                    <ng-option *ngFor="let currency of currencyList" [value]="currency.id">
-                                                        {{lang=="ar"?currency.nameAr:currency.nameEn}}
-                                                    </ng-option>
-                                                </ng-select>
-                                                <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="amountLocal" class="label-name">
+												{{'general.amount-local'|translate}}</label><span
+												class="text-danger">*</span>
+											<div class="input-group">
+												<input type="number" [(ngModel)]="amountLocal" required
+													class="form-control required" formControlName="amountLocal"
+													name="amountLocal" style="width: 70px;" disabled="true">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="currencyFactor" class="label-name">
+												{{'currency.transaction-factor'|translate}}</label>
+											<div class="input-group ">
+												<input type="number" [(ngModel)]="currencyFactor" required
+													class="form-control required" formControlName="currencyFactor"
+													name="currencyFactor" style="width: 70px;" disabled="true">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="amount" class="label-name">
+												{{'general.amount'|translate}}</label><span class="text-danger">*</span>
+											<div class="input-group ">
+												<input type="number" [(ngModel)]="amount" required
+													class="form-control required" formControlName="amount" name="amount"
+													style="width: 70px;" disabled="true">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="currencyId" class="label-name">
+												{{'component-names.currencies'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="input-group  popup">
+												<ng-select style="width:100%" [(ngModel)]="currencyId"
+													formControlName="currencyId" (change)="getAmount()"
+													name='currencyId' class="" id="currencyId">
+													<ng-option *ngFor="let currency of currencyList"
+														[value]="currency.id">
+														{{lang=="ar"?currency.nameAr:currency.nameEn}}
+													</ng-option>
+												</ng-select>
+												<div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['currencyId'].errors && f['currencyId'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
 
-                                            </div>
+											</div>
 
-                                        </div>
-                                        <div class="col-12 col-md-6 d-flex align-items-end">
-                                            <div class="media">
-                                                <label class="label-name"> {{'general.status'|translate}}
-                                                </label>
-                                                <div class="icon-state media-body">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
+										</div>
+										<div class="col-12 col-md-6 d-flex align-items-end">
+											<div class="media">
+												<label class="label-name"> {{'general.status'|translate}}
+												</label>
+												<div class="icon-state media-body">
+													<label class="switch">
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
+												</div>
+											</div>
+										</div>
 
 
 
-                                    </div>
 
-                                </div>
 
-                                <div formArrayName="issuingChequeDetail" style="width: 100% ; overflow-x: scroll;">
-                                    <div style="width: 1500px;" class="table-container">
-                                        <table class="table table-sm m-b-0 table-broder ">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <!-- <th># </th> -->
-                                                    <th style="width: 15%;">{{'general.account-number'|translate}}</th>
-                                                    <th style="width: 10%;">{{'general.amount'|translate}}</th>
-                                                    <th style="width: 10%;">{{'general.beneficiary-type'|translate}}
-                                                    </th>
-                                                    <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
-                                                    <th style="width: 15%;">{{'general.currency'|translate}}</th>
-                                                    <th style="width: 10%;">
-                                                        {{'general.currency-conversion-factor'|translate}}</th>
+									</div>
 
-                                                    <th style="width: 10%;">{{'general.balance'|translate}}</th>
-                                                    <th style="width: 15%;">{{'general.description'|translate}}</th>
-                                                    <th style="width: 1%;">{{'general.procedures'|translate}}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let row of issuingChequeForm.get('issuingChequeDetail')['controls']; let i = index" [formGroupName]="i">
-                                                    <!-- <td> -->
-                                                    <!-- {{ i+1 }} -->
-                                                    <!-- <input type="text"
+								</div>
+
+								<div formArrayName="issuingChequeDetail" style="width: 100% ; overflow-x: scroll;">
+									<div style="width: 1500px;" class="table-container">
+										<table class="table table-sm m-b-0 table-broder ">
+											<thead class="thead-light">
+												<tr>
+													<!-- <th># </th> -->
+													<th style="width: 15%;">{{'general.account-number'|translate}}</th>
+													<th style="width: 10%;">{{'general.amount'|translate}}</th>
+													<th style="width: 10%;">{{'general.beneficiary-type'|translate}}
+													</th>
+													<th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
+													<th style="width: 15%;">{{'general.currency'|translate}}</th>
+													<th style="width: 10%;">
+														{{'general.currency-conversion-factor'|translate}}</th>
+
+													<th style="width: 10%;">{{'general.balance'|translate}}</th>
+													<th style="width: 15%;">{{'general.description'|translate}}</th>
+													<th style="width: 1%;">{{'general.procedures'|translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let row of issuingChequeForm.get('issuingChequeDetail')['controls']; let i = index"
+													[formGroupName]="i">
+													<!-- <td> -->
+													<!-- {{ i+1 }} -->
+													<!-- <input type="text"
                                                             style="border: none; border-color: transparent;" hidden
                                                             formControlName="iCDetailSerial" name="iCDetailSerial"> -->
-                                                    <!-- </td> -->
-                                                    <td>
+													<!-- </td> -->
+													<td>
 
 
-                                                        <select required class="form-control required" name="accountId" formControlName="accountId">
+														<select required class="form-control required" name="accountId"
+															formControlName="accountId">
 
-                                                            <option *ngFor="let account of accountDetailsList"
-                                                                [value]="account.id">
-                                                                {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                            </option>
+															<option *ngFor="let account of accountDetailsList"
+																[value]="account.id">
+																{{lang=="ar"?account.nameAr:account.nameEn}}
+															</option>
 
-                                                        </select>
+														</select>
 
-                                                        <!-- <div class="input-group-prepend">
+														<!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickAccount(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
                                                                         </div> -->
 
-                                                    </td>
+													</td>
 
-                                                    <td>
+													<td>
 
-                                                        <div class="input-group">
-                                                            <input type="number" required class="form-control required" (keypress)="numberOnly($event,i)" (input)="onInput($event.target.value,i)" formControlName="amount" name="amount" style="width: 70px;">
-                                                        </div>
+														<div class="input-group">
+															<input type="number" required class="form-control required"
+																(keypress)="numberOnly($event,i)"
+																(input)="onInput($event.target.value,i)"
+																formControlName="amount" name="amount"
+																style="width: 70px;">
+														</div>
 
-                                                    </td>
+													</td>
 
-                                                    <td>
-
-
-                                                        <select class="form-control" name="beneficiaryTypeId" formControlName="beneficiaryTypeId" [ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}">
-
-
-                                                            <option *ngFor="let  beneficiary of beneficiaryTypesEnum"
-                                                                [value]="beneficiary.id">
-                                                                {{beneficiary.name}}
-                                                            </option>
-                                                        </select>
+													<td>
 
 
-                                                    </td>
-                                                    <td>
+														<select class="form-control" name="beneficiaryTypeId"
+															formControlName="beneficiaryTypeId"
+															[ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}">
 
 
-                                                        <select required class="form-control required" name="beneficiaryAccountId" formControlName="beneficiaryAccountId">
+															<option *ngFor="let  beneficiary of beneficiaryTypesEnum"
+																[value]="beneficiary.id">
+																{{beneficiary.name}}
+															</option>
+														</select>
 
-                                                            <option *ngFor="let account of beneficiaryAccountList"
-                                                                [value]="account.id">
-                                                                {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                            </option>
 
-                                                        </select>
+													</td>
+													<td>
 
-                                                        <!-- <div class="input-group-prepend">
+
+														<select required class="form-control required"
+															name="beneficiaryAccountId"
+															formControlName="beneficiaryAccountId">
+
+															<option *ngFor="let account of beneficiaryAccountList"
+																[value]="account.id">
+																{{lang=="ar"?account.nameAr:account.nameEn}}
+															</option>
+
+														</select>
+
+														<!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickAccount(i)"
                                                                                 class="btn btn-rounded btn-dark"
                                                                                 type="button"><i
                                                                                     class="fa fa-search"></i></button>
                                                                         </div> -->
 
-                                                    </td>
-                                                    <td>
+													</td>
+													<td>
 
 
-                                                        <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+														<select class="form-control" name="currencyId"
+															(change)="onChangeCurrency($event,i)"
+															formControlName="currencyId"
+															[ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 
 
-                                                            <option *ngFor="let currency of currencyList"
-                                                                [value]="currency.id">
-                                                                {{lang=="ar"?currency.nameAr:currency.nameEn}}
-                                                            </option>
-                                                        </select>
+															<option *ngFor="let currency of currencyList"
+																[value]="currency.id">
+																{{lang=="ar"?currency.nameAr:currency.nameEn}}
+															</option>
+														</select>
 
 
 
-                                                    </td>
-                                                    <td>
+													</td>
+													<td>
 
-                                                        <div class="input-group">
-                                                            <input type="number" required class="form-control required" disabled="disabled" formControlName="transactionFactor" name="transactionFactor" style="width: 70px;">
-                                                        </div>
-
-
-                                                    </td>
-                                                    <td>
-
-                                                        <div class="input-group">
-                                                            <input type="number" required class="form-control required" disabled="disabled" formControlName="currencyLocal" name="currencyLocal" style="width: 70px;">
-                                                        </div>
-
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" formControlName="notes" name='notes'></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-square btn-danger btn-sm waves-effect waves-light" (click)="onDeleteRow(i)"> <i
-                                                                class="icofont icofont-ui-delete"></i>{{'buttons.delete'|translate}}
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+														<div class="input-group">
+															<input type="number" required class="form-control required"
+																disabled="disabled" formControlName="transactionFactor"
+																name="transactionFactor" style="width: 70px;">
+														</div>
 
 
-                            </div>
-                            <br>
+													</td>
+													<td>
 
-                            <button type="button" (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2 mb-3 mt-3">{{'general.add-new-row'|translate}}
-                            </button>
-                            <div class="wrapper-title mt-5">
-                                <h3>{{'incoming-cheque.cheque-details-status'|translate}}</h3>
-                                <hr>
-                                <div class="row" *ngIf="issuingChequeForm.value.id>0">
-                                    <div formArrayName="issuingChequeStatusDetail" style="width: 100% ; overflow-x: scroll;">
-                                        <div>
-                                            <table class="table table-sm m-b-0 table-broder ">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>{{'general.date'|translate}}</th>
-                                                        <th>{{'general.status'|translate}}</th>
+														<div class="input-group">
+															<input type="number" required class="form-control required"
+																disabled="disabled" formControlName="currencyLocal"
+																name="currencyLocal" style="width: 70px;">
+														</div>
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let row of issuingChequeForm.get('issuingChequeStatusDetail')['controls']; let i = index" [formGroupName]="i">
-                                                        <td>
-
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control " disabled="disabled" formControlName="date" name="date">
-                                                            </div>
-
-
-                                                        </td>
-                                                        <td>
+													</td>
+													<td>
+														<textarea class="form-control" formControlName="notes"
+															name='notes'></textarea>
+													</td>
+													<td>
+														<button type="button"
+															class="btn btn-square btn-danger btn-sm waves-effect waves-light"
+															(click)="onDeleteRow(i)"> <i
+																class="icofont icofont-ui-delete"></i>{{'buttons.delete'|translate}}
+														</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 
 
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control " disabled="disabled" formControlName="statusName" name="statusName">
+							</div>
+							<br>
 
-                                                            </div>
-                                                        </td>
+							<button type="button" (click)="initGroup()"
+								class="btn btn-rounded btn-primary d-flex align-items-center gap-2 mb-3 mt-3">{{'general.add-new-row'|translate}}
+							</button>
+							<div class="wrapper-title mt-5">
+								<h3>{{'incoming-cheque.cheque-details-status'|translate}}</h3>
+								<hr>
+								<div class="row" *ngIf="issuingChequeForm.value.id>0">
+									<div formArrayName="issuingChequeStatusDetail"
+										style="width: 100% ; overflow-x: scroll;">
+										<div>
+											<table class="table table-sm m-b-0 table-broder ">
+												<thead class="thead-light">
+													<tr>
+														<th>{{'general.date'|translate}}</th>
+														<th>{{'general.status'|translate}}</th>
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let row of issuingChequeForm.get('issuingChequeStatusDetail')['controls']; let i = index"
+														[formGroupName]="i">
+														<td>
 
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+															<div class="input-group">
+																<input type="text" class="form-control "
+																	disabled="disabled" formControlName="date"
+																	name="date">
+															</div>
+
+
+														</td>
+														<td>
+
+
+															<div class="input-group">
+																<input type="text" class="form-control "
+																	disabled="disabled" formControlName="statusName"
+																	name="statusName">
+
+															</div>
+														</td>
+
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>

@@ -22,7 +22,7 @@
 											</label>
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="billKind" [items]="billKinds" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['billKind'].touched || f['billKind'].dirty ) && f['billKind'].invalid" class="alert alert-danger">
+                                                <div *ngIf="(f['billKind'].touched || f['billKind'].dirty ) && f['billKind'].invalid" class="alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['billKind'].errors && f['billKind'].errors['required']">
 														{{'validation-messages.required-field'|translate}}</span>
@@ -34,7 +34,7 @@
                                             <label for="billNameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label>
                                             <span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['billNameAr'].errors || f['billNameAr'].invalid}" name="billNameAr" formControlName="billNameAr">
                                                 <div *ngIf="(f['billNameAr'].touched || f['billNameAr'].dirty ) && f['billNameAr'].invalid" class="validation alert-danger position-absolute">
@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="billNameEn" class="label-name">{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <input type="text" class="form-control icon-branch" name="billNameEn" formControlName="billNameEn">
 
                                             </div>

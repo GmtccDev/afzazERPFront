@@ -18,7 +18,7 @@
                                         <div class="col-md-6 col-12 ">
                                             <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <input type="text" class="form-control" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -31,14 +31,14 @@
                                         <div class="col-md-6 col-12">
                                             <label for="barcode" class="label-name">
 												{{'general.barcode'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <input type="text" class="form-control" name="barcode" formControlName="barcode">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control " [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr" maxlength="250">
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
@@ -52,12 +52,12 @@
                                         <div class="col-md-6 col-12">
                                             <label for="nameEn" class="label-name">
 												{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control " name="nameEn" formControlName="nameEn" maxlength="250">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12 mb-3">
+                                        <div class="col-md-6 col-12">
                                             <label for="itemGroupId" class="label-name">
 												{{'item.item-group'|translate}}
 
@@ -78,7 +78,7 @@
 
                                         </div>
 
-                                        <div class="col-12 col-md-6 mb-3">
+                                        <div class="col-12 col-md-6">
                                             <label for="item-type" class="label-name">{{'item.item-type'|translate}}
 											</label>
                                             <div class="input-group  popup">
@@ -87,7 +87,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6 mb-3">
+                                        <div class="col-12 col-md-6">
                                             <label for="cost-calculate-method" class="label-name">{{'item.cost-calculate-method'|translate}}
 											</label>
                                             <div class="input-group  popup">
@@ -99,7 +99,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="notes" class="label-name">
 												{{'general.notes'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <textarea class="form-control w-100" maxLength="500" formControlName="notes" name='notes'></textarea>
                                             </div>
                                         </div>

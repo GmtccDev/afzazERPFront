@@ -1,56 +1,59 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
 
-                <form [formGroup]="unitTransactionForm" id="unitTransactionSubmit" class="tabs-form">
-                    <div class="main-unit">
-                        <div class="wrapper-title">
+				<form [formGroup]="unitTransactionForm" id="unitTransactionSubmit" class="tabs-form">
+					<div class="main-unit">
+						<div class="wrapper-title">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title text-capitalize">{{'unit.unit-transactions'|translate}}</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row ">
-                                    <div class="col-12 col-md-12">
-                                        <label for="transactionFactor" class="label-name">{{'unit.transaction-factor'|translate}}</label>
-                                        <div class="form-group0 position-relative">
-                                            <input type="number" class="form-control icon-unit" name="transactionFactor" formControlName="transactionFactor">
-                                        </div>
-                                    </div>
-                                    <hr class="p-0">
+							<div class="modal-header">
+								<h4 class="modal-title text-capitalize">{{'unit.unit-transactions'|translate}}</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row ">
+									<div class="col-12 col-md-12">
+										<label for="transactionFactor"
+											class="label-name">{{'unit.transaction-factor'|translate}}</label>
+										<div class="form-group position-relative">
+											<input type="number" class="form-control icon-unit" name="transactionFactor"
+												formControlName="transactionFactor">
+										</div>
+									</div>
+									<hr class="p-0">
 
-                                    <div class="col-md-6 col-12">
-                                        <label for="countryId" class="label-name">
-                                            {{'component-names.unit-information'|translate}}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="input-group  popup">
-                                            <ng-select style="width:100%" formControlName="unitDetailId" name='unitDetailId' class="" id="unitDetailId">
-                                                <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
-                                                    {{lang=="ar"?unit.nameAr:unit.nameEn}}
-                                                </ng-option>
-                                            </ng-select>
+									<div class="col-md-6 col-12">
+										<label for="countryId" class="label-name">
+											{{'component-names.unit-information'|translate}}
+											<span class="text-danger">*</span>
+										</label>
+										<div class="input-group  popup">
+											<ng-select style="width:100%" formControlName="unitDetailId"
+												name='unitDetailId' class="" id="unitDetailId">
+												<ng-option *ngFor="let unit of unitsList" [value]="unit.id">
+													{{lang=="ar"?unit.nameAr:unit.nameEn}}
+												</ng-option>
+											</ng-select>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button (click)="save()" type="submit" class="btn btn-primary "> {{
-                            'toolbar.save'|translate}}</button>
-                    </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button (click)="save()" type="submit" class="btn btn-primary "> {{
+							'toolbar.save'|translate}}</button>
+					</div>
 
-                </form>
+				</form>
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
 </section>

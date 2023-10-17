@@ -1,171 +1,193 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.9)" size="medium" color="#fff" type="ball-scale-multiple">
-    <p style="font-size: 20px; color: white">{{'general.loading'|translate}}...</p>
+	<p style="font-size: 20px; color: white">{{'general.loading'|translate}}...</p>
 </ngx-spinner>
 <div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="wrapper-title">
-                <h3>{{'general.filterSearch'|translate}}</h3>
-            </div>
-        </div>
-        <div class="row mt-3 filter-search g-3">
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowFromDate">
-                <!-- <div class="form-group"> -->
-                <label for="0" class="label-name"> {{'general.fromDate'|translate}}</label>
-                <app-full-date (OnDateSelect)="onSelectFromDate($event)" [selectedDate]="selectedFromDate"></app-full-date>
-                <!-- </div> -->
-            </div>
+	<div class="card-body">
+		<div class="row">
+			<div class="wrapper-title">
+				<h3>{{'general.filterSearch'|translate}}</h3>
+				<hr>
+			</div>
+			<!-- <div class=" filter-search0"> -->
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowFromDate">
+				<!-- <div class="form-group"> -->
+				<label for="0" class="label-name"> {{'general.fromDate'|translate}}</label>
+				<app-full-date (OnDateSelect)="onSelectFromDate($event)"
+					[selectedDate]="selectedFromDate"></app-full-date>
+				<!-- </div> -->
+			</div>
 
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowToDate">
-                <!-- <div class="form-group"> -->
-                <label for="0" class="label-name"> {{'general.toDate'|translate}}</label>
-                <app-full-date (OnDateSelect)="onSelectToDate($event)" [selectedDate]="selectedToDate"></app-full-date>
-                <!-- </div> -->
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowFromEntryNo">
-                <label for="0" class="label-name"> {{'general.from-entry-no'|translate}}</label>
-                <!-- <div class="input-group  popup"> -->
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowToDate">
+				<!-- <div class="form-group"> -->
+				<label for="0" class="label-name"> {{'general.toDate'|translate}}</label>
+				<app-full-date (OnDateSelect)="onSelectToDate($event)" [selectedDate]="selectedToDate"></app-full-date>
+				<!-- </div> -->
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowFromEntryNo">
+				<label for="0" class="label-name"> {{'general.from-entry-no'|translate}}</label>
+				<!-- <div class="input-group  popup"> -->
 
-                <div class="form-group0 position-relative">
-                    <input type="number" class="form-control icon-branch" [(ngModel)]='fromEntryNo' name='fromEntryNo' id="fromEntryNo" (ngModelChange)="onChangeFromEntryNo()">
-                </div>
-                <!-- </div> -->
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowToEntryNo">
-                <label for="0" class="label-name"> {{'general.to-entry-no'|translate}}</label>
-                <!-- <div class="input-group  popup"> -->
+				<div class="form-group position-relative">
+					<input type="number" class="form-control icon-branch" [(ngModel)]='fromEntryNo' name='fromEntryNo'
+						id="fromEntryNo" (ngModelChange)="onChangeFromEntryNo()">
+				</div>
+				<!-- </div> -->
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowToEntryNo">
+				<label for="0" class="label-name"> {{'general.to-entry-no'|translate}}</label>
+				<!-- <div class="input-group  popup"> -->
 
-                <div class="form-group0 position-relative">
-                    <input type="number" class="form-control icon-branch" [(ngModel)]='toEntryNo' name='toEntryNo' id="toEntryNo" (ngModelChange)="onChangeToEntryNo()">
-                </div>
-                <!-- </div> -->
-            </div>
+				<div class="form-group position-relative">
+					<input type="number" class="form-control icon-branch" [(ngModel)]='toEntryNo' name='toEntryNo'
+						id="toEntryNo" (ngModelChange)="onChangeToEntryNo()">
+				</div>
+				<!-- </div> -->
+			</div>
 
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowAccountGroup">
-                <label for="0" class="label-name"> {{'component-names.accountGroup'|translate}}</label>
-                <div class="input-group  popup">
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowAccountGroup">
+				<label for="0" class="label-name"> {{'component-names.accountGroup'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <ng-select style="width:100%" [(ngModel)]='selectedAccountGroupId' name='accountGroupId' class="" id="accountGroupId" (change)="getAccounts()" (ngModelChange)="onSelectAccountGroup()">
-                        <ng-option *ngFor="let accountGroup of accountGroupList" [value]="accountGroup.id">
-                            {{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowMainAccount">
-                <label for="0" class="label-name"> {{'general.main-account'|translate}}</label>
-                <div class="input-group  popup">
+					<ng-select style="width:100%" [(ngModel)]='selectedAccountGroupId' name='accountGroupId' class=""
+						id="accountGroupId" (change)="getAccounts()" (ngModelChange)="onSelectAccountGroup()">
+						<ng-option *ngFor="let accountGroup of accountGroupList" [value]="accountGroup.id">
+							{{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
+						</ng-option>
+					</ng-select>
+				</div>
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowMainAccount">
+				<label for="0" class="label-name"> {{'general.main-account'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <ng-select style="width:100%" [(ngModel)]='selectedMainAccountId' name='mainAccountId' class="" id="mainAccountId" (change)="getAccounts()" (ngModelChange)="onSelectMainAccount()">
-                        <ng-option *ngFor="let account of mainAccountsList" [value]="account.id">
-                            {{lang=="ar"?account.nameAr:account.nameEn}}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLeafAccount">
-                <label for="0" class="label-name"> {{'general.leaf-account'|translate}}</label>
-                <div class="input-group  popup">
+					<ng-select style="width:100%" [(ngModel)]='selectedMainAccountId' name='mainAccountId' class=""
+						id="mainAccountId" (change)="getAccounts()" (ngModelChange)="onSelectMainAccount()">
+						<ng-option *ngFor="let account of mainAccountsList" [value]="account.id">
+							{{lang=="ar"?account.nameAr:account.nameEn}}
+						</ng-option>
+					</ng-select>
+				</div>
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLeafAccount">
+				<label for="0" class="label-name"> {{'general.leaf-account'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <ng-select style="width:100%" [(ngModel)]='selectedLeafAccountId' name='leafAccountId' class="" id="leafAccountId" (ngModelChange)="onSelectLeafAccount()">
-                        <ng-option *ngFor="let account of leafAccountsList" [value]="account.id">
-                            {{lang=="ar"?account.nameAr:account.nameEn}}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowCostCenter">
-                <label for="0" class="label-name"> {{'component-names.costCenter'|translate}}</label>
-                <div class="input-group  popup">
+					<ng-select style="width:100%" [(ngModel)]='selectedLeafAccountId' name='leafAccountId' class=""
+						id="leafAccountId" (ngModelChange)="onSelectLeafAccount()">
+						<ng-option *ngFor="let account of leafAccountsList" [value]="account.id">
+							{{lang=="ar"?account.nameAr:account.nameEn}}
+						</ng-option>
+					</ng-select>
+				</div>
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowCostCenter">
+				<label for="0" class="label-name"> {{'component-names.costCenter'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <ng-select style="width:100%" [(ngModel)]='selectedCostCenterId' name='costCenterId' class="" id="costCenterId" (ngModelChange)="onSelectCostCenter()">
-                        <ng-option *ngFor="let costCenter of costCenterList" [value]="costCenter.id">
-                            {{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
+					<ng-select style="width:100%" [(ngModel)]='selectedCostCenterId' name='costCenterId' class=""
+						id="costCenterId" (ngModelChange)="onSelectCostCenter()">
+						<ng-option *ngFor="let costCenter of costCenterList" [value]="costCenter.id">
+							{{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
+						</ng-option>
+					</ng-select>
+				</div>
+			</div>
 
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowEntriesStatus">
-                <label for="0" class="label-name"> {{'general.entries-status'|translate}}</label>
-                <div class="input-group  popup">
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowEntriesStatus">
+				<label for="0" class="label-name"> {{'general.entries-status'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <ng-select class="custom" [(ngModel)]='selectedEntriesStatusId' (ngModelChange)="onSelectEntriesStatus()" [items]="entriesStatusEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                </div>
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowCurrency">
-                <label for="0" class="label-name"> {{'general.currency'|translate}}</label>
-                <div class="input-group  popup">
+					<ng-select class="custom" [(ngModel)]='selectedEntriesStatusId'
+						(ngModelChange)="onSelectEntriesStatus()" [items]="entriesStatusEnum" bindLabel="name"
+						bindValue="id" style="width:100%"></ng-select>
+				</div>
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowCurrency">
+				<label for="0" class="label-name"> {{'general.currency'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <ng-select style="width:100%" [(ngModel)]='selectedCurrencyId' name='currencyId' class="" id="currencyId" (ngModelChange)="onSelectCurrency()">
-                        <ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
-                            {{lang=="ar"?currency.nameAr:currency.nameEn}}
-                        </ng-option>
-                    </ng-select>
+					<ng-select style="width:100%" [(ngModel)]='selectedCurrencyId' name='currencyId' class=""
+						id="currencyId" (ngModelChange)="onSelectCurrency()">
+						<ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
+							{{lang=="ar"?currency.nameAr:currency.nameEn}}
+						</ng-option>
+					</ng-select>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowBranch">
-                <label for="0" class="label-name"> {{'component-names.branch'|translate}}</label>
-                <div class="input-group  popup">
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowBranch">
+				<label for="0" class="label-name"> {{'component-names.branch'|translate}}</label>
+				<div class="input-group  popup">
 
-                    <!-- <ng-select style="width:100%" [(ngModel)]='selectedBranchId' name='branchId' class="" id="branchId"
-				(ngModelChange)="onSelectBranch()">
-				<ng-option *ngFor="let branch of branchesList" [value]="branch.id">
-				  {{lang=="ar"?branch.nameAr:branch.nameEn}}
-				</ng-option>
-			  </ng-select> -->
-                    <p-multiSelect [options]="branchesList" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedBranchId" [virtualScroll]="true" optionLabel="{{lang=='en'?'nameEn':'nameAr'}}" id="branches" name="branchIds" class="w-100 form-control" defaultLabel="{{'general.select'|translate}}"
-                        (ngModelChange)="onSelectBranch()"></p-multiSelect>
+					<!-- <ng-select style="width:100%" [(ngModel)]='selectedBranchId' name='branchId' class="" id="branchId"
+					(ngModelChange)="onSelectBranch()">
+					<ng-option *ngFor="let branch of branchesList" [value]="branch.id">
+					  {{lang=="ar"?branch.nameAr:branch.nameEn}}
+					</ng-option>
+				  </ng-select> -->
+					<p-multiSelect [options]="branchesList" [ngModelOptions]="{standalone: true}"
+						[(ngModel)]="selectedBranchId" [virtualScroll]="true"
+						optionLabel="{{lang=='en'?'nameEn':'nameAr'}}" id="branches" name="branchIds"
+						class="w-100 form-control" defaultLabel="{{'general.select'|translate}}"
+						(ngModelChange)="onSelectBranch()"></p-multiSelect>
 
-                </div>
-            </div>
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowVoucherKind">
-                <label for="0" class="label-name">{{'voucher-type.voucher-type'|translate}} </label>
-                <div class="input-group  popup">
-
-
-                    <ng-select class="custom" [(ngModel)]='selectedVoucherKindId' [items]="voucherTypes" bindLabel="name" bindValue="id" style="width:100%" (ngModelChange)="onSelectVoucherKind()"></ng-select>
-
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowVoucher">
-                <label for="0" class="label-name"> {{'voucher.voucher'|translate}}</label>
-                <div class="input-group  popup">
-
-                    <ng-select style="width:100%" [(ngModel)]='selectedVoucherId' name='voucherId' class="" id="voucherId" (ngModelChange)="onSelectVoucher()">
-                        <ng-option *ngFor="let voucher of vouchersList" [value]="voucher.id">
-                            {{'general.number'|translate}} : {{voucher.id}} / {{'general.code'|translate}} : {{voucher.code}} / {{'general.type-id'|translate}} : {{voucher.voucherTypeId}}
-                        </ng-option>
-                    </ng-select>
-
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLevel">
-                <label for="0" class="label-name"> {{'general.level'|translate}}</label>
-                <!-- <div class="input-group  popup"> -->
-
-                <div class="form-group0 position-relative">
-                    <input type="number" class="form-control icon-branch" [(ngModel)]='level' name='level' id="level" (ngModelChange)="onChangeLevel()">
-                </div>
-                <!-- </div> -->
-            </div>
-
-            <div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowReportOptions">
-                <label for="0" class="label-name"> {{'general.report-options'|translate}}</label>
-                <div class="input-group  popup">
+				</div>
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowVoucherKind">
+				<label for="0" class="label-name">{{'voucher-type.voucher-type'|translate}} </label>
+				<div class="input-group  popup">
 
 
-                    <ng-select class="custom" [(ngModel)]='selectedReportOptionId' (ngModelChange)="onSelectReportOption()" [items]="reportOptionsEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                </div>
-            </div>
-            <div class="col-md-6 col-12 pull-right" style="padding-top: 10px;">
-                <button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch" (click)="FireSearch()"></button>
-            </div>
-        </div>
+					<ng-select class="custom" [(ngModel)]='selectedVoucherKindId' [items]="voucherTypes"
+						bindLabel="name" bindValue="id" style="width:100%"
+						(ngModelChange)="onSelectVoucherKind()"></ng-select>
 
-    </div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowVoucher">
+				<label for="0" class="label-name"> {{'voucher.voucher'|translate}}</label>
+				<div class="input-group  popup">
+
+					<ng-select style="width:100%" [(ngModel)]='selectedVoucherId' name='voucherId' class=""
+						id="voucherId" (ngModelChange)="onSelectVoucher()">
+						<ng-option *ngFor="let voucher of vouchersList" [value]="voucher.id">
+							{{'general.number'|translate}} : {{voucher.id}} / {{'general.code'|translate}} :
+							{{voucher.code}} / {{'general.type-id'|translate}} : {{voucher.voucherTypeId}}
+						</ng-option>
+					</ng-select>
+
+				</div>
+			</div>
+
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLevel">
+				<label for="0" class="label-name"> {{'general.level'|translate}}</label>
+				<!-- <div class="input-group  popup"> -->
+
+				<div class="form-group position-relative">
+					<input type="number" class="form-control icon-branch" [(ngModel)]='level' name='level' id="level"
+						(ngModelChange)="onChangeLevel()">
+				</div>
+				<!-- </div> -->
+			</div>
+
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowReportOptions">
+				<label for="0" class="label-name"> {{'general.report-options'|translate}}</label>
+				<div class="input-group  popup">
+
+
+					<ng-select class="custom" [(ngModel)]='selectedReportOptionId'
+						(ngModelChange)="onSelectReportOption()" [items]="reportOptionsEnum" bindLabel="name"
+						bindValue="id" style="width:100%"></ng-select>
+				</div>
+			</div>
+			<div class="col-md-6 col-12 pull-right" style="padding-top: 10px;">
+				<button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch" (click)="FireSearch()"></button>
+			</div>
+		</div>
+		<!-- </div> -->
+
+
+	</div>
 </div>

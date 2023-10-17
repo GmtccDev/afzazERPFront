@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div class="col-md-6 col-12">
 
-                            <div class="form-group0 position-relative">
+                            <div class="form-group position-relative">
 
                                 {{codeSerial}}
 
@@ -24,11 +24,11 @@
                                     <h3>{{'component-names.journalEntry-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-6 col-12 mb-3">
+                                        <div class="col-md-6 col-12">
                                             <label for="journalId" class="label-name">
-                                                {{'component-names.journal'|translate}}
+												{{'component-names.journal'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="journalId" (change)="onChangeJournal($event)" name='journalId' class="" id="journalId">
                                                     <ng-option *ngFor="let journal of journalList" [value]="journal.id">
@@ -43,9 +43,9 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="fiscalPeriodId" class="label-name">
-                                                {{'component-names.fiscalPeriod'|translate}}
+												{{'component-names.fiscalPeriod'|translate}}
 
-                                            </label>
+											</label>
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="fiscalPeriodId" (change)="onChangefiscalPeriod($event)" name='fiscalPeriodId' class="" id="fiscalPeriodId">
                                                     <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList" [value]="fiscalPeriod.id">
@@ -58,14 +58,14 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group0 position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" (change)="onChangeCode($event)" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}} </span>
+														{{'error.required'|translate}} </span>
                                                 </div>
 
                                             </div>
@@ -73,14 +73,14 @@
 
                                         <div class="col-md-6 col-12">
                                             <label for="date" class="label-name">
-                                                {{'general.date'|translate}}</label><span class="text-danger">*</span>
+												{{'general.date'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group0 position-relative">
 
                                                 <input type="date" class="form-control " name="date" formControlName="date">
                                                 <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['date'].errors && f['date'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
+														{{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
@@ -88,7 +88,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
 
@@ -98,24 +98,24 @@
                                         <div class="align-items-center col-12 col-md-6 d-flex justify-content-start gap-5">
                                             <div class="media">
                                                 <label class="label-name">
-                                                    {{'journalEntry.openBalance'|translate}} </label>
+													{{'journalEntry.openBalance'|translate}} </label>
                                                 <div class="icon-state media-body">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="openBalance"
-                                                            formControlName="openBalance">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+														<input type="checkbox" class="form-control" name="openBalance"
+															formControlName="openBalance">
+														<span class="switch-state"></span>
+													</label>
                                                 </div>
                                             </div>
                                             <div class="media">
                                                 <label class="label-name"> {{'general.status'|translate}}
-                                                </label>
+												</label>
                                                 <div class="icon-state media-body">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,12 +161,12 @@
 
                                                             <select required class="form-control required" name="accountId" formControlName="accountId">
 
-                                                                <option *ngFor="let account of accountList"
-                                                                    [value]="account.id">
-                                                                    <span>{{lang=="ar"?account.nameAr:account.nameEn}}</span>
-                                                                </option>
+																<option *ngFor="let account of accountList"
+																	[value]="account.id">
+																	<span>{{lang=="ar"?account.nameAr:account.nameEn}}</span>
+																</option>
 
-                                                            </select>
+															</select>
 
                                                             <!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickAccount(i)"
@@ -201,11 +201,11 @@
                                                             <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 
 
-                                                                <option *ngFor="let currency of currencyList"
-                                                                    [value]="currency.id">
-                                                                    <span>{{lang=="ar"?currency.nameAr:currency.nameEn}}</span>
-                                                                </option>
-                                                            </select>
+																<option *ngFor="let currency of currencyList"
+																	[value]="currency.id">
+																	<span>{{lang=="ar"?currency.nameAr:currency.nameEn}}</span>
+																</option>
+															</select>
                                                             <!--
                                                                         <div class="input-group-prepend">
                                                                             <button (click)="ClickCostCenter(i)"
@@ -246,12 +246,12 @@
 
                                                             <select class="form-control" name="costCenterId" formControlName="costCenterId" [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}">
 
-                                                                <option *ngFor="let costCenter of costCenterList"
-                                                                    [value]="costCenter.id">
-                                                                    <span>{{costCenter.nameAr}}</span>
-                                                                </option>
+																<option *ngFor="let costCenter of costCenterList"
+																	[value]="costCenter.id">
+																	<span>{{costCenter.nameAr}}</span>
+																</option>
 
-                                                            </select>
+															</select>
 
                                                             <!-- <div class="input-group-prepend">
                                                                             <button (click)="ClickCostCenter(i)"
@@ -271,7 +271,7 @@
 
                                                     <td>
                                                         <button type="button" class="btn btn-table btn-danger " (click)="onDeleteRow(i)"> <i
-                                                                class="icofont icofont-ui-delete"></i> حذف</button>
+																class="icofont icofont-ui-delete"></i> حذف</button>
                                                     </td>
                                                 </tr>
 
@@ -286,8 +286,8 @@
                             <br>
 
                             <button type="button" (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2"> <i
-                                    class="fa fa-plus"></i>
-                                اضافة صف جديد</button>
+									class="fa fa-plus"></i>
+								اضافة صف جديد</button>
                         </form>
 
                         <table class="mt-4 total-table table table-borderless text-end w-100">

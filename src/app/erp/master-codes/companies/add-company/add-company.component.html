@@ -1,208 +1,231 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form [formGroup]="companyForm" id="companySubmit" class="tabs-form">
-                            <div class="main-company ranoo">
-                                <div class="wrapper-title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<form [formGroup]="companyForm" id="companySubmit" class="tabs-form">
+							<div class="main-company ranoo">
+								<div class="wrapper-title">
 
-                                    <h3>{{'component-names.companies-information'|translate}}</h3>
-                                    <hr>
-                                    <div class="row ">
+									<h3>{{'component-names.companies-information'|translate}}</h3>
+									<hr>
+									<div class="row ">
 
-                                        <div class="col-12 col-md-6 offset-6">
-                                            <label for="code" class="label-name">
-                                                {{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
-                                                <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
-                                                <input type="text" class="form-control icon-company" name="code" formControlName="code">
-                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}} </span>
-                                                </div>
+										<div class="col-12 col-md-6 offset-6">
+											<label for="code" class="label-name">
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
+												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+												<input type="text" class="form-control icon-company" name="code"
+													formControlName="code">
+												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['code'].errors && f['code'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}} </span>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <label for="nameAr" class="label-name">
-                                                {{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<label for="nameAr" class="label-name">
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-company" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
-                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
-                                                        {{'error.required'|translate}}</span>
-                                                </div>
+												<input type="text" class="form-control icon-company"
+													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
+													name="nameAr" formControlName="nameAr">
+												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<label for="nameEn"
+												class="label-name">{{'general.nameEn'|translate}}</label>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-company" name="nameEn" formControlName="nameEn">
-                                                <!-- <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
+												<input type="text" class="form-control icon-company" name="nameEn"
+													formControlName="nameEn">
+												<!-- <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div> -->
 
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <div class="col-12 col-md-6">
-                                            <label for="email" class="label-name">{{'general.email'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+										<div class="col-12 col-md-6">
+											<label for="email" class="label-name">{{'general.email'|translate}}</label>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-company" name="email" formControlName="email">
-                                                <!-- <div *ngIf="(f['email'].touched || f['email'].dirty ) && f['email'].invalid" class="validation alert-danger position-absolute">
+												<input type="text" class="form-control icon-company" name="email"
+													formControlName="email">
+												<!-- <div *ngIf="(f['email'].touched || f['email'].dirty ) && f['email'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['email'].errors && f['email'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div> -->
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <label for="email" class="label-name">{{'company.web-site'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<label for="email"
+												class="label-name">{{'company.web-site'|translate}}</label>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-company" name="webSite" formControlName="webSite">
-                                                <!-- <div *ngIf="(f['email'].touched || f['email'].dirty ) && f['email'].invalid" class="validation alert-danger position-absolute">
+												<input type="text" class="form-control icon-company" name="webSite"
+													formControlName="webSite">
+												<!-- <div *ngIf="(f['email'].touched || f['email'].dirty ) && f['email'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['email'].errors && f['email'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div> -->
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <label for="phoneNumber" class="label-name">{{'general.mobile-number'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<label for="phoneNumber"
+												class="label-name">{{'general.mobile-number'|translate}}</label>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-company" name="phoneNumber" formControlName="phoneNumber">
+												<input type="text" class="form-control icon-company" name="phoneNumber"
+													formControlName="phoneNumber">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <label for="address" class="label-name">{{'general.address-information'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<label for="address"
+												class="label-name">{{'general.address-information'|translate}}</label>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-company" name="address" formControlName="address">
+												<input type="text" class="form-control icon-company" name="address"
+													formControlName="address">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="countryId" class="label-name">
-                                                {{'component-names.countries'|translate}}
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="countryId" class="label-name">
+												{{'component-names.countries'|translate}}
 
-                                            </label>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="countryId" name='countryId' class="" id="countryId">
-                                                    <ng-option *ngFor="let country of countriesList" [value]="country.id">
-                                                        {{lang=="ar"?country.nameAr:country.nameEn}}
-                                                    </ng-option>
-                                                </ng-select>
+											</label>
+											<div class="input-group  popup">
+												<ng-select style="width:100%" formControlName="countryId"
+													name='countryId' class="" id="countryId">
+													<ng-option *ngFor="let country of countriesList"
+														[value]="country.id">
+														{{lang=="ar"?country.nameAr:country.nameEn}}
+													</ng-option>
+												</ng-select>
 
-                                            </div>
-                                            <!-- <div *ngIf="(f['countryId'].touched || f['countryId'].dirty ) && f['countryId'].invalid" class="validation alert-danger position-absolute">
+											</div>
+											<!-- <div *ngIf="(f['countryId'].touched || f['countryId'].dirty ) && f['countryId'].invalid" class="validation alert-danger position-absolute">
                                                 <i class="fa fa-close "></i>
                                                 <span *ngIf="f['countryId'].errors && f['countryId'].errors['required']" class="f-12 ng-star-inserted text-white">
                                                     {{'error.required'|translate}}</span>
                                             </div> -->
-                                        </div>
+										</div>
 
-                                        <div class="col-md-6 col-12">
-                                            <label for="currencyId" class="label-name">
-                                                {{'component-names.currencies'|translate}}
+										<div class="col-md-6 col-12">
+											<label for="currencyId" class="label-name">
+												{{'component-names.currencies'|translate}}
 
-                                            </label>
-                                            <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="currencyId" name='currencyId' class="" id="currencyId">
-                                                    <ng-option *ngFor="let currency of currencyList" [value]="currency.id">
-                                                        {{lang=="ar"?currency.nameAr:currency.nameEn}}
-                                                    </ng-option>
-                                                </ng-select>
+											</label>
+											<div class="input-group  popup">
+												<ng-select style="width:100%" formControlName="currencyId"
+													name='currencyId' class="" id="currencyId">
+													<ng-option *ngFor="let currency of currencyList"
+														[value]="currency.id">
+														{{lang=="ar"?currency.nameAr:currency.nameEn}}
+													</ng-option>
+												</ng-select>
 
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <hr class="mt-3 mb-3 p-0">
-                                        <div class="col-6 col-md-6">
-                                            <div class="media">
-                                                <label class="label-name">
-                                                    {{'company.motherCompany'|translate}} </label>
-                                                <div>
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="switch-state" name="motherCompany"
-                                                            formControlName="motherCompany">
-                                                        <span class="switch-state"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-md-6">
-                                            <div class="media">
-                                                <label class="label-name"> {{'company.useHijri'|translate}}
-                                                </label>
-                                                <div>
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="switch-state" name="useHijri"
-                                                            formControlName="useHijri">
-                                                        <span class="switch-state"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr class="mt-3 mb-3 p-0">
-                                        <div class="col-12 col-md-6 ">
-                                            <label for="" class="label-name"> {{'general.logo'|translate}}</label>
-                                            <div><img *ngIf="logoPath" width="150" [src]="logoPath" class="img-company">
-                                            </div>
-                                            <div class="position-relative upload-img">
+										<hr class="mt-3 mb-3 p-0">
+										<div class="col-6 col-md-6">
+											<div class="media">
+												<label class="label-name">
+													{{'company.motherCompany'|translate}} </label>
+												<div>
+													<label class="switch">
+														<input type="checkbox" class="switch-state" name="motherCompany"
+															formControlName="motherCompany">
+														<span class="switch-state"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-6 col-md-6">
+											<div class="media">
+												<label class="label-name"> {{'company.useHijri'|translate}}
+												</label>
+												<div>
+													<label class="switch">
+														<input type="checkbox" class="switch-state" name="useHijri"
+															formControlName="useHijri">
+														<span class="switch-state"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<hr class="mt-3 mb-3 p-0">
+										<div class="col-12 col-md-6 ">
+											<label for="" class="label-name"> {{'general.logo'|translate}}</label>
+											<div><img *ngIf="logoPath" width="150" [src]="logoPath" class="img-company">
+											</div>
+											<div class="position-relative upload-img">
 
-                                                <div class="align-items-center d-flex gap-3 justify-content-center position-absolute w-100">
-                                                    <img src="../../../../../../assets/images/upload-img.png"><span>upload-img</span>
-                                                </div>
-                                                <input class="form-control opacity-0 position-absolute " (change)="onFileChange($event)" id="" type="file">
-                                            </div>
+												<div
+													class="align-items-center d-flex gap-3 justify-content-center position-absolute w-100">
+													<img
+														src="../../../../../../assets/images/upload-img.png"><span>upload-img</span>
+												</div>
+												<input class="form-control opacity-0 position-absolute "
+													(change)="onFileChange($event)" id="" type="file">
+											</div>
 
 
-                                        </div>
+										</div>
 
 
-                                        <hr class="mt-3 mb-3 p-0">
-                                        <div class="col-12 col-md-6">
-                                            <div class="media">
-                                                <label class="label-name"> {{'general.status'|translate}}
-                                                </label>
-                                                <div class="icon-state media-body">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="form-control" name="isActive"
-                                                            formControlName="isActive">
-                                                        <span class="switch-state"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
+										<hr class="mt-3 mb-3 p-0">
+										<div class="col-12 col-md-6">
+											<div class="media">
+												<label class="label-name"> {{'general.status'|translate}}
+												</label>
+												<div class="icon-state media-body">
+													<label class="switch">
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
+												</div>
+											</div>
+										</div>
 
-                                    </div>
+									</div>
 
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    </div>
+	</div>
 </section>

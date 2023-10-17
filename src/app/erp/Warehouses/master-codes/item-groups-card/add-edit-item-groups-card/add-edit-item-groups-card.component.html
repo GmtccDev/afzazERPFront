@@ -43,7 +43,7 @@
                                         <div class="col-12 col-md-6">
                                             <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -57,7 +57,7 @@
                                         <div class="col-12 col-md-6">
                                             <label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
 
@@ -86,7 +86,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6 mb-3">
+                                        <div class="col-12 col-md-6 ">
                                             <label for="cost-calculate-method" class="label-name">{{'item.cost-calculate-method'|translate}}
 											</label>
                                             <div class="input-group  popup">
@@ -113,7 +113,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
 

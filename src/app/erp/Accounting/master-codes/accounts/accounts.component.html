@@ -10,7 +10,7 @@
 			<th>{{'general.actions'|translate}}</th>
 		</tr>
 	</thead>
-	<tbody dir="rtl">
+	<tbody>
 		<ng-container *ngFor="let data of expandTable.data">
 			<ng-container *ngFor="let item of mapOfExpandedData[data.treeId]">
 				<tr *ngIf="(item.parent && item.parent.expanded) || !item.parent">
