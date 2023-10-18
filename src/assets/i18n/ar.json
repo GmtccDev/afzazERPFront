@@ -191,7 +191,8 @@
         "update": "تعديل",
         "print": "طباعة",
         "view": "عرض",
-        "cancelDefaultReport": "الغاء التقرير الافتراضى"
+        "cancelDefaultReport": "الغاء التقرير الافتراضى",
+        "post":"ترحيل"
     },
     "component-names": {
         "country-information": "معلومات الدولة",

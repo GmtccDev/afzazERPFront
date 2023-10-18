@@ -84,5 +84,8 @@ export class JournalEntryServiceProxy {
 
         return this.http.post<any>(environment.apiUrl + "/api/JournalEntry/deleteListEntity?", entity);
     }
+    updateList(list: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/JournalEntry/Post?", list);
+    }
 }
 

@@ -329,7 +329,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   onDelete() {
 
 
-    var ids = this.listIds;
+    var ids = this.listIds.map(item => item.id);
     let sub = this.issuingChequeService.deleteListIssuingCheque(ids).subscribe(
       (resonse) => {
 

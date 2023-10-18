@@ -308,7 +308,7 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    var ids = this.listIds;
+    var ids = this.listIds.map(item => item.id);
     let sub = this.taxService.deleteListTax(ids).subscribe(
       (resonse) => {
         
