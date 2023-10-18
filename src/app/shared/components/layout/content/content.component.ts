@@ -55,7 +55,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 				next: (res) => {
 					console.log(res);
 					if (res.success) {
-						debugger
+						
 						this.voucherTypes = res.response.items
 						this.depositVouchers = this.voucherTypes.filter(x => x.voucherKindId == 1);
 						this.WithdrawalVouchers = this.voucherTypes.filter(x => x.voucherKindId == 2);

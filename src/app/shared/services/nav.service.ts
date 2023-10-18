@@ -115,7 +115,7 @@ export class NavService implements OnInit, OnDestroy {
 				next: (res) => {
 					console.log(res);
 					if (res.success) {
-                        debugger
+                        
 						this.voucherType = res.response.items
 						this.depositVouchers=this.voucherType.filter(x => x.voucherKindId == 1);
 						this.WithdrawalVouchers=this.voucherType.filter(x => x.voucherKindId == 2);

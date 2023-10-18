@@ -67,7 +67,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region ngOnInit
   ngOnInit(): void {
     //  this.defineGridColumn();
-    debugger
+    
     let sub = this.route.params.subscribe(params => {
       if (params['billTypeId'] != null) {
         this.billTypeId = +params['billTypeId'];

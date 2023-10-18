@@ -203,6 +203,7 @@
         "fetch":"Fetch",
         "sales-person":"Sales Person",
         "supplier-account":"Supplier Account"
+       
     
     },
     "sales-person-commission": {
@@ -468,7 +469,11 @@
         "sales-person-commission":"Sales Person Commission",
         "sales-person-commission-card-information": "Sales Person Commission Card Information",
         "sales-person-card-information": "Sales Person Card Information",
-        "bills":"Bills"
+        "bills":"Bills",
+        "default-journal":"Default Journal",
+        "general-configuration":"General Configuration",
+        "cheques-journal":"Cheques Journal"
+
 
     },
     "language": {

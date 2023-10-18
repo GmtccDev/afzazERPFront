@@ -71,7 +71,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    debugger;
+    ;
     Promise.all([
     
       this.getSalesPersons(),
@@ -85,6 +85,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getSalesPersonCommissionCardCode();
+        this.getSelecteditem();
       }
       this.changePath();
       this.listenToClickedButton();
@@ -280,7 +281,16 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
 
     ];
   }
- 
+  radioSel: any;
+  radioSelectedString: string;
+  commissionOnSelected
+  getSelecteditem() {
+    this.radioSel = this.commissionOnList.find(Item => Item.value === this.commissionOnSelected);
+    this.radioSelectedString = JSON.stringify(this.radioSel);
+  }
+  onItemChange(item) {
+    this.getSelecteditem();
+  }
  
 
   //#endregion
@@ -333,7 +343,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
   }
   confirmSave() {
 
-    debugger
+    
     var inputDto = new SalesPersonCommissionCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.salesPersonCommissionCardForm.value;
@@ -367,7 +377,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     }
   }
   confirmUpdate() {
-    debugger
+    
     console.log("this.salesPersonCommissionCardForm.value",this.salesPersonCommissionCardForm.value)
     var inputDto = new SalesPersonCommissionCardDto()
     return new Promise<void>((resolve, reject) => {

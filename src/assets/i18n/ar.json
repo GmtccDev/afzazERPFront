@@ -282,7 +282,10 @@
         "sales-person-commission":"عمولات المناديب",
         "bill-types": "أنماط الفواتير",
         "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
-        "bills":"الفواتير"
+        "bills":"الفواتير",
+        "default-journal":"اليومية الإفتراضية",
+        "general-configuration":"الإعدادات",
+        "cheques-journal":"يومية الشيكات"
 
 
     },
@@ -416,7 +419,6 @@
         "inventory-account": "حساب المخزون",
         "minute": "دقيقة",
         "print": "الطباعة",
-      
         "delivery-date":"تاريخ التوصيل",
         "pay-way":"طريقة الدفع",
         "ship-method":"طريقة الشحن",
@@ -427,6 +429,7 @@
         "sales-person":"مندوب المبيعات",
         "supplier-account":"حساب المورد",
         "project": "المشروع"
+       
        
          
     },
@@ -487,7 +490,7 @@
         "isLeafAccount": "هل الحساب فرعي ",
         "noteNotActive": "سبب عدم التفعيل",
         "taxNumber": "الرقم الضريبي",
-        "account-classification": "تصنيف الحساب",
+        "account-classification": "فئة الحساب",
         "account-classification-income-statement": "تصنيف الحساب (قائمة الدخل)",
         "budget": "الميزانية"
     },

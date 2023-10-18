@@ -97,7 +97,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     this.spinner.show();
     Promise.all([
-      this.getGeneralConfiguration(),
+      
       this.getCostCenter(),
       this.getCurrency(),
       this.getFiscalPeriod(),
@@ -109,6 +109,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       if (this.currnetUrl == this.addUrl) {
         this.getjournalEntryCode();
       }
+      this.getGeneralConfiguration(),
       this.changePath();
       this.listenToClickedButton();
     }).catch(err => {
@@ -245,8 +246,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           resolve();
 
           if (res.success) {
-
-
+            this.journalEntryForm.controls.journalId.patchValue(Number(res.response.result.items.find(c => c.id == 1006).value))
             this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {

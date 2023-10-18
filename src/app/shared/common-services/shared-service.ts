@@ -20,7 +20,7 @@ import { Injectable } from "@angular/core";
   
     constructor() {}
     public changeButton(toolbarData: ToolbarData) {
-      debugger
+      
       
       this.buttonSource.next(toolbarData);
     }

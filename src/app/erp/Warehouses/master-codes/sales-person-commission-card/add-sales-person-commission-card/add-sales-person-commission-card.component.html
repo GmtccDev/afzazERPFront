@@ -87,7 +87,7 @@
                                             <div>
                                                 <ul class="list-group">
                                                     <li class="list-group-item" *ngFor="let item of commissionOnList">
-                                                        <input type="radio"type="radio" [formControlName]="'commissionOn'" [value]="item.value" [checked]="item.value === salesPersonCommissionCardForm.value.commissionOn" />
+                                                        <input type="radio"type="radio" [(ngModel)]="commissionOn" (change)="onItemChange(item)" [value]="item.value" [checked]="item.value" />
                                                         {{ lang == 'ar' ? item.nameAr : item.nameEn }}
                                                     </li>
                                                 </ul>

@@ -104,7 +104,7 @@ export class AddCountryComponent implements OnInit {
         }
       }
       else {
-        debugger
+        
         this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
         this.spinner.hide();
       }
@@ -214,7 +214,7 @@ export class AddCountryComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.New) {
 
             this.toolbarPathData.componentAdd = this.translate.instant("country.add-country");
-            debugger
+            
             if (this.countriesForm.value.code != null) {
               this.getCountryCode()
             }
