@@ -64,6 +64,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.listenToClickedButton();
       }).catch(err => {
