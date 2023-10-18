@@ -195,11 +195,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 	this.lang == 'ar'
 		? { title: ' الاسم', field: 'nameAr' } :
 		{ title: ' Name  ', field: 'nameEn' },
-
-	{
-		title: this.lang == 'ar' ? ' الكود' : 'code ',
-		field: 'code',
-	},
 	this.lang == 'ar'
 		? {
 			title: '  تاريخ  ', width: 300, field: 'fromDate', formatter: function (cell, formatterParams, onRendered) {
@@ -258,13 +253,13 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 	openFiscalPeriodes() { }
 	onCheck(id) {
 
-		  const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
-    if (index !== -1) {
-      this.listIds.splice(index, 1);
-    } else {
-      const newItem = { id, isChecked: true };
-      this.listIds.push(newItem);
-    }
+		const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+		if (index !== -1) {
+			this.listIds.splice(index, 1);
+		} else {
+			const newItem = { id, isChecked: true };
+			this.listIds.push(newItem);
+		}
 		this.sharedServices.changeButton({
 			action: 'Delete',
 			componentName: 'List',

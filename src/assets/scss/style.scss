@@ -481,7 +481,7 @@ html[dir="rtl"] {
     border-right: none;
     background: #4bc2f14f !important;
     text-align: start !important;
-    min-width: 155px !important;
+    min-width: 130px !important;
     min-height: 40px;
     line-height: 32px;
 }
@@ -793,7 +793,8 @@ span.ng-star-inserted {
         border-right: none;
         background: transparent !important;
         text-align: start !important;
-        min-width: 155px !important;
+        max-width: 130px !important;
+        min-width: 100px !important;
         min-height: 40px;
         line-height: 32px;
     }
@@ -881,6 +882,8 @@ span.ng-star-inserted {
 .tabulator-row .tabulator-cell {
     padding: 5px 5px !important;
     color: #797979 !important;
+    min-width: 100px !important;
+    max-width: 130px !important;
 }
 
 .tabulator .tabulator-footer .tabulator-page.active {
@@ -961,7 +964,8 @@ span.ng-star-inserted {
     border-right: none;
     background: transparent !important;
     text-align: start !important;
-    min-width: 155px !important;
+    min-width: 100px !important;
+    max-width: 130px !important;
 }
 
 .search-btn {
