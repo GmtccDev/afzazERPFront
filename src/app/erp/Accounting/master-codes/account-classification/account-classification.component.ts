@@ -298,7 +298,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 		this.subsList.push(sub);
 	}
 	onDelete() {
-		var ids = this.listIds;
+		var ids = this.listIds.map(item => item.id);
 		var entity = {
 			tableName: "AccountClassifications",
 			ids: ids,

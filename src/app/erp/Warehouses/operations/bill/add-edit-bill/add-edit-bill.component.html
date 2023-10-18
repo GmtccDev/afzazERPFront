@@ -735,20 +735,30 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12">
-                                            <label for="tax" class="label-name">{{'general.tax'|translate}}</label>
+                                            <label for="taxRatio"
+                                                class="label-name">{{'general.tax-ratio'|translate}}</label>
                                             <div class="form-group position-relative">
-                                                <input type="number"  class="form-control icon-branch"
-                                                    name="tax" formControlName="tax" [(ngModel)]="tax">
+                                                <input type="number" class="form-control icon-branch" name="taxRatio"
+                                                    formControlName="taxRatio" [(ngModel)]="taxRatio"
+                                                    (change)="getNet()">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12">
+                                            <label for="taxValue"
+                                                class="label-name">{{'general.tax-value'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control icon-branch" name="taxValue"
+                                                    formControlName="taxValue" [(ngModel)]="taxValue">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-4 col-12">
                                             <label for="discount"
                                                 class="label-name">{{'general.discount'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number"  class="form-control icon-branch"
                                                     name="discount" formControlName="discount" [(ngModel)]="discount">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-4 col-12">
                                             <label for="net" class="label-name">{{'general.net'|translate}}</label>
                                             <div class="form-group position-relative">
@@ -760,7 +770,7 @@
                                             <label for="paid" class="label-name">{{'general.paid'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control icon-branch" name="paid"
-                                                    formControlName="paid" [(ngModel)]="paid">
+                                                    formControlName="paid" [(ngModel)]="paid" (change)="getRamining()">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12">

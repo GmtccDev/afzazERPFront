@@ -3,8 +3,8 @@
 </ngx-spinner>    
 <section class="inner-page-wrapper inner-page-auction">
     <div class="container-fluid p-0">
-        <app-tabulator  [idColName]="'id'" [childRowData]="journalEntry" (onCheckItem)="onCheck($event)" (onEditItem)="onEdit($event)" (onDeleteItem)="showConfirmDeleteMessage($event)" [parentColName]="'groupId'" [divId]="'journalEntry'" [columnSettings]="columnNames" [componentName]="'journalEntry'" (onMenuActionSelected)="onMenuActionSelected($event)"
+        <app-tabulator  [idColName]="'id'" [childRowData]="journalEntry" (onCheckItem)="onCheck($event)" (onCheckPost)="onCheckUpdate()"  (onEditItem)="onEdit($event)" (onDeleteItem)="showConfirmDeleteMessage($event)" [parentColName]="'groupId'" [divId]="'journalEntry'" [columnSettings]="columnNames" [componentName]="'journalEntry'" (onMenuActionSelected)="onMenuActionSelected($event)"
             [showMenuOptions]="menuOptions" [direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1"></app-tabulator>
     </div>
   </section>
-  
+ 

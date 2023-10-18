@@ -306,7 +306,7 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    var ids = this.listIds;
+    var ids = this.listIds.map(item => item.id);
     let sub = this.voucherTypeService.deleteListVoucherType(ids).subscribe(
       (resonse) => {
         this.router.navigate([this.listUrl])
