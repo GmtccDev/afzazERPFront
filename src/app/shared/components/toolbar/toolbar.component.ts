@@ -132,6 +132,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           }
           if (this.toolbarCompnentData.action == 'View') {
             this.checkButtonClicked('View');
+          }if (this.toolbarCompnentData.action == 'ConfigMode') {
+            this.checkButtonClicked('ConfigMode');
           }
 
           console.log('toolbarCompnentData', toolbarCompnentData);

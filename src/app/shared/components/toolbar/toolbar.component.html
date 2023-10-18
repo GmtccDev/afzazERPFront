@@ -49,7 +49,7 @@
 									</span>
 								</button>
 								<button *ngIf="showButtons?.showUpdate" (click)="doUpdateEvent()"
-									[disabled]="disabledUpate" [ngClass]="{'disabled':disabledUpate}"
+									[disabled]="disabledUpdate" [ngClass]="{'disabled':disabledUpdate}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md " type="button">
 									<i data-feather="refresh-cw"></i>
 									<span class="k-button-text">
@@ -57,7 +57,7 @@
 									</span>
 								</button>
 								<button *ngIf="showButtons?.showDelete" (click)="doDeleteEvent();"
-									[disabled]="disabledDlete" [ngClass]="{'disabled':disabledDlete}"
+									[disabled]="disabledDelete" [ngClass]="{'disabled':disabledDelete}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
 									<i data-feather="x-square"></i>
 									<span class="k-button-text">
@@ -102,7 +102,7 @@
                                         </span>
                                 </button> -->
 								<div ngbDropdown class="d-inline-block" placement="bottom">
-									<button id="dropdownBasic1" ngbDropdownToggle
+									<button id="dropdownBasic1" *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}"  ngbDropdownToggle
 										class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
 										<i data-feather="download"></i>
 										<span class="k-button-text">
