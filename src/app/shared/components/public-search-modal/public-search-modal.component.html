@@ -1,59 +1,64 @@
-<nz-modal class="text-right" (nzOnCancel)="handleCancel()" nzWidth="60%"  [nzVisible]="isVisible" [nzFooter]="null" [nzClosable]="false">
-  <div class="card-body" style="height: auto;">
-    <div class="example-container mat-elevation-z8" style="padding: 10px;">
-     
- 
-      <button class="ml-auto mr-1" nz-button nzType="danger" (click)="handleCancel()"
-        style="display: flex; align-items: center;">
-        <i nz-icon class="ml-2" nzType="close-circle" nzTheme="outline"></i>
-        {{ 'toolbar.cancel' | translate }}
-      </button>
-     
-      <div class="example-header">
-        <mat-form-field>
-          <input dir="rtl" matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate}}">
-        </mat-form-field>
-      </div>
-
-      <mat-table #table class="mat-table" [dataSource]="dataSource" MatSort>
-        <ng-container matColumnDef="nameAr" style="width: 20px">
-          <mat-header-cell *matHeaderCellDef class="matHeaderCellDef">  {{'general.nameAr'|translate}}</mat-header-cell>
-          <mat-cell style="width: 20px" *matCellDef="let element"> {{element.nameAr}}</mat-cell>
-      </ng-container>
-
-    
-      <ng-container matColumnDef="nameEn" style="width: 20px">
-          <mat-header-cell *matHeaderCellDef class="matHeaderCellDef">  {{'general.nameEn'|translate}}</mat-header-cell>
-          <mat-cell style="width: 20px" *matCellDef="let element"> {{element.nameEn}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="code" style="width: 20px">
-          <mat-header-cell *matHeaderCellDef class="matHeaderCellDef">  {{'general.code'|translate}}</mat-header-cell>
-          <mat-cell style="width: 20px" *matCellDef="let element"> {{element.code}}</mat-cell>
-      </ng-container>
-   
-
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>
-
-          </mat-header-cell>
-
-          <mat-cell *matCellDef="let element; let i=index;">
-            <button mat-raised-button color="warn" (click)="OnSelected(element)">
-               {{'general.select'|translate}}
-            </button>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-
-      <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]">
-
-      </mat-paginator>
-    </div>
+<nz-modal class="text-right" (nzOnCancel)="handleCancel()" nzWidth="60%" [nzVisible]="isVisible" [nzFooter]="null"
+	[nzClosable]="false">
+	<div class="card-body" style="height: auto;">
+		<div class="example-container mat-elevation-z8" style="padding: 10px;">
 
 
-  </div>
- 
+			<button class="ml-auto mr-1" nz-button nzType="danger" (click)="handleCancel()"
+				style="display: flex; align-items: center;">
+				<i nz-icon class="ml-2" nzType="close-circle" nzTheme="outline"></i>
+				{{ 'toolbar.cancel' | translate }}
+			</button>
+
+			<div class="example-header">
+				<mat-form-field>
+					<input dir="rtl" matInput (keyup)="applyFilter($event.target.value)"
+						placeholder="{{ 'general.search' | translate}}">
+				</mat-form-field>
+			</div>
+
+			<mat-table #table class="mat-table" [dataSource]="dataSource" MatSort>
+				<ng-container matColumnDef="nameAr" style="width: 20px">
+					<mat-header-cell *matHeaderCellDef class="matHeaderCellDef">
+						{{'general.nameAr'|translate}}</mat-header-cell>
+					<mat-cell style="width: 20px" *matCellDef="let element"> {{element.nameAr}}</mat-cell>
+				</ng-container>
+
+
+				<ng-container matColumnDef="nameEn" style="width: 20px">
+					<mat-header-cell *matHeaderCellDef class="matHeaderCellDef">
+						{{'general.nameEn'|translate}}</mat-header-cell>
+					<mat-cell style="width: 20px" *matCellDef="let element"> {{element.nameEn}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="code" style="width: 20px">
+					<mat-header-cell *matHeaderCellDef class="matHeaderCellDef">
+						{{'general.code'|translate}}</mat-header-cell>
+					<mat-cell style="width: 20px" *matCellDef="let element"> {{element.code}}</mat-cell>
+				</ng-container>
+
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>
+
+					</mat-header-cell>
+
+					<mat-cell *matCellDef="let element; let i=index;">
+						<button mat-raised-button color="warn" (click)="OnSelected(element)">
+							{{'general.select'|translate}}
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+			</mat-table>
+
+			<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="5"
+				[pageSizeOptions]="[5, 10, 25, 100]">
+
+			</mat-paginator>
+		</div>
+
+
+	</div>
+
 </nz-modal>

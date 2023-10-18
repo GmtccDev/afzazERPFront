@@ -24,7 +24,7 @@
                                     <h3>{{'component-names.journalEntry-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-6 col-12 mb-3">
+                                        <div class="col-md-6 col-12">
                                             <label for="journalId" class="label-name">
 												{{'component-names.journal'|translate}}
 
@@ -59,7 +59,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" (change)="onChangeCode($event)" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -74,7 +74,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="date" class="label-name">
 												{{'general.date'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
 
                                                 <input type="date" class="form-control " name="date" formControlName="date">
                                                 <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid" class="validation alert-danger position-absolute">

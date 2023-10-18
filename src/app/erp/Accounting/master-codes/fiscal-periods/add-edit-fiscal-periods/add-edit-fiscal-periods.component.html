@@ -14,7 +14,7 @@
 
                                     <h3>{{'component-names.fiscalPeriod-information'|translate}}</h3>
                                     <hr>
-                                    <div class="row ">
+                                    <div class="gap-2 gap-md-0 row">
 
                                         <div class="col-12 col-md-6 offset-6">
                                             <label for="code" class="label-name">
@@ -62,7 +62,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="fromDate" class="label-name">
 												{{'general.fromDate'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <app-full-date name="fromDate" formControlName="fromDate" [(ngModel)]="fromDate" ngDefaultControl [selectedDate]="fromDate" (OnDateSelect)="getFromDate($event)"></app-full-date>
 
                                                 <div *ngIf="(f['fromDate'].touched || f['fromDate'].dirty ) && f['fromDate'].invalid" class="validation alert-danger position-absolute">
@@ -76,7 +76,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="toDate" class="label-name">
 												{{'general.toDate'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group0 position-relative">
+                                            <div class="form-group position-relative">
                                                 <app-full-date name="toDate" formControlName="toDate" [(ngModel)]="toDate" ngDefaultControl [selectedDate]="toDate" (OnDateSelect)="getToDate($event)"></app-full-date>
 
                                                 <div *ngIf="(f['toDate'].touched || f['toDate'].dirty ) && f['toDate'].invalid" class="validation alert-danger position-absolute">

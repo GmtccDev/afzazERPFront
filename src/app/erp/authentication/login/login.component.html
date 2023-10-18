@@ -1,7 +1,7 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
 	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
-<div class="container-fluid p-0">
+<div class="container-fluid">
 	<div class="row bg-login-admin">
 		<!-- <div class="col-xl-6 p-0"><img class="bg-img-cover bg-center h-100vh" src="../assets/images/login/bg-login.png" alt="looginpage" width="100%">
         </div> -->
@@ -25,7 +25,7 @@
 
 
 							<div class="form-group">
-								<label class="col-form-label">{{'login.user-name'|translate}}</label>
+								<label class="col-form-label label-name">{{'login.user-name'|translate}}</label>
 								<input class="form-control" type="input" required="" formControlName="userName">
 								<div *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.errors?.required"
 									class="text text-danger mt-1">
@@ -34,7 +34,7 @@
 
 							</div>
 							<div class="form-group">
-								<label class="col-form-label"> {{'login.password'|translate}} </label>
+								<label class="col-form-label label-name"> {{'login.password'|translate}} </label>
 								<input class="form-control" [type]="show ? 'text' : 'password'"
 									formControlName="password" required="" placeholder="*********">
 								<div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span>
@@ -106,7 +106,7 @@
 					{{'language.ENGLISH'|translate}}
 				</button>
 			</div>
-			<app-footer class="col-md-6 col">
+			<app-footer class="col-md-6 col-9">
 
 			</app-footer>
 		</footer>

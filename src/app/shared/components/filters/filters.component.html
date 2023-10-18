@@ -6,9 +6,9 @@
 		<div class="row">
 			<div class="wrapper-title">
 				<h3>{{'general.filterSearch'|translate}}</h3>
+				<hr>
 			</div>
-		</div>
-		<div class="row mt-3 filter-search g-3">
+			<!-- <div class=" filter-search0"> -->
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowFromDate">
 				<!-- <div class="form-group"> -->
 				<label for="0" class="label-name"> {{'general.fromDate'|translate}}</label>
@@ -121,11 +121,11 @@
 				<div class="input-group  popup">
 
 					<!-- <ng-select style="width:100%" [(ngModel)]='selectedBranchId' name='branchId' class="" id="branchId"
-				(ngModelChange)="onSelectBranch()">
-				<ng-option *ngFor="let branch of branchesList" [value]="branch.id">
-				  {{lang=="ar"?branch.nameAr:branch.nameEn}}
-				</ng-option>
-			  </ng-select> -->
+					(ngModelChange)="onSelectBranch()">
+					<ng-option *ngFor="let branch of branchesList" [value]="branch.id">
+					  {{lang=="ar"?branch.nameAr:branch.nameEn}}
+					</ng-option>
+				  </ng-select> -->
 					<p-multiSelect [options]="branchesList" [ngModelOptions]="{standalone: true}"
 						[(ngModel)]="selectedBranchId" [virtualScroll]="true"
 						optionLabel="{{lang=='en'?'nameEn':'nameAr'}}" id="branches" name="branchIds"
@@ -186,6 +186,8 @@
 				<button class="btn btn-primary" [hidden]="!ShowOptions.ShowSearch" (click)="FireSearch()"></button>
 			</div>
 		</div>
+		<!-- </div> -->
+
 
 	</div>
 </div>

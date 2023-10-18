@@ -521,6 +521,7 @@ html[dir="rtl"] {
 .form-control {
     max-height: 35px !important;
     height: 35px;
+    line-height: 36px !important;
 }
 
 .ng-select .ng-select-container .ng-value-container .ng-input>input {
@@ -680,6 +681,31 @@ html[dir=rtl] {
     main {
         margin-top: 0;
     }
+}
+
+.k-button:before,
+.sidebar-link:before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: rgb(75, 194, 241, 13%);
+    right: 0;
+    top: 0;
+}
+
+.k-button:hover:before,
+.sidebar-link:hover:before,
+.k-button:hover:after,
+.sidebar-link:hover:after {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease;
 }
 
 .sidebar-wrapper {
@@ -1249,3 +1275,27 @@ button.ant-table-row-expand-icon.ng-star-inserted.ant-table-row-expand-icon-coll
 .toast-error {
     background-color: var(--bs-danger) !important;
 }
+
+ng-select.custom {
+    padding: 0 !important;
+}
+
+.input-group ng-select {
+    margin-bottom: 1rem !important;
+}
+
+.media.profile-media {
+    gap: 5px;
+}
+
+td.d-flex.gap-2.ant-table-cell {
+    justify-content: start;
+}
+
+@import "../scss/themes/responsive";
+// @media only screen and (max-width: 767.98px) {
+//     //   add by rania
+//     .page-body-wrapper.subscription .container-subscription .item-subscription {
+//         width: 40%;
+//     }
+// }
