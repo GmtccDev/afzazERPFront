@@ -71,12 +71,12 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6 col-12  mb-3">
+                                        <div class="col-md-6 col-12">
                                             <label for="voucher-type" class="label-name">{{'voucher-type.voucher-type'|translate}}
 												<span class="text-danger">*</span></label>
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="voucherKindId" [items]="voucherTypes" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['voucherKindId'].touched || f['voucherKindId'].dirty ) && f['voucherKindId'].invalid" class="alert alert-danger">
+                                                <div *ngIf="(f['voucherKindId'].touched || f['voucherKindId'].dirty ) && f['voucherKindId'].invalid" class="alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['voucherKindId'].errors && f['voucherKindId'].errors['required']">
 														{{'validation-messages.required-field'|translate}}</span>
@@ -90,7 +90,7 @@
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="serialTypeId" [items]="serialType" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
                                                 <!-- <div *ngIf="(f['serialTypeId'].touched || f['serialTypeId'].dirty ) && f['serialTypeId'].invalid"
-                                                    class="alert alert-danger">
+                                                    class="alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span
                                                         *ngIf="f['serialTypeId'].errors && f['serialTypeId'].errors['required']">
@@ -123,7 +123,7 @@
                                             <ng-template ngbNavContent>
                                                 <div class="row">
 
-                                                    <div class="col-md-6 col-12 mb-3">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="defaultAccountId" class="label-name">{{'general.default-cash-account'|translate}}</label>
                                                         <span class="text-danger">*</span>
                                                         <div class="d-flex">
@@ -148,7 +148,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12 mb-3">
+                                                    <div class="col-md-6 col-12">
                                                         <label for="defaultCurrencyId" class="label-name">{{'general.default-currency'|translate}}</label>
                                                         <span class="text-danger">*</span>
                                                         <div class="d-flex">
