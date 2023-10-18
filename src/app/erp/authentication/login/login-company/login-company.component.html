@@ -21,7 +21,7 @@
                     <div class="input-group  popup">
                         <ng-select style="width:100%" (change)="onChangeCompany($event)" formControlName="companyId" name='companyId' class="" id="companyId">
                             <ng-option *ngFor="let company of companiesList" [value]="company.id">
-                                {{lang=="ar"?company.nameAr:company.nameEn}}
+                                {{currentSystemLanguage=="ar"?company.nameAr:company.nameEn}}
                             </ng-option>
                         </ng-select>
 
@@ -35,7 +35,7 @@
                     <div class="input-group  popup">
                         <ng-select style="width:100%" formControlName="branchId" name='branchId' class="" id="branchId">
                             <ng-option *ngFor="let branch of branchesList" [value]="branch.id">
-                                {{lang=="ar"?branch.nameAr:branch.nameEn}}
+                                {{currentSystemLanguage=="ar"?branch.nameAr:branch.nameEn}}
                             </ng-option>
                         </ng-select>
 

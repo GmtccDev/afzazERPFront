@@ -30,10 +30,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   disabledList = false;
   disabledSave = false;
-  disabledUpate = false;
+  disabledUpdate = false;
   disabledNew = false;
   disabledCopy = false;
-  disabledDlete=false
+  disabledDelete=false
   disabledCancel = false;
   disabledExport = false;
   disabledPrint = false;
@@ -132,10 +132,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           }
           if (this.toolbarCompnentData.action == 'View') {
             this.checkButtonClicked('View');
+          }if (this.toolbarCompnentData.action == 'ConfigMode') {
+            this.checkButtonClicked('ConfigMode');
           }
-          if (this.toolbarCompnentData.action == 'Post') {
-            this.checkButtonClicked('Post');
-          }
+
           console.log('toolbarCompnentData', toolbarCompnentData);
         }
       },
@@ -147,7 +147,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     let sub = this.SharedService.getToolbarPath().subscribe({
       next: (toolbarPathData: ToolbarPath) => {
         toolbarPathData;
-
+        debugger
         this.toolbarPathData = toolbarPathData;
         if (ObjectIsNotNullOrEmpty(toolbarPathData)) {
           if (
@@ -222,7 +222,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.checkButtonClicked('Delete');
     (this.toolbarData.action = 'DeleteCheckList'),
       this.SharedService.changeButton(this.toolbarData);
-      this.disabledDlete=true;
+      this.disabledDelete=true;
   }
   doViewEvent() {
 
@@ -251,29 +251,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledList = true;
       this.disabledExport = false;
       this.disabledPrint = true;
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCancel = true;
-      this.disabledDlete=true;
+      this.disabledDelete=true;
       this.disabledView=true;
       this.disabledPost=true;
       this.disableCancelDefaultReport=true;
 
     } else if (button == 'Save') {
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledNew = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDlete=true;
+      this.disabledDelete=true;
       this.disabledView=true;
       this.disableCancelDefaultReport=true;
 
     } else if (button == 'New') {
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDlete=true;
+      this.disabledDelete=true;
       this.disabledView=true;
       this.disableCancelDefaultReport=true;
 
@@ -290,23 +290,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     else if (button == 'Post') {
       this.disabledSave = true;
       this.disabledPost=false;
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDlete=true;
+      this.disabledDelete=true;
       this.disabledView=true;
       this.disableCancelDefaultReport=true;
     } 
     // else if (button == 'Print') {
     // }
     else if(button=='Delete'){
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
       this.disabledSave = true;
-      this.disabledDlete=false;
+      this.disabledDelete=false;
     } 
     else if (button == 'Report') {
        
@@ -316,12 +316,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledCopy = true;
       this.disabledList = true;
       this.disabledExport = true;
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCancel = true;
-      this.disabledDlete=true;
+      this.disabledDelete=true;
       this.disabledPrint = false;
       this.disabledView=false;
       this.disableCancelDefaultReport = false;
+
+    }
+    else if (button == 'ConfigMode') {
+      debugger
+      this.disabledList=true;
+      this.disabledSave = true;
+      this.disabledNew = true;
+      this.disabledCopy = true;
+      this.disabledList = true;
+      this.disabledExport = true;
+      this.disabledUpdate = false;
+      this.disabledCancel = true;
+      this.disabledDelete=true;
+      this.disabledPrint = true;
+      this.disabledView=true;
+      this.disableCancelDefaultReport = true;
 
     }
    
@@ -334,7 +350,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.disabledList = false;
     this.disabledExport = false;
     this.disabledPrint = false;
-    this.disabledUpate = false;
+    this.disabledUpdate = false;
     this.disableCancelDefaultReport = false;
     this.disabledView = false;
 

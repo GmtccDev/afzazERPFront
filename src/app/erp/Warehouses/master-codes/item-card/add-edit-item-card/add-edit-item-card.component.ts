@@ -542,7 +542,7 @@ export class AddEditItemCardComponent implements OnInit {
   confirmSave() {
     var inputDto = new ItemCardDto()
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       inputDto = this.itemCardForm.value;
       this.itemCardService.createItemCard(inputDto).subscribe({
         next: (result: any) => {

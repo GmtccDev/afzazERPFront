@@ -16,6 +16,8 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { DateModel } from 'src/app/shared/model/date-model';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -69,6 +71,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   checkPeriod: any;
   isMultiCurrency: boolean;
   serial: any;
+  date:any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
   entriesStatusEnum: any;
@@ -83,6 +86,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     private sharedServices: SharedService, private translate: TranslateService,
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
+    private dateService: DateCalculation,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
 
@@ -97,7 +101,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     this.spinner.show();
     Promise.all([
-      this.getGeneralConfiguration(),
+      
       this.getCostCenter(),
       this.getCurrency(),
       this.getFiscalPeriod(),
@@ -109,6 +113,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       if (this.currnetUrl == this.addUrl) {
         this.getjournalEntryCode();
       }
+      this.getGeneralConfiguration(),
       this.changePath();
       this.listenToClickedButton();
     }).catch(err => {
@@ -238,6 +243,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
 
   }
+  defaultCurrencyId:any;
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -246,7 +252,9 @@ export class AddEditJournalEntryComponent implements OnInit {
 
           if (res.success) {
 
-
+            this.defaultCurrencyId=Number(res.response.result.items.find(c => c.id == 1).value)
+            this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res.response.result.items.find(c => c.id == 7).value))
+            this.journalEntryForm.controls.journalId.patchValue(Number(res.response.result.items.find(c => c.id == 1006).value))
             this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
@@ -271,7 +279,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   definejournalEntryForm() {
     this.journalEntryForm = this.fb.group({
       id: 0,
-      date: ['', Validators.compose([Validators.required])],
+      date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       openBalance: true,
@@ -916,6 +924,10 @@ export class AddEditJournalEntryComponent implements OnInit {
       this.entriesStatusEnum = convertEnumToArray(EntryStatusArEnum);
 
     }
+  }
+  
+  getDate(selectedDate: DateModel) {
+    this.date = selectedDate;
   }
 }
 

@@ -193,17 +193,18 @@
         "sales-cost-account": "Sales Cost Account",
         "inventory-account": "Inventory Account",
         "minute": "minute",
-        "print": "Print",
-        "delivery-date": "Delivery Date",
-        "pay-way": "Pay Way",
-        "ship-method": "Ship Method",
-        "ship-kind": "Ship Kind",
-        "reference": "Reference",
-        "reference-no": "Reference No",
-        "fetch": "Fetch",
-        "sales-person": "Sales Person",
-        "supplier-account": "Supplier Account"
-
+       "print": "Print",
+        "delivery-date":"Delivery Date",
+        "pay-way":"Pay Way",
+        "ship-method":"Ship Method",
+        "ship-kind":"Ship Kind",
+        "reference":"Reference",
+        "reference-no":"Reference No",
+        "fetch":"Fetch",
+        "sales-person":"Sales Person",
+        "supplier-account":"Supplier Account"
+       
+    
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -469,7 +470,11 @@
         "sales-person-commission": "Sales Person Commission",
         "sales-person-commission-card-information": "Sales Person Commission Card Information",
         "sales-person-card-information": "Sales Person Card Information",
-        "bills": "Bills"
+        "bills":"Bills",
+        "default-journal":"Default Journal",
+        "general-configuration":"General Configuration",
+        "cheques-journal":"Cheques Journal"
+
 
     },
     "language": {

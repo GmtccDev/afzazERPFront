@@ -52,11 +52,8 @@
 											<div class="input-group  popup">
 												
 
-                                                    <ng-select style="width:100%" formControlName="calculationMethod" name='calculationMethod' class="" id="calculationMethod">
-                                                        <ng-option *ngFor="let item of calculationMethodsList" [value]="item.id">
-                                                            {{lang=="ar" ? item.nameAr:item.nameEn}}
-                                                        </ng-option>
-                                                    </ng-select>
+                                                    <ng-select class="custom" formControlName="calculationMethod" [items]="calculationMethodsList" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+
 
 											</div>
 										</div>
@@ -65,7 +62,6 @@
 											<label for="code" class="label-name">
 												{{'sales-person-commission.target'|translate}}</label>
 											<div class="form-group position-relative">
-												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
 												<input type="number" class="form-control icon-branch"
 													name="target" formControlName="target">
 
@@ -79,11 +75,8 @@
 											<div class="input-group  popup">
 												
 
-                                                    <ng-select style="width:100%" formControlName="type" name='type' class="" id="type">
-                                                        <ng-option *ngFor="let item of commissionTypeList"  [value]="item.id">
-                                                            {{lang=="ar" ? item.nameAr:item.nameEn}}
-                                                        </ng-option>
-                                                    </ng-select>
+                                            
+                                                    <ng-select class="custom" formControlName="type" [items]="commissionTypeList" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
 
 											</div>
 										</div>
@@ -94,7 +87,8 @@
                                             <div>
                                                 <ul class="list-group">
                                                     <li class="list-group-item" *ngFor="let item of commissionOnList">
-                                                        <input type="radio" formControlName="commissionOn" name="commissionOn" [value]="1" [checked]="1" /> {{ lang == 'ar' ? item.nameAr : item.nameEn }}
+                                                        <input type="radio"type="radio" [(ngModel)]="commissionOn" (change)="onItemChange(item)" [value]="item.value" [checked]="item.value" />
+                                                        {{ lang == 'ar' ? item.nameAr : item.nameEn }}
                                                     </li>
                                                 </ul>
                                             </div>
@@ -103,7 +97,6 @@
 											<label for="code" class="label-name">
 												{{'sales-person-commission.achieved-rarget-ratio'|translate}}</label>
 											<div class="form-group position-relative">
-												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
 												<input type="number" class="form-control icon-branch"
 													name="achievedTargetRatio" formControlName="achievedTargetRatio">
 
@@ -114,7 +107,6 @@
 											<label for="code" class="label-name">
 												{{'sales-person-commission.not-achieved-rarget-ratio'|translate}}</label>
 											<div class="form-group position-relative">
-												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
 												<input type="number" class="form-control icon-branch"
 													name="notAchievedTargetRatio" formControlName="notAchievedTargetRatio">
 
