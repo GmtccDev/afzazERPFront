@@ -212,7 +212,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
   }
   onEdit(id) {
-
+debugger
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -276,7 +276,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
   onDelete() {
 
 
-    var ids = this.listIds;
+    var ids = this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 

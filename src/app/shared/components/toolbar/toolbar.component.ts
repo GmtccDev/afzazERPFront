@@ -38,6 +38,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   disabledExport = false;
   disabledPrint = false;
   disabledView = false;
+  disabledPost = true;
   disableCancelDefaultReport=false;
 
   toolbarPathData!: ToolbarPath;
@@ -132,7 +133,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           if (this.toolbarCompnentData.action == 'View') {
             this.checkButtonClicked('View');
           }
-
+          if (this.toolbarCompnentData.action == 'Post') {
+            this.checkButtonClicked('Post');
+          }
           console.log('toolbarCompnentData', toolbarCompnentData);
         }
       },
@@ -185,6 +188,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     
     this.checkButtonClicked('Copy');
     (this.toolbarData.action = 'Copy'),
+      this.SharedService.changeButton(this.toolbarData);
+  }
+  doPostEvent() {
+    debugger
+    this.checkButtonClicked('Post');
+    (this.toolbarData.action = 'PostList'),
       this.SharedService.changeButton(this.toolbarData);
   }
   doNewEvent() {
@@ -277,6 +286,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     } else if (button == 'Cancel') {
     } 
+    else if (button == 'Post') {
+      this.disabledPost=false;
+    } 
     // else if (button == 'Print') {
     // }
     else if(button=='Delete'){
@@ -331,7 +343,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.showToolbarButtonsObj.showUpdate = true;
     this.showToolbarButtonsObj.showView = true;
     this.showToolbarButtonsObj.showCancelDefaultReport = true;
-
+    this.showToolbarButtonsObj.showPost = true;
     this.SharedService.changeButtonApperance(this.showToolbarButtonsObj);
   }
 }

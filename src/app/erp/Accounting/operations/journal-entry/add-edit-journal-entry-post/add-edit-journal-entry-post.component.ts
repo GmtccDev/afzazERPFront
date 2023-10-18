@@ -15,6 +15,7 @@ import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { UserService } from 'src/app/shared/common-services/user.service';
 @Component({
   selector: 'app-add-edit-journal-entry-post',
   templateUrl: './add-edit-journal-entry-post.component.html',
@@ -71,8 +72,10 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
   entriesStatusEnum: any;
+  branchId: string = this.userService.getBranchId();
+  companyId: string = this.userService.getCompanyId()
   constructor(
-    private journalEntryService: JournalEntryServiceProxy,
+    private journalEntryService: JournalEntryServiceProxy,private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -115,6 +118,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
+      
       if (params['id'] != null) {
         this.id = params['id'];
 
@@ -200,7 +204,10 @@ export class AddEditJournalEntryPostComponent implements OnInit {
 
     //this.journalEntryForm.controls['jEMasterStatusId'].value
     let journalModel = this.journalList.find(x => x.id == event);
-    this.journal = this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
+    if (journalModel != null) {
+      this.journal = this.lang == 'ar' ? journalModel.nameAr : journalModel.nameEn;
+    }
+
     if (this.serial == '1') {
 
       this.codeSerial = this.journalEntryForm.controls['code'].value
@@ -217,7 +224,10 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   onChangefiscalPeriod(event) {
 
     let fiscalPeriodModel = this.fiscalPeriodList.find(x => x.id == event);
-    this.fiscalPeriod = this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
+    if (fiscalPeriodModel != null) {
+      this.fiscalPeriod = this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
+    }
+
     if (this.serial == '3') {
 
       this.codeSerial = this.journal + "/" + this.fiscalPeriod + "/" + this.journalEntryForm.controls['code'].value
@@ -234,8 +244,8 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           if (res.success) {
 
 
-            this.isMultiCurrency = res.response.items.find(c => c.id == 2).value == "true" ? true : false;
-            this.serial = res.response.items.find(c => c.id == 3).value;
+            this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
+            this.serial = res.response.result.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
             //   this.getCurrency();
             // }
@@ -527,11 +537,11 @@ export class AddEditJournalEntryPostComponent implements OnInit {
             //   this.toolbarPathData.componentAdd = 'Add journalEntry';
             //  this.definejournalEntryForm();
             //   this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getjournalEntryCode();
+            this.getjournalEntryCode();
           }
         }
       },
@@ -629,8 +639,11 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      var entity = this.journalEntryForm.value;
-
+      
+   
+      var entity = this.journalEntryForm.getRawValue();
+      entity.branchId = this.branchId;
+      entity.companyId = this.companyId;
       let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();

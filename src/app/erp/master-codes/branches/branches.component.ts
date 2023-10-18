@@ -298,7 +298,7 @@ export class BranchesComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.subsList.push(sub);
 	}
 	onDelete() {
-		var ids = this.listIds;
+		var ids = this.listIds.map(item => item.id);
 		const input = {
 			tableName: "Branches",
 			ids: ids,

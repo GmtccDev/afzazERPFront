@@ -326,7 +326,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   // onDelete() {
-  //   var ids = this.listIds;
+  //   var ids = this.listIds.map(item => item.id);
   //   let sub = this.billService.addWithResponse("deleteList",ids).subscribe(
   //     (resonse) => {
   //       this.router.navigate([this.listUrl + this.billTypeId])

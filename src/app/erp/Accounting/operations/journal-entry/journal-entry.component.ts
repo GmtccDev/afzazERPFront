@@ -36,6 +36,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   };
   listIds: any[] = [];
+  listUpdateIds: any[] = [];
   //#endregion
 
   //#region Constructor
@@ -209,6 +210,24 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       } : {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
+      
+		this.lang == "ar" ? {
+			title: "ترحيل",
+			field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
+
+				this.onCheckEdit(cell.getRow().getData().id);
+			}
+		}
+			:
+
+			{
+				title: "Post",
+				field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
+
+
+					this.onCheckEdit(cell.getRow().getData().id);
+				}
+			}
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -245,6 +264,36 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       submitMode: false
     } as ToolbarData);
   }
+  onCheckEdit(id) {
+
+    const index = this.listUpdateIds.findIndex(item => item.id === id && item.isChecked === true);
+  if (index !== -1) {
+    this.listUpdateIds.splice(index, 1);
+  } else {
+    const newItem = { id, isChecked: true };
+    this.listUpdateIds.push(newItem);
+  }
+  
+  this.sharedServices.changeButton({
+    action: 'Post',
+    componentName: 'List',
+    submitMode: false
+  } as ToolbarData);
+ // this.sharedServices.changeToolbarPath(this.toolbarPathData);
+}
+onCheckUpdate() {
+debugger
+
+  var ids = this.listUpdateIds.map(item => item.id);
+  let sub = this.journalEntryService.updateList(ids).subscribe(
+    (resonse) => {
+
+      //reloadPage()
+      this.getJournalEntryes();
+      this.listUpdateIds = [];
+    });
+  this.subsList.push(sub);
+}
   onEdit(id) {
 
     if (id != undefined) {
@@ -291,7 +340,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-
+debugger
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
@@ -302,6 +351,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
             this.onDelete();
           }
+          else if (currentBtn.action == ToolbarActions.PostList) {
+           this.onCheckUpdate();
+          }
         }
       },
     });
@@ -310,7 +362,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
 
 
-    var ids = this.listIds;
+    var ids = this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 
@@ -358,5 +410,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     return text;
 
   }
+  CheckBoxFormatIcon() { //plain text value
+
+		return "<input id='checkId' type='checkbox' />";
+	};
   //#endregion
 }

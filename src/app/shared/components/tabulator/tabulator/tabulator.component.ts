@@ -26,6 +26,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 	@Output() onEditItem: EventEmitter<any> = new EventEmitter();
 	@Output() onDeleteItem: EventEmitter<any> = new EventEmitter();
 	@Output() onCheckItem: EventEmitter<any> = new EventEmitter();
+	@Output() onCheckPost: EventEmitter<any> = new EventEmitter();
 	@Output() onSelectItem: EventEmitter<{ item: any, isChecked: boolean }> = new EventEmitter();
 	@Output() onMenuActionSelected: EventEmitter<{ item: any, componentName: string, actionName: string }> = new EventEmitter();
 	@Input() showMenuOptions: SettingMenuShowOptions = {};

@@ -118,6 +118,14 @@
 
 
                                     </div>
+                                    <button *ngIf="showButtons?.showPost" (click)="doPostEvent();"
+                                    [hidden]="disabledPost" [ngClass]="{'disabled':disabledPost}"
+                                        class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+                                        <i data-feather="printer"></i>
+                                        <span class="k-button-text">
+                                            {{ 'toolbar.Post'|translate}}
+                                        </span>
+                                    </button>
                                 </div>
 
 
