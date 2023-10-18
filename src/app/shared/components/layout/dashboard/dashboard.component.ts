@@ -194,7 +194,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				next: (res) => {
 					console.log(res);
 					if (res.success) {
-						debugger
+						
 						this.voucherTypes = res.response.items
 						this.depositVouchers = this.voucherTypes.filter(x => x.voucherKindId == 1);
 						this.WithdrawalVouchers = this.voucherTypes.filter(x => x.voucherKindId == 2);
@@ -225,7 +225,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 						}
 
 						// res.response.items.forEach(element => {
-						// 	debugger
+						// 	
 						// 	this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
 						// 		{ queryParams: { voucherTypeId: element.id } }
 						// 	)

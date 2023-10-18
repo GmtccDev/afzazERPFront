@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
@@ -13,17 +13,19 @@ import { EditGeneralConfigurationCommand, GeneralConfigurationDto } from '../../
 import { CurrencyDto } from '../../../master-codes/models/currency';
 import { CurrencyServiceProxy } from '../../../master-codes/services/currency.servies';
 import { PublicService } from 'src/app/shared/services/public.service';
+import { JournalDto } from '../../models/journal';
 @Component({
   selector: 'app-accounting-configurations',
   templateUrl: './accounting-configurations.component.html',
   styleUrls: ['./accounting-configurations.component.scss']
 })
-export class AccountingConfigurationsComponent implements OnInit {
+export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
   //#region Main Declarations
   sub: any;
   url: any;
   id: any = 0;
   currnetUrl;
+  journalId:any=0;
   currencyList: CurrencyDto[] = [];
   generalConfiguration: GeneralConfigurationDto[] = [];
   addUrl: string = '/configurations/accounting-configurations';
@@ -33,15 +35,17 @@ export class AccountingConfigurationsComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.generalConfiguration"),
+    componentList: this.translate.instant("component-names.general-configuration"),
     componentAdd: '',
 
   };
   response: any;
+  chequesJournalId:any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
+  virtualJournalEntriesList: { nameAr: string; nameEn: string; value: string; }[];
   cycleList: { nameAr: string; nameEn: string; value: string; }[];
   routeAccountApi = 'Account/GetLeafAccounts?'
   routeApiPeriod = 'FiscalPeriod/get-ddl?'
@@ -69,18 +73,22 @@ export class AccountingConfigurationsComponent implements OnInit {
 
     this.getSerial();
     this.getCycle();
+    this.changePath();
     this.spinner.show();
-
     Promise.all([
-      this.getGeneralConfiguration(),
+  
       this.getCurrencies(),
       this.getCurrencies(),
       this.getAccount(),
-      this.getAccountPeriod()])
+      this.getJournals(),
+      this.getAccountPeriod(),
+    ,])
       .then(a => {
         this.spinner.hide();
         this.listenToClickedButton();
-        this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
+        this.getGeneralConfiguration()
+       // this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
+       this.sharedService.changeButton({action:"ConfigMode"} as ToolbarData);
         this.getSelecteditem();
       }).catch(err => {
         this.spinner.hide();
@@ -88,6 +96,7 @@ export class AccountingConfigurationsComponent implements OnInit {
 
 
   }
+
 
   getSelecteditem() {
     this.radioSel = this.cycleList.find(Item => Item.value === this.cycleSelected);
@@ -97,12 +106,13 @@ export class AccountingConfigurationsComponent implements OnInit {
     this.getSelecteditem();
   }
   radioSel: any;
+  radioSelectedString: string;
   cycleSelected: string;
-  currencyId: any;
+  currencyId: any=0;
   multiCurrency: any;
   accountReceivablesId: any;
   serial: any;
-  radioSelectedString: string;
+
   accountId: any;
   lang = localStorage.getItem("language");
   getSerial() {
@@ -112,6 +122,7 @@ export class AccountingConfigurationsComponent implements OnInit {
       { nameAr: "  اليومية / الفترة المحاسبي / رقم   ", nameEn: 'Daily/Period Accounting/Number', value: '3' }
     ];
   }
+
   getCycle() {
     this.cycleList = [
       { nameAr: 'مسودة – تمت مراجعته – مرحل ', nameEn: 'Draft - revised - carried over', value: '1' },
@@ -156,11 +167,40 @@ export class AccountingConfigurationsComponent implements OnInit {
     });
 
   }
+  routeJournalApi = 'Journal/get-ddl?'
+  journalList: JournalDto[]=[];
+d
+  getJournals() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.journalList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-
+          debugger;
           if (res.success) {
             this.accountList = res.response;
 
@@ -189,8 +229,8 @@ export class AccountingConfigurationsComponent implements OnInit {
 
           if (res.success) {
             this.ListPeriod = res.response;
-
           }
+       
 
 
           resolve();
@@ -234,9 +274,9 @@ export class AccountingConfigurationsComponent implements OnInit {
         next: (res) => {
           resolve();
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.general-configuration");
           if (res.success) {
-
+            debugger
             this.generalConfiguration = res.response.result.items
             this.currencyId = Number(this.generalConfiguration.find(c => c.id == 1).value);
             this.multiCurrency = this.generalConfiguration.find(c => c.id == 2).value == "true" ? true : false;
@@ -246,10 +286,12 @@ export class AccountingConfigurationsComponent implements OnInit {
             this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 6).value;
             this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 7).value);
             this.accountExchangeId = this.generalConfiguration.find(c => c.id == 8).value;
+            this.journalId= Number(this.generalConfiguration.find(c => c.id == 1006).value);
+            this.chequesJournalId= Number(this.generalConfiguration.find(c => c.id == 1007).value);
             this.idleTime= Number(this.generalConfiguration.find(c => c.id == 10001).value);
           }
 
-
+            console.log("res.response.result.items=========>",res.response.result.items)
 
         },
         error: (err: any) => {
@@ -292,6 +334,7 @@ export class AccountingConfigurationsComponent implements OnInit {
 
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {
+     
             this.onUpdate();
           }
          
@@ -301,6 +344,8 @@ export class AccountingConfigurationsComponent implements OnInit {
     this.subsList.push(sub);
   }
   changePath() {
+
+
     this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
   confirmUpdate() {
@@ -312,8 +357,7 @@ export class AccountingConfigurationsComponent implements OnInit {
         next: (result: any) => {
           this.spinner.show();
           this.response = { ...result.response };
-          this.getGeneralConfiguration()
-          this.submited = false;
+          this.sharedService.changeButton({action:"ConfigMode"} as ToolbarData);
           this.spinner.hide();
 
           navigateUrl(this.listUrl, this.router);
@@ -327,6 +371,8 @@ export class AccountingConfigurationsComponent implements OnInit {
       });
       this.subsList.push(sub);
 
+    }).then(a=>{
+      this.getGeneralConfiguration();
     });
   }
 
@@ -336,6 +382,7 @@ export class AccountingConfigurationsComponent implements OnInit {
       if (this.generalConfiguration.length > 0) {
         this.generalConfiguration.forEach((s) => {
           if (s) {
+            debugger;
             if (s.id == 1) {
               s.value = this.currencyId + "";
             }
@@ -360,6 +407,12 @@ export class AccountingConfigurationsComponent implements OnInit {
             else if (s.id == 8) {
               s.value = this.accountExchangeId + "";
             }
+            else if (s.id == 1006) {
+              s.value = this.journalId + "";
+            }
+            else if (s.id == 1007) {
+              s.value = this.chequesJournalId + "";
+            }
             else if (s.id == 10001) {
               s.value = this.idleTime + "";
             }
@@ -369,6 +422,7 @@ export class AccountingConfigurationsComponent implements OnInit {
         this.spinner.show();
         this.confirmUpdate().then(a => {
           this.spinner.hide();
+          this.changePath();
         }).catch(e => {
           this.spinner.hide();
         });

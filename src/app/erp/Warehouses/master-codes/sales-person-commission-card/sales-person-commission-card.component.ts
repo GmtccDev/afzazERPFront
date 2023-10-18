@@ -20,11 +20,11 @@ import { DeleteListSalesPersonCard } from '../../models/sales-person-card';
   templateUrl: './sales-person-commission-card.component.html',
   styleUrls: ['./sales-person-commission-card.component.scss']
 })
-export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
+export class SalesPersonCommissionCardComponent implements OnInit, OnDestroy {
 
   //#region Main Declarations
   salesPersonsCommissions: SalesPersonCommissionCardDto[] = [];
-  
+
   currnetUrl: any;
   addUrl: string = '/warehouses-master-codes/sales-person-commission-card/add-sales-person-commission-card';
   updateUrl: string = '/warehouses-master-codes/sales-person-commission-card/update-sales-person-commission-card/';
@@ -60,7 +60,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
   //#region ngOnInit
   ngOnInit(): void {
     // this.defineGridColumn();
-    
+
     this.spinner.show();
     Promise.all([this.getSalesPersonsCommissions()])
       .then(a => {
@@ -75,7 +75,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
 
   ngAfterViewInit(): void {
 
-   
+
 
 
   }
@@ -163,10 +163,10 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
       console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
-        const input={
-          tableName:"SalesPersonsCommissions",
-          id:id,
-          idName:"Id"
+        const input = {
+          tableName: "SalesPersonsCommissions",
+          id: id,
+          idName: "Id"
         };
         let sub = this.salesPersonCommissionServiceProxy.deleteEntity(input).subscribe(
           (resonse) => {
@@ -195,20 +195,26 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
       title: this.lang == 'ar' ? ' الكود' : 'Code ',
       field: 'code',
     },
-    {
-      title: this.lang == 'ar' ? 'الهاتف' : 'Calculation Method',
-      field: 'calculationMethod',
-    },
-    {
-      title: this.lang == 'ar' ? 'نوع العمولة' : 'type',
-      field: 'type',
-    },
+ 
+    this.lang == 'ar'
+      ? {
+        title: '  طريقة الحساب', width: 200, field: 'calculationMethod', formatter: this.translateCalcMethodArEnum
+      } : {
+        title: '   Calculation Method', width: 200, field: 'calculationMethod', formatter: this.translateCalcMethodEnEnum
+      },
+      this.lang == 'ar'
+      ? {
+        title: 'نوع العمولة', width: 200, field: 'type', formatter: this.translateCommissionTypeArEnum
+      } : {
+        title: ' Commission Type', width: 200, field: 'type', formatter: this.translateCommissionTypeEnEnum
+      },
+  
     {
       title: this.lang == 'ar' ? 'المستهدف' : 'Target',
       field: 'target',
     },
- 
-   
+
+
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -221,7 +227,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
- 
+
         { field: 'code', type: 'like', value: searchTxt },
         { field: 'calculationMethod', type: 'like', value: searchTxt },
         { field: 'type', type: 'like', value: searchTxt },
@@ -231,10 +237,99 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
       ],
     ];
   }
+  translateCommissionTypeArEnum(cell, formatterParams, onRendered) {
+
+    const calculationMethod = cell.getValue();
+    let text;
+    switch (calculationMethod) {
+      case 1:
+        text = 'شهرية';
+        break;
+      case 2:
+        text = 'ربع شهرية ';
+        break;
+      case 3:
+        text = 'نصف سنوية ';
+        break;
+      case 4:
+        text = ' سنوية ';
+        break;
+
+      default:
+        text = calculationMethod;
+        break;
+    }
+    return text;
+
+  }
+  translateCommissionTypeEnEnum(cell, formatterParams, onRendered) {
+
+    const calculationMethod = cell.getValue();
+    let text;
+    switch (calculationMethod) {
+      case 1:
+        text = 'Monthly';
+        break;
+      case 2:
+        text = 'Quarterly ';
+        break;
+      case 3:
+        text = 'Semi Annual  ';
+        break;
+      case 4:
+        text = ' Annually ';
+        break;
+
+      default:
+        text = calculationMethod;
+        break;
+    }
+    return text;
+
+  }
+  translateCalcMethodArEnum(cell, formatterParams, onRendered) {
+
+    const commissionType = cell.getValue();
+    let text;
+    switch (commissionType) {
+      case 1:
+        text = 'قيمة ثابتة';
+        break;
+      case 2:
+        text = 'تحسب بناء على عمر التحصيل';
+        break;
+ 
+
+      default:
+        text = commissionType;
+        break;
+    }
+    return text;
+
+  }
+  translateCalcMethodEnEnum(cell, formatterParams, onRendered) {
+
+    const commissionType = cell.getValue();
+    let text;
+    switch (commissionType) {
+      case 1:
+        text = 'Fix Amount';
+        break;
+      case 2:
+        text = 'As per age of collection ';
+        break;
+ 
+      default:
+        text = commissionType;
+        break;
+    }
+    return text;
+
+  }
 
   onCheck(id) {
 
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {
@@ -313,10 +408,10 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
 
     let item = new DeleteListSalesPersonCard();
     item.ids = this.listIds.map(item => item.id);
-    const input={
-      tableName:"SalesPersonsCommissions",
+    const input = {
+      tableName: "SalesPersonsCommissions",
       ids: this.listIds,
-      idName:"Id"
+      idName: "Id"
     };
     let sub = this.salesPersonCommissionServiceProxy.deleteListEntity(input).subscribe(
       (resonse) => {
@@ -327,7 +422,7 @@ export class SalesPersonCommissionCardComponent implements OnInit,OnDestroy {
       });
     this.subsList.push(sub);
   }
-  
+
 
 
 }

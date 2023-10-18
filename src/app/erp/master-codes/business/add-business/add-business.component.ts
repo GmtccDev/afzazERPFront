@@ -212,7 +212,7 @@ export class AddBusinessComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("business.add-business");
-            debugger
+            
             if (this.businessFieldForm.value.code != null) {
               this.getBusinessCode()
             }

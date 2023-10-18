@@ -464,7 +464,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       debugger
       let sub = this.billService.getLastCodeByTypeId(this.billTypeId).subscribe({
         next: (res: any) => {
-          debugger
+          
           resolve();
           this.billForm.patchValue({
             code: res.response.data
@@ -484,11 +484,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   getCashAccounts() {
-    debugger
+    
     return new Promise<void>((resolve, reject) => {
       // let sub = this.accountService.getLeafAccounts().subscribe({
       //   next: (res) => {
-      //     debugger
+      //     
       //     if (res.success) {
       //       this.cashAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Cash);
 
@@ -507,7 +507,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       // });
       // let sub = this.accountService.getLeafAccountsByAccountClassificationId(AccountClassificationsEnum.Cash).subscribe({
       //   next: (res) => {
-      //     debugger
+      //     
       //     if (res.success) {
       //       this.cashAccountsList = res.response;
 
@@ -1001,7 +1001,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.paid = 0;
 
 
-    debugger
+    
 
 
     this.clearSelectedItemData();
@@ -1251,7 +1251,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.deliveryDate = selectedDate;
   }
   getCurrencyFactor(currencyId: any) {
-    debugger
+    
     if (currencyId == this.mainCurrencyId) {
       this.currencyExchangeTransaction = 1;
     }

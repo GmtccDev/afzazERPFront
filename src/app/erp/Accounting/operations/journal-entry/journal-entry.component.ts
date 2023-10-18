@@ -366,8 +366,7 @@ onCheckUpdate() {
   }
   onDelete() {
 
-
-    var ids = this.listIds.map(item => item.id);
+    var ids =  this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 

@@ -165,7 +165,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
 
         if (this.id) {
-          debugger
+          
           this.getVoucherById(this.id).then(a => {
 
             this.spinner.hide();
@@ -287,7 +287,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherService.getVoucher(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.voucherForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -368,7 +368,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherDetailsService.allVoucherDetails(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           res = res.response.items.filter(x => x.voucherId == id)
           res.forEach(element => {
 
@@ -554,14 +554,14 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getCurrenciesTransactions() {
-  debugger
+  
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyService.getCurrenciesTransactions().subscribe({
         next: (res) => {
           resolve();
 
           if (res.success) {
-             debugger
+             
             this.currencyTransactionList = res.response;
 
           }
