@@ -1292,6 +1292,14 @@ td.d-flex.gap-2.ant-table-cell {
     justify-content: start;
 }
 
+.close_icon .toggle-sidebar {
+    transform: rotate(50deg);
+}
+
+.page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #ccc !important;
+}
+
 @import "../scss/themes/responsive";
 // @media only screen and (max-width: 767.98px) {
 //     //   add by rania
