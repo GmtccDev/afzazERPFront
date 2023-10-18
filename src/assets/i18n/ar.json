@@ -651,7 +651,7 @@
         "confirm-cost-center": "تأكيد مركز التكلفة",
         "confirm-analytical-code": "تأكيد الكود التحليلى",
         "additional-options": "خيارات أضافية",
-        "not-calculating-tax": "عدم أحتساب الضريبة",
+        "calculating-tax": "أحتساب الضريبة",
         "calculating-value-added-tax-after-luxury-tax": "أحتساب ضريبة القيمة المضافة بعد ضريبة الرفاهية",
         "calculating-tax-on-price-after-deduction-and-addition": "أحتساب ضريبة على السعر بعد الخصم و الأضافة",
         "discount-affects-cost-price": "الخصم يؤثر على سعر التكلفة",

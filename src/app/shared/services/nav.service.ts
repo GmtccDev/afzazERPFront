@@ -234,6 +234,7 @@ export class NavService implements OnInit, OnDestroy {
 
 
 		},
+		
 		{
 			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'clipboard', active: false, children: [
 				{ path: '/accounting-reports/journalEntriesReport', title: this.translate.instant("component-names.journal-entries-report"), type: 'link', active: true },

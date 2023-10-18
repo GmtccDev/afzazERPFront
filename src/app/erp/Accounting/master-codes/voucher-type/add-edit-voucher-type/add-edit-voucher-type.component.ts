@@ -159,7 +159,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       branchId: this.branchId,
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
       voucherNameEn: NAME_REQUIRED_VALIDATORS,
-      journalId: null,
+      journalId: REQUIRED_VALIDATORS,
       voucherKindId: REQUIRED_VALIDATORS,
       serialTypeId: 1,
       serialId: null,
