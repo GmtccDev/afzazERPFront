@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   url: string;
   subDomain: string;
   dataBaseName: any;
+  parts: string[];
 
   // public authService: AuthService,
   constructor(private fb: FormBuilder, public authService: UserLoginService,
@@ -55,8 +56,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     
     this.url = window.location.pathname;
-    const parts = this.url.split('/'); // Split the URL by "/"
-    this.subDomain = parts[1]; // Get the second part (index 1) from the resulting array
+   this.parts = this.url.split('/'); // Split the URL by "/"
+    this.subDomain = this.parts[1]+"/"+this.parts[2]; // Get the second part (index 1) from the resulting array
    
     this.spinner.show();
     Promise.all([ this.getCustomer()])
@@ -111,9 +112,10 @@ export class LoginComponent implements OnInit {
   }
   getCustomer() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.authService.getCustomer(this.subDomain).subscribe({
+
+      let sub = this.authService.getCustomer(this.parts[2]).subscribe({
         next: (res) => {
-          
+          debugger
           if (res.success) {
 
             this.dataBaseName = res.response.databaseName;

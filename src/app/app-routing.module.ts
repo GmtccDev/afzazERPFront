@@ -5,6 +5,7 @@ import { DashboardComponent } from "./shared/components/layout/dashboard/dashboa
 import { AuthenticationComponent } from './erp/authentication/authentication.component';
 import { AuthenticationGuard } from './shared/gaurds/authentication.guard';
 import { SubscriptionComponent } from './shared/components/layout/subscription/subscription.component';
+import { LoginComponent } from './erp/authentication/login/login.component';
 
 // const routes: Routes = [
 // 	{
@@ -151,9 +152,9 @@ const routes: Routes = [
 	  path: '',
 	  component: AuthenticationComponent,
 	  children: [
-		{ path: '', redirectTo: ':client/authentication/login', pathMatch: 'full' },
+		{ path: 'path/:client/authentication/login', component:LoginComponent, pathMatch: 'full' },
 		{
-		  path: ':client/authentication',
+		  path: 'path/:client/authentication',
 		  loadChildren: () => import('./erp/authentication/authentication-routing.module').then(m => m.AuthenticationRoutingModule)
 		}
 	  ]
