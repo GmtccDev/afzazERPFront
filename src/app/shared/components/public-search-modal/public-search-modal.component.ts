@@ -19,7 +19,7 @@ export class PublicSearchModalComponent implements OnInit {
 	@Input() routeApi: string;
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 	dataSource = new MatTableDataSource([]);
-	displayedColumns = ['nameAr', 'nameEn', 'code', 'actions'];
+	displayedColumns = ['code','nameAr', 'nameEn', 'actions'];
 	constructor(private publicService: PublicService,
 		private router: Router,
 		private sharedServices: SharedService,

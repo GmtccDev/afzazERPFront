@@ -13,6 +13,7 @@ import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { VoucherTypeServiceProxy } from '../../services/voucher-type.service';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -54,6 +55,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    private voucherTypeService: VoucherTypeServiceProxy,
 
   ) {
 
@@ -68,6 +70,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
+        this.getVoucherTypes( this.voucherTypeId);
 
 
       }
@@ -83,7 +86,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       }).catch(err => {
         this.spinner.hide();
       })
-
 
 
 
@@ -121,13 +123,19 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
+  voucherNameEn:any;
+  voucherNameAr:any;
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherService.getVoucher(id).subscribe({
+      let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res) => {
           console.log(res);
           if (res.success) {
-            this.voucherType = res.response.items
+            debugger;
+            this.voucherType = res.response;
+            this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList=this.lang=='ar'?res.response.voucherNameAr:res.response.voucherNameEn)
+    
+        
 
           }
           resolve();
@@ -145,13 +153,17 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
   }
+
+ 
+  //#endregion
+
   getVouchers() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           
           console.log(res);
-          this.toolbarPathData.componentList = this.translate.instant("component-names.vouchers");
+          
           if (res.success) {
             
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
