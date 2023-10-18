@@ -288,11 +288,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     else if (button == 'Post') {
       this.disabledSave = true;
       this.disabledPost=false;
-      this.disabledUpate = true;
+      this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDlete=true;
+      this.disabledDelete=true;
       this.disabledView=true;
       this.disableCancelDefaultReport=true;
     } 
