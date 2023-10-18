@@ -280,20 +280,24 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     componentName: 'List',
     submitMode: false
   } as ToolbarData);
+ 
  // this.sharedServices.changeToolbarPath(this.toolbarPathData);
 }
 onCheckUpdate() {
-debugger
+
 
   var ids = this.listUpdateIds.map(item => item.id);
-  let sub = this.journalEntryService.updateList(ids).subscribe(
-    (resonse) => {
+  if(ids.length>0){
+    let sub = this.journalEntryService.updateList(ids).subscribe(
+      (resonse) => {
+  
+        //reloadPage()
+        this.getJournalEntryes();
+        this.listUpdateIds = [];
+      });
+    this.subsList.push(sub);
+  }
 
-      //reloadPage()
-      this.getJournalEntryes();
-      this.listUpdateIds = [];
-    });
-  this.subsList.push(sub);
 }
   onEdit(id) {
 
@@ -341,7 +345,7 @@ debugger
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-debugger
+
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
