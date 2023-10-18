@@ -33,7 +33,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   //#region Main Declarations
   branchId: string = localStorage.getItem("branchId");
   companyId: string = localStorage.getItem("companyId");
-  //voucherForm!: FormGroup;
   voucherForm: FormGroup = new FormGroup({});
   currencyId: any;
   cashAccountId: any;
@@ -253,17 +252,17 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getVoucherTypes(id) {
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res: any) => {
           resolve();
-          this.cashAccountId = res.response.defaultAccountId;
+          debugger
+          this.cashAccountId = res.response.defaultAccountId + "";
           this.currencyId = res.response.defaultCurrencyId;
+          this.voucherForm.value.currencyId=res.response.defaultCurrencyId;
           this.voucherkindId = res.response.voucherKindId;
           this.serialTypeId = res.response.serialTypeId;
-
-
+          this.getAmount();
           if (this.id == 0) {
             if (this.serialTypeId == SerialTypeEnum.Automatic) {
               this.getVoucherCode();
@@ -296,7 +295,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
             voucherTypeId: res.response?.voucherTypeId,
             code: res.response?.code,
             voucherDate: this.dateService.getDateForCalender(res.response?.voucherDate),
-            cashAccountId: res.response?.cashAccountId,
+            cashAccountId: res.response?.cashAccountId + "",
             costCenterId: res.response?.costCenterId,
             currencyId: res.response?.currencyId,
             description: res.response?.description,
@@ -923,7 +922,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   setInputData() {
-
     this.voucher = {
       id: this.voucherForm.controls["id"].value,
       companyId: this.voucherForm.controls["companyId"].value,
