@@ -11,5 +11,6 @@ export enum ToolbarActions {
     Cancel = "Cancel",
     DeleteCheckList = "DeleteCheckList",
     CancelDefaultReport="CancelDefaultReport",
-    View="View"
+    View="View",
+    PostList="PostList"
   }

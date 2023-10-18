@@ -8,7 +8,6 @@ import { REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-valid
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { PublicService } from '../../../../../shared/services/public.service';
 import { Bill, BillItem } from '../../../models/bill'
-import { BillService } from '../../../services/bill.service';
 import { BillType } from '../../../models/bill-type'
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { SearchDialogService } from '../../../../../shared/services/search-dialog.service'
@@ -16,13 +15,14 @@ import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
-import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
 import { DateCalculation, DateModel } from '../../../../../shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from '../../../../master-codes/services/currency.servies';
 import { GeneralConfigurationServiceProxy } from '../../../../Accounting/services/general-configurations.services'
 import { convertEnumToArray, AccountClassificationsEnum, PayWayEnum, PayWayArEnum, ShipMethodEnum, ShipKindEnum, ShipKindArEnum } from '../../../../../shared/constants/enumrators/enums';
 import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 import { AccountServiceProxy } from 'src/app/erp/Accounting/services/account.services';
+import { BillServiceProxy } from '../../../services/bill.service';
+import { navigateUrl } from 'src/app/shared/helper/helper-url';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -55,10 +55,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   errorClass = '';
   total: number = 0;
   tax: number = 0;
+  taxRatio: number = 0;
+  taxValue: number = 0;
   discount: number = 0;
   net: number = 0;
   paid: number = 0;
   remaining: number = 0;
+
 
   lang = localStorage.getItem("language")
   routeCashAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Cash
@@ -77,6 +80,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   routeStoreApi = 'StoreCard/get-ddl?'
   routeProjectApi = 'Project/get-ddl?'
   routeItemApi = 'ItemCard/get-ddl?'
+  routeUnitApi = 'Unit/get-ddl?'
 
 
   cashAccountsList: any;
@@ -141,7 +145,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private publicService: PublicService,
-    private billService: BillService,
+    private billService: BillServiceProxy,
     private dateService: DateCalculation,
     private currencyService: CurrencyServiceProxy,
     private billTypeService: BillTypeServiceProxy,
@@ -187,6 +191,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getStores(),
       // this.getProjects(),
       this.getItems(),
+      this.getUnits(),
+
 
 
 
@@ -215,20 +221,20 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       if (params['id'] != null) {
         this.id = params['id'];
 
-        // if (this.id) {
-        //   this.getBillById(this.id).then(a => {
+        if (this.id) {
+          this.getBillById(this.id).then(a => {
 
-        //     this.spinner.hide();
+            this.spinner.hide();
 
-        //   }).catch(err => {
-        //     this.spinner.hide();
+          }).catch(err => {
+            this.spinner.hide();
 
-        //   });
-        // }
-        // else {
-        //   this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
-        //   this.spinner.hide();
-        // }
+          });
+        }
+        else {
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+          this.spinner.hide();
+        }
       }
       else {
         this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
@@ -298,9 +304,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       purchasesAccountId: '',
       purchasesReturnAccountId: '',
       total: '',
-      tax: '',
-      discount: '',
-      discountAccountId: '',
+      taxRatio: '',
+      taxValue: '',
+
+      // discount: '',
+      // discountAccountId: '',
       net: '',
       paid: '',
       paidAccountId: '',
@@ -330,7 +338,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   getBillTypeById(id) {
     this.billType = this.billTypesList.filter(x => x.id == id);
     if (this.id == 0) {
-       this.getBillCode();
+      this.getBillCode();
 
     }
     // return new Promise<void>((resolve, reject) => {
@@ -382,84 +390,86 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     }
   }
-  // getBillById(id: any) {
-  //   return new Promise<void>((resolve, reject) => {
-  //     let sub = this.billService.getWithResponse<Bill>("getById?id=" + id).subscribe({
-  //       next: (res: any) => {
-  //         resolve();
-  //         this.billForm.setValue({
-  //           id: res.response?.id,
-  //           companyId: res.response?.companyId,
-  //           branchId: res.response?.branchId,
-  //           billTypeId: res.response?.billTypeId,
-  //           code: res.response?.code,
-  //           date: this.dateService.getDateForCalender(res.response?.date),
-  //           supplierId: res.response?.supplierId,
-  //           supplierReference: res.response?.supplierReference,
-  //           customerId: res.response?.customerId,
-  //           payWay: res.response?.payWay,
-  //           shipMethod: res.response?.shipMethod,
-  //           shipKind: res.response?.shipKind,
-  //           referenceId: res.response?.referenceId,
-  //           referenceNo: res.response?.referenceNo,
-  //           salesPersonId: res.response?.salesPersonId,
-  //           storeId: res.response?.storeId,
-  //           deliveryDate:this.dateService.getDateForCalender(res.response?.deliveryDate),
-  //           currencyId: res.response?.currencyId,
-  //           currencyExchangeTransaction: res.response?.currencyExchangeTransaction,
-  //           projectId: res.response?.projectId,
-  //           costCenterId: res.response?.costCenterId,
-  //           notes:res.response?.notes,
-  //           attachment:res.response?.attachment,
-  //           cashAccountId: res.response?.cashAccountId,
-  //           supplierAccountId: res.response?.supplierAccountId,
-  //           salesAccountId: res.response?.salesAccountId,
-  //           salesReturnAccountId:res.response?.salesReturnAccountId,
-  //           purchasesAccountId: res.response?.purchasesAccountId,
-  //           purchasesReturnAccountId: res.response?.purchasesReturnAccountId,
-  //           total:res.response?.total,
-  //           tax: res.response?.tax,
-  //           discount: res.response?.discount,
-  //           discountAccountId: res.response?.discountAccountId,
-  //           net: res.response?.net,
-  //           paid: res.response?.paid,
-  //           paidAccountId: res.response?.paidAccountId,
-  //           remaining: res.response?.remaining,
-  //           remainingAccountId: res.response?.remainingAccountId
+  getBillById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billService.getBill(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.billForm.setValue({
+            id: res.response?.id,
+            companyId: res.response?.companyId,
+            branchId: res.response?.branchId,
+            billTypeId: res.response?.billTypeId,
+            code: res.response?.code,
+            date: this.dateService.getDateForCalender(res.response?.date),
+            supplierId: res.response?.supplierId,
+            supplierReference: res.response?.supplierReference,
+            customerId: res.response?.customerId,
+            payWay: res.response?.payWay,
+            shipMethod: res.response?.shipMethod,
+            shipKind: res.response?.shipKind,
+            referenceId: res.response?.referenceId,
+            referenceNo: res.response?.referenceNo,
+            salesPersonId: res.response?.salesPersonId,
+            storeId: res.response?.storeId,
+            deliveryDate: this.dateService.getDateForCalender(res.response?.deliveryDate),
+            currencyId: res.response?.currencyId,
+            currencyExchangeTransaction: res.response?.currencyExchangeTransaction,
+            projectId: res.response?.projectId,
+            costCenterId: res.response?.costCenterId,
+            notes: res.response?.notes,
+            attachment: res.response?.attachment,
+            cashAccountId: res.response?.cashAccountId,
+            supplierAccountId: res.response?.supplierAccountId,
+            salesAccountId: res.response?.salesAccountId,
+            salesReturnAccountId: res.response?.salesReturnAccountId,
+            purchasesAccountId: res.response?.purchasesAccountId,
+            purchasesReturnAccountId: res.response?.purchasesReturnAccountId,
+            total: res.response?.total,
+            taxRatio: res.response?.taxRatio,
+            taxValue: res.response?.taxValue,
+
+            // discount: res.response?.discount,
+            // discountAccountId: res.response?.discountAccountId,
+            net: res.response?.net,
+            paid: res.response?.paid,
+            paidAccountId: res.response?.paidAccountId,
+            remaining: res.response?.remaining,
+            remainingAccountId: res.response?.remainingAccountId
 
 
 
-  //         });
-  //         this.bill.billItem=res.data.billItem;
-  //         // this.billTotal = res.response?.billTotal;
-  //         // this.billTotalLocal = res.response?.billTotalLocal;
-  //         console.log(
-  //           'this.billForm.value set value',
-  //           this.billForm.value
-  //         );
-  //       },
-  //       error: (err: any) => {
-  //         reject(err);
-  //       },
-  //       complete: () => {
-  //         console.log('complete');
-  //       },
-  //     });
-  //     this.subsList.push(sub);
+          });
+          this.bill.billItem = res.data.billItem;
+          // this.billTotal = res.response?.billTotal;
+          // this.billTotalLocal = res.response?.billTotalLocal;
+          console.log(
+            'this.billForm.value set value',
+            this.billForm.value
+          );
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
-  //   });
-  // }
+    });
+  }
 
 
   getBillCode() {
     return new Promise<void>((resolve, reject) => {
       debugger
-      let sub = this.billService.getWithResponse("getLastCode").subscribe({
+      let sub = this.billService.getLastCodeByTypeId(this.billTypeId).subscribe({
         next: (res: any) => {
           debugger
           resolve();
           this.billForm.patchValue({
-            code: res.response
+            code: res.response.data
           });
 
         },
@@ -885,171 +895,30 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
 
   }
-  // openCurrencySearchDialog(i) {
+  getUnits() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeUnitApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.unitsList = res.response;
 
-  //   let searchTxt = '';
-  //   if (i == -1) {
-  //     searchTxt = this.selectedBillDetail?.currencyNameAr ?? '';
-  //   } else {
-  //     searchTxt = ''
-  //     // this.selectedRentContractUnits[i].unitNameAr!;
-  //   }
+          }
+          resolve();
 
-  //   let data = this.currenciesListInDetail.filter((x) => {
-  //     return (
-  //       (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
-  //       (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
-  //     );
-  //   });
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
 
-  //   if (data.length == 1) {
-  //     if (i == -1) {
-  //       this.selectedBillDetail!.currencyNameAr = data[0].nameAr;
-  //       this.selectedBillDetail!.currencyId = data[0].id;
+      this.subsList.push(sub);
+    });
 
-  //       if (this.selectedBillDetail!.currencyId != this.mainCurrencyId) {
+  }
 
-  //         this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedBillDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-  //         this.selectedBillDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-  //         this.getValueAfterConversion();
-  //       }
-  //     } else {
-  //       this.billItem[i].currencyNameAr = data[0].nameAr;
-  //       this.billItem[i].currencyId = data[0].id;
-  //       if (this.billItem[i]!.currencyId != this.mainCurrencyId) {
-
-  //         this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.billItem[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-  //         this.billItem[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-  //         this.getAddedValueAfterConversion(i);
-  //       }
-  //     }
-  //   } else {
-  //     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-  //     let names = ['code', 'nameAr', 'nameEn'];
-  //     let title = 'بحث عن العملة';
-  //     let sub = this.searchDialog
-  //       .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
-  //       .subscribe((d) => {
-  //         if (d) {
-  //           if (i == -1) {
-  //             this.selectedBillDetail!.currencyNameAr = d.nameAr;
-  //             this.selectedBillDetail!.currencyId = d.id;
-  //             if (this.selectedBillDetail!.currencyId != this.mainCurrencyId) {
-
-  //               this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedBillDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-  //               this.selectedBillDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-  //               this.getValueAfterConversion();
-
-  //             }
-  //           } else {
-
-  //             this.billItem[i].currencyNameAr = d.nameAr;
-  //             this.billItem[i].currencyId = d.id;
-  //             if (this.billItem[i]!.currencyId != this.mainCurrencyId) {
-
-  //               this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.billItem[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-  //               this.billItem[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-  //               this.getAddedValueAfterConversion(i);
-  //             }
-  //           }
-  //         }
-  //       });
-  //     this.subsList.push(sub);
-  //   }
-
-  // }
-  // openBeneficiaryAccountSearchDialog(i) {
-
-  //   let searchTxt = '';
-  //   if (i == -1) {
-  //     searchTxt = this.selectedBillDetail?.beneficiaryAccountNameAr ?? '';
-  //   } else {
-  //     searchTxt = ''
-  //     // this.selectedRentContractUnits[i].unitNameAr!;
-  //   }
-
-  //   let data = this.beneficiaryAccountsList.filter((x) => {
-  //     return (
-  //       (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
-  //       (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
-  //     );
-  //   });
-
-  //   if (data.length == 1) {
-  //     if (i == -1) {
-  //       this.selectedBillDetail!.beneficiaryAccountNameAr = data[0].nameAr;
-  //       this.selectedBillDetail!.beneficiaryAccountId = data[0].id;
-  //     } else {
-  //       this.billItem[i].beneficiaryAccountNameAr = data[0].nameAr;
-  //       this.billItem[i].beneficiaryAccountId = data[0].id;
-  //     }
-  //   } else {
-  //     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-  //     let names = ['code', 'nameAr', 'nameEn'];
-  //     let title = 'بحث عن الحساب';
-  //     let sub = this.searchDialog
-  //       .showDialog(lables, names, this.beneficiaryAccountsList, title, searchTxt)
-  //       .subscribe((d) => {
-  //         if (d) {
-  //           if (i == -1) {
-  //             this.selectedBillDetail!.beneficiaryAccountNameAr = d.nameAr;
-  //             this.selectedBillDetail!.beneficiaryAccountId = d.id;
-  //           } else {
-  //             this.billItem[i].beneficiaryAccountNameAr = d.nameAr;
-  //             this.billItem[i].beneficiaryAccountId = d.id;
-  //           }
-  //         }
-  //       });
-  //     this.subsList.push(sub);
-  //   }
-
-  // }
-  // openCostCenterSearchDialog(i) {
-
-  //   let searchTxt = '';
-  //   if (i == -1) {
-  //     searchTxt = this.selectedBillDetail?.costCenterNameAr ?? '';
-  //   } else {
-  //     searchTxt = ''
-  //     // this.selectedRentContractUnits[i].unitNameAr!;
-  //   }
-
-  //   let data = this.costCentersInDetailsList.filter((x) => {
-  //     return (
-  //       (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
-  //       (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
-  //     );
-  //   });
-
-  //   if (data.length == 1) {
-  //     if (i == -1) {
-  //       this.selectedBillDetail!.costCenterNameAr = data[0].nameAr;
-  //       this.selectedBillDetail!.costCenterId = data[0].id;
-  //     } else {
-  //       this.billItem[i].costCenterNameAr = data[0].nameAr;
-  //       this.billItem[i].costCenterId = data[0].id;
-  //     }
-  //   } else {
-  //     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-  //     let names = ['code', 'nameAr', 'nameEn'];
-  //     let title = 'بحث عن الحساب';
-  //     let sub = this.searchDialog
-  //       .showDialog(lables, names, this.costCentersInDetailsList, title, searchTxt)
-  //       .subscribe((d) => {
-  //         if (d) {
-  //           if (i == -1) {
-  //             this.selectedBillDetail!.costCenterNameAr = d.nameAr;
-  //             this.selectedBillDetail!.costCenterId = d.id;
-  //           } else {
-  //             this.billItem[i].costCenterNameAr = d.nameAr;
-  //             this.billItem[i].costCenterId = d.id;
-  //           }
-  //         }
-  //       });
-  //     this.subsList.push(sub);
-  //   }
-
-  // }
   onSelectSupplier(event) {
     this.billForm.controls.supplierId.setValue(event.id);
     this.showSearchSupplierModal = false;
@@ -1118,15 +987,20 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       discountValue: this.selectedBillItem?.discountValue ?? 0,
       total: this.selectedBillItem?.total ?? 0,
       notes: this.selectedBillItem?.notes ?? '',
-      itemNameAr: '',
-      itemNameEn: '',
-      unitNameAr: '',
-      unitNameEn: ''
+      itemNameAr: this.selectedBillItem?.itemNameAr,
+      itemNameEn: this.selectedBillItem?.itemNameEn,
+      unitNameAr: this.selectedBillItem?.unitNameAr,
+      unitNameEn: this.selectedBillItem?.unitNameEn
     });
     this.bill!.billItem = this.billItem;
 
     console.log("total:", this.selectedBillItem?.total)
     this.total += this.selectedBillItem?.total ?? 0;
+    this.net += this.selectedBillItem?.total ?? 0;
+    this.remaining += this.selectedBillItem?.total ?? 0;
+    this.taxRatio = 0;
+    this.taxValue = 0;
+    this.paid = 0;
 
 
     
@@ -1205,9 +1079,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       purchasesAccountId: this.billForm.controls["purchasesAccountId"].value,
       purchasesReturnAccountId: this.billForm.controls["purchasesReturnAccountId"].value,
       total: this.billForm.controls["total"].value,
-      tax: this.billForm.controls["tax"].value,
-      discount: this.billForm.controls["discount"].value,
-      discountAccountId: this.billForm.controls["discountAccountId"].value,
+      taxRatio: this.billForm.controls["taxRatio"].value,
+      taxValue: this.billForm.controls["taxValue"].value,
+
+      // discount: this.billForm.controls["discount"].value,
+      // discountAccountId: this.billForm.controls["discountAccountId"].value,
       net: this.billForm.controls["net"].value,
       paid: this.billForm.controls["paid"].value,
       paidAccountId: this.billForm.controls["paidAccountId"].value,
@@ -1220,118 +1096,120 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
   }
-  // confirmSave() {
-  //   this.bill.billDate = this.dateService.getDateForInsert(this.billForm.controls["billDate"].value);
-  //   return new Promise<void>((resolve, reject) => {
+  confirmSave() {
+    //this.bill.date = this.dateService.getDateForInsert(this.billForm.controls["billDate"].value);
 
-  //     let sub = this.billService.createBillAndRelations(this.bill).subscribe({
-  //       next: (result: any) => {
-  //         this.defineBillForm();
-  //         this.clearSelectedItemData();
-  //         this.billItem = [];
-  //         // this.submited = false;
-  //         this.spinner.hide();
+    return new Promise<void>((resolve, reject) => {
+  
+      let sub = this.billService.createBill(this.bill).subscribe({
+        next: (result: any) => {
+          this.defineBillForm();
+          this.clearSelectedItemData();
+          this.billItem = [];
+          // this.submited = false;
+          this.spinner.hide();
 
-  //         navigateUrl(this.listUrl + this.billTypeId, this.router);
-  //       },
-  //       error: (err: any) => {
-  //         reject(err);
-  //       },
-  //       complete: () => {
-  //         console.log('complete');
-  //       },
-  //     });
-  //     this.subsList.push(sub);
+          navigateUrl(this.listUrl + this.billTypeId, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
 
-  //   });
-  // }
-  // onSave() {
-  //   if (this.bill.billItem.length == 0) {
-  //     this.errorMessage = this.translate.instant("bill.bill-details-required");
-  //     this.errorClass = 'errorMessage';
-  //     this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-  //     return;
-  //   }
-
-  //   if (this.billForm.valid) {
-  //     this.setInputData();
-  //     this.spinner.show();
-  //     this.confirmSave().then(a => {
-  //       this.spinner.hide();
-  //     }).catch(e => {
-  //       this.spinner.hide();
-  //     });
+    });
+  }
+  onSave() {
 
 
-
-
-  //   }
-  //   else {
-  //     this.errorMessage = this.translate.instant("validation-messages.invalid-data");
-  //     this.errorClass = 'errorMessage';
-  //     this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-  //     return this.billForm.markAllAsTouched();
-
-  //   }
-  // }
-  // confirmUpdate() {
-  //   this.bill.billDate = this.dateService.getDateForInsert(this.billForm.controls["billDate"].value);
-
-  //   return new Promise<void>((resolve, reject) => {
-
-  //     let sub = this.billService.updateBillAndRelations(this.bill).subscribe({
-  //       next: (result: any) => {
-
-
-  //         this.defineBillForm();
-  //         this.clearSelectedItemData();
-  //         this.billItem = [];
-
-  //         // this.submited = false;
-  //         this.spinner.hide();
-
-  //         navigateUrl(this.listUrl + this.billTypeId, this.router);
-  //       },
-  //       error: (err: any) => {
-  //         reject(err);
-  //       },
-  //       complete: () => {
-  //         console.log('complete');
-  //       },
-  //     });
-  //     this.subsList.push(sub);
-
-  //   });
-  // }
-  // onUpdate() {
-  //   if (this.bill.billItem.length == 0) {
-  //     this.errorMessage = this.translate.instant("bill.bill-details-required");
-  //     this.errorClass = 'errorMessage';
-  //     this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-  //     return;
-  //   }
-
-  //   if (this.billForm.valid) {
-  //     this.setInputData();
-  //     this.spinner.show();
-  //     this.confirmUpdate().then(a => {
-  //       this.spinner.hide();
-  //     }).catch(e => {
-  //       this.spinner.hide();
-  //     });
+    if (this.billForm.valid) {
+      if (this.bill.billItem.length == 0) {
+        this.errorMessage = this.translate.instant("bill.bill-details-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
+      this.setInputData();
+      this.spinner.show();
+      this.confirmSave().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
 
 
 
 
-  //   }
-  //   else {
-  //     this.errorMessage = this.translate.instant("validation-messages.invalid-data");
-  //     this.errorClass = 'errorMessage';
-  //     this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-  //     return this.billForm.markAllAsTouched();
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.billForm.markAllAsTouched();
 
-  //   }
-  // }
+    }
+  }
+  confirmUpdate() {
+    //  this.bill.billDate = this.dateService.getDateForInsert(this.billForm.controls["billDate"].value);
+
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.billService.updateBill(this.bill).subscribe({
+        next: (result: any) => {
+
+
+          this.defineBillForm();
+          this.clearSelectedItemData();
+          this.billItem = [];
+
+          // this.submited = false;
+          this.spinner.hide();
+
+          navigateUrl(this.listUrl + this.billTypeId, this.router);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+  onUpdate() {
+
+    if (this.billForm.valid) {
+      if (this.bill.billItem.length == 0) {
+        this.errorMessage = this.translate.instant("bill.bill-details-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
+      this.setInputData();
+      this.spinner.show();
+      this.confirmUpdate().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
+
+
+
+
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.billForm.markAllAsTouched();
+
+    }
+  }
   //#region Tabulator
   currentBtnResult;
   listenToClickedButton() {
@@ -1346,7 +1224,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             } as ToolbarPath);
             this.router.navigate([this.listUrl + this.billTypeId]);
           } else if (currentBtn.action == ToolbarActions.Save) {
-            // this.onSave();
+            this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("bill.add-bill");
             this.defineBillForm();
@@ -1549,6 +1427,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   addItemDataForUpdate(item: BillItem) {
+    debugger
     this.billItem.push(
       {
         id: 0,
@@ -1564,19 +1443,22 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         discountValue: item.discountValue,
         total: item.total,
         notes: item.notes,
-        itemNameAr: '',
-        itemNameEn: '',
-        unitNameAr: '',
-        unitNameEn: ''
+        itemNameAr: item.itemNameAr,
+        itemNameEn: item.itemNameEn,
+        unitNameAr: item.unitNameAr,
+        unitNameEn: item.unitNameEn
       }
     )
 
     this.billItem.forEach(item => {
-
-
-
+      this.total += item.total;
+      this.net += item.total;
+      this.remaining += item.total;
     }
     )
+    this.taxRatio = 0;
+    this.taxValue = 0;
+    this.paid = 0;
 
   }
   deleteBillItemForUpdate(item: BillItem) {
@@ -1585,8 +1467,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       if (index !== -1) {
         this.billItem.splice(index, 1);
 
-        //this.contractValueTotal = 0
-        // this.remainingAmount = 0
+        this.total = 0;
+        this.net = 0;
+        this.taxRatio = 0;
+        this.taxValue = 0;
+        this.paid = 0;
+        this.remaining = 0;
+
+
       }
 
     }
@@ -1595,6 +1483,18 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
 
+  }
+  getNet() {
+    debugger
+    this.taxValue = Number(this.total) * Number(this.taxRatio / 100);
+    this.net = Number(this.total) + this.taxValue;
+    this.paid=0;
+    this.remaining=this.net;
+
+
+  }
+  getRamining() {
+    this.remaining = Number(this.net) - Number(this.paid)
   }
 
 }

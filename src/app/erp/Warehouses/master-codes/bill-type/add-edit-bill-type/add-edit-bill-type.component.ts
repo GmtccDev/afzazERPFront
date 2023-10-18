@@ -34,6 +34,7 @@ export class AddEditBillTypeComponent implements OnInit {
   warehouseEffectList: { nameAr: string; nameEn: string; value: string; }[];
   accountingEffectList: { nameAr: string; nameEn: string; value: string; }[];
   codingPolicyList: { nameAr: string; nameEn: string; value: string; }[];
+  taxManualEntryTypeList: { nameAr: string; nameEn: string; value: string; }[];
   id: any = 0;
   routeCurrencyApi = 'Currency/get-ddl?'
   currenciesList: any;
@@ -102,7 +103,7 @@ export class AddEditBillTypeComponent implements OnInit {
     this.getWarehouseEffect();
     this.getAccountingEffect();
     this.getCodingPolicy();
-
+    this.getTaxManualEntryType();
 
     this.spinner.show();
     Promise.all([
@@ -178,6 +179,8 @@ export class AddEditBillTypeComponent implements OnInit {
       notCalculatingTax: false,
       calculatingValueAddedTaxAfterLuxuryTax: false,
       calculatingTaxOnPriceAfterDeductionAndAddition: false,
+      calculatingTaxManual: false,
+      manuallyTaxType: '',
       discountAffectsCostPrice: false,
       additionAffectsCostPrice: false,
       defaultCurrencyId: '',
@@ -234,7 +237,7 @@ export class AddEditBillTypeComponent implements OnInit {
       let sub = this.billTypeService.getBillType(id).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.billTypeForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -252,6 +255,8 @@ export class AddEditBillTypeComponent implements OnInit {
             notCalculatingTax: res.response?.notCalculatingTax,
             calculatingValueAddedTaxAfterLuxuryTax: res.response?.calculatingValueAddedTaxAfterLuxuryTax,
             calculatingTaxOnPriceAfterDeductionAndAddition: res.response?.calculatingTaxOnPriceAfterDeductionAndAddition,
+            calculatingTaxManual: res.response?.calculatingTaxManual,
+            manuallyTaxType: res.response?.manuallyTaxType,
             discountAffectsCostPrice: res.response?.discountAffectsCostPrice,
             additionAffectsCostPrice: res.response?.additionAffectsCostPrice,
             defaultCurrencyId: res.response?.defaultCurrencyId,
@@ -270,7 +275,7 @@ export class AddEditBillTypeComponent implements OnInit {
 
 
           });
-        
+
 
 
         },
@@ -302,6 +307,13 @@ export class AddEditBillTypeComponent implements OnInit {
       { nameAr: ' ليس لها تأثير مستودعى', nameEn: 'It has no warehouse effect', value: '1' },
       { nameAr: 'لا ترحل إلى المستودع تلقائياً', nameEn: 'No post to the warehouses automatically', value: '2' },
       { nameAr: 'ترحل إلى المستودعات تلقائياً', nameEn: 'Post to the warehouses automatically', value: '3' }
+
+    ];
+  }
+  getTaxManualEntryType() {
+    this.taxManualEntryTypeList = [
+      { nameAr: 'على النهائي', nameEn: 'on Net', value: '1' },
+      { nameAr: 'على الاجمالى', nameEn: 'on Total', value: '2' },
 
     ];
   }
@@ -544,15 +556,15 @@ export class AddEditBillTypeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("bill-type.add-bill-type");
             if (this.billTypeForm.value.code != null) {
-             // this.getbi()
+              // this.getbi()
             }
             this.defineBillTypeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-          // this.getbi();
+            // this.getbi();
           }
         }
       },
@@ -565,6 +577,7 @@ export class AddEditBillTypeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.billTypeForm.value;
+      debugger
       let sub = this.billTypeService.createBillType(entity).subscribe({
         next: (result: any) => {
           this.defineBillTypeForm();
@@ -584,7 +597,7 @@ export class AddEditBillTypeComponent implements OnInit {
     });
   }
   onSave() {
-    
+
     if (this.billTypeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -604,7 +617,7 @@ export class AddEditBillTypeComponent implements OnInit {
     this.billTypeForm.value.id = this.id;
     var entityDb = this.billTypeForm.value;
     entityDb.id = this.id;
-
+    debugger
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.billTypeService.updateBillType(entityDb).subscribe({
@@ -642,10 +655,20 @@ export class AddEditBillTypeComponent implements OnInit {
 
     else {
 
-      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
-      this.errorClass = 'errorMessage';
-      this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      // this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      // this.errorClass = 'errorMessage';
+      // this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return this.billTypeForm.markAllAsTouched();
+    }
+  }
+  unCheckTax() {
+    if (this.billTypeForm.value.notCalculatingTax == true) {
+      this.billTypeForm.value.calculatingValueAddedTaxAfterLuxuryTax = false;
+      this.billTypeForm.value.calculatingTaxOnPriceAfterDeductionAndAddition = false;
+      this.billTypeForm.value.calculatingTaxManual = false;
+      this.billTypeForm.value.manuallyTaxType = '';
+
+
     }
   }
 

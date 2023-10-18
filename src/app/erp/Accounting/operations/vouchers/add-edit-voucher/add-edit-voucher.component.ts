@@ -440,11 +440,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   }
   getVoucherCode() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherService.getLastCode().subscribe({
+      let sub = this.voucherService.getLastCodeByTypeId(this.voucherTypeId).subscribe({
         next: (res: any) => {
           resolve();
           this.voucherForm.patchValue({
-            code: res.response
+            code: res.response.data
           });
 
         },

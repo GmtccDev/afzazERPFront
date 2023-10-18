@@ -11,7 +11,7 @@ import { SharedService } from '../../../../shared/common-services/shared-service
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BillService } from '../../services/bill.service';
+import { BillServiceProxy } from '../../services/bill.service';
 import { Bill } from '../../models/bill';
 import { ResponseResult } from '../../../../shared/model/ResponseResult';
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
@@ -326,7 +326,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   // onDelete() {
-  //   var ids = this.listIds;
+  //   var ids = this.listIds.map(item => item.id);
   //   let sub = this.billService.addWithResponse("deleteList",ids).subscribe(
   //     (resonse) => {
   //       this.router.navigate([this.listUrl + this.billTypeId])
