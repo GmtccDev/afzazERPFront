@@ -2,9 +2,9 @@ export class BillType {
     id: number;
     companyId: number;
     branchId: number;
-    billKind: number;
-    billNameAr: string;
-    billNameEn: string | undefined;
+    kind: number;
+    nameAr: string;
+    nameEn: string | undefined;
     warehouseEffect: number;
     affectOnCostPrice: boolean | undefined;
     accountingEffect: number;
@@ -12,8 +12,8 @@ export class BillType {
     codingPolicy: number;
     confirmCostCenter: boolean | undefined;
     confirmAnalyticalCode: boolean | undefined;
-    notCalculatingTax: boolean | undefined;
-    calculatingValueAddedTaxAfterLuxuryTax: boolean | undefined;
+    calculatingTax: boolean | undefined;
+    //calculatingValueAddedTaxAfterLuxuryTax: boolean | undefined;
     calculatingTaxOnPriceAfterDeductionAndAddition: boolean | undefined;
     calculatingTaxManual: boolean | undefined;
     manuallyTaxType: number | undefined;
@@ -24,7 +24,7 @@ export class BillType {
     storeId: number | undefined;
     costCenterId: number | undefined;
     paymentMethodId: number | undefined;
-    vendorId: number | undefined;
+    salesPersonId: number | undefined;
     projectId: number | undefined;
     defaultPrice: number | undefined;
     printImmediatelyAfterAddition: boolean | undefined;

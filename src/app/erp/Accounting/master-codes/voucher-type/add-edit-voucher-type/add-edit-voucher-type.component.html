@@ -47,6 +47,7 @@
 												{{'component-names.journal'|translate}}
 
 											</label>
+                                            <span class="text-danger">*</span>
                                             <div class="d-flex">
                                                 <div class="flex-grow-1">
                                                     <div class="input-group  popup">
@@ -56,6 +57,11 @@
                                                             </ng-option>
                                                         </ng-select>
 
+                                                    </div>
+                                                    <div *ngIf="(f['journalId'].touched || f['journalId'].dirty ) && f['journalId'].invalid" class="validation alert-danger position-absolute">
+                                                        <i class="fa fa-close "></i>
+                                                        <span *ngIf="f['journalId'].errors && f['journalId'].errors['required']" class="f-12 ng-star-inserted text-white">
+                                                            {{'error.required'|translate}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="">
@@ -93,25 +99,19 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12 " *ngShow="false">
+                                        <!-- <div class="col-md-6 col-12 ">
                                             <label for="serialId" class="label-name">
 												{{'accounting-configration.serial'|translate}}
 											</label>
                                             <div class="input-group  popup">
-                                                <!-- <ng-select style="width:100%" formControlName="fiscalPeriodId"
-                                                    name='fiscalPeriodId' class="" id="fiscalPeriodId">
-                                                    <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList"
-                                                        [value]="fiscalPeriod.id">
-                                                        {{lang=="ar"?fiscalPeriod.nameAr:fiscalPeriod.nameEn}}
-                                                    </ng-option>
-                                                </ng-select> -->
+                                               
                                                 <ng-select style="width:100%" formControlName="serialId" name="serialId">
                                                     <ng-option *ngFor="let serialObject of serialList" [value]="serialObject.value">
                                                         {{lang=="ar"?serialObject.nameAr:serialObject.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                     </div>

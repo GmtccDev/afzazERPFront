@@ -142,7 +142,7 @@ export class SidebarComponent {
    
    this.getVoucherTypes();
    this.getBillTypes();
-
+    debugger
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;

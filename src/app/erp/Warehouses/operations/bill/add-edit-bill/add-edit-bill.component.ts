@@ -35,6 +35,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   companyId: any = localStorage.getItem("companyId");
   billForm: FormGroup = new FormGroup({});
   currencyId: any;
+  salesPersonId:any;
+  storeId:any;
+  costCenterId:any;
+
+
   cashAccountId: any;
   supplierAccountId: any;
   salesAccountsList: any;
@@ -336,34 +341,27 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getBillTypeById(id) {
+    debugger
     this.billType = this.billTypesList.filter(x => x.id == id);
     if (this.id == 0) {
       this.getBillCode();
+      // this.billForm.setValue({
+      //   currencyId:this.billType[0].defaultCurrencyId
+      // })
+      debugger
+      // this.billForm.patchValue({
+      //   currencyId:this.billType[0].defaultCurrencyId
+      // })
+       this.currencyId=this.billType[0].defaultCurrencyId
+       this.getCurrencyFactor(this.currencyId)
+       this.salesPersonId=this.billType[0].salesPersonId
+       this.storeId=this.billType[0].storeId
+       this.costCenterId=this.billType[0].costCenterId
+
+       
 
     }
-    // return new Promise<void>((resolve, reject) => {
-    //   let sub = this.billTypeService.getBillType(id).subscribe({
-    //     next: (res: any) => {
-    //       resolve();
-    //       this.billType = res.response
-
-    //       if (this.id == 0) {
-    //         //this.getBillCode();
-
-    //       }
-
-    //     },
-    //     error: (err: any) => {
-    //       reject(err);
-    //     },
-    //     complete: () => {
-    //       console.log('complete');
-    //     },
-    //   });
-    //   this.subsList.push(sub);
-
-    // });
-
+   
   }
   getPayWays() {
 

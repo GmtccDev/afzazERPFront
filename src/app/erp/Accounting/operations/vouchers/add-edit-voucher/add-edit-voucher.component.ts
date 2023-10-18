@@ -309,10 +309,49 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.voucherTotal = res.response?.voucherTotal;
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
           debugger
-          this.voucher.voucherDetail=res.response.voucherDetail;
-          this.voucherDetail=res.response.voucherDetail;
+          // this.voucher.voucherDetail=res.response.voucherDetail;
+          // this.voucherDetail=res.response.voucherDetail;
+
+          var currencyName;
+          var beneficiaryAccountName;
+          var costCenterName;
+          res.response.voucherDetail.forEach(element => {
+            if (element.currencyId > 0) {
+
+              currencyName = this.currenciesListInDetail.find(x => x.id == element.currencyId);
+            }
+            if (element.beneficiaryAccountId > 0) {
+              beneficiaryAccountName = this.beneficiaryAccountsList.find(x => x.id == element.beneficiaryAccountId);
+            }
+            if (element.costCenterId > 0) {
+              costCenterName = this.costCentersInDetailsList.find(x => x.id == element.costCenterId);
+            }
+            this.voucherDetail.push(
+              {
+                id: element.id,
+                voucherId: element.voucherId,
+                debit: element.debit,
+                credit: element.credit,
+                currencyId: element.currencyId,
+                currencyConversionFactor: element.currencyConversionFactor,
+                debitLocal: element.debitLocal,
+                creditLocal: element.creditLocal,
+                beneficiaryTypeId: element.beneficiaryTypeId,
+                beneficiaryAccountId: element.beneficiaryAccountId,
+                description: element.description,
+                costCenterId: element.costCenterId,
+                currencyNameAr: currencyName?.nameAr ?? '',
+                currencyNameEn: currencyName?.nameEn ?? '',
+                beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
+                beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
+                costCenterNameAr: costCenterName?.nameAr ?? '',
+                costCenterNameEn: costCenterName?.nameEn ?? ''
+              }
+            )
+          });
+          
                 
-         
+          this.setInputData();
         },
         error: (err: any) => {
           reject(err);
@@ -703,6 +742,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
+        debugger
         this.selectedVoucherDetail!.costCenterNameAr = data[0].nameAr;
         this.selectedVoucherDetail!.costCenterId = data[0].id;
       } else {
@@ -908,7 +948,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   confirmSave() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
@@ -939,6 +978,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
 
     if (this.voucherForm.valid) {
+      debugger
       this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {

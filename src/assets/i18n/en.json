@@ -657,7 +657,7 @@
         "confirm-cost-center": "Confirm Cost Center",
         "confirm-analytical-code": "Confirm Analytical Code",
         "additional-options": "Additional Options",
-        "not-calculating-tax": "Not Calculating Tax",
+        "calculating-tax": "Calculating Tax",
         "calculating-value-added-tax-after-luxury-tax": "Calculating Value Added Tax After Luxury Tax",
         "calculating-tax-on-price-after-deduction-and-addition": "Calculating Tax On Price After Deduction And Addition",
         "discount-affects-cost-price": "Discount Affects Cost Price",

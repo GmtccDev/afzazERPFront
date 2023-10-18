@@ -16,37 +16,37 @@
                                     <hr>
                                     <div class="row g-3 ">
                                         <div class="col-md-6 col-12 offset-6">
-                                            <label for="billKind" class="label-name">
+                                            <label for="kind" class="label-name">
                                                 {{'bill-type.bill-type'|translate}}
 
                                             </label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="billKind" [items]="billKinds"
+                                                <ng-select class="custom" formControlName="kind" [items]="billKinds"
                                                     bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['billKind'].touched || f['billKind'].dirty ) && f['billKind'].invalid"
+                                                <div *ngIf="(f['kind'].touched || f['kind'].dirty ) && f['kind'].invalid"
                                                     class="alert alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span
-                                                        *ngIf="f['billKind'].errors && f['billKind'].errors['required']">
+                                                        *ngIf="f['kind'].errors && f['kind'].errors['required']">
                                                         {{'validation-messages.required-field'|translate}}</span>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <label for="billNameAr" class="label-name">
+                                            <label for="nameAr" class="label-name">
                                                 {{'general.nameAr'|translate}}</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['billNameAr'].errors || f['billNameAr'].invalid}"
-                                                    name="billNameAr" formControlName="billNameAr">
-                                                <div *ngIf="(f['billNameAr'].touched || f['billNameAr'].dirty ) && f['billNameAr'].invalid"
+                                                    [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
+                                                    name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span
-                                                        *ngIf="f['billNameAr'].errors && f['billNameAr'].errors['required']"
+                                                        *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
@@ -54,11 +54,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <label for="billNameEn"
+                                            <label for="nameEn"
                                                 class="label-name">{{'general.nameEn'|translate}}</label>
                                             <div class="form-group position-relative">
-                                                <input type="text" class="form-control icon-branch" name="billNameEn"
-                                                    formControlName="billNameEn">
+                                                <input type="text" class="form-control icon-branch" name="nameEn"
+                                                    formControlName="nameEn">
 
                                             </div>
                                         </div>
@@ -224,20 +224,20 @@
                                                     <div class="col-6 col-md-6">
                                                         <div class="media">
                                                             <label class="label-name">
-                                                                {{'bill-type.not-calculating-tax'|translate}}
+                                                                {{'bill-type.calculating-tax'|translate}}
                                                             </label>
                                                             <div class="icon-state media-body ">
                                                                 <label class="switch">
                                                                     <input type="checkbox" class="form-control"
-                                                                        name="notCalculatingTax"
-                                                                        formControlName="notCalculatingTax" (change)="unCheckTax()">
+                                                                        name="calculatingTax"
+                                                                        formControlName="calculatingTax" (change)="calculatingTax()">
                                                                     <span class="switch-state"></span>
                                                                 </label>
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.notCalculatingTax!=true">
+                                                    <!-- <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax!=true">
                                                         <div class="media">
                                                             <label class="label-name">
                                                                 {{'bill-type.calculating-value-added-tax-after-luxury-tax'|translate}}
@@ -252,9 +252,9 @@
                                                             </div>
                                                         </div>
 
-                                                    </div>
+                                                    </div> -->
 
-                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.notCalculatingTax!=true">
+                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax==true">
                                                         <div class="media">
                                                             <label class="label-name">
                                                                 {{'bill-type.calculating-tax-on-price-after-deduction-and-addition'|translate}}
@@ -270,7 +270,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.notCalculatingTax!=true">
+                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax==true">
                                                         <div class="media">
                                                             <label class="label-name">
                                                                 {{'bill-type.calculating-tax-manual'|translate}}
@@ -419,14 +419,14 @@
 
                                                     </div>
                                                     <div class="col-md-6 col-12">
-                                                        <label for="vendorId" class="label-name">
+                                                        <label for="salesPersonId" class="label-name">
                                                             {{'bill-type.vendor'|translate}}
 
                                                         </label>
                                                         <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="vendorId"
-                                                                name='vendorId' class="" id="vendorId">
-                                                                <ng-option *ngFor="let vendor of vendorsList"
+                                                            <ng-select style="width:100%" formControlName="salesPersonId"
+                                                                name='salesPersonId' class="" id="salesPersonId">
+                                                                <ng-option *ngFor="let vendor of salesPersonsList"
                                                                     [value]="vendor.id">
                                                                     {{lang=="ar" ? vendor.nameAr:vendor.nameEn}}
                                                                 </ng-option>
