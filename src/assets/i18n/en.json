@@ -184,8 +184,8 @@
         "net": "Net",
         "remaining": "Remaining",
         "paid": "Paid",
-        "sub-total":"Sub Total",
-        "total-before-tax":"Total Before Tax",
+        "sub-total": "Sub Total",
+        "total-before-tax": "Total Before Tax",
         "sales-account": "Sales Account",
         "sales-return-account": "Sales Return Account",
         "purchases-account": "Purchases Account",
@@ -207,14 +207,14 @@
     
     },
     "sales-person-commission": {
-        "sales-person":"Sales Person",
-        "commission-calculate-method":"Commission Calculate Method",
-        "commission-type":"Commission Type",
-        "commission-on":"Commission on ",
-        "target":"Target",
-        "achieved-rarget-ratio":"Value of commission if target achieved ",
-        "not-achieved-rarget-ratio":"Value of commission if target not achieved "
-      
+        "sales-person": "Sales Person",
+        "commission-calculate-method": "Commission Calculate Method",
+        "commission-type": "Commission Type",
+        "commission-on": "Commission on ",
+        "target": "Target",
+        "achieved-rarget-ratio": "Value of commission if target achieved ",
+        "not-achieved-rarget-ratio": "Value of commission if target not achieved "
+
 
     },
     "home": {
@@ -381,7 +381,7 @@
     "component-names": {
         "country-information": "Country information",
         "modulesType": "Modules Type",
-        "search-roles": "filter permissions",
+        "search-roles": "Filter permissions",
         "currency-information": "Currency Information",
         "business-information": "Buisness Information",
         "role-information": "Role Information",
@@ -466,8 +466,8 @@
         "item-groups-card-information": " Item Groups Card Information",
         "tax-information": "Tax Information",
         "bill-types": "Bill Types",
-        "sales-person-card":"Sales Person Card",
-        "sales-person-commission":"Sales Person Commission",
+        "sales-person-card": "Sales Person Card",
+        "sales-person-commission": "Sales Person Commission",
         "sales-person-commission-card-information": "Sales Person Commission Card Information",
         "sales-person-card-information": "Sales Person Card Information",
         "bills":"Bills",
@@ -540,8 +540,8 @@
         "default-beneficiary": "Default Beneficiary Type",
         "add-voucher-type": "Add Voucher Type",
         "update-voucher-type": "Update Voucher Type",
-        "deposit-vouchers":"[Deposit Vouchers]",
-        "withdrawal-vouchers":"[Withdrawal Vouchers]"
+        "deposit-vouchers": "[Deposit Vouchers]",
+        "withdrawal-vouchers": "[Withdrawal Vouchers]"
 
     },
     "message-title": {
@@ -678,13 +678,13 @@
         "print-expiry-dates": "Print Expiry Dates",
         "print-items-specifiers": "Print Items Specifiers",
         "print-items-images": "Print Items Images",
-        "sales-bills" : "[Sales Bills]",
-        "purchases-bills" : "[Purchases Bills]",
-        "sales-return-bills":"[Sales Return Bills]",
-        "purchases-return-bills":"[Purchases Return Bills]",
-        "first-period-goods-bills":"[First Period Goods Bills]",
-        "calculating-tax-manual":"Calculating Tax Manual"
-        
+        "sales-bills": "[Sales Bills]",
+        "purchases-bills": "[Purchases Bills]",
+        "sales-return-bills": "[Sales Return Bills]",
+        "purchases-return-bills": "[Purchases Return Bills]",
+        "first-period-goods-bills": "[First Period Goods Bills]",
+        "calculating-tax-manual": "Calculating Tax Manual"
+
 
 
 
@@ -694,15 +694,15 @@
         "add-bill": "Add Bill",
         "update-bill": "Update Bill",
         "bill": "Bill",
-        "supplier":"Supplier",
-        "customer":"Customer",
-        "supplier-reference":"Supplier Reference",
-        "store":"Store",
+        "supplier": "Supplier",
+        "customer": "Customer",
+        "supplier-reference": "Supplier Reference",
+        "store": "Store",
         "transaction-factor": "Transaction Factor",
-        "items":"Items",
-        "item":"Item",
-        "item-description":"Item Description"
-        
+        "items": "Items",
+        "item": "Item",
+        "item-description": "Item Description"
+
 
     }
 }

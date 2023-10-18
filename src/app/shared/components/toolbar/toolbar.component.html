@@ -1,78 +1,78 @@
 <div class="toolbar-fixed">
-    <div class="container-fluid">
-        <div class="page-title">
-            <div class="row">
+	<div class="container-fluid">
+		<div class="page-title">
+			<div class="row">
 
-                <div class="col-6">
-                    <h4 class="m-0 py-2">
-                        {{toolbarPathData.componentList}}</h4>
-                </div>
-                <!-- <app-breadcrumb [title]="'Product List'" [items]="['Apps', 'Ecommerce']" [active_item]="'Product List'"></app-breadcrumb> -->
+				<div class="col-md- 6 col">
+					<h4 class="m-0 py-2">
+						{{toolbarPathData.componentList}}</h4>
+				</div>
+				<!-- <app-breadcrumb [title]="'Product List'" [items]="['Apps', 'Ecommerce']" [active_item]="'Product List'"></app-breadcrumb> -->
 
-                <div class="col-12">
-                    <div class="toolbar-wrapper">
-                        <div class="k-toolbar d-flex">
-                            <div class="btn-tools">
-                                <button *ngIf="showButtons?.showList" (click)="goToList()" [disabled]="disabledList"
-                                    [ngClass]="{'disabled':disabledList}"
-                                    class="btn-primary font-white k-button k-button-md k-rounded-md" type="button"
-                                    routerLinkActive="router-link-active">
-                                    <i data-feather="list"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.list'|translate}}
-                                    </span>
-                                </button>
-                                <button *ngIf="showButtons?.showSave" (click)="doSaveEvent()" [disabled]="disabledSave"
-                                    [ngClass]="{'disabled':disabledSave}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md" type="button"
-                                    form="#GroundsFormSubmit">
-                                    <i data-feather="save"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.save'|translate}}
-                                    </span>
-                                </button>
-                                <button *ngIf="showButtons?.showNew" (click)="doNewEvent()" [disabled]="disabledNew"
-                                    [ngClass]="{'disabled':disabledNew}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                    <i data-feather="file-plus"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.new'|translate}}
-                                    </span>
-                                </button>
-                                <button *ngIf="showButtons?.showCopy" (click)="doCopyEvent();" [disabled]="disabledCopy"
-                                    [ngClass]="{'disabled':disabledCopy}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md"
-                                    form="#GroundsFormSubmit" type="button">
-                                    <i data-feather="copy"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.copy'|translate}}
-                                    </span>
-                                </button>
-                                <button *ngIf="showButtons?.showUpdate" (click)="doUpdateEvent()"
-                                    [disabled]="disabledUpdate" [ngClass]="{'disabled':disabledUpate}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md " type="button">
-                                    <i data-feather="refresh-cw"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.update'|translate}}
-                                    </span>
-                                </button>
-                                <button *ngIf="showButtons?.showDelete" (click)="doDeleteEvent();"
-                                    [disabled]="disabledDelete" [ngClass]="{'disabled':disabledDelete}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                    <i data-feather="x-square"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.delete'|translate}}
-                                    </span>
-                                </button>
-                                <button *ngIf="showButtons?.showCancel" (click)="doCancelEvent();"
-                                    disabled="disabledCancel" [ngClass]="{'disabled':disabledCancel}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                    <i data-feather="x-square"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.cancel'|translate}}
-                                    </span>
-                                </button>
-                                <!-- <button *ngIf="showButtons?.showPrint" (click)="doPrintEvent();"
+				<div class="col-12">
+					<div class="toolbar-wrapper">
+						<div class="k-toolbar d-flex">
+							<div class="btn-tools">
+								<button *ngIf="showButtons?.showList" (click)="goToList()" [disabled]="disabledList"
+									[ngClass]="{'disabled':disabledList}"
+									class="btn-primary font-white k-button k-button-md k-rounded-md" type="button"
+									routerLinkActive="router-link-active">
+									<i data-feather="list"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.list'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showSave" (click)="doSaveEvent()" [disabled]="disabledSave"
+									[ngClass]="{'disabled':disabledSave}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button"
+									form="#GroundsFormSubmit">
+									<i data-feather="save"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.save'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showNew" (click)="doNewEvent()" [disabled]="disabledNew"
+									[ngClass]="{'disabled':disabledNew}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<i data-feather="file-plus"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.new'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showCopy" (click)="doCopyEvent();" [disabled]="disabledCopy"
+									[ngClass]="{'disabled':disabledCopy}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md"
+									form="#GroundsFormSubmit" type="button">
+									<i data-feather="copy"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.copy'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showUpdate" (click)="doUpdateEvent()"
+									[disabled]="disabledUpate" [ngClass]="{'disabled':disabledUpate}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md " type="button">
+									<i data-feather="refresh-cw"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.update'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showDelete" (click)="doDeleteEvent();"
+									[disabled]="disabledDlete" [ngClass]="{'disabled':disabledDlete}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<i data-feather="x-square"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.delete'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showCancel" (click)="doCancelEvent();"
+									disabled="disabledCancel" [ngClass]="{'disabled':disabledCancel}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<i data-feather="x-square"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.cancel'|translate}}
+									</span>
+								</button>
+								<!-- <button *ngIf="showButtons?.showPrint" (click)="doPrintEvent();"
                                 [disabled]="disabledPrint" [ngClass]="{'disabled':disabledPrint}"
                                     class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
                                     <i data-feather="printer"></i>
@@ -80,71 +80,72 @@
                                         {{ 'toolbar.print'|translate}}
                                     </span>
                                 </button> -->
-                                 <!-- <button *ngIf="showButtons?.showView" (click)="doViewEvent();" [disabled]="disabledView"
+								<!-- <button *ngIf="showButtons?.showView" (click)="doViewEvent();" [disabled]="disabledView"
                                     [ngClass]="{'disabled':disabledView}"
                                     class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
                                     <span class="k-button-text">
                                         {{ 'toolbar.view'|translate}}
                                     </span>
                                 </button>  -->
-                                <button *ngIf="showButtons?.showCancelDefaultReport"
-                                    (click)="doCancelDefaultReportEvent();" [disabled]="disableCancelDefaultReport"
-                                    [ngClass]="{'disabled':disableCancelDefaultReport}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.cancelDefaultReport'|translate}}
-                                    </span>
-                                </button>
-                                <!-- <button *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}" class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+								<button *ngIf="showButtons?.showCancelDefaultReport"
+									(click)="doCancelDefaultReportEvent();" [disabled]="disableCancelDefaultReport"
+									[ngClass]="{'disabled':disableCancelDefaultReport}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<span class="k-button-text">
+										{{ 'toolbar.cancelDefaultReport'|translate}}
+									</span>
+								</button>
+								<!-- <button *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}" class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
 									<i data-feather="download"></i>
                                         <span class="k-button-text">
                                           {{ 'toolbar.export'|translate}}
                                         </span>
                                 </button> -->
-                                <div ngbDropdown class="d-inline-block" placement="bottom" >
-                                    <button id="dropdownBasic1"  *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}" ngbDropdownToggle
-                                        class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                        <i data-feather="download"></i>
-                                        <span class="k-button-text">
-                                            {{ 'toolbar.export'|translate}}
-                                        </span>
-                                    </button>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <button class="dropdown-item">export pdf</button>
-                                        <button class="dropdown-item">export excel</button>
-                                        <button class="dropdown-item">export csv</button>
-                                        <button class="dropdown-item">export html</button>
-                                        <button class="dropdown-item">export json</button>
+								<div ngbDropdown class="d-inline-block" placement="bottom">
+									<button id="dropdownBasic1" ngbDropdownToggle
+										class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+										<i data-feather="download"></i>
+										<span class="k-button-text">
+											{{ 'toolbar.export'|translate}}
+										</span>
+									</button>
+									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+										<button class="dropdown-item">export pdf</button>
+										<button class="dropdown-item">export excel</button>
+										<button class="dropdown-item">export csv</button>
+										<button class="dropdown-item">export html</button>
+										<button class="dropdown-item">export json</button>
 
 
-                                    </div>
-                                    <button *ngIf="showButtons?.showPost" (click)="doPostEvent();"
-                                    [hidden]="disabledPost" [disabled]="disabledPost" [ngClass]="{'disabled':disabledPost}"
-                                        class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                        <i data-feather="printer"></i>
-                                        <span class="k-button-text">
-                                            {{ 'toolbar.post'|translate}}
-                                        </span>
-                                    </button>
-                                </div>
+									</div>
+									<button *ngIf="showButtons?.showPost" (click)="doPostEvent();"
+										[hidden]="disabledPost" [disabled]="disabledPost"
+										[ngClass]="{'disabled':disabledPost}"
+										class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+										<i data-feather="printer"></i>
+										<span class="k-button-text">
+											{{ 'toolbar.post'|translate}}
+										</span>
+									</button>
+								</div>
 
 
-                            </div>
-                            <div class=" col">
-                                <!-- <div class="col col-md-4 ml-auto">
+							</div>
+							<div class=" col">
+								<!-- <div class="col col-md-4 ml-auto">
                                     <span class="k-textbox k-input k-input-solid k-rounded-md k-input-md"><input
                                                 type="text" class="k-input-inner" placeholder="Search..." tabindex="-1">
                                             <span class="k-input-suffix"><span class="k-icon k-i-search"></span></span>
                                     </span>
                                 </div> -->
-                                <!-- <button class="k-button k-button-md k-button-solid-base k-rounded-md" title="More tools" type="submit">
+								<!-- <button class="k-button k-button-md k-button-solid-base k-rounded-md" title="More tools" type="submit">
 									<i data-feather="search"></i>
                                     </button> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
