@@ -243,8 +243,8 @@ export class AccountingConfigurationsComponent implements OnInit {
             this.serial = this.generalConfiguration.find(c => c.id == 3).value;
             this.cycleSelected = this.generalConfiguration.find(c => c.id == 4).value;
             this.accountId = this.generalConfiguration.find(c => c.id == 5).value;
-            this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 6).value);
-            this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 7).value;
+            this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 6).value;
+            this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 7).value);
             this.accountExchangeId = this.generalConfiguration.find(c => c.id == 8).value;
             this.idleTime= Number(this.generalConfiguration.find(c => c.id == 10001).value);
           }
