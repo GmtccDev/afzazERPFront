@@ -4,6 +4,8 @@ import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
+import { SharedService } from '../common-services/shared-service';
+import { ToolbarPath } from '../interfaces/toolbar-path';
 
 
 // Menu
@@ -33,7 +35,7 @@ export class NavService implements OnInit, OnDestroy {
 	WithdrawalVouchers: any = [];
 
 	billTypes: any = [];
-
+    
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
@@ -58,6 +60,7 @@ export class NavService implements OnInit, OnDestroy {
 	public fullScreen: boolean = false;
 
 	constructor(private router: Router, private translate: TranslateService,
+		private sharedService:SharedService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
 		this.voucherTypes.push(
 			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
@@ -113,7 +116,7 @@ export class NavService implements OnInit, OnDestroy {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					console.log(res);
+					console.log("allVoucherTypees====",res);
 					if (res.success) {
 						debugger
 						this.voucherType = res.response.items
@@ -126,6 +129,7 @@ export class NavService implements OnInit, OnDestroy {
 							//		{ path: '', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true })
 							this.depositVouchers.forEach(element => {
 								this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
+								//this.sharedService.changeToolbarPath({componentList:element.voucherNameEn}as ToolbarPath)
 
 							});
 						}
@@ -133,6 +137,7 @@ export class NavService implements OnInit, OnDestroy {
 							this.voucherTypes += this.translate.instant("voucher-type.Withdrawal-vouchers");
 							this.WithdrawalVouchers.forEach(element => {
 								this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
+								//this.sharedService.changeToolbarPath({componentList:element.voucherNameEn}as ToolbarPath)
 
 							});
 						}

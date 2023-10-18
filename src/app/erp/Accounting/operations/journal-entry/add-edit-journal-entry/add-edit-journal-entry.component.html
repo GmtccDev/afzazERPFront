@@ -12,7 +12,7 @@
 
                             <div class="form-group position-relative">
 
-                                {{codeSerial}}
+                                <!-- {{codeSerial}} -->
 
 
                             </div>
@@ -173,7 +173,7 @@
 
                                                         <div class="input-group ">
 
-                                                            <select required class="form-control required" name="accountId" formControlName="accountId">
+                                                            <select required class="form-control required" (change)="onChangeAccount()" name="accountId" formControlName="accountId">
 
 																<option *ngFor="let account of accountList"
 																	[value]="account.id">

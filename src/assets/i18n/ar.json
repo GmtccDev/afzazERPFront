@@ -547,7 +547,7 @@
         "voucher": "السند"
     },
     "journalEntry": {
-        "openBalance": "الرصيد الافتتاحي "
+        "openBalance": "القيد الافتتاحي "
     },
     "account-classification": {
         "add-account-classification": "اضافة تصنيف الحساب",
