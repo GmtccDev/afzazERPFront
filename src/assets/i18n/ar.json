@@ -429,7 +429,11 @@
         "fetch":"أسترجاع",
         "sales-person":"مندوب المبيعات",
         "supplier-account":"حساب المورد",
-        "project": "المشروع"
+        "project": "المشروع",
+        "addition-ratio":"نسبة الأضافة",
+        "addition-value":"قيمة الأضافة",
+        "paid-account":"حساب المدفوع",
+        "remaining-account":"حساب المتبقى"
        
        
          
@@ -689,7 +693,9 @@
         "transaction-factor": " معامل التحويل ",
         "items":"الأصناف",
         "item":"الصنف",
-        "item-description":"وصف الصنف"
+        "item-description":"وصف الصنف",
+        "additions-and-discounts":"الأضافات و الخصومات على الفاتورة"
+
 
 
 
