@@ -249,7 +249,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     return this.voucherForm.controls;
   }
 
-
+voucherNameEn:any;
+voucherNameAr:any;
   //#endregion
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
@@ -262,6 +263,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.voucherForm.value.currencyId=res.response.defaultCurrencyId;
           this.voucherkindId = res.response.voucherKindId;
           this.serialTypeId = res.response.serialTypeId;
+          this.voucherNameEn= res.response.voucherNameEn;
+          this.voucherNameAr=res.response.voucherNameAr;
           this.getAmount();
           if (this.id == 0) {
             if (this.serialTypeId == SerialTypeEnum.Automatic) {
@@ -434,6 +437,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           resolve();
           if (res.response.value > 0) {
             this.mainCurrencyId = res.response.value;
+            console.log("res.response.value=========>",res.response.value)
           }
 
 
@@ -1118,8 +1122,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = 1 / currencyModel.transactionFactor;
-          this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
+          this.currencyFactor = currencyModel.transactionFactor;
+          this.voucherTotal = (currencyModel.transactionFactor) * this.voucherTotalLocal;
         }
       })
       this.subsList.push(sub);

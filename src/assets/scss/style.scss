@@ -664,7 +664,7 @@ html[dir=rtl] {
     h5,
     h6,
     span,
-    input,
+    input,mat-header-cell.mat-header-cell,.mat-cell, .mat-footer-cell
     a {
         font-family: "Almarai", sans-serif !important;
     }
@@ -1309,7 +1309,23 @@ td.d-flex.gap-2.ant-table-cell {
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links.custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: #ccc !important;
 }
+.ant-modal-body {
+    padding:0!important  ;
+}
+ .mat-form-field-label-wrapper {
+    right: auto;
+    left: 10px;
+    top: 0px;
+    bottom: 0;
+}
+[dir=rtl] .mat-form-field-label-wrapper {
+    left: auto;
+    right: 10px;
+}
+.input-search{
+    
 
+}
 @import "../scss/themes/responsive";
 // @media only screen and (max-width: 767.98px) {
 //     //   add by rania
