@@ -886,6 +886,12 @@ span.ng-star-inserted {
     max-width: 130px !important;
 }
 
+.tabulator .tabulator-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 9999;
+}
+
 .tabulator .tabulator-footer .tabulator-page.active {
     background: var(--theme-deafult);
     color: var(--bs-white);
