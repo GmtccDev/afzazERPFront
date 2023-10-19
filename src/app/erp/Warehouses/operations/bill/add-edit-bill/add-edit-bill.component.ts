@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { PublicService } from '../../../../../shared/services/public.service';
-import { Bill, BillItem } from '../../../models/bill'
+import { Bill, BillAdditionAndDiscount, BillItem } from '../../../models/bill'
 import { BillType } from '../../../models/bill-type'
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { SearchDialogService } from '../../../../../shared/services/search-dialog.service'
@@ -35,11 +35,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   companyId: any = localStorage.getItem("companyId");
   billForm: FormGroup = new FormGroup({});
   currencyId: any;
-  salesPersonId:any;
-  storeId:any;
-  costCenterId:any;
-
-
+  salesPersonId: any;
+  storeId: any;
+  costCenterId: any;
   cashAccountId: any;
   supplierAccountId: any;
   salesAccountsList: any;
@@ -52,6 +50,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   bill: Bill = new Bill();
   billItem: BillItem[] = [];
   selectedBillItem: BillItem = new BillItem();
+  billAdditionAndDiscount: BillAdditionAndDiscount[] = [];
+  selectedBillAdditionAndDiscount: BillAdditionAndDiscount = new BillAdditionAndDiscount();
   subsList: Subscription[] = [];
   currencyExchangeTransaction: number;
   id: any = 0;
@@ -73,6 +73,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   routeSalesAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Sales
   routeSupplierAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Supplier
   routePurchasesAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Purchases
+  routeAccountApi = 'Account/GetLeafAccounts?'
 
   routeCurrencyApi = "currency/get-ddl?"
   routeCostCenterApi = 'CostCenter/get-ddl?'
@@ -87,7 +88,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   routeItemApi = 'ItemCard/get-ddl?'
   routeUnitApi = 'Unit/get-ddl?'
 
-
+  accountsList:any;
   cashAccountsList: any;
   currenciesList: any;
   costCentersList: any;
@@ -115,7 +116,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   currency: any;
   mainCurrencyId: number;
-
+  paidAccountId:number;
+  remainingAccountId:number;
   showSearchSupplierModal = false;
   showSearchCustomerModal = false;
   showSearchCashAccountModal = false;
@@ -124,12 +126,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchSalesReturnAccountModal = false;
   showSearchPurchasesAccountModal = false;
   showSearchPurchasesReturnAccountModal = false;
-
+  showSearchPaidAccountModal=false;
+  showSearchRemainingAccountModal=false;
   showSearchCostCenterModal = false;
   showSearchCurrencyModal = false;
   showSearchSalesPersonModal = false;
   showSearchStoreModal = false;
   showSearchProjectModal = false;
+ 
 
   addUrl: string = '/warehouses-operations/bill/add-bill';
   updateUrl: string = '/warehouses-operations/bill/update-bill/';
@@ -188,7 +192,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getSupplierAccounts(),
       this.getSalesAccounts(),
       this.getPurchasesAccounts(),
-
+      this.getAccounts(),
       this.getCostCenters(),
       this.getBillTypes(),
       this.getBills(),
@@ -352,16 +356,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       // this.billForm.patchValue({
       //   currencyId:this.billType[0].defaultCurrencyId
       // })
-       this.currencyId=this.billType[0].defaultCurrencyId
-       this.getCurrencyFactor(this.currencyId)
-       this.salesPersonId=this.billType[0].salesPersonId
-       this.storeId=this.billType[0].storeId
-       this.costCenterId=this.billType[0].costCenterId
+      this.currencyId = this.billType[0].defaultCurrencyId
+      this.getCurrencyFactor(this.currencyId)
+      this.salesPersonId = this.billType[0].salesPersonId
+      this.storeId = this.billType[0].storeId
+      this.costCenterId = this.billType[0].costCenterId
 
-       
+
 
     }
-   
+
   }
   getPayWays() {
 
@@ -464,7 +468,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       debugger
       let sub = this.billService.getLastCodeByTypeId(this.billTypeId).subscribe({
         next: (res: any) => {
-          
+
           resolve();
           this.billForm.patchValue({
             code: res.response.data
@@ -484,7 +488,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   getCashAccounts() {
-    
+
     return new Promise<void>((resolve, reject) => {
       // let sub = this.accountService.getLeafAccounts().subscribe({
       //   next: (res) => {
@@ -596,6 +600,28 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           if (res.success) {
             this.purchasesAccountsList = res.response;
             this.purchasesReturnAccountsList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+    });
+
+  }
+  getAccounts() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountsList = res.response;
 
           }
           resolve();
@@ -949,6 +975,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.billForm.controls.purchasesReturnAccountId.setValue(event.id);
     this.showSearchPurchasesReturnAccountModal = false;
   }
+  onSelectPaidAccount(event) {
+    this.billForm.controls.paidAccountId.setValue(event.id);
+  }
+  onSelectRemainingAccount(event) {
+    this.billForm.controls.remainingAccountId.setValue(event.id);
+  }
   onSelectCostCenter(event) {
     this.billForm.controls.costCenterId.setValue(event.id);
     this.showSearchCostCenterModal = false;
@@ -975,20 +1007,24 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       id: 0,
       billId: this.selectedBillItem?.billId ?? 0,
       itemId: this.selectedBillItem?.itemId ?? 0,
+      itemDescription: this.selectedBillItem?.itemDescription ?? '',
       unitId: this.selectedBillItem?.unitId ?? 0,
       quantity: this.selectedBillItem?.quantity ?? 0,
       price: this.selectedBillItem?.price ?? 0,
       totalBeforeTax: this.selectedBillItem?.totalBeforeTax ?? 0,
-      taxRatio: this.selectedBillItem?.taxRatio ?? 0,
-      taxValue: this.selectedBillItem?.taxValue ?? 0,
+      additionRatio: this.selectedBillItem?.additionRatio ?? 0,
+      additionValue: this.selectedBillItem?.additionValue ?? 0,
       discountRatio: this.selectedBillItem?.discountRatio ?? 0,
       discountValue: this.selectedBillItem?.discountValue ?? 0,
       total: this.selectedBillItem?.total ?? 0,
+      storeId: this.selectedBillItem?.storeId ?? 0,
       notes: this.selectedBillItem?.notes ?? '',
       itemNameAr: this.selectedBillItem?.itemNameAr,
       itemNameEn: this.selectedBillItem?.itemNameEn,
       unitNameAr: this.selectedBillItem?.unitNameAr,
-      unitNameEn: this.selectedBillItem?.unitNameEn
+      unitNameEn: this.selectedBillItem?.unitNameEn,
+      storeNameAr: this.selectedBillItem?.storeNameAr,
+      storeNameEn: this.selectedBillItem?.storeNameEn
     });
     this.bill!.billItem = this.billItem;
 
@@ -1001,7 +1037,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.paid = 0;
 
 
-    
+
 
 
     this.clearSelectedItemData();
@@ -1027,20 +1063,24 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       id: 0,
       billId: 0,
       itemId: 0,
+      itemDescription: '',
       unitId: 0,
       quantity: 0,
       price: 0,
       totalBeforeTax: 0,
-      taxRatio: 0,
-      taxValue: 0,
+      additionRatio: 0,
+      additionValue: 0,
       discountRatio: 0,
       discountValue: 0,
       total: 0,
+      storeId: 0,
       notes: '',
       itemNameAr: '',
       itemNameEn: '',
       unitNameAr: '',
-      unitNameEn: ''
+      unitNameEn: '',
+      storeNameAr: '',
+      storeNameEn: ''
     }
   }
 
@@ -1089,6 +1129,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       remainingAccountId: this.billForm.controls["remainingAccountId"].value,
 
       billItem: this.bill.billItem ?? [],
+      billAdditionAndDiscount: this.bill.billAdditionAndDiscount ?? [],
+
 
     };
 
@@ -1098,7 +1140,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     //this.bill.date = this.dateService.getDateForInsert(this.billForm.controls["billDate"].value);
 
     return new Promise<void>((resolve, reject) => {
-  
+
       let sub = this.billService.createBill(this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
@@ -1121,8 +1163,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
   }
   onSave() {
-
-
     if (this.billForm.valid) {
       if (this.bill.billItem.length == 0) {
         this.errorMessage = this.translate.instant("bill.bill-details-required");
@@ -1137,9 +1177,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       }).catch(e => {
         this.spinner.hide();
       });
-
-
-
 
     }
     else {
@@ -1251,7 +1288,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.deliveryDate = selectedDate;
   }
   getCurrencyFactor(currencyId: any) {
-    
+
     if (currencyId == this.mainCurrencyId) {
       this.currencyExchangeTransaction = 1;
     }
@@ -1356,62 +1393,218 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
 
   }
+  openStoreSearchDialog(i) {
+    debugger
+    let searchTxt = '';
+    if (i == -1) {
+      searchTxt = this.selectedBillItem?.storeNameAr ?? '';
+    } else {
+      searchTxt = ''
+      // this.selectedRentContractUnits[i].unitNameAr!;
+    }
+
+    let data = this.storesList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+
+    if (data.length == 1) {
+      if (i == -1) {
+        this.selectedBillItem!.storeNameAr = data[0].nameAr;
+        this.selectedBillItem!.storeId = data[0].id;
+      } else {
+        this.billItem[i].storeNameAr = data[0].nameAr;
+        this.billItem[i].storeId = data[0].id;
+      }
+    } else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن المستودع';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.storesList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            if (i == -1) {
+              this.selectedBillItem!.storeNameAr = d.nameAr;
+              this.selectedBillItem!.storeId = d.id;
+            } else {
+              this.billItem[i].storeNameAr = d.nameAr;
+              this.billItem[i].storeId = d.id;
+            }
+          }
+        });
+      this.subsList.push(sub);
+    }
+
+  }
   onChangeItem() {
+    
+    // this.selectedBillItem.itemDescription= '';
+    // this.selectedBillItem.unitId=0;
+    // this.selectedBillItem.quantity=0;
+    // this.selectedBillItem.price=0;
+    // this.selectedBillItem.totalBeforeTax=0;
+    // this.selectedBillItem.additionRatio=0;
+    // this.selectedBillItem.additionValue=0;
+    // this.selectedBillItem.discountRatio=0;
+    // this.selectedBillItem.discountValue=0;
+    // this.selectedBillItem.total=0;
+    // this.selectedBillItem.storeId=0;
+    // this.selectedBillItem.notes='';
+    // this.selectedBillItem.itemNameAr='';
+    // this.selectedBillItem.itemNameEn='';
+    // this.selectedBillItem.unitNameAr='';
+    // this.selectedBillItem.unitNameEn='';
+    // this.selectedBillItem.storeNameAr='';
+    // this.selectedBillItem.storeNameEn='';
     this.selectedBillItem.price = this.itemsList.find((x) => x.id == this.selectedBillItem.itemId)?.sellingPrice;
+    
     if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
       this.onChangeQuantityOrPrice();
     }
   }
   onChangeQuantityOrPrice() {
     this.selectedBillItem.totalBeforeTax = Number(this.selectedBillItem.quantity) * Number(this.selectedBillItem.price);
-    this.selectedBillItem.total = this.selectedBillItem.totalBeforeTax;
-    this.selectedBillItem.taxRatio = 0;
-    this.selectedBillItem.taxValue = 0;
+    if (this.billType[0].calculatingTax == true) {
+      // if(this.billType[0].calculatingTaxManual==true )
+      // {
+      //   this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + Number(this.selectedBillItem.totalBeforeTax * this.tax);
+
+      // }
+      // else
+      // {
+      this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + Number(this.selectedBillItem.totalBeforeTax * 0.14);
+     // }
+    }
+    else {
+      this.selectedBillItem.total = this.selectedBillItem.totalBeforeTax;
+
+    }
+    this.selectedBillItem.additionRatio = 0;
+    this.selectedBillItem.additionValue = 0;
     this.selectedBillItem.discountRatio = 0;
     this.selectedBillItem.discountValue = 0;
 
   }
-  onChangeTaxOrDiscountRatio() {
-    if (this.selectedBillItem.taxRatio > 0) {
-      this.selectedBillItem.taxValue =
-        Number(this.selectedBillItem.totalBeforeTax) * Number(this.selectedBillItem.taxRatio / 100);
-
-    }
-    if (this.selectedBillItem.discountRatio > 0) {
-      this.selectedBillItem.discountValue =
-        Number(this.selectedBillItem.totalBeforeTax) * Number(this.selectedBillItem.discountRatio / 100);
-    }
-
-
-    this.selectedBillItem.total =
-      Number(this.selectedBillItem.totalBeforeTax) + Number(this.selectedBillItem.taxValue) + Number(this.selectedBillItem.discountValue);
-
-
-
-  }
   onChangeQuantityOrPriceAdded(i: any) {
     this.billItem[i].totalBeforeTax = Number(this.billItem[i].quantity) * Number(this.billItem[i].price);
-    this.billItem[i].total = this.billItem[i].totalBeforeTax;
-    this.billItem[i].taxRatio = 0;
-    this.billItem[i].taxValue = 0;
+    if (this.billType[0].calculatingTax == true) {
+      this.billItem[i].total = Number(this.billItem[i].totalBeforeTax) + Number(this.billItem[i].totalBeforeTax * 0.14);
+    }
+    else {
+      this.billItem[i].total = this.billItem[i].totalBeforeTax;
+
+    }
+    this.billItem[i].additionRatio = 0;
+    this.billItem[i].additionValue = 0;
     this.billItem[i].discountRatio = 0;
     this.billItem[i].discountValue = 0;
 
   }
-  onChangeTaxOrDiscountRatioAdded(i: any) {
-    if (this.billItem[i].taxRatio > 0) {
-      this.billItem[i].taxValue =
-        Number(this.billItem[i].totalBeforeTax) * Number(this.billItem[i].taxRatio / 100);
+  onChangeAdditionOrDiscountRatio(i:number) {
+    if (i==1) {
+      this.selectedBillItem.additionValue =
+        Number(this.selectedBillItem.quantity * this.selectedBillItem.price) * Number(this.selectedBillItem.additionRatio / 100);
+      this.selectedBillItem.discountRatio = 0;
+      this.selectedBillItem.discountValue = 0;
 
     }
-    if (this.billItem[i].discountRatio > 0) {
+    if (i==2) {
+      this.selectedBillItem.discountValue =
+        Number(this.selectedBillItem.quantity * this.selectedBillItem.price) * Number(this.selectedBillItem.discountRatio / 100);
+      this.selectedBillItem.additionRatio = 0;
+      this.selectedBillItem.additionValue = 0;
+    }
+    if (i==3) {
+      this.selectedBillItem.additionRatio =
+      (Number(this.selectedBillItem.additionValue) /  Number(this.selectedBillItem.quantity * this.selectedBillItem.price))*100;
+      this.selectedBillItem.discountRatio = 0;
+      this.selectedBillItem.discountValue = 0;
+
+    }
+    if (i==4) {
+      this.selectedBillItem.discountRatio =
+       (Number(this.selectedBillItem.discountValue) / Number(this.selectedBillItem.quantity * this.selectedBillItem.price))*100 ;
+      this.selectedBillItem.additionRatio = 0;
+      this.selectedBillItem.additionValue = 0;
+    }
+    this.selectedBillItem.totalBeforeTax = Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)
+
+    if (this.billType[0].calculatingTax == true) {
+      if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
+        this.selectedBillItem.total =
+          Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)
+          + (Number(Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)) * 0.14)
+      }
+      else {
+        this.selectedBillItem.total =
+          Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)
+          + Number(this.selectedBillItem.quantity * this.selectedBillItem.price * 0.14)
+
+      }
+
+    }
+    else {
+      this.selectedBillItem.total =
+        Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue);
+
+    }
+
+
+
+  }
+
+  onChangeAdditionOrDiscountRatioAdded(i: any) {
+    if (i==1) {
+      this.billItem[i].additionValue =
+        Number(this.billItem[i].quantity * this.billItem[i].price) * Number(this.billItem[i].additionRatio / 100);
+      this.billItem[i].discountRatio = 0;
+      this.billItem[i].discountValue = 0;
+
+    }
+    if (i==2) {
       this.billItem[i].discountValue =
-        Number(this.billItem[i].totalBeforeTax) * Number(this.billItem[i].discountRatio / 100);
+        Number(this.billItem[i].quantity * this.billItem[i].price) * Number(this.billItem[i].discountRatio / 100);
+      this.billItem[i].additionRatio = 0;
+      this.billItem[i].additionValue = 0;
+    }
+    if (i==3) {
+      this.billItem[i].additionRatio =
+      (Number(this.billItem[i].additionValue) /  Number(this.billItem[i].quantity * this.billItem[i].price))*100;
+      this.billItem[i].discountRatio = 0;
+      this.billItem[i].discountValue = 0;
+
+    }
+    if (i==4) {
+      this.billItem[i].discountRatio =
+       (Number(this.billItem[i].discountValue) / Number(this.billItem[i].quantity * this.billItem[i].price))*100 ;
+      this.billItem[i].additionRatio = 0;
+      this.billItem[i].additionValue = 0;
+    }
+    this.billItem[i].totalBeforeTax = Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)
+
+    if (this.billType[0].calculatingTax == true) {
+      if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
+        this.billItem[i].total =
+          Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)
+          + (Number(Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)) * 0.14)
+      }
+      else {
+        this.billItem[i].total =
+          Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)
+          + Number(this.billItem[i].quantity * this.billItem[i].price * 0.14)
+
+      }
+
+    }
+    else {
+      this.billItem[i].total =
+        Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue);
+
     }
 
-
-    this.billItem[i].total =
-      Number(this.billItem[i].totalBeforeTax) + Number(this.billItem[i].taxValue) + Number(this.billItem[i].discountValue);
 
 
 
@@ -1431,20 +1624,24 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         id: 0,
         billId: item.billId,
         itemId: item.itemId,
+        itemDescription: item.itemDescription,
         unitId: item.unitId,
         quantity: item.quantity,
         price: item.price,
         totalBeforeTax: item.totalBeforeTax,
-        taxRatio: item.taxRatio,
-        taxValue: item.taxValue,
+        additionRatio: item.additionRatio,
+        additionValue: item.additionValue,
         discountRatio: item.discountRatio,
         discountValue: item.discountValue,
         total: item.total,
+        storeId: item.storeId,
         notes: item.notes,
         itemNameAr: item.itemNameAr,
         itemNameEn: item.itemNameEn,
         unitNameAr: item.unitNameAr,
-        unitNameEn: item.unitNameEn
+        unitNameEn: item.unitNameEn,
+        storeNameAr: item.storeNameAr,
+        storeNameEn: item.storeNameEn
       }
     )
 
@@ -1486,13 +1683,17 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     debugger
     this.taxValue = Number(this.total) * Number(this.taxRatio / 100);
     this.net = Number(this.total) + this.taxValue;
-    this.paid=0;
-    this.remaining=this.net;
+    this.paid = 0;
+    this.remaining = this.net;
 
 
   }
   getRamining() {
     this.remaining = Number(this.net) - Number(this.paid)
+  }
+  addItemAdditionsDiscounts()
+  {
+    
   }
 
 }
