@@ -64,6 +64,15 @@
 										{{ 'toolbar.delete'|translate}}
 									</span>
 								</button>
+								<button *ngIf="showButtons?.showPost" (click)="doPostEvent();"
+								[hidden]="disabledPost" [disabled]="disabledPost"
+								[ngClass]="{'disabled':disabledPost}"
+								class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+								<i data-feather="printer"></i>
+								<span class="k-button-text">
+									{{ 'toolbar.post'|translate}}
+								</span>
+							</button>
 								<button *ngIf="showButtons?.showCancel" (click)="doCancelEvent();"
 									disabled="disabledCancel" [ngClass]="{'disabled':disabledCancel}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
@@ -95,6 +104,7 @@
 										{{ 'toolbar.cancelDefaultReport'|translate}}
 									</span>
 								</button>
+						
 								<!-- <button *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}" class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
 									<i data-feather="download"></i>
                                         <span class="k-button-text">
@@ -118,15 +128,7 @@
 
 
 									</div>
-									<button *ngIf="showButtons?.showPost" (click)="doPostEvent();"
-										[hidden]="disabledPost" [disabled]="disabledPost"
-										[ngClass]="{'disabled':disabledPost}"
-										class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-										<i data-feather="printer"></i>
-										<span class="k-button-text">
-											{{ 'toolbar.post'|translate}}
-										</span>
-									</button>
+								
 								</div>
 
 
