@@ -106,7 +106,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     let sub = this.SharedService.getClickedbutton().subscribe({
       next: (toolbarCompnentData: ToolbarData) => {
         toolbarCompnentData;
-
+      debugger;
         if (ObjectIsNotNullOrEmpty(toolbarCompnentData)) {
           this.toolbarCompnentData = toolbarCompnentData;
           if (this.toolbarCompnentData.action == 'New') {
@@ -126,6 +126,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           }
           if (this.toolbarCompnentData.action == 'Print') {
             this.checkButtonClicked('Print');
+          }if (this.toolbarCompnentData.action == 'Post') {
+            this.checkButtonClicked('Post');
           }
           if (this.toolbarCompnentData.action == 'CancelDefaultReport') {
             this.checkButtonClicked('CancelDefaultReport');
@@ -147,7 +149,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     let sub = this.SharedService.getToolbarPath().subscribe({
       next: (toolbarPathData: ToolbarPath) => {
         toolbarPathData;
-        debugger
+        
         this.toolbarPathData = toolbarPathData;
         if (ObjectIsNotNullOrEmpty(toolbarPathData)) {
           if (
@@ -191,9 +193,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.SharedService.changeButton(this.toolbarData);
   }
   doPostEvent() {
-    debugger
+    
     this.checkButtonClicked('Post');
-    (this.toolbarData.action = 'PostList'),
+    (this.toolbarData.action = 'Post'),
       this.SharedService.changeButton(this.toolbarData);
   }
   doNewEvent() {
@@ -225,7 +227,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledDelete=true;
   }
   doViewEvent() {
-
     this.checkButtonClicked('View');
     (this.toolbarData.action = 'View'),
       this.SharedService.changeButton(this.toolbarData);
@@ -296,6 +297,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPrint = true;
       this.disabledDelete=true;
       this.disabledView=true;
+      this.disabledCancel=true;
+      this.disabledNew=true;
       this.disableCancelDefaultReport=true;
     } 
     // else if (button == 'Print') {
@@ -325,7 +328,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     else if (button == 'ConfigMode') {
-      debugger
+      
       this.disabledList=true;
       this.disabledSave = true;
       this.disabledNew = true;

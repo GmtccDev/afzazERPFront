@@ -64,7 +64,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-        this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
+       // this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.listenToClickedButton();
       }).catch(err => {
@@ -212,23 +212,23 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
       
-		this.lang == "ar" ? {
-			title: "ترحيل",
-			field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
+		// this.lang == "ar" ? {
+		// 	title: "ترحيل",
+		// 	field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
 
-				this.onCheckEdit(cell.getRow().getData().id);
-			}
-		}
-			:
+		// 		this.onCheckEdit(cell.getRow().getData().id);
+		// 	}
+		// }
+		// 	:
 
-			{
-				title: "Post",
-				field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
+		// 	{
+		// 		title: "Post",
+		// 		field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
 
 
-					this.onCheckEdit(cell.getRow().getData().id);
-				}
-			}
+		// 			this.onCheckEdit(cell.getRow().getData().id);
+		// 		}
+		// 	}
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -356,7 +356,7 @@ onCheckUpdate() {
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
             this.onDelete();
           }
-          else if (currentBtn.action == ToolbarActions.PostList) {
+          else if (currentBtn.action == ToolbarActions.Post) {
            this.onCheckUpdate();
           }
         }
@@ -365,7 +365,7 @@ onCheckUpdate() {
     this.subsList.push(sub);
   }
   onDelete() {
-
+debugger;
     var ids =  this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
