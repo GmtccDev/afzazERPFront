@@ -21,24 +21,30 @@
 												{{'general.parent'|translate}}
 
 											</label>
-											<div class="input-group  popup">
-												<ng-select style="width:100%" formControlName="parentId" name='parentId'
-													class="" id="parentId">
-													<ng-option *ngFor="let account of accountList" [value]="account.id">
-														{{lang=="ar"?account.nameAr:account.nameEn}}
-													</ng-option>
-												</ng-select>
+											<div class="d-flex">
+												<div class="flex-grow-1">
+													<div class="input-group  popup">
+														<ng-select style="width:100%" formControlName="parentId"
+															name='parentId' class="" id="parentId">
+															<ng-option *ngFor="let account of accountList"
+																[value]="account.id">
+																{{lang=="ar"?account.nameAr:account.nameEn}}
+															</ng-option>
+														</ng-select>
 
+													</div>
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
 											</div>
-
 										</div>
 
-										<div class="col-md-2 col-2">
-											<button class="btn btn-rounded btn-dark" (click)="showSearchModal=true"
-												type="button"><i class="fa fa-search"></i></button>
-										</div>
 
-										<div class="col-12 col-md-6 offset-6">
+
+										<div class="col-12 col-md-6 ">
 											<label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
 											<div class="form-group position-relative">
@@ -96,16 +102,19 @@
 											<label for="voucher-type"
 												class="label-name">{{'account.account-classification'|translate}}
 												<span class="text-danger">*</span></label>
-											<div class="input-group  popup">
-												<ng-select class="custom" formControlName="accountClassificationId"
-													[items]="accountClassificationsEnum" bindLabel="name" bindValue="id"
-													style="width:100%"></ng-select>
-												<div *ngIf="(f['accountClassificationId'].touched || f['accountClassificationId'].dirty ) && f['accountClassificationId'].invalid"
-													class="alert alert-danger">
-													<i class="fa fa-close "></i>
-													<span
-														*ngIf="f['accountClassificationId'].errors && f['accountClassificationId'].errors['required']">
-														{{'validation-messages.required-field'|translate}}</span>
+											<div class="form-group position-relative">
+												<div class="input-group  popup">
+													<ng-select class="custom m-0"
+														formControlName="accountClassificationId"
+														[items]="accountClassificationsEnum" bindLabel="name"
+														bindValue="id" style="width:100%"></ng-select>
+													<div *ngIf="(f['accountClassificationId'].touched || f['accountClassificationId'].dirty ) && f['accountClassificationId'].invalid"
+														class="validation alert-danger position-absolute">
+														<i class="fa fa-close "></i>
+														<span
+															*ngIf="f['accountClassificationId'].errors && f['accountClassificationId'].errors['required']">
+															{{'validation-messages.required-field'|translate}}</span>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -169,103 +178,123 @@
 											</div>
 										</div>
 
-										<div class="col-md-4 col-4" *ngIf="isMultiCompanies">
+										<div class="col-md-6 col-12" *ngIf="isMultiCompanies">
 											<label for="companyId" class="label-name">
 												{{'component-names.companies'|translate}}
 
 											</label>
-											<div class="input-group  popup">
-												<ng-select style="width:100%" formControlName="companyId"
-													name='companyId' class="" id="companyId">
-													<ng-option *ngFor="let company of companyList" [value]="company.id">
-														{{lang=="ar"?company.nameAr:company.nameEn}}
-													</ng-option>
-												</ng-select>
+											<div class="d-flex">
+												<div class="flex-grow-1">
+													<div class="input-group  popup">
+														<ng-select style="width:100%" formControlName="companyId"
+															name='companyId' class="" id="companyId">
+															<ng-option *ngFor="let company of companyList"
+																[value]="company.id">
+																{{lang=="ar"?company.nameAr:company.nameEn}}
+															</ng-option>
+														</ng-select>
 
+													</div>
+												</div>
+												<div class="" *ngIf="isMultiCompanies">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchModalCompany=true" type="button"><i
+															class="fa fa-search"></i>
+													</button>
+												</div>
 											</div>
 										</div>
 
-										<div class="col-md-2 col-2" *ngIf="isMultiCompanies">
-											<button class="btn btn-rounded btn-dark"
-												(click)="showSearchModalCompany=true" type="button"><i
-													class="fa fa-search"></i>
-											</button>
-										</div>
-										<div class="col-md-4 col-4">
+
+										<div class="col-md-6 col-12">
 											<label for="costCenterId" class="label-name">
 												{{'component-names.costCenter'|translate}}
 
 											</label>
-											<div class="input-group  popup">
-												<ng-select style="width:100%" formControlName="costCenterId"
-													name='costCenterId' class="" id="costCenterId">
-													<ng-option *ngFor="let costCenter of costCenterList"
-														[value]="costCenter.id">
-														{{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
-													</ng-option>
-												</ng-select>
+											<div class="d-flex">
+												<div class="flex-grow-1">
+													<div class="input-group  popup">
+														<ng-select style="width:100%" formControlName="costCenterId"
+															name='costCenterId' class="" id="costCenterId">
+															<ng-option *ngFor="let costCenter of costCenterList"
+																[value]="costCenter.id">
+																{{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
+															</ng-option>
+														</ng-select>
 
+													</div>
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchModalCostCenter=true" type="button"><i
+															class="fa fa-search"></i>
+													</button>
+												</div>
 											</div>
 
 										</div>
 
-										<div class="col-md-2 col-2">
-											<button class="btn btn-rounded btn-dark"
-												(click)="showSearchModalCostCenter=true" type="button"><i
-													class="fa fa-search"></i>
-											</button>
-										</div>
 
-										<div class="col-md-4 col-4" *ngIf="isMultiCurrency">
+
+										<div class="col-md-6 col-12" *ngIf="isMultiCurrency">
 											<label for="currencyId" class="label-name">
-												{{'component-names.currencies'|translate}}
+												{{'general.currency'|translate}}
 
 											</label>
-											<div class="input-group  popup">
-												<ng-select style="width:100%" formControlName="currencyId"
-													name='currencyId' class="" id="currencyId">
-													<ng-option *ngFor="let currency of currencyList"
-														[value]="currency.id">
-														{{lang=="ar"?currency.nameAr:currency.nameEn}}
-													</ng-option>
-												</ng-select>
+											<div class="d-flex">
+												<div class="flex-grow-1">
+													<div class="input-group  popup">
+														<ng-select style="width:100%" formControlName="currencyId"
+															name='currencyId' class="" id="currencyId">
+															<ng-option *ngFor="let currency of currencyList"
+																[value]="currency.id">
+																{{lang=="ar"?currency.nameAr:currency.nameEn}}
+															</ng-option>
+														</ng-select>
 
+													</div>
+												</div>
+												<div class="" *ngIf="isMultiCurrency">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchModalCurrency=true" type="button"><i
+															class="fa fa-search"></i>
+													</button>
+												</div>
 											</div>
 
 										</div>
 
-										<div class="col-md-2 col-2" *ngIf="isMultiCurrency">
-											<button class="btn btn-rounded btn-dark"
-												(click)="showSearchModalCurrency=true" type="button"><i
-													class="fa fa-search"></i>
-											</button>
-										</div>
-										<div class="col-md-4 col-4">
-											<div class="input-group  popup">
-												<label for="accountGroupId" class="label-name">
-													{{'component-names.accountGroup'|translate}}
 
-												</label>
+										<div class="col-md-6 col-12">
 
-												<ng-select style="width:100%" formControlName="accountGroupId"
-													name='accountGroupId' class="" id="accountGroupId">
-													<ng-option *ngFor="let accountGroup of accountGroupList"
-														[value]="accountGroup.id">
-														{{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
-													</ng-option>
-												</ng-select>
+											<label for="accountGroupId" class="label-name">
+												{{'component-names.accountGroup'|translate}}
+
+											</label>
+											<div class="d-flex">
+												<div class="flex-grow-1">
+													<div class="input-group  popup">
+														<ng-select style="width:100%" formControlName="accountGroupId"
+															name='accountGroupId' class="" id="accountGroupId">
+															<ng-option *ngFor="let accountGroup of accountGroupList"
+																[value]="accountGroup.id">
+																{{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
+															</ng-option>
+														</ng-select>
+													</div>
+
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchModalAccountGroup=true" type="button"><i
+															class="fa fa-search"></i>
+													</button>
+												</div>
 
 											</div>
-
 										</div>
 
-										<div class="col-md-2 col-2">
-											<button class="btn btn-rounded btn-dark"
-												(click)="showSearchModalAccountGroup=true" type="button"><i
-													class="fa fa-search"></i>
-											</button>
-										</div>
-										<div class="col-md-4 col-4">
+										<div class="col-md-6 col-12">
 											<label for="accountType" class="label-name">
 												{{'account.accountType'|translate}}
 
@@ -282,7 +311,7 @@
 											</div>
 
 										</div>
-										<div class="col-md-4 col-4"
+										<div class="col-md-6 col-12"
 											*ngIf="accountForm.controls['accountType'].value==2;">
 											<label for="budget" class="label-name">
 												{{'account.budget'|translate}}
@@ -300,7 +329,7 @@
 
 										</div>
 
-										<div class="col-md-4 col-4"
+										<div class="col-md-6 col-12"
 											*ngIf="accountForm.controls['accountType'].value==1;">
 											<label for="accountClassificationIdOfIncomeStatement" class="label-name">
 												{{'account.account-classification-income-statement'|translate}}

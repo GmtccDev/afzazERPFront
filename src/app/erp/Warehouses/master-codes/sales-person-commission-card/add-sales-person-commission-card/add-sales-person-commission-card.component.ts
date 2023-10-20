@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { navigateUrl } from 'src/app/shared/helper/helper-url';
 import { SalesPersonCardDto } from '../../../models/sales-person-card';
+import { CommissionTypeArEnum, CommissionTypeEnum, calculationMethodsArEnum, calculationMethodsEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 
 @Component({
   selector: 'app-add-sales-person-commission-card',
@@ -70,7 +71,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    
+    ;
     Promise.all([
     
       this.getSalesPersons(),
@@ -84,6 +85,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getSalesPersonCommissionCardCode();
+        this.getSelecteditem();
       }
       this.changePath();
       this.listenToClickedButton();
@@ -176,7 +178,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     return new Promise<void>((resolve, reject) => {
       let sub = this.salesPersonCommissionServiceProxy.getSalesPersonCommission(id).subscribe({
         next: (res: any) => {
-          console.log("getSalesPersonCommissionCardId",res)
+       
           resolve();
           this.salesPersonCommissionCardForm.patchValue({
             id: res.response?.id,
@@ -249,23 +251,28 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
 
   }
   commissionTypeList:any[]=[]
+
   getCommissionTypeList() {
-    this.commissionTypeList = [
-      { nameAr: 'شهرية ', nameEn: 'Monthly', id: '1' },
-      { nameAr: 'ربع شهرية', nameEn: 'Quarterly', id: '2' },
-      { nameAr: "نصف سنوية", nameEn: 'Semi Annual', id: '3' },
-      { nameAr: "سنوي", nameEn: ' Annual', value: '4' }
-    ];
+    if (this.lang == 'en') {
+      this.commissionTypeList = convertEnumToArray(CommissionTypeEnum);
+    }
+    else {
+      this.commissionTypeList = convertEnumToArray(CommissionTypeArEnum);
+
+    }
   }
   calculationMethodsList:any[]=[]
-  getCalculationMethodsList() {
-    this.calculationMethodsList = [
-      { nameAr: 'قيمة ثابتة ', nameEn: 'Fix Amount', id: '1' },
-      { nameAr: 'تحسب بناء على عمر التحصيل', nameEn: 'As per age of collection', id: '2' },
 
-    ];
+  getCalculationMethodsList() {
+    if (this.lang == 'en') {
+      this.calculationMethodsList = convertEnumToArray(calculationMethodsEnum);
+    }
+    else {
+      this.calculationMethodsList = convertEnumToArray(calculationMethodsArEnum);
+
+    }
   }
- 
+  commissionOn
   commissionOnList:any[]=[]
   getCommissionOnList() {
     this.commissionOnList = [
@@ -274,7 +281,16 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
 
     ];
   }
- 
+  radioSel: any;
+  radioSelectedString: string;
+  commissionOnSelected
+  getSelecteditem() {
+    this.radioSel = this.commissionOnList.find(Item => Item.value === this.commissionOnSelected);
+    this.radioSelectedString = JSON.stringify(this.radioSel);
+  }
+  onItemChange(item) {
+    this.getSelecteditem();
+  }
  
 
   //#endregion

@@ -66,7 +66,7 @@
 												<span class="text-danger">*</span></label>
                                             <div class="input-group  popup">
                                                 <ng-select class="custom" formControlName="type" [items]="accountClassificationsTypes" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['type'].touched || f['type'].dirty ) && f['type'].invalid" class="alert alert-danger">
+                                                <div *ngIf="(f['type'].touched || f['type'].dirty ) && f['type'].invalid" class="alert-danger">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['type'].errors && f['type'].errors['required']">
 														{{'validation-messages.required-field'|translate}}</span>

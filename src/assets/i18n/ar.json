@@ -228,11 +228,11 @@
         "journal-information": "معلومات اليوميات ",
         "fiscalPeriod-information": " معلومات الفترات المحاسبية",
         "fiscalPeriod": "الفترات المحاسبية",
-        "accountGroup": "مجموعة حساب",
+        "accountGroup": "مجموعة الحساب",
         "accountGroup-information": "معلومات مجموعة الحساب",
         "costCenter": "مراكز الكلفة",
         "costCenter-information": "معلومات مركز الكلفة",
-        "account": " الحساب",
+        "account": " دليل الحسابات",
         "account-information": "معلومات  الحساب",
         "accountClassification": "تصنيف الحساب",
         "accountClassification-information": "معلومات تصنيف الحساب",
@@ -248,9 +248,9 @@
         "income-statement-report": "تقرير قائمة الدخل",
         "vouchers-transactions-report": "تقرير حركة السندات",
         "close-fiscal-period": "اغلاق الفترة المحاسبية",
-        "incomingCheque": "الشيك الوراد",
+        "incomingCheque": "الشيكات الواردة",
         "incomingCheque-information": "معلومات الشيك الوراد",
-        "issuing-cheque": "الشيك الصادر",
+        "issuing-cheque": "الشيكات الصادرة",
         "issuing-cheque-information": "معلومات الشيك الصادر",
         "general-ledger-report": "تقرير دفتر الاستاذ العام",
         "journal-entries-report": "تقرير القيود اليومية",
@@ -283,7 +283,10 @@
         "sales-person-commission":"عمولات المناديب",
         "bill-types": "أنماط الفواتير",
         "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
-        "bills":"الفواتير"
+        "bills":"الفواتير",
+        "default-journal":"اليومية الإفتراضية",
+        "general-configuration":"الإعدادات",
+        "cheques-journal":"يومية الشيكات"
 
 
     },
@@ -417,7 +420,6 @@
         "inventory-account": "حساب المخزون",
         "minute": "دقيقة",
         "print": "الطباعة",
-      
         "delivery-date":"تاريخ التوصيل",
         "pay-way":"طريقة الدفع",
         "ship-method":"طريقة الشحن",
@@ -427,7 +429,12 @@
         "fetch":"أسترجاع",
         "sales-person":"مندوب المبيعات",
         "supplier-account":"حساب المورد",
-        "project": "المشروع"
+        "project": "المشروع",
+        "addition-ratio":"نسبة الأضافة",
+        "addition-value":"قيمة الأضافة",
+        "paid-account":"حساب المدفوع",
+        "remaining-account":"حساب المتبقى"
+       
        
          
     },
@@ -488,7 +495,7 @@
         "isLeafAccount": "هل الحساب فرعي ",
         "noteNotActive": "سبب عدم التفعيل",
         "taxNumber": "الرقم الضريبي",
-        "account-classification": "تصنيف الحساب",
+        "account-classification": "فئة الحساب",
         "account-classification-income-statement": "تصنيف الحساب (قائمة الدخل)",
         "budget": "الميزانية"
     },
@@ -544,7 +551,7 @@
         "voucher": "السند"
     },
     "journalEntry": {
-        "openBalance": "الرصيد الافتتاحي "
+        "openBalance": "القيد الافتتاحي "
     },
     "account-classification": {
         "add-account-classification": "اضافة تصنيف الحساب",
@@ -648,7 +655,7 @@
         "confirm-cost-center": "تأكيد مركز التكلفة",
         "confirm-analytical-code": "تأكيد الكود التحليلى",
         "additional-options": "خيارات أضافية",
-        "not-calculating-tax": "عدم أحتساب الضريبة",
+        "calculating-tax": "أحتساب الضريبة",
         "calculating-value-added-tax-after-luxury-tax": "أحتساب ضريبة القيمة المضافة بعد ضريبة الرفاهية",
         "calculating-tax-on-price-after-deduction-and-addition": "أحتساب ضريبة على السعر بعد الخصم و الأضافة",
         "discount-affects-cost-price": "الخصم يؤثر على سعر التكلفة",
@@ -686,7 +693,9 @@
         "transaction-factor": " معامل التحويل ",
         "items":"الأصناف",
         "item":"الصنف",
-        "item-description":"وصف الصنف"
+        "item-description":"وصف الصنف",
+        "additions-and-discounts":"الأضافات و الخصومات على الفاتورة"
+
 
 
 

@@ -51,8 +51,8 @@ export class AddEditBillTypeComponent implements OnInit {
   routePaymentMethodApi = 'PaymentMethod/get-ddl?'
   paymentMethodsList: any;
 
-  routeVendorApi = 'Vendor/get-ddl?'
-  vendorsList: any;
+  routeSalesPersonApi = 'SalesPersonCard/get-ddl?'
+  salesPersonsList: any;
 
   routeProjectApi = 'Project/get-ddl?'
   projectsList: any;
@@ -112,7 +112,7 @@ export class AddEditBillTypeComponent implements OnInit {
       this.getStores(),
       this.getCostCenters(),
       this.getPaymentMethods(),
-      // this.getVendors(),
+      this.getSalesPersons(),
       // this.getProjects(),
       // this.getPrices()
 
@@ -166,9 +166,9 @@ export class AddEditBillTypeComponent implements OnInit {
       id: 0,
       companyId: this.companyId,
       branchId: this.branchId,
-      billKind: REQUIRED_VALIDATORS,
-      billNameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(250)])],
-      billNameEn: '',
+      kind: REQUIRED_VALIDATORS,
+      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(250)])],
+      nameEn: '',
       warehouseEffect: REQUIRED_VALIDATORS,
       affectOnCostPrice: false,
       accountingEffect: REQUIRED_VALIDATORS,
@@ -176,8 +176,8 @@ export class AddEditBillTypeComponent implements OnInit {
       codingPolicy: REQUIRED_VALIDATORS,
       confirmCostCenter: false,
       confirmAnalyticalCode: false,
-      notCalculatingTax: false,
-      calculatingValueAddedTaxAfterLuxuryTax: false,
+      calculatingTax: false,
+      //calculatingValueAddedTaxAfterLuxuryTax: false,
       calculatingTaxOnPriceAfterDeductionAndAddition: false,
       calculatingTaxManual: false,
       manuallyTaxType: '',
@@ -188,7 +188,7 @@ export class AddEditBillTypeComponent implements OnInit {
       storeId: '',
       costCenterId: '',
       paymentMethodId: '',
-      vendorId: '',
+      salesPersonId: '',
       projectId: '',
       defaultPrice: '',
       printImmediatelyAfterAddition: false,
@@ -242,21 +242,21 @@ export class AddEditBillTypeComponent implements OnInit {
             id: res.response?.id,
             companyId: res.response?.companyId,
             branchId: res.response?.branchId,
-            billKind: res.response?.billKind,
-            billNameAr: res.response?.billNameAr,
-            billNameEn: res.response?.billNameEn,
-            warehouseEffect: res.response?.warehouseEffect,
+            kind: res.response?.kind,
+            nameAr: res.response?.nameAr,
+            nameEn: res.response?.nameEn,
+            warehouseEffect: res.response?.warehouseEffect + "",
             affectOnCostPrice: res.response?.affectOnCostPrice,
-            accountingEffect: res.response?.accountingEffect,
+            accountingEffect: res.response?.accountingEffect + "",
             postingToAccountsAutomatically: res.response?.postingToAccountsAutomatically,
-            codingPolicy: res.response?.codingPolicy,
+            codingPolicy: res.response?.codingPolicy + "",
             confirmCostCenter: res.response?.confirmCostCenter,
             confirmAnalyticalCode: res.response?.confirmAnalyticalCode,
-            notCalculatingTax: res.response?.notCalculatingTax,
-            calculatingValueAddedTaxAfterLuxuryTax: res.response?.calculatingValueAddedTaxAfterLuxuryTax,
+            calculatingTax: res.response?.calculatingTax,
+          //  calculatingValueAddedTaxAfterLuxuryTax: res.response?.calculatingValueAddedTaxAfterLuxuryTax,
             calculatingTaxOnPriceAfterDeductionAndAddition: res.response?.calculatingTaxOnPriceAfterDeductionAndAddition,
             calculatingTaxManual: res.response?.calculatingTaxManual,
-            manuallyTaxType: res.response?.manuallyTaxType,
+            manuallyTaxType: res.response?.manuallyTaxType +"",
             discountAffectsCostPrice: res.response?.discountAffectsCostPrice,
             additionAffectsCostPrice: res.response?.additionAffectsCostPrice,
             defaultCurrencyId: res.response?.defaultCurrencyId,
@@ -264,7 +264,7 @@ export class AddEditBillTypeComponent implements OnInit {
             storeId: res.response?.storeId,
             costCenterId: res.response?.costCenterId,
             paymentMethodId: res.response?.paymentMethodId,
-            vendorId: res.response?.vendorId,
+            salesPersonId: res.response?.salesPersonId,
             projectId: res.response?.projectId,
             defaultPrice: res.response?.defaultPrice,
             printImmediatelyAfterAddition: res.response?.printImmediatelyAfterAddition,
@@ -454,12 +454,12 @@ export class AddEditBillTypeComponent implements OnInit {
     });
 
   }
-  getVendors() {
+  getSalesPersons() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeVendorApi).subscribe({
+      let sub = this.publicService.getDdl(this.routeSalesPersonApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.vendorsList = res.response.filter(x => x.isActive == true);
+            this.salesPersonsList = res.response.filter(x => x.isActive == true);
 
           }
 
@@ -661,12 +661,14 @@ export class AddEditBillTypeComponent implements OnInit {
       return this.billTypeForm.markAllAsTouched();
     }
   }
-  unCheckTax() {
-    if (this.billTypeForm.value.notCalculatingTax == true) {
-      this.billTypeForm.value.calculatingValueAddedTaxAfterLuxuryTax = false;
+  calculatingTax() {
+    debugger
+    if (this.billTypeForm.value.calculatingTax == false) {
+   //   this.billTypeForm.value.calculatingValueAddedTaxAfterLuxuryTax = false;
       this.billTypeForm.value.calculatingTaxOnPriceAfterDeductionAndAddition = false;
       this.billTypeForm.value.calculatingTaxManual = false;
       this.billTypeForm.value.manuallyTaxType = '';
+     
 
 
     }

@@ -12,7 +12,7 @@
 
                             <div class="form-group position-relative">
 
-                                {{codeSerial}}
+                                <!-- {{codeSerial}} -->
 
 
                             </div>
@@ -24,7 +24,7 @@
                                     <h3>{{'component-names.journalEntry-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-6 col-12 mb-3">
+                                        <div class="col-md-6 col-12">
                                             <label for="journalId" class="label-name">
 												{{'component-names.journal'|translate}}
 
@@ -59,7 +59,7 @@
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+                                            <div class="form-group0 position-relative">
                                                 <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code" (change)="onChangeCode($event)" formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
@@ -71,12 +71,26 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <!-- <div class="col-md-6 col-12">
+                                            <label for="date" class="label-name">
+												{{'general.date'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group0 position-relative">
+
+                                                <input type="date" class="form-control " name="date" formControlName="date">
+                                                <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['date'].errors && f['date'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-6 col-12" disabled="postType == 1" [ngClass]="{'disabled':postType == 1}">
                                             <label for="date" class="label-name">
 												{{'general.date'|translate}}</label><span class="text-danger">*</span>
                                             <div class="form-group position-relative">
+                                                <app-full-date name="date" formControlName="date"  [(ngModel)]="date" ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"></app-full-date>
 
-                                                <input type="date" class="form-control " name="date" formControlName="date">
                                                 <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['date'].errors && f['date'].errors['required']" class="f-12 ng-star-inserted text-white">
@@ -107,7 +121,7 @@
 													</label>
                                                 </div>
                                             </div>
-                                            <div class="media">
+                                            <div class="media" hidden >
                                                 <label class="label-name"> {{'general.status'|translate}}
 												</label>
                                                 <div class="icon-state media-body">
@@ -159,7 +173,7 @@
 
                                                         <div class="input-group ">
 
-                                                            <select required class="form-control required" name="accountId" formControlName="accountId">
+                                                            <select required class="form-control required" (change)="onChangeGetDefaultCurrency($event,i)" name="accountId" formControlName="accountId">
 
 																<option *ngFor="let account of accountList"
 																	[value]="account.id">

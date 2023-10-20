@@ -189,8 +189,8 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'id',
     },
     this.lang == 'ar'
-      ? { title: ' الاسم', field: 'billNameAr' } :
-      { title: ' Name  ', field: 'billNameEn' },
+      ? { title: ' الاسم', field: 'nameAr' } :
+      { title: ' Name  ', field: 'nameEn' },
     
 
   ];

@@ -159,7 +159,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       branchId: this.branchId,
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
       voucherNameEn: NAME_REQUIRED_VALIDATORS,
-      journalId: null,
+      journalId: REQUIRED_VALIDATORS,
       voucherKindId: REQUIRED_VALIDATORS,
       serialTypeId: 1,
       serialId: null,
@@ -213,7 +213,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     let sub =  this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.voucherTypeForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -426,7 +426,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-        debugger
+        
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.sharedServices.changeToolbarPath({
@@ -443,7 +443,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
             this.defineVoucherTypeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update) {
-            debugger
+            
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {

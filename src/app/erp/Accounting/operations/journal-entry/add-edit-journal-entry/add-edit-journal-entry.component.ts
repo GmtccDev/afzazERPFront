@@ -16,6 +16,10 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { DateModel } from 'src/app/shared/model/date-model';
+import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
+import { AccountDto } from '../../../models/account';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -69,6 +73,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   checkPeriod: any;
   isMultiCurrency: boolean;
   serial: any;
+  date: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
   entriesStatusEnum: any;
@@ -78,16 +83,20 @@ export class AddEditJournalEntryComponent implements OnInit {
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
+    private currencyServiceProxy: CurrencyServiceProxy,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
+    private dateService: DateCalculation,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+  
 
   ) {
     this.definejournalEntryForm();
+    
   }
   //#endregion
 
@@ -97,7 +106,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     this.spinner.show();
     Promise.all([
-      this.getGeneralConfiguration(),
+
       this.getCostCenter(),
       this.getCurrency(),
       this.getFiscalPeriod(),
@@ -109,7 +118,8 @@ export class AddEditJournalEntryComponent implements OnInit {
       if (this.currnetUrl == this.addUrl) {
         this.getjournalEntryCode();
       }
-      this.changePath();
+      this.getGeneralConfiguration(),
+        this.changePath();
       this.listenToClickedButton();
     }).catch(err => {
       this.spinner.hide();
@@ -238,6 +248,8 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
 
   }
+  defaultCurrencyId: any;
+  financialEntryCycle: any;
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -245,8 +257,10 @@ export class AddEditJournalEntryComponent implements OnInit {
           resolve();
 
           if (res.success) {
-
-
+            this.defaultCurrencyId = Number(res.response.result.items.find(c => c.id == 1).value)
+            this.financialEntryCycle = Number(res.response.result.items.find(c => c.id == 4).value)
+            this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res.response.result.items.find(c => c.id == 7).value))
+            this.journalEntryForm.controls.journalId.patchValue(Number(res.response.result.items.find(c => c.id == 1006).value))
             this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
@@ -271,14 +285,14 @@ export class AddEditJournalEntryComponent implements OnInit {
   definejournalEntryForm() {
     this.journalEntryForm = this.fb.group({
       id: 0,
-      date: ['', Validators.compose([Validators.required])],
+      date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      openBalance: true,
+      openBalance: false,
       notes: null,
       journalId: ['', Validators.compose([Validators.required])],
       fiscalPeriodId: ['', Validators.compose([Validators.required])],
-      //  postType:2,
+      postType: '',
       journalEntriesDetail: this.fb.array([])
     });
     this.initGroup();
@@ -362,6 +376,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   get journalEntriesDetailDTOList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
 
   //#region CRUD operations
+  postType: any;
   getjournalEntryById(id: any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
@@ -466,6 +481,8 @@ export class AddEditJournalEntryComponent implements OnInit {
           })
 
           if (res.response?.postType == 1) {
+            this.postType = res.response?.postType;
+
             this.journalEntryForm.disable();
           }
           console.log(
@@ -541,6 +558,7 @@ export class AddEditJournalEntryComponent implements OnInit {
             }
             this.toolbarPathData.componentAdd = 'Add journalEntry';
             this.definejournalEntryForm();
+            this.isSelectCurrency=false;
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
@@ -558,6 +576,8 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
+      this.journalEntryForm.value.postType = this.financialEntryCycle == 3 ? 1 : 2;
+      this.journalEntryForm.value.date = this.dateService.getDateForInsert(this.date)
       var entity = this.journalEntryForm.value;
       entity.branchId = this.branchId;
       entity.companyId = this.companyId;
@@ -628,17 +648,86 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
   }
 
+  isSelectCurrency:boolean=false;
+  onChangeGetDefaultCurrency(event, index) {
+    debugger;
+    if(!this.isSelectCurrency)
+    {
+      let currencyId;
+      var accountData = this.accountList.find(x => x.id == event.target.value) as AccountDto;
+      if (accountData != null) {
+        currencyId = accountData.currencyId != null ? accountData.currencyId : this.defaultCurrencyId;
+      }
+      const ctrl = <FormArray>this.journalEntryForm.controls['journalEntriesDetail'];
+      ctrl.controls.forEach(x => {
+        x.get('currencyId').setValue(currencyId)
+        this.cd.detectChanges()
+      });
+      this.onSelectCurrency(currencyId, index)
+    }
+   
+  }
+  currency: any;
+ 
   onChangeCurrency(event, index) {
+    this.isSelectCurrency=true;
+    let selectCurrencyId = event.target.value;
+    let currencyModel = this.currencyList.find(x => x.id == selectCurrencyId);
+    if (this.defaultCurrencyId == selectCurrencyId) {
+      currencyModel.transactionFactor = 1;
+      const faControl =
+        (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
+      faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
+      faControl['controls'].jEDetailCreditLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailCredit.value);
+      faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailDebit.value);
+      faControl['controls'].jEDetailSerial.setValue(index + 1);
+    } else {
+      let sub = this.currencyServiceProxy.getCurrency(selectCurrencyId).subscribe({
+        next: (res: any) => {
+          this.currency = res;
+          let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.defaultCurrencyId)[0];
+          let currencyFactor = currencyModel.transactionFactor;
+          const faControl =
+            (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
+          faControl['controls'].transactionFactor.setValue(currencyFactor);
+          faControl['controls'].jEDetailCreditLocal.setValue(currencyFactor * faControl['controls'].jEDetailCredit.value);
+          faControl['controls'].jEDetailDebitLocal.setValue(currencyFactor * faControl['controls'].jEDetailDebit.value);
+          faControl['controls'].jEDetailSerial.setValue(index + 1);
+        }
+      })
+      this.subsList.push(sub);
+    }
 
-    console.log('Name changed:', event.target.value);
+  }
+  onSelectCurrency(currencyId, index) {
 
-    let currencyModel = this.currencyList.find(x => x.id == event.target.value);
-    const faControl =
-      (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
-    faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
-    faControl['controls'].jEDetailCreditLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailCredit.value);
-    faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailDebit.value);
-    faControl['controls'].jEDetailSerial.setValue(index + 1);
+    let currencyModel = this.currencyList.find(x => x.id == currencyId);
+    if (this.defaultCurrencyId == currencyId) {
+      currencyModel.transactionFactor = 1;
+      const faControl =
+        (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
+      faControl['controls'].transactionFactor.setValue(currencyModel.transactionFactor);
+      faControl['controls'].jEDetailCreditLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailCredit.value);
+      faControl['controls'].jEDetailDebitLocal.setValue(currencyModel.transactionFactor * faControl['controls'].jEDetailDebit.value);
+      faControl['controls'].jEDetailSerial.setValue(index + 1);
+    } else {
+      let sub = this.currencyServiceProxy.getCurrency(currencyId).subscribe({
+        next: (res: any) => {
+          this.currency = res;
+          let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.defaultCurrencyId)[0];
+          let currencyFactor = currencyModel.transactionFactor;
+          const faControl =
+            (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
+          faControl['controls'].transactionFactor.setValue(currencyFactor);
+          faControl['controls'].jEDetailCreditLocal.setValue(currencyFactor * faControl['controls'].jEDetailCredit.value);
+          faControl['controls'].jEDetailDebitLocal.setValue(currencyFactor * faControl['controls'].jEDetailDebit.value);
+          faControl['controls'].jEDetailSerial.setValue(index + 1);
+        }
+      })
+      this.subsList.push(sub);
+
+    }
+
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
@@ -788,6 +877,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
           if (res.success) {
             this.currencyList = res.response;
+            console.log("this.currencyList", this.currencyList)
 
           }
           resolve();
@@ -916,6 +1006,10 @@ export class AddEditJournalEntryComponent implements OnInit {
       this.entriesStatusEnum = convertEnumToArray(EntryStatusArEnum);
 
     }
+  }
+
+  getDate(selectedDate: DateModel) {
+    this.date = selectedDate;
   }
 }
 

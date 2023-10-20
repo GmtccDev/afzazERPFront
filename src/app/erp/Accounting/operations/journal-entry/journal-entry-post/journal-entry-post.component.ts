@@ -61,7 +61,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
     Promise.all([this.getJournalEntryes()])
       .then(a => {
         this.spinner.hide();
-        this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+        this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.listenToClickedButton();
       }).catch(err => {
@@ -208,9 +208,16 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
   openJournalEntryes() { }
   onCheck(id) {
-
-
+debugger;
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+  if (index !== -1) {
+    this.listIds.splice(index, 1);
+  } else {
+    const newItem = { id, isChecked: true };
+    this.listIds.push(newItem);
   }
+
+}
   onEdit(id) {
 debugger
     if (id != undefined) {
@@ -257,7 +264,7 @@ debugger
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-
+debugger
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
@@ -267,6 +274,9 @@ debugger
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
             // this.onDelete();
+          }
+          else if (currentBtn.action == ToolbarActions.Post) {
+            this.onCheckUpdate();
           }
         }
       },
@@ -285,6 +295,23 @@ debugger
         this.listIds = [];
       });
     this.subsList.push(sub);
+  }
+  listUpdateIds: any[] = [];
+  onCheckUpdate() {
+
+debugger;
+    var ids = this.listIds.map(item => item.id);
+    if(ids.length>0){
+      let sub = this.journalEntryService.updateList(ids).subscribe(
+        (resonse) => {
+    
+          //reloadPage()
+          this.getJournalEntryes();
+          this.listUpdateIds = [];
+        });
+      this.subsList.push(sub);
+    }
+  
   }
   translateArEnum(cell, formatterParams, onRendered) {
 

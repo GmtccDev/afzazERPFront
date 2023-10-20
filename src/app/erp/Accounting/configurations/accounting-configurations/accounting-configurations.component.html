@@ -8,7 +8,7 @@
             <h3> {{'component-names.currencies'|translate}}</h3>
         </div>
         <div class="card-body">
-            <div class="row align-items-end">
+            <div class="row align-items-end g-3">
                 <div class="col-md-6 col-12">
                     <label for="currencyId" class="label-name">
 						{{'component-names.currencies'|translate}}
@@ -23,7 +23,7 @@
 
                     </div>
                 </div>
-                <div class="col-6 col-md-6">
+                <div class="col col-md-6">
                     <div class="media">
                         <label class="label-name"> {{'accounting-configration.multiCurrency'|translate}}
 						</label>
@@ -45,6 +45,36 @@
                 <h3>{{'accounting-configration.journalentries'|translate}}</h3>
             </div>
             <div class="card-body">
+
+                <label for="journalId" class="label-name">
+                    {{'component-names.default-journal'|translate}}
+                   
+                </label>
+                <div class="input-group  popup">
+                    <ng-select style="width:100%" [(ngModel)]="journalId"  name='journalId' class="" id="journalId">
+                        <ng-option *ngFor="let journal of journalList" [value]="journal.id">
+                            {{lang=="ar"?journal.nameAr:journal.nameEn}}
+                        </ng-option>
+                    </ng-select>
+                   
+                </div>
+            </div>
+            <div class="card-body">
+
+                <label for="journalId" class="label-name">
+                    {{'component-names.cheques-journal'|translate}}
+                   
+                </label>
+                <div class="input-group  popup">
+                    <ng-select style="width:100%" [(ngModel)]="chequesJournalId"  name='chequesJournalId' class="" id="chequesJournalId">
+                        <ng-option *ngFor="let journal of journalList" [value]="journal.id">
+                            {{lang=="ar"?journal.nameAr:journal.nameEn}}
+                        </ng-option>
+                    </ng-select>
+                   
+                </div>
+            </div>
+            <div class="card-body pb-3">
 
                 <!-- <div class="row">
 					<div class="col-md-6 col-12"> -->
@@ -77,9 +107,10 @@
 
 				</label>
                 <div class="">
+                  
                     <ul class="list-group">
                         <li class="list-group-item" *ngFor="let item of cycleList">
-                            <input type="radio" [(ngModel)]="cycleSelected" name="cycleSelected" value="{{item.value}}" (change)="onItemChange(item)" /> {{lang=="ar"?item.nameAr:item.nameEn}}
+                            <input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value" name="cycleSelected" value="{{item.value}}" (change)="onItemChange(item)" /> {{lang=="ar"?item.nameAr:item.nameEn}}
 
                         </li>
                     </ul>
