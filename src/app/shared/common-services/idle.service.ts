@@ -17,9 +17,12 @@ export class IdleService implements OnDestroy, OnInit {
   public isIdle$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   subsList: Subscription[] = [];
   name: string;
-  constructor(private generalConfigurationService: GeneralConfigurationServiceProxy, userService: UserService) {
-    this.name = userService.getUserName();
-    this.getGeneralConfiguration()
+  constructor(private generalConfigurationService: GeneralConfigurationServiceProxy, public userService: UserService) {
+    if (this.userService.isLoggedIn()) {
+      this.name = userService.getUserName();
+      this.getGeneralConfiguration()
+    }
+
   }
   ngOnInit(): void {
 
@@ -30,16 +33,17 @@ export class IdleService implements OnDestroy, OnInit {
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
       if (this.name != "") {
+
         let sub = this.generalConfigurationService.allGeneralConfiguration(0, 1, 1000, undefined, undefined, undefined).subscribe({
           next: (res) => {
-  
+
             resolve();
-  
+
             if (res.success) {
 
               this.timeoutInMinutes = Number(res.response.result.items.find(c => c.id == 10001).value);
               this.startTimer();
-  
+
             }
 
           },
@@ -50,10 +54,10 @@ export class IdleService implements OnDestroy, OnInit {
             console.log('complete');
           },
         });
-  
+
         this.subsList.push(sub);
       }
-   
+
     });
 
   }

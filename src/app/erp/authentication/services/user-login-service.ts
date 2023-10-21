@@ -11,7 +11,7 @@ export class UserLoginService {
   UserLoginLogin(AuthenticateRequest: any): Observable<any> {
     
     const headers = new HttpHeaders().set('databaseName', AuthenticateRequest.dataBaseName);
-    return this._httpClient.post<any>(environment.apiUrl + '/api/UserLogin/Login', AuthenticateRequest, { headers });
+    return this._httpClient.post<any>(environment.apiUrl + '/api/UserLogin/Login', AuthenticateRequest);
   }
 
   UserLoginCompany(AuthenticateRequest: any):Observable<any>{
@@ -32,6 +32,8 @@ getDdlWithCompanies( ids: Array<number>|undefined): Observable<any> {
 getCustomer(subDomain: any): Observable<any> {
   let params = new HttpParams();
   params = params.append('subDomain', subDomain);
-  return this._httpClient.get<any>(environment.apiUrlِAdmin + "/api/Customer/GetCustomer", { params: params });
+  //return this._httpClient.get<any>(environment.apiUrlِAdmin + "/api/Customer/GetCustomer", { params: params });
+  return this._httpClient.get<any>("/api/Customer/GetCustomer", { params: params });
+
 }
 }

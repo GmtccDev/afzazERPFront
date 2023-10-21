@@ -60,8 +60,11 @@ export class LoginComponent implements OnInit {
     this.subDomain = this.parts[1]+"/"+this.parts[2]; // Get the second part (index 1) from the resulting array
    
     this.spinner.show();
-    Promise.all([ this.getCustomer()])
-      .then(a => {this.getCompanies()
+    Promise.all(
+      [this.getCompanies()]
+    )
+      .then(a => {
+        //this.getCompanies()
         this.userService.logout();
         this.spinner.hide();
 
@@ -183,10 +186,11 @@ export class LoginComponent implements OnInit {
     // if (this.loginForm.value.userName == "admin" && this.loginForm.value.password == "admin") {
 
     // }
-    this.loginForm.value.dataBaseName = this.dataBaseName
+  //  this.loginForm.value.dataBaseName = this.dataBaseName
+  debugger
     let sub = this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
-
+        debugger
 
         console.log(next);
 
@@ -219,7 +223,7 @@ export class LoginComponent implements OnInit {
               else {
                 //   this.router.navigate(['/dashboard/default']);
               const  subdomain=localStorage.getItem('subDomain');
-                this.router.navigate([subdomain+'/Subscription']);
+                this.router.navigate(['/Subscription']);
               }
               this.modelService.dismissAll();
             }
