@@ -40,6 +40,8 @@ export class Bill {
     remaining: number | undefined;
     remainingAccountId: number | undefined;
     billItem: BillItem[] = [];
+    billAdditionAndDiscount: BillAdditionAndDiscount[] = [];
+
 
 
 }
@@ -47,21 +49,38 @@ export class BillItem {
     id: number;
     billId: number;
     itemId: number;
+    itemDescription: string | undefined;
     unitId: number | undefined;
     quantity: number;
     price: number;
     totalBeforeTax: number | undefined;
-    taxRatio: number | undefined;
-    taxValue: number | undefined;
+    additionRatio: number | undefined;
+    additionValue: number | undefined;
     discountRatio: number | undefined;
     discountValue: number | undefined;
     total: number | undefined;
+    storeId: number | undefined;
     notes: string | undefined;
     itemNameAr:string;
     itemNameEn:string;
     unitNameAr:string;
     unitNameEn:string;
+    storeNameAr:string;
+    storeNameEn:string;
 
 
+
+}
+export class BillAdditionAndDiscount {
+    id: number;
+    billId: number;
+    additionRatio:number | undefined;
+    additionValue:number | undefined;
+    discountRatio:number | undefined;
+    discountValue:number | undefined;
+    accountId:string|undefined;
+    currencyId:number | undefined;
+    currencyExchangeTransaction:number | undefined;
+    notes:string|undefined;
 
 }

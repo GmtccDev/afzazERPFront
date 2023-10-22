@@ -37,4 +37,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]
 })
-export class MasterCodesRoutingModule { }
+export class 
+MasterCodesRoutingModule { }

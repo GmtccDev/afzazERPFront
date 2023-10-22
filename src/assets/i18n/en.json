@@ -202,8 +202,14 @@
         "reference-no":"Reference No",
         "fetch":"Fetch",
         "sales-person":"Sales Person",
-        "supplier-account":"Supplier Account"
-       
+        "supplier-account":"Supplier Account",
+        "addition-ratio":"Addition Ratio",
+        "addition-value":"Addition Value",
+        "paid-account":"Paid Account",
+        "remaining-account":"Remaining Account"
+        
+
+
     
     },
     "sales-person-commission": {
@@ -701,7 +707,8 @@
         "transaction-factor": "Transaction Factor",
         "items": "Items",
         "item": "Item",
-        "item-description": "Item Description"
+        "item-description": "Item Description",
+        "additions-and-discounts":"Additions And Discounts on Bill"
 
 
     }

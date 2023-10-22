@@ -8,9 +8,10 @@ import {environment} from '../../../../environments/environment'
 export class UserLoginService {
   constructor(private _httpClient: HttpClient) { }
 
-  UserLoginLogin(AuthenticateRequest: any):Observable<any>{
-
-    return this._httpClient.post<any>(environment.apiUrl + "/api/UserLogin/Login", AuthenticateRequest);
+  UserLoginLogin(AuthenticateRequest: any): Observable<any> {
+    
+    const headers = new HttpHeaders().set('databaseName', AuthenticateRequest.dataBaseName);
+    return this._httpClient.post<any>(environment.apiUrl + '/api/UserLogin/Login', AuthenticateRequest);
   }
 
   UserLoginCompany(AuthenticateRequest: any):Observable<any>{
@@ -27,5 +28,12 @@ getDdlWithCompanies( ids: Array<number>|undefined): Observable<any> {
   queryParams = queryParams.appendAll({'companies': ids});
 
   return this._httpClient.get<any>(environment.apiUrl+ "/api/UserLogin/get-ddlWithCompanies?", { params: queryParams });
+}
+getCustomer(subDomain: any): Observable<any> {
+  let params = new HttpParams();
+  params = params.append('subDomain', subDomain);
+  //return this._httpClient.get<any>(environment.apiUrlِAdmin + "/api/Customer/GetCustomer", { params: params });
+  return this._httpClient.get<any>("/api/Customer/GetCustomer", { params: params });
+
 }
 }

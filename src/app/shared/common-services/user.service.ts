@@ -103,4 +103,14 @@ export class UserService {
         if(name)return name;
         else return '';
     }
+    setSubDomain(name: string) {
+        if (name) {
+            localStorage.setItem('subDomain', name);
+        }
+    }
+    getSubDomain(){
+        let name = localStorage.getItem('subDomain');
+        if(name)return name;
+        else return '';
+    }
 }
