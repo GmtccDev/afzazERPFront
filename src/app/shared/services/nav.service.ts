@@ -39,7 +39,7 @@ export class NavService implements OnInit, OnDestroy {
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
-	// Search Box
+	// Search BoxF
 	public search: boolean = false;
 
 	// Language
@@ -62,6 +62,8 @@ export class NavService implements OnInit, OnDestroy {
 	constructor(private router: Router, private translate: TranslateService,
 		private sharedService:SharedService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
+			
+		//console.log(this.subdomain)
 		this.voucherTypes.push(
 			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 			{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },

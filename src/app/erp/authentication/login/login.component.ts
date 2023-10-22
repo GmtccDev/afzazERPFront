@@ -8,6 +8,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginCompanyComponent } from './login-company/login-company.component';
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
+import { NotificationService } from 'src/app/shared/common-services/notification.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
   public show: boolean = false;
   public loginForm = this.fb.group({
     userName: ['', [Validators.required]],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    dataBaseName: null
   });
   public errorMessage: any;
   // authService: any;
@@ -27,15 +30,19 @@ export class LoginComponent implements OnInit {
   companiesList: any;
   branchesList: any;
   subsList: Subscription[] = [];
+  url: string;
+  subDomain: string;
+  dataBaseName: any;
+  parts: string[];
 
   // public authService: AuthService,
   constructor(private fb: FormBuilder, public authService: UserLoginService,
     private modelService: NgbModal,
-    private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService, private notificationService: NotificationService,
     public router: Router, private userService: UserService, private translate: TranslateService) {
 
     this.currentSystemLanguage = this.userService.getCurrentSystemLanguage();
-    this.userService.setCurrentLanguage(this.currentSystemLanguage );
+    this.userService.setCurrentLanguage(this.currentSystemLanguage);
     this.translate.use(this.currentSystemLanguage);
     if (this.currentSystemLanguage === 'ar') {
       document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -47,9 +54,17 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.url = window.location.pathname;
+   this.parts = this.url.split('/'); // Split the URL by "/"
+    this.subDomain = this.parts[1]+"/"+this.parts[2]; // Get the second part (index 1) from the resulting array
+   
     this.spinner.show();
-    Promise.all([this.getCompanies()])
+    Promise.all(
+      [this.getCompanies()]
+    )
       .then(a => {
+        //this.getCompanies()
         this.userService.logout();
         this.spinner.hide();
 
@@ -86,6 +101,38 @@ export class LoginComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+
+
+    });
+
+  }
+  getCustomer() {
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.authService.getCustomer(this.parts[2]).subscribe({
+        next: (res) => {
+          debugger
+          if (res.success) {
+
+            this.dataBaseName = res.response.databaseName;
+            this.userService.setSubDomain(this.subDomain);
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+          this.notificationService.error("الدومين غير صحيح")
+
         },
         complete: () => {
           console.log('complete');
@@ -139,10 +186,11 @@ export class LoginComponent implements OnInit {
     // if (this.loginForm.value.userName == "admin" && this.loginForm.value.password == "admin") {
 
     // }
-
+  //  this.loginForm.value.dataBaseName = this.dataBaseName
+  debugger
     let sub = this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
-
+        debugger
 
         console.log(next);
 
@@ -159,7 +207,7 @@ export class LoginComponent implements OnInit {
           // localStorage.setItem("userName",decodedJwtData.fullName)
 
           const modalRef = this.modelService.open(LoginCompanyComponent);
-          
+
           modalRef.componentInstance.name = 'World';
           modalRef.componentInstance.userName = this.loginForm.value.userName;
           modalRef.componentInstance.password = this.loginForm.value.password;
@@ -174,7 +222,7 @@ export class LoginComponent implements OnInit {
               }
               else {
                 //   this.router.navigate(['/dashboard/default']);
-                
+              const  subdomain=localStorage.getItem('subDomain');
                 this.router.navigate(['/Subscription']);
               }
               this.modelService.dismissAll();

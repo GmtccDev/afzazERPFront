@@ -31,6 +31,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.idleService.isIdle$.subscribe((isIdle) => {
       if (isIdle) {
+        //let subDomain=localStorage.getItem("subDomain")
         this.router.navigate(['/authentication/login'])
       }
     });
