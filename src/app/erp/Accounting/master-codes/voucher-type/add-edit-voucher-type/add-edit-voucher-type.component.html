@@ -11,84 +11,104 @@
                         <form [formGroup]="voucherTypeForm" id="voucherTypeSubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
-
                                     <h3>{{'voucher-type.voucher-type-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
                                         <div class="col-md-6 col-12">
                                             <label for="voucherNameAr" class="label-name">
-												{{'voucher-type.voucher-name-ar'|translate}}</label>
+                                                {{'voucher-type.voucher-name-ar'|translate}}</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['voucherNameAr'].errors || f['voucherNameAr'].invalid}" name="voucherNameAr" formControlName="voucherNameAr">
-                                                <div *ngIf="(f['voucherNameAr'].touched || f['voucherNameAr'].dirty ) && f['voucherNameAr'].invalid" class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch"
+                                                    [ngClass]="{'is-invalid':f['voucherNameAr'].errors || f['voucherNameAr'].invalid}"
+                                                    name="voucherNameAr" formControlName="voucherNameAr">
+                                                <div *ngIf="(f['voucherNameAr'].touched || f['voucherNameAr'].dirty ) && f['voucherNameAr'].invalid"
+                                                    class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['voucherNameAr'].errors && f['voucherNameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
-														{{'error.required'|translate}}</span>
+                                                    <span
+                                                        *ngIf="f['voucherNameAr'].errors && f['voucherNameAr'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <label for="voucherNameEn" class="label-name">{{'voucher-type.voucher-name-en'|translate}}</label>
-                                            <span class="text-danger">*</span>
+                                            <label for="voucherNameEn"
+                                                class="label-name">{{'voucher-type.voucher-name-en'|translate}}</label>
+                                            <!-- <span class="text-danger">*</span> -->
                                             <div class="form-group position-relative">
-                                                <input type="text" class="form-control icon-branch" name="voucherNameEn" formControlName="voucherNameEn">
-                                                <div *ngIf="(f['voucherNameEn'].touched || f['voucherNameEn'].dirty ) && f['voucherNameEn'].invalid" class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" name="voucherNameEn"
+                                                    formControlName="voucherNameEn">
+                                                <!-- <div *ngIf="(f['voucherNameEn'].touched || f['voucherNameEn'].dirty ) && f['voucherNameEn'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['voucherNameEn'].errors && f['voucherNameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <label for="journalId" class="label-name">
-												{{'component-names.journal'|translate}}
+                                                {{'component-names.journal'|translate}}
 
-											</label>
+                                            </label>
                                             <span class="text-danger">*</span>
                                             <div class="d-flex">
                                                 <div class="flex-grow-1">
                                                     <div class="input-group  popup">
-                                                        <ng-select style="width:100%" formControlName="journalId" name='journalId' class="" id="journalId">
-                                                            <ng-option *ngFor="let journal of journalList" [value]="journal.id">
+                                                        <ng-select style="width:100%" formControlName="journalId"
+                                                            name='journalId' class="" id="journalId">
+                                                            <ng-option *ngFor="let journal of journalList"
+                                                                [value]="journal.id">
                                                                 {{lang=="ar"?journal.nameAr:journal.nameEn}}
                                                             </ng-option>
                                                         </ng-select>
 
                                                     </div>
-                                                    <div *ngIf="(f['journalId'].touched || f['journalId'].dirty ) && f['journalId'].invalid" class="validation alert-danger position-absolute">
+                                                    <div *ngIf="(f['journalId'].touched || f['journalId'].dirty ) && f['journalId'].invalid"
+                                                        class="validation alert-danger position-absolute">
                                                         <i class="fa fa-close "></i>
-                                                        <span *ngIf="f['journalId'].errors && f['journalId'].errors['required']" class="f-12 ng-star-inserted text-white">
+                                                        <span
+                                                            *ngIf="f['journalId'].errors && f['journalId'].errors['required']"
+                                                            class="f-12 ng-star-inserted text-white">
                                                             {{'error.required'|translate}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="">
-                                                    <button class="btn btn-rounded btn-dark" (click)="showSearchJournalModal=true" type="button"><i
-															class="fa fa-search"></i></button>
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchJournalModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <label for="voucher-type" class="label-name">{{'voucher-type.voucher-type'|translate}}
-												<span class="text-danger">*</span></label>
+                                            <label for="voucher-type"
+                                                class="label-name">{{'voucher-type.voucher-type'|translate}}
+                                                <span class="text-danger">*</span></label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="voucherKindId" [items]="voucherTypes" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['voucherKindId'].touched || f['voucherKindId'].dirty ) && f['voucherKindId'].invalid" class="alert-danger">
+                                                <ng-select class="custom" formControlName="voucherKindId"
+                                                    [items]="voucherTypes" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
+                                                <div *ngIf="(f['voucherKindId'].touched || f['voucherKindId'].dirty ) && f['voucherKindId'].invalid"
+                                                    class="alert-danger">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['voucherKindId'].errors && f['voucherKindId'].errors['required']">
-														{{'validation-messages.required-field'|translate}}</span>
+                                                    <span
+                                                        *ngIf="f['voucherKindId'].errors && f['voucherKindId'].errors['required']">
+                                                        {{'validation-messages.required-field'|translate}}</span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6 col-12">
-                                            <label for="serialTypeId" class="label-name">{{'voucher-type.serial-type'|translate}}
-												<span class="text-danger">*</span></label>
+                                            <label for="serialTypeId"
+                                                class="label-name">{{'voucher-type.serial-type'|translate}}
+                                                <span class="text-danger">*</span></label>
                                             <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="serialTypeId" [items]="serialType" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+                                                <ng-select class="custom" formControlName="serialTypeId"
+                                                    [items]="serialType" bindLabel="name" bindValue="id"
+                                                    style="width:100%"></ng-select>
                                                 <!-- <div *ngIf="(f['serialTypeId'].touched || f['serialTypeId'].dirty ) && f['serialTypeId'].invalid"
                                                     class="alert-danger">
                                                     <i class="fa fa-close "></i>
@@ -124,51 +144,73 @@
                                                 <div class="row">
 
                                                     <div class="col-md-6 col-12">
-                                                        <label for="defaultAccountId" class="label-name">{{'general.default-cash-account'|translate}}</label>
+                                                        <label for="defaultAccountId"
+                                                            class="label-name">{{'general.default-cash-account'|translate}}</label>
                                                         <span class="text-danger">*</span>
                                                         <div class="d-flex">
                                                             <div class="flex-grow-1">
                                                                 <div class="input-group  popup">
-                                                                    <ng-select style="width:100%" formControlName="defaultAccountId" name='defaultAccountId' class="" id="defaultAccountId">
-                                                                        <ng-option *ngFor="let account of cashAccountList" [value]="account.id">
+                                                                    <ng-select style="width:100%"
+                                                                        formControlName="defaultAccountId"
+                                                                        name='defaultAccountId' class=""
+                                                                        id="defaultAccountId">
+                                                                        <ng-option
+                                                                            *ngFor="let account of cashAccountList"
+                                                                            [value]="account.id">
                                                                             {{lang=="ar"?account.nameAr:account.nameEn}}
                                                                         </ng-option>
                                                                     </ng-select>
 
-                                                                    <div *ngIf="(f['defaultAccountId'].touched || f['defaultAccountId'].dirty ) && f['defaultAccountId'].invalid" class="validation alert-danger position-absolute">
+                                                                    <div *ngIf="(f['defaultAccountId'].touched || f['defaultAccountId'].dirty ) && f['defaultAccountId'].invalid"
+                                                                        class="validation alert-danger position-absolute">
                                                                         <i class="fa fa-close "></i>
-                                                                        <span *ngIf="f['defaultAccountId'].errors && f['defaultAccountId'].errors['required']" class="f-12 ng-star-inserted text-white">
-																			{{'error.required'|translate}}</span>
+                                                                        <span
+                                                                            *ngIf="f['defaultAccountId'].errors && f['defaultAccountId'].errors['required']"
+                                                                            class="f-12 ng-star-inserted text-white">
+                                                                            {{'error.required'|translate}}</span>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                             <div class="">
-                                                                <button class="btn btn-rounded btn-dark" (click)="showSearchAccountModal=true" type="button"><i class="fa fa-search"></i></button>
+                                                                <button class="btn btn-rounded btn-dark"
+                                                                    (click)="showSearchAccountModal=true"
+                                                                    type="button"><i class="fa fa-search"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-12">
-                                                        <label for="defaultCurrencyId" class="label-name">{{'general.default-currency'|translate}}</label>
+                                                        <label for="defaultCurrencyId"
+                                                            class="label-name">{{'general.default-currency'|translate}}</label>
                                                         <span class="text-danger">*</span>
                                                         <div class="d-flex">
                                                             <div class="flex-grow-1">
                                                                 <div class="input-group  popup">
-                                                                    <ng-select style="width:100%" formControlName="defaultCurrencyId" name='defaultCurrencyId' class="" id="defaultCurrencyId">
-                                                                        <ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
+                                                                    <ng-select style="width:100%"
+                                                                        formControlName="defaultCurrencyId"
+                                                                        name='defaultCurrencyId' class=""
+                                                                        id="defaultCurrencyId">
+                                                                        <ng-option
+                                                                            *ngFor="let currency of currenciesList"
+                                                                            [value]="currency.id">
                                                                             {{lang=="ar"?currency.nameAr:currency.nameEn}}
                                                                         </ng-option>
                                                                     </ng-select>
-                                                                    <div *ngIf="(f['defaultCurrencyId'].touched || f['defaultCurrencyId'].dirty ) && f['defaultCurrencyId'].invalid" class="validation alert-danger position-absolute">
+                                                                    <div *ngIf="(f['defaultCurrencyId'].touched || f['defaultCurrencyId'].dirty ) && f['defaultCurrencyId'].invalid"
+                                                                        class="validation alert-danger position-absolute">
                                                                         <i class="fa fa-close "></i>
-                                                                        <span *ngIf="f['defaultCurrencyId'].errors && f['defaultCurrencyId'].errors['required']" class="f-12 ng-star-inserted text-white">
-																			{{'error.required'|translate}}</span>
+                                                                        <span
+                                                                            *ngIf="f['defaultCurrencyId'].errors && f['defaultCurrencyId'].errors['required']"
+                                                                            class="f-12 ng-star-inserted text-white">
+                                                                            {{'error.required'|translate}}</span>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                             <div class="">
-                                                                <button class="btn btn-rounded btn-dark" (click)="showSearchCurrencyModal=true" type="button"><i class="fa fa-search"></i></button>
+                                                                <button class="btn btn-rounded btn-dark"
+                                                                    (click)="showSearchCurrencyModal=true"
+                                                                    type="button"><i class="fa fa-search"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -188,30 +230,44 @@
                                                     </div> -->
 
                                                     <div class="col-md-6 col-12 ">
-                                                        <label for="createFinancialEntryId" class="label-name">{{'voucher-type.create-financial-entry'|translate}}
-														</label>
+                                                        <label for="createFinancialEntryId"
+                                                            class="label-name">{{'voucher-type.create-financial-entry'|translate}}
+                                                        </label>
                                                         <span class="text-danger">*</span>
                                                         <div class="input-group  popup">
-                                                            <ng-select class="custom" formControlName="createFinancialEntryId" [items]="createFinancialEntry" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                            <div *ngIf="(f['createFinancialEntryId'].touched || f['createFinancialEntryId'].dirty ) && f['createFinancialEntryId'].invalid" class="validation alert-danger position-absolute">
+                                                            <ng-select class="custom"
+                                                                formControlName="createFinancialEntryId"
+                                                                [items]="createFinancialEntry" bindLabel="name"
+                                                                bindValue="id" style="width:100%"></ng-select>
+                                                            <div *ngIf="(f['createFinancialEntryId'].touched || f['createFinancialEntryId'].dirty ) && f['createFinancialEntryId'].invalid"
+                                                                class="validation alert-danger position-absolute">
                                                                 <i class="fa fa-close "></i>
-                                                                <span *ngIf="f['createFinancialEntryId'].errors && f['createFinancialEntryId'].errors['required']" class="f-12 ng-star-inserted text-white">
-																	{{'error.required'|translate}}</span>
+                                                                <span
+                                                                    *ngIf="f['createFinancialEntryId'].errors && f['createFinancialEntryId'].errors['required']"
+                                                                    class="f-12 ng-star-inserted text-white">
+                                                                    {{'error.required'|translate}}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-12">
-                                                        <label for="defaultBeneficiaryId" class="label-name">{{'voucher-type.default-beneficiary'|translate}}
-														</label>
+                                                        <label for="defaultBeneficiaryId"
+                                                            class="label-name">{{'voucher-type.default-beneficiary'|translate}}
+                                                        </label>
                                                         <span class="text-danger">*</span>
                                                         <div class="input-group  popup">
-                                                            <ng-select class="custom" formControlName="defaultBeneficiaryId" [items]="defaultBeneficiaryType" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+                                                            <ng-select class="custom"
+                                                                formControlName="defaultBeneficiaryId"
+                                                                [items]="defaultBeneficiaryType" bindLabel="name"
+                                                                bindValue="id" style="width:100%"></ng-select>
 
                                                         </div>
-                                                        <div *ngIf="(f['defaultBeneficiaryId'].touched || f['defaultBeneficiaryId'].dirty ) && f['defaultBeneficiaryId'].invalid" class="validation alert-danger position-absolute">
+                                                        <div *ngIf="(f['defaultBeneficiaryId'].touched || f['defaultBeneficiaryId'].dirty ) && f['defaultBeneficiaryId'].invalid"
+                                                            class="validation alert-danger position-absolute">
                                                             <i class="fa fa-close "></i>
-                                                            <span *ngIf="f['defaultBeneficiaryId'].errors && f['defaultBeneficiaryId'].errors['required']" class="f-12 ng-star-inserted text-white">
-																{{'error.required'|translate}}</span>
+                                                            <span
+                                                                *ngIf="f['defaultBeneficiaryId'].errors && f['defaultBeneficiaryId'].errors['required']"
+                                                                class="f-12 ng-star-inserted text-white">
+                                                                {{'error.required'|translate}}</span>
                                                         </div>
                                                     </div>
                                                     <!-- <div class="col gap-3 grid grid-cols-3 ">
@@ -239,14 +295,15 @@
                                                     </div> -->
                                                     <div class="col-md-6 col-12 ">
                                                         <div class="media">
-                                                            <label for="printAfterSave" class="label-name">{{'general.print-after-save'|translate}}</label>
+                                                            <label for="printAfterSave"
+                                                                class="label-name">{{'general.print-after-save'|translate}}</label>
                                                             <div class="icon-state media-body">
                                                                 <label class="switch">
-																	<input type="checkbox" class="form-control"
-																		name="printAfterSave"
-																		formControlName="printAfterSave">
-																	<span class="switch-state"></span>
-																</label>
+                                                                    <input type="checkbox" class="form-control"
+                                                                        name="printAfterSave"
+                                                                        formControlName="printAfterSave">
+                                                                    <span class="switch-state"></span>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -278,11 +335,14 @@
     </div>
 </section>
 
-<app-public-search-modal [isVisible]="showSearchJournalModal" [routeApi]="routeJournalApi" (emitClose)="showSearchJournalModal = false;" (emitSearch)="onSelectJournal($event)">
+<app-public-search-modal [isVisible]="showSearchJournalModal" [routeApi]="routeJournalApi"
+    (emitClose)="showSearchJournalModal = false;" (emitSearch)="onSelectJournal($event)">
 </app-public-search-modal>
 
-<app-public-search-modal [isVisible]="showSearchAccountModal" [routeApi]="routeCashAccountApi" (emitClose)="showSearchAccountModal = false;" (emitSearch)="onSelectAccount($event)">
+<app-public-search-modal [isVisible]="showSearchAccountModal" [routeApi]="routeCashAccountApi"
+    (emitClose)="showSearchAccountModal = false;" (emitSearch)="onSelectAccount($event)">
 </app-public-search-modal>
 
-<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi" (emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
+<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi"
+    (emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
 </app-public-search-modal>

@@ -69,10 +69,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
   lang = localStorage.getItem("language")
-  routeCashAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Cash
-  routeSalesAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Sales
-  routeSupplierAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Supplier
-  routePurchasesAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Purchases
+  routeCashAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
+  routeSalesAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Sales
+  routeSupplierAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Supplier
+  routePurchasesAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Purchases
   routeAccountApi = 'Account/GetLeafAccounts?'
 
   routeCurrencyApi = "currency/get-ddl?"
@@ -88,7 +88,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   routeItemApi = 'ItemCard/get-ddl?'
   routeUnitApi = 'Unit/get-ddl?'
 
-  accountsList:any;
+  accountsList: any;
   cashAccountsList: any;
   currenciesList: any;
   costCentersList: any;
@@ -116,8 +116,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   currency: any;
   mainCurrencyId: number;
-  paidAccountId:number;
-  remainingAccountId:number;
+  paidAccountId: number;
+  remainingAccountId: number;
   showSearchSupplierModal = false;
   showSearchCustomerModal = false;
   showSearchCashAccountModal = false;
@@ -126,14 +126,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchSalesReturnAccountModal = false;
   showSearchPurchasesAccountModal = false;
   showSearchPurchasesReturnAccountModal = false;
-  showSearchPaidAccountModal=false;
-  showSearchRemainingAccountModal=false;
+  showSearchPaidAccountModal = false;
+  showSearchRemainingAccountModal = false;
   showSearchCostCenterModal = false;
   showSearchCurrencyModal = false;
   showSearchSalesPersonModal = false;
   showSearchStoreModal = false;
   showSearchProjectModal = false;
- 
+
 
   addUrl: string = '/warehouses-operations/bill/add-bill';
   updateUrl: string = '/warehouses-operations/bill/update-bill/';
@@ -183,11 +183,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.getShipMethods();
 
     Promise.all([
+      this.getGeneralConfigurationsOfMainCurrency(),
       this.getSuppliers(),
       this.getCustomers(),
       this.getCurrencies(),
       this.getCurrenciesTransactions(),
-      this.getGeneralConfigurationsOfMainCurrency(),
       this.getCashAccounts(),
       this.getSupplierAccounts(),
       this.getSalesAccounts(),
@@ -489,44 +489,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   getCashAccounts() {
     return new Promise<void>((resolve, reject) => {
-      // let sub = this.accountService.getLeafAccounts().subscribe({
-      //   next: (res) => {
-      //     
-      //     if (res.success) {
-      //       this.cashAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Cash);
-
-      //     }
-
-
-      //     resolve();
-
-      //   },
-      //   error: (err: any) => {
-      //     reject(err);
-      //   },
-      //   complete: () => {
-      //     console.log('complete');
-      //   },
-      // });
-      // let sub = this.accountService.getLeafAccountsByAccountClassificationId(AccountClassificationsEnum.Cash).subscribe({
-      //   next: (res) => {
-      //     
-      //     if (res.success) {
-      //       this.cashAccountsList = res.response;
-
-      //     }
-
-
-      //     resolve();
-
-      //   },
-      //   error: (err: any) => {
-      //     reject(err);
-      //   },
-      //   complete: () => {
-      //     console.log('complete');
-      //   },
-      // });
+      
       let sub = this.publicService.getDdl(this.routeCashAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
@@ -1056,6 +1019,19 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
   }
+  deleteBillAdditionDiscount(index) {
+    this.net = this.net - this.billAdditionAndDiscount[index]?.additionValue + this.billAdditionAndDiscount[index].discountValue ?? 0;
+    if (this.billAdditionAndDiscount.length) {
+      if (this.billAdditionAndDiscount.length == 1) {
+        this.billAdditionAndDiscount = [];
+      } else {
+        this.billAdditionAndDiscount.splice(index, 1);
+      }
+    }
+
+    this.bill.billAdditionAndDiscount = this.billAdditionAndDiscount;
+
+  }
   clearSelectedItemData() {
     this.selectedBillItem = {
       id: 0,
@@ -1079,6 +1055,28 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       unitNameEn: '',
       storeNameAr: '',
       storeNameEn: ''
+    }
+  }
+  clearSelectedBilladditionDiscountData() {
+    this.selectedBillAdditionAndDiscount = {
+      id: 0,
+      billId: 0,
+      additionRatio: 0,
+      additionValue: 0,
+      discountRatio: 0,
+      discountValue: 0,
+      accountId: '',
+      notes: '',
+      correspondingAccountId: '',
+      currencyId: 0,
+      currencyExchangeTransaction: 0,
+      accountNameAr: '',
+      accountNameEn: '',
+      correspondingAccountNameAr: '',
+      correspondingAccountNameEn: '',
+      currencyNameAr: '',
+      currencyNameEn: '',
+
     }
   }
 
@@ -1294,6 +1292,25 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     }
   }
+  getCurrencyFactorForAdditionAndDiscount(currencyId: any) {
+    debugger
+    if (currencyId == this.mainCurrencyId) {
+      this.selectedBillAdditionAndDiscount.currencyExchangeTransaction = 1;
+    }
+    else {
+      this.selectedBillAdditionAndDiscount.currencyExchangeTransaction = this.currencyTransactionList.filter(x => x.currencyMasterId == currencyId && x.currencyDetailId == this.mainCurrencyId)[0].transactionFactor
+
+    }
+  }
+  getCurrencyFactorForAdditionAndDiscountAdded(currencyId: any, i: number) {
+    if (currencyId == this.mainCurrencyId) {
+      this.billAdditionAndDiscount[i].currencyExchangeTransaction = 1;
+    }
+    else {
+      this.billAdditionAndDiscount[i].currencyExchangeTransaction = this.currencyTransactionList.filter(x => x.currencyMasterId == currencyId && x.currencyDetailId == this.mainCurrencyId)[0].transactionFactor
+
+    }
+  }
   openItemSearchDialog(i) {
 
     let searchTxt = '';
@@ -1436,8 +1453,159 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
 
   }
+  openAccountSearchDialog(i) {
+
+    let searchTxt = '';
+    if (i == -1) {
+      searchTxt = this.selectedBillAdditionAndDiscount?.accountNameAr ?? '';
+    } else {
+      searchTxt = ''
+      // this.selectedRentContractUnits[i].unitNameAr!;
+    }
+
+    let data = this.accountsList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+
+    if (data.length == 1) {
+      if (i == -1) {
+        this.selectedBillAdditionAndDiscount!.accountNameAr = data[0].nameAr;
+        this.selectedBillAdditionAndDiscount!.accountId = data[0].id;
+      } else {
+        this.billAdditionAndDiscount[i].accountNameAr = data[0].nameAr;
+        this.billAdditionAndDiscount[i].accountId = data[0].id;
+      }
+
+    } else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن الحساب';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.accountsList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            if (i == -1) {
+              this.selectedBillAdditionAndDiscount!.accountNameAr = d.nameAr;
+              this.selectedBillAdditionAndDiscount!.accountId = d.id;
+            } else {
+              this.billAdditionAndDiscount[i].accountNameAr = d.nameAr;
+              this.billAdditionAndDiscount[i].accountId = d.id;
+            }
+
+          }
+        });
+      this.subsList.push(sub);
+    }
+
+  }
+  openCorrespondingAccountSearchDialog(i) {
+
+    let searchTxt = '';
+    if (i == -1) {
+      searchTxt = this.selectedBillAdditionAndDiscount?.correspondingAccountNameAr ?? '';
+    } else {
+      searchTxt = ''
+      // this.selectedRentContractUnits[i].unitNameAr!;
+    }
+
+    let data = this.accountsList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+
+    if (data.length == 1) {
+      if (i == -1) {
+        this.selectedBillAdditionAndDiscount!.correspondingAccountNameAr = data[0].nameAr;
+        this.selectedBillAdditionAndDiscount!.correspondingAccountId = data[0].id;
+      } else {
+        this.billAdditionAndDiscount[i].correspondingAccountNameAr = data[0].nameAr;
+        this.billAdditionAndDiscount[i].correspondingAccountId = data[0].id;
+      }
+
+    } else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن الحساب';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.accountsList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            if (i == -1) {
+              this.selectedBillAdditionAndDiscount!.correspondingAccountNameAr = d.nameAr;
+              this.selectedBillAdditionAndDiscount!.correspondingAccountId = d.id;
+            } else {
+              this.billAdditionAndDiscount[i].correspondingAccountNameAr = d.nameAr;
+              this.billAdditionAndDiscount[i].correspondingAccountId = d.id;
+            }
+
+          }
+        });
+      this.subsList.push(sub);
+    }
+
+  }
+  openCurrencySearchDialog(i) {
+    let searchTxt = '';
+    if (i == -1) {
+      searchTxt = this.selectedBillAdditionAndDiscount?.currencyNameAr ?? '';
+    } else {
+      searchTxt = ''
+      // this.selectedRentContractUnits[i].unitNameAr!;
+    }
+
+    let data = this.currenciesList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+
+    if (data.length == 1) {
+      if (i == -1) {
+        this.selectedBillAdditionAndDiscount!.currencyNameAr = data[0].nameAr;
+        this.selectedBillAdditionAndDiscount!.currencyId = data[0].id;
+        this.getCurrencyFactorForAdditionAndDiscount(data[0].id);
+      } else {
+        this.billAdditionAndDiscount[i].currencyNameAr = data[0].nameAr;
+        this.billAdditionAndDiscount[i].currencyId = data[0].id;
+        this.getCurrencyFactorForAdditionAndDiscountAdded(data[0].id, i);
+
+      }
+
+    } else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن العملة';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.currenciesList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            if (i == -1) {
+              this.selectedBillAdditionAndDiscount!.currencyNameAr = d.nameAr;
+              this.selectedBillAdditionAndDiscount!.currencyId = d.id;
+              this.getCurrencyFactorForAdditionAndDiscount(data[0].id);
+
+            } else {
+              this.billAdditionAndDiscount[i].currencyNameAr = d.nameAr;
+              this.billAdditionAndDiscount[i].currencyId = d.id;
+              this.getCurrencyFactorForAdditionAndDiscountAdded(data[0].id, i);
+
+            }
+
+          }
+        });
+      this.subsList.push(sub);
+    }
+
+  }
+
   onChangeItem() {
-    
+
     // this.selectedBillItem.itemDescription= '';
     // this.selectedBillItem.unitId=0;
     // this.selectedBillItem.quantity=0;
@@ -1457,7 +1625,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     // this.selectedBillItem.storeNameAr='';
     // this.selectedBillItem.storeNameEn='';
     this.selectedBillItem.price = this.itemsList.find((x) => x.id == this.selectedBillItem.itemId)?.sellingPrice;
-    
+
     if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
       this.onChangeQuantityOrPrice();
     }
@@ -1473,7 +1641,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       // else
       // {
       this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + Number(this.selectedBillItem.totalBeforeTax * 0.14);
-     // }
+      // }
     }
     else {
       this.selectedBillItem.total = this.selectedBillItem.totalBeforeTax;
@@ -1500,30 +1668,30 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.billItem[i].discountValue = 0;
 
   }
-  onChangeAdditionOrDiscountRatio(i:number) {
-    if (i==1) {
+  onChangeAdditionOrDiscountRatio(i: number) {
+    if (i == 1) {
       this.selectedBillItem.additionValue =
         Number(this.selectedBillItem.quantity * this.selectedBillItem.price) * Number(this.selectedBillItem.additionRatio / 100);
       this.selectedBillItem.discountRatio = 0;
       this.selectedBillItem.discountValue = 0;
 
     }
-    if (i==2) {
+    if (i == 2) {
       this.selectedBillItem.discountValue =
         Number(this.selectedBillItem.quantity * this.selectedBillItem.price) * Number(this.selectedBillItem.discountRatio / 100);
       this.selectedBillItem.additionRatio = 0;
       this.selectedBillItem.additionValue = 0;
     }
-    if (i==3) {
+    if (i == 3) {
       this.selectedBillItem.additionRatio =
-      (Number(this.selectedBillItem.additionValue) /  Number(this.selectedBillItem.quantity * this.selectedBillItem.price))*100;
+        (Number(this.selectedBillItem.additionValue) / Number(this.selectedBillItem.quantity * this.selectedBillItem.price)) * 100;
       this.selectedBillItem.discountRatio = 0;
       this.selectedBillItem.discountValue = 0;
 
     }
-    if (i==4) {
+    if (i == 4) {
       this.selectedBillItem.discountRatio =
-       (Number(this.selectedBillItem.discountValue) / Number(this.selectedBillItem.quantity * this.selectedBillItem.price))*100 ;
+        (Number(this.selectedBillItem.discountValue) / Number(this.selectedBillItem.quantity * this.selectedBillItem.price)) * 100;
       this.selectedBillItem.additionRatio = 0;
       this.selectedBillItem.additionValue = 0;
     }
@@ -1553,30 +1721,30 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
 
-  onChangeAdditionOrDiscountRatioAdded(i: any) {
-    if (i==1) {
+  onChangeAdditionOrDiscountRatioAdded(a: any,i:number) {
+    if (a == 1) {
       this.billItem[i].additionValue =
         Number(this.billItem[i].quantity * this.billItem[i].price) * Number(this.billItem[i].additionRatio / 100);
       this.billItem[i].discountRatio = 0;
       this.billItem[i].discountValue = 0;
 
     }
-    if (i==2) {
+    if (a == 2) {
       this.billItem[i].discountValue =
         Number(this.billItem[i].quantity * this.billItem[i].price) * Number(this.billItem[i].discountRatio / 100);
       this.billItem[i].additionRatio = 0;
       this.billItem[i].additionValue = 0;
     }
-    if (i==3) {
+    if (a == 3) {
       this.billItem[i].additionRatio =
-      (Number(this.billItem[i].additionValue) /  Number(this.billItem[i].quantity * this.billItem[i].price))*100;
+        (Number(this.billItem[i].additionValue) / Number(this.billItem[i].quantity * this.billItem[i].price)) * 100;
       this.billItem[i].discountRatio = 0;
       this.billItem[i].discountValue = 0;
 
     }
-    if (i==4) {
+    if (a == 4) {
       this.billItem[i].discountRatio =
-       (Number(this.billItem[i].discountValue) / Number(this.billItem[i].quantity * this.billItem[i].price))*100 ;
+        (Number(this.billItem[i].discountValue) / Number(this.billItem[i].quantity * this.billItem[i].price)) * 100;
       this.billItem[i].additionRatio = 0;
       this.billItem[i].additionValue = 0;
     }
@@ -1606,6 +1774,64 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
   }
+  onChangeAdditionOrDiscountRatioInBillAdditionDiscount(i: any) {
+    if (i == 1) {
+      this.selectedBillAdditionAndDiscount.additionValue =
+        Number(this.total) * Number(this.selectedBillAdditionAndDiscount.additionRatio / 100);
+      this.selectedBillAdditionAndDiscount.discountRatio = 0;
+      this.selectedBillAdditionAndDiscount.discountValue = 0;
+
+    }
+    if (i == 2) {
+      this.selectedBillAdditionAndDiscount.discountValue =
+        Number(this.total) * Number(this.selectedBillAdditionAndDiscount.discountRatio / 100);
+      this.selectedBillAdditionAndDiscount.additionRatio = 0;
+      this.selectedBillAdditionAndDiscount.additionValue = 0;
+    }
+    if (i == 3) {
+      this.selectedBillAdditionAndDiscount.additionRatio =
+        (Number(this.selectedBillAdditionAndDiscount.additionValue) / Number(this.total)) * 100;
+      this.selectedBillAdditionAndDiscount.discountRatio = 0;
+      this.selectedBillAdditionAndDiscount.discountValue = 0;
+
+    }
+    if (i == 4) {
+      this.selectedBillAdditionAndDiscount.discountRatio =
+        (Number(this.selectedBillAdditionAndDiscount.discountValue) / Number(this.total)) * 100;
+      this.selectedBillAdditionAndDiscount.additionRatio = 0;
+      this.selectedBillAdditionAndDiscount.additionValue = 0;
+    }
+  }
+  onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(a:any,i: any) {
+    if (a == 1) {
+      this.billAdditionAndDiscount[i].additionValue =
+        Number(this.total) * Number(this.billAdditionAndDiscount[i].additionRatio / 100);
+      this.billAdditionAndDiscount[i].discountRatio = 0;
+      this.billAdditionAndDiscount[i].discountValue = 0;
+
+    }
+    if (a == 2) {
+      this.billAdditionAndDiscount[i].discountValue =
+        Number(this.total) * Number(this.billAdditionAndDiscount[i].discountRatio / 100);
+      this.billAdditionAndDiscount[i].additionRatio = 0;
+      this.billAdditionAndDiscount[i].additionValue = 0;
+    }
+    if (a == 3) {
+      this.billAdditionAndDiscount[i].additionRatio =
+        (Number(this.billAdditionAndDiscount[i].additionValue) / Number(this.total)) * 100;
+      this.billAdditionAndDiscount[i].discountRatio = 0;
+      this.billAdditionAndDiscount[i].discountValue = 0;
+
+    }
+    if (a == 4) {
+      this.billAdditionAndDiscount[i].discountRatio =
+        (Number(this.billAdditionAndDiscount[i].discountValue) / Number(this.total)) * 100;
+      this.billAdditionAndDiscount[i].additionRatio = 0;
+      this.billAdditionAndDiscount[i].additionValue = 0;
+    }
+    this.net = this.net + this.billAdditionAndDiscount[i].additionValue - this.billAdditionAndDiscount[i].discountValue;
+  }
+
   updateItemData(item: BillItem) {
     if (this.billItem.length > 0) {
       this.deleteBillItemForUpdate(item);
@@ -1613,7 +1839,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
 
   }
-
   addItemDataForUpdate(item: BillItem) {
     debugger
     this.billItem.push(
@@ -1676,6 +1901,65 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
   }
+  updateBillAdditionsAndDiscountData(item: BillAdditionAndDiscount) {
+
+    if (this.billAdditionAndDiscount.length > 0) {
+      this.deleteBillAdditionDiscountForUpdate(item);
+      this.addBillAdditionDiscountDataForUpdate(item);
+    }
+  }
+  addBillAdditionDiscountDataForUpdate(item: BillAdditionAndDiscount) {
+    debugger
+    this.billAdditionAndDiscount.push(
+      {
+        id: 0,
+        billId: item.billId,
+        additionRatio: item.additionRatio,
+        additionValue: item.additionValue,
+        discountRatio: item.discountRatio,
+        discountValue: item.discountValue,
+        accountId: item.accountId,
+        notes: item.notes,
+        correspondingAccountId: item.correspondingAccountId,
+        currencyId: item.currencyId,
+        currencyExchangeTransaction: item.currencyExchangeTransaction,
+        accountNameAr: item.accountNameAr,
+        accountNameEn: item.accountNameEn,
+        correspondingAccountNameAr:item.correspondingAccountNameAr,
+        correspondingAccountNameEn: item.correspondingAccountNameEn,
+        currencyNameAr: item.currencyNameAr,
+        currencyNameEn: item.currencyNameEn
+      }
+    )
+
+    this.billAdditionAndDiscount.forEach(item => {
+      this.net = this.total + item.additionValue - item.discountValue;
+    
+    }
+    )
+   
+
+  }
+  deleteBillAdditionDiscountForUpdate(item: BillAdditionAndDiscount) {
+    if (item != null) {
+      const index: number = this.billAdditionAndDiscount.indexOf(item);
+      if (index !== -1) {
+        this.billAdditionAndDiscount.splice(index, 1);
+
+        this.net = this.net - this.billAdditionAndDiscount[index].additionValue + this.billAdditionAndDiscount[index].discountValue;
+      
+
+
+      }
+
+    }
+
+
+
+
+
+  }
+
   getNet() {
     debugger
     this.taxValue = Number(this.total) * Number(this.taxRatio / 100);
@@ -1688,9 +1972,31 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   getRamining() {
     this.remaining = Number(this.net) - Number(this.paid)
   }
-  addItemAdditionsDiscounts()
-  {
-    
+  addItemAdditionsDiscounts() {
+    this.billAdditionAndDiscount.push({
+      id: 0,
+      billId: this.selectedBillAdditionAndDiscount?.billId ?? 0,
+      additionRatio: this.selectedBillAdditionAndDiscount?.additionRatio ?? 0,
+      additionValue: this.selectedBillAdditionAndDiscount?.additionValue ?? 0,
+      discountRatio: this.selectedBillAdditionAndDiscount?.discountRatio ?? 0,
+      discountValue: this.selectedBillAdditionAndDiscount?.discountValue ?? 0,
+      accountId: this.selectedBillAdditionAndDiscount?.accountId ?? '',
+      notes: this.selectedBillAdditionAndDiscount?.notes ?? '',
+      correspondingAccountId: this.selectedBillAdditionAndDiscount?.correspondingAccountId ?? '',
+      currencyId: this.selectedBillAdditionAndDiscount?.currencyId ?? 0,
+      currencyExchangeTransaction: this.selectedBillAdditionAndDiscount?.currencyExchangeTransaction ?? 0,
+      accountNameAr: this.selectedBillAdditionAndDiscount?.accountNameAr ?? '',
+      accountNameEn: this.selectedBillAdditionAndDiscount?.accountNameEn ?? '',
+      correspondingAccountNameAr: this.selectedBillAdditionAndDiscount?.correspondingAccountNameAr ?? '',
+      correspondingAccountNameEn: this.selectedBillAdditionAndDiscount?.correspondingAccountNameEn ?? '',
+      currencyNameAr: this.selectedBillAdditionAndDiscount?.currencyNameAr ?? '',
+      currencyNameEn: this.selectedBillAdditionAndDiscount?.currencyNameEn ?? ''
+    });
+    this.bill!.billAdditionAndDiscount = this.billAdditionAndDiscount;
+
+    this.net = this.net + this.selectedBillAdditionAndDiscount?.additionValue - this.selectedBillAdditionAndDiscount?.discountValue ?? 0;
+
+    this.clearSelectedBilladditionDiscountData();
   }
 
 }

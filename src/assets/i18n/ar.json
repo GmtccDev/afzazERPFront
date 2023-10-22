@@ -362,8 +362,8 @@
         "debit": "مدين",
         "credit": "دائن",
         "currency-conversion-factor": "معامل التحويل ",
-        "debit-after-conversion": "مدين بعد التحويل",
-        "credit-after-conversion": "دائن بعد التحويل",
+        "debit-after-conversion": "مدين محلى",
+        "credit-after-conversion": "دائن محلى",
         "beneficiary": "المستفيد",
         "beneficiary-type": "نوع المستفيد",
         "beneficiary-account": "حساب المستفيد",
@@ -433,7 +433,9 @@
         "addition-ratio":"نسبة الأضافة",
         "addition-value":"قيمة الأضافة",
         "paid-account":"حساب المدفوع",
-        "remaining-account":"حساب المتبقى"
+        "remaining-account":"حساب المتبقى",
+        "corresponding-account":"الحساب المقابل"
+
        
        
          

@@ -43,7 +43,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     private voucherTypeService: VoucherTypeServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
@@ -106,7 +105,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.voucher-types");
           if (res.success) {
             this.voucherType = res.response.items
@@ -119,7 +117,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -158,7 +155,6 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
 
@@ -190,23 +186,8 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     this.lang == 'ar'
       ? { title: ' الاسم', field: 'voucherNameAr' } :
-      { title: ' Name  ', field: 'voucherNameEn' },
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-    //   field: 'createdAt',
-    // },
-    // {
-    //   title: this.lang == 'ar' ? 'تم الانشاء بواسطة' : 'Created by',
-    //   field: 'createdBy',
-    // },
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-    //   field: 'updatedAt',
-    // },
-    // {
-    //   title: this.lang == 'ar' ? 'تم التعديل بواسطة' : 'Updated by',
-    //   field: 'updateBy',
-    // },
+      { title: ' Name  ', field: 'voucherNameEn' }
+    
 
   ];
 

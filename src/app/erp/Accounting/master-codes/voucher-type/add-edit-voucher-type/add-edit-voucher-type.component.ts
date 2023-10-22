@@ -42,7 +42,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   journalList: any;
   currenciesList: any;
-
   fiscalPeriodList: any;
   cashAccountList: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
@@ -77,7 +76,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   routeCurrencyApi = "currency/get-ddl?"
 
   routefiscalPeriodApi = "fiscalPeriod/get-ddl?"
-  routeCashAccountApi = 'Account/GetLeafAccountsByAccountClassificationId?AccountClassificationId=' + AccountClassificationsEnum.Cash
+  routeCashAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
   companyId: string = localStorage.getItem("companyId");
   branchId: string = localStorage.getItem("branchId");
 
@@ -158,18 +157,15 @@ export class AddEditVoucherTypeComponent implements OnInit {
       companyId: this.companyId,
       branchId: this.branchId,
       voucherNameAr: NAME_REQUIRED_VALIDATORS,
-      voucherNameEn: NAME_REQUIRED_VALIDATORS,
+      voucherNameEn: '',
       journalId: REQUIRED_VALIDATORS,
       voucherKindId: REQUIRED_VALIDATORS,
       serialTypeId: 1,
       serialId: null,
       defaultAccountId: REQUIRED_VALIDATORS,
       defaultCurrencyId: REQUIRED_VALIDATORS,
-      //chooseAccountNature: false,
       createFinancialEntryId: REQUIRED_VALIDATORS,
       defaultBeneficiaryId: REQUIRED_VALIDATORS,
-      // needReview: false,
-      // defaultLayoutId:null,
       printAfterSave: false
     });
 
@@ -210,10 +206,10 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   getVoucherTypeById(id: any) {
     return new Promise<void>((resolve, reject) => {
-    let sub =  this.voucherTypeService.getVoucherType(id).subscribe({
+      let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.voucherTypeForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -224,26 +220,22 @@ export class AddEditVoucherTypeComponent implements OnInit {
             voucherKindId: res.response?.voucherKindId,
             serialTypeId: res.response?.serialTypeId,
             serialId: res.response?.serialId,
-            defaultAccountId: res.response?.defaultAccountId,
+            defaultAccountId: res.response?.defaultAccountId + "",
             defaultCurrencyId: res.response?.defaultCurrencyId,
-            //  chooseAccountNature: res.response?.chooseAccountNature,
             createFinancialEntryId: res.response?.createFinancialEntryId,
             defaultBeneficiaryId: res.response?.defaultBeneficiaryId,
-            //  needReview: res.response?.needReview,
-            // defaultLayoutId: res.response?.defaultLayoutId,
             printAfterSave: res.response?.printAfterSave
 
 
 
           });
 
-         
+
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -265,7 +257,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -295,7 +286,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -308,7 +298,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeCashAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.cashAccountList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true && x.accountClassificationId == AccountClassificationsEnum.Cash);
+            this.cashAccountList = res.response;
 
           }
           resolve();
@@ -318,7 +308,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -341,7 +330,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -401,7 +389,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -426,7 +413,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-        
+
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.sharedServices.changeToolbarPath({
@@ -438,16 +425,14 @@ export class AddEditVoucherTypeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("voucher-type.add-voucher-type");
             if (this.voucherTypeForm.value.code != null) {
-           //   this.getVoucherType()
             }
             this.defineVoucherTypeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
-            
+          } else if (currentBtn.action == ToolbarActions.Update) {
+
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-          // this.get();
           }
         }
       },
@@ -478,13 +463,12 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
     });
   }
   onSave() {
-    
+
     if (this.voucherTypeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -524,7 +508,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
     });
@@ -535,9 +518,9 @@ export class AddEditVoucherTypeComponent implements OnInit {
     if (this.voucherTypeForm.valid) {
 
       this.spinner.show();
-      this.confirmUpdate().then(a=>{
+      this.confirmUpdate().then(a => {
         this.spinner.hide();
-      }).catch(e=>{
+      }).catch(e => {
         this.spinner.hide();
       });
     }
