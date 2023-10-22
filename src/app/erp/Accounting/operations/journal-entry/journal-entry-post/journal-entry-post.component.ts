@@ -208,7 +208,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
   openJournalEntryes() { }
   onCheck(id) {
-debugger;
+;
     const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
   if (index !== -1) {
     this.listIds.splice(index, 1);
@@ -219,7 +219,7 @@ debugger;
 
 }
   onEdit(id) {
-debugger
+
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -264,7 +264,7 @@ debugger
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
-debugger
+
         //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
@@ -299,7 +299,7 @@ debugger
   listUpdateIds: any[] = [];
   onCheckUpdate() {
 
-debugger;
+;
     var ids = this.listIds.map(item => item.id);
     if(ids.length>0){
       let sub = this.journalEntryService.updateList(ids).subscribe(
