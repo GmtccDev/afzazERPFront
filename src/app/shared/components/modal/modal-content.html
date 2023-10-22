@@ -10,21 +10,23 @@
 	<table class="table table-broder">
 		<thead>
 			<th>{{'general.template-name'|translate}}</th>
-			<th colspan="4"></th>
+			<th colspan="4">{{'general.actions'|translate}}</th>
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of reportList">
 				<td>{{item.fileName}}</td>
 				<td>
-					<button class="btn btn-primary" (click)="viewRpt(item)">{{'buttons.show'|translate}}</button>
+					<button class="btn btn-primary btn-table"
+						(click)="viewRpt(item)">{{'buttons.show'|translate}}</button>
 				</td>
+
 				<td>
-					<button class="btn btn-primary" (click)="designRpt(item)"
-						hidden>{{'buttons.design'|translate}}</button>
-				</td>
-				<td>
-					<button class="btn btn-secondary"
+					<button class="btn btn-secondary btn-table"
 						(click)="setAsDefaultRpt(item)">{{'buttons.default'|translate}}</button>
+				</td>
+				<td>
+					<button class="btn btn-primary btn-table" (click)="designRpt(item)"
+						hidden>{{'buttons.design'|translate}}</button>
 				</td>
 				<td *ngIf="item.isBasic!=true">
 					<button class="btn btn-danger btn-table"
