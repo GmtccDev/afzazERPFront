@@ -19,13 +19,14 @@
 					<button class="btn btn-primary btn-table"
 						(click)="viewRpt(item)">{{'buttons.show'|translate}}</button>
 				</td>
-				<td>
-					<button class="btn btn-primary btn-table" (click)="designRpt(item)"
-						hidden>{{'buttons.design'|translate}}</button>
-				</td>
+
 				<td>
 					<button class="btn btn-secondary btn-table"
 						(click)="setAsDefaultRpt(item)">{{'buttons.default'|translate}}</button>
+				</td>
+				<td>
+					<button class="btn btn-primary btn-table" (click)="designRpt(item)"
+						hidden>{{'buttons.design'|translate}}</button>
 				</td>
 				<td *ngIf="item.isBasic!=true">
 					<button class="btn btn-danger btn-table"
