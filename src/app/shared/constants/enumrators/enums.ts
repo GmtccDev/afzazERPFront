@@ -236,3 +236,5 @@ export enum calculationMethodsEnum{
   'As per age of collection'= 2,
  
  }
+
+

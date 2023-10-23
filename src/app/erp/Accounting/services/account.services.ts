@@ -49,7 +49,7 @@ export class AccountServiceProxy {
     getLeafAccountsByAccountClassificationId(accountClassificationId: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('accountClassificationId', accountClassificationId);
-        return this.http.get<any>(this.baseUrl + "/api/Account/GetLeafAccountsByAccountClassificationId", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/Account/GetLeafAccounts", { params: params });
     }
     allAccountes(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
         let queryParams = new HttpParams();

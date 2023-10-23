@@ -183,7 +183,8 @@
 											</label>
 											<div class="d-flex">
 												<ng-select class="flex-grow-1" formControlName="costCenterId"
-													name='costCenterId' id="costCenterId">
+													name='costCenterId' id="costCenterId"
+													(change)="getCostCenterInDetails()">
 													<ng-option *ngFor="let costCenter of costCentersList"
 														[value]="costCenter.id">
 														{{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
@@ -256,14 +257,14 @@
 																			[(ngModel)]="voucherDetail[i].debit"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
-																			(change)="getAddedValueAfterConversion()">
+																			(change)="getAddedValueAfterConversion(i)">
 																	</td>
 																	<td *ngIf="voucherkindId==2">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].credit"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
-																			(change)="getAddedValueAfterConversion()">
+																			(change)="getAddedValueAfterConversion(i)">
 																	</td>
 																	<td style="width:100px;"
 																		*ngIf="enableMultiCurrencies">
@@ -303,7 +304,8 @@
 																			[(ngModel)]="voucherDetail[i].beneficiaryTypeId"
 																			[ngModelOptions]="{standalone: true}"
 																			[items]="beneficiaryTypesEnum"
-																			bindLabel="name" bindValue="id"></ng-select>
+																			bindLabel="name" bindValue="id"
+																			(change)="getBeneficaryAccountsByTypeId(voucherDetail[i].beneficiaryTypeId)"></ng-select>
 																	</td>
 																	<td>
 
@@ -324,16 +326,17 @@
 
 
 																	</td>
-																	<td>
-																		<!-- <button class="btn btn-danger px-3" (click)="deleteItem(i)" type="button">
-
-                                                                        <i class="las la-trash-alt"></i>
-                                                                    </button> -->
-
-																		<input type="button"
-																			class="btn btn-danger  btn-table"
+																	<td
+																		class="align-items-center d-flex justify-content-center gap-1">
+																		<button type="button"
+																			class="btn btn-secondary px-3 "
+																			(click)="updateDetailData(item)"><i
+																				class="fa fa-edit"></i></button>
+																		<button class="btn btn-danger px-3"
 																			value="{{'buttons.delete'|translate}}"
-																			(click)="deleteItem(i)">
+																			type="button">
+																			{{'buttons.delete' | translate}}
+																		</button>
 																	</td>
 																</tr>
 
@@ -392,7 +395,8 @@
 																			[ngModelOptions]="{standalone: true}"
 																			[items]="beneficiaryTypesEnum"
 																			bindLabel="name" bindValue="id"
-																			style="width:100%"></ng-select>
+																			style="width:100%"
+																			(change)="getBeneficaryAccountsByTypeId(selectedVoucherDetail.beneficiaryTypeId)"></ng-select>
 																	</td>
 																	<td>
 
@@ -446,7 +450,7 @@
 	</div>
 </section>
 
-<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeAccountApi"
+<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeCashAccountApi"
 	(emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
 </app-public-search-modal>
 <app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi"
