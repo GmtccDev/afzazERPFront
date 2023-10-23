@@ -441,7 +441,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       //  this.selectedToDate = this.dateConverterService.getCurrentDate();
     }
     this.OnFilter.emit({
-
+    
       fromDate: this.selectedFromDate,
       toDate: this.selectedToDate,
       accountGroupId: this.selectedAccountGroupId,
