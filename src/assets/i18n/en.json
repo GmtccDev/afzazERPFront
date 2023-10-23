@@ -207,8 +207,10 @@
         "addition-value":"Addition Value",
         "paid-account":"Paid Account",
         "remaining-account":"Remaining Account",
-        "corresponding-account":"Corresponding Account"
-        
+        "corresponding-account":"Corresponding Account",
+        "customer-account":"Customer Account",
+        "bank-account":"Bank Account"
+
 
 
     

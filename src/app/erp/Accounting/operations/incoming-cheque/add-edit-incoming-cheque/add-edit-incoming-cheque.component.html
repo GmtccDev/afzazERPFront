@@ -16,13 +16,10 @@
                                     <h3>{{'component-names.incomingCheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-
-
                                         <div class="col-md-6 col-12">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="position-relative">
-                                                <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
                                                 <input type="text" class="form-control icon-branch" name="code"
                                                     formControlName="code">
                                                 <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
@@ -36,25 +33,31 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12 ">
-                                            <label for="account" class="label-name">
-                                                {{'component-names.account'|translate}}
+                                            <label for="bankAccount" class="label-name">
+                                                {{'general.bank-account'|translate}}
                                             </label><span class="text-danger">*</span>
                                             <div class="input-group form-group">
-                                                <select required class="form-control required" name="accountId"
-                                                    formControlName="accountId">
-
-                                                    <option *ngFor="let account of accountList" [value]="account.id">
+                                                <select required class="form-control required" name="bankAccountId"
+                                                    formControlName="bankAccountId">
+                                                    <option *ngFor="let account of bankAccountList"
+                                                        [value]="account.id">
                                                         {{lang=="ar"?account.nameAr:account.nameEn}}
                                                     </option>
 
                                                 </select>
-
-                                                <!-- <div class="input-group-prepend">
-                                                            <button (click)="ClickAccount(i)"
-                                                                class="btn btn-rounded btn-dark"
-                                                                type="button"><i
-                                                                    class="fa fa-search"></i></button>
-                                                        </div> -->
+                                                <div *ngIf="(f['bankAccountId'].touched || f['bankAccountId'].dirty ) && f['bankAccountId'].invalid"
+                                                    class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['bankAccountId'].errors && f['bankAccountId'].errors['required']"
+                                                        class="f-12 ng-star-inserted text-white">
+                                                        {{'error.required'|translate}}</span>
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchBankAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -65,8 +68,6 @@
                                                 <app-full-date name="date" formControlName="date" [(ngModel)]="date"
                                                     ngDefaultControl [selectedDate]="date"
                                                     (OnDateSelect)="getDate($event)"></app-full-date>
-                                                <!-- <input type="date" [(ngModel)]="date" class="form-control " name="date"
-                                                    formControlName="date"  ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"> -->
                                                 <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -96,8 +97,6 @@
                                                 <app-full-date name="dueDate" formControlName="dueDate"
                                                     [(ngModel)]="dueDate" ngDefaultControl [selectedDate]="dueDate"
                                                     (OnDateSelect)="getDueDate($event)"></app-full-date>
-                                                <!-- <input type="date" [(ngModel)]="dueDate" class="form-control " name="dueDate"
-                                                    formControlName="dueDate"  ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"> -->
                                                 <div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
@@ -191,15 +190,14 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <!-- <th># </th> -->
-                                                <th style="width: 15%;">{{'general.account-number'|translate}}</th>
-                                                <th style="width: 10%;">{{'general.amount'|translate}}</th>
-                                                <th style="width: 10%;">{{'general.beneficiary-type'|translate}}
-                                                </th>
+                                                <th style="width: 10%;">{{'general.beneficiary-type'|translate}}</th>
                                                 <th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
+                                                <!-- <th style="width: 15%;">{{'general.account-number'|translate}}
+                                                </th> -->
+                                                <th style="width: 10%;">{{'general.amount'|translate}}</th>
                                                 <th style="width: 15%;">{{'general.currency'|translate}}</th>
                                                 <th style="width: 10%;">
                                                     {{'general.currency-conversion-factor'|translate}}</th>
-
                                                 <th style="width: 10%;">{{'general.balance'|translate}}</th>
                                                 <th style="width: 15%;">{{'general.description'|translate}}</th>
                                                 <th style="width: 1%;">{{'general.procedures'|translate}}</th>
@@ -208,15 +206,30 @@
                                         <tbody>
                                             <tr *ngFor="let row of incomingChequeForm.get('incomingChequeDetail')['controls']; let i = index"
                                                 [formGroupName]="i">
-                                                <!-- <td> -->
-                                                <!-- {{ i+1 }} -->
-                                                <!-- <input type="text"
-                                                            style="border: none; border-color: transparent;" hidden
-                                                            formControlName="iCDetailSerial" name="iCDetailSerial"> -->
-                                                <!-- </td> -->
                                                 <td>
+                                                    <select class="form-control" name="beneficiaryTypeId"
+                                                        formControlName="beneficiaryTypeId"
+                                                        [ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}"
+                                                        (change)="getBeneficiaryList(row.get('beneficiaryTypeId').value)">
+                                                        <option *ngFor="let  beneficiary of beneficiaryTypesEnum"
+                                                            [value]="beneficiary.id">
+                                                            {{beneficiary.name}}
+                                                        </option>
+                                                    </select>
 
 
+                                                </td>
+                                                <td>
+                                                    <select required class="form-control required" name="beneficiaryId"
+                                                        formControlName="beneficiaryId" (change)="getBeneficiaryAccount(row)">
+                                                        <option *ngFor="let account of filterBeneficiaryList"
+                                                            [value]="account.id">
+                                                            {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                        </option>
+
+                                                    </select>
+                                                </td>
+                                                <!-- <td >
                                                     <select required class="form-control required" name="accountId"
                                                         formControlName="accountId">
 
@@ -227,15 +240,7 @@
 
                                                     </select>
 
-                                                    <!-- <div class="input-group-prepend">
-                                                                            <button (click)="ClickAccount(i)"
-                                                                                class="btn btn-rounded btn-dark"
-                                                                                type="button"><i
-                                                                                    class="fa fa-search"></i></button>
-                                                                        </div> -->
-
-                                                </td>
-
+                                                </td> -->
                                                 <td>
 
                                                     <div class="input-group">
@@ -244,45 +249,6 @@
                                                             (input)="onInput($event.target.value,i)"
                                                             formControlName="amount" name="amount" style="width: 70px;">
                                                     </div>
-
-                                                </td>
-
-                                                <td>
-
-
-                                                    <select class="form-control" name="beneficiaryTypeId"
-                                                        formControlName="beneficiaryTypeId"
-                                                        [ngClass]="{ 'required': (row.get('beneficiaryTypeId')?.errors?.required)}">
-
-
-                                                        <option *ngFor="let  beneficiary of beneficiaryTypesEnum"
-                                                            [value]="beneficiary.id">
-                                                            {{beneficiary.name}}
-                                                        </option>
-                                                    </select>
-
-
-                                                </td>
-                                                <td>
-
-
-                                                    <select required class="form-control required"
-                                                        name="beneficiaryAccountId"
-                                                        formControlName="beneficiaryAccountId">
-
-                                                        <option *ngFor="let account of beneficiaryAccountList"
-                                                            [value]="account.id">
-                                                            {{lang=="ar"?account.nameAr:account.nameEn}}
-                                                        </option>
-
-                                                    </select>
-
-                                                    <!-- <div class="input-group-prepend">
-                                                                            <button (click)="ClickAccount(i)"
-                                                                                class="btn btn-rounded btn-dark"
-                                                                                type="button"><i
-                                                                                    class="fa fa-search"></i></button>
-                                                                        </div> -->
 
                                                 </td>
                                                 <td>
@@ -392,3 +358,7 @@
         </div>
     </div>
 </section>
+
+<app-public-search-modal [isVisible]="showSearchBankAccountModal" [routeApi]="routeBankAccountApi"
+    (emitClose)="showSearchBankAccountModal = false;" (emitSearch)="onSelectBankAccount($event)">
+</app-public-search-modal>

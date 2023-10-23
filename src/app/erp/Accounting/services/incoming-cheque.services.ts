@@ -61,7 +61,6 @@ export class IncomingChequeServiceProxy {
 
         return this.http.get<any>(this.baseUrl + "/api/IncomingCheque/all?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/IncomingCheque/GetIncomingCheques");
     }
 
 

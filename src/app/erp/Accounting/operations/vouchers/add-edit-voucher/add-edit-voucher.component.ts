@@ -1096,20 +1096,17 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucherDate = selectedDate;
   }
   getValueAfterConversion() {
-    ;
     this.selectedVoucherDetail.debitLocal = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
     this.selectedVoucherDetail.creditLocal = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
 
 
   }
   getAddedValueAfterConversion(i: any) {
-    ;
     this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
     this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
   }
   getAmount() {
-    ;
     if (this.voucherForm.value.currencyId == this.mainCurrencyId) {
       this.voucherTotal = this.voucherTotalLocal;
       this.currencyFactor = 1;

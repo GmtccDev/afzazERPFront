@@ -166,16 +166,12 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           });
           this.fromDate = this.dateService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateService.getDateForCalender(res.response.toDate);
-          console.log(
-            'this.fiscalPeriodForm.value set value',
-            this.fiscalPeriodForm.value
-          );
+         
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -197,7 +193,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -269,7 +264,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
     });
@@ -306,7 +300,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -315,7 +308,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   }
 
   onUpdate() {
-
     if (this.fiscalPeriodForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
