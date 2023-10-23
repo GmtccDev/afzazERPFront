@@ -1,16 +1,17 @@
-<div>
-	<button class="ml-auto close" nz-button nzType="danger" mat-button mat-dialog-close>
+<div class="align-items-baseline d-flex justify-content-between w-100">
+	<h2 mat-dialog-title>{{title}}</h2>
+	<button class="ml-auto close" nz-button nzType="danger" mat-dialog-close>
 		<span aria-hidden="true">&times;</span>
 	</button>
 </div>
-<h2 mat-dialog-title>{{title}}</h2>
+
 <mat-dialog-content class="mat-typography">
 	<div class="row">
 		<div class="col-md-12">
 			<!-- <input type="search" class="form-control" [(ngModel)]="searchText" (change)="Search()"> -->
 		</div>
 	</div>
-	<table class="table table-responsive">
+	<table class="table table-responsive table-popup">
 		<tr>
 			<th>
 				#
@@ -25,13 +26,13 @@
 			<td>{{i+1}}</td>
 			<td *ngFor="let name of colomnNames">{{a[name]}}</td>
 			<td>
-				<button class="btn btn-secondary btn-table" (click)="OnDataSelect(a)">select</button>
+				<button class="btn btn-primary btn-table" (click)="OnDataSelect(a)">select</button>
 			</td>
 		</tr>
 	</table>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-	<button mat-button mat-dialog-close>إغلاق</button>
+	<button mat-dialog-close class="btn-secondary btn">إغلاق</button>
 	<!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
 </mat-dialog-actions>

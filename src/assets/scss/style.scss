@@ -1292,8 +1292,42 @@ ng-select.custom {
     padding: 0 !important;
 }
 
-.input-group ng-select {
+.input-group ng-select,
+.d-flex>ng-select {
     margin-bottom: 1rem !important;
+}
+
+td {
+    input.form-control,
+    ng-select {
+        border-radius: 0 !important;
+    }
+}
+
+.table thead th {
+    min-width: 130px;
+    &:nth-of-type(1) {
+        min-width: 30px;
+    }
+    &:last-of-type {
+        min-width: 70px;
+    }
+}
+
+button.btn.btn-rounded.btn-dark {
+    border-radius: 0 0 3px 3px;
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    -ms-border-radius: 0 0 3px 3px;
+    -o-border-radius: 0 0 3px 3px;
+}
+
+[dir="rtl"] .d-flex>.ng-select .ng-select-container {
+    border-radius: 0px 3px 3px 0 !important;
+}
+
+[dir="rtl"] button.btn.btn-rounded.btn-dark {
+    border-radius: 3px 0 0 3px;
 }
 
 .media.profile-media {
@@ -1333,6 +1367,20 @@ td.d-flex.gap-2.ant-table-cell {
     line-height: 33px;
     &:nth-last-of-type(2),
     &:nth-last-of-type(3),
+    &:nth-last-of-type(1) {
+        padding: 0 !important;
+    }
+}
+
+[dir="rtl"] {
+    .table th,
+    .table td {
+        font-family: 'Almarai' !important;
+    }
+}
+
+.table-popup.table td {
+    padding: 0 10px;
     &:nth-last-of-type(1) {
         padding: 0 !important;
     }
