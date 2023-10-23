@@ -90,7 +90,8 @@ export enum AccountClassificationsEnum {
   Other = 6,
   Sales = 7,
   Purchases = 8,
-  Inventory = 9
+  Inventory = 9,
+  Bank=10
 
 }
 export enum AccountClassificationsArEnum {
@@ -102,7 +103,8 @@ export enum AccountClassificationsArEnum {
   أخرى = 6,
   مبيعات = 7,
   مشتريات = 8,
-  مخزون = 9
+  مخزون = 9,
+  بنك=10
 }
 export enum ReportOptionsEnum {
   Quarterly = 1,
@@ -236,3 +238,5 @@ export enum calculationMethodsEnum{
   'As per age of collection'= 2,
  
  }
+
+

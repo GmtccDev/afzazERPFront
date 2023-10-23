@@ -79,8 +79,17 @@ export class BillAdditionAndDiscount {
     discountRatio:number | undefined;
     discountValue:number | undefined;
     accountId:string|undefined;
+    notes:string|undefined;
+    correspondingAccountId:string|undefined;
     currencyId:number | undefined;
     currencyExchangeTransaction:number | undefined;
-    notes:string|undefined;
+    accountNameAr:string|undefined;
+    accountNameEn:string|undefined;
+    correspondingAccountNameAr:string|undefined;
+    correspondingAccountNameEn:string|undefined;
+    currencyNameAr:string|undefined;
+    currencyNameEn:string|undefined;
+
+
 
 }

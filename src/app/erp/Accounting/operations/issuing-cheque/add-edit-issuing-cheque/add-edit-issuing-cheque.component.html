@@ -12,17 +12,13 @@
 						<form [formGroup]="issuingChequeForm" id="issuingChequeFormSubmit" class="tabs-form">
 							<div class="main-branch ranoo">
 								<div class="wrapper-title">
-
 									<h3>{{'component-names.issuing-cheque-information'|translate}}</h3>
 									<hr>
 									<div class="row ">
-
-
 										<div class="col-12 col-md-6">
 											<label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
 											<div class="form-group position-relative">
-												<!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
 												<input type="text" class="form-control icon-branch" name="code"
 													formControlName="code">
 												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
@@ -36,27 +32,34 @@
 											</div>
 										</div>
 										<div class="col-md-6 col-12">
-											<label for="code" class="label-name">
-												{{'component-names.account'|translate}}
+											<label for="accountId" class="label-name">
+												{{'general.bank-account'|translate}}
 											</label><span class="text-danger">*</span>
+											<div class="input-group form-group">
 
-											<select required class="form-control required" name="accountId"
-												formControlName="accountId">
+												<select required class="form-control required" name="accountId"
+													formControlName="accountId">
 
-												<option *ngFor="let account of accountList" [value]="account.id">
-													{{lang=="ar"?account.nameAr:account.nameEn}}
-												</option>
+													<option *ngFor="let account of bankAccountList"
+														[value]="account.id">
+														{{lang=="ar"?account.nameAr:account.nameEn}}
+													</option>
 
-											</select>
-
-											<!-- <div class="input-group-prepend">
-                                                            <button (click)="ClickAccount(i)"
-                                                                class="btn btn-rounded btn-dark"
-                                                                type="button"><i
-                                                                    class="fa fa-search"></i></button>
-                                                        </div> -->
-
-
+												</select>
+												<div *ngIf="(f['accountId'].touched || f['accountId'].dirty ) && f['accountId'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['accountId'].errors && f['accountId'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchBankAccountModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
+											</div>
 										</div>
 										<div class="col-md-6 col-12">
 											<label for="date" class="label-name">
@@ -65,8 +68,6 @@
 												<app-full-date name="date" formControlName="date" [(ngModel)]="date"
 													ngDefaultControl [selectedDate]="date"
 													(OnDateSelect)="getDate($event)"></app-full-date>
-												<!-- <input type="date" [(ngModel)]="date" class="form-control " name="date"
-                                                    formControlName="date"  ngDefaultControl [selectedDate]="date" (OnDateSelect)="getDate($event)"> -->
 												<div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
@@ -96,8 +97,7 @@
 												<app-full-date name="dueDate" formControlName="dueDate"
 													[(ngModel)]="dueDate" ngDefaultControl [selectedDate]="dueDate"
 													(OnDateSelect)="getDueDate($event)"></app-full-date>
-												<!-- <input type="date" [(ngModel)]="dueDate" class="form-control " name="dueDate"
-                                                    formControlName="dueDate"  ngDefaultControl [selectedDate]="dueDate" (OnDateSelect)="getDueDate($event)"> -->
+
 												<div *ngIf="(f['dueDate'].touched || f['dueDate'].dirty ) && f['dueDate'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
@@ -400,3 +400,7 @@
 		</div>
 	</div>
 </section>
+
+<app-public-search-modal [isVisible]="showSearchBankAccountModal" [routeApi]="routeBankAccountApi"
+	(emitClose)="showSearchBankAccountModal = false;" (emitSearch)="onSelectBankAccount($event)">
+</app-public-search-modal>

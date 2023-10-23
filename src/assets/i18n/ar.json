@@ -232,7 +232,7 @@
         "accountGroup-information": "معلومات مجموعة الحساب",
         "costCenter": "مراكز الكلفة",
         "costCenter-information": "معلومات مركز الكلفة",
-        "account": " دليل الحسابات",
+        "account": "الحساب",
         "account-information": "معلومات  الحساب",
         "accountClassification": "تصنيف الحساب",
         "accountClassification-information": "معلومات تصنيف الحساب",
@@ -362,11 +362,11 @@
         "debit": "مدين",
         "credit": "دائن",
         "currency-conversion-factor": "معامل التحويل ",
-        "debit-after-conversion": "مدين بعد التحويل",
-        "credit-after-conversion": "دائن بعد التحويل",
-        "beneficiary": "المستفيد",
-        "beneficiary-type": "نوع المستفيد",
-        "beneficiary-account": "حساب المستفيد",
+        "debit-after-conversion": "مدين محلى",
+        "credit-after-conversion": "دائن محلى",
+        "beneficiary": " الجهة",
+        "beneficiary-type": "نوع الجهة",
+        "beneficiary-account": "حساب الجهة",
         "balance": "التعادل",
         "notes": "ملاحظات",
         "gregorian": "ميلادى",
@@ -384,7 +384,7 @@
         "template-name": "أسم النموذج",
         "report-options": "خيارات التقرير",
         "default-cash-account": "حساب النقدية الافتراضى",
-        "amount": "الكمية",
+        "amount": "القيمة",
         "dueDate": "تاريخ الاستحقاق",
         "account-number": "رقم الحساب",
         "add-new-row": "اضافة صف جديد",
@@ -433,7 +433,11 @@
         "addition-ratio":"نسبة الأضافة",
         "addition-value":"قيمة الأضافة",
         "paid-account":"حساب المدفوع",
-        "remaining-account":"حساب المتبقى"
+        "remaining-account":"حساب المتبقى",
+        "corresponding-account":"الحساب المقابل",
+        "customer-account":"حساب العميل",
+        "bank-account":"حساب البنك"
+
        
        
          
@@ -531,7 +535,7 @@
         "serial-format": "تنسيق التسلسل",
         "choose-account-nature": "أختيار طبيعة الحساب",
         "create-financial-entry": "انشاء قيد مالى",
-        "default-beneficiary": "نوع المستفيد الافتراضى",
+        "default-beneficiary": "نوع  الجهة الافتراضى",
         "add-voucher-type": "اضافة نمط سند",
         "update-voucher-type": "تحديث نمط السند",
         "deposit-vouchers":"[سندات القبض]",

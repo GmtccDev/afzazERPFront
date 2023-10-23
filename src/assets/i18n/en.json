@@ -142,8 +142,8 @@
         "debit": "Debit",
         "credit": "Credit",
         "currency-conversion-factor": "Currency Conversion",
-        "debit-after-conversion": "Debit After Conversion",
-        "credit-after-conversion": "Credit After Conversion",
+        "debit-after-conversion": "Debit Local",
+        "credit-after-conversion": "Credit Local",
         "beneficiary": "Beneficiary",
         "beneficiary-type": "Beneficiary Type",
         "beneficiary-account": "Beneficiary Account",
@@ -206,8 +206,11 @@
         "addition-ratio":"Addition Ratio",
         "addition-value":"Addition Value",
         "paid-account":"Paid Account",
-        "remaining-account":"Remaining Account"
-        
+        "remaining-account":"Remaining Account",
+        "corresponding-account":"Corresponding Account",
+        "customer-account":"Customer Account",
+        "bank-account":"Bank Account"
+
 
 
     

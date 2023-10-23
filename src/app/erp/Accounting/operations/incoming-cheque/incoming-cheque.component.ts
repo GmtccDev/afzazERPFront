@@ -60,7 +60,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   //#region ngOnInit
   ngOnInit(): void {
-    //  this.defineGridColumn();
     this.spinner.show();
     Promise.all([this.getIncomingChequees()])
       .then(a => {
@@ -74,9 +73,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-
-
-
   }
 
 
@@ -109,15 +105,11 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     return new Promise<void>((resolve, reject) => {
       let sub = this.incomingChequeService.allIncomingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
-
           this.toolbarPathData.componentList = this.translate.instant("component-names.incomingCheque");
           if (res.success) {
             this.incomingCheque = res.response.items
 
           }
-
-
           resolve();
 
         },
@@ -125,7 +117,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -161,7 +152,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
         let sub = this.incomingChequeService.deleteIncomingCheque(id).subscribe(
@@ -350,7 +340,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
         this.spinner.show();
-
         let sub = this.incomingChequeService.collect(id).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
@@ -363,7 +352,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           error: (err: any) => {
           },
           complete: () => {
-            console.log('complete');
           },
         });
         this.subsList.push(sub);
@@ -397,7 +385,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           error: (err: any) => {
           },
           complete: () => {
-            console.log('complete');
           },
         });
         this.subsList.push(sub);
