@@ -1372,6 +1372,32 @@ td.d-flex.gap-2.ant-table-cell {
     }
 }
 
+button.btn.btn-outline-secondary.calendar0:first-of-type {
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+}
+
+.input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+}
+
+.card .input-group.sniper-date button.btn.btn-outline-secondary.calendar0:last-of-type {
+    border-radius: inherit !important;
+    -webkit-border-radius: inherit !important;
+    -moz-border-radius: inherit !important;
+    -ms-border-radius: inherit !important;
+    -o-border-radius: inherit !important;
+}
+
 [dir="rtl"] {
     .table th,
     .table td {
