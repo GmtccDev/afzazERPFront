@@ -259,8 +259,12 @@ export class AddEditJournalEntryComponent implements OnInit {
           if (res.success) {
             this.defaultCurrencyId = Number(res.response.result.items.find(c => c.id == 1).value)
             this.financialEntryCycle = Number(res.response.result.items.find(c => c.id == 4).value)
-            this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res.response.result.items.find(c => c.id == 7).value))
-            this.journalEntryForm.controls.journalId.patchValue(Number(res.response.result.items.find(c => c.id == 1006).value))
+            if(!this.id)
+            {
+              this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res.response.result.items.find(c => c.id == 7).value))
+              this.journalEntryForm.controls.journalId.patchValue(Number(res.response.result.items.find(c => c.id == 1006).value))
+            }
+            
             this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == 3).value;
             // if (this.isMultiCurrency) {
@@ -650,7 +654,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   isSelectCurrency:boolean=false;
   onChangeGetDefaultCurrency(event, index) {
-    debugger;
+    ;
     if(!this.isSelectCurrency)
     {
       let currencyId;
