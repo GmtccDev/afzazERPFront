@@ -14,7 +14,7 @@ import { IssuingChequeServiceProxy } from '../../../services/issuing-cheque.serv
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
@@ -44,6 +44,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
     componentAdd: '',
 
   };
+  showSearchBankAccountModal = false;
+
   currencyId: any;
   amount: number = 0;
   amountLocal: number = 0;
@@ -61,19 +63,20 @@ export class AddEditIssuingChequeComponent implements OnInit {
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
   routeAccountApi = 'Account/GetLeafAccounts?'
+  routeBankAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Bank
+
   journalList: any;
   costCenterList: any;
   currencyList: any;
   fiscalPeriodList: any;
   counter: number;
-  accountList: any;
+  bankAccountList: any;
   accountDetailsList: any;
   beneficiaryAccountList: any;
   index: any;
   totalamount: number;
   totalDebit: number;
   totalDebitLocal: number;
-  //totalamountLocal: number;
   checkPeriod: any;
   isMultiCurrency: boolean;
   serial: any;
@@ -112,7 +115,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
       this.getGeneralConfiguration(),
       this.getCostCenter(),
       this.getCurrency(),
-      this.getAccount()
+      this.getAccount(),
+      this.getBankAccount()
+
     ]).then(a => {
       this.getRouteData();
       this.currnetUrl = this.router.url;
@@ -227,7 +232,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -326,7 +330,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
     },
 
     ));
-    console.log(issuingChequeDetail.value)
   }
   getAmount() {
     if (this.issuingChequeForm.value.currencyId == this.mainCurrencyId) {
@@ -478,7 +481,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -503,7 +505,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -577,7 +578,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -596,7 +596,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
     //   return;
     // }
 
-    console.log("getRawValue=>", this.issuingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
 
@@ -637,7 +636,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
   }
 
   onChangeCurrency(event, index) {
-    console.log('Name changed:', event.target.value);
     this.amount = 0;
     this.amountLocal = 0;
     this.currencyFactor = 0;
@@ -684,7 +682,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -722,7 +719,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -730,8 +726,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
     });
   }
   onUpdate() {
-    
-    console.log("getRawValue=>", this.issuingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
     ctrl.controls.forEach(x => {
@@ -769,7 +763,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.accountList = res.response;
             this.accountDetailsList = res.response;
             this.beneficiaryAccountList = res.response;
 
@@ -781,7 +774,28 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getBankAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeBankAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.bankAccountList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
         },
       });
 
@@ -805,7 +819,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -829,7 +842,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -884,6 +896,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
     this.showCostCenterModal = true;
     this.index = i;
 
+  }
+  onSelectBankAccount(event) {
+    this.issuingChequeForm.controls.accountId.setValue(event.id);
+    this.showSearchBankAccountModal = false;
   }
 }
 

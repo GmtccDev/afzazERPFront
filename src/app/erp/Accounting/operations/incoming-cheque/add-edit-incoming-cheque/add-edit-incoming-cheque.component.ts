@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, RequiredValidator, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -14,7 +14,7 @@ import { IncomingChequeServiceProxy } from '../../../services/incoming-cheque.se
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
@@ -34,7 +34,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   amountLocal: number = 0;
   mainCurrencyId: number;
   currnetUrl;
-  currencyId:any;
+  currencyId: any;
+  showSearchBankAccountModal = false;
+
   public show: boolean = false;
   lang = localStorage.getItem("language")
   incomingCheque: [] = [];
@@ -62,21 +64,29 @@ export class AddEditIncomingChequeComponent implements OnInit {
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
   routeAccountApi = 'Account/GetLeafAccounts?'
+  routeCustomerApi = 'CustomerCard/get-ddl?'
+  routeSupplierApi = 'SupplierCard/get-ddl?'
+
+  routeBankAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Bank
   journalList: any;
   costCenterList: any;
   currencyList: any;
   currency: any;
   fiscalPeriodList: any;
   counter: number = 0;
-  accountList: any;
+  bankAccountList: any;
   accountDetailsList: any;
-  beneficiaryAccountList: any;
+  customerList: any;
+  supplierList: any;
+
+  accountList: any;
+  filterBeneficiaryList: any;
+
 
   index: any;
   totalamount: number;
   totalDebit: number;
   totalDebitLocal: number;
-  //totalamountLocal: number;
   checkPeriod: any;
   isMultiCurrency: boolean;
   date!: DateModel;
@@ -113,7 +123,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.getGeneralConfiguration(),
       this.getCostCenter(),
       this.getCurrency(),
+      this.getBankAccount(),
+      this.getCustomers(),
+      this.getSuppliers(),
       this.getAccount()
+
     ]).then(a => {
       this.getRouteData();
       this.currnetUrl = this.router.url;
@@ -161,13 +175,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   onSelectJournal(event) {
-
     this.incomingChequeForm.controls.accountId.setValue(event.id);
     this.showSearchModal = false;
   }
   onSelectCountry(event) {
-
-
     this.incomingChequeForm.controls.countryId.setValue(event.id);
     this.showSearchModalCountry = false;
   }
@@ -228,7 +239,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -244,7 +254,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       isActive: true,
       dueDate: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       notes: null,
-      accountId: ['', Validators.compose([Validators.required])],
+      bankAccountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       amountLocal: ['', Validators.compose([Validators.required])],
       currencyId: [null, Validators.compose([Validators.required])],
@@ -288,11 +298,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   get incomingChequeDetailList(): FormArray { return this.incomingChequeForm.get('incomingChequeDetail') as FormArray; }
   initGroup() {
-    
+
     this.counter += 1;
     let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
-    if(incomingChequeDetail.length>0)
-    {
+    if (incomingChequeDetail.length > 0) {
       this.alertsService.showError(
         this.translate.instant("incoming-cheque.can-not-add-more-than-one-detail"),
         ""
@@ -317,14 +326,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
     incomingChequeDetail.push(this.fb.group({
       id: [null],
       incomingChequeId: [null],
-      accountId: [null, Validators.required],
       beneficiaryTypeId: [null],
+      beneficiaryId: [null],
+      accountId: [''],
       currencyId: [null],
       transactionFactor: [null],
       notes: [''],
       amount: [0.0],
       currencyLocal: [null],
-      beneficiaryAccountId: [null],
       iCDetailSerial: [this.counter]
     }, {
       validator: this.atLeastOne(Validators.required, ['amount', 'amount']),
@@ -333,7 +342,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
     ));
 
-    console.log(incomingChequeDetail.value)
   }
   getAmount() {
     if (this.incomingChequeForm.value.currencyId == this.mainCurrencyId) {
@@ -343,12 +351,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.incomingChequeForm.value.currencyId).subscribe({
         next: (res: any) => {
-          
-          
+
+
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = 1 / currencyModel.transactionFactor;
-          this.amount =(1 / currencyModel.transactionFactor) * this.amountLocal;
+          this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
         }
       })
       this.subsList.push(sub);
@@ -364,7 +372,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.amount = 0;
     this.amountLocal = 0;
     this.currencyFactor = 0;
-    this.currencyId=null;
+    this.currencyId = null;
 
 
   }
@@ -399,7 +407,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             isActive: res.response?.isActive,
             dueDate: this.dateService.getDateForCalender(res.response.dueDate),
             notes: res.response?.notes,
-            accountId: res.response?.accountId,
+            bankAccountId: res.response?.bankAccountId,
             amount: res.response?.amount,
             amountLocal: res.response?.amountLocal,
             status: res.response?.status,
@@ -418,20 +426,20 @@ export class AddEditIncomingChequeComponent implements OnInit {
           let ListDetail = res.response?.incomingChequeDetail;
 
           this.incomingChequeDetailDTOList.clear();
-          ListDetail.forEach(element => {
+          
 
+          ListDetail.forEach(element => {
+            this.getBeneficiaryList(element.beneficiaryTypeId);   
             this.incomingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
               incomingChequeId: element.incomingChequeId,
+              beneficiaryTypeId: element.beneficiaryTypeId,
+              beneficiaryId: element.beneficiaryId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
               notes: element.notes,
               amount: element.amount,
-              beneficiaryTypeId: element.beneficiaryTypeId,
-              beneficiaryAccountId: element.beneficiaryAccountId,
-              // amount: element.amount,
-              // costCenterId: element.costCenterId,
               currencyLocal: element.currencyLocal,
               iCDetailSerial: this.counter
             }, { validator: this.atLeastOne(Validators.required, ['amount', 'amount']) }
@@ -482,7 +490,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -507,7 +514,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -547,11 +553,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
             }
             this.defineIncomingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getIncomingChequeCode();
+            this.getIncomingChequeCode();
           }
         }
       },
@@ -582,7 +588,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -600,8 +605,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-
-    console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
+    debugger
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
 
@@ -627,6 +631,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     // }
 
     //  var entity = new CreateIncomingChequeCommand();
+    debugger
     if (this.incomingChequeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -640,20 +645,19 @@ export class AddEditIncomingChequeComponent implements OnInit {
       return this.incomingChequeForm.markAllAsTouched();
     }
   }
- 
+
 
   onChangeCurrency(event, index) {
-    console.log('Name changed:', event.target.value);
     this.amount = 0;
     this.amountLocal = 0;
     this.currencyFactor = 0;
-    this.currencyId=null;
+    this.currencyId = null;
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -664,7 +668,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
           }
           else {
-            
+
             let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
             //(x => x.id == event.target.value);
 
@@ -675,7 +679,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             faControl['controls'].iCDetailSerial.setValue(index + 1);
 
           }
-          
+
           let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
 
           if (incomingChequeDetail.length > 0) {
@@ -697,7 +701,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -729,10 +732,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.incomingChequeService.updateIncomingCheque(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          console.log('result dataaddData ', result);
-
-          //  this.defineincomingChequeForm();
-
           this.submited = false;
           this.spinner.hide();
 
@@ -742,7 +741,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -750,8 +748,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
   }
   onUpdate() {
-
-    console.log("getRawValue=>", this.incomingChequeForm.getRawValue());
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
     ctrl.controls.forEach(x => {
@@ -780,9 +776,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
+            //this.accountDetailsList = res.response;
             this.accountList = res.response;
-            this.accountDetailsList = res.response;
-            this.beneficiaryAccountList = res.response;
 
           }
           resolve();
@@ -792,13 +787,93 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
       this.subsList.push(sub);
     });
 
+  }
+  getCustomers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCustomerApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.customerList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getSuppliers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeSupplierApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.supplierList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getBankAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeBankAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.bankAccountList = res.response;
+
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getBeneficiaryAccount(row) {
+    debugger
+    if (row != null) {
+      if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Client || row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Supplier) {
+        debugger
+        row.get('accountId').value = this.filterBeneficiaryList.filter(x => x.id == Number(row.get('beneficiaryId').value))[0].accountId;
+
+
+      }
+      else if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Account) {
+        row.get('accountId').value = Number(row.get('beneficiaryId').value);
+      }
+    }
   }
   getCostCenter() {
     return new Promise<void>((resolve, reject) => {
@@ -818,7 +893,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -832,7 +906,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            
+
             this.currencyList = res.response;
 
           }
@@ -843,12 +917,27 @@ export class AddEditIncomingChequeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
       this.subsList.push(sub);
     });
+
+  }
+  getBeneficiaryList(beneficiaryTypeId) {
+    debugger
+    this.filterBeneficiaryList = [];
+    if (beneficiaryTypeId != null) {
+      if (beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
+        this.filterBeneficiaryList = this.customerList;
+      }
+      else if (beneficiaryTypeId == BeneficiaryTypeEnum.Supplier) {
+        this.filterBeneficiaryList = this.supplierList;
+      }
+      else if (beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
+        this.filterBeneficiaryList = this.accountList;
+      }
+    }
 
   }
 
@@ -902,6 +991,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.showCostCenterModal = true;
     this.index = i;
 
+  }
+  onSelectBankAccount(event) {
+    this.incomingChequeForm.controls.bankAccountId.setValue(event.id);
+    this.showSearchBankAccountModal = false;
   }
 }
 
