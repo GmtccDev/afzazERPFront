@@ -35,7 +35,7 @@ export class NavService implements OnInit, OnDestroy {
 	WithdrawalVouchers: any = [];
 
 	billTypes: any = [];
-    
+
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
@@ -60,9 +60,9 @@ export class NavService implements OnInit, OnDestroy {
 	public fullScreen: boolean = false;
 
 	constructor(private router: Router, private translate: TranslateService,
-		private sharedService:SharedService,
+		private sharedService: SharedService,
 		private voucherTypeService: VoucherTypeServiceProxy) {
-			
+
 		//console.log(this.subdomain)
 		this.voucherTypes.push(
 			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
@@ -118,7 +118,7 @@ export class NavService implements OnInit, OnDestroy {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					console.log("allVoucherTypees====",res);
+					console.log("allVoucherTypees====", res);
 					if (res.success) {
 						debugger
 						this.voucherType = res.response.items
@@ -232,8 +232,11 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children:
-				this.voucherTypes,
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: [
+				{ title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: this.voucherTypes },
+				{ title: this.translate.instant("general.voucherTypes"), type: 'sub', icon: 'dollar-sign', active: false, children: [] },
+			]
+
 			// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
 			// ]
 
