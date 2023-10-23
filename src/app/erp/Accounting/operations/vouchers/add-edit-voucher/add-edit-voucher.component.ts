@@ -257,7 +257,7 @@ voucherNameAr:any;
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.cashAccountId = res.response.defaultAccountId + "";
           this.currencyId = res.response.defaultCurrencyId;
           this.voucherForm.value.currencyId=res.response.defaultCurrencyId;
@@ -310,7 +310,7 @@ voucherNameAr:any;
           });
           this.voucherTotal = res.response?.voucherTotal;
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
-          debugger
+          
           // this.voucher.voucherDetail=res.response.voucherDetail;
           // this.voucherDetail=res.response.voucherDetail;
 
@@ -608,7 +608,7 @@ voucherNameAr:any;
 
   }
   openCurrencySearchDialog(i) {
-
+ 
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyNameAr ?? '';
@@ -634,6 +634,9 @@ voucherNameAr:any;
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getValueAfterConversion();
+        }else{
+          this.selectedVoucherDetail!.currencyConversionFactor = 1;
+          this.getValueAfterConversion();
         }
       } else {
         this.voucherDetail[i].currencyNameAr = data[0].nameAr;
@@ -642,6 +645,9 @@ voucherNameAr:any;
 
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+          this.getAddedValueAfterConversion(i);
+        }else{
+          this.voucherDetail[i]!.currencyConversionFactor = 1;
           this.getAddedValueAfterConversion(i);
         }
       }
@@ -652,6 +658,7 @@ voucherNameAr:any;
       let sub = this.searchDialog
         .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
         .subscribe((d) => {
+          
           if (d) {
             if (i == -1) {
               this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
@@ -662,6 +669,9 @@ voucherNameAr:any;
                 this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
                 this.getValueAfterConversion();
 
+              }else{
+                this.selectedVoucherDetail!.currencyConversionFactor = 1;
+                this.getValueAfterConversion();
               }
             } else {
 
@@ -745,7 +755,7 @@ voucherNameAr:any;
 
     if (data.length == 1) {
       if (i == -1) {
-        debugger
+        
         this.selectedVoucherDetail!.costCenterNameAr = data[0].nameAr;
         this.selectedVoucherDetail!.costCenterId = data[0].id;
       } else {
@@ -980,7 +990,7 @@ voucherNameAr:any;
     }
 
     if (this.voucherForm.valid) {
-      debugger
+      
       this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -1101,17 +1111,20 @@ voucherNameAr:any;
     this.voucherDate = selectedDate;
   }
   getValueAfterConversion() {
+    ;
     this.selectedVoucherDetail.debitLocal = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
     this.selectedVoucherDetail.creditLocal = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
 
 
   }
   getAddedValueAfterConversion(i: any) {
+    ;
     this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
     this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
   }
   getAmount() {
+    ;
     if (this.voucherForm.value.currencyId == this.mainCurrencyId) {
       this.voucherTotal = this.voucherTotalLocal;
       this.currencyFactor = 1;
@@ -1123,7 +1136,7 @@ voucherNameAr:any;
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = currencyModel.transactionFactor;
-          this.voucherTotal = (currencyModel.transactionFactor) * this.voucherTotalLocal;
+          this.voucherTotal = (1/currencyModel.transactionFactor) * this.voucherTotalLocal;
         }
       })
       this.subsList.push(sub);

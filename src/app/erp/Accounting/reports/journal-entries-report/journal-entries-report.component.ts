@@ -11,6 +11,7 @@ import { FiscalPeriodServiceProxy } from "../../services/fiscal-period.services"
 import { ToolbarData } from "src/app/shared/interfaces/toolbar-data";
 import { NgbdModalContent } from "src/app/shared/components/modal/modal-component";
 import { ToolbarActions } from "src/app/shared/enum/toolbar-actions";
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
 	selector: "app-journal-entries-report",
 	templateUrl: "./journal-entries-report.component.html",
@@ -43,7 +44,9 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	};
 
 	//#region Constructor
-	constructor(private modalService: NgbModal, private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) {}
+	constructor(private modalService: NgbModal,
+		private spinner:NgxSpinnerService,
+		 private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) {}
 
 	//#endregion
 
@@ -52,12 +55,21 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		this.sharedServices.changeButton({ action: "Report" } as ToolbarData);
 		this.listenToClickedButton();
 		this.sharedServices.changeToolbarPath(this.toolbarPathData);
+		Promise.all([
+			this.getGeneralConfigurationsOfAccountingPeriod()
+	  
+		  ]).then(a => {
+			this.spinner.hide();
+		  }).catch(err => {
+	  
+			this.spinner.hide();
+		  });
 	}
 
 	//#endregion
 	//#region ngAfterViewInit
 	ngAfterViewInit(): void {
-		this.getGeneralConfigurationsOfAccountingPeriod();
+		//this.getGeneralConfigurationsOfAccountingPeriod();
 	}
 	getFromDate() {
 		let monthFrom;
@@ -95,22 +107,26 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		let monthTo;
 
 		if (this.fromDate == undefined || this.fromDate == null) {
-			this.fromDate = this.dateConverterService.getCurrentDate();
-			monthFrom = Number(this.fromDate.month - 1);
-			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		} else if(!this.isContainsDate(this.fromDate)) {
-			monthFrom = Number(this.fromDate.month - 1);
-			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		}
-
-		if (this.toDate == undefined || this.toDate == null) {
-			this.toDate = this.dateConverterService.getCurrentDate();
-			monthTo = Number(this.toDate.month + 1);
-			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		} else if(!this.isContainsDate(this.toDate)) {
-			monthTo = Number(this.toDate.month + 1);
-			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		}
+			//  this.fromDate = this.dateConverterService.getCurrentDate();
+			monthFrom = Number(this.fromDate.month + 1)
+			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
+		  }
+		  else {
+			monthFrom = Number(this.fromDate.month + 1)
+			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
+	  
+		  }
+	  
+		  if (this.toDate == undefined || this.toDate == null) {
+			//  this.toDate = this.dateConverterService.getCurrentDate();
+			monthTo = Number(this.toDate.month + 1)
+			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
+	  
+		  }
+		  else {
+			monthTo = Number(this.toDate.month + 1)
+			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
+		  }
 
 		//   if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
 		// 	this.currencyId = 0;
@@ -221,7 +237,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 					if (res.response.value > 0) {
 						;
 						this.facialPeriodId = res.response.value;
-						//this.getfiscalPeriodById(this.facialPeriodId);
+						this.getfiscalPeriodById(this.facialPeriodId);
 					}
 				},
 				error: (err: any) => {
@@ -238,7 +254,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					;
+					debugger;
 					console.log("result data getbyid", res);
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
