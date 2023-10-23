@@ -1328,13 +1328,26 @@ td.d-flex.gap-2.ant-table-cell {
     right: 10px;
 }
 
-.d-block.modal.fade.show .table td {
+.modal.fade.show .table td {
     padding: 0 10px;
     line-height: 33px;
     &:nth-last-of-type(2),
     &:nth-last-of-type(3),
     &:nth-last-of-type(1) {
         padding: 0 !important;
+    }
+}
+
+.cdk-overlay-pane {
+    min-width: 500px;
+    &.table td {
+        padding: 0 10px;
+        line-height: 33px;
+        &:nth-last-of-type(2),
+        &:nth-last-of-type(3),
+        &:nth-last-of-type(1) {
+            padding: 0 !important;
+        }
     }
 }
 
