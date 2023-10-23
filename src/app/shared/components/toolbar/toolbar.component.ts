@@ -106,7 +106,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     let sub = this.SharedService.getClickedbutton().subscribe({
       next: (toolbarCompnentData: ToolbarData) => {
         toolbarCompnentData;
-      debugger;
+      ;
         if (ObjectIsNotNullOrEmpty(toolbarCompnentData)) {
           this.toolbarCompnentData = toolbarCompnentData;
           if (this.toolbarCompnentData.action == 'New') {

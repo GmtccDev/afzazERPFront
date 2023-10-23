@@ -587,7 +587,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openCurrencySearchDialog(i) {
-
+ 
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyNameAr ?? '';
@@ -613,6 +613,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getValueAfterConversion();
+        }else{
+          this.selectedVoucherDetail!.currencyConversionFactor = 1;
+          this.getValueAfterConversion();
         }
       } else {
         this.voucherDetail[i].currencyNameAr = data[0].nameAr;
@@ -621,6 +624,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+          this.getAddedValueAfterConversion(i);
+        }else{
+          this.voucherDetail[i]!.currencyConversionFactor = 1;
           this.getAddedValueAfterConversion(i);
         }
       }
@@ -631,6 +637,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.searchDialog
         .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
         .subscribe((d) => {
+          
           if (d) {
             if (i == -1) {
               this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
@@ -641,6 +648,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
                 this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
                 this.getValueAfterConversion();
 
+              }else{
+                this.selectedVoucherDetail!.currencyConversionFactor = 1;
+                this.getValueAfterConversion();
               }
             } else {
 
@@ -1086,17 +1096,20 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucherDate = selectedDate;
   }
   getValueAfterConversion() {
+    ;
     this.selectedVoucherDetail.debitLocal = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
     this.selectedVoucherDetail.creditLocal = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
 
 
   }
   getAddedValueAfterConversion(i: any) {
+    ;
     this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
     this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
   }
   getAmount() {
+    ;
     if (this.voucherForm.value.currencyId == this.mainCurrencyId) {
       this.voucherTotal = this.voucherTotalLocal;
       this.currencyFactor = 1;
@@ -1108,7 +1121,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = currencyModel.transactionFactor;
-          this.voucherTotal = (currencyModel.transactionFactor) * this.voucherTotalLocal;
+          this.voucherTotal = (1/currencyModel.transactionFactor) * this.voucherTotalLocal;
         }
       })
       this.subsList.push(sub);

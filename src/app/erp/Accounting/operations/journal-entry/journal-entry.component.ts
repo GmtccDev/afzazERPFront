@@ -365,7 +365,7 @@ onCheckUpdate() {
     this.subsList.push(sub);
   }
   onDelete() {
-debugger;
+;
     var ids =  this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
@@ -389,7 +389,7 @@ debugger;
         break;
 
       default:
-        text = status;
+        text = 'غير مرحل';
         break;
     }
     return text;
@@ -408,7 +408,7 @@ debugger;
         break;
 
       default:
-        text = status;
+        text = 'Not Post';
         break;
     }
     return text;
