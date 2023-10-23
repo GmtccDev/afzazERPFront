@@ -549,8 +549,8 @@
         "default-beneficiary": "Default Beneficiary Type",
         "add-voucher-type": "Add Voucher Type",
         "update-voucher-type": "Update Voucher Type",
-        "deposit-vouchers": "[Deposit Vouchers]",
-        "withdrawal-vouchers": "[Withdrawal Vouchers]"
+        "deposit-vouchers": "Deposit Vouchers",
+        "withdrawal-vouchers": "Withdrawal Vouchers"
 
     },
     "message-title": {

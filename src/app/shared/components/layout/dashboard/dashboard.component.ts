@@ -200,41 +200,36 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 						this.WithdrawalVouchers = this.voucherTypes.filter(x => x.voucherKindId == 2);
 
 						if (this.depositVouchers.length > 0) {
-							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'link', active: true }),
-								this.depositVouchers.forEach(element => {
-									this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-										{ queryParams: { voucherTypeId: element.id } })
-									this.navServices.voucherTypes.filter((value, index, self) => {
-										return index === self.findIndex(obj => (
-											obj.path === value.path && obj.title === value.title
-										));
-									});
+							this.depositVouchers.forEach(element => {
+								this.navServices.voucherTypesNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+									{ queryParams: { voucherTypeId: element.id } })
+								this.navServices.voucherTypesNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
 								});
+							});
+							const distinctVoucherTypes = this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'sub', active: false,children:distinctVoucherTypes })
+							
 						}
 						if (this.WithdrawalVouchers.length > 0) {
-							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'link', active: true }),
-								this.WithdrawalVouchers.forEach(element => {
-									this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-										{ queryParams: { voucherTypeId: element.id } })
-									this.navServices.voucherTypes.filter((value, index, self) => {
-										return index === self.findIndex(obj => (
-											obj.path === value.path && obj.title === value.title
-										));
-									});
+							this.WithdrawalVouchers.forEach(element => {
+								this.navServices.WithdrawalVouchersNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+									{ queryParams: { voucherTypeId: element.id } })
+								this.navServices.WithdrawalVouchersNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
 								});
+							});
+							const distinctVoucherTypes = this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'sub', active: false,children:distinctVoucherTypes })
+							
 						}
 
-						// res.response.items.forEach(element => {
-						// 	
-						// 	this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-						// 		{ queryParams: { voucherTypeId: element.id } }
-						// 	)
-						// 	this.navServices.voucherTypes.filter((value, index, self) => {
-						// 		return index === self.findIndex(obj => (
-						// 			obj.path === value.path && obj.title === value.title
-						// 		));
-						// 	});
-						// });
+					
 					}
 					resolve();
 				},

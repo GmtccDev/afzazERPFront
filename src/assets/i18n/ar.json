@@ -538,8 +538,8 @@
         "default-beneficiary": "نوع  الجهة الافتراضى",
         "add-voucher-type": "اضافة نمط سند",
         "update-voucher-type": "تحديث نمط السند",
-        "deposit-vouchers":"[سندات القبض]",
-        "withdrawal-vouchers":"[سندات الصرف]"
+        "deposit-vouchers":"سندات القبض",
+        "withdrawal-vouchers":"سندات الصرف"
     },
     "message-title": {
         "done": "نجاح",

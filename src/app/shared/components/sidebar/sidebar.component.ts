@@ -32,7 +32,7 @@ export class SidebarComponent {
     private billTypeService: BillTypeServiceProxy,
 
     public layout: LayoutService) {
-      debugger
+      
       let x=this.subdomain;
     let menu = localStorage.getItem("Menu");
     if (menu == '0') {
@@ -102,7 +102,7 @@ export class SidebarComponent {
         this.menuItems = menuItems;
         console.log("----menuItems----", menuItems);
         this.router.events.subscribe((event) => {
-          debugger
+          
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
               if (items.path === event.url) {
@@ -143,7 +143,7 @@ export class SidebarComponent {
   }
 
   sidebarToggle() {
-    debugger
+    
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
   }
 
@@ -152,7 +152,7 @@ export class SidebarComponent {
    
    this.getVoucherTypes();
    this.getBillTypes();
-    debugger
+    
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;
@@ -173,7 +173,7 @@ export class SidebarComponent {
 
   // Click Toggle menu
   toggletNavActive(item) {
-    debugger
+    
     if (!item.active) {
       this.menuItems.forEach(a => {
         if (this.menuItems.includes(item)) {

@@ -33,7 +33,9 @@ export class NavService implements OnInit, OnDestroy {
 	voucherTypes: any = [];
 	depositVouchers: any = [];
 	WithdrawalVouchers: any = [];
-
+	voucherTypesNew: any = [];
+	depositVouchersNew: any = [];
+	WithdrawalVouchersNew: any = [];
 	billTypes: any = [];
 
 	private unsubscriber: Subject<any> = new Subject();
@@ -232,13 +234,7 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: [
-				{ title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: this.voucherTypes },
-				{ title: this.translate.instant("general.voucherTypes"), type: 'sub', icon: 'dollar-sign', active: false, children: [] },
-			]
-
-			// { path: '/accounting-operations/endYear', title: this.translate.instant("component-names.end-year"), type: 'link', active: true },
-			// ]
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: this.voucherTypes 
 
 
 
