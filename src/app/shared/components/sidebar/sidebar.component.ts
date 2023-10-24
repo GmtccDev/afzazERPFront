@@ -255,7 +255,7 @@ export class SidebarComponent {
             
             const billTypes = res.response.items.map(element => ({
               path: '/warehouses-operations/bill',
-              title: element.billNameAr,
+              title: element.nameAr,
               type: 'link',
               active: true
             }));

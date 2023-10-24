@@ -44,13 +44,13 @@ export enum CreateFinancialEntryArEnum {
 export enum BeneficiaryTypeEnum {
   Client = 1,
   Supplier = 2,
-  Employee = 3,
+  // Employee = 3,
   Account = 4
 }
 export enum BeneficiaryTypeArEnum {
   عميل = 1,
   مورد = 2,
-  مؤظف = 3,
+  // مؤظف = 3,
   حساب = 4
 }
 export enum EntriesStatusEnum {

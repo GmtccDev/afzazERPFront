@@ -53,7 +53,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					console.log(res);
 					if (res.success) {
 						
 						this.voucherTypes = res.response.items
@@ -99,7 +98,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
 				},
 			});
 
@@ -112,7 +110,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					console.log(res);
 					if (res.success) {
 						this.billTypes = res.response.items
 						this.salesBills = this.billTypes.filter(x => x.kind == 1);
@@ -188,7 +185,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
 						}
 						// res.response.items.forEach(element => {
-						// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+						// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 						// 		{ queryParams: { billTypeId: element.id } }
 						// 	)
 						// 	this.navServices.billTypes.filter((value, index, self) => {
@@ -206,7 +203,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
 				},
 			});
 

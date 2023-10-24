@@ -35,7 +35,8 @@
                                         <div class="col-md-6 col-12 ">
                                             <label for="bankAccount" class="label-name">
                                                 {{'general.bank-account'|translate}}
-                                            </label><span class="text-danger">*</span>
+                                            </label>
+                                            <span class="text-danger">*</span>
                                             <div class="input-group form-group">
                                                 <select required class="form-control required" name="bankAccountId"
                                                     formControlName="bankAccountId">
@@ -222,9 +223,9 @@
                                                 <td>
                                                     <select required class="form-control required" name="beneficiaryId"
                                                         formControlName="beneficiaryId" (change)="getBeneficiaryAccount(row)">
-                                                        <option *ngFor="let account of filterBeneficiaryList"
-                                                            [value]="account.id">
-                                                            {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                        <option *ngFor="let beneficiary of filterBeneficiaryList"
+                                                            [value]="beneficiary.id">
+                                                            {{lang=="ar"?beneficiary.nameAr:beneficiary.nameEn}}
                                                         </option>
 
                                                     </select>

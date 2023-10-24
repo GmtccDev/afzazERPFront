@@ -64,12 +64,15 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   errorClass = '';
   lang = localStorage.getItem("language")
   routeCashAccountApi = 'Account/getLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
-  routeCurrencyApi = "currency/get-ddl?"
+  routeCurrencyApi = "Currency/get-ddl?"
   routeCostCenterApi = 'CostCenter/get-ddl?'
+  routeCustomerApi = 'CustomerCard/get-ddl?'
+  routeSupplierApi = 'SupplierCard/get-ddl?'
+  routeAccountApi = 'Account/GetLeafAccounts?'
 
   cashAccountsList: any;
   beneficiaryAccountsList: any;
-  filterBeneficiaryAccountsList: any;
+  filterBeneficiaryList: any;
 
   currenciesList: any;
   currenciesListInDetail: any;
@@ -77,6 +80,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   costCentersInDetailsList: any;
   currencyTransactionList: any;
   filterCurrencyTransactionList: any;
+
+  customersList: any;
+  suppliersList: any;
+  accountsList: any;
 
   queryParams: any;
   voucherTypeId: any;
@@ -139,6 +146,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       this.getCurrenciesTransactions(),
       this.getAccounts(),
       this.getCostCenters(),
+      this.getCustomers(),
+      this.getSuppliers(),
+
 
     ]).then(a => {
       this.getRouteData();
@@ -309,15 +319,17 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
 
           var currencyName;
-          var beneficiaryAccountName;
+          var beneficiaryName;
           var costCenterName;
           res.response.voucherDetail.forEach(element => {
+            this.getBeneficaryByTypeId(element.beneficiaryTypeId);
+
             if (element.currencyId > 0) {
 
               currencyName = this.currenciesListInDetail.find(x => x.id == element.currencyId);
             }
-            if (element.beneficiaryAccountId > 0) {
-              beneficiaryAccountName = this.beneficiaryAccountsList.find(x => x.id == element.beneficiaryAccountId);
+            if (element.beneficiaryId > 0) {
+              beneficiaryName = this.filterBeneficiaryList.find(x => x.id == element.beneficiaryId);
             }
             if (element.costCenterId > 0) {
               costCenterName = this.costCentersInDetailsList.find(x => x.id == element.costCenterId);
@@ -326,20 +338,21 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
               {
                 id: element.id,
                 voucherId: element.voucherId,
+                beneficiaryTypeId: element.beneficiaryTypeId,
+                beneficiaryId: element.beneficiaryId,
+                beneficiaryAccountId: element.beneficiaryAccountId,
                 debit: element.debit,
                 credit: element.credit,
                 currencyId: element.currencyId,
                 currencyConversionFactor: element.currencyConversionFactor,
                 debitLocal: element.debitLocal,
                 creditLocal: element.creditLocal,
-                beneficiaryTypeId: element.beneficiaryTypeId,
-                beneficiaryAccountId: element.beneficiaryAccountId,
                 description: element.description,
                 costCenterId: element.costCenterId,
                 currencyNameAr: currencyName?.nameAr ?? '',
                 currencyNameEn: currencyName?.nameEn ?? '',
-                beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
-                beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
+                beneficiaryNameAr: beneficiaryName?.nameAr ?? '',
+                beneficiaryNameEn: beneficiaryName?.nameEn ?? '',
                 costCenterNameAr: costCenterName?.nameAr ?? '',
                 costCenterNameEn: costCenterName?.nameEn ?? ''
               }
@@ -385,20 +398,21 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
               {
                 id: element.id,
                 voucherId: element.voucherId,
+                beneficiaryTypeId: element.beneficiaryTypeId,
+                beneficiaryId: element.beneficiaryId,
+                beneficiaryAccountId: element.beneficiaryAccountId,
                 debit: element.debit,
                 credit: element.credit,
                 currencyId: element.currencyId,
                 currencyConversionFactor: element.currencyConversionFactor,
                 debitLocal: element.debitLocal,
                 creditLocal: element.creditLocal,
-                beneficiaryTypeId: element.beneficiaryTypeId,
-                beneficiaryAccountId: element.beneficiaryAccountId,
                 description: element.description,
                 costCenterId: element.costCenterId,
                 currencyNameAr: currencyName?.nameAr ?? '',
                 currencyNameEn: currencyName?.nameEn ?? '',
-                beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
-                beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
+                beneficiaryNameAr: beneficiaryAccountName?.nameAr ?? '',
+                beneficiaryNameEn: beneficiaryAccountName?.nameEn ?? '',
                 costCenterNameAr: costCenterName?.nameAr ?? '',
                 costCenterNameEn: costCenterName?.nameEn ?? ''
               }
@@ -490,11 +504,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   }
   getAccounts() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.accountService.getLeafAccounts().subscribe({
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
             this.cashAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Cash);
-            this.beneficiaryAccountsList = res.response;
+            this.accountsList = res.response;
 
           }
 
@@ -587,7 +601,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openCurrencySearchDialog(i) {
- 
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyNameAr ?? '';
@@ -613,7 +627,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getValueAfterConversion();
-        }else{
+        } else {
           this.selectedVoucherDetail!.currencyConversionFactor = 1;
           this.getValueAfterConversion();
         }
@@ -625,7 +639,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getAddedValueAfterConversion(i);
-        }else{
+        } else {
           this.voucherDetail[i]!.currencyConversionFactor = 1;
           this.getAddedValueAfterConversion(i);
         }
@@ -637,7 +651,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.searchDialog
         .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
         .subscribe((d) => {
-          
+
           if (d) {
             if (i == -1) {
               this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
@@ -648,7 +662,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
                 this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
                 this.getValueAfterConversion();
 
-              }else{
+              } else {
                 this.selectedVoucherDetail!.currencyConversionFactor = 1;
                 this.getValueAfterConversion();
               }
@@ -669,16 +683,16 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
 
   }
-  openBeneficiaryAccountSearchDialog(i) {
+  openBeneficiarySearchDialog(i) {
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '';
+      searchTxt = this.selectedVoucherDetail?.beneficiaryNameAr ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
-    let data = this.filterBeneficiaryAccountsList.filter((x) => {
+    let data = this.filterBeneficiaryList.filter((x) => {
       return (
         (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
@@ -687,26 +701,33 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetail!.beneficiaryAccountNameAr = data[0].nameAr;
-        this.selectedVoucherDetail!.beneficiaryAccountId = data[0].id;
+        this.selectedVoucherDetail!.beneficiaryNameAr = data[0].nameAr;
+        this.selectedVoucherDetail!.beneficiaryId = data[0].id;
+        this.getBeneficiaryAccount();
       } else {
-        this.voucherDetail[i].beneficiaryAccountNameAr = data[0].nameAr;
-        this.voucherDetail[i].beneficiaryAccountId = data[0].id;
+        this.voucherDetail[i].beneficiaryNameAr = data[0].nameAr;
+        this.voucherDetail[i].beneficiaryId = data[0].id;
+        this.getBeneficiaryAccountAdded(i);
+
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن الحساب';
+      let title = 'بحث عن الجهة';
       let sub = this.searchDialog
-        .showDialog(lables, names, this.filterBeneficiaryAccountsList, title, searchTxt)
+        .showDialog(lables, names, this.filterBeneficiaryList, title, searchTxt)
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetail!.beneficiaryAccountNameAr = d.nameAr;
-              this.selectedVoucherDetail!.beneficiaryAccountId = d.id;
+              this.selectedVoucherDetail!.beneficiaryNameAr = d.nameAr;
+              this.selectedVoucherDetail!.beneficiaryId = d.id;
+              this.getBeneficiaryAccount();
+
             } else {
-              this.voucherDetail[i].beneficiaryAccountNameAr = d.nameAr;
-              this.voucherDetail[i].beneficiaryAccountId = d.id;
+              this.voucherDetail[i].beneficiaryNameAr = d.nameAr;
+              this.voucherDetail[i].beneficiaryId = d.id;
+              this.getBeneficiaryAccountAdded(i);
+
             }
           }
         });
@@ -714,12 +735,16 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
 
   }
-  getBeneficaryAccountsByTypeId(typeId: any) {
-    if (typeId == BeneficiaryTypeEnum.Account) {
-      this.filterBeneficiaryAccountsList = this.beneficiaryAccountsList;
+  getBeneficaryByTypeId(typeId: any) {
+    this.filterBeneficiaryList = [];
+    if (typeId == BeneficiaryTypeEnum.Client) {
+      this.filterBeneficiaryList = this.customersList;
     }
-    else {
-      this.filterBeneficiaryAccountsList = this.beneficiaryAccountsList.filter(x => x.accountClassificationId == typeId);
+    else if (typeId == BeneficiaryTypeEnum.Supplier) {
+      this.filterBeneficiaryList = this.suppliersList;
+    }
+    else if (typeId == BeneficiaryTypeEnum.Account) {
+      this.filterBeneficiaryList = this.accountsList;
     }
   }
   openCostCenterSearchDialog(i) {
@@ -749,7 +774,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن الحساب';
+      let title = 'بحث عن مركز التكلفة';
       let sub = this.searchDialog
         .showDialog(lables, names, this.costCentersInDetailsList, title, searchTxt)
         .subscribe((d) => {
@@ -794,27 +819,28 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucherDetail.push({
       id: 0,
       voucherId: this.selectedVoucherDetail?.voucherId ?? 0,
+      beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
+      beneficiaryId: this.selectedVoucherDetail?.beneficiaryId ?? 0,
+      beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       debit: this.selectedVoucherDetail?.debit ?? 0,
       credit: this.selectedVoucherDetail?.credit ?? 0,
       currencyId: this.selectedVoucherDetail?.currencyId ?? 0,
       currencyConversionFactor: this.selectedVoucherDetail?.currencyConversionFactor ?? 0,
       debitLocal: this.selectedVoucherDetail?.debitLocal ?? 0,
       creditLocal: this.selectedVoucherDetail?.creditLocal ?? 0,
-      beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
-      beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       description: this.selectedVoucherDetail?.description ?? '',
       costCenterId: this.selectedVoucherDetail?.costCenterId ?? 0,
       currencyNameAr: this.selectedVoucherDetail?.currencyNameAr ?? '',
       currencyNameEn: this.selectedVoucherDetail?.currencyNameEn ?? '',
-      beneficiaryAccountNameAr: this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '',
-      beneficiaryAccountNameEn: this.selectedVoucherDetail?.beneficiaryAccountNameEn ?? '',
+      beneficiaryNameAr: this.selectedVoucherDetail?.beneficiaryNameAr ?? '',
+      beneficiaryNameEn: this.selectedVoucherDetail?.beneficiaryNameEn ?? '',
       costCenterNameAr: this.selectedVoucherDetail?.costCenterNameAr ?? '',
       costCenterNameEn: this.selectedVoucherDetail?.costCenterNameEn ?? ''
     });
-     
+
     this.voucher!.voucherDetail = this.voucherDetail;
 
-   
+
     this.totalDebitLocal += this.selectedVoucherDetail?.debitLocal ?? 0;
     this.totalCreditLocal += this.selectedVoucherDetail?.creditLocal ?? 0;
     this.calculateTotals();
@@ -823,7 +849,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   calculateTotals() {
-     
+
     let currencyConversionFactor;
     if (this.voucherkindId == 1) {
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
@@ -902,20 +928,21 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.selectedVoucherDetail = {
       id: 0,
       voucherId: 0,
+      beneficiaryTypeId: 0,
+      beneficiaryId: 0,
+      beneficiaryAccountId: 0,
       debit: 0,
       credit: 0,
       currencyId: 0,
       currencyConversionFactor: 1,
       debitLocal: 0,
       creditLocal: 0,
-      beneficiaryTypeId: 0,
-      beneficiaryAccountId: 0,
       description: '',
       costCenterId: 0,
       currencyNameAr: '',
       currencyNameEn: '',
-      beneficiaryAccountNameAr: '',
-      beneficiaryAccountNameEn: '',
+      beneficiaryNameAr: '',
+      beneficiaryNameEn: '',
       costCenterNameAr: '',
       costCenterNameEn: ''
     }
@@ -942,26 +969,25 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       voucherDetail: this.voucher.voucherDetail ?? [],
 
     };
-     
-    this.voucher.voucherDetail= this.voucherDetail;
-    this.voucherTotal=this.voucherForm.controls["voucherTotal"].value;
+
+    this.voucher.voucherDetail = this.voucherDetail;
+    this.voucherTotal = this.voucherForm.controls["voucherTotal"].value;
     if (this.voucherkindId == 1) {
       this.totalDebitLocal = this.voucherForm.controls["voucherTotalLocal"].value
     }
-    else
-    {
+    else {
       this.totalCreditLocal = this.voucherForm.controls["voucherTotalLocal"].value
 
     }
-    this.voucherTotalLocal=this.voucherForm.controls["voucherTotalLocal"].value;
-    this.currencyFactor=this.voucherForm.controls["currencyFactor"].value;
+    this.voucherTotalLocal = this.voucherForm.controls["voucherTotalLocal"].value;
+    this.currencyFactor = this.voucherForm.controls["currencyFactor"].value;
 
 
   }
   confirmSave() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
-       
+
       let sub = this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
@@ -1118,7 +1144,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = currencyModel.transactionFactor;
-          this.voucherTotal = (1/currencyModel.transactionFactor) * this.voucherTotalLocal;
+          this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
         }
       })
       this.subsList.push(sub);
@@ -1136,32 +1162,33 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   addVoucherDetailForUpdate(item: VoucherDetail) {
-     
+
     this.voucherDetail.push(
       {
         id: 0,
         voucherId: 0,
+        beneficiaryTypeId: item.beneficiaryTypeId,
+        beneficiaryId: item.beneficiaryId,
+        beneficiaryAccountId: item.beneficiaryAccountId,
         debit: item.debit,
         credit: item.credit,
         currencyId: item.currencyId,
         currencyConversionFactor: item.currencyConversionFactor,
         debitLocal: item.debitLocal,
         creditLocal: item.creditLocal,
-        beneficiaryTypeId: item.beneficiaryTypeId,
-        beneficiaryAccountId: item.beneficiaryAccountId,
         description: item.description,
         costCenterId: item.costCenterId,
         currencyNameAr: item.currencyNameAr,
         currencyNameEn: item.currencyNameEn,
-        beneficiaryAccountNameAr: item.beneficiaryAccountNameAr,
-        beneficiaryAccountNameEn: item.beneficiaryAccountNameEn,
+        beneficiaryNameAr: item.beneficiaryNameAr,
+        beneficiaryNameEn: item.beneficiaryNameEn,
         costCenterNameAr: item.costCenterNameAr,
         costCenterNameEn: item.costCenterNameEn
       }
     )
 
     this.voucherDetail.forEach(item => {
-       
+
       this.totalDebitLocal += item.debitLocal ?? 0;
       this.totalCreditLocal += item.creditLocal ?? 0;
     }
@@ -1177,7 +1204,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       const index: number = this.voucherDetail.indexOf(item);
       if (index !== -1) {
         this.voucherDetail.splice(index, 1);
-         
+
         this.totalDebitLocal = 0;
         this.totalCreditLocal = 0;
 
@@ -1191,5 +1218,75 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
 
   }
+  getCustomers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCustomerApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.customersList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getSuppliers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeSupplierApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.suppliersList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getBeneficiaryAccount() {
+    debugger
+    if(this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
+    {
+    this.selectedVoucherDetail.beneficiaryAccountId=this.filterBeneficiaryList.filter(x => x.id == Number(this.selectedVoucherDetail.beneficiaryId))[0].accountId
+    }
+    else if(this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Account)
+    {
+      this.selectedVoucherDetail.beneficiaryAccountId=this.selectedVoucherDetail.beneficiaryId;
+    }
+    
+  }
+  getBeneficiaryAccountAdded(i) {
+    debugger
+    if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
+    {
+      debugger
+    this.voucherDetail[i].beneficiaryAccountId=this.filterBeneficiaryList.filter(x => x.id == Number(this.voucherDetail[i].beneficiaryId))[0].accountId
+    }
+    else if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Account)
+    {
+      this.voucherDetail[i].beneficiaryAccountId=this.voucherDetail[i].beneficiaryId;
+    }
+    
+  }
+
 }
 

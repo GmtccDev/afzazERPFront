@@ -55,7 +55,6 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    // this.defineGridColumn();
     this.spinner.show();
     Promise.all([this.getUnits()])
       .then(a => {
@@ -118,7 +117,6 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -153,7 +151,6 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
         const input = {
@@ -191,7 +188,7 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
     },
-    
+
 
   ];
 
@@ -216,7 +213,7 @@ export class UnitComponent implements OnInit, OnDestroy, AfterViewInit {
   openUnits() { }
   onCheck(id) {
 
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {

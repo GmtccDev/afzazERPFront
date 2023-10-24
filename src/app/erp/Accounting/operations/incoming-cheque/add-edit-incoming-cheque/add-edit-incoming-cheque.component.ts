@@ -63,10 +63,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = 'Account/GetLeafAccounts?'
   routeCustomerApi = 'CustomerCard/get-ddl?'
   routeSupplierApi = 'SupplierCard/get-ddl?'
-
+  routeAccountApi = 'Account/GetLeafAccounts?'
   routeBankAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Bank
   journalList: any;
   costCenterList: any;
@@ -78,11 +77,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   accountDetailsList: any;
   customerList: any;
   supplierList: any;
-
   accountList: any;
   filterBeneficiaryList: any;
-
-
   index: any;
   totalamount: number;
   totalDebit: number;
@@ -426,10 +422,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
           let ListDetail = res.response?.incomingChequeDetail;
 
           this.incomingChequeDetailDTOList.clear();
-          
+
 
           ListDetail.forEach(element => {
-            this.getBeneficiaryList(element.beneficiaryTypeId);   
+            this.getBeneficiaryList(element.beneficiaryTypeId);
             this.incomingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
               incomingChequeId: element.incomingChequeId,
@@ -605,7 +601,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    debugger
+
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
 
@@ -631,7 +627,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     // }
 
     //  var entity = new CreateIncomingChequeCommand();
-    debugger
+
     if (this.incomingChequeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -706,16 +702,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.subsList.push(sub);
 
     });
-
-
-
-
-
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-
       if (entity.status > 1) {
         this.spinner.hide();
         this.alertsService.showError(
@@ -862,10 +852,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getBeneficiaryAccount(row) {
-    debugger
+
     if (row != null) {
       if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Client || row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Supplier) {
-        debugger
+
         row.get('accountId').value = this.filterBeneficiaryList.filter(x => x.id == Number(row.get('beneficiaryId').value))[0].accountId;
 
 
@@ -925,7 +915,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getBeneficiaryList(beneficiaryTypeId) {
-    debugger
+
     this.filterBeneficiaryList = [];
     if (beneficiaryTypeId != null) {
       if (beneficiaryTypeId == BeneficiaryTypeEnum.Client) {

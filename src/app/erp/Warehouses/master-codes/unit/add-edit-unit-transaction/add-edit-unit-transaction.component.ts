@@ -107,7 +107,6 @@ export class AddEditUnitTransactionComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -133,7 +132,6 @@ export class AddEditUnitTransactionComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -180,7 +178,6 @@ export class AddEditUnitTransactionComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -224,7 +221,6 @@ export class AddEditUnitTransactionComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);

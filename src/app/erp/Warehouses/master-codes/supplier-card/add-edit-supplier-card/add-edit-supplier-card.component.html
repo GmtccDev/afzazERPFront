@@ -198,7 +198,7 @@
 												{{'general.account'|translate}}
 											</label>
 											<span class="text-danger">*</span>
-											<div class="input-group  popup">
+											<div class="input-group form-group">
 												<ng-select style="width:100%" formControlName="accountId"
 													name='accountId' class="" id="accountId">
 													<ng-option *ngFor="let account of accountsList"
@@ -213,6 +213,11 @@
 														*ngIf="f['accountId'].errors && f['accountId'].errors['required']"
 														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchSupplierAccountModal=true" type="button"><i
+															class="fa fa-search"></i></button>
 												</div>
 
 											</div>
@@ -243,3 +248,7 @@
 		</div>
 	</div>
 </section>
+		
+<app-public-search-modal [isVisible]="showSearchSupplierAccountModal" [routeApi]="routeSupplierAccountApi"
+	(emitClose)="showSearchSupplierAccountModal = false;" (emitSearch)="onSelectSupplierAccount($event)">
+</app-public-search-modal>

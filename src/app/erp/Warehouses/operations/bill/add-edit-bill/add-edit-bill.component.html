@@ -177,7 +177,7 @@
                                                     (change)="getBillsByReferenceId(billForm.value.referenceId)">
                                                     <ng-option *ngFor="let billType of billTypesList"
                                                         [value]="billType.id">
-                                                        {{lang=="ar"?billType.billNameAr:billType.billNameEn}}
+                                                        {{lang=="ar"?billType.nameAr:billType.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
 
