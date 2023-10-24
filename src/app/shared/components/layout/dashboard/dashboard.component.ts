@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 	model: NgbDateStruct;
 	disabled = true;
 	subsList: Subscription[] = [];
-	voucherTypes: any = [];
 	depositVouchers: any = [];
 	WithdrawalVouchers: any = [];
 	billTypes: any = [];
@@ -195,9 +194,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					console.log(res);
 					if (res.success) {
 						
-						this.voucherTypes = res.response.items
-						this.depositVouchers = this.voucherTypes.filter(x => x.voucherKindId == 1);
-						this.WithdrawalVouchers = this.voucherTypes.filter(x => x.voucherKindId == 2);
+						this.depositVouchers =res?.response?.items?.filter(x => x.voucherKindId == 1);
+						this.WithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == 2);
 
 						if (this.depositVouchers.length > 0) {
 							this.depositVouchers.forEach(element => {
@@ -209,8 +207,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 									));
 								});
 							});
-							const distinctVoucherTypes = this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'sub', active: false,children:distinctVoucherTypes })
+							this.navServices.voucherTypesNew= this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 							
 						}
 						if (this.WithdrawalVouchers.length > 0) {
@@ -223,9 +220,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 									));
 								});
 							});
-							const distinctVoucherTypes = this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+							this.navServices.WithdrawalVouchersNew= this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
-							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'sub', active: false,children:distinctVoucherTypes })
 							
 						}
 
