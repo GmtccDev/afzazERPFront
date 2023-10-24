@@ -19,20 +19,21 @@ export class Voucher {
 export class VoucherDetail {
     id: number;
     voucherId: number; 
+    beneficiaryTypeId: number;
+    beneficiaryId: number;
+    beneficiaryAccountId: number;
     debit: number;
     credit: number;
     currencyId: number;
     currencyConversionFactor: number|undefined;
     debitLocal: number|undefined;
     creditLocal: number | undefined;
-    beneficiaryTypeId: number;
-    beneficiaryAccountId: number;
     description: string;
     costCenterId:number|undefined;
     currencyNameAr:string;
     currencyNameEn:string;
-    beneficiaryAccountNameAr:string;
-    beneficiaryAccountNameEn:string;
+    beneficiaryNameAr:string;
+    beneficiaryNameEn:string;
     costCenterNameAr:string;
     costCenterNameEn:string;
 

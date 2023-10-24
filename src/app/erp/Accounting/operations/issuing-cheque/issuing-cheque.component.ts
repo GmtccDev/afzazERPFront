@@ -58,7 +58,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
   }
 
-
   //#endregion
 
   //#region ngOnInit

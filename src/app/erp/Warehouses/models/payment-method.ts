@@ -5,7 +5,7 @@ export class PaymentMethodDto {
     companyId: number;
     branchId: number;
     nameAr: string;
-    nameEn: string;
+    nameEn: string |undefined;
     code: string;
     isActive: boolean | undefined;
     accountId: any;

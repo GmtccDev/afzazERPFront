@@ -15,6 +15,7 @@ import { SupplierCardDto } from '../../../models/supplier-card';
 import { SupplierCardServiceProxy } from '../../../Services/supplier-card.service';
 import { CountryDto } from '../../../../master-codes/models/country';
 import { CountryServiceProxy } from '../../../../master-codes/services/country.servies';
+import { AccountClassificationsEnum } from 'src/app/shared/constants/enumrators/enums';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class AddEditSupplierCardComponent implements OnInit {
   id: any = 0;
   currnetUrl;
   lang: any = localStorage.getItem("language")
-  routeAccountApi = 'Account/get-ddl?'
+  routeSupplierAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Supplier
   accountsList: any;
   routeApiCountry = 'Country/get-ddl?'
   countriesList: CountryDto[] = [];
@@ -50,6 +51,7 @@ export class AddEditSupplierCardComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  showSearchSupplierAccountModal = false;
 
   constructor(
     private supplierCardService: SupplierCardServiceProxy,
@@ -72,7 +74,7 @@ export class AddEditSupplierCardComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     Promise.all([
-      this.getAccounts(),
+      this.getSupplierAccounts(),
       this.getCountries()
 
 
@@ -201,7 +203,6 @@ export class AddEditSupplierCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -222,7 +223,6 @@ export class AddEditSupplierCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -230,13 +230,12 @@ export class AddEditSupplierCardComponent implements OnInit {
     });
 
   }
-  getAccounts() {
+  getSupplierAccounts() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+      let sub = this.publicService.getDdl(this.routeSupplierAccountApi).subscribe({
         next: (res) => {
-
           if (res.success) {
-            this.accountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+            this.accountsList = res.response;
 
           }
 
@@ -247,7 +246,6 @@ export class AddEditSupplierCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -273,7 +271,6 @@ export class AddEditSupplierCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -341,7 +338,6 @@ export class AddEditSupplierCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -379,7 +375,6 @@ export class AddEditSupplierCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -402,7 +397,10 @@ export class AddEditSupplierCardComponent implements OnInit {
 
     }
   }
-
+  onSelectSupplierAccount(event) {
+    this.supplierCardForm.controls.accountId.setValue(event.id);
+    this.showSearchSupplierAccountModal = false;
+  }
 
 }
 
