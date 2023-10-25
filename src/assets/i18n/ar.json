@@ -192,7 +192,7 @@
         "print": "طباعة",
         "view": "عرض",
         "cancelDefaultReport": "الغاء التقرير الافتراضى",
-        "post":"ترحيل"
+        "post": "ترحيل"
     },
     "component-names": {
         "country-information": "معلومات الدولة",
@@ -280,15 +280,13 @@
         "item-groups-card-information": "معلومات بطاقة مجموعة اصناف",
         "sales-person-card": "بطاقة المندوب",
         "sales-person-card-information": "معلومات بطاقة المندوب",
-        "sales-person-commission":"عمولات المناديب",
+        "sales-person-commission": "عمولات المناديب",
         "bill-types": "أنماط الفواتير",
         "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
-        "bills":"الفواتير",
-        "default-journal":"اليومية الإفتراضية",
-        "general-configuration":"الإعدادات",
-        "cheques-journal":"يومية الشيكات"
-
-
+        "bills": "الفواتير",
+        "default-journal": "اليومية الإفتراضية",
+        "general-configuration": "الإعدادات",
+        "cheques-journal": "يومية الشيكات"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -403,8 +401,8 @@
         "tax": "الضريبة",
         "discount": "الخصم",
         "total": "الأجمالى",
-        "sub-total":"الأجمالى الجزئي",
-        "total-before-tax":"الأجمالى قبل الضريبة",
+        "sub-total": "الأجمالى الجزئي",
+        "total-before-tax": "الأجمالى قبل الضريبة",
         "tax-ratio": "نسبة الضريبة",
         "tax-value": "قيمة الضريبة",
         "discount-ratio": "نسبة الخصم",
@@ -420,41 +418,32 @@
         "inventory-account": "حساب المخزون",
         "minute": "دقيقة",
         "print": "الطباعة",
-        "delivery-date":"تاريخ التوصيل",
-        "pay-way":"طريقة الدفع",
-        "ship-method":"طريقة الشحن",
-        "ship-kind":"نوع الشحن",
-        "reference":"المرجع",
-        "reference-no":"رقم المرجع",
-        "fetch":"أسترجاع",
-        "sales-person":"مندوب المبيعات",
-        "supplier-account":"حساب المورد",
+        "delivery-date": "تاريخ التوصيل",
+        "pay-way": "طريقة الدفع",
+        "ship-method": "طريقة الشحن",
+        "ship-kind": "نوع الشحن",
+        "reference": "المرجع",
+        "reference-no": "رقم المرجع",
+        "fetch": "أسترجاع",
+        "sales-person": "مندوب المبيعات",
+        "supplier-account": "حساب المورد",
         "project": "المشروع",
-        "addition-ratio":"نسبة الأضافة",
-        "addition-value":"قيمة الأضافة",
-        "paid-account":"حساب المدفوع",
-        "remaining-account":"حساب المتبقى",
-        "corresponding-account":"الحساب المقابل",
-        "customer-account":"حساب العميل",
-        "bank-account":"حساب البنك"
-
-       
-       
-         
+        "addition-ratio": "نسبة الأضافة",
+        "addition-value": "قيمة الأضافة",
+        "paid-account": "حساب المدفوع",
+        "remaining-account": "حساب المتبقى",
+        "corresponding-account": "الحساب المقابل",
+        "customer-account": "حساب العميل",
+        "bank-account": "حساب البنك"
     },
-
     "sales-person-commission": {
-        "sales-person":"المندوب",
-        "commission-calculate-method":"طريقة احتساب العمولة",
-        "commission-type":"نوع العمولة",
-        "commission-on":"العمولة على ",
-        "target":"المستهدف",
-        "achieved-rarget-ratio":"قيمة العمولة في حالة تحقيق المستهدف",
-        "not-achieved-rarget-ratio":"قيمة العمولة في حالة عدم تحقيق المستهدف"
-      
-
-
-
+        "sales-person": "المندوب",
+        "commission-calculate-method": "طريقة احتساب العمولة",
+        "commission-type": "نوع العمولة",
+        "commission-on": "العمولة على ",
+        "target": "المستهدف",
+        "achieved-rarget-ratio": "قيمة العمولة في حالة تحقيق المستهدف",
+        "not-achieved-rarget-ratio": "قيمة العمولة في حالة عدم تحقيق المستهدف"
     },
     "currency": {
         "transaction-date": "تاريخ المعامل ",
@@ -538,8 +527,8 @@
         "default-beneficiary": "نوع  الجهة الافتراضى",
         "add-voucher-type": "اضافة نمط سند",
         "update-voucher-type": "تحديث نمط السند",
-        "deposit-vouchers":"سندات القبض",
-        "withdrawal-vouchers":"سندات الصرف"
+        "deposit-vouchers": "سندات القبض",
+        "withdrawal-vouchers": "سندات الصرف"
     },
     "message-title": {
         "done": "نجاح",
@@ -555,7 +544,21 @@
         "voucher": "السند"
     },
     "journalEntry": {
-        "openBalance": "القيد الافتتاحي "
+        "openBalance": "القيد الافتتاحي ",
+        "accountNumber": "رقم الحساب",
+        "credit": "دائن",
+        "debit": "مدين",
+        "currency": "العملة",
+        "balance": "التعادل",
+        "localCredit": "دائن محلي",
+        "localDebit": "مدين محلي",
+        "costCenter": "مركز التكلفة",
+        "description": "الوصف",
+        "actions": "الاجراءات",
+        "totalDebit": "اجمالي المدين",
+        "totalCredit": "اجمالي الدائن",
+        "totalDebitLocal": "اجمالي المدين محلي",
+        "totalCreditLocal": "اجمالي الدائن محلي"
     },
     "account-classification": {
         "add-account-classification": "اضافة تصنيف الحساب",
@@ -579,7 +582,6 @@
         "collect": "تحصيل",
         "confirm-reject": "هل أنت متأكد من رفض هذا الشيك؟",
         "reject": "رفض"
-        
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"
@@ -642,7 +644,6 @@
         "cost-price": "سعر التكلفة",
         "type": "النوع",
         "current-balance": "الرصيد الحالى"
-
     },
     "bill-type": {
         "bill-type-information": "معلومات نمط الفاتورة",
@@ -676,33 +677,29 @@
         "print-items-specifiers": "طباعة محددات الأصناف",
         "print-items-images": "طباعة صور الاصناف",
         "transaction-factor": " معامل التحويل ",
-        "sales-bills" : " فواتير المبيعات ",
-        "purchases-bills" : " فواتير المشتريات ",
-        "sales-return-bills":" فواتير مرتجع المبيعات ",
-        "purchases-return-bills":" فواتير مرتجع المشتريات ",
-        "first-period-goods-bills":" فواتير بضاعة أول المدة ",
-        "calculating-tax-manual":"أحتساب الضريبة يدويا"
-
-
+        "sales-bills": " فواتير المبيعات ",
+        "purchases-bills": " فواتير المشتريات ",
+        "sales-return-bills": " فواتير مرتجع المبيعات ",
+        "purchases-return-bills": " فواتير مرتجع المشتريات ",
+        "first-period-goods-bills": " فواتير بضاعة أول المدة ",
+        "calculating-tax-manual": "أحتساب الضريبة يدويا"
     },
     "bill": {
         "bill-information": "معلومات الفاتورة",
         "add-bill": "اضافة الفاتورة",
         "update-bill": "تحديث الفاتورة",
         "bill": "الفاتورة",
-        "supplier":"المورد",
-        "customer":"العميل",
-        "supplier-reference":"مرجع المورد",
-        "store":"المستودع",
+        "supplier": "المورد",
+        "customer": "العميل",
+        "supplier-reference": "مرجع المورد",
+        "store": "المستودع",
         "transaction-factor": " معامل التحويل ",
-        "items":"الأصناف",
-        "item":"الصنف",
-        "item-description":"وصف الصنف",
-        "additions-and-discounts":"الأضافات و الخصومات على الفاتورة"
-
-
-
-
-    }
-
+        "items": "الأصناف",
+        "item": "الصنف",
+        "item-description": "وصف الصنف",
+        "additions-and-discounts": "الأضافات و الخصومات على الفاتورة"
+    },
+    "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
+    "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
+    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين"
 }

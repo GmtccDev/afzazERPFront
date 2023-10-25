@@ -21,6 +21,9 @@ import { DateModel } from 'src/app/shared/model/date-model';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
 import { AccountDto } from '../../../models/account';
 import { ModuleType } from '../../../models/general-configurations';
+import { JournalEntryDetail } from '../../../models/journal';
+import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -59,12 +62,12 @@ export class AddEditJournalEntryComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = 'Account/getLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
+  routeAccountApi = 'Account/GetLeafAccounts?'
   journalList: any;
   costCenterList: any;
   currencyList: any;
   fiscalPeriodList: any;
-  counter: number;
+  counter: number = 0;
   accountList: any;
   index: any;
   totalCredit: number;
@@ -74,7 +77,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   checkPeriod: any;
   isMultiCurrency: boolean;
   serial: any;
-  date: any;
+  date: any = this.dateService.getCurrentDate();
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
   entriesStatusEnum: any;
@@ -85,6 +88,8 @@ export class AddEditJournalEntryComponent implements OnInit {
   showSearhBeneficiaryAccountsModal = false;
   showSearchCurrencyModal = false;
   showSearchCashAccountModal = false;
+  listDetail: JournalEntryDetail[] = [];
+  disableFlag: boolean = false;
   constructor(
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
@@ -99,7 +104,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
 
-
+    private modalService: NgbModal,
   ) {
     this.definejournalEntryForm();
 
@@ -283,7 +288,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -304,7 +309,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       postType: '',
       journalEntriesDetail: this.fb.array([])
     });
-    this.initGroup();
+    // this.initGroup();
     this.journalEntryForm.get('journalEntriesDetail').valueChanges.subscribe(values => {
 
       this.totalCredit = 0;
@@ -351,6 +356,8 @@ export class AddEditJournalEntryComponent implements OnInit {
       jEDetailDebit: [0.0],
       costCenterId: [null],
       costCenterName: '',
+      currencyName: '',
+      accountName: '',
       jEDetailCreditLocal: [0.0],
       jEDetailDebitLocal: [0.0],
       jEDetailSerial: [this.counter]
@@ -360,13 +367,28 @@ export class AddEditJournalEntryComponent implements OnInit {
     },
 
     ));
-   
+
   }
   onDeleteRow(rowIndex) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      ;
+      if (rs == 'Confirm') {
+        this.spinner.show();
 
-    let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
-    journalEntriesDetail.removeAt(rowIndex);
-    this.counter -= 1;
+        let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+        journalEntriesDetail.removeAt(rowIndex);
+        this.counter -= 1;
+        this.spinner.hide();
+
+      }
+    });
+
+
   }
   atLeastOne = (validator: ValidatorFn, controls: string[]) => (
     group: FormGroup,
@@ -405,11 +427,24 @@ export class AddEditJournalEntryComponent implements OnInit {
             journalEntriesDetail: this.fb.array([])
 
           });
-          let ListDetail = res.response?.journalEntriesDetail;
-
+          debugger
+          this.listDetail = res.response?.journalEntriesDetail;
+          debugger
           this.journalEntriesDetailDTOList.clear();
-          ListDetail.forEach(element => {
-
+          this.listDetail.forEach(element => {
+            debugger
+            var costCenter = this.costCenterList?.find(c => c.id == element.costCenterId)
+            if (costCenter != null && costCenter != undefined) {
+              element.costCenterName = this.lang = "ar" ? costCenter.nameAr : costCenter.nameEn;
+            }
+            var currency = this.currencyList?.find(c => c.id == element.currencyId)
+            if (currency != null && currency != undefined) {
+              element.currencyName = this.lang = "ar" ? currency.nameAr : currency.nameEn;
+            }
+            var account = this.accountList?.find(c => c.id == element.accountId)
+            if (account != null && account != undefined) {
+              element.accountName = this.lang = "ar" ? account.nameAr : account.nameEn;
+            }
             this.journalEntriesDetailDTOList.push(this.fb.group({
               id: element.id,
               journalEntriesMasterId: element.journalEntriesMasterId,
@@ -422,7 +457,11 @@ export class AddEditJournalEntryComponent implements OnInit {
               costCenterId: element.costCenterId,
               jEDetailCreditLocal: element.jeDetailCreditLocal,
               jEDetailDebitLocal: element.jeDetailDebitLocal,
-              jEDetailSerial: this.counter
+              jEDetailSerial: this.counter,
+              costCenterName: element.costCenterName,
+              currencyName: element.currencyName,
+              accountName: element.accountName,
+
             }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
             ));
 
@@ -493,15 +532,16 @@ export class AddEditJournalEntryComponent implements OnInit {
           if (res.response?.postType == 1) {
             this.postType = res.response?.postType;
 
-           // this.journalEntryForm.disable();
+            this.journalEntryForm.disable();
+            this.disableFlag = true;
           }
-   
+
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
       this.subsList.push(sub);
@@ -526,7 +566,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
       this.subsList.push(sub);
@@ -588,7 +628,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       var entity = this.journalEntryForm.value;
       entity.branchId = this.branchId;
       entity.companyId = this.companyId;
-      
+
       let sub = this.journalEntryService.createJournalEntry(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -601,7 +641,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
       this.subsList.push(sub);
@@ -621,7 +661,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     if (this.counter < 2) {
       this.alertsService.showError(
-        'يجب أن يكون على الاقل اثنين من الصفوف',
+        this.translate.instant('twoRows'),
         ""
 
       )
@@ -629,19 +669,19 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
     if ((this.totalCredit == 0 || this.totalDebit == 0)) {
       this.alertsService.showError(
-        'يجب ان يكون قيم في الدائن والمدين',
+        this.translate.instant('debitCreditValues'),
         ""
       )
       return;
     }
     if ((this.totalCredit !== this.totalDebit)) {
       this.alertsService.showError(
-        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
+        this.translate.instant('totalValues'),
         ""
       )
       return;
     }
-    debugger
+
     //  var entity = new CreateJournalEntryCommand();
     if (this.journalEntryForm.valid) {
       this.spinner.show();
@@ -679,7 +719,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   onChangeCurrency(event, index) {
     this.isSelectCurrency = true;
-    let selectCurrencyId = event.target.value;
+    let selectCurrencyId = event.id;
     let currencyModel = this.currencyList.find(x => x.id == selectCurrencyId);
     if (this.defaultCurrencyId == selectCurrencyId) {
       currencyModel.transactionFactor = 1;
@@ -694,6 +734,9 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res: any) => {
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.defaultCurrencyId)[0];
+          if (currencyModel !== null && currencyModel !== undefined) {
+            currencyModel.transactionFactor = 1;
+          }
           let currencyFactor = currencyModel.transactionFactor;
           const faControl =
             (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
@@ -701,6 +744,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           faControl['controls'].jEDetailCreditLocal.setValue(currencyFactor * faControl['controls'].jEDetailCredit.value);
           faControl['controls'].jEDetailDebitLocal.setValue(currencyFactor * faControl['controls'].jEDetailDebit.value);
           faControl['controls'].jEDetailSerial.setValue(index + 1);
+
         }
       })
       this.subsList.push(sub);
@@ -753,7 +797,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
       this.subsList.push(sub);
@@ -762,10 +806,10 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   onUpdate() {
 
- 
+
     if (this.counter < 2) {
       this.alertsService.showError(
-        'يجب أن يكون على الاقل اثنين من الصفوف',
+        this.translate.instant('twoRows'),
         ""
 
       )
@@ -773,14 +817,14 @@ export class AddEditJournalEntryComponent implements OnInit {
     }
     if ((this.totalCredit == 0 || this.totalDebit == 0)) {
       this.alertsService.showError(
-        'يجب ان يكون قيم في الدائن والمدين',
+        this.translate.instant('debitCreditValues'),
         ""
       )
       return;
     }
     if ((this.totalCredit !== this.totalDebit)) {
       this.alertsService.showError(
-        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
+        this.translate.instant('totalValues'),
         ""
       )
       return;
@@ -818,7 +862,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -844,7 +888,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -870,7 +914,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -885,7 +929,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
           if (res.success) {
             this.currencyList = res.response;
-    
+
 
           }
           resolve();
@@ -895,7 +939,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -922,7 +966,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -1020,37 +1064,42 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.date = selectedDate;
   }
   onSelectCashAccount(event) {
-    this.journalEntryForm.controls.cashAccountId.setValue(event.id);
+    const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+    faControl['controls'].accountId.setValue(event.id);
+    faControl['controls'].accountName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
     this.showSearchCashAccountModal = false;
   }
   onSelectCostCenter(event) {
-    
-    const faControl =
-      (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+    debugger
+    const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
     faControl['controls'].costCenterId.setValue(event.id);
-    faControl['controls'].costCenterName.setValue(event.nameAr);
+    faControl['controls'].costCenterName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
     this.showSearchCostCenterModal = false;
   }
   onSelectCurrencyPopup(event) {
-    this.journalEntryForm.controls.currencyId.setValue(event.id);
+    const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+    faControl['controls'].currencyId.setValue(event.id);
+    faControl['controls'].currencyName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
+    this.onChangeCurrency(event, this.index)
     this.showSearchCurrencyModal = false;
   }
   openModalSearchCostCenter(i) {
-    
+
     this.index = i;
     this.showSearchCostCenterModal = true;
-    
+
   }
-  getCostCenterName(i) {
-    debugger
-    const faControl =
-      (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(i);
-    var id = faControl['controls'].costCenterId.value;
-    if(id==null){
-      return;
-    }
-    var costCenterName = this.costCenterList.find(c => c.id == id);
-    return costCenterName.nameAr;
+  openModalSearchCurrency(i) {
+
+    this.index = i;
+    this.showSearchCurrencyModal = true;
+
+  }
+  openModalSearchAccount(i) {
+
+    this.index = i;
+    this.showSearchCashAccountModal = true;
+
   }
 }
 
