@@ -35,6 +35,11 @@ export class NavService implements OnInit, OnDestroy {
 	depositVouchersNew: any = [];
 	WithdrawalVouchersNew: any = [];
 	billTypes: any = [];
+	salesBillTypesNew: any = [];
+	purchasesBillTypesNew: any = [];
+	salesReturnBillTypesNew: any = [];
+	purchasesReturnBillTypesNew: any = [];
+	firstPeriodGoodsBillTypesNew:any=[];
 
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
@@ -241,10 +246,10 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: [
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: 
 				this.billTypes,
 
-			]
+			
 
 
 
