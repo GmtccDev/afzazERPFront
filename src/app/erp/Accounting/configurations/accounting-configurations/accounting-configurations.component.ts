@@ -200,7 +200,7 @@ d
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-          debugger;
+          ;
           if (res.success) {
             this.accountList = res.response;
 
@@ -276,7 +276,7 @@ d
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.general-configuration");
           if (res.success) {
-            debugger
+            
             this.generalConfiguration = res.response.result.items
             this.currencyId = Number(this.generalConfiguration.find(c => c.id == 1).value);
             this.multiCurrency = this.generalConfiguration.find(c => c.id == 2).value == "true" ? true : false;
@@ -286,9 +286,9 @@ d
             this.accountReceivablesId = this.generalConfiguration.find(c => c.id == 6).value;
             this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == 7).value);
             this.accountExchangeId = this.generalConfiguration.find(c => c.id == 8).value;
-            this.journalId= Number(this.generalConfiguration.find(c => c.id == 1006).value);
-            this.chequesJournalId= Number(this.generalConfiguration.find(c => c.id == 1007).value);
-            this.idleTime= Number(this.generalConfiguration.find(c => c.id == 10001).value);
+            this.journalId= Number(this.generalConfiguration?.find(c => c.id == 1006).value);
+            this.chequesJournalId= Number(this.generalConfiguration?.find(c => c.id == 1007).value);
+            this.idleTime= Number(this.generalConfiguration?.find(c => c.id == 10001).value);
           }
 
             console.log("res.response.result.items=========>",res.response.result.items)
@@ -382,7 +382,7 @@ d
       if (this.generalConfiguration.length > 0) {
         this.generalConfiguration.forEach((s) => {
           if (s) {
-            debugger;
+            ;
             if (s.id == 1) {
               s.value = this.currencyId + "";
             }
@@ -422,6 +422,7 @@ d
         this.spinner.show();
         this.confirmUpdate().then(a => {
           this.spinner.hide();
+          this.getGeneralConfiguration();
           this.changePath();
         }).catch(e => {
           this.spinner.hide();
