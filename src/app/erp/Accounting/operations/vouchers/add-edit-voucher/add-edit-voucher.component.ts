@@ -277,7 +277,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -359,7 +359,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -423,7 +423,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -437,7 +437,7 @@ voucherNameAr:any;
           resolve();
           if (res.response.value > 0) {
             this.mainCurrencyId = res.response.value;
-            console.log("res.response.value=========>",res.response.value)
+    
           }
 
 
@@ -446,7 +446,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -472,7 +472,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -494,7 +494,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -521,7 +521,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -549,7 +549,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -575,7 +575,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -599,7 +599,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -974,7 +974,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -1033,7 +1033,7 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);

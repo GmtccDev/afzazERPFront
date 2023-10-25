@@ -111,7 +111,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.accountService.getAllTree(this.filter).subscribe({
         next: (res) => {
 
-          console.log(res);
+          
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.account");
           if (res.success) {
@@ -130,7 +130,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -155,7 +155,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
+      ;
       if (rs == 'Confirm') {
         this.spinner.show();
 

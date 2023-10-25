@@ -120,7 +120,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					
 				},
 			});
 
@@ -227,7 +227,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					
 				},
 			});
 

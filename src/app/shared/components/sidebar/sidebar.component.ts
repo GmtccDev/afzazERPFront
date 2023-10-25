@@ -32,14 +32,14 @@ export class SidebarComponent {
     private billTypeService: BillTypeServiceProxy,
 
     public layout: LayoutService) {
-      debugger
+   
       let x=this.subdomain;
     let menu = localStorage.getItem("Menu");
     if (menu == '0') {
    
       this.navServices.itemsSettings.subscribe(menuItems => {
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+   
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
@@ -72,7 +72,7 @@ export class SidebarComponent {
       this.navServices.itemsAccount.subscribe(menuItems => {
         
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+        
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             ;
@@ -100,9 +100,9 @@ export class SidebarComponent {
     else if (menu == '6') {
       this.navServices.itemsWarehouses.subscribe(menuItems => {
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+      
         this.router.events.subscribe((event) => {
-          debugger
+          
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
               if (items.path === event.url) {
@@ -143,7 +143,7 @@ export class SidebarComponent {
   }
 
   sidebarToggle() {
-    debugger
+
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
   }
 
@@ -152,7 +152,7 @@ export class SidebarComponent {
    
    this.getVoucherTypes();
    this.getBillTypes();
-    debugger
+
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;
@@ -173,7 +173,7 @@ export class SidebarComponent {
 
   // Click Toggle menu
   toggletNavActive(item) {
-    debugger
+    
     if (!item.active) {
       this.menuItems.forEach(a => {
         if (this.menuItems.includes(item)) {
@@ -218,7 +218,7 @@ export class SidebarComponent {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
+          
           if (res.success) {
             
             const voucherTypes = res.response.items.map(element => ({
@@ -237,7 +237,7 @@ export class SidebarComponent {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -250,7 +250,7 @@ export class SidebarComponent {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
+          
           if (res.success) {
             
             const billTypes = res.response.items.map(element => ({
@@ -269,7 +269,7 @@ export class SidebarComponent {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+ 
         },
       });
 

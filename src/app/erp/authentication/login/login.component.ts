@@ -188,6 +188,7 @@ export class LoginComponent implements OnInit {
     // }
   //  this.loginForm.value.dataBaseName = this.dataBaseName
   debugger
+  
     let sub = this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
         debugger

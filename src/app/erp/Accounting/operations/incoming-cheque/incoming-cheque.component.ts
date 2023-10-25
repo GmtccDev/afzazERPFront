@@ -125,7 +125,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -161,7 +161,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
+      ;
       if (rs == 'Confirm') {
         this.spinner.show();
         let sub = this.incomingChequeService.deleteIncomingCheque(id).subscribe(
@@ -363,7 +363,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           error: (err: any) => {
           },
           complete: () => {
-            console.log('complete');
+            
           },
         });
         this.subsList.push(sub);
@@ -397,7 +397,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           error: (err: any) => {
           },
           complete: () => {
-            console.log('complete');
+            
           },
         });
         this.subsList.push(sub);

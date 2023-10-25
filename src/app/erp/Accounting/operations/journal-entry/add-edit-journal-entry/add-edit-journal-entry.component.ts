@@ -278,7 +278,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -354,7 +354,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     },
 
     ));
-    console.log(journalEntriesDetail.value)
+   
   }
   onDeleteRow(rowIndex) {
 
@@ -489,16 +489,13 @@ export class AddEditJournalEntryComponent implements OnInit {
 
             this.journalEntryForm.disable();
           }
-          console.log(
-            'this.journalEntryForm.value set value',
-            this.journalEntryForm.value
-          );
+   
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -523,7 +520,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -597,7 +594,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -614,7 +611,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     //   )
     //   return;
     // }
-    console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+
     if (this.counter < 2) {
       this.alertsService.showError(
         'يجب أن يكون على الاقل اثنين من الصفوف',
@@ -749,7 +746,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -758,7 +755,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   onUpdate() {
 
-    console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+ 
     if (this.counter < 2) {
       this.alertsService.showError(
         'يجب أن يكون على الاقل اثنين من الصفوف',
@@ -814,7 +811,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -840,7 +837,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -866,7 +863,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -881,7 +878,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
           if (res.success) {
             this.currencyList = res.response;
-            console.log("this.currencyList", this.currencyList)
+    
 
           }
           resolve();
@@ -891,7 +888,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -918,7 +915,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
