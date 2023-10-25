@@ -148,16 +148,17 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <!-- <th># </th> -->
-                                                    <th style="width: 15%;">رقم الحساب</th>
-                                                    <th style="width: 10%;">مدين</th>
-                                                    <th style="width: 10%;">دائن</th>
-                                                    <th style="width: 15%;">العملة</th>
-                                                    <th style="width: 10%;">التعادل</th>
-                                                    <th style="width: 10%;">مدين محلي</th>
-                                                    <th style="width: 10%;">دائن محلي</th>
-                                                    <th style="width: 15%;">مركز التكلفة</th>
-                                                    <th style="width: 15%;">الوصف</th>
-                                                    <th style="width: 1%;">الاجراءات</th>
+                                                    <th style="width: 15%;">{{ 'journalEntry.accountNumber' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.debit' | translate }}</th>
+                                                    <th style="width: 15%;">{{ 'journalEntry.currency' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.balance' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.localDebit' | translate }}</th>
+                                                    <th style="width: 15%;">{{ 'journalEntry.costCenter' | translate }}</th>
+                                                    <th style="width: 14%;">{{ 'journalEntry.description' | translate }}</th>
+                                                    <th style="width: 1%;">{{ 'journalEntry.actions' | translate }}</th>
+                                                 
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -173,7 +174,7 @@
 
                                                         <div class="input-group ">
 
-                                                            <select required class="form-control required" (change)="onChangeGetDefaultCurrency($event,i)" name="accountId" formControlName="accountId">
+                                                            <!-- <select required class="form-control required" (change)="onChangeGetDefaultCurrency($event,i)" name="accountId" formControlName="accountId">
 
 																<option *ngFor="let account of accountList"
 																	[value]="account.id">
@@ -186,7 +187,16 @@
                                                                 <button class="btn btn-rounded btn-dark"
                                                                     (click)="showSearchCashAccountModal=true" type="button"><i
                                                                         class="fa fa-search"></i></button>
-                                                            </div>
+                                                            </div> -->
+                                                            <input class="form-control" formControlName="accountName"    
+                                                          
+                                                            [ngModelOptions]="{standalone: true}"   [ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
+
+                                                             type="text" name="accountId" 
+                                                            (keyup.Enter)="openModalSearchAccount(i)">
+                                                            <div *ngIf="row.get('accountName')?.errors?.required && row.get('accountName')?.touched" class="invalid-feedback">
+                                                                Account Name is required.
+                                                              </div>
                                                         </div>
 
                                                     </td>
@@ -211,7 +221,7 @@
 
                                                         <div class="input-group">
 
-                                                            <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+                                                            <!-- <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 
 
 																<option *ngFor="let currency of currencyList"
@@ -223,7 +233,12 @@
                                                                 <button class="btn btn-rounded btn-dark"
                                                                     (click)="showSearchCurrencyModal=true" type="button"><i
                                                                         class="fa fa-search"></i></button>
-                                                            </div>
+                                                            </div> -->
+                                                            <input class="form-control" formControlName="currencyName"    
+                                                          
+                                                            [ngModelOptions]="{standalone: true}"
+                                                             type="text" name="currencyId"  [ngClass]="{ 'required': (row.get('accountId')?.errors?.required)}"
+                                                            (keyup.Enter)="openModalSearchCurrency(i)"  (change)="onChangeCurrency($event,i)">
                                                         </div>
 
 
@@ -263,8 +278,10 @@
 																</option>
 
 															</select> -->
-                                                            <input class="form-control" [value]="getCostCenterName(i)" 
-                                                             type="text" name="costCenterId" formControlName="costCenterId" [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
+                                                           <input class="form-control" formControlName="costCenterName"    
+                                                          
+                                                            [ngModelOptions]="{standalone: true}"
+                                                             type="text" name="costCenterId"  [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
                                                             (keyup.Enter)="openModalSearchCostCenter(i)">
                                                            
                                                         </div>
@@ -277,14 +294,40 @@
                                                     </td>
 
 
-                                                    <td>
-                                                        <button type="button" class="btn btn-table btn-danger " (click)="onDeleteRow(i)"> <i
-																class="icofont icofont-ui-delete"></i> حذف</button>
-                                                    </td>
+                                                    
+                                                    <td
+                                                    class="align-items-center border-0 d-flex justify-content-center gap-1">
+                                                    <!-- <button type="button"
+                                                        class="btn btn-secondary btn-table px-3"
+                                                        ><i
+                                                            class="fa fa-edit"></i></button> -->
+                                                    <button class="btn btn-danger btn-table px-3" 
+                                                        value="{{'buttons.delete'|translate}}"
+                                                        type="button" (click)="onDeleteRow(i)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                                <!-- <td>
+                                                    <button type="button"  (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2"> <i
+                                                        class="fa fa-plus"></i>
+                                                   </button>
+                                                </td> -->
                                                 </tr>
-
+                                               
                                             </tbody>
+                                            
+                                          
                                         </table>
+                                        <table>
+                                            <tr>
+                                              <td></td>
+                                              <td>
+                                                <button type="button" (click)="initGroup()"  class="btn btn-rounded btn-primary d-flex align-items-center gap-2">
+                                                  <i class="fa fa-plus"></i>
+                                                </button>
+                                              </td>
+                                            </tr>
+                                          </table>
                                     </div>
 
 
@@ -293,33 +336,29 @@
                             </div>
                             <br>
 
-                            <button type="button" (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2"> <i
+                            <!-- <button type="button" (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2"> <i
 									class="fa fa-plus"></i>
-								اضافة صف جديد</button>
+								اضافة صف جديد</button> -->
                         </form>
 
                         <table class="mt-4 total-table table table-borderless text-end w-100">
                             <tr>
-                                <td> اجمالي المدين</td>
-                                <td class="text-start">{{totalCredit}}</td>
+                              <td>{{'journalEntry.totalDebit' | translate }}</td>
+                              <td class="text-start">{{ totalCredit }}</td>
                             </tr>
                             <tr>
-                                <td> اجمالي الدائن </td>
-                                <td class="text-start"><label for="totalDebitValue" class="p-0">{{totalDebit}}</label>
-                                </td>
-
+                              <td>{{'journalEntry.totalCredit' | translate }}</td>
+                              <td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebit }}</label></td>
                             </tr>
                             <tr>
-                                <td>اجمالي المدين محلي</td>
-                                <td class="text-start"> <label class="p-0">{{totalCreditLocal}}</label>
-                                </td>
+                              <td>{{'journalEntry.totalDebitLocal' | translate }}</td>
+                              <td class="text-start"><label class="p-0">{{ totalCreditLocal }}</label></td>
                             </tr>
                             <tr>
-                                <td>اجمالي الدائن محلي</td>
-                                <td class="text-start"><label for="totalDebitValue" class="p-0">{{totalDebitLocal}}</label></td>
+                              <td>{{'journalEntry.totalCreditLocal' | translate }}</td>
+                              <td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebitLocal }}</label></td>
                             </tr>
-
-                        </table>
+                          </table>
 
 
 
