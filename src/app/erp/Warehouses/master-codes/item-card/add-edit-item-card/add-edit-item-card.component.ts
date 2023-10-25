@@ -17,7 +17,6 @@ import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum, WarrantyTypeEnum, WarrantyTypeArEnum, AccountClassificationsEnum } from '../../../../../shared/constants/enumrators/enums';
 import { environment } from 'src/environments/environment';
 import { UnitServiceProxy } from '../../../Services/unit.servies';
-import { UnitDto, UnitTransactionDto } from '../../../models/unit';
 
 @Component({
   selector: 'app-add-edit-item-card',
@@ -32,7 +31,7 @@ export class AddEditItemCardComponent implements OnInit {
   lang = localStorage.getItem("language")
   companyId = localStorage.getItem("companyId")
   branchId = localStorage.getItem("branchId")
-  routeAccountApi = 'Account/get-ddl?'
+  routeAccountApi = 'Account/GetLeafAccounts?'
   salesAccountsList: any;
   salesReturnsAccountsList: any;
   purchasesAccountsList: any;
@@ -59,14 +58,11 @@ export class AddEditItemCardComponent implements OnInit {
   image: any;
   itemCard: ItemCardDto = new ItemCardDto();
   itemCardUnit: ItemCardUnitDto[] = [];
+  selectedItemCardUnit: ItemCardUnitDto = new ItemCardUnitDto();
+
   itemCardAlternative: ItemCardAlternativeDto[] = [];
   selectedItemCardAlternative: ItemCardAlternativeDto = new ItemCardAlternativeDto();
 
-  unit: UnitTransactionDto[] = [];
-  selectedUnit: UnitTransactionDto = new UnitTransactionDto();
-
-
-  //ItemCard: ItemCardDto[] = [];
   addUrl: string = '/warehouses-master-codes/itemCard/add-itemCard';
   updateUrl: string = '/warehouses-master-codes/itemCard/update-itemCard/';
   listUrl: string = '/warehouses-master-codes/itemCard';
@@ -124,8 +120,8 @@ export class AddEditItemCardComponent implements OnInit {
       this.getItemGroups(),
       this.getMainUnits(),
       this.getUnitTransactions(),
-      this.getAccounts(),
-      //this.getItems()
+      this.getLeafAccounts(),
+      this.getItems()
 
 
     ]).then(a => {
@@ -149,13 +145,9 @@ export class AddEditItemCardComponent implements OnInit {
         if (this.id > 0) {
           this.getItemCardById(this.id).then(a => {
             this.spinner.hide();
-
           }).catch(err => {
             this.spinner.hide();
-
           });
-
-
         }
         else {
           this.sharedService.changeButton({ action: 'New' } as ToolbarData);
@@ -208,7 +200,7 @@ export class AddEditItemCardComponent implements OnInit {
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(250)])],
       nameEn: '',
       itemGroupId: REQUIRED_VALIDATORS,
-      itemType: '',
+      itemType: REQUIRED_VALIDATORS,
       image: '',
       costCalculateMethod: '',
       notes: '',
@@ -234,6 +226,7 @@ export class AddEditItemCardComponent implements OnInit {
       heightFactor: '',
       widthFactor: '',
       lengthFactor: '',
+      attachment: '',
       salesAccountId: '',
       salesReturnsAccountId: '',
       purchasesAccountId: '',
@@ -254,22 +247,45 @@ export class AddEditItemCardComponent implements OnInit {
   //#endregion
 
   //#region CRUD Operations
+  getUnitsByMainUnitId(mainUnitId: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.unitService.getUnit(mainUnitId).subscribe({
+        next: (res: any) => {
+          resolve();
+          debugger
+          this.unitsList = res.response.unitTransactionsDto
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   getItemCardById(id: any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.itemCardService.getItemCard(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
+          this.getUnitsByMainUnitId(res.response?.mainUnitId);
           this.itemCardForm.setValue({
             id: res.response.id,
             companyId: res.response.companyId,
             branchId: res.response.branchId,
             code: res.response.code,
             barcode: res.response?.barcode,
-            nameAr:res.response.nameAr ,
+            nameAr: res.response.nameAr,
             nameEn: res.response?.nameEn,
             itemGroupId: res.response.itemGroupId,
-            itemType: res.response,
-            image: res.response?.itemType,
+            itemType: res.response.itemType,
+            image: res.response?.image,
             costCalculateMethod: res.response?.costCalculateMethod,
             notes: res.response?.notes,
             model: res.response?.model,
@@ -290,10 +306,11 @@ export class AddEditItemCardComponent implements OnInit {
             quantity: res.response?.quantity,
             warrantyPeriod: res.response?.warrantyPeriod,
             warrantyType: res.response?.warrantyType,
-            itemKind: res.response?.itemKind,
+            itemKind: res.response?.itemKind + "",
             heightFactor: res.response?.heightFactor,
             widthFactor: res.response?.widthFactor,
             lengthFactor: res.response?.lengthFactor,
+            attachment: res.response?.attachment,
             salesAccountId: res.response?.salesAccountId,
             salesReturnsAccountId: res.response?.salesReturnsAccountId,
             purchasesAccountId: res.response?.purchasesAccountId,
@@ -302,9 +319,21 @@ export class AddEditItemCardComponent implements OnInit {
             inventoryAccountId: res.response?.inventoryAccountId,
             isActive: res.response?.isActive
 
-
           });
-
+          debugger
+          if (res.response?.itemCardUnits != null) {
+            this.itemCardUnit = res.response?.itemCardUnits;
+          }
+          else {
+            this.itemCardUnit = [];
+          }
+          if (res.response?.itemCardAlternatives != null) {
+            this.itemCardAlternative = res.response?.itemCardAlternatives;
+          }
+          else {
+            this.itemCardAlternative = []
+          }
+          this.setInputData();
 
         },
         error: (err: any) => {
@@ -340,18 +369,18 @@ export class AddEditItemCardComponent implements OnInit {
     });
 
   }
-  getAccounts() {
+  getLeafAccounts() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
 
           if (res.success) {
-            this.salesAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Sales && x.isActive == true);
-            this.salesReturnsAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Sales && x.isActive == true);
-            this.purchasesAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Purchases && x.isActive == true);
-            this.purchasesReturnsAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Purchases && x.isActive == true);
-            this.salesCostAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Sales && x.isActive == true);
-            this.inventoryAccountsList = res.response.filter(x => x.isLeafAccount == true && x.accountClassificationId == AccountClassificationsEnum.Inventory && x.isActive == true);
+            this.salesAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Sales);
+            this.salesReturnsAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Sales);
+            this.purchasesAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Purchases);
+            this.purchasesReturnsAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Purchases);
+            this.salesCostAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Sales);
+            this.inventoryAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Inventory);
 
           }
 
@@ -425,7 +454,7 @@ export class AddEditItemCardComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeItemCardApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.itemsList = res.response.filter(x => x.isActive == true);
+            this.itemsList = res.response;
 
           }
 
@@ -525,11 +554,11 @@ export class AddEditItemCardComponent implements OnInit {
             }
             this.defineItemCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getItemCardCode();
+            this.getItemCardCode();
           }
         }
       },
@@ -539,16 +568,81 @@ export class AddEditItemCardComponent implements OnInit {
   changePath() {
     this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
+  setInputData() {
+    this.itemCard = {
+      id: this.itemCardForm.controls["id"].value,
+      companyId: this.itemCardForm.controls["companyId"].value,
+      branchId: this.itemCardForm.controls["branchId"].value,
+      code: this.itemCardForm.controls["code"].value,
+      barcode: this.itemCardForm.controls["barcode"].value,
+      nameAr: this.itemCardForm.controls["nameAr"].value,
+      nameEn: this.itemCardForm.controls["nameEn"].value,
+      itemGroupId: this.itemCardForm.controls["itemGroupId"].value,
+      itemType: this.itemCardForm.controls["itemType"].value,
+      image: this.itemCardForm.controls["image"].value,
+      costCalculateMethod: this.itemCardForm.controls["costCalculateMethod"].value,
+      notes: this.itemCardForm.controls["notes"].value,
+      model: this.itemCardForm.controls["model"].value,
+      manufacturer: this.itemCardForm.controls["manufacturer"].value,
+      maxLimit: this.itemCardForm.controls["maxLimit"].value,
+      minLimit: this.itemCardForm.controls["minLimit"].value,
+      reorderLimit: this.itemCardForm.controls["reorderLimit"].value,
+      description: this.itemCardForm.controls["description"].value,
+      isActive: this.itemCardForm.controls["isActive"].value,
+      mainUnitId: this.itemCardForm.controls["mainUnitId"].value,
+      sellingPrice: this.itemCardForm.controls["sellingPrice"].value,
+      consumerPrice: this.itemCardForm.controls["consumerPrice"].value,
+      minSellingPrice: this.itemCardForm.controls["minSellingPrice"].value,
+      openingCostPrice: this.itemCardForm.controls["openingCostPrice"].value,
+      hasExpiredDate: this.itemCardForm.controls["hasExpiredDate"].value,
+      lifeTime: this.itemCardForm.controls["lifeTime"].value,
+      lifeTimeType: this.itemCardForm.controls["lifeTimeType"].value,
+      hasSerialNumber: this.itemCardForm.controls["hasSerialNumber"].value,
+      quantity: this.itemCardForm.controls["quantity"].value,
+      warrantyPeriod: this.itemCardForm.controls["warrantyPeriod"].value,
+      warrantyType: this.itemCardForm.controls["warrantyType"].value,
+      itemKind: this.itemCardForm.controls["itemKind"].value,
+      heightFactor: this.itemCardForm.controls["heightFactor"].value,
+      widthFactor: this.itemCardForm.controls["widthFactor"].value,
+      lengthFactor: this.itemCardForm.controls["lengthFactor"].value,
+      attachment: '',
+      salesAccountId: this.itemCardForm.controls["salesAccountId"].value,
+      salesReturnsAccountId: this.itemCardForm.controls["salesReturnsAccountId"].value,
+      purchasesAccountId: this.itemCardForm.controls["purchasesAccountId"].value,
+      purchasesReturnsAccountId: this.itemCardForm.controls["purchasesReturnsAccountId"].value,
+      salesCostAccountId: this.itemCardForm.controls["salesCostAccountId"].value,
+      inventoryAccountId: this.itemCardForm.controls["inventoryAccountId"].value,
+
+      itemCardUnits: this.itemCard.itemCardUnits ?? [],
+      itemCardAlternatives: this.itemCard.itemCardAlternatives ?? [],
+
+
+
+
+
+
+    };
+
+    this.itemCard.itemCardUnits = this.itemCardUnit;
+    this.itemCard.itemCardAlternatives = this.itemCardAlternative;
+
+
+
+
+  }
   confirmSave() {
-    var inputDto = new ItemCardDto()
+    debugger
     return new Promise<void>((resolve, reject) => {
-      
-      inputDto = this.itemCardForm.value;
-      this.itemCardService.createItemCard(inputDto).subscribe({
+      debugger
+      this.itemCardService.createItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineItemCardForm();
-          this.submited = false;
+          this.clearSelectedUnitData();
+          this.itemCardUnit = [];
+
+          this.clearSelectedItemData();
+          this.itemCardAlternative = [];
 
           navigateUrl(this.listUrl, this.router);
         },
@@ -562,7 +656,9 @@ export class AddEditItemCardComponent implements OnInit {
     });
   }
   onSave() {
+    debugger
     if (this.itemCardForm.valid) {
+      this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
@@ -576,16 +672,16 @@ export class AddEditItemCardComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    var inputDto = new ItemCardDto()
     return new Promise<void>((resolve, reject) => {
-      inputDto = this.itemCardForm.value;
-      inputDto.id = this.id;
-
-      let sub = this.itemCardService.updateItemCard(inputDto).subscribe({
+      debugger
+      let sub = this.itemCardService.updateItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
           this.defineItemCardForm();
-          this.submited = false;
+          this.clearSelectedUnitData();
+          this.itemCardUnit = [];
+          this.clearSelectedItemData();
+          this.itemCardAlternative = [];
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
@@ -601,8 +697,8 @@ export class AddEditItemCardComponent implements OnInit {
   }
 
   onUpdate() {
-
     if (this.itemCardForm.valid) {
+      this.setInputData();
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();
@@ -649,12 +745,9 @@ export class AddEditItemCardComponent implements OnInit {
   }
   getUnitTransactions() {
     return new Promise<void>((resolve, reject) => {
-      
       let sub = this.unitService.getUnitTransactions().subscribe({
         next: (res) => {
-
           if (res.success) {
-            
             this.unitTransactionsList = res.response;
 
           }
@@ -675,48 +768,27 @@ export class AddEditItemCardComponent implements OnInit {
     });
 
   }
-  getUnitsByMainUnitId(mainUnitId: any) {
-    
-    this.unitsList=this.unitTransactionsList.filter(x=>x.unitMasterId==mainUnitId);
-    // this.itemCardUnit = [];
-    // this.filterUnitTransactionsList = this.unitTransactionsList.filter(x => x.MasterId == mainUnitId);
-    // this.filterUnitTransactionsList.forEach(element => {
-    //   //  let unitName=this.unitsList.filter(x=>x.id==element.DetailId);
-    //   this.itemCardUnit.push(
-    //     {
-    //       unitId: element.warehousesUnitDetailId,
-    //       unitName: element.warehousesUnitDetailId,
-    //       id: 0,
-    //       itemCardId: 0,
-    //       transactionFactor: element.transactionFactor,
-    //       sellingPrice: 0,
-    //       minSellingPrice: 0,
-    //       consumerPrice: 0,
-    //       openingCostPrice: 0
-    //     }
-    //   )
-    // });
 
-
+  getUnitDetail(unitId: any) {
+    this.selectedItemCardUnit.transactionFactor = this.unitsList.filter(x => x.unitDetailId == unitId)[0].transactionFactor;
   }
-  getUnitDetail(unitId:any)
-  {
-    this.selectedUnit.transactionFactor=this.unitsList.transactionFactor;
+  getUnitDetailAdded(unitId: any, i: any) {
+    this.itemCardUnit[i].transactionFactor = this.unitsList.filter(x => x.unitDetailId == unitId)[0].transactionFactor;
   }
 
   addItem() {
-    
+    debugger
     this.itemCardAlternative.push({
       id: 0,
       itemCardId: 0,
       alternativeItemId: this.selectedItemCardAlternative.alternativeItemId,
-      sellingPrice: this.selectedItemCardAlternative.sellingPrice?? 0,
-      alternativeType: this.selectedItemCardAlternative.alternativeType?? 0,
-      costPrice: this.selectedItemCardAlternative.costPrice?? 0,
-      currentBalance: this.selectedItemCardAlternative.currentBalance?? 0
+      sellingPrice: this.selectedItemCardAlternative.sellingPrice ?? 0,
+      alternativeType: this.selectedItemCardAlternative.alternativeType ?? 0,
+      costPrice: this.selectedItemCardAlternative.costPrice ?? 0,
+      currentBalance: this.selectedItemCardAlternative.currentBalance ?? 0
     });
 
-    
+
     this.itemCard!.itemCardAlternatives = this.itemCardAlternative;
     this.clearSelectedItemData();
 
@@ -724,8 +796,8 @@ export class AddEditItemCardComponent implements OnInit {
   clearSelectedItemData() {
     this.selectedItemCardAlternative = {
       id: 0,
-      itemCardId: 0,
-      alternativeItemId: 0,
+      itemCardId: '',
+      alternativeItemId: '',
       sellingPrice: 0,
       alternativeType: 0,
       costPrice: 0,
@@ -735,7 +807,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
 
   deleteItem(index) {
-    
+
     if (this.itemCardAlternative.length) {
       if (this.itemCardAlternative.length == 1) {
         this.itemCardAlternative = [];
@@ -748,8 +820,51 @@ export class AddEditItemCardComponent implements OnInit {
 
 
   }
+  addUnit() {
+    debugger
+    this.itemCardUnit.push({
+      id: 0,
+      itemCardId: 0,
+      unitId: this.selectedItemCardUnit.unitId,
+      transactionFactor: this.selectedItemCardUnit.transactionFactor ?? 0,
+      sellingPrice: this.selectedItemCardUnit.sellingPrice ?? 0,
+      minSellingPrice: this.selectedItemCardUnit.minSellingPrice ?? 0,
+      consumerPrice: this.selectedItemCardUnit.consumerPrice ?? 0,
+      openingCostPrice: this.selectedItemCardUnit.openingCostPrice ?? 0,
+      // unitName: this.selectedItemCardUnit?.uni?? ''
+    });
 
 
+    this.itemCard!.itemCardUnits = this.itemCardUnit;
+    this.clearSelectedUnitData();
+
+  }
+  clearSelectedUnitData() {
+    this.selectedItemCardUnit = {
+      id: 0,
+      itemCardId: '',
+      unitId: '',
+      transactionFactor: 0,
+      sellingPrice: 0,
+      minSellingPrice: 0,
+      consumerPrice: 0,
+      openingCostPrice: 0,
+
+    }
+  }
+  deleteUnit(index) {
+    if (this.itemCardUnit.length) {
+      if (this.itemCardUnit.length == 1) {
+        this.itemCardUnit = [];
+      } else {
+        this.itemCardUnit.splice(index, 1);
+      }
+    }
+
+    this.itemCard.itemCardUnits = this.itemCardUnit;
+
+
+  }
 }
 
 
