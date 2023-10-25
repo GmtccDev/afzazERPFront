@@ -55,11 +55,9 @@ export class  ItemCardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    // this.defineGridColumn();
-    
     this.spinner.show();
     Promise.all([
-     // this.getItems()
+       this.getItems()
     ])
       .then(a => {
         this.spinner.hide();
@@ -315,7 +313,6 @@ export class  ItemCardComponent implements OnInit, OnDestroy, AfterViewInit {
     let sub = this.itemCardService.deleteListEntity(input).subscribe(
       (resonse) => {
 
-        //reloadPage()
         this.getItems();
         this.listIds = [];
       });

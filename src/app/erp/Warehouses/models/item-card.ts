@@ -9,7 +9,7 @@ export class ItemCardDto {
     nameAr: string;
     nameEn: string | undefined;
     itemGroupId: number;
-    itemTypeId: number | undefined;
+    itemType: number | undefined;
     image: string | undefined;
     costCalculateMethod: number | undefined;
     notes: string | undefined;
@@ -19,7 +19,7 @@ export class ItemCardDto {
     minLimit: number | undefined;
     reorderLimit: number | undefined;
     description: string | undefined;
-    isActive: boolean | undefined;
+    isActive: boolean;
     mainUnitId: number | undefined;
     sellingPrice: number | undefined;
     consumerPrice: number | undefined;
@@ -36,6 +36,7 @@ export class ItemCardDto {
     heightFactor: number | undefined;
     widthFactor: number | undefined;
     lengthFactor: number | undefined;
+    attachment:string | undefined;
     salesAccountId: number | undefined;
     salesReturnsAccountId: number | undefined;
     purchasesAccountId: number | undefined;
@@ -48,21 +49,21 @@ export class ItemCardDto {
 }
 export class ItemCardUnitDto {
     id: number;
-    itemCardId: number;
-    unitId: number;
+    itemCardId: any;
+    unitId: any;
     transactionFactor: number;
     sellingPrice: number | undefined;
     minSellingPrice: number | undefined;
     consumerPrice: number | undefined;
     openingCostPrice: number | undefined;
-    unitName: string | undefined;
+   // unitName: string | undefined;
 
 
 }
 export class ItemCardAlternativeDto {
     id: number;
-    itemCardId: number;
-    alternativeItemId: number;
+    itemCardId: any;
+    alternativeItemId: any;
     costPrice: number | undefined;
     sellingPrice: number | undefined;
     alternativeType: number;
