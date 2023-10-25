@@ -109,7 +109,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
       let sub = this.itemGroupsCardService.getAllTree(this.filter).subscribe({
         next: (res) => {
 
-          console.log(res);
+          //console.log(res);
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-groups-card");
           if (res.success) {
@@ -128,7 +128,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 

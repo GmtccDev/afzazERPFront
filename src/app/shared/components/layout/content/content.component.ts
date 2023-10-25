@@ -119,7 +119,7 @@ getBillTypes() {
 					if (this.salesBills.length > 0) {
 						// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'link', active: true }),
 							// this.salesBills.forEach(element => {
-							// 	debugger
+							// 	
 							// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 							// 		{ queryParams: { billTypeId: element.id } })
 							// 	this.navServices.billTypes.filter((value, index, self) => {

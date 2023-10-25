@@ -118,7 +118,7 @@ export class CurrenciesComponent implements OnInit, OnDestroy, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					//console.log('complete');
 				},
 			});
 

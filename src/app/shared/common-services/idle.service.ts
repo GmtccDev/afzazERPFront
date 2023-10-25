@@ -52,7 +52,7 @@ export class IdleService implements OnDestroy, OnInit {
             reject(err);
           },
           complete: () => {
-            console.log('complete');
+            //console.log('complete');
           },
         });
 

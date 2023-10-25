@@ -135,7 +135,7 @@ export class AddBusinessComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.businessService.getBusiness(id).subscribe({
         next: (res: any) => {
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           this.businessFieldForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -152,7 +152,7 @@ export class AddBusinessComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -176,7 +176,7 @@ export class AddBusinessComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -250,7 +250,7 @@ export class AddBusinessComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -290,7 +290,7 @@ export class AddBusinessComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

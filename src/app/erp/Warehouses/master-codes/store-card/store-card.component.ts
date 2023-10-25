@@ -111,7 +111,7 @@ export class StoreCardComponent implements OnInit, OnDestroy, AfterViewInit {
 			let sub = this.storeCardService.getAllTree(this.filter).subscribe({
 				next: (res) => {
 
-					console.log(res);
+					//console.log(res);
 
 					this.toolbarPathData.componentList = this.translate.instant("component-names.storeCard");
 					if (res.success) {
@@ -130,7 +130,7 @@ export class StoreCardComponent implements OnInit, OnDestroy, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					//console.log('complete');
 				},
 			});
 

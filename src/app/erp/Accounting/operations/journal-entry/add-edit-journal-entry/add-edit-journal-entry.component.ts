@@ -427,12 +427,12 @@ export class AddEditJournalEntryComponent implements OnInit {
             journalEntriesDetail: this.fb.array([])
 
           });
-          debugger
+          
           this.listDetail = res.response?.journalEntriesDetail;
-          debugger
+          
           this.journalEntriesDetailDTOList.clear();
           this.listDetail.forEach(element => {
-            debugger
+            
             var costCenter = this.costCenterList?.find(c => c.id == element.costCenterId)
             if (costCenter != null && costCenter != undefined) {
               element.costCenterName = this.lang = "ar" ? costCenter.nameAr : costCenter.nameEn;
@@ -1070,7 +1070,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.showSearchCashAccountModal = false;
   }
   onSelectCostCenter(event) {
-    debugger
+    
     const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
     faControl['controls'].costCenterId.setValue(event.id);
     faControl['controls'].costCenterName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);

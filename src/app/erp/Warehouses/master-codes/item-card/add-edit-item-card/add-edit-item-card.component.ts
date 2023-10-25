@@ -252,7 +252,7 @@ export class AddEditItemCardComponent implements OnInit {
       let sub = this.unitService.getUnit(mainUnitId).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.unitsList = res.response.unitTransactionsDto
 
 
@@ -261,7 +261,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -273,7 +273,7 @@ export class AddEditItemCardComponent implements OnInit {
       let sub = this.itemCardService.getItemCard(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.getUnitsByMainUnitId(res.response?.mainUnitId);
           this.itemCardForm.setValue({
             id: res.response.id,
@@ -320,7 +320,7 @@ export class AddEditItemCardComponent implements OnInit {
             isActive: res.response?.isActive
 
           });
-          debugger
+          
           if (res.response?.itemCardUnits != null) {
             this.itemCardUnit = res.response?.itemCardUnits;
           }
@@ -340,7 +340,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -361,7 +361,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -391,7 +391,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -416,7 +416,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -441,7 +441,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -465,7 +465,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -631,9 +631,9 @@ export class AddEditItemCardComponent implements OnInit {
 
   }
   confirmSave() {
-    debugger
+    
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       this.itemCardService.createItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -650,13 +650,13 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
     });
   }
   onSave() {
-    debugger
+    
     if (this.itemCardForm.valid) {
       this.setInputData();
       this.spinner.show();
@@ -673,7 +673,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.itemCardService.updateItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -688,7 +688,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -760,7 +760,7 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -777,7 +777,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
 
   addItem() {
-    debugger
+    
     this.itemCardAlternative.push({
       id: 0,
       itemCardId: 0,
@@ -821,7 +821,7 @@ export class AddEditItemCardComponent implements OnInit {
 
   }
   addUnit() {
-    debugger
+    
     this.itemCardUnit.push({
       id: 0,
       itemCardId: 0,

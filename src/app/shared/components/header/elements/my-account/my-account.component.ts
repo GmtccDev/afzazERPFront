@@ -16,12 +16,12 @@ export class MyAccountComponent implements OnInit {
 	public profileImg: 'assets/images/dashboard/profile.png';
 
 	constructor(public router: Router, private modelService: NgbModal) {
-		console.log("12 localstorage", (localStorage.getItem('userName')))
+		//console.log("12 localstorage", (localStorage.getItem('userName')))
 		this.userName = localStorage.getItem('userName');
 		if ((localStorage.getItem('user'))) {
-			console.log("true");
+			//console.log("true");
 		} else {
-			console.log("NO ");
+			//console.log("NO ");
 		}
 
 	}

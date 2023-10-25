@@ -115,7 +115,7 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					//console.log('complete');
 				},
 			});
 
@@ -130,7 +130,7 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 	delete(id: any) {
 
 		this.journalService.deleteJournal(id).subscribe((resonse) => {
-			console.log('delet response', resonse);
+			//console.log('delet response', resonse);
 			this.getJournals();
 		});
 	}

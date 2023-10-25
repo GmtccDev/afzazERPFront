@@ -194,7 +194,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           console.log('complete');
+           //console.log('complete');
          },
        });
        this.subsList.push(sub);
@@ -215,7 +215,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           console.log('complete');
+           //console.log('complete');
          },
        });
        this.subsList.push(sub);
@@ -240,7 +240,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           console.log('complete');
+           //console.log('complete');
          },
        });
  
@@ -266,7 +266,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           console.log('complete');
+           //console.log('complete');
          },
        });
  
@@ -338,7 +338,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           console.log('complete');
+           //console.log('complete');
          },
        });
      });
@@ -374,7 +374,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           console.log('complete');
+           //console.log('complete');
          },
        });
        this.subsList.push(sub);

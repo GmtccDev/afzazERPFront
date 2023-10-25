@@ -1263,7 +1263,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getBeneficiaryAccount() {
-    debugger
+    
     if(this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
     {
     this.selectedVoucherDetail.beneficiaryAccountId=this.filterBeneficiaryList.filter(x => x.id == Number(this.selectedVoucherDetail.beneficiaryId))[0].accountId
@@ -1275,10 +1275,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     
   }
   getBeneficiaryAccountAdded(i) {
-    debugger
+    
     if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
     {
-      debugger
+      
     this.voucherDetail[i].beneficiaryAccountId=this.filterBeneficiaryList.filter(x => x.id == Number(this.voucherDetail[i].beneficiaryId))[0].accountId
     }
     else if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Account)

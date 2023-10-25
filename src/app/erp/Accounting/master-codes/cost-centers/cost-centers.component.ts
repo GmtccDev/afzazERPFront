@@ -112,7 +112,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.costCenterService.getAllTree(this.filter).subscribe({
         next: (res) => {
           
-          console.log(res);
+          //console.log(res);
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.costCenter");
           if (res.success) {
@@ -131,7 +131,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 

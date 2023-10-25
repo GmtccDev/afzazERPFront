@@ -125,7 +125,7 @@ export class SalesPersonCommissionCardComponent implements OnInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 

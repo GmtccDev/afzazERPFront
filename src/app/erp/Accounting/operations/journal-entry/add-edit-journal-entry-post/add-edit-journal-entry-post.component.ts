@@ -260,7 +260,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -476,7 +476,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -501,7 +501,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -571,7 +571,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -580,15 +580,8 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   onSave() {
 
-    // if (this.checkPeriod == null) {
-    //   this.alertsService.showError(
-    //     'يجب أن يكون السنة المالية مفتوحة و الفترة المحاسبية مفتوحة',
-    //     "",
-
-    //   )
-    //   return;
-    // }
-    console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+   
+   // console.log("getRawValue=>", this.journalEntryForm.getRawValue());
     if (this.counter < 2) {
       this.alertsService.showError(
         'يجب أن يكون على الاقل اثنين من الصفوف',
@@ -656,7 +649,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -721,7 +714,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -747,7 +740,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -773,7 +766,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -797,7 +790,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -824,7 +817,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 

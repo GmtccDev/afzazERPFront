@@ -235,7 +235,7 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
       let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
 
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           if (res.response.value > 0) {
 
             this.facialPeriodId = res.response.value;
@@ -248,7 +248,7 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -261,7 +261,7 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
 
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 
@@ -273,7 +273,7 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
