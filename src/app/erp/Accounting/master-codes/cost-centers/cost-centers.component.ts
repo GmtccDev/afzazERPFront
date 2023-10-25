@@ -333,7 +333,44 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
       array.push(node);
     }
   }
+  expandAll: boolean=true;
+  convertTreeToListExpanded(root: TreeNodeInterface): TreeNodeInterface[] {
 
+    const stack: TreeNodeInterface[] = [];
+    const array: TreeNodeInterface[] = [];
+    const hashMap = {};
+    stack.push({ ...root, levelId: 0, expanded: true });
+    while (stack.length !== 0) {
+      const node = stack.pop()!;
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({ ...node.children[i], levelId: node.levelId! + 1, expanded: true, parent: node });
+
+        }
+        if (node.children.length == 0) {
+          node.children = null;
+        }
+      }
+    }
+    return array;
+  }
+  expandAllRows() {
+    if (this.expandAll) {
+      this.listOfMapData.forEach(item => {
+        this.mapOfExpandedData[item.treeId] = this.convertTreeToListExpanded(item);
+      });
+      this.expandAll=false;
+    }
+    else {
+      this.listOfMapData.forEach(item => {
+        this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
+      });
+      this.expandAll=true;
+    }
+
+  }
 
 
 

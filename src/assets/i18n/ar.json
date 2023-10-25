@@ -434,7 +434,8 @@
         "remaining-account": "حساب المتبقى",
         "corresponding-account": "الحساب المقابل",
         "customer-account": "حساب العميل",
-        "bank-account": "حساب البنك"
+        "bank-account": "حساب البنك",
+        "all":"الكل"
     },
     "sales-person-commission": {
         "sales-person": "المندوب",
