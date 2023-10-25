@@ -493,7 +493,7 @@ export class AddEditJournalEntryComponent implements OnInit {
           if (res.response?.postType == 1) {
             this.postType = res.response?.postType;
 
-           // this.journalEntryForm.disable();
+            this.journalEntryForm.disable();
           }
           console.log(
             'this.journalEntryForm.value set value',
