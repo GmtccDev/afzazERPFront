@@ -6,7 +6,7 @@ import { SharedService } from '../../common-services/shared-service';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { PublicService } from '../../services/public.service';
 import { ICustomEnum } from '../../interfaces/ICustom-enum';
-import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray, VoucherTypeEnum, VoucherTypeArEnum, ReportOptionsEnum, ReportOptionsArEnum } from '../../constants/enumrators/enums';
+import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray, VoucherTypeEnum, VoucherTypeArEnum, ReportOptionsEnum, ReportOptionsArEnum, GeneralConfigurationEnum } from '../../constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { BranchDto } from 'src/app/erp/master-codes/models/branch';
@@ -120,6 +120,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     // this.getLanguage();
     //this.GetData();
+    
     this.getGeneralConfigurationsOfAccountingPeriod()
 
 
@@ -191,7 +192,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -205,6 +206,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
+            console.log("getAccounts",res.response)
             if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
               this.mainAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount != true && x.isActive == true);
               if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
@@ -216,7 +219,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
             else {
-              this.mainAccountsList = res.response.filter(x => x.isLeafAccount != true && x.isActive == true);
+              this.mainAccountsList = res.response.filter(x => x.levelId==0  && x.isActive == true);
               if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
                 this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive == true);
 
@@ -237,7 +240,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -286,7 +289,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -328,7 +331,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -351,7 +354,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -374,7 +377,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 
@@ -386,11 +389,12 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
     return new Promise<void>((resolve, reject) => {
 
-      let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
         next: (res: any) => {
           resolve();
+  
           if (res.response.value > 0) {
-
+              
             this.facialPeriodId = res.response.value;
             this.getfiscalPeriodById(this.facialPeriodId);
           }
@@ -401,7 +405,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -410,11 +414,12 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   getfiscalPeriodById(id: any) {
+    
     return new Promise<void>((resolve, reject) => {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
 
-          console.log('result data getbyid', res);
+
           this.selectedFromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.selectedToDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 
@@ -425,7 +430,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
       this.subsList.push(sub);
@@ -506,15 +511,22 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectBranch() {
-
+   debugger
     this.branchIds = ''
-    this.selectedBranchId?.forEach(c => {
-      this.branchIds += c.id + ",";
+     
+    this.selectedBranchId?.forEach(selectedId => {
+      if(this.selectedBranchId.length>=2)
+      {
+        this.branchIds += selectedId + ",";
+      }else{
+        this.branchIds =selectedId;
+      }
+      
     })
 
     this.branchIds = this.branchIds.substring(0, this.branchIds.length - 1);
 
-    this.FireSearch()
+    this.FireSearch();
 
   }
   onSelectVoucher() {

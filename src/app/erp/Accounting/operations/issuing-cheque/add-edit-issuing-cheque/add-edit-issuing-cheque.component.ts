@@ -18,6 +18,7 @@ import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum,
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
+import { ModuleType } from '../../../models/general-configurations';
 @Component({
   selector: 'app-add-edit-issuing-cheque',
   templateUrl: './add-edit-issuing-cheque.component.html',
@@ -220,7 +221,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Accounting, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           resolve();
           if (res.success && res.response.result.items.length > 0) {
