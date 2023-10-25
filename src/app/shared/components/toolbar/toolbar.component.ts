@@ -52,7 +52,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.currentUrl = '';
-    console.log('tooolbar url  ', this.router.url);
+  
     this.currentUrl = this.router.url;
     this.toolbarData.componentName = this.currentUrl;
     this.SharedService.changeButton(this.toolbarData);
@@ -92,7 +92,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         if (ObjectIsNotNullOrEmpty(showCurrentBtn)) {
           this.showButtons = showCurrentBtn;
           this.resetCLickedButtons();
-          console.log('showCurrentBtn', showCurrentBtn);
+        
         } else {
           this.resetShowButtons();
         }
@@ -138,7 +138,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.checkButtonClicked('ConfigMode');
           }
 
-          console.log('toolbarCompnentData', toolbarCompnentData);
+    
         }
       },
     });
@@ -168,7 +168,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           ) {
             this.checkButtonClicked('Update');
           }
-          console.log('toolbarPathData', toolbarPathData);
+     
         }
       },
     });

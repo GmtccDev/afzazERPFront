@@ -85,7 +85,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 		let monthFrom;
 		let monthTo;
-
+debugger
 		if (this.fromDate == undefined || this.fromDate == null) {
 			this.fromDate = this.dateConverterService.getCurrentDate();
 			monthFrom = Number(this.fromDate.month + 1);
@@ -171,7 +171,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		ShowToEntryNo: true,
 	};
 
-	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; entriesStatusId;parentAccountId;accountGroupId }) {
+	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; entriesStatusId;mainAccountId;accountGroupId }) {
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
@@ -179,7 +179,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		this.currencyId = e.currencyId;
 		this.branchId = e.branchId;
 		this.entriesStatusId = e.entriesStatusId;
-		this.parentAccountId=e.parentAccountId;
+		this.parentAccountId=e.mainAccountId;
 		this.accountGroupId=e.accountGroupId;
 	}
 
