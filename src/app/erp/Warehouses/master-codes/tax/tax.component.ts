@@ -116,11 +116,8 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.taxService.allTaxes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          
-          console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.taxes");
           if (res.success) {
-            
             this.taxes = res.response.items;
 
           }
@@ -131,7 +128,6 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -145,7 +141,6 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.taxService.deleteTax(id).subscribe((resonse) => {
-      console.log('delete response', resonse);
       this.getTaxes();
       
     });
@@ -168,7 +163,6 @@ export class TaxComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
         const input={

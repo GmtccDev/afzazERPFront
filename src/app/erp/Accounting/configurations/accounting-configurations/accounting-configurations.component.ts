@@ -203,6 +203,7 @@ d
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           
+          ;
           if (res.success) {
             this.accountList = res.response;
 
@@ -292,6 +293,8 @@ d
             this.journalId= Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value);
             this.chequesJournalId= Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.ChequesJournal).value);
             this.idleTime= Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.IdleTime).value);
+
+   
           }
 
       
@@ -386,6 +389,7 @@ d
         this.generalConfiguration.forEach((s) => {
           if (s) {
             
+            ;
             if (s.id == 1) {
               s.value = this.currencyId + "";
             }
@@ -425,6 +429,7 @@ d
         this.spinner.show();
         this.confirmUpdate().then(a => {
           this.spinner.hide();
+          this.getGeneralConfiguration();
           this.changePath();
         }).catch(e => {
           this.spinner.hide();

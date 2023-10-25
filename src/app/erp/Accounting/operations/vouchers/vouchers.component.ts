@@ -70,7 +70,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
-        this.getVoucherTypes( this.voucherTypeId);
+        this.getVoucherTypes(this.voucherTypeId);
 
 
       }
@@ -123,19 +123,15 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  voucherNameEn:any;
-  voucherNameAr:any;
+  voucherNameEn: any;
+  voucherNameAr: any;
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res) => {
-          console.log(res);
           if (res.success) {
-            debugger;
             this.voucherType = res.response;
-            this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList=this.lang=='ar'?res.response.voucherNameAr:res.response.voucherNameEn)
-    
-        
+            this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.voucherNameAr : res.response.voucherNameEn)
 
           }
           resolve();
@@ -145,7 +141,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -154,18 +149,14 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
- 
+
   //#endregion
 
   getVouchers() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          
-          console.log(res);
-          
           if (res.success) {
-            
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
 
           }
@@ -176,7 +167,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -190,7 +180,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.voucherService.deleteVoucher(id).subscribe((resonse) => {
-      console.log('delete response', resonse);
       this.getVouchers();
       this.router.navigate([this.listUrl + this.voucherTypeId])
         .then(() => {
@@ -199,7 +188,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   edit(id: string) {
-    
+
     this.router.navigate([
       '/accounting-operations/vouchers/update-voucher/',
       this.voucherTypeId, id,
@@ -217,9 +206,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
-        
+
         this.spinner.show();
         let sub = this.voucherService.deleteVoucher(id).subscribe(
           (resonse) => {
@@ -297,7 +285,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   openVoucherTypes() { }
   onCheck(id) {
 
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {
@@ -327,7 +315,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
-        
+
         this.edit(event.item.id);
         this.sharedServices.changeButton({
           action: 'Update',

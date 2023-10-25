@@ -44,13 +44,13 @@ export enum CreateFinancialEntryArEnum {
 export enum BeneficiaryTypeEnum {
   Client = 1,
   Supplier = 2,
-  Employee = 3,
+  // Employee = 3,
   Account = 4
 }
 export enum BeneficiaryTypeArEnum {
   عميل = 1,
   مورد = 2,
-  مؤظف = 3,
+  // مؤظف = 3,
   حساب = 4
 }
 export enum EntriesStatusEnum {
@@ -90,7 +90,8 @@ export enum AccountClassificationsEnum {
   Other = 6,
   Sales = 7,
   Purchases = 8,
-  Inventory = 9
+  Inventory = 9,
+  Bank=10
 
 }
 export enum AccountClassificationsArEnum {
@@ -102,7 +103,8 @@ export enum AccountClassificationsArEnum {
   أخرى = 6,
   مبيعات = 7,
   مشتريات = 8,
-  مخزون = 9
+  مخزون = 9,
+  بنك=10
 }
 export enum ReportOptionsEnum {
   Quarterly = 1,
@@ -255,3 +257,5 @@ DefaultJournal=1006,
 ChequesJournal=1007,
 IdleTime=10001
  }
+
+

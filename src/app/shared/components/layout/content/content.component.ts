@@ -18,7 +18,6 @@ import { Subscription } from 'rxjs';
 export class ContentComponent implements OnInit, AfterViewInit {
 	lang = localStorage.getItem("language")
 	subsList: Subscription[] = [];
-	voucherTypes: any = [];
 	depositVouchers: any = [];
 	WithdrawalVouchers: any = [];
 	billTypes: any = [];
@@ -53,66 +52,41 @@ export class ContentComponent implements OnInit, AfterViewInit {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					console.log(res);
 					if (res.success) {
 						
-						this.voucherTypes = res.response.items
-						this.depositVouchers = this.voucherTypes.filter(x => x.voucherKindId == 1);
-						this.WithdrawalVouchers = this.voucherTypes.filter(x => x.voucherKindId == 2);
+						this.depositVouchers =res?.response?.items?.filter(x => x.voucherKindId == 1);
+						this.WithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == 2);
 
 						if (this.depositVouchers.length > 0) {
-							// this.navServices.voucherTypes.push({
-							// 	 title: this.translate.instant("voucher-type.deposit-vouchers"), icon: 'users', type: 'sub', active: false, children:
-							// 		//[
-							// 			this.depositVouchers.forEach(element => {
-							// 			[	this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-							// 					{ queryParams: { voucherTypeId: element.id } })
-							// 			]
-							// 				this.navServices.voucherTypes.filter((value, index, self) => {
-							// 					return index === self.findIndex(obj => (
-							// 						obj.path === value.path && obj.title === value.title
-							// 					));
-							// 				})
-										
-							// 			})
-							// 		//]
-							// })
-							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'link', active: true }),
-								this.depositVouchers.forEach(element => {
-									this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-										{ queryParams: { voucherTypeId: element.id } })
-									this.navServices.voucherTypes.filter((value, index, self) => {
-										return index === self.findIndex(obj => (
-											obj.path === value.path && obj.title === value.title
-										));
-									});
+							this.depositVouchers.forEach(element => {
+								this.navServices.voucherTypesNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+									{ queryParams: { voucherTypeId: element.id } })
+								this.navServices.voucherTypesNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
 								});
+							})
+							this.navServices.voucherTypesNew= this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+								
 
 						}
 						if (this.WithdrawalVouchers.length > 0) {
-							this.navServices.voucherTypes.push({ path: '/dashboard/default', title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'link', active: true }),
 							this.WithdrawalVouchers.forEach(element => {
-								this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+								this.navServices.WithdrawalVouchersNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
 									{ queryParams: { voucherTypeId: element.id } })
-								this.navServices.voucherTypes.filter((value, index, self) => {
+								this.navServices.WithdrawalVouchersNew.filter((value, index, self) => {
 									return index === self.findIndex(obj => (
 										obj.path === value.path && obj.title === value.title
 									));
 								});
 							});
+							this.navServices.WithdrawalVouchersNew= this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+											
 						}
-						// res.response.items.forEach(element => {
-						// 	this.navServices.voucherTypes.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
-						// 		{ queryParams: { voucherTypeId: element.id } }
-						// 	)
-						// 	this.navServices.voucherTypes.filter((value, index, self) => {
-						// 		return index === self.findIndex(obj => (
-						// 			obj.path === value.path && obj.title === value.title
-						// 		));
-						// 	});
-						// });
-
-
+					
 					}
 					resolve();
 				},
@@ -120,7 +94,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					
 				},
 			});
 
@@ -133,7 +106,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
-					console.log(res);
 					if (res.success) {
 						this.billTypes = res.response.items
 						this.salesBills = this.billTypes.filter(x => x.kind == 1);
@@ -209,7 +181,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
 						}
 						// res.response.items.forEach(element => {
-						// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.billNameAr : element.billNameEn, type: 'link', active: true },
+						// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 						// 		{ queryParams: { billTypeId: element.id } }
 						// 	)
 						// 	this.navServices.billTypes.filter((value, index, self) => {
@@ -227,7 +199,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					
 				},
 			});
 

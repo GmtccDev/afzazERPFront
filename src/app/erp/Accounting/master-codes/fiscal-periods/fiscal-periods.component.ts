@@ -124,7 +124,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
 				},
 			});
 
@@ -159,7 +158,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 		modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
 		modalRef.componentInstance.isYesNo = true;
 		modalRef.result.then((rs) => {
-			console.log(rs);
 			if (rs == 'Confirm') {
 				this.spinner.show();
 				const input = {

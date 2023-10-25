@@ -44,6 +44,11 @@ export enum ValueTypeEnum
 }
 export enum ModuleType
 {
-
-    Accounting = 1
+    Settings=0,
+    Sales=1,
+    CRM=2,
+    Payroll = 3,
+    Purchase = 4,
+    Accounting = 5,
+    FixedAssets = 6
 }

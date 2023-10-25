@@ -64,12 +64,12 @@
 											</div>
 										</div>
 
-										<div class="col-md-6 col-12">
+                                        <div class="col-md-6 col-12 ">
 											<label for="accountId" class="label-name">
 												{{'general.account'|translate}}
 											</label>
 											<span class="text-danger">*</span>
-											<div class="input-group  popup">
+                                            <div class="input-group form-group">
 												<ng-select style="width:100%" formControlName="accountId"
 													name='accountId' class="" id="accountId" [(ngModel)]="accountId">
 													<ng-option *ngFor="let account of accountsList"
@@ -85,15 +85,16 @@
 														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
 												</div>
+												<div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
 
 											</div>
 
 										</div>
-										<!-- <div class="col-md-1 col-md-1">
-                                            <button class="btn btn-rounded btn-dark"
-                                                (click)="showSearchAccountModal=true" type="button"><i
-                                                    class="fa fa-search"></i></button>
-                                        </div> -->
+									
 										<div class="col-md-6 col-12 d-flex align-items-end">
 											<div class="media">
 												<label class="label-name"> {{'general.status'|translate}}

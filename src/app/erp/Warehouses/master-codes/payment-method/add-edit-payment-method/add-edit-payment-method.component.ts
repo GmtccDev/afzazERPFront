@@ -26,7 +26,7 @@ export class AddEditPaymentMethodComponent implements OnInit {
   branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
-  routeAccountApi = 'Account/get-ddl?'
+  routeAccountApi = 'Account/GetLeafAccounts?'
   accountsList: any;
 
   paymentMethod: PaymentMethodDto[] = [];
@@ -45,6 +45,8 @@ export class AddEditPaymentMethodComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  showSearchAccountModal = false;
+
   constructor(
     private paymentMethodService: PaymentMethodServiceProxy,
     private router: Router,
@@ -142,7 +144,7 @@ export class AddEditPaymentMethodComponent implements OnInit {
       companyId: this.companyId,
       branchId: this.branchId,
       nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
+      nameEn: '',
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       accountId: REQUIRED_VALIDATORS
@@ -179,7 +181,6 @@ export class AddEditPaymentMethodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -200,7 +201,6 @@ export class AddEditPaymentMethodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -214,7 +214,7 @@ export class AddEditPaymentMethodComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.accountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+            this.accountsList = res.response;
 
           }
 
@@ -225,7 +225,6 @@ export class AddEditPaymentMethodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -296,7 +295,6 @@ export class AddEditPaymentMethodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
     });
@@ -332,7 +330,6 @@ export class AddEditPaymentMethodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -341,7 +338,6 @@ export class AddEditPaymentMethodComponent implements OnInit {
   }
 
   onUpdate() {
-
     if (this.paymentMethodForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
@@ -355,7 +351,10 @@ export class AddEditPaymentMethodComponent implements OnInit {
 
     }
   }
-
+  onSelectAccount(event) {
+    this.paymentMethodForm.controls.accountId.setValue(event.id);
+    this.showSearchAccountModal = false;
+  }
 
 }
 

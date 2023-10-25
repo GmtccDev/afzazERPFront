@@ -32,7 +32,7 @@ export class SidebarComponent {
     private billTypeService: BillTypeServiceProxy,
 
     public layout: LayoutService) {
-   
+      
       let x=this.subdomain;
     let menu = localStorage.getItem("Menu");
     if (menu == '0') {
@@ -143,16 +143,15 @@ export class SidebarComponent {
   }
 
   sidebarToggle() {
-
+    
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
   }
 
   // Active Nave state
   setNavActive(item) {
    
-   this.getVoucherTypes();
    this.getBillTypes();
-
+    
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;
@@ -214,38 +213,6 @@ export class SidebarComponent {
     }
   }
 
-  getVoucherTypes() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          
-          if (res.success) {
-            
-            const voucherTypes = res.response.items.map(element => ({
-              path: '/accounting-operations/vouchers',
-              title: element.voucherNameAr,
-              type: 'link',
-              active: true
-            }));
-            this.navServices.voucherTypes=voucherTypes ;
-
-
-          }
-          resolve();
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          
-        },
-      });
-
-    	this.subsList.push(sub);
-
-    });
-
-  }
   getBillTypes() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -255,7 +222,7 @@ export class SidebarComponent {
             
             const billTypes = res.response.items.map(element => ({
               path: '/warehouses-operations/bill',
-              title: element.billNameAr,
+              title: element.nameAr,
               type: 'link',
               active: true
             }));

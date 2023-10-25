@@ -23,6 +23,7 @@ import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { formatDate, navigateUrl } from 'src/app/shared/helper/helper-url';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
+import { AccountServiceProxy } from '../../../services/account.services';
 
 @Component({
   selector: 'app-add-edit-voucher',
@@ -52,7 +53,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   totalCreditLocal: number = 0;
   voucher: Voucher = new Voucher();
   voucherDetail: VoucherDetail[] = [];
-  _voucherDetail: VoucherDetail = new VoucherDetail();
   selectedVoucherDetail: VoucherDetail = new VoucherDetail();
   beneficiaryTypesEnum: ICustomEnum[] = [];
 
@@ -63,20 +63,27 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   errorMessage = '';
   errorClass = '';
   lang = localStorage.getItem("language")
-  routeAccountApi = 'Account/get-ddl?'
-  routeCurrencyApi = "currency/get-ddl?"
+  routeCashAccountApi = 'Account/getLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
+  routeCurrencyApi = "Currency/get-ddl?"
   routeCostCenterApi = 'CostCenter/get-ddl?'
+  routeCustomerApi = 'CustomerCard/get-ddl?'
+  routeSupplierApi = 'SupplierCard/get-ddl?'
+  routeAccountApi = 'Account/GetLeafAccounts?'
 
   cashAccountsList: any;
-  //  costCenterAccountsList: any;
   beneficiaryAccountsList: any;
-  //costCenterAccountsInDetailList: any;
+  filterBeneficiaryList: any;
+
   currenciesList: any;
   currenciesListInDetail: any;
   costCentersList: any;
   costCentersInDetailsList: any;
   currencyTransactionList: any;
   filterCurrencyTransactionList: any;
+
+  customersList: any;
+  suppliersList: any;
+  accountsList: any;
 
   queryParams: any;
   voucherTypeId: any;
@@ -113,8 +120,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private searchDialog: SearchDialogService,
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
-    private spinnerService: NgxSpinnerService,
     private currencyServiceProxy: CurrencyServiceProxy,
+    private accountService: AccountServiceProxy
 
 
 
@@ -139,6 +146,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       this.getCurrenciesTransactions(),
       this.getAccounts(),
       this.getCostCenters(),
+      this.getCustomers(),
+      this.getSuppliers(),
+
 
     ]).then(a => {
       this.getRouteData();
@@ -165,7 +175,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
 
         if (this.id) {
-          
+
           this.getVoucherById(this.id).then(a => {
 
             this.spinner.hide();
@@ -249,22 +259,21 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     return this.voucherForm.controls;
   }
 
-voucherNameEn:any;
-voucherNameAr:any;
+  voucherNameEn: any;
+  voucherNameAr: any;
   //#endregion
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res: any) => {
           resolve();
-          
           this.cashAccountId = res.response.defaultAccountId + "";
           this.currencyId = res.response.defaultCurrencyId;
-          this.voucherForm.value.currencyId=res.response.defaultCurrencyId;
+          this.voucherForm.value.currencyId = res.response.defaultCurrencyId;
           this.voucherkindId = res.response.voucherKindId;
           this.serialTypeId = res.response.serialTypeId;
-          this.voucherNameEn= res.response.voucherNameEn;
-          this.voucherNameAr=res.response.voucherNameAr;
+          this.voucherNameEn = res.response.voucherNameEn;
+          this.voucherNameAr = res.response.voucherNameAr;
           this.getAmount();
           if (this.id == 0) {
             if (this.serialTypeId == SerialTypeEnum.Automatic) {
@@ -277,7 +286,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -290,7 +298,6 @@ voucherNameAr:any;
       let sub = this.voucherService.getVoucher(id).subscribe({
         next: (res: any) => {
           resolve();
-          
           this.voucherForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -310,20 +317,19 @@ voucherNameAr:any;
           });
           this.voucherTotal = res.response?.voucherTotal;
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
-          
-          // this.voucher.voucherDetail=res.response.voucherDetail;
-          // this.voucherDetail=res.response.voucherDetail;
 
           var currencyName;
-          var beneficiaryAccountName;
+          var beneficiaryName;
           var costCenterName;
           res.response.voucherDetail.forEach(element => {
+            this.getBeneficaryByTypeId(element.beneficiaryTypeId);
+
             if (element.currencyId > 0) {
 
               currencyName = this.currenciesListInDetail.find(x => x.id == element.currencyId);
             }
-            if (element.beneficiaryAccountId > 0) {
-              beneficiaryAccountName = this.beneficiaryAccountsList.find(x => x.id == element.beneficiaryAccountId);
+            if (element.beneficiaryId > 0) {
+              beneficiaryName = this.filterBeneficiaryList.find(x => x.id == element.beneficiaryId);
             }
             if (element.costCenterId > 0) {
               costCenterName = this.costCentersInDetailsList.find(x => x.id == element.costCenterId);
@@ -332,34 +338,35 @@ voucherNameAr:any;
               {
                 id: element.id,
                 voucherId: element.voucherId,
+                beneficiaryTypeId: element.beneficiaryTypeId,
+                beneficiaryId: element.beneficiaryId,
+                beneficiaryAccountId: element.beneficiaryAccountId,
                 debit: element.debit,
                 credit: element.credit,
                 currencyId: element.currencyId,
                 currencyConversionFactor: element.currencyConversionFactor,
                 debitLocal: element.debitLocal,
                 creditLocal: element.creditLocal,
-                beneficiaryTypeId: element.beneficiaryTypeId,
-                beneficiaryAccountId: element.beneficiaryAccountId,
                 description: element.description,
                 costCenterId: element.costCenterId,
                 currencyNameAr: currencyName?.nameAr ?? '',
                 currencyNameEn: currencyName?.nameEn ?? '',
-                beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
-                beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
+                beneficiaryNameAr: beneficiaryName?.nameAr ?? '',
+                beneficiaryNameEn: beneficiaryName?.nameEn ?? '',
                 costCenterNameAr: costCenterName?.nameAr ?? '',
                 costCenterNameEn: costCenterName?.nameEn ?? ''
               }
             )
           });
-          
-                
+          this.voucher.voucherDetail = this.voucherDetail;
+
+
           this.setInputData();
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -371,7 +378,6 @@ voucherNameAr:any;
       let sub = this.voucherDetailsService.allVoucherDetails(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res: any) => {
           resolve();
-          
           res = res.response.items.filter(x => x.voucherId == id)
           res.forEach(element => {
 
@@ -392,20 +398,21 @@ voucherNameAr:any;
               {
                 id: element.id,
                 voucherId: element.voucherId,
+                beneficiaryTypeId: element.beneficiaryTypeId,
+                beneficiaryId: element.beneficiaryId,
+                beneficiaryAccountId: element.beneficiaryAccountId,
                 debit: element.debit,
                 credit: element.credit,
                 currencyId: element.currencyId,
                 currencyConversionFactor: element.currencyConversionFactor,
                 debitLocal: element.debitLocal,
                 creditLocal: element.creditLocal,
-                beneficiaryTypeId: element.beneficiaryTypeId,
-                beneficiaryAccountId: element.beneficiaryAccountId,
                 description: element.description,
                 costCenterId: element.costCenterId,
                 currencyNameAr: currencyName?.nameAr ?? '',
                 currencyNameEn: currencyName?.nameEn ?? '',
-                beneficiaryAccountNameAr: beneficiaryAccountName?.nameAr ?? '',
-                beneficiaryAccountNameEn: beneficiaryAccountName?.nameEn ?? '',
+                beneficiaryNameAr: beneficiaryAccountName?.nameAr ?? '',
+                beneficiaryNameEn: beneficiaryAccountName?.nameEn ?? '',
                 costCenterNameAr: costCenterName?.nameAr ?? '',
                 costCenterNameEn: costCenterName?.nameEn ?? ''
               }
@@ -423,7 +430,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -437,7 +443,6 @@ voucherNameAr:any;
           resolve();
           if (res.response.value > 0) {
             this.mainCurrencyId = res.response.value;
-    
           }
 
 
@@ -446,7 +451,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -455,9 +459,7 @@ voucherNameAr:any;
 
   }
   getGeneralConfigurationsOfMultiCurrency() {
-
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.generalConfigurationService.getGeneralConfiguration(2).subscribe({
         next: (res: any) => {
           resolve();
@@ -472,7 +474,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -494,7 +495,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -506,10 +506,9 @@ voucherNameAr:any;
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-
           if (res.success) {
-            this.cashAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true && x.accountClassificationId == AccountClassificationsEnum.Cash);
-            this.beneficiaryAccountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+            this.cashAccountsList = res.response.filter(x => x.accountClassificationId == AccountClassificationsEnum.Cash);
+            this.accountsList = res.response;
 
           }
 
@@ -521,7 +520,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
 
@@ -530,7 +528,6 @@ voucherNameAr:any;
 
   }
   getBeneficiaryAccountByType() {
-
     this.beneficiaryAccountsList = this.beneficiaryAccountsList.find(x => x.accountClassificationId == this.selectedVoucherDetail.beneficiaryTypeId)
   }
   getCurrencies() {
@@ -549,7 +546,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
 
@@ -558,14 +554,13 @@ voucherNameAr:any;
 
   }
   getCurrenciesTransactions() {
-  
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyService.getCurrenciesTransactions().subscribe({
         next: (res) => {
           resolve();
 
           if (res.success) {
-             
+
             this.currencyTransactionList = res.response;
 
           }
@@ -575,7 +570,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
 
@@ -599,7 +593,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
 
@@ -608,7 +601,7 @@ voucherNameAr:any;
 
   }
   openCurrencySearchDialog(i) {
- 
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyNameAr ?? '';
@@ -634,7 +627,7 @@ voucherNameAr:any;
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getValueAfterConversion();
-        }else{
+        } else {
           this.selectedVoucherDetail!.currencyConversionFactor = 1;
           this.getValueAfterConversion();
         }
@@ -646,7 +639,7 @@ voucherNameAr:any;
           this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
           this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
           this.getAddedValueAfterConversion(i);
-        }else{
+        } else {
           this.voucherDetail[i]!.currencyConversionFactor = 1;
           this.getAddedValueAfterConversion(i);
         }
@@ -658,7 +651,7 @@ voucherNameAr:any;
       let sub = this.searchDialog
         .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
         .subscribe((d) => {
-          
+
           if (d) {
             if (i == -1) {
               this.selectedVoucherDetail!.currencyNameAr = d.nameAr;
@@ -669,7 +662,7 @@ voucherNameAr:any;
                 this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
                 this.getValueAfterConversion();
 
-              }else{
+              } else {
                 this.selectedVoucherDetail!.currencyConversionFactor = 1;
                 this.getValueAfterConversion();
               }
@@ -690,17 +683,16 @@ voucherNameAr:any;
     }
 
   }
-  openBeneficiaryAccountSearchDialog(i) {
-
+  openBeneficiarySearchDialog(i) {
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '';
+      searchTxt = this.selectedVoucherDetail?.beneficiaryNameAr ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
-    let data = this.beneficiaryAccountsList.filter((x) => {
+    let data = this.filterBeneficiaryList.filter((x) => {
       return (
         (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
@@ -709,26 +701,33 @@ voucherNameAr:any;
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetail!.beneficiaryAccountNameAr = data[0].nameAr;
-        this.selectedVoucherDetail!.beneficiaryAccountId = data[0].id;
+        this.selectedVoucherDetail!.beneficiaryNameAr = data[0].nameAr;
+        this.selectedVoucherDetail!.beneficiaryId = data[0].id;
+        this.getBeneficiaryAccount();
       } else {
-        this.voucherDetail[i].beneficiaryAccountNameAr = data[0].nameAr;
-        this.voucherDetail[i].beneficiaryAccountId = data[0].id;
+        this.voucherDetail[i].beneficiaryNameAr = data[0].nameAr;
+        this.voucherDetail[i].beneficiaryId = data[0].id;
+        this.getBeneficiaryAccountAdded(i);
+
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن الحساب';
+      let title = 'بحث عن الجهة';
       let sub = this.searchDialog
-        .showDialog(lables, names, this.beneficiaryAccountsList, title, searchTxt)
+        .showDialog(lables, names, this.filterBeneficiaryList, title, searchTxt)
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetail!.beneficiaryAccountNameAr = d.nameAr;
-              this.selectedVoucherDetail!.beneficiaryAccountId = d.id;
+              this.selectedVoucherDetail!.beneficiaryNameAr = d.nameAr;
+              this.selectedVoucherDetail!.beneficiaryId = d.id;
+              this.getBeneficiaryAccount();
+
             } else {
-              this.voucherDetail[i].beneficiaryAccountNameAr = d.nameAr;
-              this.voucherDetail[i].beneficiaryAccountId = d.id;
+              this.voucherDetail[i].beneficiaryNameAr = d.nameAr;
+              this.voucherDetail[i].beneficiaryId = d.id;
+              this.getBeneficiaryAccountAdded(i);
+
             }
           }
         });
@@ -736,8 +735,19 @@ voucherNameAr:any;
     }
 
   }
+  getBeneficaryByTypeId(typeId: any) {
+    this.filterBeneficiaryList = [];
+    if (typeId == BeneficiaryTypeEnum.Client) {
+      this.filterBeneficiaryList = this.customersList;
+    }
+    else if (typeId == BeneficiaryTypeEnum.Supplier) {
+      this.filterBeneficiaryList = this.suppliersList;
+    }
+    else if (typeId == BeneficiaryTypeEnum.Account) {
+      this.filterBeneficiaryList = this.accountsList;
+    }
+  }
   openCostCenterSearchDialog(i) {
-
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.costCenterNameAr ?? '';
@@ -755,7 +765,6 @@ voucherNameAr:any;
 
     if (data.length == 1) {
       if (i == -1) {
-        
         this.selectedVoucherDetail!.costCenterNameAr = data[0].nameAr;
         this.selectedVoucherDetail!.costCenterId = data[0].id;
       } else {
@@ -765,7 +774,7 @@ voucherNameAr:any;
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
       let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن الحساب';
+      let title = 'بحث عن مركز التكلفة';
       let sub = this.searchDialog
         .showDialog(lables, names, this.costCentersInDetailsList, title, searchTxt)
         .subscribe((d) => {
@@ -810,31 +819,39 @@ voucherNameAr:any;
     this.voucherDetail.push({
       id: 0,
       voucherId: this.selectedVoucherDetail?.voucherId ?? 0,
+      beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
+      beneficiaryId: this.selectedVoucherDetail?.beneficiaryId ?? 0,
+      beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       debit: this.selectedVoucherDetail?.debit ?? 0,
       credit: this.selectedVoucherDetail?.credit ?? 0,
       currencyId: this.selectedVoucherDetail?.currencyId ?? 0,
       currencyConversionFactor: this.selectedVoucherDetail?.currencyConversionFactor ?? 0,
       debitLocal: this.selectedVoucherDetail?.debitLocal ?? 0,
       creditLocal: this.selectedVoucherDetail?.creditLocal ?? 0,
-      beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
-      beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       description: this.selectedVoucherDetail?.description ?? '',
       costCenterId: this.selectedVoucherDetail?.costCenterId ?? 0,
       currencyNameAr: this.selectedVoucherDetail?.currencyNameAr ?? '',
       currencyNameEn: this.selectedVoucherDetail?.currencyNameEn ?? '',
-      beneficiaryAccountNameAr: this.selectedVoucherDetail?.beneficiaryAccountNameAr ?? '',
-      beneficiaryAccountNameEn: this.selectedVoucherDetail?.beneficiaryAccountNameEn ?? '',
+      beneficiaryNameAr: this.selectedVoucherDetail?.beneficiaryNameAr ?? '',
+      beneficiaryNameEn: this.selectedVoucherDetail?.beneficiaryNameEn ?? '',
       costCenterNameAr: this.selectedVoucherDetail?.costCenterNameAr ?? '',
       costCenterNameEn: this.selectedVoucherDetail?.costCenterNameEn ?? ''
     });
+
     this.voucher!.voucherDetail = this.voucherDetail;
 
 
     this.totalDebitLocal += this.selectedVoucherDetail?.debitLocal ?? 0;
     this.totalCreditLocal += this.selectedVoucherDetail?.creditLocal ?? 0;
+    this.calculateTotals();
+
+    this.clearSelectedItemData();
+
+  }
+  calculateTotals() {
+
     let currencyConversionFactor;
     if (this.voucherkindId == 1) {
-      //here
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
       if (this.currencyId != this.mainCurrencyId) {
 
@@ -860,12 +877,9 @@ voucherNameAr:any;
         this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
       }
     }
-
-    this.clearSelectedItemData();
-
   }
   deleteItem(index) {
-    
+
     this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
     this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
     let currencyConversionFactor;
@@ -905,7 +919,7 @@ voucherNameAr:any;
     }
 
     this.voucher.voucherDetail = this.voucherDetail;
-    
+
     this.currencyFactor = 0;
     this.currencyId = null;
 
@@ -914,20 +928,21 @@ voucherNameAr:any;
     this.selectedVoucherDetail = {
       id: 0,
       voucherId: 0,
+      beneficiaryTypeId: 0,
+      beneficiaryId: 0,
+      beneficiaryAccountId: 0,
       debit: 0,
       credit: 0,
       currencyId: 0,
       currencyConversionFactor: 1,
       debitLocal: 0,
       creditLocal: 0,
-      beneficiaryTypeId: 0,
-      beneficiaryAccountId: 0,
       description: '',
       costCenterId: 0,
       currencyNameAr: '',
       currencyNameEn: '',
-      beneficiaryAccountNameAr: '',
-      beneficiaryAccountNameEn: '',
+      beneficiaryNameAr: '',
+      beneficiaryNameEn: '',
       costCenterNameAr: '',
       costCenterNameEn: ''
     }
@@ -955,17 +970,29 @@ voucherNameAr:any;
 
     };
 
+    this.voucher.voucherDetail = this.voucherDetail;
+    this.voucherTotal = this.voucherForm.controls["voucherTotal"].value;
+    if (this.voucherkindId == 1) {
+      this.totalDebitLocal = this.voucherForm.controls["voucherTotalLocal"].value
+    }
+    else {
+      this.totalCreditLocal = this.voucherForm.controls["voucherTotalLocal"].value
+
+    }
+    this.voucherTotalLocal = this.voucherForm.controls["voucherTotalLocal"].value;
+    this.currencyFactor = this.voucherForm.controls["currencyFactor"].value;
+
 
   }
   confirmSave() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
+
       let sub = this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
           this.clearSelectedItemData();
           this.voucherDetail = [];
-          // this.submited = false;
           this.spinner.hide();
 
           navigateUrl(this.listUrl + this.voucherTypeId, this.router);
@@ -974,7 +1001,6 @@ voucherNameAr:any;
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -990,7 +1016,6 @@ voucherNameAr:any;
     }
 
     if (this.voucherForm.valid) {
-      
       this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -998,10 +1023,6 @@ voucherNameAr:any;
       }).catch(e => {
         this.spinner.hide();
       });
-
-
-
-
     }
     else {
       this.errorMessage = this.translate.instant("validation-messages.invalid-data");
@@ -1013,27 +1034,19 @@ voucherNameAr:any;
   }
   confirmUpdate() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
-
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.voucherService.updateVoucherAndRelations(this.voucher).subscribe({
         next: (result: any) => {
-
-
           this.defineVoucherForm();
           this.clearSelectedItemData();
           this.voucherDetail = [];
-
-          // this.submited = false;
           this.spinner.hide();
-
           navigateUrl(this.listUrl + this.voucherTypeId, this.router);
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          
         },
       });
       this.subsList.push(sub);
@@ -1041,8 +1054,6 @@ voucherNameAr:any;
     });
   }
   onUpdate() {
-    
-
     if (this.voucherForm.valid) {
       if (this.voucher.voucherDetail.length == 0) {
         this.errorMessage = this.translate.instant("voucher.voucher-details-required");
@@ -1093,11 +1104,11 @@ voucherNameAr:any;
             this.voucherDetail = [];
 
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getVoucherCode();
+            this.getVoucherCode();
           }
         }
       },
@@ -1111,20 +1122,17 @@ voucherNameAr:any;
     this.voucherDate = selectedDate;
   }
   getValueAfterConversion() {
-    ;
     this.selectedVoucherDetail.debitLocal = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
     this.selectedVoucherDetail.creditLocal = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
 
 
   }
   getAddedValueAfterConversion(i: any) {
-    ;
     this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
     this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
 
   }
   getAmount() {
-    ;
     if (this.voucherForm.value.currencyId == this.mainCurrencyId) {
       this.voucherTotal = this.voucherTotalLocal;
       this.currencyFactor = 1;
@@ -1132,16 +1140,153 @@ voucherNameAr:any;
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.voucherForm.value.currencyId).subscribe({
         next: (res: any) => {
-          
+
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = currencyModel.transactionFactor;
-          this.voucherTotal = (1/currencyModel.transactionFactor) * this.voucherTotalLocal;
+          this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
         }
       })
       this.subsList.push(sub);
 
     }
   }
+  getCostCenterInDetails() {
+    //this.selectedVoucherDetail.costCenterId=
+  }
+  updateDetailData(item: VoucherDetail) {
+    if (this.voucherDetail.length > 0) {
+      this.deleteVoucherDetailForUpdate(item);
+      this.addVoucherDetailForUpdate(item);
+    }
+
+  }
+  addVoucherDetailForUpdate(item: VoucherDetail) {
+
+    this.voucherDetail.push(
+      {
+        id: 0,
+        voucherId: 0,
+        beneficiaryTypeId: item.beneficiaryTypeId,
+        beneficiaryId: item.beneficiaryId,
+        beneficiaryAccountId: item.beneficiaryAccountId,
+        debit: item.debit,
+        credit: item.credit,
+        currencyId: item.currencyId,
+        currencyConversionFactor: item.currencyConversionFactor,
+        debitLocal: item.debitLocal,
+        creditLocal: item.creditLocal,
+        description: item.description,
+        costCenterId: item.costCenterId,
+        currencyNameAr: item.currencyNameAr,
+        currencyNameEn: item.currencyNameEn,
+        beneficiaryNameAr: item.beneficiaryNameAr,
+        beneficiaryNameEn: item.beneficiaryNameEn,
+        costCenterNameAr: item.costCenterNameAr,
+        costCenterNameEn: item.costCenterNameEn
+      }
+    )
+
+    this.voucherDetail.forEach(item => {
+
+      this.totalDebitLocal += item.debitLocal ?? 0;
+      this.totalCreditLocal += item.creditLocal ?? 0;
+    }
+    )
+    this.calculateTotals();
+
+
+
+
+  }
+  deleteVoucherDetailForUpdate(item: VoucherDetail) {
+    if (item != null) {
+      const index: number = this.voucherDetail.indexOf(item);
+      if (index !== -1) {
+        this.voucherDetail.splice(index, 1);
+
+        this.totalDebitLocal = 0;
+        this.totalCreditLocal = 0;
+
+
+      }
+
+    }
+
+
+
+
+
+  }
+  getCustomers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCustomerApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.customersList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getSuppliers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeSupplierApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.suppliersList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getBeneficiaryAccount() {
+    debugger
+    if(this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
+    {
+    this.selectedVoucherDetail.beneficiaryAccountId=this.filterBeneficiaryList.filter(x => x.id == Number(this.selectedVoucherDetail.beneficiaryId))[0].accountId
+    }
+    else if(this.selectedVoucherDetail.beneficiaryTypeId == BeneficiaryTypeEnum.Account)
+    {
+      this.selectedVoucherDetail.beneficiaryAccountId=this.selectedVoucherDetail.beneficiaryId;
+    }
+    
+  }
+  getBeneficiaryAccountAdded(i) {
+    debugger
+    if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
+    {
+      debugger
+    this.voucherDetail[i].beneficiaryAccountId=this.filterBeneficiaryList.filter(x => x.id == Number(this.voucherDetail[i].beneficiaryId))[0].accountId
+    }
+    else if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Account)
+    {
+      this.voucherDetail[i].beneficiaryAccountId=this.voucherDetail[i].beneficiaryId;
+    }
+    
+  }
+
 }
 

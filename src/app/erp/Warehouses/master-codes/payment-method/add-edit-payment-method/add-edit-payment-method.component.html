@@ -54,11 +54,11 @@
 										</div>
 										<div class="col-md-6 col-12">
 											<label for="nameEn" class="label-name">
-												{{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+												{{'general.nameEn'|translate}}</label>
 											<div class="form-group position-relative">
 
 												<input type="text" class="form-control " name="nameEn"
-													formControlName="nameEn">
+													formControlName="nameEn" minlength="2" maxlength="50">
 
 
 											</div>
@@ -84,6 +84,11 @@
 														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
 												</div>
+												<div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
 
 											</div>
 
@@ -113,3 +118,6 @@
 		</div>
 	</div>
 </section>
+<app-public-search-modal [isVisible]="showSearchAccountModal" [routeApi]="routeAccountApi"
+	(emitClose)="showSearchAccountModal = false;" (emitSearch)="onSelectAccount($event)">
+</app-public-search-modal>

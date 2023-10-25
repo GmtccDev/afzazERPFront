@@ -58,7 +58,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
   }
 
-
   //#endregion
 
   //#region ngOnInit
@@ -112,14 +111,10 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     return new Promise<void>((resolve, reject) => {
       let sub = this.issuingChequeService.allIssuingChequees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
-
           this.toolbarPathData.componentList = this.translate.instant("component-names.issuing-cheque");
           if (res.success) {
             this.issuingCheque = res.response.items
           }
-
-
           resolve();
 
         },
@@ -127,7 +122,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -163,14 +157,12 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
 
         let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
           (resonse) => {
 
-            //reloadPage()
             this.getIssuingChequees();
 
           });
@@ -362,7 +354,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           error: (err: any) => {
           },
           complete: () => {
-            console.log('complete');
           },
         });
         this.subsList.push(sub);
@@ -394,7 +385,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           error: (err: any) => {
           },
           complete: () => {
-            console.log('complete');
           },
         });
         this.subsList.push(sub);
