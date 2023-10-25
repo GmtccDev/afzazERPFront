@@ -676,11 +676,11 @@
         "print-items-specifiers": "طباعة محددات الأصناف",
         "print-items-images": "طباعة صور الاصناف",
         "transaction-factor": " معامل التحويل ",
-        "sales-bills" : "[فواتير المبيعات]",
-        "purchases-bills" : "[فواتير المشتريات]",
-        "sales-return-bills":"[فواتير مرتجع المبيعات]",
-        "purchases-return-bills":"[فواتير مرتجع المشتريات]",
-        "first-period-goods-bills":"[فواتير بضاعة أول المدة]",
+        "sales-bills" : " فواتير المبيعات ",
+        "purchases-bills" : " فواتير المشتريات ",
+        "sales-return-bills":" فواتير مرتجع المبيعات ",
+        "purchases-return-bills":" فواتير مرتجع المشتريات ",
+        "first-period-goods-bills":" فواتير بضاعة أول المدة ",
         "calculating-tax-manual":"أحتساب الضريبة يدويا"
 
 
