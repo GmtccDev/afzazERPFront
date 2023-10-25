@@ -39,7 +39,7 @@ export class SidebarComponent {
    
       this.navServices.itemsSettings.subscribe(menuItems => {
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+   
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
@@ -72,7 +72,7 @@ export class SidebarComponent {
       this.navServices.itemsAccount.subscribe(menuItems => {
         
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+        
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             ;
@@ -100,7 +100,7 @@ export class SidebarComponent {
     else if (menu == '6') {
       this.navServices.itemsWarehouses.subscribe(menuItems => {
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+      
         this.router.events.subscribe((event) => {
           
           if (event instanceof NavigationEnd) {
@@ -217,7 +217,7 @@ export class SidebarComponent {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
+          
           if (res.success) {
             
             const billTypes = res.response.items.map(element => ({
@@ -236,7 +236,7 @@ export class SidebarComponent {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+ 
         },
       });
 
