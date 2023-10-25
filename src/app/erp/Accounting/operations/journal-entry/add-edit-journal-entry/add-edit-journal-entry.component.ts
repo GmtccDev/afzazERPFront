@@ -734,10 +734,11 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res: any) => {
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.defaultCurrencyId)[0];
+          let currencyFactor=1;
           if (currencyModel !== null && currencyModel !== undefined) {
-            currencyModel.transactionFactor = 1;
+            currencyFactor = currencyModel?.transactionFactor;
           }
-          let currencyFactor = currencyModel.transactionFactor;
+         
           const faControl =
             (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
           faControl['controls'].transactionFactor.setValue(currencyFactor);
