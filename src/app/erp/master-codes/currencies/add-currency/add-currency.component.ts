@@ -37,7 +37,7 @@ export class AddCurrencyComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("currencies"),
+    componentList: this.translate.instant("component-names.currencies"),
     componentAdd: '',
 
   };
