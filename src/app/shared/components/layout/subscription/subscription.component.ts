@@ -128,7 +128,7 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 		];
 	}
 	openLink(object) {
-		debugger
+		
 	//let	subdomain=localStorage.getItem('subDomain');
 		localStorage.setItem("Menu", object.value)
 		this.router.navigate([object.link]);
@@ -144,9 +144,9 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 					this.getApplications();
 					//   this.router.navigate(['/dashboard/default']);
 					if (next.response != null) {
-						debugger
+						
 						this.applicationsRoute = [...next.response?.applications?.split(",")]
-						console.log(this.applicationsRoute);
+						//console.log(this.applicationsRoute);
 						for (var i = 0; i < this.applications.length; i++) {
 
 							var find = this.applicationsRoute.includes(this.applications[i].value);
@@ -166,7 +166,7 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 			error => {
 
 				//this.showLoader = false;
-				console.log(error)
+				//console.log(error)
 
 			}
 		)

@@ -218,7 +218,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
      let sub = this.generalConfigurationService.getGeneralConfiguration(7).subscribe({
         next: (res: any) => {
           resolve();
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           if (res.response.value > 0) {
             
             this.facialPeriodId = res.response.value;
@@ -231,7 +231,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -255,7 +255,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

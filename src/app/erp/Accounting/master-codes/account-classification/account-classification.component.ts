@@ -118,7 +118,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					//console.log('complete');
 				},
 			});
 
@@ -137,7 +137,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 			idName: "Id"
 		}
 		this.accountClassificationService.deleteEntityAccountClassification(entity).subscribe((resonse) => {
-			console.log('delet response', resonse);
+			//console.log('delet response', resonse);
 			this.getAccountClassifications();
 		});
 	}
@@ -159,7 +159,7 @@ export class AccountClassificationComponent implements OnInit, OnDestroy, AfterV
 		modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
 		modalRef.componentInstance.isYesNo = true;
 		modalRef.result.then((rs) => {
-			console.log(rs);
+			//console.log(rs);
 			if (rs == 'Confirm') {
 				this.spinner.show();
 				const input = {

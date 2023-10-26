@@ -92,7 +92,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		 return reuslt;
 	  }
 	gotoViewer() {
-		debugger
+		
 		let monthFrom;
 		let monthTo;
 

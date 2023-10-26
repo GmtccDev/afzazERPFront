@@ -121,7 +121,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -135,7 +135,7 @@ export class BankAccountComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD master-codes
   delete(id: any) {
     this.bankAccountService.deleteBankAccount(id).subscribe((resonse) => {
-      console.log('delet response', resonse);
+      //console.log('delet response', resonse);
       this.getBankAccounts();
     });
   }

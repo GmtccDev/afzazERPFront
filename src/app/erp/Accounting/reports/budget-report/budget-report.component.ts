@@ -100,7 +100,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -113,7 +113,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
           
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 
@@ -126,7 +126,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

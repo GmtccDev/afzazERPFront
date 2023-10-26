@@ -182,7 +182,7 @@ export class AddEditBankAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -218,7 +218,7 @@ export class AddEditBankAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -244,7 +244,7 @@ export class AddEditBankAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -311,7 +311,7 @@ export class AddEditBankAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -352,7 +352,7 @@ export class AddEditBankAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

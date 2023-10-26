@@ -19,6 +19,7 @@ import { SubscriptionService } from 'src/app/shared/components/layout/subscripti
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { AccountClassificationsArEnum, AccountClassificationsEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { ModuleType } from '../../../models/general-configurations';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -251,7 +252,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Accounting, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           resolve();
 
@@ -275,7 +276,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -304,7 +305,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -330,7 +331,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -356,7 +357,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -380,7 +381,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -407,7 +408,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -433,7 +434,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -495,7 +496,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -524,7 +525,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -594,7 +595,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -639,7 +640,7 @@ export class AddEditAccountComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

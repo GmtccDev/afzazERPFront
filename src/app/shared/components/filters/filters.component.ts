@@ -206,7 +206,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            debugger
+            
             console.log("getAccounts",res.response)
             if (this.selectedAccountGroupId != null && this.selectedAccountGroupId != undefined) {
               this.mainAccountsList = res.response.filter(x => x.accountGroupId == this.selectedAccountGroupId && x.isLeafAccount != true && x.isActive == true);
@@ -511,7 +511,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectBranch() {
-   debugger
+   
     this.branchIds = ''
      
     this.selectedBranchId?.forEach(selectedId => {

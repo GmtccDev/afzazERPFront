@@ -218,7 +218,7 @@ export class AddEditRoleComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -250,7 +250,7 @@ export class AddEditRoleComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -320,7 +320,7 @@ export class AddEditRoleComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -358,7 +358,7 @@ export class AddEditRoleComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

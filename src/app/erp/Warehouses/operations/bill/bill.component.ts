@@ -133,7 +133,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   //     .subscribe({
   //       next: (res:ResponseResult<Bill[]>) => {
           
-  //         console.log(res);
+  //         //console.log(res);
   //         this.toolbarPathData.componentList = this.translate.instant("component-names.bills");
   //         if (res.success) {
   //           this.bills = [...res.data?.filter(x => x.billTypeId == this.billTypeId && x.branchId == this.branchId && x.companyId == this.companyId) ?? []];
@@ -147,7 +147,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   //         reject(err);
   //       },
   //       complete: () => {
-  //         console.log('complete');
+  //         //console.log('complete');
   //       },
   //     });
 

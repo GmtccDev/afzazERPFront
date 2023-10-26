@@ -92,9 +92,9 @@ export class ModalComponent implements OnInit {
 
 	open(content) {
 
-		console.log("contetn---------", content)
+		//console.log("contetn---------", content)
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-			console.log(" modalService content", content)
+			//console.log(" modalService content", content)
 			this.closeResult = `Closed with: ${result}`;
 		}, (reason) => {
 			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

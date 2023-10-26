@@ -27,13 +27,13 @@ export class DateCalculation {
     let d = new Date(workDate.year, workDate.month, workDate.day);
 
     let hijriStartDate = this.ngbCalendar.fromGregorian(d)
-    console.log(hijriStartDate);
+    //console.log(hijriStartDate);
     if (rentMethodType == 1) {
       //Month      
       addedYears = Math.floor(period / 12);
       addedMonth = period % 12;
       hijriStartDate.year = hijriStartDate.year + addedYears;
-      console.log("1", hijriStartDate);
+      //console.log("1", hijriStartDate);
 
       if (addedMonth + hijriStartDate.month > 12) {
         hijriStartDate.month = hijriStartDate.month + addedMonth - 12;
@@ -113,7 +113,7 @@ export class DateCalculation {
       //Month
       addedYears = Math.floor(period / 12);
       addedMonth = period % 12;
-      console.log("Period Division", Math.floor(period / 12), period % 12)
+      //console.log("Period Division", Math.floor(period / 12), period % 12)
 
       endDate.year = workDate.year + addedYears;
       if (addedMonth + workDate.month > 12) {
@@ -174,7 +174,7 @@ export class DateCalculation {
     }
     endDate.month = mMonth - 1;
     endDate.day = mDay;
-    console.log("End Date: ", endDate);
+    //console.log("End Date: ", endDate);
     return endDate;
   }
 
@@ -299,7 +299,7 @@ export class DateCalculation {
     endDate.month = mMonth - 1;
     endDate.day = mDay;
     endDate.year = mYear;
-    console.log("new Date: ", endDate);
+    //console.log("new Date: ", endDate);
     return endDate;
   }
 

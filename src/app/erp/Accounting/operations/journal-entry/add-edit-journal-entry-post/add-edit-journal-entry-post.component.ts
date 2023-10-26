@@ -16,6 +16,7 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
+import { ModuleType } from '../../../models/general-configurations';
 @Component({
   selector: 'app-add-edit-journal-entry-post',
   templateUrl: './add-edit-journal-entry-post.component.html',
@@ -236,7 +237,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Accounting, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
 
           resolve();
@@ -259,7 +260,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -475,7 +476,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -500,7 +501,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -570,7 +571,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -579,15 +580,8 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   onSave() {
 
-    // if (this.checkPeriod == null) {
-    //   this.alertsService.showError(
-    //     'يجب أن يكون السنة المالية مفتوحة و الفترة المحاسبية مفتوحة',
-    //     "",
-
-    //   )
-    //   return;
-    // }
-    console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+   
+   // console.log("getRawValue=>", this.journalEntryForm.getRawValue());
     if (this.counter < 2) {
       this.alertsService.showError(
         'يجب أن يكون على الاقل اثنين من الصفوف',
@@ -655,7 +649,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -720,7 +714,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -746,7 +740,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -772,7 +766,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -796,7 +790,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -823,7 +817,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 

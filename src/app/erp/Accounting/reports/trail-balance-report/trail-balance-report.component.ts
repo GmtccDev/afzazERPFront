@@ -92,7 +92,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 
 		let monthFrom;
 		let monthTo;
-     debugger;
+     ;
 	 if (this.fromDate == undefined || this.fromDate == null) {
 
 		monthFrom = Number(this.fromDate.month + 1)
@@ -211,7 +211,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					debugger
+					
 			
 					
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);

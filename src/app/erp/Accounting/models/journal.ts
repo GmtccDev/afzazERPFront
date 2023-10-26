@@ -26,3 +26,19 @@ export interface IJournalDtoPageList {
 export class DeleteListJournalCommand{
     ids: number[] | undefined;
 }
+export class JournalEntryDetail {
+    id: number | null;
+    journalEntriesMasterId: number | null;
+    accountId: number | null;
+    currencyId: number | null;
+    transactionFactor: number | null;
+    notes: string;
+    jeDetailCredit: number;
+    jeDetailDebit: number;
+    costCenterId: number | null;
+    costCenterName: string;
+    currencyName: string;
+    accountName: string;
+    jeDetailCreditLocal: number;
+    jeDetailDebitLocal: number;
+    jeDetailSerial: number;}

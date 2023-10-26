@@ -345,14 +345,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getBillTypeById(id) {
-    debugger
+    
     this.billType = this.billTypesList.filter(x => x.id == id);
     if (this.id == 0) {
       this.getBillCode();
       // this.billForm.setValue({
       //   currencyId:this.billType[0].defaultCurrencyId
       // })
-      debugger
+      
       // this.billForm.patchValue({
       //   currencyId:this.billType[0].defaultCurrencyId
       // })
@@ -454,7 +454,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -465,7 +465,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   getBillCode() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.billService.getLastCodeByTypeId(this.billTypeId).subscribe({
         next: (res: any) => {
 
@@ -479,7 +479,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -503,7 +503,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -525,7 +525,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -548,7 +548,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -571,7 +571,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -593,7 +593,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -615,7 +615,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -638,7 +638,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -663,7 +663,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -686,7 +686,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -709,7 +709,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -732,7 +732,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -755,7 +755,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -778,7 +778,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -804,7 +804,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -827,7 +827,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -850,7 +850,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -873,7 +873,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -896,7 +896,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -1151,7 +1151,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -1205,7 +1205,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -1293,7 +1293,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   getCurrencyFactorForAdditionAndDiscount(currencyId: any) {
-    debugger
+    
     if (currencyId == this.mainCurrencyId) {
       this.selectedBillAdditionAndDiscount.currencyExchangeTransaction = 1;
     }
@@ -1408,7 +1408,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   openStoreSearchDialog(i) {
-    debugger
+    
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedBillItem?.storeNameAr ?? '';
@@ -1840,7 +1840,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   addItemDataForUpdate(item: BillItem) {
-    debugger
+    
     this.billItem.push(
       {
         id: 0,
@@ -1909,7 +1909,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   addBillAdditionDiscountDataForUpdate(item: BillAdditionAndDiscount) {
-    debugger
+    
     this.billAdditionAndDiscount.push(
       {
         id: 0,
@@ -1961,7 +1961,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   getNet() {
-    debugger
+    
     this.taxValue = Number(this.total) * Number(this.taxRatio / 100);
     this.net = Number(this.total) + this.taxValue;
     this.paid = 0;

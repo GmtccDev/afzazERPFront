@@ -5,7 +5,7 @@ import { CONTROLPANEL } from '../constants/constant';
 export function selectLang(lang: string, translateService: TranslateService, type: string) {
 
     translateService.use(lang).subscribe(res=>{
-      console.log("Used Lang Setting is ",res);
+      //console.log("Used Lang Setting is ",res);
     });
     localStorage.setItem("language", lang);
     let node = document.createElement('link');
@@ -17,12 +17,12 @@ export function selectLang(lang: string, translateService: TranslateService, typ
     } else {
 
         if (lang == "ar") {
-            console.log("Arabic")
+            //console.log("Arabic")
             localStorage.setItem("language", "ar");
              node.href = '../assets/website/css/style-ar.css';
 
         } else {
-            console.log("English")
+            //console.log("English")
             localStorage.setItem("language", "en");
              node.href = '../assets/website/css/style.css';
 
