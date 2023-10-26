@@ -68,33 +68,38 @@
 												{{'general.account'|translate}}
 											</label>
 											<span class="text-danger">*</span>
-											<div class="input-group  popup">
-												<ng-select style="width:100%" formControlName="accountId"
-													name='accountId' class="" id="accountId">
-													<ng-option *ngFor="let account of accountsList"
-														[value]="account.id">
-														{{lang=="ar"?account.nameAr:account.nameEn}}
-													</ng-option>
-												</ng-select>
-												<div *ngIf="(f['accountId'].touched || f['accountId'].dirty ) && f['accountId'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span
-														*ngIf="f['accountId'].errors && f['accountId'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
-														{{'error.required'|translate}}</span>
+											<div class=" d-flex">
+												<div class="flex-grow-1">
+													<div class="input-group mb-3   ">
+														<!-- <div class="input-group  popup"> -->
+														<ng-select style="width:100%" formControlName="accountId"
+															name='accountId' class="" id="accountId">
+															<ng-option *ngFor="let account of accountsList"
+																[value]="account.id">
+																{{lang=="ar"?account.nameAr:account.nameEn}}
+															</ng-option>
+														</ng-select>
+														<div *ngIf="(f['accountId'].touched || f['accountId'].dirty ) && f['accountId'].invalid"
+															class="validation alert-danger position-absolute">
+															<i class="fa fa-close "></i>
+															<span
+																*ngIf="f['accountId'].errors && f['accountId'].errors['required']"
+																class="f-12 ng-star-inserted text-white">
+																{{'error.required'|translate}}</span>
+														</div>
+													</div>
 												</div>
 												<div class="">
-                                                    <button class="btn btn-rounded btn-dark"
-                                                        (click)="showSearchAccountModal=true" type="button"><i
-                                                            class="fa fa-search"></i></button>
-                                                </div>
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchAccountModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
 
 											</div>
 
 										</div>
 
-										<div class="col-md-6 col-12">
+										<div class=" col-12 col-md-6 d-flex">
 											<div class="media">
 												<label class="label-name"> {{'general.status'|translate}}
 												</label>
