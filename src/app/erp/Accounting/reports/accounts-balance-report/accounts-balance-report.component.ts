@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +12,7 @@ import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 
 @Component({
 	selector: 'app-accounts-balance-report',
@@ -45,7 +47,9 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	};
 
 	//#region Constructor
-	constructor(private modalService: NgbModal, private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) { }
+	constructor(private modalService: NgbModal,
+		private spinner:NgxSpinnerService,
+		 private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) { }
 
 	//#endregion
 
@@ -54,12 +58,23 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		this.sharedServices.changeButton({ action: "Report" } as ToolbarData);
 		this.listenToClickedButton();
 		this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
+		Promise.all([
+			this.getGeneralConfigurationsOfAccountingPeriod()
+	  
+		  ]).then(a => {
+			this.spinner.hide();
+		  }).catch(err => {
+	  
+			this.spinner.hide();
+		  });
+		
 	}
 
 	//#endregion
 	//#region ngAfterViewInit
 	ngAfterViewInit(): void {
-		this.getGeneralConfigurationsOfAccountingPeriod();
+	//	this.getGeneralConfigurationsOfAccountingPeriod();
 	}
 
 	//#endregion
@@ -73,40 +88,43 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		});
 	}
 	//#endregion
-	isContainsDate(input: string): boolean {
-
-		const date = new Date(input);
-
-		let reuslt= date instanceof Date && !isNaN(date.getTime());
-		 return reuslt;
-	  }
+	
 
 	gotoViewer() {
 
 		let monthFrom;
 		let monthTo;
 
-		if (this.fromDate == undefined || this.fromDate == null) {
-			this.fromDate = this.dateConverterService.getCurrentDate();
-			monthFrom = Number(this.fromDate.month + 1);
-			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		} else if(!this.isContainsDate(this.fromDate)) {
-			monthFrom = Number(this.fromDate.month + 1);
-			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		}
+		debugger;
 
-		if (this.toDate == undefined || this.toDate == null) {
-			this.toDate = this.dateConverterService.getCurrentDate();
-			monthTo = Number(this.toDate.month + 1);
-			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		} else if (!this.isContainsDate(this.toDate)) {
-			monthTo = Number(this.toDate.month + 1);
-			this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		}
+		if (this.fromDate == undefined || this.fromDate == null) {
+			//  this.fromDate = this.dateConverterService.getCurrentDate();
+			monthFrom = Number(this.fromDate.month + 1)
+			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
+		  }
+		  else if(this.fromDate.month!=undefined) {
+		
+			monthFrom = Number(this.fromDate.month + 1)
+			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
+		  }
+	  
+		  if (this.toDate == undefined || this.toDate == null) {
+			
+			monthTo = Number(this.toDate.month + 1)
+			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
+	  
+		  }
+		  else if(this.toDate.month!=undefined) {
+			monthTo = Number(this.toDate.month + 1)
+			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
+		  }
 
 
 		if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
 			this.branchId = 0;
+		}
+		if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
+			this.currencyId = 0;
 		}
 		if (this.accountGroupId == null || this.accountGroupId == undefined || this.accountGroupId == "") {
 			this.accountGroupId = 0;
@@ -130,6 +148,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		 + "&reportParameter=toDate!" + this.toDate
 		 + "&reportParameter=branchId!" + this.branchId
+		  + "&reportParameter=currencyId!" + this.currencyId
 		  + "&reportParameter=companyId!" + this.companyId
 		  + "&reportParameter=parentAccountId!" + this.parentAccountId
 		  + "&reportParameter=entriesStatusId!" + this.entriesStatusId
@@ -203,14 +222,14 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 		const promise = new Promise<void>((resolve, reject) => {
 
-		let sub=this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+		let sub=this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
 				next: (res: any) => {
 
-					console.log("result data getbyid", res);
+				
 					if (res.response.value > 0) {
 
 						this.facialPeriodId = res.response.value;
-						//this.getfiscalPeriodById(this.facialPeriodId);
+						this.getfiscalPeriodById(this.facialPeriodId);
 					}
 				},
 				error: (err: any) => {

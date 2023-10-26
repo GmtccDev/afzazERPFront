@@ -219,7 +219,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
             else {
-              this.mainAccountsList = res.response.filter(x => x.levelId==0  && x.isActive == true);
+              this.mainAccountsList = res.response.filter(x => x.isLeafAccount== false && x.isActive == true);
               if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
                 this.leafAccountsList = res.response.filter(x => x.isLeafAccount == true && x.parentId == this.selectedMainAccountId && x.isActive == true);
 

@@ -82,6 +82,7 @@ export class LoginCompanyComponent implements OnInit {
           
           if (res.success) {
             this.companiesList = res.response;
+            console.log("companiesList",this.companiesList)
 
           }
 
@@ -93,6 +94,7 @@ export class LoginCompanyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
+         
           //console.log('complete');
         },
       });
@@ -113,6 +115,7 @@ export class LoginCompanyComponent implements OnInit {
 
 
             this.branchesList = res.response;
+            console.log(this.branchesList)
 
 
 

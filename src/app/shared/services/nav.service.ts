@@ -172,7 +172,7 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/accounting-master-codes/fiscalPeriod', title: this.translate.instant("component-names.fiscalPeriod"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountGroup', title: this.translate.instant("component-names.accountGroup"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountClassification', title: this.translate.instant("component-names.accountClassification"), type: 'link', active: true },
-				{ path: '/accounting-master-codes/account', title: this.translate.instant("component-names.account"), type: 'link', active: true },
+				{ path: '/accounting-master-codes/account', title: this.translate.instant("component-names.chart-account"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/costCenter', title: this.translate.instant("component-names.costCenter"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
 				//	{ path: '/accounting-master-codes/bankAccount', title: this.translate.instant("component-names.bankAccount"), type: 'link', active: true },

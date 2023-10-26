@@ -286,6 +286,7 @@
         "close": "Close",
         "add": "Add"
     },
+  
     "messages": {
         "invalid-data": "Please Enter Valid Data!",
         "success": "Data has been Deleted Successfully",
@@ -482,7 +483,8 @@
         "bills":"Bills",
         "default-journal":"Default Journal",
         "general-configuration":"General Configuration",
-        "cheques-journal":"Cheques Journal"
+        "cheques-journal":"Cheques Journal",
+        "chart-account":"Chart of Accounts"
 
 
     },

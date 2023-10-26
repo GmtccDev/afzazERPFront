@@ -74,6 +74,7 @@
         "close": "اغلاق",
         "add": "اضافة"
     },
+   
     "validation-message": {
         "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
     },
@@ -283,10 +284,13 @@
         "sales-person-commission": "عمولات المناديب",
         "bill-types": "أنماط الفواتير",
         "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
-        "bills": "الفواتير",
-        "default-journal": "اليومية الإفتراضية",
-        "general-configuration": "الإعدادات",
-        "cheques-journal": "يومية الشيكات"
+        "bills":"الفواتير",
+        "default-journal":"اليومية الإفتراضية",
+        "general-configuration":"الإعدادات",
+        "cheques-journal":"يومية الشيكات",
+        "chart-account":"دليل الحسابات"
+
+      
     },
     "general": {
         "nameAr": "الاسم العربي",

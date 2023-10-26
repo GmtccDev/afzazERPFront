@@ -256,7 +256,7 @@ export class AddEditAccountComponent implements OnInit {
         next: (res) => {
           resolve();
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.companies");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.account");
           if (res.success) {
 
             if (res.response.result.items.length>0) {
