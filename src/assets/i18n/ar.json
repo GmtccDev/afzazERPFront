@@ -74,6 +74,7 @@
         "close": "اغلاق",
         "add": "اضافة"
     },
+   
     "validation-message": {
         "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
     },
@@ -286,7 +287,8 @@
         "bills":"الفواتير",
         "default-journal":"اليومية الإفتراضية",
         "general-configuration":"الإعدادات",
-        "cheques-journal":"يومية الشيكات"
+        "cheques-journal":"يومية الشيكات",
+        "chart-account":"دليل الحسابات"
 
 
     },
