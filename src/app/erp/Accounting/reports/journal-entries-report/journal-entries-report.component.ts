@@ -142,6 +142,9 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		if (this.JournalId == null || this.JournalId == undefined || this.JournalId == "") {
 			this.JournalId = 0;
 		}
+		if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
+			this.currencyId = 0;
+		}
 
 		;
 
@@ -149,6 +152,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		+ "&reportParameter=toDate!" + this.toDate
 		+ "&reportParameter=branchId!" + this.branchId
 		+ "&reportParameter=companyId!" + this.companyId
+		+ "&reportParameter=currencyId!" + this.currencyId
 		+ "&reportParameter=entriesStatusId!" + this.entriesStatusId
 		+ "&reportParameter=JournalId!" + this.JournalId
 		+ "&reportParameter=fromEntryNo!" + this.fromEntryNo
