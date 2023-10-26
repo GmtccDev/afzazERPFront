@@ -107,26 +107,26 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
     let monthTo;
 
     if (this.fromDate == undefined || this.fromDate == null) {
-      this.fromDate = this.dateConverterService.getCurrentDate();
-      monthFrom = Number(this.fromDate.month + 1)
-      this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-    }
-    else {
-      monthFrom = Number(this.fromDate.month + 1)
-      this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-
-    }
-
-    if (this.toDate == undefined || this.toDate == null) {
-      this.toDate = this.dateConverterService.getCurrentDate();
-      monthTo = Number(this.toDate.month + 1)
-      this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
-
-    }
-    else {
-      monthTo = Number(this.toDate.month + 1)
-      this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
-    }
+			//  this.fromDate = this.dateConverterService.getCurrentDate();
+			monthFrom = Number(this.fromDate.month + 1)
+			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
+		  }
+		  else if(this.fromDate.month!=undefined) {
+		
+			monthFrom = Number(this.fromDate.month + 1)
+			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
+		  }
+	  
+		  if (this.toDate == undefined || this.toDate == null) {
+			
+			monthTo = Number(this.toDate.month + 1)
+			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
+	  
+		  }
+		  else if(this.toDate.month!=undefined) {
+			monthTo = Number(this.toDate.month + 1)
+			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
+		  }
 
     if (this.voucherKindId == null || this.voucherKindId == undefined) {
       this.voucherKindId = 0;
