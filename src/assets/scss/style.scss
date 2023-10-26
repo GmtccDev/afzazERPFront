@@ -1425,6 +1425,22 @@ button.btn.btn-outline-secondary.calendar0:first-of-type {
     }
 }
 
+html[dir="rtl"] {
+    .ngb-dp-arrow.right .ngb-dp-navigation-chevron {
+        transform: rotate(220deg);
+    }
+    .ngb-dp-navigation-chevron {
+        transform: rotate(45deg);
+    }
+    .form-select {
+        background-position: left 0.75rem center !important;
+    }
+}
+
+.sniper-date .btn-light.bg-primary.text-white {
+    background-color: var(--theme-deafult) !important;
+}
+
 .input-search {}
 
 @import "../scss/themes/responsive";

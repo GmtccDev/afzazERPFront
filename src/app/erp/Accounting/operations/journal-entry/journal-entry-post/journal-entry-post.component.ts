@@ -299,7 +299,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
   listUpdateIds: any[] = [];
   onCheckUpdate() {
 
-;
     var ids = this.listIds.map(item => item.id);
     if(ids.length>0){
       let sub = this.journalEntryService.updateList(ids).subscribe(
@@ -308,6 +307,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
           //reloadPage()
           this.getJournalEntryes();
           this.listUpdateIds = [];
+          this.listIds=[]
         });
       this.subsList.push(sub);
     }
