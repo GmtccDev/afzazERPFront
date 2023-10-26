@@ -82,6 +82,7 @@ export class LoginCompanyComponent implements OnInit {
           
           if (res.success) {
             this.companiesList = res.response;
+            console.log("companiesList",this.companiesList)
 
           }
 
@@ -93,7 +94,8 @@ export class LoginCompanyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+         
+          //console.log('complete');
         },
       });
 
@@ -113,6 +115,7 @@ export class LoginCompanyComponent implements OnInit {
 
 
             this.branchesList = res.response;
+            console.log(this.branchesList)
 
 
 
@@ -126,7 +129,7 @@ export class LoginCompanyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -204,7 +207,7 @@ export class LoginCompanyComponent implements OnInit {
       let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
         next: (res: any) => {
 
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           if (res.response.value > 0) {
 
             this.facialPeriodId = res.response.value;
@@ -217,7 +220,7 @@ export class LoginCompanyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -230,7 +233,7 @@ export class LoginCompanyComponent implements OnInit {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
 
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
           this.fromDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDateOfFacialPeriod = this.dateConverterService.getDateForCalender(res.response.toDate);
           localStorage.setItem("fromDateOfFacialPeriod", this.fromDateOfFacialPeriod)
@@ -245,7 +248,7 @@ export class LoginCompanyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

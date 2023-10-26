@@ -12,6 +12,7 @@ import { ToolbarData } from "src/app/shared/interfaces/toolbar-data";
 import { NgbdModalContent } from "src/app/shared/components/modal/modal-component";
 import { ToolbarActions } from "src/app/shared/enum/toolbar-actions";
 import { NgxSpinnerService } from "ngx-spinner";
+import { GeneralConfigurationEnum } from "src/app/shared/constants/enumrators/enums";
 @Component({
 	selector: "app-journal-entries-report",
 	templateUrl: "./journal-entries-report.component.html",
@@ -52,6 +53,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 
 	//#region ngOnInit
 	ngOnInit(): void {
+		
 		this.sharedServices.changeButton({ action: "Report" } as ToolbarData);
 		this.listenToClickedButton();
 		this.sharedServices.changeToolbarPath(this.toolbarPathData);
@@ -71,20 +73,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	ngAfterViewInit(): void {
 		//this.getGeneralConfigurationsOfAccountingPeriod();
 	}
-	getFromDate() {
-		let monthFrom;
-		this.fromDate = this.dateConverterService.getCurrentDate();
-		monthFrom = Number(this.fromDate.month + 1);
-		this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		return this.fromDate;
-	}
-	getDateTo() {
-		let monthTo;
-		this.toDate = this.dateConverterService.getCurrentDate();
-		monthTo = Number(this.toDate.month + 1);
-		this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		return this.toDate;
-	}
+
 	//#endregion
 
 	//#region ngOnDestroy
@@ -96,13 +85,14 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		});
 	}
 	//#endregion
+		//this.fromDate= this.dateConverterService.getDateForCalender(this.defualtFromDate);
 	isContainsDate(input: string): boolean {
 		const date = new Date(input);
 		let reuslt= date instanceof Date && !isNaN(date.getTime());
 		 return reuslt;
 	  }
 	gotoViewer() {
-		;
+		
 		let monthFrom;
 		let monthTo;
 
@@ -111,19 +101,19 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 			monthFrom = Number(this.fromDate.month + 1)
 			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
 		  }
-		  else {
+		  else if(this.fromDate.month!=undefined) {
+		
 			monthFrom = Number(this.fromDate.month + 1)
 			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-	  
 		  }
 	  
 		  if (this.toDate == undefined || this.toDate == null) {
-			//  this.toDate = this.dateConverterService.getCurrentDate();
+			
 			monthTo = Number(this.toDate.month + 1)
 			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
 	  
 		  }
-		  else {
+		  else if(this.toDate.month!=undefined) {
 			monthTo = Number(this.toDate.month + 1)
 			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
 		  }
@@ -136,7 +126,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 			this.accountId = 0;
 		}
 
-		if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
+		if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined"|| this.branchId == "") {
 			this.branchId = 0;
 		}
 		if (this.entriesStatusId == null || this.entriesStatusId == undefined || this.entriesStatusId == "") {
@@ -230,13 +220,13 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		;
 		const promise = new Promise<void>((resolve, reject) => {
 			;
-			this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+			this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
 				next: (res: any) => {
 					;
-					console.log("result data getbyid", res);
+			
 					if (res.response.value > 0) {
-						;
-						this.facialPeriodId = res.response.value;
+						
+						this.facialPeriodId =Number(res.response.value);
 						this.getfiscalPeriodById(this.facialPeriodId);
 					}
 				},
@@ -244,18 +234,21 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 					reject(err);
 				},
 				complete: () => {
-					console.log("complete");
+					
 				},
 			});
 		});
 		return promise;
 	}
+	defualtFromDate:any;
+	defualtToDate:any;
 	getfiscalPeriodById(id: any) {
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					debugger;
-					console.log("result data getbyid", res);
+					
+				    this.defualtFromDate=res.response.fromDate;
+					this.defualtToDate =res.response.toDate;
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 				},
@@ -263,7 +256,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 					reject(err);
 				},
 				complete: () => {
-					console.log("complete");
+					
 				},
 			});
 		});

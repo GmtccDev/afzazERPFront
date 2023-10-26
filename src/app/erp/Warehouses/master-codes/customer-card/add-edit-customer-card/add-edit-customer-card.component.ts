@@ -15,6 +15,7 @@ import { CustomerCardDto } from '../../../models/customer-card';
 import { CustomerCardServiceProxy } from '../../../Services/customer-card.service';
 import { CountryDto } from '../../../../master-codes/models/country';
 import { CountryServiceProxy } from '../../../../master-codes/services/country.servies';
+import { AccountClassificationsEnum } from 'src/app/shared/constants/enumrators/enums';
 
 
 @Component({
@@ -29,9 +30,9 @@ export class AddEditCustomerCardComponent implements OnInit {
   branchId: any = localStorage.getItem("branchId");
   id: any = 0;
   currnetUrl;
-  lang:any = localStorage.getItem("language")
-  routeAccountApi = 'Account/get-ddl?'
-  accountsList: any;
+  lang: any = localStorage.getItem("language")
+  routeClientAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Client
+  clientAccountsList: any;
   routeApiCountry = 'Country/get-ddl?'
   countriesList: CountryDto[] = [];
   customerCard: CustomerCardDto[] = [];
@@ -50,6 +51,7 @@ export class AddEditCustomerCardComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  showSearchCustomerAccountModal = false;
 
   constructor(
     private customerCardService: CustomerCardServiceProxy,
@@ -72,7 +74,7 @@ export class AddEditCustomerCardComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     Promise.all([
-      this.getAccounts(),
+      this.getClientAccounts(),
       this.getCountries()
 
 
@@ -201,7 +203,6 @@ export class AddEditCustomerCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -222,7 +223,6 @@ export class AddEditCustomerCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -230,13 +230,13 @@ export class AddEditCustomerCardComponent implements OnInit {
     });
 
   }
-  getAccounts() {
+  getClientAccounts() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+      let sub = this.publicService.getDdl(this.routeClientAccountApi).subscribe({
         next: (res) => {
 
           if (res.success) {
-            this.accountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+            this.clientAccountsList = res.response;
 
           }
 
@@ -247,7 +247,6 @@ export class AddEditCustomerCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -273,7 +272,6 @@ export class AddEditCustomerCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -314,11 +312,11 @@ export class AddEditCustomerCardComponent implements OnInit {
             }
             this.defineCustomerCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getCustomerCardCode();
+            this.getCustomerCardCode();
           }
         }
       },
@@ -344,7 +342,6 @@ export class AddEditCustomerCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -382,7 +379,6 @@ export class AddEditCustomerCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -405,11 +401,14 @@ export class AddEditCustomerCardComponent implements OnInit {
 
     }
   }
+  onSelectCustomerAccount(event) {
+    this.customerCardForm.controls.accountId.setValue(event.id);
+    this.showSearchCustomerAccountModal = false;
+  }
 
 
 }
 
-
-  //#endregion
+//#endregion
 
 

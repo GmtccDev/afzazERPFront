@@ -18,6 +18,7 @@ import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum,
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
+import { ModuleType } from '../../../models/general-configurations';
 @Component({
   selector: 'app-add-edit-issuing-cheque',
   templateUrl: './add-edit-issuing-cheque.component.html',
@@ -64,7 +65,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
   routeCurrencyApi = "Currency/get-ddl?"
   routeAccountApi = 'Account/GetLeafAccounts?'
   routeBankAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Bank
-
+  routeCustomerApi = 'CustomerCard/get-ddl?'
+  routeSupplierApi = 'SupplierCard/get-ddl?'
   journalList: any;
   costCenterList: any;
   currencyList: any;
@@ -87,6 +89,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
   dueDate!: DateModel;
   currencyFactor: number;
   currency: any;
+  accountList: any;
+  customerList: any;
+  supplierList: any;
+  filterBeneficiaryList: any;
   constructor(
     private issuingChequeService: IssuingChequeServiceProxy,
     private router: Router,
@@ -116,7 +122,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
       this.getCostCenter(),
       this.getCurrency(),
       this.getAccount(),
-      this.getBankAccount()
+      this.getBankAccount(),
+      this.getCustomers(),
+      this.getSuppliers()
 
     ]).then(a => {
       this.getRouteData();
@@ -213,7 +221,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Accounting, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           resolve();
           if (res.success && res.response.result.items.length > 0) {
@@ -247,7 +255,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
       isActive: true,
       dueDate: ['', Validators.compose([Validators.required])],
       notes: null,
-      accountId: ['', Validators.compose([Validators.required])],
+      bankAccountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       amountLocal: ['', Validators.compose([Validators.required])],
       currencyId: [null, Validators.compose([Validators.required])],
@@ -315,14 +323,14 @@ export class AddEditIssuingChequeComponent implements OnInit {
     issuingChequeDetail.push(this.fb.group({
       id: [null],
       issuingChequeId: [null],
-      accountId: [null, Validators.required],
+      accountId: [''],
       beneficiaryTypeId: [null],
       currencyId: [null],
       transactionFactor: [null],
       notes: [''],
       amount: [0.0],
       currencyLocal: [null],
-      beneficiaryAccountId: [null],
+      beneficiaryId: [null],
       iCDetailSerial: [this.counter]
     }, {
       validator: this.atLeastOne(Validators.required, ['amount', 'amount']),
@@ -391,7 +399,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
             isActive: res.response?.isActive,
             dueDate: this.dateService.getDateForCalender(res.response.dueDate),
             notes: res.response?.notes,
-            accountId: res.response?.accountId,
+            bankAccountId: res.response?.bankAccountId,
             amount: res.response?.amount,
             amountLocal: res.response?.amountLocal,
             status: res.response?.status,
@@ -409,21 +417,18 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
           this.issuingChequeDetailDTOList.clear();
           ListDetail.forEach(element => {
-
+            this.getBeneficiaryList(element.beneficiaryTypeId);
             this.issuingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
               issuingChequeId: element.issuingChequeId,
+              beneficiaryTypeId: element.beneficiaryTypeId,
+              beneficiaryId: element. beneficiaryId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
               notes: element.notes,
               amount: element.amount,
-              beneficiaryTypeId: element.beneficiaryTypeId,
-              beneficiaryAccountId: element.beneficiaryAccountId,
-              // amount: element.amount,
-              // costCenterId: element.costCenterId,
               currencyLocal: element.currencyLocal,
-              // amountLocal: element.amountLocal,
               iCDetailSerial: this.counter
             }, { validator: this.atLeastOne(Validators.required, ['amount', 'amount']) }
             ));
@@ -621,6 +626,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     // }
 
     //  var entity = new CreateissuingChequeCommand();
+        
     if (this.issuingChequeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -641,11 +647,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
     this.currencyFactor = 0;
     this.currencyId = null;
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -763,8 +767,52 @@ export class AddEditIssuingChequeComponent implements OnInit {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
-            this.accountDetailsList = res.response;
-            this.beneficiaryAccountList = res.response;
+            this.accountList = res.response;
+           // this.beneficiaryAccountList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getCustomers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeCustomerApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.customerList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getSuppliers() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeSupplierApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.supplierList = res.response;
 
           }
           resolve();
@@ -898,8 +946,38 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
   }
   onSelectBankAccount(event) {
-    this.issuingChequeForm.controls.accountId.setValue(event.id);
+    this.issuingChequeForm.controls.bankAccountId.setValue(event.id);
     this.showSearchBankAccountModal = false;
+  }
+  getBeneficiaryAccount(row) {
+        
+    if (row != null) {
+      if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Client || row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Supplier) {
+            
+        row.get('accountId').value = this.filterBeneficiaryList.filter(x => x.id == Number(row.get('beneficiaryId').value))[0].accountId;
+
+
+      }
+      else if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Account) {
+        row.get('accountId').value = Number(row.get('beneficiaryId').value);
+      }
+    }
+  }
+  getBeneficiaryList(beneficiaryTypeId) {
+        
+    this.filterBeneficiaryList = [];
+    if (beneficiaryTypeId != null) {
+      if (beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
+        this.filterBeneficiaryList = this.customerList;
+      }
+      else if (beneficiaryTypeId == BeneficiaryTypeEnum.Supplier) {
+        this.filterBeneficiaryList = this.supplierList;
+      }
+      else if (beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
+        this.filterBeneficiaryList = this.accountList;
+      }
+    }
+
   }
 }
 

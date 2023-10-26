@@ -18,6 +18,7 @@ import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum,
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
+import { ModuleType } from '../../../models/general-configurations';
 @Component({
   selector: 'app-add-edit-incoming-cheque',
   templateUrl: './add-edit-incoming-cheque.component.html',
@@ -63,10 +64,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   routeJournalApi = 'Journal/get-ddl?'
   routeCostCenterApi = 'CostCenter/get-ddl?'
   routeCurrencyApi = "Currency/get-ddl?"
-  routeAccountApi = 'Account/GetLeafAccounts?'
   routeCustomerApi = 'CustomerCard/get-ddl?'
   routeSupplierApi = 'SupplierCard/get-ddl?'
-
+  routeAccountApi = 'Account/GetLeafAccounts?'
   routeBankAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Bank
   journalList: any;
   costCenterList: any;
@@ -78,11 +78,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   accountDetailsList: any;
   customerList: any;
   supplierList: any;
-
   accountList: any;
   filterBeneficiaryList: any;
-
-
   index: any;
   totalamount: number;
   totalDebit: number;
@@ -222,7 +219,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.allGeneralConfiguration(5, undefined, undefined, undefined, undefined, undefined).subscribe({
+      let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Accounting, undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           resolve();
           if (res.success && res.response.result.items.length > 0) {
@@ -426,10 +423,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
           let ListDetail = res.response?.incomingChequeDetail;
 
           this.incomingChequeDetailDTOList.clear();
-          
+
 
           ListDetail.forEach(element => {
-            this.getBeneficiaryList(element.beneficiaryTypeId);   
+            this.getBeneficiaryList(element.beneficiaryTypeId);
             this.incomingChequeDetailDTOList.push(this.fb.group({
               id: element.id,
               incomingChequeId: element.incomingChequeId,
@@ -605,7 +602,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    debugger
+
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
 
@@ -631,7 +628,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     // }
 
     //  var entity = new CreateIncomingChequeCommand();
-    debugger
+
     if (this.incomingChequeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -706,16 +703,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.subsList.push(sub);
 
     });
-
-
-
-
-
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-
       if (entity.status > 1) {
         this.spinner.hide();
         this.alertsService.showError(
@@ -862,10 +853,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getBeneficiaryAccount(row) {
-    debugger
+
     if (row != null) {
       if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Client || row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Supplier) {
-        debugger
+
         row.get('accountId').value = this.filterBeneficiaryList.filter(x => x.id == Number(row.get('beneficiaryId').value))[0].accountId;
 
 
@@ -925,7 +916,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getBeneficiaryList(beneficiaryTypeId) {
-    debugger
+
     this.filterBeneficiaryList = [];
     if (beneficiaryTypeId != null) {
       if (beneficiaryTypeId == BeneficiaryTypeEnum.Client) {

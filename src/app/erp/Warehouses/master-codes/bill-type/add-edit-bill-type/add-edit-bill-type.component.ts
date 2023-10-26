@@ -283,7 +283,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -350,7 +349,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -374,7 +372,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -398,7 +395,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -422,7 +418,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -446,7 +441,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -470,7 +464,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -494,7 +487,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -518,7 +510,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -577,7 +568,7 @@ export class AddEditBillTypeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.billTypeForm.value;
-      debugger
+          
       let sub = this.billTypeService.createBillType(entity).subscribe({
         next: (result: any) => {
           this.defineBillTypeForm();
@@ -589,7 +580,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -617,7 +607,7 @@ export class AddEditBillTypeComponent implements OnInit {
     this.billTypeForm.value.id = this.id;
     var entityDb = this.billTypeForm.value;
     entityDb.id = this.id;
-    debugger
+        
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.billTypeService.updateBillType(entityDb).subscribe({
@@ -633,7 +623,6 @@ export class AddEditBillTypeComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -662,7 +651,7 @@ export class AddEditBillTypeComponent implements OnInit {
     }
   }
   calculatingTax() {
-    debugger
+        
     if (this.billTypeForm.value.calculatingTax == false) {
    //   this.billTypeForm.value.calculatingValueAddedTaxAfterLuxuryTax = false;
       this.billTypeForm.value.calculatingTaxOnPriceAfterDeductionAndAddition = false;

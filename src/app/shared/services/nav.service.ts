@@ -28,15 +28,18 @@ export interface Menu {
 })
 
 export class NavService implements OnInit, OnDestroy {
-	voucherType: any[] = [];
 	subsList: Subscription[] = [];
-	voucherTypes: any = [];
 	depositVouchers: any = [];
 	WithdrawalVouchers: any = [];
 	voucherTypesNew: any = [];
 	depositVouchersNew: any = [];
 	WithdrawalVouchersNew: any = [];
 	billTypes: any = [];
+	salesBillTypesNew: any = [];
+	purchasesBillTypesNew: any = [];
+	salesReturnBillTypesNew: any = [];
+	purchasesReturnBillTypesNew: any = [];
+	firstPeriodGoodsBillTypesNew:any=[];
 
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
@@ -61,19 +64,9 @@ export class NavService implements OnInit, OnDestroy {
 	// Full screen
 	public fullScreen: boolean = false;
 
-	constructor(private router: Router, private translate: TranslateService,
-		private sharedService: SharedService,
-		private voucherTypeService: VoucherTypeServiceProxy) {
+	constructor(private router: Router, private translate: TranslateService) {
 
-		//console.log(this.subdomain)
-		this.voucherTypes.push(
-			{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
-			{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
-			{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
-			{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
-			{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
-
-		)
+	
 		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
@@ -116,54 +109,7 @@ export class NavService implements OnInit, OnDestroy {
 		});
 	}
 
-	getVoucherTypes() {
-		return new Promise<void>((resolve, reject) => {
-			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-				next: (res) => {
-					console.log("allVoucherTypees====", res);
-					if (res.success) {
-						debugger
-						this.voucherType = res.response.items
-						this.depositVouchers = this.voucherType.filter(x => x.voucherKindId == 1);
-						this.WithdrawalVouchers = this.voucherType.filter(x => x.voucherKindId == 2);
-
-						if (this.depositVouchers.length > 0) {
-							this.voucherTypes += this.translate.instant("voucher-type.deposit-vouchers");
-							//	this.voucherTypes.push(
-							//		{ path: '', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true })
-							this.depositVouchers.forEach(element => {
-								this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
-								//this.sharedService.changeToolbarPath({componentList:element.voucherNameEn}as ToolbarPath)
-
-							});
-						}
-						if (this.WithdrawalVouchers.length > 0) {
-							this.voucherTypes += this.translate.instant("voucher-type.Withdrawal-vouchers");
-							this.WithdrawalVouchers.forEach(element => {
-								this.voucherTypes += "{path: '/accounting-operations/vouchers', title: " + element.voucherNameEn + ", type: 'link', active: true },"
-								//this.sharedService.changeToolbarPath({componentList:element.voucherNameEn}as ToolbarPath)
-
-							});
-						}
-
-
-					}
-					resolve();
-				},
-				error: (err: any) => {
-					reject(err);
-				},
-				complete: () => {
-					console.log('complete');
-				},
-			});
-
-			this.subsList.push(sub);
-
-		});
-
-	}
-
+	
 	private setScreenWidth(width: number): void {
 		this.screenWidth.next(width);
 	}
@@ -226,7 +172,7 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/accounting-master-codes/fiscalPeriod', title: this.translate.instant("component-names.fiscalPeriod"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountGroup', title: this.translate.instant("component-names.accountGroup"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/accountClassification', title: this.translate.instant("component-names.accountClassification"), type: 'link', active: true },
-				{ path: '/accounting-master-codes/account', title: this.translate.instant("component-names.account"), type: 'link', active: true },
+				{ path: '/accounting-master-codes/account', title: this.translate.instant("component-names.chart-account"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/costCenter', title: this.translate.instant("component-names.costCenter"), type: 'link', active: true },
 				{ path: '/accounting-master-codes/voucherType', title: this.translate.instant("component-names.voucher-types"), type: 'link', active: true },
 				//	{ path: '/accounting-master-codes/bankAccount', title: this.translate.instant("component-names.bankAccount"), type: 'link', active: true },
@@ -234,12 +180,28 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: this.voucherTypes 
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false,
+			children: [
+				{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
+				{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
+				{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
+				{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
+				{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
+				{
+					title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
+					children: this.WithdrawalVouchersNew
+				},
+				{
+					title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
+					children: this.voucherTypesNew
+				},
+			]
+
 
 
 
 		},
-
+		
 		{
 			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'clipboard', active: false, children: [
 				{ path: '/accounting-reports/journalEntriesReport', title: this.translate.instant("component-names.journal-entries-report"), type: 'link', active: true },
@@ -284,10 +246,10 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: [
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: 
 				this.billTypes,
 
-			]
+			
 
 
 

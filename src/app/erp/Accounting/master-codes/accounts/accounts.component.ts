@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DeleteListAccountCommand, AccountDto, TreeNodeInterface } from '../../models/account';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,7 @@ import { SettingMenuShowOptions } from '../../../../shared/components/models/set
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { AccountServiceProxy } from '../../services/account.services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
@@ -37,6 +38,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   listIds: any[] = [];
   listOfMapData: any[];
+  expandAll: boolean=true;
   //#endregion
 
   //#region Constructor
@@ -111,7 +113,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.accountService.getAllTree(this.filter).subscribe({
         next: (res) => {
 
-          console.log(res);
+
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.account");
           if (res.success) {
@@ -130,7 +132,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+
         },
       });
 
@@ -155,7 +157,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
+      ;
       if (rs == 'Confirm') {
         this.spinner.show();
 
@@ -325,6 +327,28 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return array;
   }
+  convertTreeToListExpanded(root: TreeNodeInterface): TreeNodeInterface[] {
+
+    const stack: TreeNodeInterface[] = [];
+    const array: TreeNodeInterface[] = [];
+    const hashMap = {};
+    stack.push({ ...root, levelId: 0, expanded: true });
+    while (stack.length !== 0) {
+      const node = stack.pop()!;
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({ ...node.children[i], levelId: node.levelId! + 1, expanded: true, parent: node });
+
+        }
+        if (node.children.length == 0) {
+          node.children = null;
+        }
+      }
+    }
+    return array;
+  }
   visitNode(node: TreeNodeInterface, hashMap: { [key: string]: boolean }, array: TreeNodeInterface[]): void {
     if (!hashMap[node.treeId]) {
       hashMap[node.treeId] = true;
@@ -332,7 +356,21 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  expandAllRows() {
+    if (this.expandAll) {
+      this.listOfMapData.forEach(item => {
+        this.mapOfExpandedData[item.treeId] = this.convertTreeToListExpanded(item);
+      });
+      this.expandAll=false;
+    }
+    else {
+      this.listOfMapData.forEach(item => {
+        this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
+      });
+      this.expandAll=true;
+    }
 
+  }
 
 
 

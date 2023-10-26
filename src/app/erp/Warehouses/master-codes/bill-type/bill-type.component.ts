@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
@@ -43,7 +42,6 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     private billTypeService: BillTypeServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
@@ -106,7 +104,6 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
           this.toolbarPathData.componentList = this.translate.instant("component-names.bill-types");
           if (res.success) {
             this.billType = res.response.items
@@ -119,7 +116,6 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -133,7 +129,6 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region CRUD Operations
   delete(id: any) {
     this.billTypeService.deleteBillType(id).subscribe((resonse) => {
-     // this.getBillTypes();
       this.router.navigate([this.listUrl])
       .then(() => {
         window.location.reload();
@@ -158,7 +153,6 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
 
@@ -205,8 +199,8 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
-        { field: 'billNameEn', type: 'like', value: searchTxt },
-        { field: 'billNameAr', type: 'like', value: searchTxt },
+        { field: 'nameEn', type: 'like', value: searchTxt },
+        { field: 'nameAr', type: 'like', value: searchTxt },
         { field: 'id', type: 'like', value: searchTxt },
         ,
       ],
@@ -275,7 +269,6 @@ export class BillTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 

@@ -143,7 +143,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -221,7 +221,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -259,7 +259,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -271,7 +271,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
       let sub = this.generalConfigurationService.getGeneralConfiguration(5).subscribe({
         next: (res: any) => {
           resolve();
-          console.log('result data getbyid', res);
+          //console.log('result data getbyid', res);
 
           if (res.response.value > 0) {
             this.closeAccountId = res.response.value;
@@ -283,7 +283,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

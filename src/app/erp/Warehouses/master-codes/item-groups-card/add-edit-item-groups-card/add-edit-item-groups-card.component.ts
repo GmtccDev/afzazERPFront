@@ -132,7 +132,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -234,7 +234,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
 
@@ -253,7 +253,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
         next: (res: any) => {
           resolve();
           
-          console.log(res)
+          //console.log(res)
           this.itemGroupsCardForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -273,7 +273,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -304,7 +304,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -391,7 +391,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           this.spinner.hide();
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -435,7 +435,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);

@@ -53,7 +53,7 @@ export class PublicSearchModalComponent implements OnInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					//console.log('complete');
 				},
 			});
 

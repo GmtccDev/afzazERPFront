@@ -23,7 +23,6 @@ import {  formatDate, navigateUrl } from '../../../../../shared/helper/helper-ur
 })
 export class AddEditTaxComponent implements OnInit, AfterViewInit {
   //#region Main Declarations
-
   taxForm: FormGroup = new FormGroup({});
   companyId: any = localStorage.getItem("companyId");
   branchId: any = localStorage.getItem("branchId");
@@ -40,7 +39,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   errorMessage = '';
   errorClass = '';
   lang = localStorage.getItem("language")
-  routeAccountApi = 'Account/get-ddl?'
+  routeAccountApi = 'Account/GetLeafAccounts?'
   accountsList: any;
   submitMode:boolean=false;
   addUrl: string = '/warehouses-master-codes/tax/add-tax';
@@ -193,7 +192,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -217,7 +215,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -229,9 +226,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-
           if (res.success) {
-            this.accountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+            this.accountsList = res.response;
 
           }
 
@@ -242,7 +238,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
 
@@ -259,7 +254,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    
     this.taxDetail.push({
       id: 0,
       taxId: this.selectedTaxDetail?.taxId ?? 0,
@@ -275,7 +269,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
   }
   deleteItem(index) {
-    
     if (this.taxDetail.length) {
       if (this.taxDetail.length == 1) {
         this.taxDetail = [];
@@ -300,7 +293,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   }
 
   setInputData() {
-
     this.taxMaster = {
       id: this.taxForm.controls["id"].value,
       companyId: this.taxForm.controls["companyId"].value,
@@ -319,21 +311,17 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
-      
       let sub = this.taxService.createTax(this.taxMaster).subscribe({
         next: (result: any) => {
           this.defineTaxForm();
           this.clearSelectedItemData();
           this.taxDetail = [];
-          // this.submited = false;
-
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -355,10 +343,6 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       }).catch(e => {
         this.spinner.hide();
       });
-
-
-
-
     }
     else {
       this.errorMessage = this.translate.instant("validation-messages.invalid-data");
@@ -375,16 +359,12 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
           this.defineTaxForm();
           this.clearSelectedItemData();
           this.taxDetail = [];
-
-          // this.submited = false;
-
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);

@@ -111,7 +111,7 @@ export class StoreCardComponent implements OnInit, OnDestroy, AfterViewInit {
 			let sub = this.storeCardService.getAllTree(this.filter).subscribe({
 				next: (res) => {
 
-					console.log(res);
+					//console.log(res);
 
 					this.toolbarPathData.componentList = this.translate.instant("component-names.storeCard");
 					if (res.success) {
@@ -130,7 +130,7 @@ export class StoreCardComponent implements OnInit, OnDestroy, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					console.log('complete');
+					//console.log('complete');
 				},
 			});
 
@@ -336,7 +336,44 @@ export class StoreCardComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 
-
+	expandAll: boolean=true;
+	convertTreeToListExpanded(root: TreeNodeInterface): TreeNodeInterface[] {
+  
+	  const stack: TreeNodeInterface[] = [];
+	  const array: TreeNodeInterface[] = [];
+	  const hashMap = {};
+	  stack.push({ ...root, levelId: 0, expanded: true });
+	  while (stack.length !== 0) {
+		const node = stack.pop()!;
+		this.visitNode(node, hashMap, array);
+		if (node.children) {
+  
+		  for (let i = node.children.length - 1; i >= 0; i--) {
+			stack.push({ ...node.children[i], levelId: node.levelId! + 1, expanded: true, parent: node });
+  
+		  }
+		  if (node.children.length == 0) {
+			node.children = null;
+		  }
+		}
+	  }
+	  return array;
+	}
+	expandAllRows() {
+	  if (this.expandAll) {
+		this.listOfMapData.forEach(item => {
+		  this.mapOfExpandedData[item.treeId] = this.convertTreeToListExpanded(item);
+		});
+		this.expandAll=false;
+	  }
+	  else {
+		this.listOfMapData.forEach(item => {
+		  this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
+		});
+		this.expandAll=true;
+	  }
+  
+	}
 
 
 

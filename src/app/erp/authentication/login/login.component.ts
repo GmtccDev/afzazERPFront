@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
 
       let sub = this.authService.getCustomer(this.parts[2]).subscribe({
         next: (res) => {
-          debugger
+          
           if (res.success) {
 
             this.dataBaseName = res.response.databaseName;
@@ -135,7 +135,7 @@ export class LoginComponent implements OnInit {
 
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -169,7 +169,7 @@ export class LoginComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -187,10 +187,12 @@ export class LoginComponent implements OnInit {
 
     // }
   //  this.loginForm.value.dataBaseName = this.dataBaseName
-  debugger
+ 
+  
+  
     let sub = this.authService.UserLoginLogin(this.loginForm.value).subscribe(
       next => {
-        debugger
+        
 
         console.log(next);
 

@@ -219,11 +219,13 @@
 												<li ngbNavItem [destroyOnHide]="false">
 													<a ngbNavLink> {{'general.details' |translate}}</a>
 													<ng-template ngbNavContent>
-														<div class="overflow-auto0 overflow-auto-x">
+														<div class="overflow-auto0">
 															<table class="table table-responsive text-center"
 																style="overflow-y: scroll !important;">
 																<thead>
 																	<th>#</th>
+																	<th>{{'general.beneficiary-type'|translate}}</th>
+																	<th>{{'general.beneficiary'|translate}}</th>
 																	<th *ngIf="voucherkindId==1">
 																		{{'general.debit'|translate}}</th>
 																	<th *ngIf="voucherkindId==2">
@@ -241,8 +243,7 @@
 																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
 																		{{'general.credit-after-conversion'|translate}}
 																	</th>
-																	<th>{{'general.beneficiary'|translate}}</th>
-																	<th>{{'general.beneficiary-account'|translate}}</th>
+
 																	<!-- <th>{{'general.description'|translate}}</th> -->
 																	<th>{{'general.cost-center'|translate}}</th>
 
@@ -252,6 +253,21 @@
 																</thead>
 																<tr *ngFor="let item of voucherDetail; let i= index;">
 																	<td> {{i+1}}</td>
+																	<td>
+																		<ng-select class="custom p-0"
+																			[(ngModel)]="voucherDetail[i].beneficiaryTypeId"
+																			[ngModelOptions]="{standalone: true}"
+																			[items]="beneficiaryTypesEnum"
+																			bindLabel="name" bindValue="id"
+																			(change)="getBeneficaryByTypeId(voucherDetail[i].beneficiaryTypeId)"></ng-select>
+																	</td>
+																	<td>
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="voucherDetail[i].beneficiaryNameAr"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openBeneficiarySearchDialog(i)">
+																	</td>
 																	<td *ngIf="voucherkindId==1">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].debit"
@@ -273,8 +289,6 @@
 																			[(ngModel)]="voucherDetail[i].currencyNameAr"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openCurrencySearchDialog(i)">
-
-
 																	</td>
 																	<td *ngIf="enableMultiCurrencies">
 																		<input type="number"
@@ -299,24 +313,7 @@
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control">
 																	</td>
-																	<td>
-																		<ng-select class="custom p-0"
-																			[(ngModel)]="voucherDetail[i].beneficiaryTypeId"
-																			[ngModelOptions]="{standalone: true}"
-																			[items]="beneficiaryTypesEnum"
-																			bindLabel="name" bindValue="id"
-																			(change)="getBeneficaryAccountsByTypeId(voucherDetail[i].beneficiaryTypeId)"></ng-select>
-																	</td>
-																	<td>
 
-																		<input type="text" class="form-control"
-																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="voucherDetail[i].beneficiaryAccountNameAr"
-																			[ngModelOptions]="{standalone: true}"
-																			(keydown.Enter)="openBeneficiaryAccountSearchDialog(i)">
-
-
-																	</td>
 																	<td>
 																		<input type="text" class="form-control"
 																			placeholder="{{'general.search'|translate}}"
@@ -336,14 +333,28 @@
 																			value="{{'buttons.delete'|translate}}"
 																			type="button">
 																			<i class="fa fa-trash"></i>
-
-																			<!-- {{'buttons.delete' | translate}} -->
 																		</button>
 																	</td>
 																</tr>
 
 																<tr>
 																	<td>{{voucherDetail.length + 1}}</td>
+																	<td>
+																		<ng-select class="custom"
+																			[(ngModel)]="selectedVoucherDetail.beneficiaryTypeId"
+																			[ngModelOptions]="{standalone: true}"
+																			[items]="beneficiaryTypesEnum"
+																			bindLabel="name" bindValue="id"
+																			style="width:100%"
+																			(change)="getBeneficaryByTypeId(selectedVoucherDetail.beneficiaryTypeId)"></ng-select>
+																	</td>
+																	<td>
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="selectedVoucherDetail.beneficiaryNameAr"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openBeneficiarySearchDialog(-1)">
+																	</td>
 																	<td *ngIf="voucherkindId==1">
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.debit"
@@ -391,25 +402,7 @@
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control">
 																	</td>
-																	<td>
-																		<ng-select class="custom"
-																			[(ngModel)]="selectedVoucherDetail.beneficiaryTypeId"
-																			[ngModelOptions]="{standalone: true}"
-																			[items]="beneficiaryTypesEnum"
-																			bindLabel="name" bindValue="id"
-																			style="width:100%"
-																			(change)="getBeneficaryAccountsByTypeId(selectedVoucherDetail.beneficiaryTypeId)"></ng-select>
-																	</td>
-																	<td>
 
-																		<input type="text" class="form-control"
-																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="selectedVoucherDetail.beneficiaryAccountNameAr"
-																			[ngModelOptions]="{standalone: true}"
-																			(keydown.Enter)="openBeneficiaryAccountSearchDialog(-1)">
-
-
-																	</td>
 																	<td>
 																		<input type="text" class="form-control "
 																			placeholder="{{'general.search'|translate}}"
@@ -452,7 +445,6 @@
 	</div>
 </section>
 
-<!-- <app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeAccountApi" (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)"> -->
 
 <app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeCashAccountApi"
 	(emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">

@@ -29,7 +29,7 @@ export class ItemCardServiceProxy {
     }
 
     createItemCard(ItemCard: any): Observable<any> {
-
+        
         return this.http.post<any>(environment.apiUrl + "/api/ItemCard/add?", ItemCard);
     }
     
@@ -38,6 +38,7 @@ export class ItemCardServiceProxy {
         return this.http.post<any>(environment.apiUrl + "/api/ItemCard/deleteList?", ItemCard);
     }
     updateItemCard(ItemCard: any): Observable<any> {
+        
         return this.http.post<any>(environment.apiUrl + "/api/ItemCard/edit?", ItemCard);
     }
     getDdl(): Observable<any> {

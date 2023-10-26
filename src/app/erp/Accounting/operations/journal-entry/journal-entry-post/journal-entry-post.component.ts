@@ -121,7 +121,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+          
         },
       });
 

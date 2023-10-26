@@ -11,6 +11,8 @@ import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-trail-balance-report',
@@ -23,7 +25,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 	userId: any = localStorage.getItem("userId");
 	// = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
 
-	companyId: string = localStorage.getItem("companyId");
+	companyId: any = Number(localStorage.getItem("companyId"));
 	lang = localStorage.getItem("language");
 
 	subsList: Subscription[] = [];
@@ -44,7 +46,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 	};
 
 	//#region Constructor
-	constructor(private modalService: NgbModal, private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) {}
+	constructor(private modalService: NgbModal,	private spinner:NgxSpinnerService, private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) {}
 
 	//#endregion
 
@@ -53,27 +55,23 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		this.sharedServices.changeButton({ action: "Report" } as ToolbarData);
 		this.listenToClickedButton();
 		this.sharedServices.changeToolbarPath(this.toolbarPathData);
+		Promise.all([
+			this.getGeneralConfigurationsOfAccountingPeriod()
+	  
+		  ]).then(a => {
+			this.spinner.hide();
+		  }).catch(err => {
+	  
+			this.spinner.hide();
+		  });
 	}
 
 	//#endregion
 	//#region ngAfterViewInit
 	ngAfterViewInit(): void {
-		this.getGeneralConfigurationsOfAccountingPeriod();
+	//	this.getGeneralConfigurationsOfAccountingPeriod();
 	}
-	getFromDate() {
-		let monthFrom;
-		this.fromDate = this.dateConverterService.getCurrentDate();
-		monthFrom = Number(this.fromDate.month + 1);
-		this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
-		return this.fromDate;
-	}
-	getDateTo() {
-		let monthTo;
-		this.toDate = this.dateConverterService.getCurrentDate();
-		monthTo = Number(this.toDate.month + 1);
-		this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
-		return this.toDate;
-	}
+	
 	//#endregion
 
 	//#region ngOnDestroy
@@ -94,24 +92,24 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 
 		let monthFrom;
 		let monthTo;
-     
+     ;
 	 if (this.fromDate == undefined || this.fromDate == null) {
 
 		monthFrom = Number(this.fromDate.month + 1)
 		this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
 	  }
-	  else if(!this.isContainsDate(this.fromDate)) {
+	  else if(this.fromDate.month!=undefined) {
 			monthFrom = Number(this.fromDate.month + 1);
 			this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
 		}
 
 	  if (this.toDate == undefined || this.toDate == null) {
-		//  this.toDate = this.dateConverterService.getCurrentDate();
+		
 		monthTo = Number(this.toDate.month + 1)
 		this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
 
 	  }
-	  else if(!this.isContainsDate(this.toDate)) {
+	  else if(this.toDate.month!=undefined) {
 		monthTo = Number(this.toDate.month + 1);
 		this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
 	}
@@ -160,7 +158,7 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 
 	};
 
-	OnFilter(e: { fromDate; toDate;entriesStatusId, branchId,level}) {
+	OnFilter(e: { fromDate; toDate;entriesStatusId,branchId,level}) {
 		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
@@ -189,10 +187,10 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		;
 		const promise = new Promise<void>((resolve, reject) => {
 			;
-			this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+			this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
 				next: (res: any) => {
 					;
-					console.log("result data getbyid", res);
+					
 					if (res.response.value > 0) {
 						;
 						this.facialPeriodId = res.response.value;
@@ -213,9 +211,9 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					;
-					console.log("result data getbyid", res);
-					;
+					
+			
+					
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 				},

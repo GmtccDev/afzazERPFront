@@ -44,13 +44,13 @@ export enum CreateFinancialEntryArEnum {
 export enum BeneficiaryTypeEnum {
   Client = 1,
   Supplier = 2,
-  Employee = 3,
+  // Employee = 3,
   Account = 4
 }
 export enum BeneficiaryTypeArEnum {
   عميل = 1,
   مورد = 2,
-  مؤظف = 3,
+  // مؤظف = 3,
   حساب = 4
 }
 export enum EntriesStatusEnum {
@@ -237,6 +237,25 @@ export enum calculationMethodsEnum{
   'Fix Amount'=1,
   'As per age of collection'= 2,
  
+ }
+ export enum GeneralConfigurationEnum{
+MainCurrency=1,
+MultiCurrency=2,
+JournalEntriesSerial=3,
+FinancialEntryCycle=4,
+ClosingAccount=5,
+AccountReceivables=6,
+AccountingPeriod=7,
+AccountExchange=8,
+FixedAssetsJournal=1000,
+DeprecationJournalEntries=1001, 
+AssetsGroupSerial=1002,
+AssetsGroupSerialFormat=1003,
+AssetsSerial=1004, 
+AssetsSerialformat=1005, 
+DefaultJournal=1006,
+ChequesJournal=1007,
+IdleTime=10001
  }
 
 

@@ -286,6 +286,7 @@
         "close": "Close",
         "add": "Add"
     },
+  
     "messages": {
         "invalid-data": "Please Enter Valid Data!",
         "success": "Data has been Deleted Successfully",
@@ -482,7 +483,8 @@
         "bills":"Bills",
         "default-journal":"Default Journal",
         "general-configuration":"General Configuration",
-        "cheques-journal":"Cheques Journal"
+        "cheques-journal":"Cheques Journal",
+        "chart-account":"Chart of Accounts"
 
 
     },
@@ -567,7 +569,21 @@
         "voucher": "Voucher"
     },
     "journalEntry": {
-        "openBalance": "Openning Journal"
+        "openBalance": "Openning Journal",
+        "accountNumber": "Account Number",
+        "credit": "Credit",
+        "debit": "Debit",
+        "currency": "Currency",
+        "balance": "Balance",
+        "localCredit": "Local Credit",
+        "localDebit": "Local Debit",
+        "costCenter": "Cost Center",
+        "description": "Description",
+        "actions": "Actions",
+        "totalDebit": "Total Debit",
+        "totalCredit": "Total Credit",
+        "totalDebitLocal": "Total Debit Local",
+        "totalCreditLocal": "Total Credit Local"
     },
     "account-classification": {
         "add-account-classification": "Add Account Classification",
@@ -687,11 +703,11 @@
         "print-expiry-dates": "Print Expiry Dates",
         "print-items-specifiers": "Print Items Specifiers",
         "print-items-images": "Print Items Images",
-        "sales-bills": "[Sales Bills]",
-        "purchases-bills": "[Purchases Bills]",
-        "sales-return-bills": "[Sales Return Bills]",
-        "purchases-return-bills": "[Purchases Return Bills]",
-        "first-period-goods-bills": "[First Period Goods Bills]",
+        "sales-bills": " Sales Bills ",
+        "purchases-bills": " Purchases Bills ",
+        "sales-return-bills": " Sales Return Bills ",
+        "purchases-return-bills": " Purchases Return Bills ",
+        "first-period-goods-bills": " First Period Goods Bills ",
         "calculating-tax-manual": "Calculating Tax Manual"
 
 
@@ -714,5 +730,8 @@
         "additions-and-discounts":"Additions And Discounts on Bill"
 
 
-    }
+    },
+    "twoRows": "There must be at least two rows",
+    "debitCreditValues": "There must be values in both the debit and credit",
+    "totalValues": "The total debit values in the debit column must be equal to the total credit values in the credit column"
 }

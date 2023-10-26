@@ -180,7 +180,6 @@ export class AddEditPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -201,7 +200,6 @@ export class AddEditPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -274,7 +272,6 @@ export class AddEditPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
     });
@@ -311,7 +308,6 @@ export class AddEditPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
         },
       });
       this.subsList.push(sub);

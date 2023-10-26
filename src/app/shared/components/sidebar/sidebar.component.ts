@@ -39,7 +39,7 @@ export class SidebarComponent {
    
       this.navServices.itemsSettings.subscribe(menuItems => {
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+   
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
@@ -72,7 +72,7 @@ export class SidebarComponent {
       this.navServices.itemsAccount.subscribe(menuItems => {
         
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+        
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             ;
@@ -100,7 +100,7 @@ export class SidebarComponent {
     else if (menu == '6') {
       this.navServices.itemsWarehouses.subscribe(menuItems => {
         this.menuItems = menuItems;
-        console.log("----menuItems----", menuItems);
+      
         this.router.events.subscribe((event) => {
           
           if (event instanceof NavigationEnd) {
@@ -150,7 +150,6 @@ export class SidebarComponent {
   // Active Nave state
   setNavActive(item) {
    
-   this.getVoucherTypes();
    this.getBillTypes();
     
     this.menuItems.filter(menuItem => {
@@ -214,48 +213,16 @@ export class SidebarComponent {
     }
   }
 
-  getVoucherTypes() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res.success) {
-            
-            const voucherTypes = res.response.items.map(element => ({
-              path: '/accounting-operations/vouchers',
-              title: element.voucherNameAr,
-              type: 'link',
-              active: true
-            }));
-            this.navServices.voucherTypes=voucherTypes ;
-
-
-          }
-          resolve();
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
-
-    	this.subsList.push(sub);
-
-    });
-
-  }
   getBillTypes() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          console.log(res);
+          
           if (res.success) {
             
             const billTypes = res.response.items.map(element => ({
               path: '/warehouses-operations/bill',
-              title: element.billNameAr,
+              title: element.nameAr,
               type: 'link',
               active: true
             }));
@@ -269,7 +236,7 @@ export class SidebarComponent {
           reject(err);
         },
         complete: () => {
-          console.log('complete');
+ 
         },
       });
 

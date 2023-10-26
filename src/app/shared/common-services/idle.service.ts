@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
 import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
+import { ModuleType } from 'src/app/erp/Accounting/models/general-configurations';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class IdleService implements OnDestroy, OnInit {
     return new Promise<void>((resolve, reject) => {
       if (this.name != "") {
 
-        let sub = this.generalConfigurationService.allGeneralConfiguration(0, 1, 1000, undefined, undefined, undefined).subscribe({
+        let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Settings, 1, 1000, undefined, undefined, undefined).subscribe({
           next: (res) => {
 
             resolve();
@@ -51,7 +52,7 @@ export class IdleService implements OnDestroy, OnInit {
             reject(err);
           },
           complete: () => {
-            console.log('complete');
+            //console.log('complete');
           },
         });
 
