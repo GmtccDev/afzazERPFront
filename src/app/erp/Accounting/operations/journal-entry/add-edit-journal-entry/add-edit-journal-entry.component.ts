@@ -117,11 +117,11 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     this.spinner.show();
     Promise.all([
-
+      this.getJournals(),
       this.getCostCenter(),
       this.getCurrency(),
       this.getFiscalPeriod(),
-      this.getJournals(),
+
       this.getAccount()
     ]).then(a => {
       this.getRouteData();
@@ -342,7 +342,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   get journalEntriesDetailList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
   initGroup() {
-
+    debugger
     this.counter += 1;
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     journalEntriesDetail.push(this.fb.group({
@@ -368,6 +368,9 @@ export class AddEditJournalEntryComponent implements OnInit {
 
     ));
 
+    const currentIndex = journalEntriesDetail.length - 1;
+    this.index = currentIndex;
+    this.onOpenNewRow();
   }
   onDeleteRow(rowIndex) {
     const modalRef = this.modalService.open(MessageModalComponent);
@@ -410,10 +413,17 @@ export class AddEditJournalEntryComponent implements OnInit {
   //#region CRUD operations
   postType: any;
   getjournalEntryById(id: any) {
+
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
+          this.lang = localStorage.getItem("language")
+          this.onChangeJournal(res.response?.journalId);
+          this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
+          this.onChangeCode(null);
+          console.log(this.journalList)
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
@@ -427,12 +437,12 @@ export class AddEditJournalEntryComponent implements OnInit {
             journalEntriesDetail: this.fb.array([])
 
           });
-          
+
           this.listDetail = res.response?.journalEntriesDetail;
-          
+
           this.journalEntriesDetailDTOList.clear();
           this.listDetail.forEach(element => {
-            
+
             var costCenter = this.costCenterList?.find(c => c.id == element.costCenterId)
             if (costCenter != null && costCenter != undefined) {
               element.costCenterName = this.lang = "ar" ? costCenter.nameAr : costCenter.nameEn;
@@ -465,9 +475,7 @@ export class AddEditJournalEntryComponent implements OnInit {
             }, { validator: this.atLeastOne(Validators.required, ['jEDetailCredit', 'JEDetailDebit']) }
             ));
 
-            this.onChangeJournal(res.response?.journalId);
-            this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
-            this.onChangeCode(null);
+
             this.counter = element.jeDetailSerial;
           });
           this.totalCredit = 0;
@@ -719,7 +727,7 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   onChangeCurrency(event, index) {
     this.isSelectCurrency = true;
-    let selectCurrencyId = event.id;
+    let selectCurrencyId = event;
     let currencyModel = this.currencyList.find(x => x.id == selectCurrencyId);
     if (this.defaultCurrencyId == selectCurrencyId) {
       currencyModel.transactionFactor = 1;
@@ -734,11 +742,11 @@ export class AddEditJournalEntryComponent implements OnInit {
         next: (res: any) => {
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.defaultCurrencyId)[0];
-          let currencyFactor=1;
+          let currencyFactor = 1;
           if (currencyModel !== null && currencyModel !== undefined) {
             currencyFactor = currencyModel?.transactionFactor;
           }
-         
+
           const faControl =
             (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(index);
           faControl['controls'].transactionFactor.setValue(currencyFactor);
@@ -783,6 +791,28 @@ export class AddEditJournalEntryComponent implements OnInit {
 
   }
   confirmUpdate() {
+    if (this.counter < 2) {
+      this.alertsService.showError(
+        this.translate.instant('twoRows'),
+        ""
+
+      )
+      return;
+    }
+    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+      this.alertsService.showError(
+        this.translate.instant('debitCreditValues'),
+        ""
+      )
+      return;
+    }
+    if ((this.totalCredit !== this.totalDebit)) {
+      this.alertsService.showError(
+        this.translate.instant('totalValues'),
+        ""
+      )
+      return;
+    }
     return new Promise<void>((resolve, reject) => {
       var entity = this.journalEntryForm.value;
       entity.branchId = this.branchId;
@@ -807,29 +837,8 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   onUpdate() {
 
+    debugger
 
-    if (this.counter < 2) {
-      this.alertsService.showError(
-        this.translate.instant('twoRows'),
-        ""
-
-      )
-      return;
-    }
-    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
-      this.alertsService.showError(
-        this.translate.instant('debitCreditValues'),
-        ""
-      )
-      return;
-    }
-    if ((this.totalCredit !== this.totalDebit)) {
-      this.alertsService.showError(
-        this.translate.instant('totalValues'),
-        ""
-      )
-      return;
-    }
     if (this.journalEntryForm.valid) {
       this.spinner.show();
       this.confirmUpdate().then(a => {
@@ -852,7 +861,14 @@ export class AddEditJournalEntryComponent implements OnInit {
 
           if (res.success) {
             this.journalList = res.response;
-
+            this.journalList.forEach(element => {
+              if (this.lang == "ar") {
+                element.nameAr = element.nameAr;
+              }
+              else{
+                element.nameAr = element.nameEn;
+              }
+            })
           }
 
 
@@ -956,6 +972,13 @@ export class AddEditJournalEntryComponent implements OnInit {
           if (res.success) {
 
             this.fiscalPeriodList = res.response;
+            this.fiscalPeriodList.forEach(element => {
+              if (this.lang == "ar") {
+                element.nameAr = element.nameAr;
+              }
+              else{
+                element.nameAr = element.nameEn;
+              }})
             this.checkPeriod = res.response.fiscalPeriodStatus;
           }
 
@@ -1071,7 +1094,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.showSearchCashAccountModal = false;
   }
   onSelectCostCenter(event) {
-    
+
     const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
     faControl['controls'].costCenterId.setValue(event.id);
     faControl['controls'].costCenterName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
@@ -1081,7 +1104,16 @@ export class AddEditJournalEntryComponent implements OnInit {
     const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
     faControl['controls'].currencyId.setValue(event.id);
     faControl['controls'].currencyName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
-    this.onChangeCurrency(event, this.index)
+    this.onChangeCurrency(event.id, this.index)
+    this.showSearchCurrencyModal = false;
+  }
+  onOpenNewRow() {
+    debugger
+    const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+    var event = this.currencyList.find(c => c.id == this.defaultCurrencyId);
+    faControl['controls'].currencyId.setValue(event.id);
+    faControl['controls'].currencyName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
+    this.onChangeCurrency(event.id, this.index)
     this.showSearchCurrencyModal = false;
   }
   openModalSearchCostCenter(i) {

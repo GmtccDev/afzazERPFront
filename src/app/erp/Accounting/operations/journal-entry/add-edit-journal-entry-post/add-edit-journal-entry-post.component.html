@@ -169,16 +169,16 @@
 											<thead class="thead-light">
 												<tr>
 													<!-- <th># </th> -->
-													<th style="width: 15%;">رقم الحساب</th>
-													<th style="width: 10%;">مدين</th>
-													<th style="width: 10%;">دائن</th>
-													<th style="width: 15%;">العملة</th>
-													<th style="width: 10%;">التعادل</th>
-													<th style="width: 10%;">مدين محلي</th>
-													<th style="width: 10%;">دائن محلي</th>
-													<th style="width: 15%;">مركز التكلفة</th>
-													<th style="width: 15%;">الوصف</th>
-													<th style="width: 1%;">الاجراءات</th>
+													<th style="width: 15%;">{{ 'journalEntry.accountNumber' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.debit' | translate }}</th>
+                                                    <th style="width: 15%;">{{ 'journalEntry.currency' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.balance' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}</th>
+                                                    <th style="width: 10%;">{{ 'journalEntry.localDebit' | translate }}</th>
+                                                    <th style="width: 15%;">{{ 'journalEntry.costCenter' | translate }}</th>
+                                                    <th style="width: 14%;">{{ 'journalEntry.description' | translate }}</th>
+                                                    <th style="width: 1%;">{{ 'journalEntry.actions' | translate }}</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -323,9 +323,11 @@
 
 
 													<td>
-														<button type="button" class="btn btn-table btn-danger"
-															(click)="onDeleteRow(i)"> <i
-																class="icofont icofont-ui-delete"></i> حذف</button>
+														<!-- <button class="btn btn-danger btn-table px-3" 
+                                                        value="{{'buttons.delete'|translate}}"
+                                                        type="button" (click)="onDeleteRow(i)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button> -->
 													</td>
 												</tr>
 											</tbody>
@@ -338,30 +340,28 @@
 							</div>
 							<br>
 
-							<button type="button" (click)="initGroup()"
-								class="btn btn-rounded btn-primary d-flex align-items-center gap-2">اضافة صف
-								جديد</button>
+							<!-- <button type="button" (click)="initGroup()"  class="btn btn-rounded btn-primary d-flex align-items-center gap-2">
+								<i class="fa fa-plus"></i>
+							  </button> -->
 						</form>
-						<table class="mt-4 total-table table table-borderless text-end w-100">
-							<tr>
-								<td>اجمالي المدين </td>
-								<td class="text-start"><label>{{totalCredit}}</label></td>
-							</tr>
-							<tr>
-								<td>اجمالي الدائن </td>
-								<td class="text-start"><label for="totalDebitValue">{{totalDebit}}</label></td>
-							</tr>
-							<tr>
-								<td>اجمالي المدين محلي</td>
-								<td class="text-start"><label>{{totalCreditLocal}}</label></td>
-							</tr>
-							<tr>
-								<td>اجمالي الدائن محلي</td>
-								<td class="text-start"><label for="totalDebitValue">{{totalDebitLocal}}</label></td>
-							</tr>
-
-
-						</table>
+					    <table class="mt-4 total-table table table-borderless text-end w-100">
+                            <tr>
+                              <td>{{'journalEntry.totalDebit' | translate }}</td>
+                              <td class="text-start">{{ totalCredit }}</td>
+                            </tr>
+                            <tr>
+                              <td>{{'journalEntry.totalCredit' | translate }}</td>
+                              <td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebit }}</label></td>
+                            </tr>
+                            <tr>
+                              <td>{{'journalEntry.totalDebitLocal' | translate }}</td>
+                              <td class="text-start"><label class="p-0">{{ totalCreditLocal }}</label></td>
+                            </tr>
+                            <tr>
+                              <td>{{'journalEntry.totalCreditLocal' | translate }}</td>
+                              <td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebitLocal }}</label></td>
+                            </tr>
+                          </table>
 
 
 					</div>
