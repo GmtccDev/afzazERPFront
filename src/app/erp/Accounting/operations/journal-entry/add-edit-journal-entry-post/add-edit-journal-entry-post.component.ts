@@ -582,28 +582,28 @@ export class AddEditJournalEntryPostComponent implements OnInit {
 
    
    // console.log("getRawValue=>", this.journalEntryForm.getRawValue());
-    if (this.counter < 2) {
-      this.alertsService.showError(
-        'يجب أن يكون على الاقل اثنين من الصفوف',
-        ""
+   if (this.counter < 2) {
+    this.alertsService.showError(
+      this.translate.instant('twoRows'),
+      ""
 
-      )
-      return;
-    }
-    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
-      this.alertsService.showError(
-        'يجب ان يكون قيم في الدائن والمدين',
-        ""
-      )
-      return;
-    }
-    if ((this.totalCredit !== this.totalDebit)) {
-      this.alertsService.showError(
-        'مجموع القيم الدائنة في عامود دائن يجب ان تكون مساوية لمجموع القيم المدينة في عامود مدين',
-        ""
-      )
-      return;
-    }
+    )
+    return;
+  }
+  if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+    this.alertsService.showError(
+      this.translate.instant('debitCreditValues'),
+      ""
+    )
+    return;
+  }
+  if ((this.totalCredit !== this.totalDebit)) {
+    this.alertsService.showError(
+      this.translate.instant('totalValues'),
+      ""
+    )
+    return;
+  }
     if (this.journalEntryForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {

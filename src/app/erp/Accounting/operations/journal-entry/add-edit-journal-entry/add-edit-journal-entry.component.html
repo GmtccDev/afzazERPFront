@@ -32,8 +32,8 @@
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="journalId" (change)="onChangeJournal($event)" name='journalId' class="" id="journalId">
                                                     <ng-option *ngFor="let journal of journalList" [value]="journal.id">
-                                                        {{lang=="ar"?journal.nameAr:journal.nameEn}}
-                                                    </ng-option>
+														<span>{{journal.nameAr}}</span>
+													</ng-option>
                                                 </ng-select>
 
                                             </div>
@@ -49,7 +49,7 @@
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="fiscalPeriodId" (change)="onChangefiscalPeriod($event)" name='fiscalPeriodId' class="" id="fiscalPeriodId">
                                                     <ng-option *ngFor="let fiscalPeriod of fiscalPeriodList" [value]="fiscalPeriod.id">
-                                                        {{lang=="ar"?fiscalPeriod.nameAr:fiscalPeriod.nameEn}}
+                                                        {{fiscalPeriod.nameAr}}
                                                     </ng-option>
                                                 </ng-select>
 
