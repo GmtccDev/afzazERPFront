@@ -200,8 +200,8 @@ export class AddEditAccountComponent implements OnInit {
       isLeafAccount: true,
       parentId: null,
       companyId: null,
-      openBalanceDebit: null,
-      openBalanceCredit: null,
+     // openBalanceDebit: null,
+     // openBalanceCredit: null,
       debitLimit: null,
       creditLimit: null,
       taxNumber: null,
@@ -471,8 +471,8 @@ export class AddEditAccountComponent implements OnInit {
             isLeafAccount: res.response?.isLeafAccount,
             parentId: res.response?.parentId,
             companyId: res.response?.companyId,
-            openBalanceDebit: res.response?.openBalanceDebit,
-            openBalanceCredit: res.response?.openBalanceCredit,
+          //  openBalanceDebit: res.response?.openBalanceDebit,
+           // openBalanceCredit: res.response?.openBalanceCredit,
             debitLimit: res.response?.debitLimit,
             creditLimit: res.response?.creditLimit,
             taxNumber: res.response?.taxNumber,
@@ -593,8 +593,10 @@ export class AddEditAccountComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
+          this.spinner.hide();
           //console.log('complete');
         },
       });
