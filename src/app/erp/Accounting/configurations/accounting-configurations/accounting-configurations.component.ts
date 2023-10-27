@@ -20,13 +20,27 @@ import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/en
   templateUrl: './accounting-configurations.component.html',
   styleUrls: ['./accounting-configurations.component.scss']
 })
-export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
+export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
   //#region Main Declarations
   sub: any;
   url: any;
   id: any = 0;
   currnetUrl;
-  journalId:any=0;
+  journalId: any = '';
+  radioSel: any;
+  radioSelectedString: string;
+  cycleSelected: any = '1';
+  currencyId: any = '';
+  multiCurrency: any = '';
+  accountReceivablesId: any = '';
+  serial: any = '1';
+  accountId: any = '';
+  chequesJournalId: any = '';
+  accountExchangeId: any = '';
+  accountingPeriodId: any = '';
+  idleTime: any = '';
+
+  lang = localStorage.getItem("language");
   currencyList: CurrencyDto[] = [];
   generalConfiguration: GeneralConfigurationDto[] = [];
   addUrl: string = '/configurations/accounting-configurations';
@@ -41,7 +55,6 @@ export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
 
   };
   response: any;
-  chequesJournalId:any;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -52,12 +65,9 @@ export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
   routeApiPeriod = 'FiscalPeriod/get-ddl?'
   accountList: any;
   showSearchModal: boolean;
-  accountingPeriodId: any;
   showSearchModalAccountReceivables: boolean;
   ListPeriod: any;
-  accountExchangeId: any;
   showSearchModalAccountExchange: boolean;
-  idleTime: number;
   constructor(private currencyService: CurrencyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private router: Router,
@@ -77,20 +87,20 @@ export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
     this.changePath();
     this.spinner.show();
     Promise.all([
-  
+
       this.getCurrencies(),
       this.getCurrencies(),
       this.getAccount(),
       this.getJournals(),
       this.getAccountPeriod(),
-    ,])
+      ,])
       .then(a => {
         this.spinner.hide();
         this.listenToClickedButton();
         this.getGeneralConfiguration()
-       // this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
-     
-       this.sharedService.changeButton({action:"ConfigMode"} as ToolbarData);
+        // this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
+
+        this.sharedService.changeButton({ action: "ConfigMode" } as ToolbarData);
         this.getSelecteditem();
       }).catch(err => {
         this.spinner.hide();
@@ -107,16 +117,7 @@ export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
   onItemChange(item) {
     this.getSelecteditem();
   }
-  radioSel: any;
-  radioSelectedString: string;
-  cycleSelected: any;
-  currencyId: any=0;
-  multiCurrency: any;
-  accountReceivablesId: any;
-  serial: any;
 
-  accountId: any;
-  lang = localStorage.getItem("language");
   getSerial() {
     this.serialList = [
       { nameAr: 'رقم ', nameEn: 'Number', value: '1' },
@@ -161,7 +162,7 @@ export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -170,8 +171,8 @@ export class AccountingConfigurationsComponent implements OnInit,OnDestroy {
 
   }
   routeJournalApi = 'Journal/get-ddl?'
-  journalList: JournalDto[]=[];
-d
+  journalList: JournalDto[] = [];
+  d
   getJournals() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
@@ -190,7 +191,7 @@ d
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -202,7 +203,7 @@ d
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
         next: (res) => {
-          
+
           ;
           if (res.success) {
             this.accountList = res.response;
@@ -217,7 +218,7 @@ d
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -233,7 +234,7 @@ d
           if (res.success) {
             this.ListPeriod = res.response;
           }
-       
+
 
 
           resolve();
@@ -243,7 +244,7 @@ d
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -271,7 +272,7 @@ d
   //#endregion
 
   //#region CRUD Operations
-  
+
   getGeneralConfiguration() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.allGeneralConfiguration(undefined, 1, 10000, undefined, undefined, undefined).subscribe({
@@ -280,31 +281,55 @@ d
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.general-configuration");
           if (res.success) {
-            
+            debugger
             this.generalConfiguration = res.response.result.items
-            this.currencyId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value);
+            if (Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value) > 0) {
+              this.currencyId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value);
+            }
+            else {
+              this.currencyId = "";
+            }
+
             this.multiCurrency = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
+            debugger
             this.serial = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
+           
             this.cycleSelected = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.FinancialEntryCycle).value;
             this.accountId = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.ClosingAccount).value;
             this.accountReceivablesId = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.AccountReceivables).value;
-            this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value);
+            if (Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value) > 0) {
+              this.accountingPeriodId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value);
+            }
+            else {
+              this.accountingPeriodId = "";
+            }
             this.accountExchangeId = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.AccountExchange).value;
-            this.journalId= Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value);
-            this.chequesJournalId= Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.ChequesJournal).value);
-            this.idleTime= Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.IdleTime).value);
+            if (Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value) > 0) {
+              this.journalId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value);
+            }
+            else {
+              this.journalId = "";
+            }
+            if (Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.ChequesJournal).value) > 0) {
+              this.chequesJournalId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.ChequesJournal).value);
 
-   
+            }
+            else {
+              this.chequesJournalId = "";
+            }
+            this.idleTime = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.IdleTime).value;
+
+
           }
 
-      
+
 
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-         
+
         },
       });
 
@@ -339,11 +364,11 @@ d
             currentBtn.action = this.updateUrl
 
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
-     
+          } else if (currentBtn.action == ToolbarActions.Update) {
+
             this.onUpdate();
           }
-         
+
         }
       },
     });
@@ -356,14 +381,14 @@ d
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      
+
       let item = new EditGeneralConfigurationCommand();
       item.generalConfiguration = this.generalConfiguration;
       let sub = this.generalConfigurationService.updateGeneralConfiguration(item).subscribe({
         next: (result: any) => {
           this.spinner.show();
           this.response = { ...result.response };
-          this.sharedService.changeButton({action:"ConfigMode"} as ToolbarData);
+          this.sharedService.changeButton({ action: "ConfigMode" } as ToolbarData);
           this.spinner.hide();
 
           navigateUrl(this.listUrl, this.router);
@@ -372,53 +397,105 @@ d
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
       this.subsList.push(sub);
 
-    }).then(a=>{
+    }).then(a => {
       this.getGeneralConfiguration();
     });
   }
 
   onUpdate() {
     {
-      
+
       if (this.generalConfiguration.length > 0) {
         this.generalConfiguration.forEach((s) => {
           if (s) {
-            
-            ;
             if (s.id == 1) {
-              s.value = this.currencyId + "";
+              if (this.currencyId > 0) {
+                s.value = this.currencyId + "";
+              }
+              else {
+                s.value = "";
+              }
             }
             else if (s.id == 2) {
               s.value = this.multiCurrency + "";
             }
             else if (s.id == 3) {
-              s.value = this.serial + "";
+              if (this.serial > 0) {
+                s.value = this.serial + "";
+              }
+              else {
+                s.value = "1";
+              }
             }
             else if (s.id == 4) {
-              s.value = this.cycleSelected + "";
+              if(this.cycleSelected>0)
+              {
+                s.value = this.cycleSelected + "";
+
+              }
+              else
+              {
+                s.value = "1";
+
+              }
             }
             else if (s.id == 5) {
-              s.value = this.accountId + "";
+              if (this.accountId > 0) {
+                s.value = this.accountId + "";
+              }
+              else {
+                s.value = "";
+              }
             }
             else if (s.id == 6) {
-              s.value = this.accountReceivablesId + "";
+              if (this.accountReceivablesId > 0) {
+                s.value = this.accountReceivablesId + "";
+              }
+              else {
+                s.value = "";
+
+              }
             }
             else if (s.id == 7) {
-              s.value = this.accountingPeriodId + "";
+              if (this.accountingPeriodId > 0) {
+                s.value = this.accountingPeriodId + "";
+              }
+              else {
+                s.value = "";
+
+              }
             }
             else if (s.id == 8) {
-              s.value = this.accountExchangeId + "";
+              if (this.accountExchangeId > 0) {
+                s.value = this.accountExchangeId + "";
+              }
+              else {
+                s.value = "";
+
+              }
             }
             else if (s.id == 1006) {
-              s.value = this.journalId + "";
+              if (this.journalId > 0) {
+                s.value = this.journalId + "";
+              }
+              else {
+                s.value = "";
+
+              }
             }
             else if (s.id == 1007) {
-              s.value = this.chequesJournalId + "";
+              if (this.chequesJournalId > 0) {
+                s.value = this.chequesJournalId + "";
+              }
+              else {
+                s.value = "";
+
+              }
             }
             else if (s.id == 10001) {
               s.value = this.idleTime + "";
@@ -451,8 +528,8 @@ d
     this.showSearchModalAccountReceivables = false;
   }
   onSelectAccountExchange(event) {
-    
-    this.accountExchangeId=event.id;
+
+    this.accountExchangeId = event.id;
     this.showSearchModalAccountExchange = false;
   }
   //#endregion

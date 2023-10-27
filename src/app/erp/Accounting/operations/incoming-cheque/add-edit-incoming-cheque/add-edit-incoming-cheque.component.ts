@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, RequiredValidator, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -645,10 +645,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
 
   onChangeCurrency(event, index) {
-    this.amount = 0;
-    this.amountLocal = 0;
-    this.currencyFactor = 0;
-    this.currencyId = null;
+    // this.amount = 0;
+    // this.amountLocal = 0;
+    // this.currencyFactor = 0;
+    // this.currencyId = null;
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({

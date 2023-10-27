@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==2 || billType[0].kind==4">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
                                             <label for="supplierId" class="label-name">
                                                 {{'bill.supplier'|translate}}
                                             </label>
@@ -91,7 +91,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==2 || billType[0].kind==4">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
                                             <label for="supplierReference"
                                                 class="label-name">{{'bill.supplier-reference'|translate}}</label>
                                             <div class="form-group position-relative">
@@ -100,7 +100,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==1 || billType[0].kind==3">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==1 || billTypeKind==3">
                                             <label for="customerId" class="label-name">
                                                 {{'bill.customer'|translate}}
                                             </label>
@@ -357,7 +357,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==2 || billType[0].kind==4">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
                                             <label for="supplierAccountId" class="label-name">
                                                 {{'general.supplier-account'|translate}}
                                             </label>
@@ -379,7 +379,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==1">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==1">
                                             <label for="salesAccountId" class="label-name">
                                                 {{'general.sales-account'|translate}}
                                             </label>
@@ -400,7 +400,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==3">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==3">
                                             <label for="salesReturnAccountId" class="label-name">
                                                 {{'general.sales-return-account'|translate}}
                                             </label>
@@ -422,7 +422,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==2">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2">
                                             <label for="purchasesAccountId" class="label-name">
                                                 {{'general.purchases-account'|translate}}
                                             </label>
@@ -443,7 +443,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6 col-12" *ngIf="billType[0].kind==4">
+                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==4">
                                             <label for="purchasesReturnAccountId" class="label-name">
                                                 {{'general.purchases-return-account'|translate}}
                                             </label>
@@ -986,7 +986,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12"
-                                            *ngIf="billType[0].calculatingTax==true && billType[0].calculatingTaxManual==true">
+                                            *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual==true">
                                             <label for="taxRatio"
                                                 class="label-name">{{'general.tax-ratio'|translate}}</label>
                                             <div class="form-group position-relative">
@@ -996,7 +996,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12"
-                                            *ngIf="billType[0].calculatingTax==true && billType[0].calculatingTaxManual==true">
+                                            *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual==true">
                                             <label for="taxValue"
                                                 class="label-name">{{'general.tax-value'|translate}}</label>
                                             <div class="form-group position-relative">

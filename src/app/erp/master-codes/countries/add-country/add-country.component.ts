@@ -32,7 +32,7 @@ export class AddCountryComponent implements OnInit {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("countries"),
+    componentList: this.translate.instant("component-names.countries"),
     componentAdd: '',
 
   };

@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-
 import { CreateCurrencyTransactionCommand, EditCurrencyTransactionCommand } from '../../models/currency';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyServiceProxy } from '../../services/currency.servies';
+import { DateModel } from 'src/app/shared/model/date-model';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
   selector: 'app-add-edit-currency-transactions',
   templateUrl: './add-edit-currency-transactions.component.html',
@@ -28,12 +28,15 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   @Input() public currencyMasterId;
   @Input() public id: any = 0;
   currenciesList: any;
+  transactionDate!: DateModel;
+
   constructor(
     private currencyService: CurrencyServiceProxy,
-    private router: Router,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private dateService: DateCalculation,
+
   ) {
     this.defineCurrencyForm();
   }
@@ -75,11 +78,13 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
   defineCurrencyForm() {
     this.currencyForm = this.fb.group({
       id: 0,
-      transactionDate: null,
+      transactionDate: this.dateService.getCurrentDate(),
       transactionFactor: null,
       currencyMasterId: this.currencyMasterId,
       currencyDetailId: null,
     });
+    this.transactionDate = this.dateService.getCurrentDate();
+
   }
 
   //#endregion
@@ -93,6 +98,9 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     return [year, month, day].join('-');
   }
   //#region CRUD Operations
+  getTransactionDate(selectedDate: DateModel) {
+    this.transactionDate = selectedDate;
+  }
   getCurrencyTransaction(id: any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyService.getCurrencyTransaction(id).subscribe({
@@ -100,24 +108,21 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
           resolve();
           this.currencyForm.setValue({
             id: res.response?.id,
-            transactionDate: this.formatDate(Date.parse(res.response.transactionDate)),
+            transactionDate: this.dateService.getDateForCalender(res.response.transactionDate),
             transactionFactor: res.response.transactionFactor,
             currencyMasterId: this.currencyMasterId,
             currencyDetailId: res.response?.currencyDetailId,
 
           });
 
+          this.transactionDate = this.dateService.getDateForCalender(res.response.transactionDate);
 
-          console.log(
-            'this.currencyForm.value set value',
-            this.currencyForm.value
-          );
+         
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -143,7 +148,6 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
 
@@ -176,25 +180,25 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
     }
   }
   confirmSave() {
-    
     var inputDto = new CreateCurrencyTransactionCommand()
     return new Promise<void>((resolve, reject) => {
       inputDto.inputDto = this.currencyForm.value;
       inputDto.inputDto.currencyMasterId = this.currencyMasterId;
+      inputDto.inputDto.transactionDate = this.dateService.getDateForInsert(inputDto.inputDto.transactionDate);
+       
       let sub = this.currencyService.createCurrencyTransaction(inputDto).subscribe({
         next: (result: any) => {
-          
-          this.response = { ...result.response };
+           
           this.defineCurrencyForm();
           this.submited = false;
           this.activeModal.close(this.currencyMasterId);
+          this.spinner.hide();
           
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -222,10 +226,11 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
       inputDto.inputDto = this.currencyForm.value;
       inputDto.inputDto.currencyMasterId = this.currencyMasterId;
       inputDto.inputDto.id = this.id;
+      inputDto.inputDto.transactionDate = this.dateService.getDateForInsert(inputDto.inputDto.transactionDate);
+
       let sub = this.currencyService.updateCurrencyTransaction(inputDto).subscribe({
         next: (result: any) => {
           
-          this.response = { ...result.response };
           this.defineCurrencyForm();
           this.submited = false;
           this.activeModal.close(this.currencyMasterId);
@@ -236,7 +241,6 @@ export class AddEditCurrencyTransactionsComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);

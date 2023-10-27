@@ -642,10 +642,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
   }
 
   onChangeCurrency(event, index) {
-    this.amount = 0;
-    this.amountLocal = 0;
-    this.currencyFactor = 0;
-    this.currencyId = null;
+    // this.amount = 0;
+    // this.amountLocal = 0;
+    // this.currencyFactor = 0;
+    // this.currencyId = null;
     return new Promise<void>((resolve, reject) => {
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {

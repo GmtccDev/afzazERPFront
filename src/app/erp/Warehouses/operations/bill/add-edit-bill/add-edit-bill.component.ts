@@ -113,6 +113,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   queryParams: any;
   billTypeId: any;
   billType: BillType[] = [];
+  billTypeKind: any;
+  billTypeCalculatingTax: boolean;
+  billTypeCalculatingTaxManual: boolean;
 
   currency: any;
   mainCurrencyId: number;
@@ -345,19 +348,19 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getBillTypeById(id) {
-    
+
     this.billType = this.billTypesList.filter(x => x.id == id);
+    this.billTypeKind = this.billType[0].kind;
+    this.billTypeCalculatingTax = this.billType[0].calculatingTax;
+    this.billTypeCalculatingTaxManual = this.billType[0].calculatingTaxManual;
+
     if (this.id == 0) {
       this.getBillCode();
-      // this.billForm.setValue({
-      //   currencyId:this.billType[0].defaultCurrencyId
-      // })
-      
-      // this.billForm.patchValue({
-      //   currencyId:this.billType[0].defaultCurrencyId
-      // })
+     
       this.currencyId = this.billType[0].defaultCurrencyId
-      this.getCurrencyFactor(this.currencyId)
+      if (this.currencyId > 0) {
+        this.getCurrencyFactor(this.currencyId)
+      }
       this.salesPersonId = this.billType[0].salesPersonId
       this.storeId = this.billType[0].storeId
       this.costCenterId = this.billType[0].costCenterId
@@ -465,7 +468,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   getBillCode() {
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.billService.getLastCodeByTypeId(this.billTypeId).subscribe({
         next: (res: any) => {
 
@@ -489,7 +492,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   getCashAccounts() {
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.publicService.getDdl(this.routeCashAccountApi).subscribe({
         next: (res) => {
           if (res.success) {
@@ -1293,7 +1296,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   getCurrencyFactorForAdditionAndDiscount(currencyId: any) {
-    
+
     if (currencyId == this.mainCurrencyId) {
       this.selectedBillAdditionAndDiscount.currencyExchangeTransaction = 1;
     }
@@ -1408,7 +1411,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   openStoreSearchDialog(i) {
-    
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedBillItem?.storeNameAr ?? '';
@@ -1721,7 +1724,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
 
-  onChangeAdditionOrDiscountRatioAdded(a: any,i:number) {
+  onChangeAdditionOrDiscountRatioAdded(a: any, i: number) {
     if (a == 1) {
       this.billItem[i].additionValue =
         Number(this.billItem[i].quantity * this.billItem[i].price) * Number(this.billItem[i].additionRatio / 100);
@@ -1802,7 +1805,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.selectedBillAdditionAndDiscount.additionValue = 0;
     }
   }
-  onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(a:any,i: any) {
+  onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(a: any, i: any) {
     if (a == 1) {
       this.billAdditionAndDiscount[i].additionValue =
         Number(this.total) * Number(this.billAdditionAndDiscount[i].additionRatio / 100);
@@ -1840,7 +1843,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   addItemDataForUpdate(item: BillItem) {
-    
+
     this.billItem.push(
       {
         id: 0,
@@ -1909,7 +1912,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   addBillAdditionDiscountDataForUpdate(item: BillAdditionAndDiscount) {
-    
+
     this.billAdditionAndDiscount.push(
       {
         id: 0,
@@ -1925,7 +1928,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         currencyExchangeTransaction: item.currencyExchangeTransaction,
         accountNameAr: item.accountNameAr,
         accountNameEn: item.accountNameEn,
-        correspondingAccountNameAr:item.correspondingAccountNameAr,
+        correspondingAccountNameAr: item.correspondingAccountNameAr,
         correspondingAccountNameEn: item.correspondingAccountNameEn,
         currencyNameAr: item.currencyNameAr,
         currencyNameEn: item.currencyNameEn
@@ -1934,10 +1937,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     this.billAdditionAndDiscount.forEach(item => {
       this.net = this.total + item.additionValue - item.discountValue;
-    
+
     }
     )
-   
+
 
   }
   deleteBillAdditionDiscountForUpdate(item: BillAdditionAndDiscount) {
@@ -1947,7 +1950,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.billAdditionAndDiscount.splice(index, 1);
 
         this.net = this.net - this.billAdditionAndDiscount[index].additionValue + this.billAdditionAndDiscount[index].discountValue;
-      
+
 
 
       }
@@ -1961,7 +1964,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   getNet() {
-    
+
     this.taxValue = Number(this.total) * Number(this.taxRatio / 100);
     this.net = Number(this.total) + this.taxValue;
     this.paid = 0;

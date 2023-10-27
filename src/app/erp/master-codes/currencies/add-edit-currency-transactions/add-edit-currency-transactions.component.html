@@ -21,11 +21,10 @@
 						<div class="col-12 col-md-12">
 							<label for="transactionDate"
 								class="label-name">{{'currency.transaction-date'|translate}}</label>
-							<div class="form-group0 position-relative">
-
-								<input type="date" class="form-control icon-currency" name="transactionDate"
-									formControlName="transactionDate">
-
+							<div class=" position-relative">
+								<app-full-date name="transactionDate" formControlName="transactionDate"
+									[(ngModel)]="transactionDate" ngDefaultControl [selectedDate]="transactionDate"
+									(OnDateSelect)="getTransactionDate($event)"></app-full-date>
 							</div>
 						</div>
 
