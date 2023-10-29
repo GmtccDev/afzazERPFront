@@ -23,7 +23,6 @@ import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { formatDate, navigateUrl } from 'src/app/shared/helper/helper-url';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
-import { AccountServiceProxy } from '../../../services/account.services';
 
 @Component({
   selector: 'app-add-edit-voucher',
@@ -40,7 +39,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   voucherkindId: any;
   serialTypeId: any;
   voucherDate!: DateModel;
-
+  defaultBeneficiaryId:any;
   showSearchCashAccountModal = false;
   showSearchCostCenterModal = false;
   showSearchBeneficiaryAccountsModal = false;
@@ -121,7 +120,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private currencyServiceProxy: CurrencyServiceProxy,
-    private accountService: AccountServiceProxy
 
 
 
@@ -274,6 +272,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.serialTypeId = res.response.serialTypeId;
           this.voucherNameEn = res.response.voucherNameEn;
           this.voucherNameAr = res.response.voucherNameAr;
+          this.defaultBeneficiaryId = res.response.defaultBeneficiaryId;
+          this.selectedVoucherDetail.beneficiaryTypeId=this.defaultBeneficiaryId;
+          this.getBeneficaryByTypeId(this.selectedVoucherDetail.beneficiaryTypeId,-1);
           this.getAmount();
           if (this.id == 0) {
             if (this.serialTypeId == SerialTypeEnum.Automatic) {
@@ -322,7 +323,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           var beneficiaryName;
           var costCenterName;
           res.response.voucherDetail.forEach(element => {
-            this.getBeneficaryByTypeId(element.beneficiaryTypeId);
+            this.getBeneficaryByTypeId(element.beneficiaryTypeId,-1);
 
             if (element.currencyId > 0) {
 
@@ -684,6 +685,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openBeneficiarySearchDialog(i) {
+    debugger
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.beneficiaryNameAr ?? '';
@@ -691,7 +693,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
     }
-
+     
     let data = this.filterBeneficiaryList.filter((x) => {
       return (
         (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
@@ -735,8 +737,18 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
 
   }
-  getBeneficaryByTypeId(typeId: any) {
+  getBeneficaryByTypeId(typeId: any,i:any) {
     this.filterBeneficiaryList = [];
+    if(i==-1)
+    {
+      this.selectedVoucherDetail.beneficiaryNameAr='';
+
+    }
+    else
+    {
+      this.voucherDetail[i].beneficiaryNameAr='';
+
+    }
     if (typeId == BeneficiaryTypeEnum.Client) {
       this.filterBeneficiaryList = this.customersList;
     }
@@ -928,13 +940,13 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.selectedVoucherDetail = {
       id: 0,
       voucherId: 0,
-      beneficiaryTypeId: 0,
+      beneficiaryTypeId: this.defaultBeneficiaryId,
       beneficiaryId: 0,
       beneficiaryAccountId: 0,
       debit: 0,
       credit: 0,
       currencyId: 0,
-      currencyConversionFactor: 1,
+      currencyConversionFactor: 0,
       debitLocal: 0,
       creditLocal: 0,
       description: '',
@@ -1275,6 +1287,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     
   }
   getBeneficiaryAccountAdded(i) {
+    debugger
     
     if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
     {

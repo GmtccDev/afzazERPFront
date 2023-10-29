@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { MasterCodesRoutingModule } from './master-codes-routing.module';
 import { CountriesComponent } from './countries/countries.component'
@@ -17,6 +17,9 @@ import { AddCompanyComponent } from './companies/add-company/add-company.compone
 import { CompanyServiceProxy } from './services/company.service';
 import { BranchesComponent } from './branches/branches.component';
 import { AddEditBranchComponent } from './branches/add-edit-branch/add-edit-branch.component';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [ CountriesComponent, AddCountryComponent, AddBusinessComponent, BusinessComponent, AddCurrencyComponent, CurrenciesComponent, AddEditCurrencyTransactionsComponent, CompaniesComponent, AddCompanyComponent, BranchesComponent, AddEditBranchComponent],
@@ -25,6 +28,6 @@ import { AddEditBranchComponent } from './branches/add-edit-branch/add-edit-bran
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule
 
   ],
-  providers: [CountryServiceProxy,CompanyServiceProxy]
+  providers: [CountryServiceProxy,CompanyServiceProxy,DateCalculation,DatePipe,DateConverterService,NgbCalendarIslamicUmalqura]
 })
 export class MasterCodesModule { }

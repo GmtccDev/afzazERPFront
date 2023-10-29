@@ -14,6 +14,7 @@ import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VoucherTypeServiceProxy } from '../../services/voucher-type.service';
+import { format } from 'date-fns';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -51,7 +52,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
@@ -241,7 +241,12 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'voucherDate',
+      field: 'voucherDate', width: 300, formatter: function (cell, formatterParams, onRendered) {
+				var value = cell.getValue();
+				value = format(new Date(value), 'dd-MM-yyyy');;
+				return value;
+			}
+      
     },
     {
       title: this.lang == 'ar' ? 'اجمالى قيمة السند محلى' : 'Voucher Total Local',

@@ -52,13 +52,14 @@
 
 					</label>
 					<div class="input-group  popup">
-						<ng-select style="width:100%" [(ngModel)]="journalId" name='journalId' class="" id="journalId">
+						<ng-select style="width:100%" [(ngModel)]="journalId" name='journalId'>
 							<ng-option *ngFor="let journal of journalList" [value]="journal.id">
 								{{lang=="ar"?journal.nameAr:journal.nameEn}}
 							</ng-option>
 						</ng-select>
 
 					</div>
+
 				</div>
 
 				<div class="col-12">
@@ -115,7 +116,7 @@
 
 					<ul class="list-group">
 						<li class="list-group-item" *ngFor="let item of cycleList">
-							<input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value" name="cycleSelected"
+							<input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value" name="cycleSelected" 
 								value="{{item.value}}" (change)="onItemChange(item)" />
 							{{lang=="ar"?item.nameAr:item.nameEn}}
 
@@ -227,7 +228,7 @@
 					<!-- <div class="media"> -->
 					<label class="label-name"> {{'accounting-configration.idleTime'|translate}} </label>
 					<div class="icon-state media-body">
-						<input type="text" class="form-control" [(ngModel)]="idleTime" name="idleTime">
+						<input type="number" class="form-control" [(ngModel)]="idleTime" name="idleTime">
 						<span class="minute">{{'general.minute'|translate}}</span>
 					</div>
 					<!-- </div> -->
