@@ -97,7 +97,9 @@
     },
     "messageTitle": {
         "done": "نجاح",
-        "delete": "حذف"
+        "delete": "حذف",
+        "generate-entry":"توليد القيد"
+
     },
     "validation": {
         "phoneValidation": "رقم الجوال غير صحيح",
@@ -288,7 +290,9 @@
         "default-journal":"اليومية الإفتراضية",
         "general-configuration":"الإعدادات",
         "cheques-journal":"يومية الشيكات",
-        "chart-account":"دليل الحسابات"
+        "chart-account":"دليل الحسابات",
+        "post-vouchers":"ترحيل السندات"
+
 
       
     },
@@ -373,7 +377,7 @@
         "notes": "ملاحظات",
         "gregorian": "ميلادى",
         "hijri": "هجرى",
-        "filterSearch": "فلتر البحث في التقارير",
+        "filterSearch": "فلتر البحث",
         "entries-status": "حالة القيود",
         "number": "رقم",
         "type-id": "رقم النمط",
@@ -546,7 +550,9 @@
         "voucher-details-required": "من فضلك أدخل تفاصيل السند",
         "add-voucher": "اضافة سند",
         "update-voucher": "تحديث السند",
-        "voucher": "السند"
+        "voucher": "السند",
+        "confirm-generate-entry": "هل أنت متأكد من توليد القيد لهذا السند؟"
+
     },
     "journalEntry": {
         "openBalance": "القيد الافتتاحي ",

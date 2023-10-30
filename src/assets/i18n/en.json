@@ -151,7 +151,7 @@
         "template-name": "Template Name",
         "gregorian": "Gregorian",
         "hijri": "Hijri",
-        "filterSearch": "Search filter in reports",
+        "filterSearch": "Search filter",
         "entries-status": "Entries Status",
         "number": "Number",
         "type-id": "Type Id",
@@ -292,6 +292,7 @@
         "success": "Data has been Deleted Successfully",
         "wrong": "Wrong",
         "confirm-delete": "Are you sure to delete the item ?",
+
         "done": "Doneddsfgsfgdfgdfgdfgdfg",
         "alert": "Alert",
         "info": "Info",
@@ -299,7 +300,8 @@
     },
     "messageTitle": {
         "done": "Done",
-        "delete": "Delete"
+        "delete": "Delete",
+        "generate-entry":"Generate Entry"
     },
     "error": {
         "from-to-date": "The to date must be greater than the from date.",
@@ -484,7 +486,8 @@
         "default-journal":"Default Journal",
         "general-configuration":"General Configuration",
         "cheques-journal":"Cheques Journal",
-        "chart-account":"Chart of Accounts"
+        "chart-account":"Chart of Accounts",
+        "post-vouchers":"Post Vouchers"
 
 
     },
@@ -566,7 +569,9 @@
         "voucher-details-required": "Voucher Details is required",
         "add-voucher": "Add Voucher",
         "update-voucher": "Update Voucher",
-        "voucher": "Voucher"
+        "voucher": "Voucher",
+        "confirm-generate-entry": "Are you sure to generate entry for this voucher ?"
+
     },
     "journalEntry": {
         "openBalance": "Openning Journal",

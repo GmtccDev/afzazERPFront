@@ -891,7 +891,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
   }
   deleteItem(index) {
-
+    debugger
     this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
     this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
     let currencyConversionFactor;
@@ -932,8 +932,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     this.voucher.voucherDetail = this.voucherDetail;
 
-    this.currencyFactor = 0;
-    this.currencyId = null;
+   // this.currencyFactor = 0;
+   // this.currencyId = null;
 
   }
   clearSelectedItemData() {
