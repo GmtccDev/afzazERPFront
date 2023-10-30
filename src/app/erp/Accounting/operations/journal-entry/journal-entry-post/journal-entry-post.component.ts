@@ -180,6 +180,10 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
           return value;
         }
       },
+      this.lang == 'ar'
+			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
+
+
     this.lang == 'ar'
       ? {
         title: '  الحالة  ', width: 300, field: 'postType', formatter: this.translateArEnum
