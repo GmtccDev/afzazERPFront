@@ -3,9 +3,6 @@ import { Subject, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
-import { SharedService } from '../common-services/shared-service';
-import { ToolbarPath } from '../interfaces/toolbar-path';
 
 
 // Menu
@@ -195,6 +192,8 @@ export class NavService implements OnInit, OnDestroy {
 					title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
 					children: this.voucherTypesNew
 				},
+				{ path: '/accounting-operations/postVoucher', title: this.translate.instant("component-names.post-vouchers"), type: 'link', active: true },
+
 			]
 
 

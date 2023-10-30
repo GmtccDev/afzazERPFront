@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
@@ -257,15 +256,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'description',
     },
 
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-    //   field: 'createdAt',
-    // },
-
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-    //   field: 'updatedAt',
-    // },
+    
 
 
   ];
