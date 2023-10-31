@@ -142,6 +142,7 @@ export class AddEditItemCardComponent implements OnInit {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = +params['id'];
+        debugger
         if (this.id > 0) {
           this.getItemCardById(this.id).then(a => {
             this.spinner.hide();
@@ -227,12 +228,12 @@ export class AddEditItemCardComponent implements OnInit {
       widthFactor: '',
       lengthFactor: '',
       attachment: '',
-      salesAccountId: '',
-      salesReturnsAccountId: '',
-      purchasesAccountId: '',
-      purchasesReturnsAccountId: '',
-      salesCostAccountId: '',
-      inventoryAccountId: '',
+      salesAccountId: null,
+      salesReturnsAccountId: null,
+      purchasesAccountId: null,
+      purchasesReturnsAccountId: null,
+      salesCostAccountId: null,
+      inventoryAccountId: null,
       isActive: true
 
 

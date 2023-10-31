@@ -685,7 +685,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openBeneficiarySearchDialog(i) {
-    debugger
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.beneficiaryNameAr ?? '';
@@ -891,7 +890,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
   }
   deleteItem(index) {
-    debugger
+     
     this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
     this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
     let currencyConversionFactor;
@@ -1287,7 +1286,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     
   }
   getBeneficiaryAccountAdded(i) {
-    debugger
+     
     
     if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
     {

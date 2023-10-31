@@ -388,7 +388,8 @@
         "update": "Update",
         "view": "View",
         "cancelDefaultReport": "Cancel Default Report",
-        "post":"Post"
+        "post":"Post",
+        "generate-entry":"Generate Entry"
     },
     "component-names": {
         "country-information": "Country information",
@@ -487,7 +488,7 @@
         "general-configuration":"General Configuration",
         "cheques-journal":"Cheques Journal",
         "chart-account":"Chart of Accounts",
-        "post-vouchers":"Post Vouchers"
+        "generate-entry-vouchers":"Generate Entry Vouchers"
 
 
     },

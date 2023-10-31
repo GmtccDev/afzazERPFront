@@ -11,28 +11,26 @@ import { VoucherServiceProxy } from '../../../services/voucher.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { format } from 'date-fns';
-import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
-import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
 
 @Component({
-	selector: 'app-post-voucher',
-	templateUrl: './post-voucher.component.html',
-	styleUrls: ['./post-voucher.component.scss']
+	selector: 'app-generate-entry-voucher',
+	templateUrl: './generate-entry-voucher.component.html',
+	styleUrls: ['./generate-entry-voucher.component.scss']
 })
-export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
+export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 	//#region Main Declarations
-	noPostvouchers: any[] = [];
-	
+	noGenerateEntryVouchers: any[] = [];
+	voucherTypeId: any;
 
 
-	addUrl: string = '/accounting-operations/vouchers/add-voucher/';
-	updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
-	listUrl: string = '/accounting-operations/postVoucher/';
+	addUrl: string = '';
+	updateUrl: string = '';
+	listUrl: string = '/accounting-operations/generateEntryVoucher/';
 	toolbarPathData: ToolbarPath = {
 		listPath: '',
 		updatePath: this.updateUrl,
 		addPath: this.addUrl,
-		componentList: this.translate.instant("component-names.post-vouchers"),
+		componentList: this.translate.instant("component-names.generate-entry-vouchers"),
 		componentAdd: '',
 
 	};
@@ -44,7 +42,6 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 	constructor(
 		private voucherService: VoucherServiceProxy,
 		private router: Router,
-		private route: ActivatedRoute,
 		private sharedServices: SharedService,
 		private modalService: NgbModal,
 		private translate: TranslateService,
@@ -58,25 +55,19 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	//#region ngOnInit
 	ngOnInit(): void {
-
 		this.spinner.show();
-		Promise.all([this.getNotPostVouchers()])
+		Promise.all([this.getNotGenerateEntryVouchers()])
 			.then(a => {
 				this.spinner.hide();
-				this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
+				this.sharedServices.changeButton({ action: 'GenerateEntry' } as ToolbarData);
 				this.sharedServices.changeToolbarPath(this.toolbarPathData);
 				this.listenToClickedButton();
 			}).catch(err => {
 				this.spinner.hide();
 			})
-
-
-
 	}
 
 	ngAfterViewInit(): void {
-
-
 
 	}
 
@@ -107,17 +98,16 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 	//#region Basic Data
 	///Geting form dropdown list data
 
-
-
-
 	//#endregion
 
-	getNotPostVouchers() {
+	getNotGenerateEntryVouchers() {
 		return new Promise<void>((resolve, reject) => {
-			let sub = this.voucherService.allNotPostedVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
+			let sub = this.voucherService.allNotGenerateEntryVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
+					this.toolbarPathData.componentList = this.translate.instant("component-names.generate-entry-vouchers");
+
 					if (res.success) {
-						this.noPostvouchers = res.response.data.result
+						this.noGenerateEntryVouchers = res.response.data.result
 
 					}
 					resolve();
@@ -142,23 +132,46 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.voucherService.deleteVoucher(id).subscribe((resonse) => {
 			// this.getVouchers();
 			this.router.navigate([this.listUrl])
-				.then(() => {
-					window.location.reload();
-				});
+
 		});
 	}
 	edit(id: string) {
+		this.getVoucherById(id).then(a => {
+			this.router.navigate([
+				'/accounting-operations/vouchers/update-voucher/',
+				this.voucherTypeId, id,
+			]);
 
-		this.router.navigate([
-			'/accounting-operations/vouchers/update-voucher/', id,
-		]);
+			this.spinner.hide();
+
+		}).catch(err => {
+			this.spinner.hide();
+
+		});
+
 	}
+	getVoucherById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.voucherService.getVoucher(id).subscribe({
+				next: (res: any) => {
+					resolve();
+					this.voucherTypeId = res.response?.voucherTypeId
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
 
+		});
+	}
 	//#endregion
 
 
 
-	showConfirmGenerateEntryMessage(voucher) {
+	showConfirmGenerateEntryMessage(id) {
 		const modalRef = this.modalService.open(MessageModalComponent);
 		modalRef.componentInstance.message = this.translate.instant('voucher.confirm-generate-entry');
 		modalRef.componentInstance.title = this.translate.instant('messageTitle.generate-entry');
@@ -166,15 +179,18 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 		modalRef.componentInstance.isYesNo = true;
 		modalRef.result.then((rs) => {
 			if (rs == 'Confirm') {
-
 				this.spinner.show();
-				debugger
-				let sub = this.voucherService.generateEntry(voucher).subscribe(
+				this.listIds = [];
+				const newItem = { id };
+				this.listIds.push(newItem);
+				var ids = this.listIds.map(item => item.id);
+
+				let sub = this.voucherService.generateEntry(ids).subscribe(
 					(resonse) => {
-					  this.getNotPostVouchers();
+						this.getNotGenerateEntryVouchers();
 						this.router.navigate([this.listUrl])
-							.then(() => {
-							});
+						this.listIds = [];
+
 					});
 				this.subsList.push(sub);
 				this.spinner.hide();
@@ -184,7 +200,7 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 	editFormatIcon() { //plain text value
 		return "<i class=' fa fa-edit'></i>";
-	  };
+	};
 	//#endregion
 	//#region Tabulator
 
@@ -193,7 +209,8 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 	searchFilters: any;
 	groupByCols: string[] = [];
 	lang: string = localStorage.getItem("language");
-	
+	direction: string = 'ltr';
+
 	columnNames = [
 		{
 			title: this.lang == 'ar' ? ' كود' : 'Code ',
@@ -217,39 +234,29 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 
 		this.lang == 'ar'
 			? {
-				title: 'نوع السند',  field: 'voucherKindAr'
+				title: 'نوع السند', field: 'voucherKindAr'
 			} : {
-				title: 'Voucher Kind',  field: 'voucherKindEn'
+				title: 'Voucher Kind', field: 'voucherKindEn'
 			},
 		{
-			title: this.lang == 'ar' ? ' قيمة السند محلى' : 'Voucher Total Local',
+			title: this.lang == 'ar' ? ' الأجمالى محلى' : 'Total Local',
 			field: 'voucherTotalLocal'
 		},
 		this.lang == "ar" ? {
 			title: "توليد القيد",
 			field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-			  this.showConfirmGenerateEntryMessage(cell.getRow().getData());
+				this.showConfirmGenerateEntryMessage(cell.getRow().getData().id);
 			}
-		  } :
+		} :
 			{
-			  title: "Generate Entry",
-			  field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-				this.showConfirmGenerateEntryMessage(cell.getRow().getData());
-			  },
+				title: "Generate Entry",
+				field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+					this.showConfirmGenerateEntryMessage(cell.getRow().getData().id);
+				},
 			},
-
-
-
-
 
 	];
 
-	menuOptions: SettingMenuShowOptions = {
-		showDelete: true,
-		showEdit: true,
-	  };
-
-	direction: string = 'ltr';
 
 	onSearchTextChange(searchTxt: string) {
 		this.searchFilters = [
@@ -274,11 +281,7 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 			const newItem = { id, isChecked: true };
 			this.listIds.push(newItem);
 		}
-		this.sharedServices.changeButton({
-			action: 'Delete',
-			componentName: 'List',
-			submitMode: false
-		} as ToolbarData);
+		
 	}
 	onEdit(id) {
 		if (id != undefined) {
@@ -290,32 +293,13 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 			} as ToolbarData);
 
 			this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
 		}
 
 	}
-	onMenuActionSelected(event: ITabulatorActionsSelected) {
 
-		if (event != null) {
-			if (event.actionName == 'Edit') {
-
-				this.edit(event.item.id);
-				this.sharedServices.changeButton({
-					action: 'Update',
-					componentName: 'List',
-					submitMode: false
-				} as ToolbarData);
-
-				this.sharedServices.changeToolbarPath(this.toolbarPathData);
-
-			} else if (event.actionName == 'Delete') {
-				//this.showConfirmDeleteMessage(event.item.id);
-			}
-		}
-	}
 
 	//#endregion
-
-
 
 	//#region Toolbar Service
 	currentBtn!: string;
@@ -324,33 +308,34 @@ export class PostVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 
 		let sub = this.sharedServices.getClickedbutton().subscribe({
 			next: (currentBtn: ToolbarData) => {
-
-				//currentBtn;
 				if (currentBtn != null) {
-					if (currentBtn.action == ToolbarActions.List) {
-
-					} else if (currentBtn.action == ToolbarActions.New) {
-
-						//this.router.navigate([this.addUrl + this.voucherTypeId]);
-						//  this.router.navigate(['/control-panel/accounting/update-account', id]);
-
-					}
-					else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
-						this.onDelete();
+				    if (currentBtn.action == ToolbarActions.GenerateEntry) {
+						this.onCheckGenerateEntry();
 					}
 				}
 			},
 		});
 		this.subsList.push(sub);
 	}
+	onCheckGenerateEntry() {
+
+		var ids = this.listIds.map(item => item.id);
+		if (ids.length > 0) {
+			let sub = this.voucherService.generateEntry(ids).subscribe(
+				(resonse) => {
+					this.getNotGenerateEntryVouchers();
+					this.listIds = []
+				});
+			this.subsList.push(sub);
+		}
+
+	}
 	onDelete() {
 		var ids = this.listIds.map(item => item.id);
 		let sub = this.voucherService.deleteListVoucher(ids).subscribe(
 			(resonse) => {
 				this.router.navigate([this.listUrl])
-					.then(() => {
-						window.location.reload();
-					});
+
 				//this.getVouchers();
 				this.listIds = [];
 			});
