@@ -23,12 +23,13 @@ import { IssuingChequeComponent } from './issuing-cheque/issuing-cheque.componen
 import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing-cheque/add-edit-issuing-cheque.component';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PostVoucherComponent } from './vouchers/post-voucher/post-voucher.component';
 
 @NgModule({
   declarations: [
     AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent, IncomingChequeComponent, AddEditIncomingChequeComponent, JournalEntryPostComponent, AddEditJournalEntryPostComponent
     ,CloseFiscalPeriodComponent
-    ,IssuingChequeComponent, AddEditIssuingChequeComponent,
+    ,IssuingChequeComponent, AddEditIssuingChequeComponent,PostVoucherComponent
   ],
   imports: [
     CommonModule,

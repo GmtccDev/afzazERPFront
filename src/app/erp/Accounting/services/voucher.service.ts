@@ -40,6 +40,12 @@ export class VoucherServiceProxy {
 
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/edit?", voucher);
     }
+    
+    generateEntry(noPostVoucher: any): Observable<any> {
+       // let params = new HttpParams();
+       // params = params.append('id', id);
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/generateEntryForPostVouchers?", noPostVoucher)
+    }
     // ids: number[] | undefined;
     deleteListVoucher(branch: any): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/deleteList?", branch);
@@ -67,7 +73,23 @@ export class VoucherServiceProxy {
 
         return this.http.get<any>(this.baseUrl + "/api/Voucher/all?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/Voucher/GetVouchers");
+    }
+    allNotPostedVouchers(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
+     
+        let queryParams = new HttpParams();
+        if (pageIndex != undefined)
+            queryParams = queryParams.append("pageIndex", pageIndex);
+        if (pageSize != undefined)
+            queryParams = queryParams.append("pageSize", pageSize);
+        if (sortBy != undefined)
+            queryParams = queryParams.append("sortBy", sortBy);
+        if (sortOrder != undefined)
+            queryParams = queryParams.append("sortOrder", sortOrder);
+        if (filter != undefined)
+            queryParams = queryParams.append("filter", filter);
+
+        return this.http.get<any>(this.baseUrl + "/api/Voucher/getNotPostVouchers?", { params: queryParams });
+
     }
 
 

@@ -69,7 +69,7 @@
 												<input type="text" class="form-control icon-branch"
 													[ngClass]="{'is-invalid':f['voucherTotal'].errors || f['voucherTotal'].invalid}"
 													name="voucherTotal" formControlName="voucherTotal"
-													[(ngModel)]="voucherTotal">
+													[(ngModel)]="voucherTotal" disabled="true">
 												<div *ngIf="(f['voucherTotal'].touched || f['voucherTotal'].dirty ) && f['voucherTotal'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
@@ -132,7 +132,7 @@
 												<input type="text" class="form-control icon-branch"
 													[ngClass]="{'is-invalid':f['voucherTotalLocal'].errors || f['voucherTotalLocal'].invalid}"
 													name="voucherTotalLocal" formControlName="voucherTotalLocal"
-													[(ngModel)]="voucherTotalLocal">
+													[(ngModel)]="voucherTotalLocal" disabled="true">
 												<div *ngIf="(f['voucherTotalLocal'].touched || f['voucherTotalLocal'].dirty ) && f['voucherTotalLocal'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
@@ -259,7 +259,7 @@
 																			[ngModelOptions]="{standalone: true}"
 																			[items]="beneficiaryTypesEnum"
 																			bindLabel="name" bindValue="id"
-																			(change)="getBeneficaryByTypeId(voucherDetail[i].beneficiaryTypeId)"></ng-select>
+																			(change)="getBeneficaryByTypeId(voucherDetail[i].beneficiaryTypeId,i)"></ng-select>
 																	</td>
 																	<td>
 																		<input type="text" class="form-control"
@@ -304,14 +304,16 @@
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].debitLocal"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="form-control">
+																			min="0" class="form-control"
+																			disabled="true">
 																	</td>
 																	<td
 																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].creditLocal"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="form-control">
+																			min="0" class="form-control"
+																			disabled="true">
 																	</td>
 
 																	<td>
@@ -331,7 +333,7 @@
 																				class="fa fa-edit"></i></button>
 																		<button class="btn btn-danger btn-table px-3"
 																			value="{{'buttons.delete'|translate}}"
-																			type="button">
+																			type="button" (click)="deleteItem(i)">
 																			<i class="fa fa-trash"></i>
 																		</button>
 																	</td>
@@ -346,7 +348,7 @@
 																			[items]="beneficiaryTypesEnum"
 																			bindLabel="name" bindValue="id"
 																			style="width:100%"
-																			(change)="getBeneficaryByTypeId(selectedVoucherDetail.beneficiaryTypeId)"></ng-select>
+																			(change)="getBeneficaryByTypeId(selectedVoucherDetail.beneficiaryTypeId,-1)"></ng-select>
 																	</td>
 																	<td>
 																		<input type="text" class="form-control"
@@ -393,14 +395,16 @@
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.debitLocal"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="form-control">
+																			min="0" class="form-control"
+																			disabled="true">
 																	</td>
 																	<td
 																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.creditLocal"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="form-control">
+																			min="0" class="form-control"
+																			disabled="true">
 																	</td>
 
 																	<td>

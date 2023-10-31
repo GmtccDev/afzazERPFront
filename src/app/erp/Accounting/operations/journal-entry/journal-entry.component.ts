@@ -112,7 +112,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-            
+            debugger
             this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
 
 
@@ -205,6 +205,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           return value;
         }
       },
+      this.lang == 'ar'
+			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
+
+
     this.lang == 'ar'
       ? {
         title: '  الحالة  ', width: 300, field: 'postType', formatter: this.translateArEnum

@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
@@ -14,6 +13,7 @@ import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VoucherTypeServiceProxy } from '../../services/voucher-type.service';
+import { format } from 'date-fns';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -51,7 +51,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
@@ -241,7 +240,12 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'voucherDate',
+      field: 'voucherDate', width: 300, formatter: function (cell, formatterParams, onRendered) {
+				var value = cell.getValue();
+				value = format(new Date(value), 'dd-MM-yyyy');;
+				return value;
+			}
+      
     },
     {
       title: this.lang == 'ar' ? 'اجمالى قيمة السند محلى' : 'Voucher Total Local',
@@ -252,15 +256,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'description',
     },
 
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ الانشاء' : 'Create Date',
-    //   field: 'createdAt',
-    // },
-
-    // {
-    //   title: this.lang == 'ar' ? 'تاريخ التعديل' : 'Update Date',
-    //   field: 'updatedAt',
-    // },
+    
 
 
   ];
