@@ -123,10 +123,12 @@
     @import "layout/sidebar.scss";
     @import "layout/rtl.scss";
     @import "layout/box-layout.scss";
+    // @import "../scss/utils/variables";
     .bg-img-cover {
         object-fit: cover !important;
     }
     
+    $dark-all-font-color:#222222;
     $border-color:#d8d8d8;
     // start toolbar style
     .toolbar-wrapper {
@@ -753,7 +755,7 @@
         h4 {
             font-size: 1.2rem !important;
             font-weight: 600;
-            color: var(--theme-secondary);
+            color: $dark-all-font-color;
         }
     }
     
@@ -1468,6 +1470,24 @@
     
     .ngb-dp-navigation-select {
         flex: 1 1 20rem !important;
+    }
+    
+    .compact-wrapper.modern-type.page-wrapper {
+        .dashbord-page1 {
+            .page-body {
+                min-height: calc(100vh - 55px) !important;
+                margin-top: 55px !important;
+            }
+            main {
+                margin-top: 0;
+            }
+        }
+        main {
+            margin-top: 185px;
+        }
+        .header-logo-wrapper {
+            display: none !important
+        }
     }
     
     .input-search {}

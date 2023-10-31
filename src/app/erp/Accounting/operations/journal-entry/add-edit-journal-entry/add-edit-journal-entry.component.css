@@ -3,8 +3,3 @@ input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }/*# sourceMappingURL=add-edit-journal-entry.component.css.map */
-.required {
-  border: 1px solid red;
-  background-color: #ffcccc;
-  /* Add any other desired styles */
-} 
