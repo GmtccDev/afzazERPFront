@@ -167,6 +167,7 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       ShowFromDate: true, ShowToDate: true,
       ShowSearch: false,
       ShowCurrency: true,
+      
       ShowBranch: true,
       ShowVoucherKind: true
     }
