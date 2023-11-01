@@ -195,7 +195,9 @@
         "print": "طباعة",
         "view": "عرض",
         "cancelDefaultReport": "الغاء التقرير الافتراضى",
-        "post": "ترحيل"
+        "post": "ترحيل",
+        "generate-entry":"توليد القيد"
+
     },
     "component-names": {
         "country-information": "معلومات الدولة",
@@ -291,7 +293,7 @@
         "general-configuration":"الإعدادات",
         "cheques-journal":"يومية الشيكات",
         "chart-account":"دليل الحسابات",
-        "post-vouchers":"ترحيل السندات"
+        "generate-entry-vouchers":"توليد قيود السندات"
 
 
       

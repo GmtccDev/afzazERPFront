@@ -25,7 +25,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   vouchers: any[] = [];
   voucherType: any[] = [];
   voucherTypeId: any;
-
   currnetUrl: any;
   queryParams: any;
   sub: any;
@@ -248,7 +247,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       
     },
     {
-      title: this.lang == 'ar' ? 'اجمالى قيمة السند محلى' : 'Voucher Total Local',
+      title: this.lang == 'ar' ? 'الاجمالى محلى' : 'Total Local',
       field: 'voucherTotalLocal',
     },
     {
