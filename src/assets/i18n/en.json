@@ -179,9 +179,9 @@
         "discount": "Discount",
         "discount-ratio": "Discount Ratio",
         "discount-value": "Discount Value",
-
         "total": "Total",
         "net": "Net",
+        "net-after-tax":"Net After Tax",
         "remaining": "Remaining",
         "paid": "Paid",
         "sub-total": "Sub Total",

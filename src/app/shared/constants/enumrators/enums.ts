@@ -91,7 +91,7 @@ export enum AccountClassificationsEnum {
   Sales = 7,
   Purchases = 8,
   Inventory = 9,
-  Bank=10
+  Bank = 10
 
 }
 export enum AccountClassificationsArEnum {
@@ -104,7 +104,7 @@ export enum AccountClassificationsArEnum {
   مبيعات = 7,
   مشتريات = 8,
   مخزون = 9,
-  بنك=10
+  بنك = 10
 }
 export enum ReportOptionsEnum {
   Quarterly = 1,
@@ -165,12 +165,12 @@ export enum WarrantyTypeArEnum {
 
 }
 export enum BillKindEnum {
-  
+
   'Sales Bill' = 1,
   'Purchases Bill' = 2,
   'Sales Returns Bill' = 3,
   'Purchases Returns Bill' = 4,
-  'First Period Goods Bill'=5
+  'First Period Goods Bill' = 5
 
 }
 export enum BillKindArEnum {
@@ -178,84 +178,89 @@ export enum BillKindArEnum {
   'فاتورة مشتريات' = 2,
   'فاتورة مردودات مبيعات' = 3,
   'فاتورة مردودات مشتريات' = 4,
-  'فاتورة بضاعة أول المدة'=5
+  'فاتورة بضاعة أول المدة' = 5
 
 
 }
 export enum PayWayEnum {
-  
-   Cash = 1,
-   Credit = 2,
-   Installment  = 3
+
+  Cash = 1,
+  Credit = 2,
+  Installment = 3
 
 }
 export enum PayWayArEnum {
-  
+
   نقدي = 1,
   أجل = 2,
-  تقسيط  = 3
+  تقسيط = 3
 
 }
 export enum ShipMethodEnum {
-  
+
   FOB = 1,
   EX_Work = 2,
-  CF  = 3,
-  CIF=4
+  CF = 3,
+  CIF = 4
 
 }
 export enum ShipKindEnum {
-  
+
   All = 1,
   Part = 2
 
 }
 export enum ShipKindArEnum {
-  
+
   كلى = 1,
   جزئي = 2
 
 }
 export enum CommissionTypeArEnum {
-   شهرية= 1,
-   'ربع شهرية'= 2,
-   "نصف سنوية"= 3 ,
-   "سنوي"= 4,
+  شهرية = 1,
+  'ربع شهرية' = 2,
+  "نصف سنوية" = 3,
+  "سنوي" = 4,
 }
 export enum CommissionTypeEnum {
-   Monthly= 1,
-   Quarterly= 2,
-  'semi annual'= 3 ,
-   annualy = 4,
+  Monthly = 1,
+  Quarterly = 2,
+  'semi annual' = 3,
+  annualy = 4,
 }
-export enum calculationMethodsArEnum{
- 'قيمة ثابتة '=1,
- 'تحسب بناء على عمر التحصيل'= 2,
+export enum calculationMethodsArEnum {
+  'قيمة ثابتة ' = 1,
+  'تحسب بناء على عمر التحصيل' = 2,
 
 }
-export enum calculationMethodsEnum{
-  'Fix Amount'=1,
-  'As per age of collection'= 2,
- 
- }
- export enum GeneralConfigurationEnum{
-MainCurrency=1,
-MultiCurrency=2,
-JournalEntriesSerial=3,
-FinancialEntryCycle=4,
-ClosingAccount=5,
-AccountReceivables=6,
-AccountingPeriod=7,
-AccountExchange=8,
-FixedAssetsJournal=1000,
-DeprecationJournalEntries=1001, 
-AssetsGroupSerial=1002,
-AssetsGroupSerialFormat=1003,
-AssetsSerial=1004, 
-AssetsSerialformat=1005, 
-DefaultJournal=1006,
-ChequesJournal=1007,
-IdleTime=10001
- }
+export enum calculationMethodsEnum {
+  'Fix Amount' = 1,
+  'As per age of collection' = 2,
+
+}
+export enum GeneralConfigurationEnum {
+  MainCurrency = 1,
+  MultiCurrency = 2,
+  JournalEntriesSerial = 3,
+  FinancialEntryCycle = 4,
+  ClosingAccount = 5,
+  AccountReceivables = 6,
+  AccountingPeriod = 7,
+  AccountExchange = 8,
+  FixedAssetsJournal = 1000,
+  DeprecationJournalEntries = 1001,
+  AssetsGroupSerial = 1002,
+  AssetsGroupSerialFormat = 1003,
+  AssetsSerial = 1004,
+  AssetsSerialformat = 1005,
+  DefaultJournal = 1006,
+  ChequesJournal = 1007,
+  IdleTime = 10001
+}
+export enum ManuallyTaxType {
+  Net=1,
+  Total=2
+
+}
 
 

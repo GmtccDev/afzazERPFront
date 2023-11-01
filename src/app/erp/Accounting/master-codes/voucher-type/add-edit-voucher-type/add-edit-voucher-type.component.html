@@ -15,19 +15,19 @@
                                     <hr>
                                     <div class="row ">
                                         <div class="col-md-6 col-12">
-                                            <label for="voucherNameAr" class="label-name">
+                                            <label for="nameAr" class="label-name">
                                                 {{'voucher-type.voucher-name-ar'|translate}}</label>
                                             <span class="text-danger">*</span>
                                             <div class="form-group position-relative">
 
                                                 <input type="text" class="form-control icon-branch"
-                                                    [ngClass]="{'is-invalid':f['voucherNameAr'].errors || f['voucherNameAr'].invalid}"
-                                                    name="voucherNameAr" formControlName="voucherNameAr">
-                                                <div *ngIf="(f['voucherNameAr'].touched || f['voucherNameAr'].dirty ) && f['voucherNameAr'].invalid"
+                                                    [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
+                                                    name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span
-                                                        *ngIf="f['voucherNameAr'].errors && f['voucherNameAr'].errors['required']"
+                                                        *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
@@ -35,15 +35,15 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <label for="voucherNameEn"
+                                            <label for="nameEn"
                                                 class="label-name">{{'voucher-type.voucher-name-en'|translate}}</label>
                                             <!-- <span class="text-danger">*</span> -->
                                             <div class="form-group position-relative">
-                                                <input type="text" class="form-control icon-branch" name="voucherNameEn"
-                                                    formControlName="voucherNameEn">
-                                                <!-- <div *ngIf="(f['voucherNameEn'].touched || f['voucherNameEn'].dirty ) && f['voucherNameEn'].invalid" class="validation alert-danger position-absolute">
+                                                <input type="text" class="form-control icon-branch" name="nameEn"
+                                                    formControlName="nameEn">
+                                                <!-- <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['voucherNameEn'].errors && f['voucherNameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
+                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
                                                 </div> -->
                                             </div>

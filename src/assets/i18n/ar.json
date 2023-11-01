@@ -418,6 +418,7 @@
         "discount-ratio": "نسبة الخصم",
         "discount-value": "قيمة الخصم",
         "net": "الصافى",
+        "net-after-tax":"الصافى بعد الضريبة",
         "remaining": "المتبقى",
         "paid": "المدفوع",
         "sales-account": "حساب المبيعات",
