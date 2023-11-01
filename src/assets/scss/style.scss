@@ -1472,6 +1472,7 @@
         flex: 1 1 20rem !important;
     }
     
+    // start style layout=Seoul
     .compact-wrapper.modern-type.page-wrapper {
         .dashbord-page1 {
             .page-body {
@@ -1486,10 +1487,11 @@
             margin-top: 185px;
         }
         .header-logo-wrapper {
-            display: none !important
+            // display: none !important
         }
     }
     
+    // end style layout=Seoul
     .input-search {}
     
     @import "../scss/themes/responsive";
