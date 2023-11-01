@@ -185,8 +185,8 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'id',
     },
     this.lang == 'ar'
-      ? { title: ' الاسم', field: 'voucherNameAr' } :
-      { title: ' Name  ', field: 'voucherNameEn' }
+      ? { title: ' الاسم', field: 'nameAr' } :
+      { title: ' Name  ', field: 'nameEn' }
     
 
   ];
@@ -201,8 +201,8 @@ export class VoucherTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
-        { field: 'voucherNameEn', type: 'like', value: searchTxt },
-        { field: 'voucherNameAr', type: 'like', value: searchTxt },
+        { field: 'nameEn', type: 'like', value: searchTxt },
+        { field: 'nameAr', type: 'like', value: searchTxt },
         { field: 'id', type: 'like', value: searchTxt },
         ,
       ],

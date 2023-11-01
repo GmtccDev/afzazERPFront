@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NAME_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
+import { REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
@@ -177,7 +177,6 @@ export class AddEditBillTypeComponent implements OnInit {
       confirmCostCenter: false,
       confirmAnalyticalCode: false,
       calculatingTax: false,
-      //calculatingValueAddedTaxAfterLuxuryTax: false,
       calculatingTaxOnPriceAfterDeductionAndAddition: false,
       calculatingTaxManual: false,
       manuallyTaxType: '',
@@ -253,7 +252,6 @@ export class AddEditBillTypeComponent implements OnInit {
             confirmCostCenter: res.response?.confirmCostCenter,
             confirmAnalyticalCode: res.response?.confirmAnalyticalCode,
             calculatingTax: res.response?.calculatingTax,
-          //  calculatingValueAddedTaxAfterLuxuryTax: res.response?.calculatingValueAddedTaxAfterLuxuryTax,
             calculatingTaxOnPriceAfterDeductionAndAddition: res.response?.calculatingTaxOnPriceAfterDeductionAndAddition,
             calculatingTaxManual: res.response?.calculatingTaxManual,
             manuallyTaxType: res.response?.manuallyTaxType +"",
@@ -653,7 +651,6 @@ export class AddEditBillTypeComponent implements OnInit {
   calculatingTax() {
         
     if (this.billTypeForm.value.calculatingTax == false) {
-   //   this.billTypeForm.value.calculatingValueAddedTaxAfterLuxuryTax = false;
       this.billTypeForm.value.calculatingTaxOnPriceAfterDeductionAndAddition = false;
       this.billTypeForm.value.calculatingTaxManual = false;
       this.billTypeForm.value.manuallyTaxType = '';

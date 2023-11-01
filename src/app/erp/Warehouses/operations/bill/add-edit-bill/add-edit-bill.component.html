@@ -275,13 +275,13 @@
 
                                         </div>
                                         <div class="col-md-2 col-12">
-                                            <label for="currencyExchangeTransaction"
+                                            <label for="currencyValue"
                                                 class="label-name">{{'bill.transaction-factor'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control icon-branch"
-                                                    name="currencyExchangeTransaction"
-                                                    formControlName="currencyExchangeTransaction"
-                                                    [(ngModel)]="currencyExchangeTransaction">
+                                                    name="currencyValue"
+                                                    formControlName="currencyValue"
+                                                    [(ngModel)]="currencyValue">
                                             </div>
                                         </div>
 
@@ -871,7 +871,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="number"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].currencyExchangeTransaction"
+                                                                        [(ngModel)]="billAdditionAndDiscount[i].currencyValue"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 
@@ -955,7 +955,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="number"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.currencyExchangeTransaction"
+                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.currencyValue"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 
@@ -979,10 +979,24 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-4 col-12">
+                                            <label for="totalBeforeTax" class="label-name">{{'general.total-before-tax'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" disabled class="form-control icon-branch"
+                                                    name="totalBeforeTax" formControlName="totalBeforeTax" [(ngModel)]="totalBeforeTax">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
                                             <label for="total" class="label-name">{{'general.total'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" disabled class="form-control icon-branch"
                                                     name="total" formControlName="total" [(ngModel)]="total">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="net" class="label-name">{{'general.net'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" disabled class="form-control icon-branch"
+                                                    name="net" formControlName="net" [(ngModel)]="net">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12"
@@ -992,7 +1006,7 @@
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control icon-branch" name="taxRatio"
                                                     formControlName="taxRatio" [(ngModel)]="taxRatio"
-                                                    (change)="getNet()">
+                                                    (change)="getNetAfterTax(1)">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12"
@@ -1001,22 +1015,16 @@
                                                 class="label-name">{{'general.tax-value'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control icon-branch" name="taxValue"
-                                                    formControlName="taxValue" [(ngModel)]="taxValue">
+                                                    formControlName="taxValue" [(ngModel)]="taxValue" (change)="getNetAfterTax(2)">
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-4 col-12">
-                                            <label for="discount"
-                                                class="label-name">{{'general.discount'|translate}}</label>
-                                            <div class="form-group position-relative">
-                                                <input type="number"  class="form-control icon-branch"
-                                                    name="discount" formControlName="discount" [(ngModel)]="discount">
-                                            </div>
-                                        </div> -->
-                                        <div class="col-md-4 col-12">
-                                            <label for="net" class="label-name">{{'general.net'|translate}}</label>
+                                       
+                                        
+                                        <div class="col-md-4 col-12" *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual==true">
+                                            <label for="netAfterTax" class="label-name">{{'general.net-after-tax'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" disabled class="form-control icon-branch"
-                                                    name="net" formControlName="net" [(ngModel)]="net">
+                                                    name="netAfterTax" formControlName="netAfterTax" [(ngModel)]="netAfterTax">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12">
@@ -1024,6 +1032,15 @@
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control icon-branch" name="paid"
                                                     formControlName="paid" [(ngModel)]="paid" (change)="getRamining()">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="remaining"
+                                                class="label-name">{{'general.remaining'|translate}}</label>
+                                            <div class="form-group position-relative">
+                                                <input type="number" disabled class="form-control icon-branch"
+                                                    name="remaining" formControlName="remaining"
+                                                    [(ngModel)]="remaining">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
@@ -1047,15 +1064,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-4 col-12">
-                                            <label for="remaining"
-                                                class="label-name">{{'general.remaining'|translate}}</label>
-                                            <div class="form-group position-relative">
-                                                <input type="number" disabled class="form-control icon-branch"
-                                                    name="remaining" formControlName="remaining"
-                                                    [(ngModel)]="remaining">
-                                            </div>
-                                        </div>
+                                       
                                         <div class="col-md-6 col-12">
                                             <label for="remainingAccountId" class="label-name">
                                                 {{'general.remaining-account'|translate}}

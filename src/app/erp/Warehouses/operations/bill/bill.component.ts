@@ -11,9 +11,6 @@ import { SharedService } from '../../../../shared/common-services/shared-service
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BillServiceProxy } from '../../services/bill.service';
-import { Bill } from '../../models/bill';
-import { ResponseResult } from '../../../../shared/model/ResponseResult';
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
 
 @Component({
@@ -52,7 +49,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
@@ -247,7 +243,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     ];
   }
 
-  openVoucherTypes() { }
   onCheck(id) {
 
       const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
