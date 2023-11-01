@@ -23,7 +23,7 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
   //#region Main Declarations
   lang = localStorage.getItem("language");
   companyId: string = localStorage.getItem("companyId");
-
+  userId: any = localStorage.getItem("userId");
   facialPeriodId: any;
 
   subsList: Subscription[] = [];
@@ -34,8 +34,8 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
   leafAccountId: any;
   costCenterId: any;
   entriesStatusId: any;
-  level: any;
-
+  levelId: any;
+  branchId: any;
   toolbarPathData: ToolbarPath = {
     listPath: '',
     addPath: '',
@@ -113,51 +113,44 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
       monthFrom = Number(this.fromDate.month + 1)
       this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
     }
-    else {
+    else if (this.fromDate.month != undefined) {
+
       monthFrom = Number(this.fromDate.month + 1)
       this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-
     }
 
     if (this.toDate == undefined || this.toDate == null) {
-      //  this.toDate = this.dateConverterService.getCurrentDate();
+
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
 
     }
-    else {
+    else if (this.toDate.month != undefined) {
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
     }
-    // if (this.accountGroupId == null || this.accountGroupId == undefined) {
-    //   this.accountGroupId = 0;
-    // }
-    // if (this.mainAccountId == null || this.mainAccountId == undefined) {
-    //   this.mainAccountId = 0;
-    // }
-    // if (this.leafAccountId == null || this.leafAccountId == undefined) {
-    //   this.leafAccountId = 0;
-    // }
-    // if (this.costCenterId == null || this.costCenterId == undefined) {
-    //   this.costCenterId = 0;
-    // }
+    if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined" || this.branchId == "") {
+      this.branchId = 0;
+    }
+    if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined" || this.branchId == "") {
+      this.branchId = 0;
+    }
     if (this.entriesStatusId == null || this.entriesStatusId == undefined) {
       this.entriesStatusId = 0;
     }
-    if (this.level == null || this.level == undefined) {
-      this.level = 1;
+    if (this.levelId == null || this.levelId == undefined) {
+      this.levelId = 1;
     }
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate +
-      // "&reportParameter=accountGroupId!" + this.accountGroupId +
-      // "&reportParameter=mainAccountId!" + this.mainAccountId +
-      // "&reportParameter=leafAccountId!" + this.leafAccountId +
-      // "&reportParameter=costCenterId!" + this.costCenterId +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
-      "&reportParameter=level!" + this.level +
-      "&reportParameter=lang!" + this.lang +
-      "&reportParameter=companyId!" + this.companyId
+      "&reportParameter=levelId!" + this.levelId +
+      "&reportParameter=branchId!" + this.branchId +
+      "&reportParameter=companyId!" + this.companyId +
+      "&reportParameter=userId!" + this.userId +
+      "&reportParameter=lang!" + this.lang;
+
 
 
 
@@ -174,12 +167,15 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
   }
   ShowOptions: {
     ShowFromDate: boolean, ShowToDate: boolean
-    ShowSearch: boolean, ShowEntriesStatus, ShowLevel
+    ShowSearch: boolean, ShowEntriesStatus, ShowLevel, ShowBranch: boolean;
+
   } = {
       ShowFromDate: true, ShowToDate: true,
       ShowSearch: false,
       ShowEntriesStatus: true,
-      ShowLevel: true
+      ShowLevel: true,
+      ShowBranch: true
+
     }
 
   OnFilter(e: {
@@ -190,7 +186,7 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     this.fromDate = e.fromDate,
       this.toDate = e.toDate,
       this.entriesStatusId = e.entriesStatusId
-    this.level = e.level
+    this.levelId = e.level
   }
 
   listenToClickedButton() {

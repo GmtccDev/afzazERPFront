@@ -192,7 +192,7 @@ export class NavService implements OnInit, OnDestroy {
 					title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
 					children: this.voucherTypesNew
 				},
-				{ path: '/accounting-operations/postVoucher', title: this.translate.instant("component-names.post-vouchers"), type: 'link', active: true },
+				{ path: '/accounting-operations/generateEntryVoucher', title: this.translate.instant("component-names.generate-entry-vouchers"), type: 'link', active: true },
 
 			]
 

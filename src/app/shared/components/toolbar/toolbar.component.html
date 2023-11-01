@@ -64,15 +64,23 @@
 										{{ 'toolbar.delete'|translate}}
 									</span>
 								</button>
-								<button *ngIf="showButtons?.showPost" (click)="doPostEvent();"
-								[hidden]="disabledPost" [disabled]="disabledPost"
-								[ngClass]="{'disabled':disabledPost}"
-								class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-								<i data-feather="printer"></i>
-								<span class="k-button-text">
-									{{ 'toolbar.post'|translate}}
-								</span>
-							</button>
+								<button *ngIf="showButtons?.showPost" (click)="doPostEvent();" [hidden]="disabledPost"
+									[disabled]="disabledPost" [ngClass]="{'disabled':disabledPost}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<i data-feather="printer"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.post'|translate}}
+									</span>
+								</button>
+								<button *ngIf="showButtons?.showGenerateEntry" (click)="doGenerateEntryEvent();"
+									[hidden]="disabledGenerateEntry" [disabled]="disabledGenerateEntry"
+									[ngClass]="{'disabled':disabledGenerateEntry}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<i data-feather="printer"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.generate-entry'|translate}}
+									</span>
+								</button>
 								<button *ngIf="showButtons?.showCancel" (click)="doCancelEvent();"
 									disabled="disabledCancel" [ngClass]="{'disabled':disabledCancel}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
@@ -82,13 +90,13 @@
 									</span>
 								</button>
 								<button *ngIf="showButtons?.showPrint" (click)="doPrintEvent();"
-                                [disabled]="disabledPrint" [ngClass]="{'disabled':disabledPrint}"
-                                    class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
-                                    <i data-feather="printer"></i>
-                                    <span class="k-button-text">
-                                        {{ 'toolbar.print'|translate}}
-                                    </span>
-                                </button>
+									[disabled]="disabledPrint" [ngClass]="{'disabled':disabledPrint}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
+									<i data-feather="printer"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.print'|translate}}
+									</span>
+								</button>
 								<!-- <button *ngIf="showButtons?.showView" (click)="doViewEvent();" [disabled]="disabledView"
                                     [ngClass]="{'disabled':disabledView}"
                                     class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
@@ -104,7 +112,7 @@
 										{{ 'toolbar.cancelDefaultReport'|translate}}
 									</span>
 								</button>
-						
+
 								<!-- <button *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}" class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
 									<i data-feather="download"></i>
                                         <span class="k-button-text">
@@ -112,7 +120,9 @@
                                         </span>
                                 </button> -->
 								<div ngbDropdown class="d-inline-block" placement="bottom">
-									<button id="dropdownBasic1" *ngIf="showButtons?.showExport" (click)="doExportEvent();" disabled="disabledExport" [ngClass]="{'disabled':disabledExport}"  ngbDropdownToggle
+									<button id="dropdownBasic1" *ngIf="showButtons?.showExport"
+										(click)="doExportEvent();" disabled="disabledExport"
+										[ngClass]="{'disabled':disabledExport}" ngbDropdownToggle
 										class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
 										<i data-feather="download"></i>
 										<span class="k-button-text">
@@ -128,7 +138,7 @@
 
 
 									</div>
-								
+
 								</div>
 
 
