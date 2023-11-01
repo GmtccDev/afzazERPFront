@@ -500,6 +500,7 @@
         "noteNotActive": "سبب عدم التفعيل",
         "taxNumber": "الرقم الضريبي",
         "account-classification": "فئة الحساب",
+        "account-reference": " مرحعية الحساب",
         "account-classification-income-statement": "تصنيف الحساب (قائمة الدخل)",
         "budget": "الميزانية"
     },

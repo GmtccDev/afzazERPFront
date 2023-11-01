@@ -520,6 +520,7 @@
         "noteNotActive": "Note Not Active",
         "taxNumber": "Tax Number",
         "account-classification": "Account Classification",
+        "account-reference": "Account Reference",
         "account-classification-income-statement": "Account Classification (Income Statement)",
         "budget": "Budget"
     },
