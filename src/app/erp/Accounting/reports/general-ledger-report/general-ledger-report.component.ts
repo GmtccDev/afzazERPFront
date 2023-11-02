@@ -104,13 +104,16 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
     });
   }
   //#endregion
-
+selectedCurrencyName:any='';
+selectedEntriesStatusName='';
+selectedBranchName=''
+selectedLeafAccountName=''
   gotoViewer() {
 
 
     let monthFrom;
     let monthTo;
-
+  debugger
 		if (this.fromDate == undefined || this.fromDate == null) {
 			//  this.fromDate = this.dateConverterService.getCurrentDate();
 			monthFrom = Number(this.fromDate.month + 1)
@@ -153,7 +156,7 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
     if (this.toEntryNo == null || this.toEntryNo == undefined || this.toEntryNo == "") {
       this.toEntryNo = 0;
     }
-
+    
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate +
@@ -161,7 +164,12 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
       "&reportParameter=branchId!" + this.branchId +
       "&reportParameter=companyId!" + this.companyId +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
+      "&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName +
+      "&reportParameter=selectedleafAccountName!" + this.selectedLeafAccountName +
+      "&reportParameter=selectedBranchName!" + this.selectedBranchName+
+      "&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName +
       "&reportParameter=leafAccountId!" + this.leafAccountId +
+    
       "&reportParameter=fromEntryNo!" + this.fromEntryNo +
       "&reportParameter=toEntryNo!" + this.toEntryNo +
       "&reportParameter=lang!" + this.lang;
@@ -193,15 +201,20 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
     }
 
   OnFilter(e: {
-    fromDate, toDate, currencyId, branchId, fromEntryNo, toEntryNo, leafAccountId, entriesStatusId
+    fromDate, toDate, currencyId, branchId,branchName,currencyName,leafAccountName, fromEntryNo, toEntryNo, leafAccountId, entriesStatusId,
+    entriesStatusName
   }) {
 
     this.fromDate = e.fromDate
     this.toDate = e.toDate
     this.fromEntryNo = e.fromEntryNo
     this.toEntryNo = e.toEntryNo
+    this.selectedCurrencyName=e.currencyName,
+    this.selectedEntriesStatusName=e.entriesStatusName,
+    this.selectedLeafAccountName=e.leafAccountName
     this.currencyId = e.currencyId
-    this.branchId = e.branchId
+    this.branchId = e.branchId,
+    this.selectedBranchName=e.branchName,
     this.leafAccountId = e.leafAccountId
     this.entriesStatusId = e.entriesStatusId
 
@@ -265,6 +278,7 @@ export class GeneralLedgerReportComponent implements OnInit, OnDestroy, AfterVie
           //console.log('result data getbyid', res);
           this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
+          
 
 
 

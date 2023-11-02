@@ -99,7 +99,9 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
   //#endregion
-
+  selectedEntriesStatusName='';
+  selectedBranchName='';
+  selectedCostCenterName='';
   gotoViewer() {
  
     
@@ -147,7 +149,11 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
       "&reportParameter=companyId!" + this.companyId+
       "&reportParameter=entriesStatusId!" + this.entriesStatusId+
       "&reportParameter=costCenterId!" + this.costCenterId+
-      "&reportParameter=lang!" + this.lang; 
+      "&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName+
+      "&reportParameter=selectedBranchName!" + this.selectedBranchName+
+      "&reportParameter=selectedCostCenterName!" + this.selectedCostCenterName+
+      "&reportParameter=lang!" + this.lang;
+      
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -174,7 +180,7 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   OnFilter(e: {
-    fromDate, toDate,branchId,entriesStatusId,costCenterId
+    fromDate, toDate,branchId,branchName,entriesStatusId,entriesStatusName,costCenterId,costCenterName
   }) {
     
       this.fromDate = e.fromDate
@@ -182,6 +188,9 @@ export class CostCentersReportComponent implements OnInit, OnDestroy, AfterViewI
       this.branchId=e.branchId
       this.entriesStatusId=e.entriesStatusId
       this.costCenterId=e.costCenterId
+      this.selectedBranchName =e.branchName
+      this.selectedCostCenterName = e.costCenterName
+      this.selectedEntriesStatusName = e.entriesStatusName
 
   }
 

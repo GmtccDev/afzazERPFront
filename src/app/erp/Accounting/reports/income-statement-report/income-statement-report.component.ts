@@ -101,7 +101,8 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     });
   }
   //#endregion
-
+  selectedEntriesStatusName='';
+	  selectedBranchName='';
   gotoViewer() {
 
 
@@ -149,6 +150,8 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
       "&reportParameter=branchId!" + this.branchId +
       "&reportParameter=companyId!" + this.companyId +
       "&reportParameter=userId!" + this.userId +
+      "&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName+
+      "&reportParameter=selectedBranchName!" + this.selectedBranchName+
       "&reportParameter=lang!" + this.lang;
 
 
@@ -179,14 +182,17 @@ export class IncomeStatementReportComponent implements OnInit, OnDestroy, AfterV
     }
 
   OnFilter(e: {
-    fromDate, toDate, entriesStatusId, level
+    fromDate; toDate;entriesStatusName,entriesStatusId,branchId,branchName,level
   }) {
 
 
-    this.fromDate = e.fromDate,
-      this.toDate = e.toDate,
-      this.entriesStatusId = e.entriesStatusId
-    this.levelId = e.level
+    this.fromDate = e.fromDate;
+		this.toDate = e.toDate;
+		this.branchId = e.branchId;
+		this.levelId = e.level;
+		this.entriesStatusId = e.entriesStatusId;
+		this.selectedEntriesStatusName= e.entriesStatusName;
+		this.selectedBranchName = e.branchName;
   }
 
   listenToClickedButton() {
