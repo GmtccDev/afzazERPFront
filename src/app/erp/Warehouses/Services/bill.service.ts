@@ -30,13 +30,13 @@ export class BillServiceProxy {
 
     createBill(bill: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Bill/add?", bill);
+        return this.http.post<any>(environment.apiUrl + "/api/Bill/create?", bill);
     }
     deleteListBill(bill: any): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/Bill/deleteList?", bill);
     }
     updateBill(bill: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/Bill/edit?", bill);
+        return this.http.post<any>(environment.apiUrl + "/api/Bill/update?", bill);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Bill/get-ddl?");
@@ -77,7 +77,7 @@ export class BillServiceProxy {
     deleteBill(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Bill/delete", { params: params });
+        return this.http.delete<any>(environment.apiUrl + "/api/Bill/delete", { params: params });
     }
     deleteEntity(entity: any): Observable<any> {
 
