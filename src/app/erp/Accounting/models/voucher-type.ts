@@ -2,8 +2,8 @@ export class VoucherType {
     id: number;
     companyId: number; 
     branchId: number; 
-    voucherNameAr: string;
-    voucherNameEn: string;
+    nameAr: string;
+    nameEn: string;
     journalId: number|undefined;
     voucherKindId: number;
     serialTypeId: number;

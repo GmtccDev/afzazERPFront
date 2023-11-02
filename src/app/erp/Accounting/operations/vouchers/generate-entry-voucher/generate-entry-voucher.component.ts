@@ -227,9 +227,9 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		},
 		this.lang == 'ar'
 			? {
-				title: 'نمط السند', field: 'voucherNameAr'
+				title: 'نمط السند', field: 'nameAr'
 			} : {
-				title: 'Voucher Type', field: 'voucherNameEn'
+				title: 'Voucher Type', field: 'nameEn'
 			},
 
 		this.lang == 'ar'
@@ -262,8 +262,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		this.searchFilters = [
 			[
 				{ field: 'code', type: 'like', value: searchTxt },
-				{ field: 'voucherNameAr', type: 'like', value: searchTxt },
-				{ field: 'voucherNameEn', type: 'like', value: searchTxt },
+				{ field: 'nameAr', type: 'like', value: searchTxt },
+				{ field: 'nameEn', type: 'like', value: searchTxt },
 				{ field: 'voucherKindAr', type: 'like', value: searchTxt },
 				{ field: 'voucherKindEn', type: 'like', value: searchTxt },
 				{ field: 'voucherTotalLocal', type: 'like', value: searchTxt },

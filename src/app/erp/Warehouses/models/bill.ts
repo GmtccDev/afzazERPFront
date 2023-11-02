@@ -17,7 +17,7 @@ export class Bill {
     storeId: number | undefined;
     deliveryDate: any;
     currencyId: number;
-    currencyExchangeTransaction: number | undefined;
+    currencyValue: number | undefined;
     projectId: number | undefined;
     costCenterId: number;
     notes: string | undefined;
@@ -28,16 +28,15 @@ export class Bill {
     salesReturnAccountId: number | undefined;
     purchasesAccountId: number | undefined;
     purchasesReturnAccountId: number | undefined;
-    total: number | undefined;
+    totalBeforeTax: number;
+    total: number;
     taxRatio: number | undefined;
     taxValue: number | undefined;
-
-    // discount: number | undefined;
-    // discountAccountId: number | undefined;
-    net: number | undefined;
+    net: number;
+    netAfterTax: number;
     paid: number | undefined;
     paidAccountId: number | undefined;
-    remaining: number | undefined;
+    remaining: number;
     remainingAccountId: number | undefined;
     billItem: BillItem[] = [];
     billAdditionAndDiscount: BillAdditionAndDiscount[] = [];
@@ -53,12 +52,14 @@ export class BillItem {
     unitId: number | undefined;
     quantity: number;
     price: number;
-    totalBeforeTax: number | undefined;
+    totalBeforeTax: number;
     additionRatio: number | undefined;
     additionValue: number | undefined;
     discountRatio: number | undefined;
     discountValue: number | undefined;
-    total: number | undefined;
+    taxRatio: number | undefined;
+    taxValue: number | undefined;
+    total: number;
     storeId: number | undefined;
     notes: string | undefined;
     itemNameAr:string;
@@ -82,7 +83,7 @@ export class BillAdditionAndDiscount {
     notes:string|undefined;
     correspondingAccountId:string|undefined;
     currencyId:number | undefined;
-    currencyExchangeTransaction:number | undefined;
+    currencyValue:number | undefined;
     accountNameAr:string|undefined;
     accountNameEn:string|undefined;
     correspondingAccountNameAr:string|undefined;
