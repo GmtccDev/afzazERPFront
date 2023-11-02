@@ -2229,11 +2229,11 @@
                 }
                 .sidebar-main {
                     .sidebar-links {
-                        height: calc(100vh - 160px);
+                        height: calc(100vh - 250px);
                     }
                 }
                 &.close_icon {
-                    left: -300px;
+                    // left: -300px;
                     .logo-icon-wrapper {
                         display: none;
                     }
@@ -2810,3 +2810,7 @@
 /**=====================
     78. Sidebar CSS Ends
 ==========================**/
+
+.page-wrapper.modern-type .page-body-wrapper.dashbord-page1 div.sidebar-wrapper {
+    top: 50px;
+}

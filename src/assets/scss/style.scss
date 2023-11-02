@@ -1472,26 +1472,33 @@
         flex: 1 1 20rem !important;
     }
     
+    img.img-fluid.for-light.rania2,
+    img.img-fluid.for-light.rania1 {
+        display: none;
+    }
+    
     // start style layout=Seoul
-    .compact-wrapper.modern-type.page-wrapper {
+    .compact-wrapper.modern-type.page-wrapper,
+    .horizontal-wrapper.material-type.page-wrapper {
         .dashbord-page1 {
-            .page-body {
-                min-height: calc(100vh - 55px) !important;
-                margin-top: 55px !important;
-            }
             main {
                 margin-top: 0;
             }
         }
         main {
-            margin-top: 185px;
+            margin-top: 165px;
         }
-        .header-logo-wrapper {
-            // display: none !important
+        img.img-fluid.for-light.rania2,
+        img.img-fluid.for-light.rania1 {
+            display: inline;
         }
     }
     
     // end style layout=Seoul
+    // start style layout=LosAngeles
+    .horizontal-wrapper.material-type.page-wrapper {}
+    
+    // end style layout=LosAngeles
     .input-search {}
     
     @import "../scss/themes/responsive";
