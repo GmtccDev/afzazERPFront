@@ -4,7 +4,7 @@
     
 <section class="inner-page-wrapper inner-page-auction">
     <div class="container-fluid p-0">
-        <app-tabulator  [idColName]="'id'" [childRowData]="noPostvouchers" (onCheckItem)="onCheck($event)"  [parentColName]="'groupId'" [divId]="'noPostvouchers'" [columnSettings]="columnNames" [componentName]="'noPostvouchers'" (onMenuActionSelected)="onMenuActionSelected($event)"
+        <app-tabulator  [idColName]="'id'" [childRowData]="noGenerateEntryVouchers" (onCheckItem)="onCheck($event)"   (onEditItem)="onEdit($event)" [parentColName]="'groupId'" [divId]="'noGenerateEntryVouchers'" [columnSettings]="columnNames" [componentName]="'noGenerateEntryVouchers'"
              [direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1"></app-tabulator>
     </div>
 </section>

@@ -28,16 +28,15 @@ export class BillServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createBill(branch: any): Observable<any> {
+    createBill(bill: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Bill/add?", branch);
+        return this.http.post<any>(environment.apiUrl + "/api/Bill/add?", bill);
     }
-    // ids: number[] | undefined;
-    deleteListBill(branch: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/Bill/deleteList?", branch);
+    deleteListBill(bill: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/Bill/deleteList?", bill);
     }
-    updateBill(branch: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/Bill/edit?", branch);
+    updateBill(bill: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/Bill/edit?", bill);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Bill/get-ddl?");

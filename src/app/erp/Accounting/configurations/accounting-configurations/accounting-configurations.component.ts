@@ -281,7 +281,6 @@ export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.general-configuration");
           if (res.success) {
-            debugger
             this.generalConfiguration = res.response.result.items
             if (Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value) > 0) {
               this.currencyId = Number(this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value);
@@ -291,9 +290,7 @@ export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
             }
 
             this.multiCurrency = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
-            debugger
             this.serial = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
-           
             this.cycleSelected = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.FinancialEntryCycle).value;
             this.accountId = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.ClosingAccount).value;
             this.accountReceivablesId = this.generalConfiguration.find(c => c.id == GeneralConfigurationEnum.AccountReceivables).value;

@@ -257,8 +257,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     return this.voucherForm.controls;
   }
 
-  voucherNameEn: any;
-  voucherNameAr: any;
+  nameEn: any;
+  nameAr: any;
   //#endregion
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
@@ -270,8 +270,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.voucherForm.value.currencyId = res.response.defaultCurrencyId;
           this.voucherkindId = res.response.voucherKindId;
           this.serialTypeId = res.response.serialTypeId;
-          this.voucherNameEn = res.response.voucherNameEn;
-          this.voucherNameAr = res.response.voucherNameAr;
+          this.nameEn = res.response.nameEn;
+          this.nameAr = res.response.nameAr;
           this.defaultBeneficiaryId = res.response.defaultBeneficiaryId;
           this.selectedVoucherDetail.beneficiaryTypeId=this.defaultBeneficiaryId;
           this.getBeneficaryByTypeId(this.selectedVoucherDetail.beneficiaryTypeId,-1);
@@ -685,7 +685,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openBeneficiarySearchDialog(i) {
-    debugger
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.beneficiaryNameAr ?? '';
@@ -891,7 +890,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
   }
   deleteItem(index) {
-    debugger
+     
     this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
     this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
     let currencyConversionFactor;
@@ -1287,7 +1286,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     
   }
   getBeneficiaryAccountAdded(i) {
-    debugger
+     
     
     if(this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier)
     {

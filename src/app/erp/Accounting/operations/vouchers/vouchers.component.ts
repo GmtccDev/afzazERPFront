@@ -25,7 +25,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   vouchers: any[] = [];
   voucherType: any[] = [];
   voucherTypeId: any;
-
   currnetUrl: any;
   queryParams: any;
   sub: any;
@@ -122,15 +121,15 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  voucherNameEn: any;
-  voucherNameAr: any;
+  nameEn: any;
+  nameAr: any;
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res) => {
           if (res.success) {
             this.voucherType = res.response;
-            this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.voucherNameAr : res.response.voucherNameEn)
+            this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn)
 
           }
           resolve();
@@ -248,7 +247,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       
     },
     {
-      title: this.lang == 'ar' ? 'اجمالى قيمة السند محلى' : 'Voucher Total Local',
+      title: this.lang == 'ar' ? 'الاجمالى محلى' : 'Total Local',
       field: 'voucherTotalLocal',
     },
     {

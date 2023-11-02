@@ -40,7 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   disabledView = false;
   disabledPost = true;
   disableCancelDefaultReport=false;
-
+  disabledGenerateEntry=true;
   toolbarPathData!: ToolbarPath;
   toolbarData: ToolbarData = {} as ToolbarData;
   toolbarCompnentData: ToolbarData = {} as ToolbarData;
@@ -137,6 +137,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           }if (this.toolbarCompnentData.action == 'ConfigMode') {
             this.checkButtonClicked('ConfigMode');
           }
+          if (this.toolbarCompnentData.action == 'GenerateEntry') {
+            this.checkButtonClicked('GenerateEntry');
+          }
 
     
         }
@@ -198,6 +201,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     (this.toolbarData.action = 'Post'),
       this.SharedService.changeButton(this.toolbarData);
   }
+  doGenerateEntryEvent() {
+    
+    this.checkButtonClicked('GenerateEntry');
+    (this.toolbarData.action = 'GenerateEntry'),
+      this.SharedService.changeButton(this.toolbarData);
+  }
   doNewEvent() {
     this.checkButtonClicked('New');
     (this.toolbarData.action = 'New'),
@@ -257,6 +266,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledDelete=true;
       this.disabledView=true;
       this.disabledPost=true;
+      this.disabledGenerateEntry=true;
+
       this.disableCancelDefaultReport=true;
 
     } else if (button == 'Save') {
@@ -268,6 +279,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledDelete=true;
       this.disabledView=true;
       this.disableCancelDefaultReport=true;
+      this.disabledGenerateEntry=true;
+      this.disabledPost=true;
 
     } else if (button == 'New') {
       this.disabledUpdate = true;
@@ -277,6 +290,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledDelete=true;
       this.disabledView=true;
       this.disableCancelDefaultReport=true;
+      this.disabledGenerateEntry=true;
+      this.disabledPost=true;
+
 
     } else if (button == 'Copy') {
     } else if (button == 'Update') {
@@ -285,6 +301,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledView=true;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;
+      this.disabledGenerateEntry=true;
+      this.disabledPost=true;
 
     } else if (button == 'Cancel') {
     } 
@@ -300,6 +318,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledCancel=true;
       this.disabledNew=true;
       this.disableCancelDefaultReport=true;
+      this.disabledGenerateEntry=true;
+
     } 
     // else if (button == 'Print') {
     // }
@@ -325,6 +345,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPrint = false;
       this.disabledView=false;
       this.disableCancelDefaultReport = false;
+      this.disabledGenerateEntry=true;
+      this.disabledPost=true;
 
     }
     else if (button == 'ConfigMode') {
@@ -341,8 +363,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPrint = true;
       this.disabledView=true;
       this.disableCancelDefaultReport = true;
+      this.disabledGenerateEntry=true;
+      this.disabledPost=true;
+
 
     }
+    else if (button == 'GenerateEntry') {
+      this.disabledGenerateEntry=false;
+      this.disabledSave = true;
+      this.disabledPost=true;
+      this.disabledUpdate = true;
+      this.disabledCopy = true;
+      this.disabledExport = true;
+      this.disabledPrint = true;
+      this.disabledDelete=true;
+      this.disabledView=true;
+      this.disabledCancel=true;
+      this.disabledNew=true;
+      this.disableCancelDefaultReport=true;
+    } 
    
   }
 
@@ -356,6 +395,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.disabledUpdate = false;
     this.disableCancelDefaultReport = false;
     this.disabledView = false;
+    this.disabledPost = false;
+    this.disabledGenerateEntry = false;
+
 
   }
   resetShowButtons() {
@@ -372,6 +414,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.showToolbarButtonsObj.showView = true;
     this.showToolbarButtonsObj.showCancelDefaultReport = true;
     this.showToolbarButtonsObj.showPost = true;
+    this.showToolbarButtonsObj.showGenerateEntry = true;
+
     this.SharedService.changeButtonApperance(this.showToolbarButtonsObj);
   }
 }

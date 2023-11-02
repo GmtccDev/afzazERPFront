@@ -11,7 +11,7 @@
 						<form [formGroup]="voucherForm" id="voucherSubmit" class="tabs-form">
 							<div class="main-branch ranoo">
 								<div class="wrapper-title">
-									<h3>{{lang=='ar'? voucherNameAr: voucherNameEn}}</h3>
+									<h3>{{lang=='ar'? nameAr: nameEn}}</h3>
 									<hr>
 									<div class="row ">
 										<div class="col-md-6 col-12 ">
@@ -273,14 +273,14 @@
 																			[(ngModel)]="voucherDetail[i].debit"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
-																			(change)="getAddedValueAfterConversion(i)">
+																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
 																	</td>
 																	<td *ngIf="voucherkindId==2">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].credit"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
-																			(change)="getAddedValueAfterConversion(i)">
+																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
 																	</td>
 																	<td style="width:100px;"
 																		*ngIf="enableMultiCurrencies">
@@ -288,14 +288,14 @@
 																			placeholder="{{'general.search'|translate}}"
 																			[(ngModel)]="voucherDetail[i].currencyNameAr"
 																			[ngModelOptions]="{standalone: true}"
-																			(keydown.Enter)="openCurrencySearchDialog(i)">
+																			(keydown.Enter)="openCurrencySearchDialog(i);updateDetailData(item)">
 																	</td>
 																	<td *ngIf="enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].currencyConversionFactor"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
-																			(change)="getAddedValueAfterConversion(i)">
+																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
 
 																	</td>
 
@@ -327,10 +327,10 @@
 																	</td>
 																	<td
 																		class="align-items-center border-0 d-flex justify-content-center gap-1">
-																		<button type="button"
+																		<!-- <button type="button"
 																			class="btn btn-secondary btn-table px-3"
 																			(click)="updateDetailData(item)"><i
-																				class="fa fa-edit"></i></button>
+																				class="fa fa-edit"></i></button> -->
 																		<button class="btn btn-danger btn-table px-3"
 																			value="{{'buttons.delete'|translate}}"
 																			type="button" (click)="deleteItem(i)">

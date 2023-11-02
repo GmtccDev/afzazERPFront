@@ -11,7 +11,7 @@ import { IncomingChequeComponent } from './incoming-cheque/incoming-cheque.compo
 import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incoming-cheque/add-edit-incoming-cheque.component';
 import { IssuingChequeComponent } from './issuing-cheque/issuing-cheque.component';
 import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing-cheque/add-edit-issuing-cheque.component';
-import {PostVoucherComponent} from  'src/app/erp/Accounting/operations/vouchers/post-voucher/post-voucher.component';
+import {GenerateEntryVoucherComponent} from  'src/app/erp/Accounting/operations/vouchers/generate-entry-voucher/generate-entry-voucher.component';
 
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
 			{ path: 'vouchers/:voucherTypeId', component: VouchersComponent },
 			{ path: 'vouchers/add-voucher/:voucherTypeId', component: AddEditVoucherComponent },
 			{ path: 'vouchers/update-voucher/:voucherTypeId/:id', component: AddEditVoucherComponent },
-			{ path: 'postVoucher', component: PostVoucherComponent },
+			{ path: 'generateEntryVoucher', component: GenerateEntryVoucherComponent },
 			{ path: 'journalEntry', component: JournalEntryComponent },
 			{ path: 'journalEntryPost', component: JournalEntryPostComponent },
 			{ path: 'journalEntry/add-journalEntry', component: AddEditJournalEntryComponent },

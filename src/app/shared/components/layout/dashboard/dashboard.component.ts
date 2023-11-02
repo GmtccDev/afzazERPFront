@@ -198,7 +198,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 						if (this.depositVouchers.length > 0) {
 							this.depositVouchers.forEach(element => {
-								this.navServices.voucherTypesNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+								this.navServices.voucherTypesNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { voucherTypeId: element.id } })
 								this.navServices.voucherTypesNew.filter((value, index, self) => {
 									return index === self.findIndex(obj => (
@@ -211,7 +211,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 						}
 						if (this.WithdrawalVouchers.length > 0) {
 							this.WithdrawalVouchers.forEach(element => {
-								this.navServices.WithdrawalVouchersNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.voucherNameAr : element.voucherNameEn, type: 'link', active: true },
+								this.navServices.WithdrawalVouchersNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { voucherTypeId: element.id } })
 								this.navServices.WithdrawalVouchersNew.filter((value, index, self) => {
 									return index === self.findIndex(obj => (

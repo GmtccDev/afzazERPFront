@@ -41,10 +41,8 @@ export class VoucherServiceProxy {
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/edit?", voucher);
     }
     
-    generateEntry(noPostVoucher: any): Observable<any> {
-       // let params = new HttpParams();
-       // params = params.append('id', id);
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/generateEntryForPostVouchers?", noPostVoucher)
+    generateEntry(list: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/generateEntry?", list);
     }
     // ids: number[] | undefined;
     deleteListVoucher(branch: any): Observable<number> {
@@ -74,7 +72,7 @@ export class VoucherServiceProxy {
         return this.http.get<any>(this.baseUrl + "/api/Voucher/all?", { params: queryParams });
 
     }
-    allNotPostedVouchers(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
+    allNotGenerateEntryVouchers(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
      
         let queryParams = new HttpParams();
         if (pageIndex != undefined)
@@ -88,7 +86,7 @@ export class VoucherServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/Voucher/getNotPostVouchers?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/Voucher/getNotGenerateEntryVouchers?", { params: queryParams });
 
     }
 
