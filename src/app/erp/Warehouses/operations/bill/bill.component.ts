@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
 import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
@@ -12,6 +11,9 @@ import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
+import { BillTypeServiceProxy } from '../../Services/bill-type.service';
+import { BillServiceProxy } from '../../services/bill.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-bill',
@@ -45,13 +47,14 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Constructor
   constructor(
-   // private billService: BillService,
+    private billService: BillServiceProxy,
     private router: Router,
     private route: ActivatedRoute,
     private sharedServices: SharedService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    private billTypeService: BillTypeServiceProxy,
 
   ) {
 
@@ -63,19 +66,17 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region ngOnInit
   ngOnInit(): void {
     //  this.defineGridColumn();
-    
     let sub = this.route.params.subscribe(params => {
       if (params['billTypeId'] != null) {
         this.billTypeId = +params['billTypeId'];
+        this.getBillTypes(this.billTypeId);
 
 
       }
     })
     this.subsList.push(sub);
     this.spinner.show();
-    Promise.all([
-     // this.getBills()
-    ])
+    Promise.all([this.getBills()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -84,7 +85,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
       }).catch(err => {
         this.spinner.hide();
       })
-
 
 
 
@@ -122,50 +122,71 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
- 
-  // getBills() {
-  //   return new Promise<void>((resolve, reject) => {
-  //     let sub = this.billService.getWithResponse<Bill[]>("all")
-  //     .subscribe({
-  //       next: (res:ResponseResult<Bill[]>) => {
-          
-  //         //console.log(res);
-  //         this.toolbarPathData.componentList = this.translate.instant("component-names.bills");
-  //         if (res.success) {
-  //           this.bills = [...res.data?.filter(x => x.billTypeId == this.billTypeId && x.branchId == this.branchId && x.companyId == this.companyId) ?? []];
+  nameEn: any;
+  nameAr: any;
+  getBillTypes(id) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.getBillType(id).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.billType = res.response;
+            this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn)
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
 
 
-  //         }
-  //         resolve();
+  //#endregion
 
-  //       },
-  //       error: (err: any) => {
-  //         reject(err);
-  //       },
-  //       complete: () => {
-  //         //console.log('complete');
-  //       },
-  //     });
+  getBills() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billService.allBills(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.bills = res.response.items.filter(x => x.billTypeId == this.billTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
 
-  //     this.subsList.push(sub);
-  //   });
+          }
+          resolve();
 
-  // }
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
 
   //#endregion
 
   //#region CRUD Operations
-  // delete(id: any) {
-  //   this.billService.getWithResponse("delete?id="+id).subscribe((resonse) => {
-  //     this.getBills();
-  //     this.router.navigate([this.listUrl + this.billTypeId])
-  //       .then(() => {
-  //         window.location.reload();
-  //       });
-  //   });
-  // }
+  delete(id: any) {
+    this.billService.deleteBill(id).subscribe((resonse) => {
+      this.getBills();
+      this.router.navigate([this.listUrl + this.billTypeId])
+        .then(() => {
+          window.location.reload();
+        });
+    });
+  }
   edit(id: string) {
-    
     this.router.navigate([
       '/warehouses-operations/bill/update-bill/',
       this.billTypeId, id,
@@ -174,8 +195,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#endregion
 
-
-
   showConfirmDeleteMessage(id) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
@@ -183,20 +202,16 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      console.log(rs);
       if (rs == 'Confirm') {
-        
         this.spinner.show();
-        // let sub = this.billService.getWithResponse("delete?id="+id).subscribe(
-        //   (resonse) => {
-        //     this.getBills();
-        //     this.router.navigate([this.listUrl + this.billTypeId])
-        //       .then(() => {
-        //         //   window.location.reload();
-        //       });
-        //   });
-        // this.subsList.push(sub);
-        // this.spinner.hide();
+        let sub = this.billService.deleteBill(id).subscribe(
+          (resonse) => {
+            this.getBills();
+            this.router.navigate([this.listUrl + this.billTypeId])
+             
+          });
+        this.subsList.push(sub);
+        this.spinner.hide();
 
       }
     });
@@ -208,9 +223,9 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   sortByCols: any[] = [];
   searchFilters: any;
   groupByCols: string[] = [];
-  lang: any = localStorage.getItem("language");
-  branchId: any = localStorage.getItem("branchId");
-  companyId: any = localStorage.getItem("companyId");
+  lang: string = localStorage.getItem("language");
+  branchId: string = localStorage.getItem("branchId");
+  companyId: string = localStorage.getItem("companyId");
 
   columnNames = [
     {
@@ -219,11 +234,37 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'date',
+      field: 'date', width: 300, formatter: function (cell, formatterParams, onRendered) {
+				var value = cell.getValue();
+				value = format(new Date(value), 'dd-MM-yyyy');;
+				return value;
+			}
+      
     },
-    
-
-   
+    {
+      title: this.lang == 'ar' ? 'الاجمالى قبل الضريبة' : 'Total Before Tax',
+      field: 'totalBeforeTax',
+    },
+    {
+      title: this.lang == 'ar' ? 'الأجمالى' : 'total',
+      field: 'total',
+    },
+    {
+      title: this.lang == 'ar' ? 'الصافى' : 'Net',
+      field: 'net',
+    },
+    {
+      title: this.lang == 'ar' ? 'الصافى بعد الضريبة' : 'Net After Tax',
+      field: 'netAfterTax',
+    },
+    {
+      title: this.lang == 'ar' ? 'المدفوع' : 'Paid',
+      field: 'paid',
+    },
+    {
+      title: this.lang == 'ar' ? 'المتبقى' : 'Remaining',
+      field: 'remaining',
+    },
 
   ];
 
@@ -238,14 +279,23 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     this.searchFilters = [
       [
         { field: 'code', type: 'like', value: searchTxt },
+        { field: 'totalBeforeTax', type: 'like', value: searchTxt },
+        { field: 'total', type: 'like', value: searchTxt },
+        { field: 'net', type: 'like', value: searchTxt },
+        { field: 'netAfterTax', type: 'like', value: searchTxt },
+        { field: 'paid', type: 'like', value: searchTxt },
+        { field: 'remaining', type: 'like', value: searchTxt },
+
+
         ,
       ],
     ];
   }
 
+  openBillTypes() { }
   onCheck(id) {
 
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {
@@ -275,7 +325,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event != null) {
       if (event.actionName == 'Edit') {
-        
+
         this.edit(event.item.id);
         this.sharedServices.changeButton({
           action: 'Update',
@@ -286,7 +336,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
       } else if (event.actionName == 'Delete') {
-        //this.showConfirmDeleteMessage(event.item.id);
+        this.showConfirmDeleteMessage(event.item.id);
       }
     }
   }
@@ -303,7 +353,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
@@ -313,25 +362,27 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
-          //  this.onDelete();
+            this.onDelete();
           }
         }
       },
     });
     this.subsList.push(sub);
   }
-  // onDelete() {
-  //   var ids = this.listIds.map(item => item.id);
-  //   let sub = this.billService.addWithResponse("deleteList",ids).subscribe(
-  //     (resonse) => {
-  //       this.router.navigate([this.listUrl + this.billTypeId])
-  //         .then(() => {
-  //           window.location.reload();
-  //         });
-  //       this.getBills();
-  //       this.listIds = [];
-  //     });
-  //   this.subsList.push(sub);
-  // }
+  onDelete() {
+    var ids = this.listIds.map(item => item.id);
+    let sub = this.billService.deleteListBill(ids).subscribe(
+      (resonse) => {
+        this.router.navigate([this.listUrl + this.billTypeId])
+          .then(() => {
+            window.location.reload();
+          });
+        this.getBills();
+        this.listIds = [];
+      });
+    this.subsList.push(sub);
+  }
   //#endregion
+
+  
 }

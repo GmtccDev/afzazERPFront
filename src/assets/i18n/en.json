@@ -734,7 +734,8 @@
         "items": "Items",
         "item": "Item",
         "item-description": "Item Description",
-        "additions-and-discounts":"Additions And Discounts on Bill"
+        "additions-and-discounts":"Additions And Discounts on Bill",
+        "bill-items-required":"Please enter Items"
 
 
     },

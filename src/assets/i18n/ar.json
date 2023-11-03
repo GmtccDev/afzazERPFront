@@ -712,7 +712,9 @@
         "items": "الأصناف",
         "item": "الصنف",
         "item-description": "وصف الصنف",
-        "additions-and-discounts": "الأضافات و الخصومات على الفاتورة"
+        "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
+        "bill-items-required":"من فضلك أدخل الأصناف"
+
     },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
