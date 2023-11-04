@@ -71,8 +71,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   costCenterId: any;
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId, mainAccountId, leafAccountId, entriesStatusId, currencyId, branchId,
-    voucherKindId, voucherId, level, reportOptionId, fromEntryNo, toEntryNo, costCenterId
+    fromDate, toDate, accountGroupId,accountGroupName, mainAccountId, mainAccountName,leafAccountId,leafAccountName, entriesStatusId,entriesStatusName, currencyId, branchId,branchName
+    voucherKindId, voucherId, level, currencyName,costCenterName,voucherKindName, reportOptionId, fromEntryNo, toEntryNo, costCenterId
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
@@ -452,16 +452,24 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       accountGroupId: this.selectedAccountGroupId,
       mainAccountId: this.selectedMainAccountId,
       leafAccountId: this.selectedLeafAccountId,
+      leafAccountName: this.selectedLeafAccountName,
       entriesStatusId: this.selectedEntriesStatusId,
+      entriesStatusName:this.selectedEntriesStatusName,
       currencyId: this.selectedCurrencyId,
+      currencyName:this.selectedCurrencyName,
       branchId: this.branchIds,
+      branchName:this.selectedBranchName,
       voucherKindId: this.selectedVoucherKindId,
       voucherId: this.selectedVoucherId,
       level: this.level,
       fromEntryNo: this.fromEntryNo,
       toEntryNo: this.toEntryNo,
       reportOptionId: this.selectedReportOptionId,
-      costCenterId: this.selectedCostCenterId
+      costCenterId: this.selectedCostCenterId,
+      voucherKindName:this.selectedVoucherKindName,
+      mainAccountName:this.selectedMainAccountName,
+      accountGroupName:this.selectedAccountGroupName,
+      costCenterName:this.selectedCostCenterName
 
 
 
@@ -479,26 +487,32 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.FireSearch()
   }
   onSelectVoucherKind() {
+    this.getSelectedVoucherKindName();
     this.FireSearch()
 
   }
   onSelectAccountGroup() {
+    this.getAccountGroupName()
     this.FireSearch()
 
   }
   onSelectMainAccount() {
+    this.getMainAccounName();
     this.FireSearch()
 
   }
   onSelectLeafAccount() {
+    this.getLeafAccounName();
     this.FireSearch()
 
   }
   onSelectCostCenter() {
+    this.getCostCenterName()
     this.FireSearch()
 
   }
   onSelectEntriesStatus() {
+    this.getEntriesStatusName()
     this.FireSearch()
 
   }
@@ -507,24 +521,30 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectCurrency() {
+    this.getCurrencyName();
     this.FireSearch()
 
   }
   onSelectBranch() {
-   
+    this.getSelectedBranchName();
     this.branchIds = ''
-     
-    this.selectedBranchId?.forEach(selectedId => {
-      if(this.selectedBranchId.length>=2)
-      {
-        this.branchIds += selectedId + ",";
-      }else{
-        this.branchIds =selectedId;
-      }
-      
-    })
-
-    this.branchIds = this.branchIds.substring(0, this.branchIds.length - 1);
+     if(this.selectedBranchId.length==1)
+     {
+      this.branchIds = this.selectedBranchId
+     }else{
+      this.selectedBranchId?.forEach(selectedId => {
+        if(this.selectedBranchId.length>=2)
+        {
+          this.branchIds += selectedId + ",";
+        }else{
+          this.branchIds =selectedId;
+        }
+        
+      })
+  
+      this.branchIds = this.branchIds.substring(0, this.branchIds.length - 1);
+     }
+   
 
     this.FireSearch();
 
@@ -545,4 +565,110 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.FireSearch()
 
   }
+  selectedCurrencyName:any='';
+  getCurrencyName()
+  {
+    let item= this.currenciesList.find(x=>x.id==this.selectedCurrencyId)
+    if(item!=null && item!=undefined)
+    {
+      this.selectedCurrencyName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedCurrencyName=''
+    }
+  
+  }
+  selectedLeafAccountName:any='';
+  getLeafAccounName()
+  {
+    debugger
+    if(this.selectedLeafAccountId!=null && this.selectedLeafAccountId!=undefined)
+    {
+      let item= this.leafAccountsList.find(x=>x.id==this.selectedLeafAccountId)
+      this.selectedLeafAccountName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedLeafAccountName=''
+    }
+  
+  }
+  selectedEntriesStatusName:any='';
+  getEntriesStatusName()
+  {
+
+   if(this.selectedEntriesStatusId!=undefined && this.selectedEntriesStatusId!=null)
+   {
+    let itemName =this.entriesStatusEnum.find(x=>x.id==this.selectedEntriesStatusId).name;
+    this.selectedEntriesStatusName = itemName;
+   }else{
+    this.selectedEntriesStatusName=''
+   }
+
+  }
+  selectedBranchName:any='';
+  getSelectedBranchName()
+  {
+
+    let item= this.branchesList.find(x=>x.id==this.selectedBranchId)
+    if(item!=null && item!=undefined)
+    {
+      this.selectedBranchName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedBranchName=''
+    }
+  
+   
+  }
+  selectedVoucherKindName:any='';
+  getSelectedVoucherKindName()
+  {
+
+    if(this.selectedVoucherKindId!=null && this.selectedVoucherKindId!=undefined)
+    {
+      let itemName =this.voucherTypes.find(x=>x.id==this.selectedVoucherKindId).name;
+      this.selectedVoucherKindName=itemName;
+    }else{
+      this.selectedVoucherKindName=''
+    }
+  
+   
+  }
+  selectedMainAccountName:any='';
+  getMainAccounName()
+  {
+    debugger
+    if(this.selectedMainAccountId!=null && this.selectedMainAccountId!=undefined)
+    {
+      let item= this.mainAccountsList.find(x=>x.id==this.selectedMainAccountId)
+      this.selectedMainAccountName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedMainAccountName=''
+    }
+  
+  }
+  selectedAccountGroupName:any='';
+  getAccountGroupName()
+  {
+    debugger
+    if(this.selectedAccountGroupId!=null && this.selectedAccountGroupId!=undefined)
+    {
+      let item= this.accountGroupList.find(x=>x.id==this.selectedAccountGroupId)
+      this.selectedAccountGroupName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedAccountGroupName=''
+    }
+  
+  }
+  selectedCostCenterName:any='';
+  getCostCenterName()
+  {
+   
+    if(this.selectedCostCenterId!=null && this.selectedCostCenterId!=undefined)
+    {
+      let item= this.costCenterList.find(x=>x.id==this.selectedCostCenterId)
+      this.selectedCostCenterName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedCostCenterName=''
+    }
+  
+  }
+  sele
 }

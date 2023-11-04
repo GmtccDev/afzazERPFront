@@ -31,8 +31,8 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	fromDate: any;
 	toDate: any;
 	currencyId: any;
-	accountGroupId:any;
-	parentAccountId:any;
+	accountGroupId: any;
+	parentAccountId: any;
 	branchId: any;
 	entriesStatusId: any;
 	fromEntryNo: any = "";
@@ -48,8 +48,8 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 	//#region Constructor
 	constructor(private modalService: NgbModal,
-		private spinner:NgxSpinnerService,
-		 private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) { }
+		private spinner: NgxSpinnerService,
+		private reportService: ReportServiceProxy, private sharedServices: SharedService, private dateConverterService: DateConverterService, private translate: TranslateService, private generalConfigurationService: GeneralConfigurationServiceProxy, private fiscalPeriodService: FiscalPeriodServiceProxy) { }
 
 	//#endregion
 
@@ -61,20 +61,20 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 		Promise.all([
 			this.getGeneralConfigurationsOfAccountingPeriod()
-	  
-		  ]).then(a => {
+
+		]).then(a => {
 			this.spinner.hide();
-		  }).catch(err => {
-	  
+		}).catch(err => {
+
 			this.spinner.hide();
-		  });
-		
+		});
+
 	}
 
 	//#endregion
 	//#region ngAfterViewInit
 	ngAfterViewInit(): void {
-	//	this.getGeneralConfigurationsOfAccountingPeriod();
+		//	this.getGeneralConfigurationsOfAccountingPeriod();
 	}
 
 	//#endregion
@@ -88,8 +88,13 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		});
 	}
 	//#endregion
-	
 
+	selectedCurrencyName: any = '';
+	selectedEntriesStatusName = '';
+	selectedBranchName = ''
+	selectedLeafAccountName = ''
+	selectedMainAccountName = ''
+	selectedAccountGroupName = ''
 	gotoViewer() {
 
 		let monthFrom;
@@ -101,23 +106,23 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 			//  this.fromDate = this.dateConverterService.getCurrentDate();
 			monthFrom = Number(this.fromDate.month + 1)
 			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-		  }
-		  else if(this.fromDate.month!=undefined) {
-		
+		}
+		else if (this.fromDate.month != undefined) {
+
 			monthFrom = Number(this.fromDate.month + 1)
 			this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-		  }
-	  
-		  if (this.toDate == undefined || this.toDate == null) {
-			
+		}
+
+		if (this.toDate == undefined || this.toDate == null) {
+
 			monthTo = Number(this.toDate.month + 1)
 			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
-	  
-		  }
-		  else if(this.toDate.month!=undefined) {
+
+		}
+		else if (this.toDate.month != undefined) {
 			monthTo = Number(this.toDate.month + 1)
 			this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
-		  }
+		}
 
 
 		if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
@@ -143,20 +148,24 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 			this.parentAccountId = 0;
 		}
 
-		;
-         ;
+	
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
-		 + "&reportParameter=toDate!" + this.toDate
-		 + "&reportParameter=branchId!" + this.branchId
-		  + "&reportParameter=currencyId!" + this.currencyId
-		  + "&reportParameter=companyId!" + this.companyId
-		  + "&reportParameter=parentAccountId!" + this.parentAccountId
-		  + "&reportParameter=entriesStatusId!" + this.entriesStatusId
-		  + "&reportParameter=accountGroupId!" + this.accountGroupId
-		  + "&reportParameter=fromEntryNo!" + this.fromEntryNo
-		  + "&reportParameter=toEntryNo!" + this.toEntryNo
-		   + "&reportParameter=lang!" + this.lang
-		   + "&reportParameter=userId!" + this.userId;
+			+ "&reportParameter=toDate!" + this.toDate
+			+ "&reportParameter=branchId!" + this.branchId
+			+ "&reportParameter=currencyId!" + this.currencyId
+			+ "&reportParameter=companyId!" + this.companyId
+			+ "&reportParameter=parentAccountId!" + this.parentAccountId
+			+ "&reportParameter=entriesStatusId!" + this.entriesStatusId
+			+ "&reportParameter=accountGroupId!" + this.accountGroupId
+			+ "&reportParameter=fromEntryNo!" + this.fromEntryNo
+			+ "&reportParameter=toEntryNo!" + this.toEntryNo
+			+ "&reportParameter=lang!" + this.lang
+			+ "&reportParameter=userId!" + this.userId
+			+ "&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName
+			+ "&reportParameter=selectedBranchName!" + this.selectedBranchName
+			+ "&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName
+			+ "&reportParameter=selectedMainAccountName!" + this.selectedMainAccountName
+			+ "&reportParameter=selectedAccountGroupName!" + this.selectedAccountGroupName
 
 		const modalRef = this.modalService.open(NgbdModalContent);
 		modalRef.componentInstance.reportParams = reportParams;
@@ -164,7 +173,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		modalRef.componentInstance.reportTypeID = 7;
 	}
 	cancelDefaultReportStatus() {
-		this.reportService.cancelDefaultReport(1, 7).subscribe((resonse) => {});
+		this.reportService.cancelDefaultReport(1, 7).subscribe((resonse) => { });
 	}
 	ShowOptions: {
 		ShowFromDate: boolean;
@@ -174,23 +183,23 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		ShowBranch: boolean;
 		ShowEntriesStatus: boolean;
 		ShowFromEntryNo: boolean;
-		ShowAccountGroup:boolean;
+		ShowAccountGroup: boolean;
 		ShowToEntryNo: boolean;
-		ShowMainAccount:boolean;
+		ShowMainAccount: boolean;
 	} = {
-		ShowFromDate: true,
-		ShowToDate: true,
-		ShowSearch: false,
-		ShowAccountGroup:true,
-		ShowMainAccount:true,
-		ShowCurrency: true,
-		ShowBranch: true,
-		ShowEntriesStatus: true,
-		ShowFromEntryNo: true,
-		ShowToEntryNo: true,
-	};
+			ShowFromDate: true,
+			ShowToDate: true,
+			ShowSearch: false,
+			ShowAccountGroup: true,
+			ShowMainAccount: true,
+			ShowCurrency: true,
+			ShowBranch: true,
+			ShowEntriesStatus: true,
+			ShowFromEntryNo: true,
+			ShowToEntryNo: true,
+		};
 
-	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; entriesStatusId;mainAccountId;accountGroupId }) {
+	OnFilter(e: { fromDate; toDate; currencyId; currencyName; branchId; branchName; fromEntryNo; toEntryNo; entriesStatusId; entriesStatusName; mainAccountId; mainAccountName; accountGroupName, accountGroupId }) {
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
@@ -198,8 +207,14 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		this.currencyId = e.currencyId;
 		this.branchId = e.branchId;
 		this.entriesStatusId = e.entriesStatusId;
-		this.parentAccountId=e.mainAccountId;
-		this.accountGroupId=e.accountGroupId;
+		this.parentAccountId = e.mainAccountId;
+		this.accountGroupId = e.accountGroupId;
+		this.selectedAccountGroupName = e.accountGroupName;
+		this.selectedMainAccountName = e.mainAccountName;
+		this.selectedCurrencyName = e.currencyName;
+		this.selectedEntriesStatusName = e.entriesStatusName;
+		this.selectedBranchName = e.branchName;
+
 	}
 
 	listenToClickedButton() {
@@ -222,10 +237,10 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 		const promise = new Promise<void>((resolve, reject) => {
 
-		let sub=this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+			let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
 				next: (res: any) => {
 
-				
+
 					if (res.response.value > 0) {
 
 						this.facialPeriodId = res.response.value;
