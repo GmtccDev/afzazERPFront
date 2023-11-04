@@ -114,7 +114,8 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-groups-card");
           if (res.success) {
 
-            this.listOfMapData = res.response
+            this.listOfMapData = res.response;
+            console.log(res.response)
             this.listOfMapData.forEach(item => {
               this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
             });
@@ -293,18 +294,41 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
   collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
 
     if (!$event) {
+      if (data.itemCards) {
+        data.itemCards.forEach(childItem => {
+          childItem.expanded = false;
+        });
+      }
       if (data.children) {
         data.children.forEach(d => {
+         
           const target = array.find(a => a.treeId === d.treeId)!;
           target.expanded = false;
           this.collapse(array, target, false);
         });
-      } else {
-
-        return;
-      }
-    }
-  }
+      } 
+    }}
+  // }
+  // collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
+  //   debugger
+  //   if (!$event) {
+  //     if (data.children) {
+  //       data.children.forEach(d => {
+  //         const target = array.find(a => a.treeId === d.treeId)!;
+  //         target.expanded = false;
+  //         this.collapse(array, target, false);
+  //       });
+  //     } else {
+  //       // Handle collapse for itemCards
+  //       if (data.itemCards) {
+  //         data.itemCards.forEach(childItem => {
+  //           childItem.expanded = false;
+  //         });
+  //       }
+  //       return;
+  //     }
+  //   }
+  // }
   convertTreeToList(root: TreeNodeInterface): TreeNodeInterface[] {
 
     const stack: TreeNodeInterface[] = [];
