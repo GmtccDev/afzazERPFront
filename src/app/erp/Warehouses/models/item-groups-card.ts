@@ -51,6 +51,16 @@ export interface TreeNodeInterface {
     itemType:any;
     costCalculation:any
     warehousesUnitID:number;
+    itemCards:ChildItemInterface[];
+  }
+  export interface ChildItemInterface {
+    // Other properties...
+    expanded: boolean;
+    id: number;
+    nameAr: string | undefined;
+    nameEn: string | undefined;
+    code: string | undefined;
+    isActive: boolean | undefined;
   }
    enum ItemType
   {
