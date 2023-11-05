@@ -40,9 +40,9 @@
                 <td>{{ childItem.nameAr }}</td>
                 <td>{{ childItem.nameEn }}</td>
                 <td>
-                  <button nz-button nzType="primary" (click)="addNode(childItem.id)">{{ 'toolbar.new' | translate }}</button>
-                  <button nz-button nzType="default" (click)="onEdit(childItem.id)">{{ 'buttons.edit' | translate }}</button>
-                  <button nz-button nzType="danger" (click)="showConfirmDeleteMessage(childItem.id)">{{ 'buttons.delete' | translate }}</button>
+                  <!-- <button nz-button nzType="primary" (click)="addNodeChild(childItem.id)"></button> -->
+                  <button nz-button nzType="default" (click)="onEditChild(childItem.id)">{{ 'buttons.edit' | translate }}</button>
+                  <button nz-button nzType="danger" (click)="showConfirmDeleteMessageChild(childItem.id)">{{ 'buttons.delete' | translate }}</button>
                 </td>
               </tr>
             </ng-container>

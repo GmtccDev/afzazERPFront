@@ -158,25 +158,28 @@ export class ResortHttpInterceptor implements HttpInterceptor {
 
         let errorObservable = new Subject<any>();
         if (!(error.error instanceof Blob)) {
-
+debugger
             interceptObservable.error(error);
             if (error.error != null) {
                 if (error.error.message != null || error.error.message != "") {
                     this.notificationService.error(error.error.message);
+                    return errorObservable;
                 }
                 else {
                     this.notificationService.error("error in server");
+                    return errorObservable;
                 }
             }
             else {
                 this.notificationService.error("error in server");
+                return errorObservable;
             }
-            interceptObservable.complete();
+          //  interceptObservable.complete();
             return of({});
         }
 
         if (error instanceof HttpErrorResponse && error.status === 401) {
-            this.userService.logout();
+           // this.userService.logout();
         }
         blobToText(error.error).subscribe((json) => {
             const errorBody =
@@ -283,7 +286,7 @@ export class ResortHttpInterceptor implements HttpInterceptor {
 
                     this.handleError(ajaxResponse.message);
                     if (ajaxResponse.message.indexOf('not Active') > 0 || ajaxResponse.message === 'Invalid token pair') {
-                        this.userService.logout();
+                       // this.userService.logout();
                     }
 
                 }
