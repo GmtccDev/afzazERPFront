@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {SharedModule} from '../../../shared/shared.module'
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTableModule } from 'ng-zorro-antd/table';   
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { OperationsRoutingModule } from './opertations-routing.module';
@@ -14,7 +14,6 @@ import { DateConverterService } from '../../../shared/services/date-services/dat
 import { NgSelectModule } from '@ng-select/ng-select';
 import {BillComponent} from 'src/app/erp/Warehouses/operations/bill/bill.component'
 import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component'
-import { BillServiceProxy } from '../services/bill.service';
 
 
 

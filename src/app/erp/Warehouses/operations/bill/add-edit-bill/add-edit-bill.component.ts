@@ -233,7 +233,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       }
       if (params['id'] != null) {
         this.id = params['id'];
-
         if (this.id) {
           this.getBillById(this.id).then(a => {
 
@@ -294,28 +293,28 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       code: REQUIRED_VALIDATORS,
       date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       deliveryDate: [this.dateService.getCurrentDate()],
-      supplierId: '',
+      supplierId: null,
       supplierReference: '',
-      customerId: '',
+      customerId: null,
       payWay: REQUIRED_VALIDATORS,
-      shipMethod: '',
-      shipKind: '',
-      referenceId: '',
+      shipMethod: null,
+      shipKind: null,
+      referenceId: null,
       referenceNo: '',
-      salesPersonId: '',
-      storeId: '',
+      salesPersonId: null,
+      storeId: null,
       currencyId: REQUIRED_VALIDATORS,
       currencyValue: '',
-      projectId: '',
+      projectId: null,
       costCenterId: REQUIRED_VALIDATORS,
       notes: '',
       attachment: '',
-      cashAccountId: '',
-      supplierAccountId: '',
-      salesAccountId: '',
-      salesReturnAccountId: '',
-      purchasesAccountId: '',
-      purchasesReturnAccountId: '',
+      cashAccountId: null,
+      supplierAccountId: null,
+      salesAccountId: null,
+      salesReturnAccountId: null,
+      purchasesAccountId: null,
+      purchasesReturnAccountId: null,
       totalBeforeTax: '',
       taxRatio: '',
       taxValue: '',
@@ -323,9 +322,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       net: '',
       netAfterTax: '',
       paid: '',
-      paidAccountId: '',
+      paidAccountId: null,
       remaining: '',
-      remainingAccountId: ''
+      remainingAccountId: null
 
 
 
@@ -386,13 +385,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   getShipKinds() {
-
     if (this.lang == 'en') {
       this.shipKindsEnum = convertEnumToArray(ShipKindEnum);
     }
     else {
       this.shipKindsEnum = convertEnumToArray(ShipKindArEnum);
-
     }
   }
   getBillById(id: any) {
@@ -430,25 +427,31 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             salesReturnAccountId: res.response?.salesReturnAccountId,
             purchasesAccountId: res.response?.purchasesAccountId,
             purchasesReturnAccountId: res.response?.purchasesReturnAccountId,
+            totalBeforeTax: res.response?.totalBeforeTax,
             total: res.response?.total,
             taxRatio: res.response?.taxRatio,
             taxValue: res.response?.taxValue,
-
-            // discount: res.response?.discount,
-            // discountAccountId: res.response?.discountAccountId,
             net: res.response?.net,
+            netAfterTax: res.response?.netAfterTax,
             paid: res.response?.paid,
             paidAccountId: res.response?.paidAccountId,
             remaining: res.response?.remaining,
             remainingAccountId: res.response?.remainingAccountId
 
-
-
           });
-          this.bill.billItem = res.data.billItem;
-          // this.billTotal = res.response?.billTotal;
-          // this.billTotalLocal = res.response?.billTotalLocal;
+          // if (res.response?.billItems != null) {
+          //   res.response?.billItems.forEach(element => {
+          //     var item = this.itemsList?.find(c => c.id == element.itemId)
+          //     if (item != null && item != undefined) {
+          //       element.itemName = this.lang = "ar" ? item.nameAr : item.nameEn;
+          //     }
 
+          //   });
+          //   //
+
+          // }
+          this.billItem = res.response?.billItems;
+          this.billAdditionAndDiscount = res.response?.billAdditionAndDiscounts;
         },
         error: (err: any) => {
           reject(err);
@@ -478,7 +481,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
       this.subsList.push(sub);
@@ -502,7 +505,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -524,7 +526,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -547,7 +548,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -570,7 +570,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -592,7 +591,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -614,7 +612,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -637,7 +634,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -662,7 +659,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -685,7 +682,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -708,7 +705,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -731,7 +728,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -754,7 +751,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -777,7 +774,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -803,7 +800,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -826,7 +823,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -849,7 +846,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -872,7 +869,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -895,7 +892,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+
         },
       });
 
@@ -977,9 +974,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.billItem.push({
       id: 0,
       billId: this.selectedBillItem?.billId ?? 0,
-      itemId: this.selectedBillItem?.itemId ?? 0,
+      itemId: this.selectedBillItem?.itemId ?? null,
       itemDescription: this.selectedBillItem?.itemDescription ?? '',
-      unitId: this.selectedBillItem?.unitId ?? 0,
+      unitId: this.selectedBillItem?.unitId ?? null,
       quantity: this.selectedBillItem?.quantity ?? 0,
       price: this.selectedBillItem?.price ?? 0,
       totalBeforeTax: this.selectedBillItem?.totalBeforeTax ?? 0,
@@ -991,29 +988,21 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         ? this.selectedBillItem?.taxRatio ?? 0 : null,
       taxValue: taxValue,
       total: this.selectedBillItem?.total ?? 0,
-      storeId: this.selectedBillItem?.storeId ?? 0,
+      storeId: this.selectedBillItem?.storeId ?? null,
       notes: this.selectedBillItem?.notes ?? '',
-      itemNameAr: this.selectedBillItem?.itemNameAr,
-      itemNameEn: this.selectedBillItem?.itemNameEn,
-      unitNameAr: this.selectedBillItem?.unitNameAr,
-      unitNameEn: this.selectedBillItem?.unitNameEn,
-      storeNameAr: this.selectedBillItem?.storeNameAr,
-      storeNameEn: this.selectedBillItem?.storeNameEn
+      itemName: this.selectedBillItem?.itemName,
+      unitName: this.selectedBillItem?.unitName,
+      storeName: this.selectedBillItem?.storeName,
     });
-    this.bill!.billItem = this.billItem;
+    this.bill!.billItems = this.billItem;
 
     this.totalBeforeTax += this.selectedBillItem?.totalBeforeTax ?? 0;
     this.total += this.selectedBillItem?.total ?? 0;
     this.net += this.selectedBillItem?.total ?? 0;
     this.netAfterTax += this.selectedBillItem?.total ?? 0;
-    debugger
     this.remaining += this.selectedBillItem?.total - this.paid;
     this.taxRatio = 0;
     this.taxValue = 0;
-
-
-
-
     this.clearSelectedItemData();
 
   }
@@ -1031,7 +1020,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.bill.billItem = this.billItem;
+    this.bill.billItems = this.billItem;
 
 
 
@@ -1049,16 +1038,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.bill.billAdditionAndDiscount = this.billAdditionAndDiscount;
+    this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
   }
   clearSelectedItemData() {
     this.selectedBillItem = {
       id: 0,
       billId: 0,
-      itemId: 0,
+      itemId: null,
       itemDescription: '',
-      unitId: 0,
+      unitId: null,
       quantity: 0,
       price: 0,
       totalBeforeTax: 0,
@@ -1069,14 +1058,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       taxRatio: 0,
       taxValue: 0,
       total: 0,
-      storeId: 0,
+      storeId: null,
       notes: '',
-      itemNameAr: '',
-      itemNameEn: '',
-      unitNameAr: '',
-      unitNameEn: '',
-      storeNameAr: '',
-      storeNameEn: ''
+      itemName: '',
+      unitName: '',
+      storeName: '',
     }
   }
   clearSelectedBilladditionDiscountData() {
@@ -1087,17 +1073,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       additionValue: 0,
       discountRatio: 0,
       discountValue: 0,
-      accountId: '',
+      accountId: null,
       notes: '',
-      correspondingAccountId: '',
-      currencyId: 0,
+      correspondingAccountId: null,
+      currencyId: null,
       currencyValue: 0,
-      accountNameAr: '',
-      accountNameEn: '',
-      correspondingAccountNameAr: '',
-      correspondingAccountNameEn: '',
-      currencyNameAr: '',
-      currencyNameEn: '',
+      accountName: '',
+      correspondingAccountName: '',
+      currencyName: '',
 
     }
   }
@@ -1144,24 +1127,27 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       paidAccountId: this.billForm.controls["paidAccountId"].value,
       remaining: this.billForm.controls["remaining"].value,
       remainingAccountId: this.billForm.controls["remainingAccountId"].value,
-      billItem: this.bill.billItem ?? [],
-      billAdditionAndDiscount: this.bill.billAdditionAndDiscount ?? [],
+      billItems: this.bill.billItems ?? [],
+      billAdditionAndDiscounts: this.bill.billAdditionAndDiscounts ?? [],
 
 
     };
+    debugger
+    this.bill.billItems = this.billItem;
+    this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
+
 
 
   }
   confirmSave() {
-    //this.bill.date = this.dateService.getDateForInsert(this.billForm.controls["billDate"].value);
-
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.billService.createBill(this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
           this.clearSelectedItemData();
           this.billItem = [];
+          this.clearSelectedBilladditionDiscountData();
+          this.billAdditionAndDiscount = [];
           this.spinner.hide();
 
           navigateUrl(this.listUrl + this.billTypeId, this.router);
@@ -1178,8 +1164,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   onSave() {
     if (this.billForm.valid) {
-      if (this.bill.billItem.length == 0) {
-        this.errorMessage = this.translate.instant("bill.bill-details-required");
+      if (this.bill.billItems.length == 0) {
+        this.errorMessage = this.translate.instant("bill.bill-items-required");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
@@ -1203,12 +1189,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.billService.updateBill(this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
           this.clearSelectedItemData();
           this.billItem = [];
+          this.clearSelectedBilladditionDiscountData();
+          this.billAdditionAndDiscount = [];
           this.spinner.hide();
 
           navigateUrl(this.listUrl + this.billTypeId, this.router);
@@ -1224,10 +1211,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-
     if (this.billForm.valid) {
-      if (this.bill.billItem.length == 0) {
-        this.errorMessage = this.translate.instant("bill.bill-details-required");
+      if (this.bill.billItems.length == 0) {
+        this.errorMessage = this.translate.instant("bill.bill-items-required");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
@@ -1275,7 +1261,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
-            //this.onUpdate();
+            this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
             // this.getBillCode();
@@ -1326,7 +1312,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedBillItem?.itemNameAr ?? '';
+      searchTxt = this.selectedBillItem?.itemName ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -1341,10 +1327,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillItem!.itemNameAr = data[0].nameAr;
+        this.selectedBillItem!.itemName = this.lang = "ar" ? data[0].nameAr :  data[0].nameEn;
         this.selectedBillItem!.itemId = data[0].id;
       } else {
-        this.billItem[i].itemNameAr = data[0].nameAr;
+        this.billItem[i].itemName =  this.lang = "ar" ? data[0].nameAr :  data[0].nameEn;
         this.billItem[i].itemId = data[0].id;
       }
       this.onChangeItem();
@@ -1358,10 +1344,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillItem!.itemNameAr = d.nameAr;
+              this.selectedBillItem!.itemName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillItem!.itemId = d.id;
             } else {
-              this.billItem[i].itemNameAr = d.nameAr;
+              this.billItem[i].itemName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billItem[i].itemId = d.id;
             }
             this.onChangeItem();
@@ -1376,7 +1362,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedBillItem?.unitNameAr ?? '';
+      searchTxt = this.selectedBillItem?.unitName ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -1391,10 +1377,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillItem!.unitNameAr = data[0].nameAr;
+        this.selectedBillItem!.unitName =this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillItem!.unitId = data[0].id;
       } else {
-        this.billItem[i].unitNameAr = data[0].nameAr;
+        this.billItem[i].unitName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billItem[i].unitId = data[0].id;
       }
     } else {
@@ -1406,10 +1392,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillItem!.unitNameAr = d.nameAr;
+              this.selectedBillItem!.unitName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillItem!.unitId = d.id;
             } else {
-              this.billItem[i].unitNameAr = d.nameAr;
+              this.billItem[i].unitName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billItem[i].unitId = d.id;
             }
           }
@@ -1422,7 +1408,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedBillItem?.storeNameAr ?? '';
+      searchTxt = this.selectedBillItem?.storeName ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -1437,10 +1423,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillItem!.storeNameAr = data[0].nameAr;
+        this.selectedBillItem!.storeName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillItem!.storeId = data[0].id;
       } else {
-        this.billItem[i].storeNameAr = data[0].nameAr;
+        this.billItem[i].storeName = this.lang = "ar" ? data[0].nameAr :data[0].nameEn;
         this.billItem[i].storeId = data[0].id;
       }
     } else {
@@ -1452,10 +1438,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillItem!.storeNameAr = d.nameAr;
+              this.selectedBillItem!.storeName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillItem!.storeId = d.id;
             } else {
-              this.billItem[i].storeNameAr = d.nameAr;
+              this.billItem[i].storeName = this.lang = "ar" ? d.nameAr:d.nameEn;
               this.billItem[i].storeId = d.id;
             }
           }
@@ -1468,7 +1454,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedBillAdditionAndDiscount?.accountNameAr ?? '';
+      searchTxt = this.selectedBillAdditionAndDiscount?.accountName ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -1483,10 +1469,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillAdditionAndDiscount!.accountNameAr = data[0].nameAr;
+        this.selectedBillAdditionAndDiscount!.accountName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillAdditionAndDiscount!.accountId = data[0].id;
       } else {
-        this.billAdditionAndDiscount[i].accountNameAr = data[0].nameAr;
+        this.billAdditionAndDiscount[i].accountName =this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billAdditionAndDiscount[i].accountId = data[0].id;
       }
 
@@ -1499,10 +1485,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillAdditionAndDiscount!.accountNameAr = d.nameAr;
+              this.selectedBillAdditionAndDiscount!.accountName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillAdditionAndDiscount!.accountId = d.id;
             } else {
-              this.billAdditionAndDiscount[i].accountNameAr = d.nameAr;
+              this.billAdditionAndDiscount[i].accountName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billAdditionAndDiscount[i].accountId = d.id;
             }
 
@@ -1516,7 +1502,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedBillAdditionAndDiscount?.correspondingAccountNameAr ?? '';
+      searchTxt = this.selectedBillAdditionAndDiscount?.correspondingAccountName ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -1531,10 +1517,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillAdditionAndDiscount!.correspondingAccountNameAr = data[0].nameAr;
+        this.selectedBillAdditionAndDiscount!.correspondingAccountName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillAdditionAndDiscount!.correspondingAccountId = data[0].id;
       } else {
-        this.billAdditionAndDiscount[i].correspondingAccountNameAr = data[0].nameAr;
+        this.billAdditionAndDiscount[i].correspondingAccountName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billAdditionAndDiscount[i].correspondingAccountId = data[0].id;
       }
 
@@ -1547,10 +1533,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillAdditionAndDiscount!.correspondingAccountNameAr = d.nameAr;
+              this.selectedBillAdditionAndDiscount!.correspondingAccountName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillAdditionAndDiscount!.correspondingAccountId = d.id;
             } else {
-              this.billAdditionAndDiscount[i].correspondingAccountNameAr = d.nameAr;
+              this.billAdditionAndDiscount[i].correspondingAccountName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billAdditionAndDiscount[i].correspondingAccountId = d.id;
             }
 
@@ -1563,7 +1549,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   openCurrencySearchDialog(i) {
     let searchTxt = '';
     if (i == -1) {
-      searchTxt = this.selectedBillAdditionAndDiscount?.currencyNameAr ?? '';
+      searchTxt = this.selectedBillAdditionAndDiscount?.currencyName ?? '';
     } else {
       searchTxt = ''
       // this.selectedRentContractUnits[i].unitNameAr!;
@@ -1578,11 +1564,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillAdditionAndDiscount!.currencyNameAr = data[0].nameAr;
+        this.selectedBillAdditionAndDiscount!.currencyName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillAdditionAndDiscount!.currencyId = data[0].id;
         this.getCurrencyFactorForAdditionAndDiscount(data[0].id);
       } else {
-        this.billAdditionAndDiscount[i].currencyNameAr = data[0].nameAr;
+        this.billAdditionAndDiscount[i].currencyName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billAdditionAndDiscount[i].currencyId = data[0].id;
         this.getCurrencyFactorForAdditionAndDiscountAdded(data[0].id, i);
 
@@ -1597,12 +1583,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillAdditionAndDiscount!.currencyNameAr = d.nameAr;
+              this.selectedBillAdditionAndDiscount!.currencyName =this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillAdditionAndDiscount!.currencyId = d.id;
               this.getCurrencyFactorForAdditionAndDiscount(data[0].id);
 
             } else {
-              this.billAdditionAndDiscount[i].currencyNameAr = d.nameAr;
+              this.billAdditionAndDiscount[i].currencyName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billAdditionAndDiscount[i].currencyId = d.id;
               this.getCurrencyFactorForAdditionAndDiscountAdded(data[0].id, i);
 
@@ -1876,12 +1862,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         total: item.total,
         storeId: item.storeId,
         notes: item.notes,
-        itemNameAr: item.itemNameAr,
-        itemNameEn: item.itemNameEn,
-        unitNameAr: item.unitNameAr,
-        unitNameEn: item.unitNameEn,
-        storeNameAr: item.storeNameAr,
-        storeNameEn: item.storeNameEn
+        itemName: item.itemName,
+        unitName: item.unitName,
+        storeName: item.storeName,
       }
     )
 
@@ -1913,14 +1896,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       }
 
     }
-
-
-
-
-
   }
   updateBillAdditionsAndDiscountData(item: BillAdditionAndDiscount) {
-
     if (this.billAdditionAndDiscount.length > 0) {
       this.deleteBillAdditionDiscountForUpdate(item);
       this.addBillAdditionDiscountDataForUpdate(item);
@@ -1941,12 +1918,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         correspondingAccountId: item.correspondingAccountId,
         currencyId: item.currencyId,
         currencyValue: item.currencyValue,
-        accountNameAr: item.accountNameAr,
-        accountNameEn: item.accountNameEn,
-        correspondingAccountNameAr: item.correspondingAccountNameAr,
-        correspondingAccountNameEn: item.correspondingAccountNameEn,
-        currencyNameAr: item.currencyNameAr,
-        currencyNameEn: item.currencyNameEn
+        accountName: item.accountName,
+        correspondingAccountName: item.correspondingAccountName,
+        currencyName: item.currencyName
       }
     )
 
@@ -1978,13 +1952,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
 
-  getNetAfterTax(type:any) {
+  getNetAfterTax(type: any) {
     if (this.billType[0].manuallyTaxType == ManuallyTaxType.Total) {
-      if (type==1) {
+      if (type == 1) {
         this.taxValue = Math.round(Number(this.total) * Number(this.taxRatio / 100));
 
       }
-      else if (type==2) {
+      else if (type == 2) {
         this.taxRatio = (this.taxValue / this.total) * 100
 
       }
@@ -1992,10 +1966,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     }
     else if (this.billType[0].manuallyTaxType == ManuallyTaxType.Net) {
-      if (type==1) {
+      if (type == 1) {
         this.taxValue = Math.round(Number(this.net) * Number(this.taxRatio / 100));
       }
-      else if (type==2) {
+      else if (type == 2) {
         this.taxRatio = (this.taxValue / this.net) * 100
 
       }
@@ -2018,27 +1992,20 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       additionValue: this.selectedBillAdditionAndDiscount?.additionValue ?? 0,
       discountRatio: this.selectedBillAdditionAndDiscount?.discountRatio ?? 0,
       discountValue: this.selectedBillAdditionAndDiscount?.discountValue ?? 0,
-      accountId: this.selectedBillAdditionAndDiscount?.accountId ?? '',
+      accountId: this.selectedBillAdditionAndDiscount?.accountId ?? null,
       notes: this.selectedBillAdditionAndDiscount?.notes ?? '',
-      correspondingAccountId: this.selectedBillAdditionAndDiscount?.correspondingAccountId ?? '',
-      currencyId: this.selectedBillAdditionAndDiscount?.currencyId ?? 0,
+      correspondingAccountId: this.selectedBillAdditionAndDiscount?.correspondingAccountId ?? null,
+      currencyId: this.selectedBillAdditionAndDiscount?.currencyId ?? null,
       currencyValue: this.selectedBillAdditionAndDiscount?.currencyValue ?? 0,
-      accountNameAr: this.selectedBillAdditionAndDiscount?.accountNameAr ?? '',
-      accountNameEn: this.selectedBillAdditionAndDiscount?.accountNameEn ?? '',
-      correspondingAccountNameAr: this.selectedBillAdditionAndDiscount?.correspondingAccountNameAr ?? '',
-      correspondingAccountNameEn: this.selectedBillAdditionAndDiscount?.correspondingAccountNameEn ?? '',
-      currencyNameAr: this.selectedBillAdditionAndDiscount?.currencyNameAr ?? '',
-      currencyNameEn: this.selectedBillAdditionAndDiscount?.currencyNameEn ?? ''
+      accountName: this.selectedBillAdditionAndDiscount?.accountName ?? '',
+      correspondingAccountName: this.selectedBillAdditionAndDiscount?.correspondingAccountName ?? '',
+      currencyName: this.selectedBillAdditionAndDiscount?.currencyName ?? ''
     });
-    this.bill!.billAdditionAndDiscount = this.billAdditionAndDiscount;
+    this.bill!.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
     this.net = this.net + this.selectedBillAdditionAndDiscount?.additionValue - this.selectedBillAdditionAndDiscount?.discountValue ?? 0;
     this.netAfterTax = this.net ?? 0;
-    debugger
     this.remaining = this.netAfterTax - this.paid;
-
-
-
     this.clearSelectedBilladditionDiscountData();
   }
 

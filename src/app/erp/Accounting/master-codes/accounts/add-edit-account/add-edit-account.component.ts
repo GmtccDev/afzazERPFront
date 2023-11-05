@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
-import { AccountDto } from '../../../models/account';
+import { AccountDto, DeleteAccountCommand, DeleteListAccountCommand } from '../../../models/account';
 import { AccountServiceProxy } from '../../../services/account.services';
 import { CompanyDto } from 'src/app/erp/master-codes/models/company';
 import { CostCenterDto } from '../../../models/cost-Center';
@@ -197,7 +197,7 @@ export class AddEditAccountComponent implements OnInit {
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      isLeafAccount: true,
+      isLeafAccount: false,
       parentId: null,
       companyId: null,
      // openBalanceDebit: null,
@@ -699,16 +699,30 @@ export class AddEditAccountComponent implements OnInit {
     this.showSearchModalCostCenter = false;
   }
   checkAccount(id) {
-    let sub = this.accountService.checkAccount(id).subscribe(
-      (resonse) => {
-
-
-      });
+    let sub = this.accountService.checkAccount(id).subscribe({
+      
+      next: (result: any) => {
+        debugger
+        console.log(result);
+    
+      },
+      error: (err: any) => {
+     //   reject(err);
+     console.log(err);
+      },
+      complete: () => {
+        //console.log('complete');
+      },
+    });
   }
   onChangeLeaf(event) {
-    
-    if (!event.target.checked && this.id) {
-      this.checkAccount(this.id);
+    debugger
+    if (this.id && this.currnetUrl.includes(this.updateUrl)) {
+      var entity = new DeleteAccountCommand();
+      entity.id=this.id;
+      this.checkAccount(entity);
+      console.log(entity);
+     // this.accountForm.controls.isLeafAccount.setValue((event.target));
     }
   }
 }

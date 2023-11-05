@@ -99,9 +99,14 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
     });
   }
   //#endregion
+  selectedCurrencyName:any='';
+
+  selectedBranchName=''
+  selectedVocherKindName=''
+
 
   gotoViewer() {
-
+debugger;
 
     let monthFrom;
     let monthTo;
@@ -147,7 +152,11 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
       "&reportParameter=currencyId!" + this.currencyId +
       "&reportParameter=branchId!" + this.branchId +
       "&reportParameter=companyId!" + this.companyId +
-      "&reportParameter=lang!" + this.lang;
+      "&reportParameter=lang!" + this.lang+
+      "&reportParameter=selectedBranchName!" + this.selectedBranchName+
+      "&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName +
+      "&reportParameter=selectedVoucherKindName!" + this.selectedVocherKindName 
+      
 
     const modalRef = this.modalService.open(NgbdModalContent);
     modalRef.componentInstance.reportParams = reportParams;
@@ -173,7 +182,7 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
     }
 
   OnFilter(e: {
-    fromDate, toDate, currencyId, branchId, voucherKindId
+    fromDate, toDate, currencyId,currencyName,branchName, branchId, voucherKindId,voucherKindName
   }) {
 
     this.fromDate = e.fromDate
@@ -181,6 +190,9 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
     this.currencyId = e.currencyId
     this.branchId = e.branchId
     this.voucherKindId = e.voucherKindId
+    this.selectedBranchName =e.branchName
+    this.selectedCurrencyName=e.currencyName
+    this.selectedVocherKindName = e.voucherKindName
 
   }
 

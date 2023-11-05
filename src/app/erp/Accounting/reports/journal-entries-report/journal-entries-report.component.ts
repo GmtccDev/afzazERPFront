@@ -86,16 +86,15 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	}
 	//#endregion
 		//this.fromDate= this.dateConverterService.getDateForCalender(this.defualtFromDate);
-	isContainsDate(input: string): boolean {
-		const date = new Date(input);
-		let reuslt= date instanceof Date && !isNaN(date.getTime());
-		 return reuslt;
-	  }
+		selectedCurrencyName:any='';
+		selectedEntriesStatusName='';
+		selectedBranchName=''
+		selectedLeafAccountName=''
 	gotoViewer() {
 		
 		let monthFrom;
 		let monthTo;
-
+         debugger;
 		if (this.fromDate == undefined || this.fromDate == null) {
 			//  this.fromDate = this.dateConverterService.getCurrentDate();
 			monthFrom = Number(this.fromDate.month + 1)
@@ -146,7 +145,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 			this.currencyId = 0;
 		}
 
-		;
+		
 
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		+ "&reportParameter=toDate!" + this.toDate
@@ -154,6 +153,10 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		+ "&reportParameter=companyId!" + this.companyId
 		+ "&reportParameter=currencyId!" + this.currencyId
 		+ "&reportParameter=entriesStatusId!" + this.entriesStatusId
+		+"&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName 
+		+"&reportParameter=selectedleafAccountName!" + this.selectedLeafAccountName 
+		+"&reportParameter=selectedBranchName!" + this.selectedBranchName
+		+"&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName 
 		+ "&reportParameter=JournalId!" + this.JournalId
 		+ "&reportParameter=fromEntryNo!" + this.fromEntryNo
 		+ "&reportParameter=toEntryNo!" + this.toEntryNo
@@ -192,7 +195,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowLeafAccount:true
 	};
 
-	OnFilter(e: { fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
+	OnFilter(e: { branchName,currencyName,leafAccountName,entriesStatusName,fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
 		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
@@ -202,6 +205,10 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		this.branchId = e.branchId;
 		this.entriesStatusId = e.entriesStatusId;
 		this.accountId=e.leafAccountId;
+		this.selectedCurrencyName=e.currencyName,
+		this.selectedEntriesStatusName=e.entriesStatusName,
+		this.selectedLeafAccountName=e.leafAccountName
+		this.selectedBranchName = e.branchName
 	}
 
 	listenToClickedButton() {

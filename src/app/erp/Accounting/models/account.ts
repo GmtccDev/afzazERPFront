@@ -33,6 +33,9 @@ export class AccountDtoPageList {
 export class DeleteListAccountCommand {
     ids: number[] | undefined;
 }
+export class DeleteAccountCommand {
+    id: any | undefined;
+}
 export class TreeDto {
     id: number;
     nameAr: string | undefined;

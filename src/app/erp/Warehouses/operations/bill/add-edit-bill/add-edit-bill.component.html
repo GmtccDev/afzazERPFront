@@ -529,7 +529,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billItem[i].itemNameAr"
+                                                                        [(ngModel)]="billItem[i].itemName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openItemSearchDialog(i)">
                                                                 </td>
@@ -543,7 +543,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billItem[i].unitNameAr"
+                                                                        [(ngModel)]="billItem[i].unitName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openUnitSearchDialog(i)">
 
@@ -616,7 +616,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billItem[i].storeNameAr"
+                                                                        [(ngModel)]="billItem[i].storeName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openStoreSearchDialog(i)">
                                                                 </td>
@@ -646,7 +646,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillItem.itemNameAr"
+                                                                        [(ngModel)]="selectedBillItem.itemName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openItemSearchDialog(-1)">
                                                                 </td>
@@ -660,7 +660,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillItem.unitNameAr"
+                                                                        [(ngModel)]="selectedBillItem.unitName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openUnitSearchDialog(-1)">
 
@@ -734,7 +734,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillItem.storeNameAr"
+                                                                        [(ngModel)]="selectedBillItem.storeName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openStoreSearchDialog(-1)">
                                                                 </td>
@@ -844,7 +844,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].accountNameAr"
+                                                                        [(ngModel)]="billAdditionAndDiscount[i].accountName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openAccountSearchDialog(i)">
                                                                 </td>
@@ -858,14 +858,14 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].correspondingAccountNameAr"
+                                                                        [(ngModel)]="billAdditionAndDiscount[i].correspondingAccountName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openCorrespondingAccountSearchDialog(i)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].currencyNameAr"
+                                                                        [(ngModel)]="billAdditionAndDiscount[i].currencyName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openCurrencySearchDialog(i)">
                                                                 </td>
@@ -928,7 +928,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.accountNameAr"
+                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.accountName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openAccountSearchDialog(-1)">
                                                                 </td>
@@ -942,14 +942,14 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.correspondingAccountNameAr"
+                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.correspondingAccountName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openCorrespondingAccountSearchDialog(-1)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.currencyNameAr"
+                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.currencyName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openCurrencySearchDialog(-1)">
                                                                 </td>

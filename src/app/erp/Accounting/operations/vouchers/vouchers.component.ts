@@ -27,7 +27,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   voucherTypeId: any;
   currnetUrl: any;
   queryParams: any;
-  sub: any;
 
   addUrl: string = '/accounting-operations/vouchers/add-voucher/';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';

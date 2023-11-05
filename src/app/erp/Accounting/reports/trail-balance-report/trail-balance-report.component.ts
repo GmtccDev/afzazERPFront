@@ -88,6 +88,9 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		let reuslt= date instanceof Date && !isNaN(date.getTime());
 		 return reuslt;
 	  }
+	  selectedEntriesStatusName='';
+	  selectedBranchName='';
+	  
 	gotoViewer() {
 
 		let monthFrom;
@@ -133,6 +136,8 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		+ "&reportParameter=branchId!" + this.branchId
 		+ "&reportParameter=companyId!" + this.companyId
 		+ "&reportParameter=lang!" + this.lang
+		+ "&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName
+		+ "&reportParameter=selectedBranchName!" + this.selectedBranchName
 		+ "&reportParameter=userId!" + this.userId;
 		const modalRef = this.modalService.open(NgbdModalContent);
 		modalRef.componentInstance.reportParams = reportParams;
@@ -158,13 +163,15 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 
 	};
 
-	OnFilter(e: { fromDate; toDate;entriesStatusId,branchId,level}) {
+	OnFilter(e: { fromDate; toDate;entriesStatusName,entriesStatusId,branchId,branchName,level}) {
 		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.branchId = e.branchId;
 		this.levelId = e.level;
-		this.entriesStatusId = e.entriesStatusId
+		this.entriesStatusId = e.entriesStatusId;
+		this.selectedEntriesStatusName= e.entriesStatusName;
+		this.selectedBranchName = e.branchName;
 	}
 
 	listenToClickedButton() {
