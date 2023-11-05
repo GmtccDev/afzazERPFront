@@ -1,31 +1,34 @@
 <!-- page-wrapper Start-->
 <div [ngClass]="layout.config.settings.layout_type" [class]="layout.config.settings.layout_version">
-    <div class="page-wrapper" id="canvas-bookmark" [ngClass]="layoutClass">
-        <app-header></app-header>
-        <!-- Page Body Start-->
-        <div class="page-body-wrapper">
-            <div class="sidebar-wrapper" [attr.sidebar-layout]="layout.config.settings.sidebar_type" [class.close_icon]="navServices.collapseSidebar">
-                <app-sidebar></app-sidebar>
-            </div>
+	<div class="page-wrapper" id="canvas-bookmark" [ngClass]="layoutClass">
+		<app-header></app-header>
+		<!-- Page Body Start-->
+		<div class="page-body-wrapper">
 
-            <div class="page-body">
-                <!-- <app-breadcrumb [title]="'Product List'" [items]="['Apps', 'Ecommerce']" [active_item]="'Product List'"></app-breadcrumb> -->
+			<div class="sidebar-wrapper" [attr.sidebar-layout]="layout.config.settings.sidebar_type"
+				[class.close_icon]="navServices.collapseSidebar">
+				<app-sidebar></app-sidebar>
+			</div>
 
-                <main [@fadeInAnimation]="getRouterOutletState(o)">
 
-                    <router-outlet #o="outlet"></router-outlet>
-                </main>
-            </div>
-            <!-- footer start-->
-            <footer class="footer">
-                <app-footer></app-footer>
-            </footer>
-            <!-- footer End-->
+			<div class="page-body">
+				<!-- <app-breadcrumb [title]="'Product List'" [items]="['Apps', 'Ecommerce']" [active_item]="'Product List'"></app-breadcrumb> -->
 
-        </div>
-        <!-- Page Body End-->
+				<main [@fadeInAnimation]="getRouterOutletState(o)">
 
-    </div>
+					<router-outlet #o="outlet"></router-outlet>
+				</main>
+			</div>
+			<!-- footer start-->
+			<footer class="footer">
+				<app-footer></app-footer>
+			</footer>
+			<!-- footer End-->
+
+		</div>
+		<!-- Page Body End-->
+
+	</div>
 
 </div>
 <div class="bg-overlay1"></div>

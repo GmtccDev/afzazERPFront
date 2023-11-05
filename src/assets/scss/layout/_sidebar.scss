@@ -265,6 +265,7 @@
                     }
                     .flag-icon {
                         font-size: 16px;
+                        margin: 0 5px;
                     }
                 }
                 .flip-card {
@@ -2280,7 +2281,10 @@
             top: -50px;
             width: 100%;
             height: 300px;
-            background-image: $gradient-primary;
+            background-image: $gradient-primary, url(../../images/dashboard/bg.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
         }
         .card {
             box-shadow: 0 0 20px rgba($black, 0.05);
@@ -2292,7 +2296,7 @@
             border-radius: 15px 15px 0 0;
         }
         .page-body-wrapper {
-            background-image: url(../../images/other-images/boxbg.jpg);
+            background-image: url(../../images/other-images/boxbg.png);
             background-blend-mode: overlay;
             background-color: rgba($white, 0.5);
             .sidebar-wrapper {
@@ -2813,4 +2817,10 @@
 
 .page-wrapper.modern-type .page-body-wrapper.dashbord-page1 div.sidebar-wrapper {
     top: 50px;
+}
+
+button.btn.english.font-secondary.p-0 {
+    color: $header-wrapper-nav-icon-color;
+    font-weight: 500;
+    font-family: 'Rubik' !important;
 }

@@ -1496,9 +1496,65 @@
     
     // end style layout=Seoul
     // start style layout=LosAngeles
-    .horizontal-wrapper.material-type.page-wrapper {}
+    .horizontal-wrapper.material-type.page-wrapper {
+        .dashbord-page1 .page-body {
+            margin-top: 0px !important;
+        }
+        main {
+            margin-top: 0px !important;
+            .search_area_on_export_setting {
+                margin-top: 0;
+            }
+        }
+        .page-header.subscription {
+            // max-width: 1560px !important;
+            margin: 50px auto 0 !important;
+        }
+        .page-body-wrapper.subscription .page-body {
+            margin: 0 auto !important;
+        }
+        .sidebar-links>li .sidebar-submenu {
+            width: max-content !important;
+        }
+    }
+    
+    html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper {
+        .sidebar-main {
+            .sidebar-links {
+                direction: rtl !important;
+                text-align: start !important;
+                &>li {
+                    float: right;
+                    &>a svg {
+                        margin-right: initial !important;
+                        margin-left: 10px !important;
+                    }
+                }
+            }
+            .right-arrow {
+                left: 0;
+                right: initial !important;
+                svg {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+        .sidebar-submenu li a:after {
+            left: initial !important;
+            right: 20px;
+        }
+    }
     
     // end style layout=LosAngeles
+    // start style layout=LosAngeles
+    .page-wrapper.compact-sidebar {
+        .page-body-wrapper .page-body {
+            margin-top: 80px;
+            margin-left: 200px;
+        }
+    }
+    
+    // start style layout=LosAngeles
     .input-search {}
     
     @import "../scss/themes/responsive";

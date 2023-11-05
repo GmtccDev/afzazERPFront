@@ -17381,7 +17381,7 @@ strong ~ p {
   font-weight: 500;
   padding: 10px 30px;
   border-radius: 5px;
-  background: linear-gradient(26deg, var(--theme-deafult) 0%, #a26cf8 100%);
+  background: linear-gradient(207deg, #293176 0%, rgba(75, 194, 241, 0.4509803922) 100%);
   letter-spacing: 0.06rem;
 }
 .btn-gradient:hover {
@@ -24844,7 +24844,7 @@ p.data-attributes svg {
   box-shadow: none;
 }
 .offer-box .offer-slider {
-  background: linear-gradient(26deg, var(--theme-deafult) 0%, #a26cf8 100%);
+  background: linear-gradient(207deg, #293176 0%, rgba(75, 194, 241, 0.4509803922) 100%);
   border-radius: 15px;
   height: 200px;
   width: 100%;
@@ -31270,7 +31270,7 @@ div .plain-container {
    55. theme layout CSS Start
 ==========================**/
 body .dark-only {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background-color: #1d1e26;
 }
 body .dark-only .table > :not(caption) > * > * {
@@ -31294,11 +31294,11 @@ body .dark-only .accordion-item {
   background-color: #1d1e26;
 }
 body .dark-only .accordion-header .accordion-button {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background-color: #262932;
 }
 body .dark-only .email-wrap .email-app-sidebar ul li a > .title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .ngb-tp-input-container {
   border-color: #374558;
@@ -31322,13 +31322,13 @@ body .dark-only .prooduct-details-box .media {
 }
 body .dark-only .btn-light,
 body .dark-only .form-control-plaintext {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .qty-box .btn svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .dropdown-item {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .dropdown-item:hover, body .dark-only .dropdown-item:focus {
   background: #262932;
@@ -31362,10 +31362,10 @@ body .dark-only .login-card .login-main .theme-form .checkbox label::before {
 }
 body .dark-only .ProfileCard-realName a,
 body .dark-only .ProfileCard-realName span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .ProfileCard:hover {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background: #262932;
 }
 body .dark-only .H_ui ~ div {
@@ -31408,7 +31408,7 @@ body .dark-only #right-history {
   box-shadow: 0 0 9px #1d1e26;
 }
 body .dark-only .ProfileCard:hover {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background-color: #262932;
 }
 body .dark-only .translate_wrapper.active .more_lang:before {
@@ -31418,12 +31418,12 @@ body .dark-only .translate_wrapper.active .more_lang .lang {
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .toggle-sidebar svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .job-search .job-description .theme-form .row div[class^=col-] .job-select2 {
   background-color: #1d1e26;
   border-color: #1d1e26 !important;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .photoswipe-pb-responsive .custom-mesonry > div img {
   border: 1px solid #374558;
@@ -31432,7 +31432,7 @@ body .dark-only .js-example-basic-single,
 body .dark-only .js-example-disabled-results {
   border-color: #374558;
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .vertical-tab .nav-tabs .nav-item {
   border: 1px solid #374558;
@@ -31453,6 +31453,7 @@ body .dark-only .vertical-tab .nav-tabs .nav-link:hover, body .dark-only .vertic
 }
 body .dark-only .page-wrapper .k-button-solid-base {
   background-color: #262932 !important;
+  border-color: #374558 !important;
 }
 body .dark-only .page-wrapper .k-toolbar {
   background-color: #1d1e26 !important;
@@ -31470,35 +31471,35 @@ body .dark-only .page-wrapper .page-body-wrapper {
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .sidebar-main-title p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper {
   background-color: #262932;
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-title h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content.opensubmegamenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container::after {
   background-color: rgba(255, 255, 255, 0.2);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links.custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #262932;
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a.active {
   color: var(--theme-deafult);
@@ -31507,20 +31508,20 @@ body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wra
   color: var(--theme-deafult);
 }
 body .dark-only .page-wrapper.compact-wrapper .page-body-wrapper .according-menu i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper {
   border-top: 1px solid #374558;
   background: #262932;
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li > a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu {
   background: #262932;
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a.active, body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a:hover {
   color: var(--theme-deafult);
@@ -31532,12 +31533,12 @@ body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wra
   background: #262932;
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .left-arrow,
 body .dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .right-arrow {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper {
   background-color: #262932;
@@ -31549,10 +31550,10 @@ body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wra
   border-bottom: 1px solid #374558;
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li .sidebar-submenu,
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li .mega-menu-container {
@@ -31573,26 +31574,26 @@ body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wra
   stroke: var(--theme-deafult);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-title h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content.opensubmegamenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container::after {
   background-color: rgba(255, 255, 255, 0.2);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a.active {
   color: var(--theme-deafult);
 }
 body .dark-only .page-wrapper.compact-sidebar .page-body-wrapper .according-menu i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper.material-type .page-header .header-wrapper {
   border-radius: 15px 15px 0 0;
@@ -31642,7 +31643,7 @@ body .dark-only .page-wrapper .page-header .header-wrapper .search-full {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .search-full input {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .onhover-show-div:not(.profile-dropdown) li:first-child {
   background-color: #262932;
@@ -31651,7 +31652,7 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .flip-card
   background: #1d1e26;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .flip-card .flip-card-inner .front svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .flip-card .flip-card-inner .front .bookmark-dropdown li:last-child {
   border-top: 1px solid #374558;
@@ -31662,13 +31663,13 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .flip-card
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .flip-card .flip-card-inner .back .flip-back-content input {
   background-color: #1d1e26;
   border-color: #374558;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .flip-card .flip-card-inner .back li:last-child {
   border-top: 1px solid #374558;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only ::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -31809,21 +31810,21 @@ body .dark-only .pie-peity svg path:nth-child(even) {
   fill: #1d1e26;
 }
 body .dark-only .earning-card.card .card-body .left_side_earning p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .earning-card.card .card-body .earning-content {
   border-right: 1px solid #374558;
 }
 body .dark-only .earning-card.card .card-body .inner-top-left ul li,
 body .dark-only .earning-card.card .card-body .inner-top-right ul li {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .earning-card.card .card-body .inner-top-left ul li.active,
 body .dark-only .earning-card.card .card-body .inner-top-right ul li.active {
   color: var(--theme-deafult);
 }
 body .dark-only .earning-card.card .card-body .media .media-body p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .earning-card.card .card-body .border-top {
   border-top: 1px solid #374558 !important;
@@ -31838,10 +31839,10 @@ body .dark-only .chart_data_right .card-body .chart-main .media.border-none {
 }
 body .dark-only .chart_data_left .card-body .media .right-chart-content span,
 body .dark-only .chart_data_right .card-body .media .right-chart-content span {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .chart_data_right .card-body .knob-block input {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .third-news-update .news-update,
 body .dark-only .news .news-update,
@@ -31851,12 +31852,12 @@ body .dark-only .appointment-sec .news-update {
 body .dark-only .third-news-update .news-update span,
 body .dark-only .news .news-update span,
 body .dark-only .appointment-sec .news-update span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .third-news-update .appointment .radar-chart .apexcharts-datalabel,
 body .dark-only .news .appointment .radar-chart .apexcharts-datalabel,
 body .dark-only .appointment-sec .appointment .radar-chart .apexcharts-datalabel {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .chat-default .card-body.chat-box .input-group .form-control {
   background-color: #262932 !important;
@@ -31864,34 +31865,34 @@ body .dark-only .chat-default .card-body.chat-box .input-group .form-control {
   border-left: 1px solid var(--theme-deafult) !important;
 }
 body .dark-only .chat-default .card-body.chat-box .input-group .form-control::-moz-placeholder {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .chat-default .card-body.chat-box .input-group .form-control::placeholder {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .appointment-table table tr td.img-content-box .font-roboto {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .notification .card .media .media-body p span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .notification .card .media .media-body span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .default-datepicker .datepicker-inline .datepicker {
   background: #262932;
 }
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--nav-title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--nav-title i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--content .datepicker--days .datepicker--days-names .datepicker--day-name,
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--content .datepicker--days .datepicker--days-names .datepicker--cell-day,
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--content .datepicker--days .datepicker--cells .datepicker--day-name,
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--content .datepicker--days .datepicker--cells .datepicker--cell-day {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--content .datepicker--days .datepicker--days-names .datepicker--day-name.-selected-,
 body .dark-only .default-datepicker .datepicker-inline .datepicker .datepicker--content .datepicker--days .datepicker--days-names .datepicker--cell-day.-selected-,
@@ -31904,25 +31905,25 @@ body .dark-only .knowledgebase-search h3 {
   color: #2b2b2b;
 }
 body .dark-only .dash-chart .media .media-body p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .dash-chart .media .media-body p .font-roboto {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .our-product table tr td p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .activity-timeline .media .activity-line {
   background-color: rgba(255, 255, 255, 0.2);
 }
 body .dark-only .activity-timeline .media .media-body p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .total-users .goal-status ul:last-child li {
   border-top-color: #374558;
 }
 body .dark-only .best-seller-table table tbody tr td .label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .best-seller-table table tbody tr td p {
   color: rgba(255, 255, 255, 0.2);
@@ -31931,7 +31932,7 @@ body .dark-only .best-seller-table table tbody tr:hover td {
   color: var(--theme-deafult) !important;
 }
 body .dark-only .best-seller-table table tbody tr:hover td span {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .best-seller-table table tbody tr:hover td .label,
 body .dark-only .best-seller-table table tbody tr:hover td p {
@@ -32010,7 +32011,7 @@ body .dark-only .ngx-toolbar .ngx-toolbar-set {
 body .dark-only .ngx-toolbar .ngx-toolbar-set .ngx-editor-button {
   border: 1px solid #1d1e26 !important;
   border-right: transparent !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .ngx-toolbar .ngx-toolbar-set .ngx-editor-button:hover {
   background-color: #1d1e26 !important;
@@ -32045,7 +32046,7 @@ body .dark-only .gogglearea svg g text[x="636"],
 body .dark-only .gogglearea svg g text[x="115"],
 body .dark-only .gogglearea svg g text[y="343.05"],
 body .dark-only .gogglearea svg g text[x="360"] {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .goggleline svg g rect[y="96"],
 body .dark-only .goggleline svg g rect[x="201"],
@@ -32059,7 +32060,7 @@ body .dark-only .goggleline svg g text[x="1384"],
 body .dark-only .gogglecombo svg g text[x="185"],
 body .dark-only .gogglecombo svg g text[y="428.6"],
 body .dark-only .gogglecombo svg g text[x="1384"] {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .gogglecombo svg g rect[y="96"],
 body .dark-only .gogglecombo svg g rect[x="201"] {
@@ -32068,7 +32069,7 @@ body .dark-only .gogglecombo svg g rect[x="201"] {
 body .dark-only .gogglecombo svg g text[x="76.6"],
 body .dark-only .gogglecombo svg g text[x="765.5"],
 body .dark-only .gogglecombo svg g text[x="201"] {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only #area-chart1 svg g rect[x="131"],
 body .dark-only #area-chart2 svg g rect[x="131"] {
@@ -32138,7 +32139,7 @@ body .dark-only aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li:
   background-color: rgba(255, 255, 255, 0.2);
 }
 body .dark-only aw-wizard-navigation-bar.horizontal ul.steps-indicator.steps-3 li p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only aw-wizard-navigation-bar.vertical.small ul.steps-indicator li:not(:last-child):after {
   background-color: rgba(255, 255, 255, 0.2);
@@ -32147,12 +32148,12 @@ body .dark-only .accordion > .card {
   border: 1px solid #374558 !important;
 }
 body .dark-only .accordion > .card .card-header .btn-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .custom-datepicker .ngb-dp-day .btn-light,
 body .dark-only .mutliple-datepicker .ngb-dp-day .btn-light {
   background-color: #1d1e26 !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .custom-datepicker .ngb-dp-month,
 body .dark-only .custom-datepicker .ngb-dp-week,
@@ -32164,7 +32165,7 @@ body .dark-only .custom-datepicker .ngb-dp-month .ngb-dp-weekday,
 body .dark-only .custom-datepicker .ngb-dp-week .ngb-dp-weekday,
 body .dark-only .mutliple-datepicker .ngb-dp-month .ngb-dp-weekday,
 body .dark-only .mutliple-datepicker .ngb-dp-week .ngb-dp-weekday {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .custom-datepicker .ngb-dp-navigation-select .form-select,
 body .dark-only .mutliple-datepicker .ngb-dp-navigation-select .form-select {
@@ -32187,7 +32188,7 @@ body .dark-only .custom-datepicker-dropdown {
 }
 body .dark-only .mutliple-datepicker > label,
 body .dark-only .custom-datepicker-dropdown > label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .mutliple-datepicker .custom-day,
 body .dark-only .custom-datepicker-dropdown .custom-day {
@@ -32207,7 +32208,7 @@ body .dark-only .custom-datepicker-dropdown .dropdown-menu {
 }
 body .dark-only .mutliple-datepicker .align-content-between .form-select,
 body .dark-only .custom-datepicker-dropdown .align-content-between .form-select {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
   border: 1px solid #1d1e26 !important;
 }
 body .dark-only .mutliple-datepicker hr,
@@ -32215,10 +32216,10 @@ body .dark-only .custom-datepicker-dropdown hr {
   border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 body .dark-only .custom-datepicker-dropdown .form-group label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .btn-outline-dark {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only #column-chart .apexcharts-legend-text b {
   color: unset;
@@ -32424,7 +32425,7 @@ body .dark-only .popover code {
   background-color: unset;
 }
 body .dark-only .apex-chart-container .apexcharts-legend .apexcharts-legend-series span {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .apexcharts-canvas svg .apexcharts-title-text {
   fill: #fff;
@@ -32439,7 +32440,7 @@ body .dark-only .apexcharts-canvas svg .apexcharts-xaxis .apexcharts-xaxis-texts
   fill: #fff;
 }
 body .dark-only .apexcharts-canvas svg .apexcharts-legend-series span {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .apexcharts-canvas svg .apexcharts-datalabels-group .apexcharts-datalabel-label {
   fill: #fff;
@@ -32456,7 +32457,7 @@ body .dark-only .ecommerce-widget {
 body .dark-only .bookmark ul li .search-form .form-control-search input {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .bookmark ul li .search-form .form-control-search:before {
   background: #1d1e26;
@@ -32520,7 +32521,7 @@ body .dark-only .square-product-setting .icon-grid {
   background-color: #262932;
 }
 body .dark-only .square-product-setting .icon-grid svg {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .active-order-table table thead tr th,
 body .dark-only .market-table table thead tr th {
@@ -32580,10 +32581,10 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right > ul > li 
   stroke: #fff;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right.right-header > ul > li .profile-media .media-body p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus li .media .media-body .txt-dark {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus li .onhover-show-div {
   background-color: #1d1e26;
@@ -32593,7 +32594,7 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus
   border-color: #262932;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus li .onhover-show-div p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus li .onhover-show-div:before {
   border-bottom: 7px solid #1d1e26;
@@ -32606,15 +32607,15 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .nav-menus li .notification-dropdown.onhover-show-div .bg-light {
   background-color: #282e38 !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li a svg path,
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li a svg line,
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li a svg circle {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li a:hover {
   color: var(--theme-deafult);
@@ -32625,7 +32626,7 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .profile-d
   color: var(--theme-deafult) !important;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right > ul > li .media .media-body .txt-dark {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .nav-right > ul > li .onhover-show-div {
   background-color: #1d1e26;
@@ -32648,10 +32649,10 @@ body .dark-only .page-wrapper .page-header .header-wrapper .nav-right .chat-drop
   border-color: #262932;
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .left-header ul li .search-form input::-moz-placeholder {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-wrapper .left-header ul li .search-form input::placeholder {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-header .header-logo-wrapper {
   background-color: #262932;
@@ -32719,7 +32720,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .professor-table tab
   border-top: none !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .number-widgets .media .media-body h6 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .activity .media .gradient-round.gradient-line-1:after, body .dark-only .page-wrapper .page-body-wrapper .page-body .activity .media .gradient-round.small-line:after, body .dark-only .page-wrapper .page-body-wrapper .page-body .activity .media .gradient-round.medium-line:after {
   background-color: #1d1e26;
@@ -32738,10 +32739,10 @@ body .dark-only .page-wrapper .page-body-wrapper .page-title .row h3 small {
   color: #98a6ad;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-title .breadcrumb li {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-title .breadcrumb-item a svg {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-title .breadcrumb-item.active {
   color: #98a6ad;
@@ -32758,20 +32759,20 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   fill: #262932;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-block #bar-chart2 svg > g text {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-block .word-tree svg > g > rect {
   fill: #262932;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-block .word-tree svg > g > text {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header {
   background-color: transparent;
   border-bottom: 1px solid #374558;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header > span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header h1,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header h2,
@@ -32779,13 +32780,13 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header h4,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header h5,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header h6 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header .card-header-right {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header .card-header-right i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .card-header .card-header-right i.fa-cog {
   color: var(--theme-deafult);
@@ -32799,7 +32800,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .alert-light.outline,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .alert-light.outline-2x,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .alert-light.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) #animation-box .animate-widget p {
   color: #98a6ad !important;
@@ -32809,11 +32810,11 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   border: 1px solid #374558;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .line {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .table th,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .table td {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-top: 1px solid #374558;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .table thead th {
@@ -32898,7 +32899,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   border: 0;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .table-inverse tbody tr:nth-of-type(odd):hover td {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .table-border-vertical tr,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .table-border-vertical th,
@@ -32940,7 +32941,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   color: rgba(255, 255, 255, 0.7) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .custom-datepicker .ngb-dp-arrow .btn-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .custom-datepicker .ngb-dp-header {
   background-color: #262932;
@@ -32955,7 +32956,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .contact-form .theme-form .form-icon {
   background-color: #262932;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .btn-outline-light,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .btn-outline-dark,
@@ -32970,10 +32971,10 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   border-right: 1px solid #1d1e26 !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .flot-chart-placeholder .flot-text {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .flot-chart-placeholder svg text {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-overflow#gantt_chart svg g rect:first-child {
   fill: #1d1e26;
@@ -32991,17 +32992,17 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   fill: rgb(177, 177, 178);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-overflow svg > g > text {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .radial-bar:after {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .bar-chart-widget .bottom-content .num {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .bar-chart-widget .bottom-content .num .color-bottom {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .b-r-light {
   border-right: 1px solid #1d1e26 !important;
@@ -33020,13 +33021,13 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-container #browser-uses-chart svg text,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .chart-container #website-visiter-chart svg text {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .status-details h4 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .status-details h4 span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .status-details span {
   color: #98a6ad;
@@ -33053,7 +33054,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_length select {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_length,
@@ -33061,7 +33062,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_info,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_processing,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_paginate {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_paginate {
   border: 1px solid #1d1e26;
@@ -33069,7 +33070,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_filter input[type=search] {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper table.dataTable.display tbody tr,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper table.dataTable.order-column.stripe tbody tr {
@@ -33101,7 +33102,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper table.dataTable input,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper table.dataTable select {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper table.dataTable tbody tr {
@@ -33115,7 +33116,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_paginate .paginate_button {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_paginate .paginate_button.current, body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .dataTables_wrapper .dataTables_paginate .paginate_button:active {
   border-color: var(--theme-deafult);
@@ -33169,7 +33170,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   border-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .page-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background-color: #262932;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .page-item:hover .page-link {
@@ -33182,10 +33183,10 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .ecommerce-widget .total-num {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .ecommerce-widget .total-num span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .ecommerce-widget span {
   color: #98a6ad;
@@ -33205,7 +33206,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .border-tab.nav-tabs .nav-item .nav-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .border-tab.nav-tabs .nav-link.active, body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .border-tab.nav-tabs .nav-link:focus, body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .border-tab.nav-tabs .nav-link:hover {
   color: var(--theme-deafult);
@@ -33231,7 +33232,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .br-theme-bars-square .br-widget a {
   border: 2px solid #1d1e26;
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .br-theme-bars-square .br-widget a.br-active, body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .br-theme-bars-square .br-widget a.br-selected {
   border: 2px solid var(--theme-deafult);
@@ -33251,7 +33252,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-bod
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .search-form input {
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .search-form .form-group:before {
@@ -33288,7 +33289,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .nav-p
   color: #fff;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .nav-primary .nav-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .nav-primary .nav-link.active {
   color: #fff;
@@ -33297,7 +33298,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .nav-p
   color: #fff;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .nav-primary .nav-pills.nav-primary .nav-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .nav-primary .nav-pills.nav-primary .nav-link.active {
   color: #fff;
@@ -33310,7 +33311,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder .help-
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body #viewhtml .render {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .form-builder-column .drag-bx {
@@ -33320,7 +33321,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .wizard-4 ul.anchor 
   color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .gallery-with-description h4 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .gallery-with-description a > div {
   border: 1px solid #1d1e26;
@@ -33345,7 +33346,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-filter-row >
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-filter-row > .jsgrid-cell input {
   background-color: #1d1e26;
   border-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-header-row > .jsgrid-header-cell input:focus,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-header-row > .jsgrid-cell input:focus,
@@ -33357,7 +33358,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-header-row s
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-filter-row select {
   background-color: #1d1e26;
   border-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-row > .jsgrid-cell {
   background-color: #262932;
@@ -33376,17 +33377,17 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid .jsgrid-page
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid .jsgrid-pager .jsgrid-pager-page a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .jsgrid-pager-current-page {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 700;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .sub-title {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-icon li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-icon li a:hover {
   color: var(--theme-deafult);
@@ -33395,13 +33396,13 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-icon .separato
   border-bottom: 1px solid #374558;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .default-according li .text-muted {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-icon.default-according.style-1 li button:hover {
   color: var(--theme-deafult) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .nav-list .nav-list-disc li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .nav-list .nav-list-disc li:hover {
   color: var(--theme-deafult);
@@ -33421,7 +33422,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-dropdown .onho
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-dropdown .onhover-show-div .navs-icon li a svg polyline,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-dropdown .onhover-show-div .navs-icon li a svg polygon,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-dropdown .onhover-show-div .navs-icon li a svg rect {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-dropdown .onhover-show-div .navs-icon li a:hover svg path,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .navs-dropdown .onhover-show-div .navs-icon li a:hover svg line,
@@ -33434,7 +33435,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .onhover-dropdown:ho
   border-bottom: 7px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .default-according .card .btn-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .default-according .card .card-body {
   color: #98a6ad;
@@ -33447,7 +33448,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .border {
   border: 1px solid #374558 !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-date {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-details .blog-social li,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-details-main .blog-social li {
@@ -33464,7 +33465,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-deta
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-details p,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-details-main p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-details .single-blog-content-top,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .blog-box .blog-details-main .single-blog-content-top {
@@ -33517,7 +33518,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .button-builder-wrap
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .button-builder-wrap .button-preview h2 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .button-builder-wrap pre.well {
   background-color: #262932 !important;
@@ -33526,14 +33527,14 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .crm-activity > li +
   border-top: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .crm-activity > li h6 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .crm-activity ul.dates li {
   color: #98a6ad;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body #donut-color-chart-morris svg text,
 body .dark-only .page-wrapper .page-body-wrapper .page-body #donut-color-chart-morris-daily svg text {
-  fill: rgb(255, 255, 255);
+  fill: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .custom-card .card-profile img {
   background-color: #262932;
@@ -33552,20 +33553,20 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .custom-card .card-f
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .form-control {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #374558;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .checkbox label::before,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .radio label::before {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropdown-basic .dropdown .dropdown-content {
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropdown-basic .dropdown .dropdown-content a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropdown-basic .dropdown .dropdown-content a:hover {
   background-color: #262932;
@@ -33577,13 +33578,13 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .dropup-basic .dropu
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropup-basic .dropup .dropup-content a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropup-basic .dropup .dropup-content a:hover, body .dark-only .page-wrapper .page-body-wrapper .page-body .dropup-basic .dropup .dropup-content a.active {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropzone.dz-clickable .dz-message h6 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropzone.dz-clickable .dz-message span {
   color: #98a6ad;
@@ -33599,10 +33600,10 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .browser-widget .med
        column-rule: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .browser-widget .media-body h4 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .browser-widget .media-body h4 span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .browser-widget .media-body span {
   color: #98a6ad;
@@ -33611,7 +33612,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .email-wrap .email-a
   border: 2px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .email-wrap .email-app-sidebar .main-menu > li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .email-wrap .email-app-sidebar .main-menu > li a:hover {
   background-color: #1d1e26;
@@ -33620,7 +33621,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .email-wrap .email-r
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .email-wrap .media-body h6 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .email-wrap .media-body h6 small {
   color: #98a6ad;
@@ -33645,7 +33646,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .dropdown-menu {
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropdown-menu a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .dropdown-menu a:hover {
   background-color: #262932;
@@ -33670,7 +33671,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .redial-social-widge
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .social-widget-card h5,
 body .dark-only .page-wrapper .page-body-wrapper .page-body .social-widget-card h4 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .social-widget-card span {
   color: #98a6ad;
@@ -33685,10 +33686,10 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .testimonial i {
   color: #1d1e26;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .testimonial p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .testimonial h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .testimonial span {
   color: #98a6ad;
@@ -33735,7 +33736,7 @@ body .dark-only .page-wrapper .page-body-wrapper .page-body .page-builder .ge-ca
   color: #98a6ad;
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .page-builder .ge-content-type-ckeditor {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .page-body .search-page .info-block + .info-block {
   border-top: 1px solid #1d1e26;
@@ -33752,7 +33753,7 @@ body .dark-only .page-wrapper .page-body-wrapper .footer {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .page-body-wrapper .footer p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .page-body-wrapper .form-select {
   border-color: #374558;
@@ -33760,7 +33761,7 @@ body .dark-only .page-wrapper .page-body-wrapper .form-select {
 body .dark-only .page-wrapper .page-body-wrapper .form-select,
 body .dark-only .page-wrapper .page-body-wrapper .custom-file-label {
   background: #1d1e26 !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .page-body-wrapper .footer-fix {
   background-color: #262932;
@@ -33777,7 +33778,7 @@ body .dark-only .page-wrapper .dt-button-info h2 {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .chat-box .about .name {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .chat-box .chat-menu {
   border-left: 1px solid #1d1e26;
@@ -33786,7 +33787,7 @@ body .dark-only .page-wrapper .chat-box .chat-menu .nav-tabs {
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .chat-box .chat-menu .nav-tabs .nav-item .nav-link.active {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .chat-box .chat-menu .user-profile .image .icon-wrapper {
   background-color: #262932;
@@ -33802,13 +33803,13 @@ body .dark-only .page-wrapper .chat-box .chat-menu .user-profile .follow span {
   color: #98a6ad;
 }
 body .dark-only .page-wrapper .chat-box .chat-menu .user-profile .follow .follow-num {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .chat-box .status {
   color: #98a6ad;
 }
 body .dark-only .page-wrapper .chat-box .status p {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .page-wrapper .chat-box .chat-right-aside .chat .chat-header {
   border-bottom: 1px solid #1d1e26;
@@ -33823,7 +33824,7 @@ body .dark-only .page-wrapper .chat-box .chat-right-aside .chat .chat-msg-box .m
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .chat-box .chat-right-aside .chat .chat-msg-box .message {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .chat-box .chat-right-aside .chat .chat-msg-box .other-message {
   background-color: #1d1e26;
@@ -33843,7 +33844,7 @@ body .dark-only .page-wrapper .chat-box .chat-history .call-icons ul li a {
 }
 body .dark-only .page-wrapper pre {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .scorlled {
   background-color: #1d1e26;
@@ -33855,7 +33856,7 @@ body .dark-only .page-wrapper .input-group-solid .input-group-text,
 body .dark-only .page-wrapper .input-group-solid .form-control {
   background: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .semilight-bg-color,
 body .dark-only .page-wrapper .header-bg-color {
@@ -33864,7 +33865,7 @@ body .dark-only .page-wrapper .header-bg-color {
 body .dark-only .page-wrapper .list-group-item {
   background-color: #262932;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .list-group-item.active {
   background-color: var(--theme-deafult) !important;
@@ -33923,15 +33924,15 @@ body .dark-only .page-wrapper .auth-bg .authentication-box .card {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .auth-bg .authentication-box .card .theme-form .form-group input {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .auth-bg .authentication-box .card .theme-form .form-group label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .auth-bg .authentication-box .card .theme-form .checkbox label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .auth-bg .authentication-box .card .theme-form .checkbox label::before {
   background-color: #1d1e26;
@@ -33960,7 +33961,7 @@ body .dark-only .page-wrapper .auth-bg-video .authentication-box .card .theme-fo
 body .dark-only .page-wrapper .auth-bg-video .authentication-box .card .theme-form .form-group input[type=password] {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .auth-bg-video .authentication-box .card .theme-form .checkbox label::before {
   background-color: #1d1e26;
@@ -33989,24 +33990,24 @@ body .dark-only .page-wrapper .comingsoon {
   background-color: rgba(54, 64, 74, 0.9);
 }
 body .dark-only .page-wrapper .comingsoon .comingsoon-inner h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .comingsoon .comingsoon-inner .countdown {
   border-top: 1px solid #1d1e26;
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .comingsoon .comingsoon-inner .countdown .title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .comingsoon .comingsoon-inner .coming-soon-bottom-link a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .theme-form .login-divider {
   border-top: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .theme-form .login-divider:before {
   background: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .authentication-main {
   background-color: #1d1e26;
@@ -34022,20 +34023,20 @@ body .dark-only .page-wrapper .authentication-main .auth-innerright .reset-passw
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .reset-password-box .theme-form .form-group .form-control {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-color: #1d1e26;
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .reset-password-box .theme-form .opt-box {
   background-color: #1d1e26;
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .authentication-box h4 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .authentication-box h6 {
   color: #98a6ad;
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .authentication-box h3 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .authentication-box .card {
   background-color: #262932;
@@ -34044,7 +34045,7 @@ body .dark-only .page-wrapper .authentication-main .auth-innerright .authenticat
 body .dark-only .page-wrapper .authentication-main .auth-innerright .authentication-box .card .theme-form .form-group input[type=password] {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .page-wrapper .authentication-main .auth-innerright .authentication-box .card .theme-form .checkbox label::before {
   background-color: #1d1e26;
@@ -34054,7 +34055,7 @@ body .dark-only .page-wrapper .vertical-menu-main {
   background-color: #262932;
 }
 body .dark-only .page-wrapper .mega-menu .title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .page-wrapper .mega-menu .list-unstyled div a:hover {
@@ -34087,7 +34088,7 @@ body .dark-only .page-wrapper .collapse .card-body {
     border: 1px solid #1d1e26;
   }
   body .dark-only .page-wrapper .chat-box .chat-history .total-time h2 {
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255, 0.6);
   }
   body .dark-only .page-wrapper .caller-img img {
     opacity: 0.7;
@@ -34135,7 +34136,7 @@ body .dark-only .drag form {
 body .dark-only .drag form input {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .drag form .help-block {
   text-transform: capitalize;
@@ -34143,7 +34144,7 @@ body .dark-only .drag form .help-block {
 }
 body .dark-only .draggable input {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #1d1e26;
 }
 body .dark-only .draggable p {
@@ -34151,7 +34152,7 @@ body .dark-only .draggable p {
 }
 body .dark-only .draggable select {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #1d1e26;
 }
 body .dark-only .draggable .radio label::before,
@@ -34170,19 +34171,19 @@ body .dark-only .ng-select.ng-select-opened .ng-dropdown-panel {
 }
 body .dark-only .ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
   background-color: #262932;
 }
 body .dark-only .ng-select .ng-select-container {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .ng-select .ng-select-container .ng-value-container .ng-input > input {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .ng-select .ng-option-label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .select2-container--default .select2-selection--multiple,
 body .dark-only .select2-container--default .select2-selection--single {
@@ -34190,19 +34191,19 @@ body .dark-only .select2-container--default .select2-selection--single {
   border: 1px solid #1d1e26 !important;
 }
 body .dark-only .select2-container--default .select2-search--inline .select2-search__field {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .select2-container--default .select2-search--dropdown .select2-search__field {
   background-color: #1d1e26;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: #262932 !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .select2-dropdown {
   background-color: #1d1e26;
@@ -34269,7 +34270,7 @@ body .dark-only .select2-container--default.select2-container--disabled .select2
 }
 body .dark-only .theme-form .form-group select.form-control:not([size]):not([multiple]) {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-color: #1d1e26;
 }
 body .dark-only .theme-form .form-group input[type=text],
@@ -34289,7 +34290,7 @@ body .dark-only .theme-form .form-group input[type=file],
 body .dark-only .theme-form .form-group select {
   border-color: #1d1e26;
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .theme-form .form-group input[type=text]::-webkit-input-placeholder,
 body .dark-only .theme-form .form-group input[type=email]::-webkit-input-placeholder,
@@ -34310,7 +34311,7 @@ body .dark-only .theme-form .form-group select::-webkit-input-placeholder {
 }
 body .dark-only .theme-form .form-group .form-control {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .theme-form .form-group textarea {
   border-color: #1d1e26;
@@ -34320,12 +34321,12 @@ body .dark-only .theme-form .form-divider {
 }
 body .dark-only .theme-form .form-divider::before {
   background: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .CodeMirror {
   background: #262932;
   border: 1px solid #98a6ad;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .CodeMirror .CodeMirror-code pre {
   background: #262932;
@@ -34336,7 +34337,7 @@ body .dark-only .editor-toolbar {
   border-right: 1px solid #98a6ad;
 }
 body .dark-only .editor-toolbar a {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 body .dark-only .editor-toolbar a:hover, body .dark-only .editor-toolbar a.active {
   background: #1d1e26;
@@ -34365,7 +34366,7 @@ body .dark-only .u-step.active, body .dark-only .u-step.current {
 }
 body .dark-only .u-step-title,
 body .dark-only .u-pearl-title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .u-step-number {
   background-color: #262932;
@@ -34394,27 +34395,27 @@ body .dark-only .note-editor.note-frame {
 }
 body .dark-only .note-editor.note-frame .note-editing-area .note-editable {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .swal-modal {
   background-color: #262932;
 }
 body .dark-only .swal-modal .swal-title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .swal-modal .swal-text {
   color: #98a6ad;
 }
 body .dark-only .swal-modal .swal-content__input {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .nav-tabs {
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .nav-tabs .nav-link.active {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-color: #1d1e26 #1d1e26 #262932;
 }
 body .dark-only .nav-tabs .nav-link:hover, body .dark-only .nav-tabs .nav-link:focus {
@@ -34422,7 +34423,7 @@ body .dark-only .nav-tabs .nav-link:hover, body .dark-only .nav-tabs .nav-link:f
 }
 body .dark-only .nav-tabs .nav-item.show .nav-link {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-color: #1d1e26 #1d1e26 #262932;
 }
 body .dark-only .nav-tabs.nav-bottom .nav-item .nav-link.active, body .dark-only .nav-tabs.nav-bottom .nav-item .nav-link.focus, body .dark-only .nav-tabs.nav-bottom .nav-item .nav-link.hover {
@@ -34430,7 +34431,7 @@ body .dark-only .nav-tabs.nav-bottom .nav-item .nav-link.active, body .dark-only
 }
 body .dark-only .border-tab.nav-left .nav-link,
 body .dark-only .border-tab.nav-right .nav-link {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .border-tab.nav-left .nav-link.active,
 body .dark-only .border-tab.nav-right .nav-link.active {
@@ -34494,14 +34495,14 @@ body .dark-only .icon-hover-bottom {
   box-shadow: 0px 0px 1px 1px #1d1e26;
 }
 body .dark-only .icon-hover-bottom .icon-title {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .icon-hover-bottom span {
   color: #98a6ad;
 }
 body .dark-only .icon-hover-bottom .form-group input {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #1d1e26;
 }
 body .dark-only .icon-hover-bottom .icon-first i {
@@ -34526,33 +34527,33 @@ body .dark-only .timeliny .timeliny-dot {
   border: 1px solid #fff;
 }
 body .dark-only .timeliny .timeliny-dot::before {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::before {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::after {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: none;
 }
 body .dark-only .timeliny .timeliny-timeline .timeliny-timeblock:not(.inactive):not(.active) .timeliny-dot:hover {
   background-color: #fff;
 }
 body .dark-only .timeliny .timeliny-timeline .timeliny-timeblock:not(.inactive):not(.active) .timeliny-dot:hover::before {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .timeliny .timeliny-timeline .timeliny-timeblock .timeliny-dot:hover::after {
   background-color: #262932;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .todo .todo-list-wrapper #todo-list li .task-container {
   background: #262932;
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .todo .todo-list-wrapper #todo-list li .task-container .task-label {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .todo .todo-list-wrapper #todo-list li .task-container:hover h4 {
   color: #fff;
@@ -34570,16 +34571,16 @@ body .dark-only .todo .todo-list-wrapper #todo-list li.completed .task-container
 body .dark-only .todo .todo-list-wrapper .todo-list-footer .new-task-wrapper textarea {
   background-color: #262932;
   border: 1px solid #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .user-profile .ttl-info h6 {
   color: #98a6ad;
 }
 body .dark-only .user-profile .ttl-info span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .user-profile .hovercard .info .title a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .user-profile .hovercard .user-image .avatar img {
   border: 10px solid #262932;
@@ -34591,10 +34592,10 @@ body .dark-only .user-profile .hovercard .tabs-scoial {
   border-bottom: none !important;
 }
 body .dark-only .user-profile .follow .follow-num {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .user-profile .profile-img-style .user-name {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .user-profile .profile-img-style p {
   color: #98a6ad;
@@ -34620,16 +34621,16 @@ body .dark-only .jstree-default .jstree-hovered {
 }
 body .dark-only span.twitter-typeahead .tt-menu {
   background-color: #1d1e26;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only span.twitter-typeahead .tt-suggestion {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only span.twitter-typeahead .tt-suggestion:hover, body .dark-only span.twitter-typeahead .tt-suggestion:focus {
   background-color: #262932;
 }
 body .dark-only .typography small {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .code-box-copy pre {
   background-color: #1d1e26;
@@ -34706,7 +34707,7 @@ body .dark-only .error-wrapper {
   background-color: rgba(54, 64, 74, 0.8);
 }
 body .dark-only .error-wrapper .sub-content {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .b-light {
   border: 1px solid #1d1e26 !important;
@@ -34718,12 +34719,12 @@ body .dark-only .modal-content .modal-header {
   border-bottom: 1px solid #374558;
 }
 body .dark-only .modal-content .modal-header .btn-close {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 body .dark-only .modal-content .ui-front .form-control {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border: 1px solid #374558;
 }
 body .dark-only .stepwizard .stepwizard-row:before {
@@ -34749,28 +34750,28 @@ body .dark-only .my-gallery.gallery-with-description img {
   border-bottom: none !important;
 }
 body .dark-only .alert-primary.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-secondary.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-success.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-danger.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-warning.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-info.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-light.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-dark.inverse {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .alert-theme span + span + span {
   border-left: 5px solid var(--theme-deafult);
@@ -34811,13 +34812,13 @@ body .dark-only .order-history .title-orders {
   background-color: #1d1e26;
 }
 body .dark-only .navigation-option ul li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .navigation-option ul li:hover {
   background-color: #1d1e26;
 }
 body .dark-only .product-box .product-details h6 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .product-box .product-details span {
   color: #98a6ad;
@@ -34830,7 +34831,7 @@ body .dark-only .product-box .product-img .product-hover ul li:hover {
   color: #fff;
 }
 body .dark-only .browse .browse-articles ul li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .browse .browse-articles ul li:hover {
   background-color: #1d1e26;
@@ -35060,7 +35061,7 @@ body .dark-only .checkbox-solid-warning input[type=checkbox]:checked + label::af
   color: #fff !important;
 }
 body .dark-only .bootstrap-datetimepicker-widget ul li {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid #1d1e26;
 }
 body .dark-only .bootstrap-datetimepicker-widget tr th:hover,
@@ -35080,7 +35081,7 @@ body .dark-only .bootstrap-datetimepicker-widget tr:first-child th:hover {
   background-color: #262932;
 }
 body .dark-only .btn-transparent {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only #cal-basic .fc-toolbar .fc-left .fc-next-button .fc-icon-right-single-arrow:after,
 body .dark-only #cal-basic .fc-toolbar .fc-right .fc-next-button .fc-icon-right-single-arrow:after {
@@ -35142,7 +35143,7 @@ body .dark-only .main .langChoice {
   border: 1px solid #1d1e26;
 }
 body .dark-only .socialprofile .likes-profile h5 span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-only .socialprofile span {
   color: #98a6ad;
@@ -35189,7 +35190,7 @@ body .dark-only .activity-log .my-activity p {
   color: #98a6ad;
 }
 body .dark-only .bookmark ul li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 @media screen and (max-width: 1366px) {
   body .dark-only .earning-card.card .card-body .earning-content {
@@ -35201,7 +35202,7 @@ body .dark-only .bookmark ul li a {
     border-right: 1px solid #374558;
   }
   body .dark-only .page-wrapper.compact-wrapper .left-header .mega-menu svg, body .dark-only .page-wrapper.compact-sidebar .left-header .mega-menu svg {
-    stroke: rgb(255, 255, 255);
+    stroke: rgba(255, 255, 255, 0.6);
   }
 }
 @media only screen and (max-width: 767px) {
@@ -35223,41 +35224,68 @@ body .dark-only .bookmark ul li a {
 }
 body .dark-only .page-title h4,
 body .dark-only .page-title .h4 {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body .dark-only .search_area_on_export_setting,
+body .dark-only .tabulator {
+  background-color: #262932 !important;
+  box-shadow: 1px 1px 2px 1px rgba(29, 28, 28, 0.08);
+  border: 1px solid #374558 !important;
+}
+body .dark-only .tabulator .tabulator-header,
+body .dark-only .tabulator .tabulator-footer {
+  background-color: #262932 !important;
+  border: 1px solid #374558 !important;
+}
+body .dark-only .k-toolbar,
+body .dark-only .toolbar-wrapper,
+body .dark-only .page-wrapper .page-header .header-wrapper,
+body .dark-only .page-wrapper .page-header .header-wrapper li i,
+body .dark-only .page-wrapper .page-header .header-wrapper .nav-right > ul > li svg {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-color: #374558 !important;
+  stroke: rgba(255, 255, 255, 0.6) !important;
+}
+body .dark-only .font-secondary {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body .dark-only button.k-button.k-button-md.k-button-solid-base.k-rounded-md.disabled {
+  background: rgba(43, 43, 43, 0.5) !important;
+  border-color: rgba(43, 43, 43, 0.5);
 }
 body .dark-sidebar .toggle-sidebar svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper .sidebar-main-title p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper {
   background-color: #262932;
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-title h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content.opensubmegamenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container::after {
   background-color: rgba(255, 255, 255, 0.2);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links.custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #262932;
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a.active {
   color: var(--theme-deafult);
@@ -35266,7 +35294,7 @@ body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-
   color: var(--theme-deafult);
 }
 body .dark-sidebar .page-wrapper.compact-wrapper .page-body-wrapper .according-menu i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper {
   background: #262932;
@@ -35275,13 +35303,13 @@ body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-
   background-color: #262932;
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li > a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu {
   background: #262932;
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a.active, body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a:hover {
   color: var(--theme-deafult);
@@ -35293,12 +35321,12 @@ body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-
   background: #262932;
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .left-arrow,
 body .dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .right-arrow {
   background-color: #262932;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper {
   background-color: #262932;
@@ -35310,10 +35338,10 @@ body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-
   border-bottom: 1px solid #374558;
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li .sidebar-submenu,
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li .mega-menu-container {
@@ -35334,26 +35362,26 @@ body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-
   stroke: var(--theme-deafult);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-title h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content.opensubmegamenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container::after {
   background-color: rgba(255, 255, 255, 0.2);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a.active {
   color: var(--theme-deafult);
 }
 body .dark-sidebar .page-wrapper.compact-sidebar .page-body-wrapper .according-menu i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 body .for-dark {
   display: none;
@@ -35376,34 +35404,34 @@ body [class*=dark-] .for-light {
   transition: all 0.3s ease;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1) svg {
-  color: #fae475 !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+1):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2) svg {
-  color: #3d49af !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+2):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3) svg {
   color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+3):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4) svg {
-  color: #e77681 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+4):hover a svg {
   stroke: #92daf7 !important;
@@ -35415,13 +35443,13 @@ body [class*=dark-] .for-light {
   color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+5):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6) svg {
-  color: #79dc50 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+6):hover a svg {
   stroke: white !important;
@@ -35430,172 +35458,172 @@ body [class*=dark-] .for-light {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7) svg {
-  color: #e77681 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg {
-  color: #79dc50 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg {
-  color: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg {
-  color: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15) svg {
-  color: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a svg {
-  stroke: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16) svg {
-  color: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a svg {
-  stroke: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17) svg {
-  color: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg {
   stroke: #e77681 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+7):hover a:hover {
   background-color: rgba(81, 187, 37, 0.15) !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8) svg {
+  color: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a svg {
+  stroke: #fae475 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+8):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9) svg {
   color: #fae475 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a svg {
+  stroke: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+9):hover a:hover {
+  background-color: rgba(244, 244, 244, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10) svg {
+  color: #fae475 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a svg {
   stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+10):hover a:hover {
+  background-color: rgba(41, 49, 118, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11) svg {
+  color: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a svg {
+  stroke: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+11):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12) svg {
+  color: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a svg {
+  stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+12):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a svg {
+  stroke: #fae475 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+13):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a svg {
+  stroke: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+14):hover a:hover {
+  background-color: rgba(41, 49, 118, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a svg {
+  stroke: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+15):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16) svg {
+  color: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a svg {
+  stroke: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+16):hover a:hover {
+  background-color: rgba(41, 49, 118, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a svg {
+  stroke: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+17):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18) svg {
+  color: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a svg {
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+18):hover a:hover {
   background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19) svg {
-  color: #92daf7 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a svg {
-  stroke: white !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+19):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a svg {
   stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+20):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a svg {
-  stroke: #79dc50 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a svg {
+  stroke: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+21):hover a:hover {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22) svg {
-  color: #92daf7 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a svg {
   stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+22):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+23):hover a:hover {
   background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24) svg {
-  color: #79dc50 !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+24):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25) svg {
-  color: white !important;
+  color: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+25):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
@@ -35607,13 +35635,13 @@ body [class*=dark-] .for-light {
   stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+26):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27) svg {
   color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a svg {
-  stroke: #3d49af !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+27):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
@@ -35622,109 +35650,109 @@ body [class*=dark-] .for-light {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+28):hover a:hover {
-  background-color: rgba(81, 187, 37, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29) svg {
-  color: #fae475 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+29):hover a:hover {
   background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30) svg {
-  color: #fae475 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+30):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31) svg {
-  color: #92daf7 !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a svg {
   stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+31):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32) svg {
-  color: #92daf7 !important;
+  color: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a svg {
   stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+32):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33) svg {
-  color: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a svg {
-  stroke: #e77681 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a svg {
+  stroke: #79dc50 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+33):hover a:hover {
+  background-color: rgba(248, 214, 43, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34) svg {
-  color: #92daf7 !important;
+  color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+34):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35) svg {
   color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+35):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36) svg {
   color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+36):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(41, 49, 118, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37) svg {
-  color: white !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+37):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38) svg {
   color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a svg {
-  stroke: #fae475 !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+38):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39) svg {
-  color: #3d49af !important;
+  color: #e77681 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+39):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40) svg {
   color: white !important;
@@ -35733,46 +35761,46 @@ body [class*=dark-] .for-light {
   stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+40):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+41):hover a:hover {
-  background-color: rgba(81, 187, 37, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42) svg {
-  color: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a svg {
-  stroke: #e77681 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42) svg {
+  color: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a svg {
+  stroke: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+42):hover a:hover {
+  background-color: rgba(81, 187, 37, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43) svg {
-  color: #79dc50 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a svg {
-  stroke: #fae475 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44) svg {
-  color: #79dc50 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a svg {
   stroke: #79dc50 !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+43):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44) svg {
+  color: #92daf7 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a svg {
+  stroke: #e77681 !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+44):hover a:hover {
-  background-color: rgba(41, 49, 118, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45) svg {
-  color: #e77681 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+45):hover a svg {
   stroke: #79dc50 !important;
@@ -35781,37 +35809,37 @@ body [class*=dark-] .for-light {
   background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46) svg {
-  color: #92daf7 !important;
+  color: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+46):hover a:hover {
-  background-color: rgba(248, 214, 43, 0.15) !important;
+  background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47) svg {
-  color: #92daf7 !important;
+  color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+47):hover a:hover {
   background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48) svg {
-  color: #79dc50 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+48):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(81, 187, 37, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49) svg {
   color: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a svg {
-  stroke: #e77681 !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+49):hover a:hover {
   background-color: rgba(220, 53, 69, 0.15) !important;
@@ -35820,40 +35848,40 @@ body [class*=dark-] .for-light {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a svg {
-  stroke: #92daf7 !important;
+  stroke: #fae475 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+50):hover a:hover {
-  background-color: rgba(81, 187, 37, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51) svg {
   color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a svg {
-  stroke: #e77681 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52) svg {
-  color: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a svg {
-  stroke: white !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a:hover {
-  background-color: rgba(220, 53, 69, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg {
-  color: #92daf7 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg {
   stroke: #92daf7 !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+51):hover a:hover {
+  background-color: rgba(248, 214, 43, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52) svg {
+  color: #3d49af !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a svg {
+  stroke: #fae475 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+52):hover a:hover {
+  background-color: rgba(75, 194, 241, 0.15) !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53) svg {
+  color: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a svg {
+  stroke: #fae475 !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+53):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54) svg {
-  color: white !important;
+  color: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+54):hover a svg {
   stroke: #3d49af !important;
@@ -35865,55 +35893,55 @@ body [class*=dark-] .for-light {
   color: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55):hover a svg {
-  stroke: #e77681 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+55):hover a:hover {
   background-color: rgba(220, 53, 69, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56) svg {
-  color: #3d49af !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg {
-  stroke: #e77681 !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
-}
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg {
   color: white !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a svg {
   stroke: #92daf7 !important;
 }
-.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover {
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+56):hover a:hover {
   background-color: rgba(41, 49, 118, 0.15) !important;
 }
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57) svg {
+  color: #e77681 !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a svg {
+  stroke: white !important;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+57):hover a:hover {
+  background-color: rgba(244, 244, 244, 0.15) !important;
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58) svg {
-  color: #79dc50 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a svg {
-  stroke: #79dc50 !important;
+  stroke: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+58):hover a:hover {
   background-color: rgba(248, 214, 43, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59) svg {
-  color: #e77681 !important;
+  color: #92daf7 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a svg {
-  stroke: white !important;
+  stroke: #79dc50 !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+59):hover a:hover {
-  background-color: rgba(75, 194, 241, 0.15) !important;
+  background-color: rgba(244, 244, 244, 0.15) !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60) svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60) svg {
-  color: white !important;
+  color: #3d49af !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a svg, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a svg {
-  stroke: #fae475 !important;
+  stroke: white !important;
 }
 .page-wrapper.compact-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a:hover, .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper[sidebar-layout=iconcolor-sidebar] .sidebar-main .sidebar-links > li:nth-child(7n+60):hover a:hover {
-  background-color: rgba(244, 244, 244, 0.15) !important;
+  background-color: rgba(75, 194, 241, 0.15) !important;
 }
 
 /**=====================
@@ -37530,6 +37558,7 @@ body [class*=dark-] .for-light {
 }
 .page-wrapper .page-header .header-wrapper .nav-right > ul .flag-icon {
   font-size: 16px;
+  margin: 0 5px;
 }
 .page-wrapper .page-header .header-wrapper .nav-right .flip-card {
   width: 220px;
@@ -38611,16 +38640,16 @@ body [class*=dark-] .for-light {
   background-color: #262932 !important;
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links li a span, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links li a svg, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links li a svg {
-  stroke: rgb(255, 255, 255);
+  stroke: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-title h5, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-title h5 {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content.opensubmegamenu li a, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container .mega-box .link-section .submenu-content.opensubmegamenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container::after, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .mega-menu-container::after {
@@ -38634,10 +38663,10 @@ body [class*=dark-] .for-light {
   stroke: var(--theme-deafult);
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links > li .sidebar-submenu li a {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a span, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a span {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.dark-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a.active, .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-list ul.sidebar-submenu li a.active {
   color: var(--theme-deafult);
@@ -38652,10 +38681,10 @@ body [class*=dark-] .for-light {
   display: block;
 }
 .page-wrapper.compact-wrapper.dark-sidebar .according-menu i, .page-wrapper.compact-wrapper.color-sidebar .according-menu i {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.dark-sidebar .sidebar-main-title p, .page-wrapper.compact-wrapper.color-sidebar .sidebar-main-title p {
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.6);
 }
 .page-wrapper.compact-wrapper.color-sidebar div.sidebar-wrapper {
   background-color: #2f3c4e !important;
@@ -39159,7 +39188,10 @@ body [class*=dark-] .for-light {
   top: -50px;
   width: 100%;
   height: 300px;
-  background-image: linear-gradient(26deg, var(--theme-deafult) 0%, #a26cf8 100%);
+  background-image: linear-gradient(207deg, #293176 0%, rgba(75, 194, 241, 0.4509803922) 100%), url(../../images/dashboard/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 .page-wrapper.material-type .card {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
@@ -39171,7 +39203,7 @@ body [class*=dark-] .for-light {
   border-radius: 15px 15px 0 0;
 }
 .page-wrapper.material-type .page-body-wrapper {
-  background-image: url(../../images/other-images/boxbg.jpg);
+  background-image: url(../../images/other-images/boxbg.png);
   background-blend-mode: overlay;
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -39373,7 +39405,7 @@ body [class*=dark-] .for-light {
     left: 0;
     width: 100%;
     height: 240px;
-    background: linear-gradient(26deg, var(--theme-deafult) 0%, #a26cf8 100%);
+    background: linear-gradient(207deg, #293176 0%, rgba(75, 194, 241, 0.4509803922) 100%);
   }
   .page-wrapper.material-icon .toggle-sidebar {
     color: rgba(255, 255, 255, 0.8);
@@ -39494,6 +39526,12 @@ body [class*=dark-] .for-light {
 ==========================**/
 .page-wrapper.modern-type .page-body-wrapper.dashbord-page1 div.sidebar-wrapper {
   top: 50px;
+}
+
+button.btn.english.font-secondary.p-0 {
+  color: #242934;
+  font-weight: 500;
+  font-family: "Rubik" !important;
 }
 
 /**=====================
@@ -44563,6 +44601,54 @@ img.img-fluid.for-light.rania1 {
 .horizontal-wrapper.material-type.page-wrapper img.img-fluid.for-light.rania2,
 .horizontal-wrapper.material-type.page-wrapper img.img-fluid.for-light.rania1 {
   display: inline;
+}
+
+.horizontal-wrapper.material-type.page-wrapper .dashbord-page1 .page-body {
+  margin-top: 0px !important;
+}
+.horizontal-wrapper.material-type.page-wrapper main {
+  margin-top: 0px !important;
+}
+.horizontal-wrapper.material-type.page-wrapper main .search_area_on_export_setting {
+  margin-top: 0;
+}
+.horizontal-wrapper.material-type.page-wrapper .page-header.subscription {
+  margin: 50px auto 0 !important;
+}
+.horizontal-wrapper.material-type.page-wrapper .page-body-wrapper.subscription .page-body {
+  margin: 0 auto !important;
+}
+.horizontal-wrapper.material-type.page-wrapper .sidebar-links > li .sidebar-submenu {
+  width: -moz-max-content !important;
+  width: max-content !important;
+}
+
+html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper .sidebar-main .sidebar-links {
+  direction: rtl !important;
+  text-align: start !important;
+}
+html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper .sidebar-main .sidebar-links > li {
+  float: right;
+}
+html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper .sidebar-main .sidebar-links > li > a svg {
+  margin-right: initial !important;
+  margin-left: 10px !important;
+}
+html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper .sidebar-main .right-arrow {
+  left: 0;
+  right: initial !important;
+}
+html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper .sidebar-main .right-arrow svg {
+  transform: rotate(180deg);
+}
+html[dir=rtl] .horizontal-wrapper.material-type.page-wrapper .sidebar-submenu li a:after {
+  left: initial !important;
+  right: 20px;
+}
+
+.page-wrapper.compact-sidebar .page-body-wrapper .page-body {
+  margin-top: 80px;
+  margin-left: 200px;
 }
 
 /**=====================

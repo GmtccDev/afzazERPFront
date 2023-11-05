@@ -2,7 +2,7 @@
    55. theme layout CSS Start
 ==========================**/
 
-$dark-all-font-color: rgb(255, 255, 255);
+$dark-all-font-color: rgba(255, 255, 255, 0.6);
 body {
     .dark-only {
         color: $dark-all-font-color;
@@ -243,6 +243,7 @@ body {
         .page-wrapper {
             .k-button-solid-base {
                 background-color: $dark-card-background !important;
+                border-color: $dark-card-border !important;
             }
             .k-toolbar {
                 background-color: $dark-body-background !important;
@@ -5521,6 +5522,34 @@ body {
         .page-title h4,
         .page-title .h4 {
             color: $dark-all-font-color !important;
+        }
+        .search_area_on_export_setting,
+        .tabulator {
+            background-color: $dark-card-background !important;
+            box-shadow: 1px 1px 2px 1px rgba(29, 28, 28, 0.08);
+            border: 1px solid $dark-card-border !important;
+        }
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-footer {
+            background-color: $dark-card-background !important;
+            border: 1px solid $dark-card-border !important;
+        }
+        .k-toolbar,
+        .toolbar-wrapper,
+        .page-wrapper .page-header .header-wrapper,
+        .page-wrapper .page-header .header-wrapper li i,
+        .page-wrapper .page-header .header-wrapper .nav-right>ul>li svg {
+            color: $dark-all-font-color !important;
+            border-color: $dark-card-border !important;
+            stroke: $dark-all-font-color !important;
+        }
+        .font-secondary {
+            color: $dark-all-font-color !important;
+        }
+        button.k-button.k-button-md.k-button-solid-base.k-rounded-md.disabled {
+            background: rgba($theme-body-font-color, 0.5) !important;
+            border-color: rgba($theme-body-font-color, 0.5);
+            // color: rgba($theme-body-font-color, 0.5) !important;
         }
     }
     .dark-sidebar {
