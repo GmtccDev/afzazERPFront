@@ -149,7 +149,6 @@ export class SidebarComponent {
 
   // Active Nave state
   setNavActive(item) {
-   
    this.getBillTypes();
     
     this.menuItems.filter(menuItem => {
