@@ -446,7 +446,12 @@
         "corresponding-account": "الحساب المقابل",
         "customer-account": "حساب العميل",
         "bank-account": "حساب البنك",
-        "all":"الكل"
+        "all":"الكل",
+        "tax-number":"الرقم الضريبي",
+        "mail-box":"صندوق البريد",
+        "credit-limit":"حد الأئتمان",
+        "initial-balance":"الرصيد الأفتتاحى",
+        "postal-code":"الرمز البريدى"
     },
     "sales-person-commission": {
         "sales-person": "المندوب",
