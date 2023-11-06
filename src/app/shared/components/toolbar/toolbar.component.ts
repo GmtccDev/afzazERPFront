@@ -18,14 +18,17 @@ import { ToolbarPath } from '../../interfaces/toolbar-path'
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
+  tabular: any;
+  componentName: any;
+
   constructor(
     private router: Router,
     private SharedService: SharedService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.showToolbarButtonsObj = {} as ToolbarButtonsAppearance;
+
   }
-  tabular: any;
   showButtons!: ToolbarButtonsAppearance;
 
   disabledList = false;
@@ -33,14 +36,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   disabledUpdate = false;
   disabledNew = false;
   disabledCopy = false;
-  disabledDelete=false
+  disabledDelete = false
   disabledCancel = false;
   disabledExport = false;
   disabledPrint = false;
   disabledView = false;
   disabledPost = true;
-  disableCancelDefaultReport=false;
-  disabledGenerateEntry=true;
+  disableCancelDefaultReport = false;
+  disabledGenerateEntry = true;
   toolbarPathData!: ToolbarPath;
   toolbarData: ToolbarData = {} as ToolbarData;
   toolbarCompnentData: ToolbarData = {} as ToolbarData;
@@ -50,9 +53,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   updateUrl;
   ngOnInit(): void {
-
+    
+    this.tabular = this.SharedService.getTabulator();
+    this.tabular = this.tabular.source._value;
+    this.componentName = this.SharedService.getComponentName();
+    this.componentName = this.componentName.source._value;
     this.currentUrl = '';
-  
     this.currentUrl = this.router.url;
     this.toolbarData.componentName = this.currentUrl;
     this.SharedService.changeButton(this.toolbarData);
@@ -92,7 +98,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         if (ObjectIsNotNullOrEmpty(showCurrentBtn)) {
           this.showButtons = showCurrentBtn;
           this.resetCLickedButtons();
-        
+
         } else {
           this.resetShowButtons();
         }
@@ -102,7 +108,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   listenClickedButton() {
-     
+
     let sub = this.SharedService.getClickedbutton().subscribe({
       next: (toolbarCompnentData: ToolbarData) => {
         toolbarCompnentData;
@@ -125,7 +131,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           }
           if (this.toolbarCompnentData.action == 'Print') {
             this.checkButtonClicked('Print');
-          }if (this.toolbarCompnentData.action == 'Post') {
+          } if (this.toolbarCompnentData.action == 'Post') {
             this.checkButtonClicked('Post');
           }
           if (this.toolbarCompnentData.action == 'CancelDefaultReport') {
@@ -133,14 +139,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           }
           if (this.toolbarCompnentData.action == 'View') {
             this.checkButtonClicked('View');
-          }if (this.toolbarCompnentData.action == 'ConfigMode') {
+          } if (this.toolbarCompnentData.action == 'ConfigMode') {
             this.checkButtonClicked('ConfigMode');
           }
           if (this.toolbarCompnentData.action == 'GenerateEntry') {
             this.checkButtonClicked('GenerateEntry');
           }
 
-    
+
         }
       },
     });
@@ -151,7 +157,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     let sub = this.SharedService.getToolbarPath().subscribe({
       next: (toolbarPathData: ToolbarPath) => {
         toolbarPathData;
-        
+
         this.toolbarPathData = toolbarPathData;
         if (ObjectIsNotNullOrEmpty(toolbarPathData)) {
           if (
@@ -170,7 +176,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           ) {
             this.checkButtonClicked('Update');
           }
-     
+
         }
       },
     });
@@ -178,7 +184,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   doSaveEvent() {
-    
+
     this.checkButtonClicked('Save');
     // (this.toolbarData.action = 'Save'),
     this.SharedService.changeButton({ action: 'Save' } as ToolbarData);
@@ -189,19 +195,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.SharedService.changeButton(this.toolbarData);
   }
   doCopyEvent() {
-    
+
     this.checkButtonClicked('Copy');
     (this.toolbarData.action = 'Copy'),
       this.SharedService.changeButton(this.toolbarData);
   }
   doPostEvent() {
-    
+
     this.checkButtonClicked('Post');
     (this.toolbarData.action = 'Post'),
       this.SharedService.changeButton(this.toolbarData);
   }
   doGenerateEntryEvent() {
-    
+
     this.checkButtonClicked('GenerateEntry');
     (this.toolbarData.action = 'GenerateEntry'),
       this.SharedService.changeButton(this.toolbarData);
@@ -222,17 +228,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.SharedService.changeButton(this.toolbarData);
   }
   doPrintEvent() {
-     
+
     this.checkButtonClicked('Print');
     (this.toolbarData.action = 'Print'),
       this.SharedService.changeButton(this.toolbarData);
   }
   doDeleteEvent() {
-    
+
     this.checkButtonClicked('Delete');
     (this.toolbarData.action = 'DeleteCheckList'),
       this.SharedService.changeButton(this.toolbarData);
-      this.disabledDelete=true;
+    this.disabledDelete = true;
   }
   doViewEvent() {
     this.checkButtonClicked('View');
@@ -251,7 +257,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   checkButtonClicked(button: string) {
- 
+
     this.resetCLickedButtons();
     if (button == 'List') {
       this.disabledSave = true;
@@ -262,12 +268,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPrint = true;
       this.disabledUpdate = true;
       this.disabledCancel = true;
-      this.disabledDelete=true;
-      this.disabledView=true;
-      this.disabledPost=true;
-      this.disabledGenerateEntry=true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disabledPost = true;
+      this.disabledGenerateEntry = true;
 
-      this.disableCancelDefaultReport=true;
+      this.disableCancelDefaultReport = true;
 
     } else if (button == 'Save') {
       this.disabledUpdate = true;
@@ -275,77 +281,77 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledNew = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDelete=true;
-      this.disabledView=true;
-      this.disableCancelDefaultReport=true;
-      this.disabledGenerateEntry=true;
-      this.disabledPost=true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disableCancelDefaultReport = true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
 
     } else if (button == 'New') {
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDelete=true;
-      this.disabledView=true;
-      this.disableCancelDefaultReport=true;
-      this.disabledGenerateEntry=true;
-      this.disabledPost=true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disableCancelDefaultReport = true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
 
 
     }
     else if (button == 'Print') {
       this.disabledSave = true;
       this.disabledPrint = true;
-      this.disabledView=true;
+      this.disabledView = true;
       this.disabledPrint = false;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;
-      this.disabledGenerateEntry=true;
-      this.disabledPost=true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
 
 
-    }  else if (button == 'Copy') {
+    } else if (button == 'Copy') {
     } else if (button == 'Update') {
       this.disabledSave = true;
-      this.disabledView=true;
+      this.disabledView = true;
       this.disabledPrint = false;
-      this.disabledCancel=true;
+      this.disabledCancel = true;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;
-      this.disabledGenerateEntry=true;
-      this.disabledPost=true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
 
     } else if (button == 'Cancel') {
-    } 
+    }
     else if (button == 'Post') {
       this.disabledSave = true;
-      this.disabledPost=false;
+      this.disabledPost = false;
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDelete=true;
-      this.disabledView=true;
-      this.disabledCancel=true;
-      this.disabledNew=true;
-      this.disableCancelDefaultReport=true;
-      this.disabledGenerateEntry=true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disabledCancel = true;
+      this.disabledNew = true;
+      this.disableCancelDefaultReport = true;
+      this.disabledGenerateEntry = true;
 
-    } 
+    }
     // else if (button == 'Print') {
     // }
-    else if(button=='Delete'){
+    else if (button == 'Delete') {
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
       this.disabledSave = true;
-      this.disabledDelete=false;
-    } 
+      this.disabledDelete = false;
+    }
     else if (button == 'Report') {
-       
-      this.disabledList=true;
+
+      this.disabledList = true;
       this.disabledSave = true;
       this.disabledNew = true;
       this.disabledCopy = true;
@@ -353,17 +359,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledExport = true;
       this.disabledUpdate = true;
       this.disabledCancel = true;
-      this.disabledDelete=true;
+      this.disabledDelete = true;
       this.disabledPrint = false;
-      this.disabledView=false;
+      this.disabledView = false;
       this.disableCancelDefaultReport = false;
-      this.disabledGenerateEntry=true;
-      this.disabledPost=true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
 
     }
     else if (button == 'ConfigMode') {
-      
-      this.disabledList=true;
+
+      this.disabledList = true;
       this.disabledSave = true;
       this.disabledNew = true;
       this.disabledCopy = true;
@@ -371,30 +377,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledExport = true;
       this.disabledUpdate = false;
       this.disabledCancel = true;
-      this.disabledDelete=true;
+      this.disabledDelete = true;
       this.disabledPrint = true;
-      this.disabledView=true;
+      this.disabledView = true;
       this.disableCancelDefaultReport = true;
-      this.disabledGenerateEntry=true;
-      this.disabledPost=true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
 
 
     }
     else if (button == 'GenerateEntry') {
-      this.disabledGenerateEntry=false;
+      this.disabledGenerateEntry = false;
       this.disabledSave = true;
-      this.disabledPost=true;
+      this.disabledPost = true;
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledExport = true;
       this.disabledPrint = true;
-      this.disabledDelete=true;
-      this.disabledView=true;
-      this.disabledCancel=true;
-      this.disabledNew=true;
-      this.disableCancelDefaultReport=true;
-    } 
-   
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disabledCancel = true;
+      this.disabledNew = true;
+      this.disableCancelDefaultReport = true;
+    }
+
   }
 
   resetCLickedButtons() {
@@ -431,18 +437,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.SharedService.changeButtonApperance(this.showToolbarButtonsObj);
   }
   exportPdf() {
-		debugger
-    this.tabular =sessionStorage.getItem("tabular");
-    this.tabular = JSON.stringify(this.tabular);
+    this.tabular.download("pdf", this.componentName + ".pdf", {
+      orientation: "portrait", //set page orientation to portrait
+      title: this.componentName + " " + "Report", //add title to report
+      lang: 'ar',
+      unicode: true,
 
 
-		this.tabular.download("pdf", "asd" + ".pdf", {
-		  orientation: "portrait", //set page orientation to portrait
-		  title:  "asd" + " " + "Report", //add title to report
-		  lang:'ar',
-		  unicode:true,
-	
-	
-		});
-	  }
+    });
+  }
+  exportJson() {
+    this.tabular.download("json", this.componentName + ".json");
+  }
+
+  exportHtml() {
+    this.tabular.download("html", this.componentName + ".html", { style: true });
+  }
+
+  exportCsv() {
+    this.tabular.download("csv", this.componentName + ".csv");
+  }
+
+  exportExcel() {
+    this.tabular.download("xlsx", this.componentName + ".xlsx", { sheetName: this.componentName });
+  }
+
+
 }

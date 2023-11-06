@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { SettingMenuShowOptions } from '../../models/setting-menu-show-options';
 import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
 import { PanelSetting } from '../../models/panel-setting';
+import { SharedService } from 'src/app/shared/common-services/shared-service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-tabulator',
 	templateUrl: './tabulator.component.html',
@@ -98,8 +101,13 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 	@Input() columnSettings: any[] = [];
 	columnNames: any[] = [];
+	someSubscription: any;
+	constructor(private renderer: Renderer2,
+		private sharedService: SharedService,
+		private spinner: NgxSpinnerService,
+		public router: Router,
+	) {
 
-	constructor(private renderer: Renderer2) {
 	}
 
 
@@ -107,6 +115,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 	ngOnInit() {
 		//this.listenToRedraw();
 	}
+
 	private drawTable() {
 		let self = this;
 		this.tabular = new Tabulator(this.tab, {
@@ -224,13 +233,28 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	ngAfterViewInit() {
+		debugger
+		if (!localStorage.getItem('foo')) {
+			localStorage.setItem('foo', 'no reload')
+			location.reload()
+		} else {
+			localStorage.removeItem('foo')
+		}
+
 		this.tab = document.createElement('div');
 		this.drawTable();
 		this.showDataOnGrid();
-		debugger
-		var jsonArray = this.tabular;
-		sessionStorage.setItem("tabular", jsonArray);
 
+		this.sharedService.setTabulator(this.tabular);
+		this.sharedService.setComponentName(this.componentName);
+
+
+
+	}
+	reloadPage() {
+		setTimeout(() => {
+			window.location.reload();
+		}, 100);
 	}
 
 
@@ -889,42 +913,40 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	exportPdf() {
-		debugger
 		this.tabular.download("pdf", this.componentName + ".pdf", {
-		  orientation: "portrait", //set page orientation to portrait
-		  title: this.componentName + " " + "Report", //add title to report
-		  lang:'ar',
-		  unicode:true,
-	
-	
+			orientation: "portrait", //set page orientation to portrait
+			title: this.componentName + " " + "Report", //add title to report
+			lang: 'ar',
+			unicode: true,
+
+
 		});
-	  }
+	}
 
 
-	  arabicFont = {
+	arabicFont = {
 		name: 'Cairo', // Replace with the actual font family name of your Arabic font
 		style: 'normal',
 		src: 'url(src/assets/fonts/Cairo/Cairo-VariableFont_slnt,wght.ttf)', // Replace with the path to your Arabic font file
-	  };
-	
-	
-	  exportJson() {
+	};
+
+
+	exportJson() {
 		this.tabular.download("json", this.componentName + ".json");
-	  }
-	
-	  exportHtml() {
+	}
+
+	exportHtml() {
 		this.tabular.download("html", this.componentName + ".html", { style: true });
-	  }
-	
-	  exportCsv() {
+	}
+
+	exportCsv() {
 		this.tabular.download("csv", this.componentName + ".csv");
-	  }
-	
-	  exportExcel() {
-		debugger
+	}
+
+	exportExcel() {
 		this.tabular.download("xlsx", this.componentName + ".xlsx", { sheetName: this.componentName });
-	  }
-	
+	}
+
 
 	removeGroupItem(index: number) {
 		this.groupByList.splice(index, 1);
@@ -966,6 +988,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 				s.unsubscribe();
 			}
 		})
+
 	}
 
 

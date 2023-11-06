@@ -148,10 +148,14 @@
 									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
 										<button ngbDropdownItem
 											(click)="exportPdf()">{{'tabulator.export-pdf'|translate}}</button>
-										<button ngbDropdownItem>{{'tabulator.export-excel'|translate}}</button>
-										<button ngbDropdownItem>{{'tabulator.export-csv'|translate}}</button>
-										<button ngbDropdownItem>{{'tabulator.export-html'|translate}}</button>
-										<button ngbDropdownItem>{{'tabulator.export-json'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportExcel()">{{'tabulator.export-excel'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportCsv()">{{'tabulator.export-csv'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportHtml()">{{'tabulator.export-html'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportJson()">{{'tabulator.export-json'|translate}}</button>
 									</div>
 								</div>
 
