@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 @Component({
   selector: 'app-add-edit-journals',
   templateUrl: './add-edit-journals.component.html',
@@ -19,6 +21,11 @@ import { navigateUrl } from '../../../../../shared/helper/helper-url';
 })
 export class AddEditJournalsComponent implements OnInit {
   //#region Main Declarations
+  userId: any = localStorage.getItem("userId");
+	// = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
+	orderBy: any;
+	companyId: string = localStorage.getItem("companyId");
+	lang = localStorage.getItem("language");
   journalForm!: FormGroup;
   sub: any;
   url: any;
@@ -47,6 +54,7 @@ export class AddEditJournalsComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
+    private modalService: NgbModal,
     private SharedServices: SharedService, private translate: TranslateService
   ) {
     this.defineJournalForm();
@@ -202,7 +210,7 @@ export class AddEditJournalsComponent implements OnInit {
     let sub = this.SharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-
+            debugger
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.SharedServices.changeToolbarPath({
@@ -223,7 +231,9 @@ export class AddEditJournalsComponent implements OnInit {
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
            this.getJournalCode();
-          }
+          }  else if (currentBtn.action == ToolbarActions.Print) {
+            this.gotoViewer();
+           }
         }
       },
     });
@@ -314,5 +324,34 @@ export class AddEditJournalsComponent implements OnInit {
   }
 
   //#endregion
+
+  // Print Page Report
+
+reportTypeId=1000;
+branchId
+JournalId
+selectedCurrencyName='';
+selectedBranchName='';
+gotoViewer() {
+	
+
+
+	if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined"|| this.branchId == "") {
+		this.branchId = 0;
+	}
+	
+	let reportParams: string = "reportParameter=branchId!" + this.branchId
+	+ "&reportParameter=companyId!" + this.companyId
+	+"&reportParameter=selectedBranchName!" + this.selectedBranchName
+	+"&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName 
+	+ "&reportParameter=JournalEntryId!" + this.id
+	+ "&reportParameter=lang!" + this.lang
+	+ "&reportParameter=userId!" + this.userId;
+
+	const modalRef = this.modalService.open(NgbdModalContent);
+	modalRef.componentInstance.reportParams = reportParams;
+	modalRef.componentInstance.reportType = 1;
+	modalRef.componentInstance.reportTypeID = this.reportTypeId;
+}
 }
 
