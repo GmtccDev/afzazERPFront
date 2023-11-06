@@ -294,11 +294,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPost=true;
 
 
-    } else if (button == 'Copy') {
+    }
+    else if (button == 'Print') {
+      this.disabledSave = true;
+      this.disabledPrint = true;
+      this.disabledView=true;
+      this.disabledPrint = false;
+      this.disableCancelDefaultReport = true;
+      this.disabledExport = true;
+      this.disabledGenerateEntry=true;
+      this.disabledPost=true;
+
+
+    }  else if (button == 'Copy') {
     } else if (button == 'Update') {
       this.disabledSave = true;
       this.disabledPrint = true;
       this.disabledView=true;
+      this.disabledPrint = true;
+      this.disabledCancel=true;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;
       this.disabledGenerateEntry=true;

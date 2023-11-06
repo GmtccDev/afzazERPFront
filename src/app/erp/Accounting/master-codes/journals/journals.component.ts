@@ -309,5 +309,8 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.subsList.push(sub);
 	}
 	//#endregion
+
+
+	
 }
 

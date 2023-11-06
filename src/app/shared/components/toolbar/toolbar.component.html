@@ -48,6 +48,7 @@
 										{{ 'toolbar.copy'|translate}}
 									</span>
 								</button>
+						
 								<button *ngIf="showButtons?.showUpdate" (click)="doUpdateEvent()"
 									[disabled]="disabledUpdate" [ngClass]="{'disabled':disabledUpdate}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md " type="button">

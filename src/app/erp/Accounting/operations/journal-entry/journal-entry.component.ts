@@ -14,6 +14,7 @@ import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { JournalEntryServiceProxy } from '../../services/journal-entry'
 import format from 'date-fns/format';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ReportViewerService } from '../../reports/services/report-viewer.service';
 @Component({
   selector: 'app-journal-entry',
   templateUrl: './journal-entry.component.html',
@@ -48,6 +49,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    private reportViewerService: ReportViewerService
 
   ) {
 
@@ -64,7 +66,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
-       // this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
+        // this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
         this.listenToClickedButton();
       }).catch(err => {
@@ -126,7 +128,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -205,8 +207,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
           return value;
         }
       },
-      this.lang == 'ar'
-			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
+    this.lang == 'ar'
+      ? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
 
 
     this.lang == 'ar'
@@ -215,24 +217,24 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       } : {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
-      
-		// this.lang == "ar" ? {
-		// 	title: "ترحيل",
-		// 	field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
 
-		// 		this.onCheckEdit(cell.getRow().getData().id);
-		// 	}
-		// }
-		// 	:
+    this.lang == "ar" ? {
+      title: "عرض التقرير",
+      field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
 
-		// 	{
-		// 		title: "Post",
-		// 		field: "id", formatter: this.CheckBoxFormatIcon, cellClick: (e, cell) => {
+        this.onViewReportClicked(cell.getRow().getData().id);
+      }
+    }
+      :
+
+      {
+        title: "View Report",
+        field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
 
 
-		// 			this.onCheckEdit(cell.getRow().getData().id);
-		// 		}
-		// 	}
+          this.onViewReportClicked(cell.getRow().getData().id);
+        }
+      }
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -256,7 +258,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   openJournalEntryes() { }
   onCheck(id) {
 
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {
@@ -272,37 +274,44 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   onCheckEdit(id) {
 
     const index = this.listUpdateIds.findIndex(item => item.id === id && item.isChecked === true);
-  if (index !== -1) {
-    this.listUpdateIds.splice(index, 1);
-  } else {
-    const newItem = { id, isChecked: true };
-    this.listUpdateIds.push(newItem);
-  }
-  
-  this.sharedServices.changeButton({
-    action: 'Post',
-    componentName: 'List',
-    submitMode: false
-  } as ToolbarData);
- 
- // this.sharedServices.changeToolbarPath(this.toolbarPathData);
-}
-onCheckUpdate() {
+    if (index !== -1) {
+      this.listUpdateIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listUpdateIds.push(newItem);
+    }
 
+    this.sharedServices.changeButton({
+      action: 'Post',
+      componentName: 'List',
+      submitMode: false
+    } as ToolbarData);
 
-  var ids = this.listUpdateIds.map(item => item.id);
-  if(ids.length>0){
-    let sub = this.journalEntryService.updateList(ids).subscribe(
-      (resonse) => {
-  
-        //reloadPage()
-        this.getJournalEntryes();
-        this.listUpdateIds = [];
-      });
-    this.subsList.push(sub);
+    // this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
 
-}
+  onViewReportClicked(id) {
+    debugger;
+    let reportType = 1;
+    let reportTypeId = 1000;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+  }
+  onCheckUpdate() {
+
+
+    var ids = this.listUpdateIds.map(item => item.id);
+    if (ids.length > 0) {
+      let sub = this.journalEntryService.updateList(ids).subscribe(
+        (resonse) => {
+
+          //reloadPage()
+          this.getJournalEntryes();
+          this.listUpdateIds = [];
+        });
+      this.subsList.push(sub);
+    }
+
+  }
   onEdit(id) {
 
     if (id != undefined) {
@@ -361,7 +370,7 @@ onCheckUpdate() {
             this.onDelete();
           }
           else if (currentBtn.action == ToolbarActions.Post) {
-           this.onCheckUpdate();
+            this.onCheckUpdate();
           }
         }
       },
@@ -369,8 +378,8 @@ onCheckUpdate() {
     this.subsList.push(sub);
   }
   onDelete() {
-;
-    var ids =  this.listIds.map(item => item.id);
+    ;
+    var ids = this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 
@@ -420,7 +429,11 @@ onCheckUpdate() {
   }
   CheckBoxFormatIcon() { //plain text value
 
-		return "<input id='checkId' type='checkbox' />";
-	};
+    return "<input id='checkId' type='checkbox' />";
+  };
+  printReportFormatIcon() { //plain text value
+
+    return "<i class='fa fa-print' aria-hidden='true'></i>";
+  };
   //#endregion
 }

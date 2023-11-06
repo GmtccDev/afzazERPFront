@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,20 +24,29 @@ import { ModuleType } from '../../../models/general-configurations';
 import { JournalEntryDetail } from '../../../models/journal';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
+import { ReportFile } from 'src/app/shared/model/report-file';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
   styleUrls: ['./add-edit-journal-entry.component.scss']
 })
-export class AddEditJournalEntryComponent implements OnInit {
+export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
   //#region Main Declarations
+  userId: any = localStorage.getItem("userId");
+  private readonly apiurl = environment.apiUrl;
+  // = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
+  orderBy: any;
+  companyId: string = localStorage.getItem("companyId");
+  lang = localStorage.getItem("language");
   journalEntryForm!: FormGroup;
   sub: any;
   url: any;
   id: any = 0;
   currnetUrl;
   public show: boolean = false;
-  lang = localStorage.getItem("language")
   journalEntry: [] = [];
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
@@ -81,8 +90,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
   entriesStatusEnum: any;
-  branchId: string = this.userService.getBranchId();
-  companyId: string = this.userService.getCompanyId();
+
   showSearchCostCenterModal = false;
   showSearchBeneficiaryAccountsModal = false;
   showSearhBeneficiaryAccountsModal = false;
@@ -101,6 +109,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
     private dateService: DateCalculation,
+    private rptSrv: ReportServiceProxy,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
 
@@ -114,7 +123,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   //#region ngOnInit
   ngOnInit(): void {
     this.getEntriesStatusEnum();
-
+   
     this.spinner.show();
     Promise.all([
       this.getJournals(),
@@ -136,19 +145,23 @@ export class AddEditJournalEntryComponent implements OnInit {
       this.spinner.hide();
     });
 
+   
+
 
 
 
 
   }
   getRouteData() {
+    localStorage.removeItem("journalEntryId")
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
-
         if (this.id > 0) {
+             localStorage.setItem("journalEntryId",this.id);
           this.getjournalEntryById(this.id).then(a => {
             this.spinner.hide();
+            this.sharedServices.changeButton({ action: 'Update', submitMode:false } as ToolbarData);
 
           }).catch(err => {
             this.spinner.hide();
@@ -189,6 +202,8 @@ export class AddEditJournalEntryComponent implements OnInit {
         s.unsubscribe();
       }
     });
+   
+
   }
   //#endregion
 
@@ -342,7 +357,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   get journalEntriesDetailList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
   initGroup() {
-    debugger
+    
     this.counter += 1;
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     journalEntriesDetail.push(this.fb.group({
@@ -418,7 +433,7 @@ export class AddEditJournalEntryComponent implements OnInit {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
           this.lang = localStorage.getItem("language")
           this.onChangeJournal(res.response?.journalId);
           this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
@@ -598,7 +613,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-
+     
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.sharedServices.changeToolbarPath({
@@ -620,6 +635,8 @@ export class AddEditJournalEntryComponent implements OnInit {
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
             this.getjournalEntryCode();
+          }  else if (currentBtn.action == ToolbarActions.Print) {
+            this.gotoViewer();
           }
         }
       },
@@ -837,7 +854,7 @@ export class AddEditJournalEntryComponent implements OnInit {
   }
   onUpdate() {
 
-    debugger
+    
 
     if (this.journalEntryForm.valid) {
       this.spinner.show();
@@ -865,7 +882,7 @@ export class AddEditJournalEntryComponent implements OnInit {
               if (this.lang == "ar") {
                 element.nameAr = element.nameAr;
               }
-              else{
+              else {
                 element.nameAr = element.nameEn;
               }
             })
@@ -976,9 +993,10 @@ export class AddEditJournalEntryComponent implements OnInit {
               if (this.lang == "ar") {
                 element.nameAr = element.nameAr;
               }
-              else{
+              else {
                 element.nameAr = element.nameEn;
-              }})
+              }
+            })
             this.checkPeriod = res.response.fiscalPeriodStatus;
           }
 
@@ -1108,7 +1126,7 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.showSearchCurrencyModal = false;
   }
   onOpenNewRow() {
-    debugger
+    
     const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
     var event = this.currencyList.find(c => c.id == this.defaultCurrencyId);
     faControl['controls'].currencyId.setValue(event.id);
@@ -1134,5 +1152,56 @@ export class AddEditJournalEntryComponent implements OnInit {
     this.showSearchCashAccountModal = true;
 
   }
+
+  // Print Page Report
+
+  reportTypeId = 1000;
+  reportType=1;
+  branchId
+  reportParams="";
+  reportList: ReportFile[] = [];
+  gotoViewer(){
+  this.rptSrv.setReportList(this.reportType, this.reportTypeId).then(a => {
+
+    this.rptSrv.getReportList().subscribe(r => {
+        this.reportList = r["response"]
+        
+        if (this.reportList.length > 0) {
+            this.reportList.forEach(element => {
+              
+              this.viewRpt(element);
+
+            });
+        }
+
+    });
+
+});
+}
+
+viewRpt(selectedRpt: ReportFile) {
+  debugger;
+  let JournalEntryId ;
+  let lang = localStorage.getItem("language");
+  if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined" || this.branchId == "") {
+    this.branchId = 0;
+  }
+  // JournalEntryId = this.id;
+   JournalEntryId = localStorage.getItem("journalEntryId")
+  this.reportParams = "reportParameter=branchId!" + this.branchId
+  + "&reportParameter=companyId!" + this.companyId
+  + "&reportParameter=lang!" + lang
+  + "&reportParameter=userId!" + this.userId
+  + "&reportParameter=JournalEntryId!" +JournalEntryId;
+  
+  var newUrl = this.apiurl?.replace('api', '') + "/Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + this.reportType + "&reportParameter=reportTypeID!" + this.reportTypeId + "&" + this.reportParams;
+  window.open(newUrl, "_blank");
+
+ // this.close();
+
+
+}
+
+
 }
 
