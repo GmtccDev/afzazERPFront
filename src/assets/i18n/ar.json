@@ -727,6 +727,7 @@
         "bill-items-required": "من فضلك أدخل الأصناف"
     },
     "tabulator": {
+        "export": "تصدير",
         "export-pdf": "تصدير PDF",
         "export-excel": "تصدير أكسيل",
         "export-csv": "تصدير CSV",

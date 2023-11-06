@@ -18,6 +18,8 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { ReportViewerService } from '../../reports/services/report-viewer.service';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 @Component({
   selector: 'app-incoming-cheque',
   templateUrl: './incoming-cheque.component.html',
@@ -28,6 +30,10 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   //#region Main Declarations
   editFormatIcon() { //plain text value
     return "<i class=' fa fa-edit'></i>";
+  };
+  printReportFormatIcon() { //plain text value
+
+    return "<i class='fa fa-print' aria-hidden='true'></i>";
   };
   errorMessage = '';
   errorClass = '';
@@ -64,6 +70,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private spinner: NgxSpinnerService,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private reportViewerService: ReportViewerService
 
   ) {
 
@@ -315,6 +322,23 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
             this.showConfirmRejectMessage(cell.getRow().getData().id);
           }
         },
+      },
+    this.lang == "ar" ? {
+      title: "عرض التقرير",
+      field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+
+        this.onViewReportClicked(cell.getRow().getData().id);
+      }
+    }
+      :
+
+      {
+        title: "View Report",
+        field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+
+
+          this.onViewReportClicked(cell.getRow().getData().id);
+        }
       }
   ];
 
@@ -500,5 +524,14 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
       }
     });
+  }
+  onViewReportClicked(id) {
+    let reportParams: string =
+    "reportParameter=id!" + id
+    + "&reportParameter=lang!" + this.lang
+    const modalRef = this.modalService.open(NgbdModalContent);
+		modalRef.componentInstance.reportParams = reportParams;
+		modalRef.componentInstance.reportType = 1;
+		modalRef.componentInstance.reportTypeID = 9;
   }
 }

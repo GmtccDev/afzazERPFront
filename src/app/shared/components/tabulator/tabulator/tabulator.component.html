@@ -77,13 +77,16 @@
 
 
 </div>
+
 <div class="search_area_on_export_setting">
+
     <div class="align-items-center d-flex justify-content-end search-box">
         <input class="search-txt" type="text" name="" placeholder="{{'general.search'|translate}}"
             [(ngModel)]="searchTxt" (change)="search()" #searchInput (blur)="showSearchButton()">
         <button class="search-btn0 btn btn-primary" (click)="showSearch()" #searchButton> <i
                 class="fa fa-search"></i></button>
     </div>
+
     <div [style]="tabulatorStyle" class="tabulator-container">
         <div [style]="customStyle" [id]="'my-tabular-table'+divId"></div>
     </div>

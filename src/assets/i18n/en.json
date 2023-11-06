@@ -735,6 +735,7 @@
         "bill-items-required": "Please enter Items"
     },
     "tabulator": {
+        "export": "Export",
         "export-pdf": "Export PDF",
         "export-excel": "Export Excel",
         "export-csv": "Export CSV",

@@ -11,7 +11,7 @@ import { ObjectIsNotNullOrEmpty } from '../../helper/helper';
 import { ToolbarData } from '../../interfaces/toolbar-data';
 import { ToolbarButtonsAppearance } from '../../interfaces/toolbar-buttons-appearance';
 import { ToolbarPath } from '../../interfaces/toolbar-path'
-import { enableDebugTools } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -25,7 +25,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ) {
     this.showToolbarButtonsObj = {} as ToolbarButtonsAppearance;
   }
-
+  tabular: any;
   showButtons!: ToolbarButtonsAppearance;
 
   disabledList = false;
@@ -106,7 +106,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     let sub = this.SharedService.getClickedbutton().subscribe({
       next: (toolbarCompnentData: ToolbarData) => {
         toolbarCompnentData;
-      ;
         if (ObjectIsNotNullOrEmpty(toolbarCompnentData)) {
           this.toolbarCompnentData = toolbarCompnentData;
           if (this.toolbarCompnentData.action == 'New') {
@@ -309,9 +308,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }  else if (button == 'Copy') {
     } else if (button == 'Update') {
       this.disabledSave = true;
-      this.disabledPrint = true;
       this.disabledView=true;
-      this.disabledPrint = true;
+      this.disabledPrint = false;
       this.disabledCancel=true;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;
@@ -432,4 +430,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     this.SharedService.changeButtonApperance(this.showToolbarButtonsObj);
   }
+  exportPdf() {
+		debugger
+    this.tabular =sessionStorage.getItem("tabular");
+    this.tabular = JSON.stringify(this.tabular);
+
+
+		this.tabular.download("pdf", "asd" + ".pdf", {
+		  orientation: "portrait", //set page orientation to portrait
+		  title:  "asd" + " " + "Report", //add title to report
+		  lang:'ar',
+		  unicode:true,
+	
+	
+		});
+	  }
 }

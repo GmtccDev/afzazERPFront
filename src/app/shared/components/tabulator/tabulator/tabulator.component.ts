@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { SettingMenuShowOptions } from '../../models/setting-menu-show-options';
 import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
 import { PanelSetting } from '../../models/panel-setting';
-
 @Component({
 	selector: 'app-tabulator',
 	templateUrl: './tabulator.component.html',
@@ -106,15 +105,9 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	ngOnInit() {
-
 		//this.listenToRedraw();
 	}
-
-
-
-
 	private drawTable() {
-		;
 		let self = this;
 		this.tabular = new Tabulator(this.tab, {
 
@@ -231,10 +224,13 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	ngAfterViewInit() {
-		;
 		this.tab = document.createElement('div');
 		this.drawTable();
 		this.showDataOnGrid();
+		debugger
+		var jsonArray = this.tabular;
+		sessionStorage.setItem("tabular", jsonArray);
+
 	}
 
 
