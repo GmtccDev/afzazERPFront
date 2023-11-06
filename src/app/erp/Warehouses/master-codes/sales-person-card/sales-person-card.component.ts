@@ -1,6 +1,5 @@
 import { DeleteListSalesPersonCard, SalesPersonCardDto } from './../../models/sales-person-card';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SupplierCardDto } from '../../models/supplier-card';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import { TranslateService } from '@ngx-translate/core';
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
@@ -58,8 +57,6 @@ export class SalesPersonCardComponent implements OnInit,OnDestroy {
 
   //#region ngOnInit
   ngOnInit(): void {
-    // this.defineGridColumn();
-    
     this.spinner.show();
     Promise.all([this.getsalesPersons()])
       .then(a => {

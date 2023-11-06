@@ -46,6 +46,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 	isShowGridFilter: boolean = false;
 	@Input() groupType: number = 0;
 	@Input() path: string = "";
+	@Input() showExport: boolean = true;
 
 	filterOperations: { nameAr: string, nameEn: string, symbol: string }[] = [
 		{
@@ -892,29 +893,42 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	exportPdf() {
-
-		this.tabular.download("pdf", "data.pdf", {
-			orientation: "portrait", //set page orientation to portrait
-			title: "Example Report", //add title to report
+		debugger
+		this.tabular.download("pdf", this.componentName + ".pdf", {
+		  orientation: "portrait", //set page orientation to portrait
+		  title: this.componentName + " " + "Report", //add title to report
+		  lang:'ar',
+		  unicode:true,
+	
+	
 		});
-	}
+	  }
 
 
-	exportJson() {
-		this.tabular.download("json", "data.json");
-	}
-
-	exportHtml() {
-		this.tabular.download("html", "data.html", { style: true });
-	}
-
-	exportCsv() {
-		this.tabular.download("csv", "data.csv");
-	}
-
-	exportExcel() {
-		this.tabular.download("xlsx", "data.xlsx", { sheetName: "My Data" });
-	}
+	  arabicFont = {
+		name: 'Cairo', // Replace with the actual font family name of your Arabic font
+		style: 'normal',
+		src: 'url(src/assets/fonts/Cairo/Cairo-VariableFont_slnt,wght.ttf)', // Replace with the path to your Arabic font file
+	  };
+	
+	
+	  exportJson() {
+		this.tabular.download("json", this.componentName + ".json");
+	  }
+	
+	  exportHtml() {
+		this.tabular.download("html", this.componentName + ".html", { style: true });
+	  }
+	
+	  exportCsv() {
+		this.tabular.download("csv", this.componentName + ".csv");
+	  }
+	
+	  exportExcel() {
+		debugger
+		this.tabular.download("xlsx", this.componentName + ".xlsx", { sheetName: this.componentName });
+	  }
+	
 
 	removeGroupItem(index: number) {
 		this.groupByList.splice(index, 1);

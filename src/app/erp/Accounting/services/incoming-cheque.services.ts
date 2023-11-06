@@ -28,18 +28,18 @@ export class IncomingChequeServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createIncomingCheque(branch: any): Observable<any> {
+    createIncomingCheque(incomingCheque: any): Observable<any> {
         
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/add?", branch);
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/add?", incomingCheque);
        
     }
    
     // ids: number[] | undefined;
-    deleteListIncomingCheque(branch: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteList?", branch);
+    deleteListIncomingCheque(incomingCheque: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/deleteList?", incomingCheque);
     }
-    updateIncomingCheque(branch: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/edit?", branch);
+    updateIncomingCheque(incomingCheque: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/IncomingCheque/edit?", incomingCheque);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/IncomingCheque/get-ddl?");

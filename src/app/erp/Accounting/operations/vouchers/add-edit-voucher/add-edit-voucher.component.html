@@ -264,7 +264,7 @@
 																	<td>
 																		<input type="text" class="form-control"
 																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="voucherDetail[i].beneficiaryNameAr"
+																			[(ngModel)]="voucherDetail[i].beneficiaryName"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openBeneficiarySearchDialog(i)">
 																	</td>
@@ -286,7 +286,7 @@
 																		*ngIf="enableMultiCurrencies">
 																		<input type="text" class="form-control"
 																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="voucherDetail[i].currencyNameAr"
+																			[(ngModel)]="voucherDetail[i].currencyName"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openCurrencySearchDialog(i);updateDetailData(item)">
 																	</td>
@@ -319,7 +319,7 @@
 																	<td>
 																		<input type="text" class="form-control"
 																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="voucherDetail[i].costCenterNameAr"
+																			[(ngModel)]="voucherDetail[i].costCenterName"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openCostCenterSearchDialog(i)">
 
@@ -353,7 +353,7 @@
 																	<td>
 																		<input type="text" class="form-control"
 																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="selectedVoucherDetail.beneficiaryNameAr"
+																			[(ngModel)]="selectedVoucherDetail.beneficiaryName"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openBeneficiarySearchDialog(-1)">
 																	</td>
@@ -375,7 +375,7 @@
 																		*ngIf="enableMultiCurrencies">
 																		<input type="text" class="form-control"
 																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="selectedVoucherDetail.currencyNameAr"
+																			[(ngModel)]="selectedVoucherDetail.currencyName"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openCurrencySearchDialog(-1)">
 
@@ -410,7 +410,7 @@
 																	<td>
 																		<input type="text" class="form-control "
 																			placeholder="{{'general.search'|translate}}"
-																			[(ngModel)]="selectedVoucherDetail.costCenterNameAr"
+																			[(ngModel)]="selectedVoucherDetail.costCenterName"
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openCostCenterSearchDialog(-1)">
 

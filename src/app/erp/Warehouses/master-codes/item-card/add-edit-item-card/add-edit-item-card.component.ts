@@ -142,7 +142,6 @@ export class AddEditItemCardComponent implements OnInit {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = +params['id'];
-        debugger
         if (this.id > 0) {
           this.getItemCardById(this.id).then(a => {
             this.spinner.hide();
@@ -249,7 +248,6 @@ export class AddEditItemCardComponent implements OnInit {
 
   //#region CRUD Operations
   getItemGroupData(itemGroupId: any) {
-    debugger
     if (itemGroupId > 0) {
       var result = this.itemGroupsList.filter(x => x.id == itemGroupId);
       this.itemCardForm.patchValue({
@@ -257,6 +255,9 @@ export class AddEditItemCardComponent implements OnInit {
         costCalculateMethod: result[0].costCalculation,
         mainUnitId: result[0].unitId
       })
+      if (this.itemCardForm.value.mainUnitId != null) {
+        this.getUnitsByMainUnitId(this.itemCardForm.value.mainUnitId)
+      }
     }
   }
   getUnitsByMainUnitId(mainUnitId: any) {
@@ -273,7 +274,6 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -358,13 +358,13 @@ export class AddEditItemCardComponent implements OnInit {
 
     });
   }
-  getItemCardCode() {
+  getItemCardCode(itemGroupId:any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.itemCardService.getLastCode().subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-card");
           this.itemCardForm.patchValue({
-            code: res.response
+            code: itemGroupId + res.response
           });
 
         },
@@ -558,16 +558,16 @@ export class AddEditItemCardComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-item');
-            if (this.itemCardForm.value.code != null) {
-              this.getItemCardCode()
-            }
+            // if (this.itemCardForm.value.code != null) {
+            //   this.getItemCardCode()
+            // }
             this.defineItemCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-            this.getItemCardCode();
+            //this.getItemCardCode();
           }
         }
       },

@@ -95,12 +95,12 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <label for="warehousesUnitId" class="label-name">
+                                            <label for="unitId" class="label-name">
 												{{'item.unit'|translate}}
 
 											</label>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" formControlName="warehousesUnitId" name='warehousesUnitId' class="" id="warehousesUnitId">
+                                                <ng-select style="width:100%" formControlName="unitId" name='unitId' class="" id="unitId">
                                                     <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
                                                         {{lang=="ar" ? unit.nameAr:unit.nameEn}}
                                                     </ng-option>
