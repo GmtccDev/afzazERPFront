@@ -9,6 +9,7 @@ import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/service
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { Subscription } from 'rxjs';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 
 @Component({
   selector: 'app-login-company',
@@ -204,10 +205,9 @@ export class LoginCompanyComponent implements OnInit {
   }
   getGeneralConfigurationsOfAccountingPeriod() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.getGeneralConfiguration(6).subscribe({
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
         next: (res: any) => {
 
-          //console.log('result data getbyid', res);
           if (res.response.value > 0) {
 
             this.facialPeriodId = res.response.value;

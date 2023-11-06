@@ -76,7 +76,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   routeCurrencyApi = "currency/get-ddl?"
 
   routefiscalPeriodApi = "fiscalPeriod/get-ddl?"
-  routeCashAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
+  routeCashAccountApi = 'Account/getLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Cash
   companyId: string = localStorage.getItem("companyId");
   branchId: string = localStorage.getItem("branchId");
 

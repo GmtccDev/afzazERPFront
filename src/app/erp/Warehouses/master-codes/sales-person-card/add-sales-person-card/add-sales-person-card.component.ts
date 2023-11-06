@@ -15,6 +15,7 @@ import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
 import { navigateUrl } from 'src/app/shared/helper/helper-url';
 import { CODE_REQUIRED_VALIDATORS, PHONE_VALIDATORS, REQUIRED_VALIDATORS } from 'src/app/shared/constants/input-validators';
+import { AccountClassificationsEnum } from 'src/app/shared/constants/enumrators/enums';
 
 @Component({
   selector: 'app-add-sales-person-card',
@@ -28,8 +29,8 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
    id: any = 0;
    currnetUrl;
    lang:any = localStorage.getItem("language")
-   routeAccountApi = 'Account/get-ddl?'
-   accountsList: any;
+   routeEmployeeAccountApi = 'Account/GetLeafAccounts?AccountClassificationId=' + AccountClassificationsEnum.Employee
+   employeeAccountsList: any;
    routeApiCountry = 'Country/get-ddl?'
    countriesList: CountryDto[] = [];
    SalesPersonCard: SalesPersonCardDto[] = [];
@@ -70,7 +71,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
    ngOnInit(): void {
      this.spinner.show();
      Promise.all([
-       this.getAccounts(),
+       this.getEmployeeAccounts(),
        this.getCountries()
  
  
@@ -223,13 +224,12 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
      });
  
    }
-   getAccounts() {
+   getEmployeeAccounts() {
      return new Promise<void>((resolve, reject) => {
-       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+       let sub = this.publicService.getDdl(this.routeEmployeeAccountApi).subscribe({
          next: (res) => {
- 
            if (res.success) {
-             this.accountsList = res.response.filter(x => x.isLeafAccount == true && x.isActive == true);
+             this.employeeAccountsList = res.response;
  
            }
  
@@ -240,7 +240,6 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           //console.log('complete');
          },
        });
  
@@ -266,7 +265,6 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           //console.log('complete');
          },
        });
  
@@ -338,7 +336,6 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           //console.log('complete');
          },
        });
      });
@@ -374,7 +371,6 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
            reject(err);
          },
          complete: () => {
-           //console.log('complete');
          },
        });
        this.subsList.push(sub);

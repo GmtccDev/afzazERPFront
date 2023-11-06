@@ -14,7 +14,7 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { DateCalculation, DateModel } from '../../../../../shared/services/date-services/date-calc.service';
 import { TaxDetail, TaxMaster } from '../../../models/tax';
 import { TaxServiceProxy } from '../../../Services/tax.service';
-import {  formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
+import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
 
 @Component({
   selector: 'app-add-edit-tax',
@@ -41,7 +41,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   lang = localStorage.getItem("language")
   routeAccountApi = 'Account/GetLeafAccounts?'
   accountsList: any;
-  submitMode:boolean=false;
+  submitMode: boolean = false;
   addUrl: string = '/warehouses-master-codes/tax/add-tax';
   updateUrl: string = '/warehouses-master-codes/tax/update-tax/';
   listUrl: string = '/warehouses-master-codes/tax/';
@@ -186,7 +186,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
             isActive: res.response?.isActive,
           });
           this.taxDetail = res.response?.taxDetail;
-          this.taxMaster.taxDetail = res.response?.taxDetail;
+
         },
         error: (err: any) => {
           reject(err);
@@ -205,7 +205,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       let sub = this.taxService.getLastCode().subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.taxForm.patchValue({
             code: res.response
           });
@@ -254,16 +254,38 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    this.taxDetail.push({
-      id: 0,
-      taxId: this.selectedTaxDetail?.taxId ?? 0,
-      fromDate:formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.fromDate)),
-      toDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.toDate)),
-      taxRatio: this.selectedTaxDetail?.taxRatio ?? 0,
+    debugger
+    // if (this.taxDetail.length > 0 && this.taxDetail != null) {
+    //   this.taxDetail.forEach(element => {
+    //     debugger
+    //     let fromDate = element.fromDate;
+    //     let toDate = element.toDate;
+    //     let date =this.selectedTaxDetail?.fromDate.year +'-0'+(this.selectedTaxDetail?.fromDate.month + 1) +'-'+ this.selectedTaxDetail?.fromDate.day
+    //     //formatDate(this.selectedTaxDetail?.fromDate);
 
-    });
+    //     if (date >= fromDate && date <= toDate) {
+    //       debugger
+    //       this.errorMessage = this.translate.instant("tax.date-exist");
+    //       this.errorClass = 'errorMessage';
+    //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //       return;
+    //     }
 
-    
+    //   });
+
+    // }
+    if (this.selectedTaxDetail?.fromDate)
+
+      this.taxDetail.push({
+        id: 0,
+        taxId: this.selectedTaxDetail?.taxId ?? 0,
+        fromDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.fromDate)),
+        toDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.toDate)),
+        taxRatio: this.selectedTaxDetail?.taxRatio ?? 0,
+
+      });
+
+
     this.taxMaster!.taxDetail = this.taxDetail;
     this.clearSelectedItemData();
 
@@ -372,7 +394,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-    
+
     if (this.taxForm.valid) {
       if (this.taxMaster.taxDetail.length == 0) {
         this.errorMessage = this.translate.instant("tax.tax-details-required");
@@ -417,7 +439,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
             this.defineTaxForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
-            
+
             this.onUpdate();
           }
         }

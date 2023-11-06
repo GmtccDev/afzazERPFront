@@ -9,7 +9,7 @@ export class ItemGroupsCardDto {
     parentId: number | undefined;
     itemType:any;
     costCalculation:any
-    warehousesUnitID:number;
+    unitID:number;
 }
 export class CreateItemGroupsCard{
     inputDto:ItemGroupsCardDto;

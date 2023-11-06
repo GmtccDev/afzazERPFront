@@ -118,7 +118,12 @@
                             "src/assets/css/feather-icon.css",
                             "node_modules/tabulator-tables/dist/css/tabulator.css"
                         ],
-                        "scripts": [],
+                        "scripts": [
+
+                            "src/assets/exportJs/xlsx.full.min.js",
+                            "src/assets/exportJs/jspdf.min.js",
+                            "src/assets/exportJs/jspdf.plugin.autotable.js"
+                        ],
                         "vendorChunk": true,
                         "extractLicenses": false,
                         "buildOptimizer": false,
@@ -205,7 +210,7 @@
             }
         }
     },
-    "defaultProject": "cuba",
+    "defaultProject": "resort-erp-afzaz",
     "cli": {
         "analytics": false,
         "cache": {

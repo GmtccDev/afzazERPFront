@@ -14,6 +14,11 @@ import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VoucherTypeServiceProxy } from '../../services/voucher-type.service';
 import { format } from 'date-fns';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
+import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -27,7 +32,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   voucherTypeId: any;
   currnetUrl: any;
   queryParams: any;
-
+  fiscalPeriodId: number;
+  fiscalPeriodName: string;
+  fiscalPeriodStatus: number;
+  errorMessage = '';
+  errorClass = '';
   addUrl: string = '/accounting-operations/vouchers/add-voucher/';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
   listUrl: string = '/accounting-operations/vouchers/';
@@ -53,6 +62,9 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
     private voucherTypeService: VoucherTypeServiceProxy,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private alertsService: NotificationsAlertsService,
 
   ) {
 
@@ -63,7 +75,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    //  this.defineGridColumn();
     let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
@@ -74,7 +85,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
-    Promise.all([this.getVouchers()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getVouchers() ])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -145,8 +156,52 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
   }
+  getGeneralConfigurationsOfFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+            this.fiscalPeriodId = res.response.value;
+            if(this.fiscalPeriodId!=null)
+            {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
+
+            }
+          }
 
 
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   //#endregion
 
   getVouchers() {
@@ -154,7 +209,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
+            this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
           resolve();
@@ -204,15 +259,19 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
+        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+          this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
 
         this.spinner.show();
         let sub = this.voucherService.deleteVoucher(id).subscribe(
           (resonse) => {
             this.getVouchers();
             this.router.navigate([this.listUrl + this.voucherTypeId])
-              .then(() => {
-                //   window.location.reload();
-              });
+              
           });
         this.subsList.push(sub);
         this.spinner.hide();
@@ -239,11 +298,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
       field: 'voucherDate', width: 300, formatter: function (cell, formatterParams, onRendered) {
-				var value = cell.getValue();
-				value = format(new Date(value), 'dd-MM-yyyy');;
-				return value;
-			}
-      
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+
     },
     {
       title: this.lang == 'ar' ? 'الاجمالى محلى' : 'Total Local',
@@ -254,7 +313,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       field: 'description',
     },
 
-    
+
 
 
   ];
@@ -271,12 +330,13 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       [
         { field: 'code', type: 'like', value: searchTxt },
         { field: 'voucherTotal', type: 'like', value: searchTxt },
+        { field: 'description', type: 'like', value: searchTxt },
+
         ,
       ],
     ];
   }
 
-  openVoucherTypes() { }
   onCheck(id) {
 
     const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
@@ -320,7 +380,15 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
       } else if (event.actionName == 'Delete') {
-        this.showConfirmDeleteMessage(event.item.id);
+        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+          this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+        else {
+          this.showConfirmDeleteMessage(event.item.id);
+        }
       }
     }
   }
@@ -333,22 +401,27 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   currentBtn!: string;
   subsList: Subscription[] = [];
   listenToClickedButton() {
-
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
           } else if (currentBtn.action == ToolbarActions.New) {
 
             this.router.navigate([this.addUrl + this.voucherTypeId]);
-            //  this.router.navigate(['/control-panel/accounting/update-account', id]);
 
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
-            this.onDelete();
+            if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+              this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+            else {
+              this.onDelete();
+            }
           }
         }
       },
