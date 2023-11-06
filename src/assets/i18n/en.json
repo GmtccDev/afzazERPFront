@@ -98,7 +98,6 @@
         "is-taxable": "Is Taxable",
         "tax-ratio": "Tax Ratio",
         "tax-value": "Tax Value",
-
         "owner": "Owner",
         "owner-required": "Owner is required",
         "loading": "loading",
@@ -209,7 +208,11 @@
         "remaining-account":"Remaining Account",
         "corresponding-account":"Corresponding Account",
         "customer-account":"Customer Account",
-        "bank-account":"Bank Account"
+        "bank-account":"Bank Account",
+        "tax-number":"Tax Number",
+        "mail-box":"Mail Box",
+        "credit-limit":"Credit Limit",
+        "initial-balance":"Initial Balance"
 
 
 
