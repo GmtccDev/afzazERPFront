@@ -74,7 +74,6 @@
         "close": "اغلاق",
         "add": "اضافة"
     },
-   
     "validation-message": {
         "invalid-data": "رجاء إدخال البيانات بشكل صحيح!"
     },
@@ -98,8 +97,7 @@
     "messageTitle": {
         "done": "نجاح",
         "delete": "حذف",
-        "generate-entry":"توليد القيد"
-
+        "generate-entry": "توليد القيد"
     },
     "validation": {
         "phoneValidation": "رقم الجوال غير صحيح",
@@ -196,8 +194,7 @@
         "view": "عرض",
         "cancelDefaultReport": "الغاء التقرير الافتراضى",
         "post": "ترحيل",
-        "generate-entry":"توليد القيد"
-
+        "generate-entry": "توليد القيد"
     },
     "component-names": {
         "country-information": "معلومات الدولة",
@@ -228,7 +225,7 @@
         "branch": "الفرع",
         "branches": "الفروع",
         "branches-information": "معلومات الفروع",
-        "configurations": "الاعدادات",
+        "configurations": "الإعدادات",
         "journal": "اليوميات",
         "journal-information": "معلومات اليوميات ",
         "fiscalPeriod-information": " معلومات الفترات المحاسبية",
@@ -288,15 +285,12 @@
         "sales-person-commission": "عمولات المناديب",
         "bill-types": "أنماط الفواتير",
         "sales-person-commission-card-information": "معلومات بطاقة  عمولات المناديب",
-        "bills":"الفواتير",
-        "default-journal":"اليومية الإفتراضية",
-        "general-configuration":"الإعدادات",
-        "cheques-journal":"يومية الشيكات",
-        "chart-account":"دليل الحسابات",
-        "generate-entry-vouchers":"توليد قيود السندات"
-
-
-      
+        "bills": "الفواتير",
+        "default-journal": "اليومية الإفتراضية",
+        "general-configuration": "الإعدادات",
+        "cheques-journal": "يومية الشيكات",
+        "chart-account": "دليل الحسابات",
+        "generate-entry-vouchers": "توليد قيود السندات"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -418,7 +412,7 @@
         "discount-ratio": "نسبة الخصم",
         "discount-value": "قيمة الخصم",
         "net": "الصافى",
-        "net-after-tax":"الصافى بعد الضريبة",
+        "net-after-tax": "الصافى بعد الضريبة",
         "remaining": "المتبقى",
         "paid": "المدفوع",
         "sales-account": "حساب المبيعات",
@@ -446,7 +440,12 @@
         "corresponding-account": "الحساب المقابل",
         "customer-account": "حساب العميل",
         "bank-account": "حساب البنك",
-        "all":"الكل"
+        "all": "الكل",
+        "tax-number": "الرقم الضريبي",
+        "mail-box": "صندوق البريد",
+        "credit-limit": "حد الأئتمان",
+        "initial-balance": "الرصيد الأفتتاحى",
+        "postal-code": "الرمز البريدى"
     },
     "sales-person-commission": {
         "sales-person": "المندوب",
@@ -555,8 +554,12 @@
         "add-voucher": "اضافة سند",
         "update-voucher": "تحديث السند",
         "voucher": "السند",
-        "confirm-generate-entry": "هل أنت متأكد من توليد القيد لهذا السند؟"
-
+        "confirm-generate-entry": "هل أنت متأكد من توليد القيد لهذا السند؟",
+        "no-add-voucher-fiscal-period-closed": "لا يمكن اضافة سند لهذة الفترة المحاسبية المغلقة",
+        "no-add-voucher-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة سند. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-update-voucher-fiscal-period-closed": "لا يمكن تعديل هذا السند لهذة الفترة المحاسبية المغلقة",
+        "no-delete-voucher-fiscal-period-closed": "لا يمكن حذف هذا السند لهذة الفترة المحاسبية المغلقة",
+        "no-generate-entry-voucher-fiscal-period-closed": "لا يمكن توليد القيد للسند لهذة الفترة المحاسبية المغلقة"
     },
     "journalEntry": {
         "openBalance": "القيد الافتتاحي ",
@@ -596,7 +599,13 @@
         "confirm-collect": "هل أنت متأكد من تحصيل هذا الشيك؟",
         "collect": "تحصيل",
         "confirm-reject": "هل أنت متأكد من رفض هذا الشيك؟",
-        "reject": "رفض"
+        "reject": "رفض",
+        "no-add-cheque-fiscal-period-closed": "لا يمكن اضافة سند لهذة الفترة المحاسبيةالمغلقة",
+        "no-add-cheque-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة شيك. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-update-cheque-fiscal-period-closed": "لا يمكن تعديل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
+        "no-delete-cheque-fiscal-period-closed": "لا يمكن حذف هذا الشيك لهذة الفترة المحاسبية المغلقة",
+        "no-collect-cheque-fiscal-period-closed": "لا يمكن تحصيل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
+        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة"
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"
@@ -623,7 +632,9 @@
         "tax-information": "بيانات الضريبة",
         "tax-ratio": "نسبة الضريبة",
         "tax-details-required": "تفاصيل الضريبة مطلوب",
-        "add-tax": "اضافة ضريبة"
+        "add-tax": "اضافة ضريبة",
+        "date-exist":"التاريخ مضاف من قبل"
+
     },
     "item": {
         "item-group": "مجموعة الصنف",
@@ -712,7 +723,16 @@
         "items": "الأصناف",
         "item": "الصنف",
         "item-description": "وصف الصنف",
-        "additions-and-discounts": "الأضافات و الخصومات على الفاتورة"
+        "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
+        "bill-items-required": "من فضلك أدخل الأصناف"
+    },
+    "tabulator": {
+        "export-pdf": "تصدير PDF",
+        "export-excel": "تصدير أكسيل",
+        "export-csv": "تصدير CSV",
+        "export-html": "تصدير HTML",
+        "export-json": "تصدير Json",
+        "save": "حفظ"
     },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",

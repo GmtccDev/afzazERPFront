@@ -101,9 +101,7 @@ export class AccountServiceProxy {
         return this.http.get<any>(environment.apiUrl + "/api/Account/deleteAccount", { params: params });
     }
     checkAccount(id: any): Observable<any> {
-        let params = new HttpParams();
-        params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Account/check", { params: params });
+        return this.http.post<any>(environment.apiUrl + "/api/Account/isLeafAccount?", id);
     }
     deleteEntity(entity: any): Observable<any> {
 
@@ -112,6 +110,11 @@ export class AccountServiceProxy {
     deleteListEntity(entity: any): Observable<any> {
 
         return this.http.post<any>(environment.apiUrl + "/api/Account/deleteListEntity?", entity);
+    }
+    isLeafAccount(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.get<any>(environment.apiUrl + "/api/Account/isLeafAccount", { params: params });
     }
 }
 

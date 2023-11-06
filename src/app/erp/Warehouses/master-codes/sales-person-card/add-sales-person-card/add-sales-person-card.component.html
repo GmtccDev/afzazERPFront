@@ -195,7 +195,7 @@
 											<div class="input-group  popup">
 												<ng-select style="width:100%" formControlName="accountId"
 													name='accountId' class="" id="accountId">
-													<ng-option *ngFor="let account of accountsList"
+													<ng-option *ngFor="let account of employeeAccountsList"
 														[value]="account.id">
 														{{lang=="ar"?account.nameAr:account.nameEn}}
 													</ng-option>

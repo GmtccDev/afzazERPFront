@@ -98,7 +98,6 @@
         "is-taxable": "Is Taxable",
         "tax-ratio": "Tax Ratio",
         "tax-value": "Tax Value",
-
         "owner": "Owner",
         "owner-required": "Owner is required",
         "loading": "loading",
@@ -181,7 +180,7 @@
         "discount-value": "Discount Value",
         "total": "Total",
         "net": "Net",
-        "net-after-tax":"Net After Tax",
+        "net-after-tax": "Net After Tax",
         "remaining": "Remaining",
         "paid": "Paid",
         "sub-total": "Sub Total",
@@ -193,27 +192,27 @@
         "sales-cost-account": "Sales Cost Account",
         "inventory-account": "Inventory Account",
         "minute": "minute",
-       "print": "Print",
-        "delivery-date":"Delivery Date",
-        "pay-way":"Pay Way",
-        "ship-method":"Ship Method",
-        "ship-kind":"Ship Kind",
-        "reference":"Reference",
-        "reference-no":"Reference No",
-        "fetch":"Fetch",
-        "sales-person":"Sales Person",
-        "supplier-account":"Supplier Account",
-        "addition-ratio":"Addition Ratio",
-        "addition-value":"Addition Value",
-        "paid-account":"Paid Account",
-        "remaining-account":"Remaining Account",
-        "corresponding-account":"Corresponding Account",
-        "customer-account":"Customer Account",
-        "bank-account":"Bank Account"
-
-
-
-    
+        "print": "Print",
+        "delivery-date": "Delivery Date",
+        "pay-way": "Pay Way",
+        "ship-method": "Ship Method",
+        "ship-kind": "Ship Kind",
+        "reference": "Reference",
+        "reference-no": "Reference No",
+        "fetch": "Fetch",
+        "sales-person": "Sales Person",
+        "supplier-account": "Supplier Account",
+        "addition-ratio": "Addition Ratio",
+        "addition-value": "Addition Value",
+        "paid-account": "Paid Account",
+        "remaining-account": "Remaining Account",
+        "corresponding-account": "Corresponding Account",
+        "customer-account": "Customer Account",
+        "bank-account": "Bank Account",
+        "tax-number": "Tax Number",
+        "mail-box": "Mail Box",
+        "credit-limit": "Credit Limit",
+        "initial-balance": "Initial Balance"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -223,8 +222,6 @@
         "target": "Target",
         "achieved-rarget-ratio": "Value of commission if target achieved ",
         "not-achieved-rarget-ratio": "Value of commission if target not achieved "
-
-
     },
     "home": {
         "enter-keyword": "Enter keyword",
@@ -286,13 +283,11 @@
         "close": "Close",
         "add": "Add"
     },
-  
     "messages": {
         "invalid-data": "Please Enter Valid Data!",
         "success": "Data has been Deleted Successfully",
         "wrong": "Wrong",
         "confirm-delete": "Are you sure to delete the item ?",
-
         "done": "Doneddsfgsfgdfgdfgdfgdfg",
         "alert": "Alert",
         "info": "Info",
@@ -301,7 +296,7 @@
     "messageTitle": {
         "done": "Done",
         "delete": "Delete",
-        "generate-entry":"Generate Entry"
+        "generate-entry": "Generate Entry"
     },
     "error": {
         "from-to-date": "The to date must be greater than the from date.",
@@ -388,8 +383,8 @@
         "update": "Update",
         "view": "View",
         "cancelDefaultReport": "Cancel Default Report",
-        "post":"Post",
-        "generate-entry":"Generate Entry"
+        "post": "Post",
+        "generate-entry": "Generate Entry"
     },
     "component-names": {
         "country-information": "Country information",
@@ -483,14 +478,12 @@
         "sales-person-commission": "Sales Person Commission",
         "sales-person-commission-card-information": "Sales Person Commission Card Information",
         "sales-person-card-information": "Sales Person Card Information",
-        "bills":"Bills",
-        "default-journal":"Default Journal",
-        "general-configuration":"General Configuration",
-        "cheques-journal":"Cheques Journal",
-        "chart-account":"Chart of Accounts",
-        "generate-entry-vouchers":"Generate Entry Vouchers"
-
-
+        "bills": "Bills",
+        "default-journal": "Default Journal",
+        "general-configuration": "General Configuration",
+        "cheques-journal": "Cheques Journal",
+        "chart-account": "Chart of Accounts",
+        "generate-entry-vouchers": "Generate Entry Vouchers"
     },
     "language": {
         "ARABIC": "Ar",
@@ -558,7 +551,6 @@
         "update-voucher-type": "Update Voucher Type",
         "deposit-vouchers": "Deposit Vouchers",
         "withdrawal-vouchers": "Withdrawal Vouchers"
-
     },
     "message-title": {
         "done": "Done",
@@ -572,8 +564,12 @@
         "add-voucher": "Add Voucher",
         "update-voucher": "Update Voucher",
         "voucher": "Voucher",
-        "confirm-generate-entry": "Are you sure to generate entry for this voucher ?"
-
+        "confirm-generate-entry": "Are you sure to generate entry for this voucher ?",
+        "no-add-voucher-fiscal-period-closed": "You can not add a voucher to this closed fiscal period",
+        "no-add-voucher-fiscal-period-choose-open-fiscal-period": "You can not add a voucher.You Should choose a open fiscal period from the settings",
+        "no-update-voucher-fiscal-period-closed": "You can not update the voucher to this closed fiscal period",
+        "no-delete-voucher-fiscal-period-closed": "You can not delete the voucher to this closed fiscal period",
+        "no-generate-entry-voucher-fiscal-period-closed": "You can not generate entry to this voucher to this closed fiscal period"
     },
     "journalEntry": {
         "openBalance": "Openning Journal",
@@ -613,7 +609,13 @@
         "collected": "Collected",
         "rejected": "Rejected",
         "cheque-details-status": "Cheque Details Status",
-        "can-not-add-more-than-one-detail": "You can not add more than one detail for the cheque"
+        "can-not-add-more-than-one-detail": "You can not add more than one detail for the cheque",
+        "no-add-cheque-fiscal-period-closed": "You can not add a cheque to this closed fiscal period",
+        "no-add-cheque-fiscal-period-choose-open-fiscal-period": "You can not add a cheque.You Should choose a open fiscal period from the settings",
+        "no-update-cheque-fiscal-period-closed": "You can not update the cheque to this closed fiscal period",
+        "no-delete-cheque-fiscal-period-closed": "You can not delete the cheque to this closed fiscal period",
+        "no-collect-cheque-fiscal-period-closed": "You can not collect the cheque to this closed fiscal period",
+        "no-reject-cheque-fiscal-period-closed": "You can not reject the cheque to this closed fiscal period"
     },
     "account-groups": {
         "add-account-group": "Add Account Group"
@@ -640,7 +642,8 @@
         "tax-information": "Tax Information",
         "tax-ratio": "Tax Ratio",
         "tax-details-required": "Tax details is required",
-        "add-tax": "Add Tax"
+        "add-tax": "Add Tax",
+        "date-exist":"This date is added before"
     },
     "item": {
         "item-group": "Item Group",
@@ -676,8 +679,6 @@
         "width-factor": "Width Factor",
         "length-factor": "Length Factor",
         "tranaction-factor": "Transaction Factor"
-
-
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",
@@ -716,10 +717,6 @@
         "purchases-return-bills": " Purchases Return Bills ",
         "first-period-goods-bills": " First Period Goods Bills ",
         "calculating-tax-manual": "Calculating Tax Manual"
-
-
-
-
     },
     "bill": {
         "bill-information": "Bill Information",
@@ -734,9 +731,16 @@
         "items": "Items",
         "item": "Item",
         "item-description": "Item Description",
-        "additions-and-discounts":"Additions And Discounts on Bill"
-
-
+        "additions-and-discounts": "Additions And Discounts on Bill",
+        "bill-items-required": "Please enter Items"
+    },
+    "tabulator": {
+        "export-pdf": "Export PDF",
+        "export-excel": "Export Excel",
+        "export-csv": "Export CSV",
+        "export-html": "Export HTML",
+        "export-json": "Export Json",
+        "save": "Save"
     },
     "twoRows": "There must be at least two rows",
     "debitCreditValues": "There must be values in both the debit and credit",

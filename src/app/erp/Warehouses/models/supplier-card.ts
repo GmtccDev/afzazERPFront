@@ -13,6 +13,11 @@ export class SupplierCardDto {
     fax: string | undefined;
     email: string | undefined;
     countryId: any;
+    taxNumber:string|undefined;
+    postalCode:string|undefined;
+    mailBox:string|undefined;
+    creditLimit:number|undefined;
+    initialBalance:number|undefined;
     isActive: boolean | undefined;
 
 }

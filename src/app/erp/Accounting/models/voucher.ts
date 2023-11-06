@@ -12,6 +12,9 @@ export class Voucher {
     voucherTotal: number;
     voucherTotalLocal: number;
     currencyFactor: number;
+    //isGenerateEntry: boolean|undefined;
+    fiscalPeriodId: number;
+
     voucherDetail:VoucherDetail[]=[];
 
 
@@ -30,12 +33,9 @@ export class VoucherDetail {
     creditLocal: number | undefined;
     description: string;
     costCenterId:number|undefined;
-    currencyNameAr:string;
-    currencyNameEn:string;
-    beneficiaryNameAr:string;
-    beneficiaryNameEn:string;
-    costCenterNameAr:string;
-    costCenterNameEn:string;
+    currencyName:string;
+    beneficiaryName:string;
+    costCenterName:string;
 
 
   

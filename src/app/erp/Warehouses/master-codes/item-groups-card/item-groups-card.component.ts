@@ -13,6 +13,7 @@ import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
 import {ItemGroupsCardServiceProxy} from '../../Services/item-groups-card.service'
 import {ItemGroupsCardDto,DeleteListItemGroupsCard, TreeNodeInterface} from '../../models/item-groups-card'
+import { ItemCardServiceProxy } from '../../Services/item-card.service';
 
 @Component({
   selector: 'app-item-groups-card',
@@ -44,6 +45,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
   //#region Constructor
   constructor(
     private itemGroupsCardService: ItemGroupsCardServiceProxy,
+    private itemsCardService: ItemCardServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
     private modalService: NgbModal,
@@ -114,7 +116,8 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-groups-card");
           if (res.success) {
 
-            this.listOfMapData = res.response
+            this.listOfMapData = res.response;
+            console.log(res.response)
             this.listOfMapData.forEach(item => {
               this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
             });
@@ -293,18 +296,41 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
   collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
 
     if (!$event) {
+      if (data.itemCards) {
+        data.itemCards.forEach(childItem => {
+          childItem.expanded = false;
+        });
+      }
       if (data.children) {
         data.children.forEach(d => {
+         
           const target = array.find(a => a.treeId === d.treeId)!;
           target.expanded = false;
           this.collapse(array, target, false);
         });
-      } else {
-
-        return;
-      }
-    }
-  }
+      } 
+    }}
+  // }
+  // collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
+  //   debugger
+  //   if (!$event) {
+  //     if (data.children) {
+  //       data.children.forEach(d => {
+  //         const target = array.find(a => a.treeId === d.treeId)!;
+  //         target.expanded = false;
+  //         this.collapse(array, target, false);
+  //       });
+  //     } else {
+  //       // Handle collapse for itemCards
+  //       if (data.itemCards) {
+  //         data.itemCards.forEach(childItem => {
+  //           childItem.expanded = false;
+  //         });
+  //       }
+  //       return;
+  //     }
+  //   }
+  // }
   convertTreeToList(root: TreeNodeInterface): TreeNodeInterface[] {
 
     const stack: TreeNodeInterface[] = [];
@@ -372,8 +398,62 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
   }
+  addNodeChild(parentId) {
 
+    if (parentId != undefined) {
+      // this.edit(id);
+      this.sharedServices.changeButton({
+        action: 'New',
+        componentName: 'List',
+        submitMode: false
+      } as ToolbarData);
 
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.router.navigate(['warehouses-master-codes/itemCard/update-itemCard/' + parentId])
+    }
+  }
+  onEditChild(id) {
 
+    if (id != undefined) {
+      // this.edit(id);
+      this.sharedServices.changeButton({
+        action: 'Update',
+        componentName: 'List',
+        submitMode: false
+      } as ToolbarData);
+
+      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.router.navigate(['warehouses-master-codes/itemCard/update-itemCard/' + id])
+    }
+
+  }
+  showConfirmDeleteMessageChild(id) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      console.log(rs);
+      if (rs == 'Confirm') {
+        this.spinner.show();
+        const input={
+          tableName:" ItemCards",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.itemsCardService.deleteEntity(input).subscribe(
+          (resonse) => {
+
+            this.getItemGroupsCards();
+
+          });
+        this.subsList.push(sub);
+        this.spinner.hide();
+
+      }
+    });
+  }
 }
 
