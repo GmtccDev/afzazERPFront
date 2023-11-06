@@ -161,9 +161,15 @@ export class AddEditCustomerCardComponent implements OnInit {
       phone: PHONE_VALIDATORS,
       fax: '',
       email: '',
+      taxNumber:'',
+      postalCode:'',
+      mailBox:'',
+      creditLimit:'',
+      initialBalance:'',
       responsiblePerson: REQUIRED_VALIDATORS,
       accountId: REQUIRED_VALIDATORS,
       countryId: ''
+     
     }
 
     );
@@ -190,6 +196,11 @@ export class AddEditCustomerCardComponent implements OnInit {
             phone: res.response?.phone,
             fax: res.response?.fax,
             email: res.response?.email,
+            taxNumber: res.response?.taxNumber,
+            postalCode: res.response?.postalCode,
+            mailBox: res.response?.mailBox,
+            creditLimit: res.response?.creditLimit,
+            initialBalance: res.response?.initialBalance,
             responsiblePerson: res.response?.responsiblePerson,
             accountId: res.response?.accountId,
             countryId: res.response?.countryId,

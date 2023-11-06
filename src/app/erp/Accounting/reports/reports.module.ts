@@ -1,3 +1,4 @@
+import { ReportViewerService } from './services/report-viewer.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SharedModule} from '../../../shared/shared.module'
@@ -15,7 +16,8 @@ import { GeneralLedgerReportComponent } from './general-ledger-report/general-le
 import { JournalEntriesReportComponent } from './journal-entries-report/journal-entries-report.component'
 import { CostCentersReportComponent } from './cost-centers-report/cost-centers-report.component';
 import { AccountsBalanceReportComponent } from './accounts-balance-report/accounts-balance-report.component';
-import { TrailBalanceReportComponent } from './trail-balance-report/trail-balance-report.component'
+import { TrailBalanceReportComponent } from './trail-balance-report/trail-balance-report.component';
+import { JournalEntryPageReportComponent } from './journal-entry-page-report/journal-entry-page-report.component'
 
 
 
@@ -28,6 +30,7 @@ import { TrailBalanceReportComponent } from './trail-balance-report/trail-balanc
     CostCentersReportComponent,
     AccountsBalanceReportComponent,
     TrailBalanceReportComponent,
+    JournalEntryPageReportComponent,
 
 
   ],
@@ -40,6 +43,6 @@ import { TrailBalanceReportComponent } from './trail-balance-report/trail-balanc
 
 
   ],
-  providers: [NgbCalendarIslamicUmalqura]
+  providers: [NgbCalendarIslamicUmalqura,ReportViewerService]
 })
 export class ReportsModule { }

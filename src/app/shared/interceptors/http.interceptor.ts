@@ -158,7 +158,6 @@ export class ResortHttpInterceptor implements HttpInterceptor {
 
         let errorObservable = new Subject<any>();
         if (!(error.error instanceof Blob)) {
-debugger
             interceptObservable.error(error);
             if (error.error != null) {
                 if (error.error.message != null || error.error.message != "") {

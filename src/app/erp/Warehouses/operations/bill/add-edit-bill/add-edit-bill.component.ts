@@ -18,7 +18,7 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { DateCalculation, DateModel } from '../../../../../shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from '../../../../master-codes/services/currency.servies';
 import { GeneralConfigurationServiceProxy } from '../../../../Accounting/services/general-configurations.services'
-import { convertEnumToArray, AccountClassificationsEnum, PayWayEnum, PayWayArEnum, ShipMethodEnum, ShipKindEnum, ShipKindArEnum, ManuallyTaxType } from '../../../../../shared/constants/enumrators/enums';
+import { convertEnumToArray, AccountClassificationsEnum, PayWayEnum, PayWayArEnum, ShipMethodEnum, ShipKindEnum, ShipKindArEnum, ManuallyTaxType, GeneralConfigurationEnum } from '../../../../../shared/constants/enumrators/enums';
 import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 import { AccountServiceProxy } from 'src/app/erp/Accounting/services/account.services';
 import { BillServiceProxy } from '../../../services/bill.service';
@@ -599,7 +599,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   getGeneralConfigurationsOfMainCurrency() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.getGeneralConfiguration(1).subscribe({
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.MainCurrency).subscribe({
         next: (res: any) => {
           resolve();
           if (res.response.value > 0) {

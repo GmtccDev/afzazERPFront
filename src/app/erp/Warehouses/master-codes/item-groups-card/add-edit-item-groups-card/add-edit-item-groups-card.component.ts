@@ -209,7 +209,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
       itemType: null,
       costCalculation: null,
       notes:null,
-      warehousesUnitId:null
+      unitId:null
     });
 
   }
@@ -234,7 +234,6 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
 
@@ -252,8 +251,6 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
       let sub = this.itemGroupsCardService.getItemGroupsCard(id).subscribe({
         next: (res: any) => {
           resolve();
-          
-          //console.log(res)
           this.itemGroupsCardForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -264,7 +261,7 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
             itemType: res.response?.itemType,
             costCalculation: res.response?.costCalculation,
             notes:res.response?.notes,
-            warehousesUnitId:res.response?.warehousesUnitId,
+            unitId:res.response?.unitId,
           });
 
        
@@ -273,7 +270,6 @@ export class AddEditItemGroupsCardComponent implements  OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);

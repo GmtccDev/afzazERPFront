@@ -5524,7 +5524,8 @@ body {
             color: $dark-all-font-color !important;
         }
         .search_area_on_export_setting,
-        .tabulator {
+        .tabulator,
+        input.search-txt {
             background-color: $dark-card-background !important;
             box-shadow: 1px 1px 2px 1px rgba(29, 28, 28, 0.08);
             border: 1px solid $dark-card-border !important;

@@ -513,11 +513,42 @@ export class AddEditAccountComponent implements OnInit {
         next: (res: any) => {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.account");
+          
           this.accountForm.patchValue({
             code: res.response
           });
           if (this.parentId != undefined || this.parentId != null) {
             this.accountForm.controls.parentId.setValue((this.parentId));
+            
+            this.accountService.getAccount(this.parentId).subscribe(res1 => {
+			
+              debugger
+              this.accountForm.patchValue({
+                
+              
+                isActive: res1.response?.isActive,
+                isLeafAccount: res1.response?.isLeafAccount,
+               
+                companyId: res1.response?.companyId,
+           
+               
+                currencyId: res1.response?.currencyId,
+                costCenterId: res1.response?.costCenterId,
+                accountGroupId: res1.response?.accountGroupId,
+                accountType: res1.response?.accountType,
+              
+                accountClassificationId: res1.response?.accountClassificationId,
+                accountClassificationIdOfIncomeStatement: res1.response?.accountClassificationIdOfIncomeStatement,
+                noteNotActive: res1.response?.noteNotActive,
+    
+              });
+    
+              console.log(
+                'this.accountForm.value set value',
+                this.accountForm.value
+              );
+            })
+            
           }
 
         },
@@ -702,7 +733,7 @@ export class AddEditAccountComponent implements OnInit {
     let sub = this.accountService.checkAccount(id).subscribe({
       
       next: (result: any) => {
-        debugger
+        
         console.log(result);
     
       },
@@ -716,7 +747,7 @@ export class AddEditAccountComponent implements OnInit {
     });
   }
   onChangeLeaf(event) {
-    debugger
+    
     if (this.id && this.currnetUrl.includes(this.updateUrl)) {
       var entity = new DeleteAccountCommand();
       entity.id=this.id;

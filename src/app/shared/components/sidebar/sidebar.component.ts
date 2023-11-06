@@ -5,6 +5,7 @@ import { LayoutService } from '../../services/layout.service';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 import { Subscription } from 'rxjs';
 import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
+import { refreshPaging } from '../../helper/helper';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,39 +27,38 @@ export class SidebarComponent {
   public leftArrowNone: boolean = true;
   public rightArrowNone: boolean = false;
 
-  subdomain=localStorage.getItem('subDomain');
+  subdomain = localStorage.getItem('subDomain');
   constructor(private router: Router, public navServices: NavService,
-    private voucherTypeService: VoucherTypeServiceProxy,
     private billTypeService: BillTypeServiceProxy,
 
     public layout: LayoutService) {
-      
-      let x=this.subdomain;
+
+    let x = this.subdomain;
     let menu = localStorage.getItem("Menu");
     if (menu == '0') {
-   
+
       this.navServices.itemsSettings.subscribe(menuItems => {
         this.menuItems = menuItems;
-   
+
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
-              
+
               if (items.path === event.url) {
-                
+
                 this.setNavActive(items);
               }
               if (!items.children) { return false; }
               items.children.filter(subItems => {
                 if (subItems.path === event.url) {
-                  
+
                   this.setNavActive(subItems);
                 }
                 if (!subItems.children) { return false; }
                 subItems.children.filter(subSubItems => {
-                  
+
                   if (subSubItems.path === event.url) {
-                    
+
                     this.setNavActive(subSubItems);
                   }
                 });
@@ -70,12 +70,11 @@ export class SidebarComponent {
     }
     else if (menu == '5') {
       this.navServices.itemsAccount.subscribe(menuItems => {
-        
+
         this.menuItems = menuItems;
-        
+
         this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
-            ;
             menuItems.filter(items => {
               if (items.path === event.url) {
                 this.setNavActive(items);
@@ -100,9 +99,9 @@ export class SidebarComponent {
     else if (menu == '6') {
       this.navServices.itemsWarehouses.subscribe(menuItems => {
         this.menuItems = menuItems;
-      
+
         this.router.events.subscribe((event) => {
-          
+
           if (event instanceof NavigationEnd) {
             menuItems.filter(items => {
               if (items.path === event.url) {
@@ -143,15 +142,13 @@ export class SidebarComponent {
   }
 
   sidebarToggle() {
-    
+
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
   }
 
   // Active Nave state
   setNavActive(item) {
-   
-   this.getBillTypes();
-    
+    debugger
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;
@@ -172,7 +169,7 @@ export class SidebarComponent {
 
   // Click Toggle menu
   toggletNavActive(item) {
-    
+
     if (!item.active) {
       this.menuItems.forEach(a => {
         if (this.menuItems.includes(item)) {
@@ -213,36 +210,4 @@ export class SidebarComponent {
     }
   }
 
-  getBillTypes() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          
-          if (res.success) {
-            
-            const billTypes = res.response.items.map(element => ({
-              path: '/warehouses-operations/bill',
-              title: element.nameAr,
-              type: 'link',
-              active: true
-            }));
-            this.navServices.billTypes=billTypes ;
-
-
-          }
-          resolve();
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
- 
-        },
-      });
-
-    	this.subsList.push(sub);
-
-    });
-
-  }
 }

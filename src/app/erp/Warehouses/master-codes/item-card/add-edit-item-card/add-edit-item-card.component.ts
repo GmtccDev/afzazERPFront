@@ -142,7 +142,6 @@ export class AddEditItemCardComponent implements OnInit {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = +params['id'];
-        debugger
         if (this.id > 0) {
           this.getItemCardById(this.id).then(a => {
             this.spinner.hide();
@@ -248,12 +247,25 @@ export class AddEditItemCardComponent implements OnInit {
   //#endregion
 
   //#region CRUD Operations
+  getItemGroupData(itemGroupId: any) {
+    if (itemGroupId > 0) {
+      var result = this.itemGroupsList.filter(x => x.id == itemGroupId);
+      this.itemCardForm.patchValue({
+        itemType: result[0].itemType,
+        costCalculateMethod: result[0].costCalculation,
+        mainUnitId: result[0].unitId
+      })
+      if (this.itemCardForm.value.mainUnitId != null) {
+        this.getUnitsByMainUnitId(this.itemCardForm.value.mainUnitId)
+      }
+    }
+  }
   getUnitsByMainUnitId(mainUnitId: any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.unitService.getUnit(mainUnitId).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.unitsList = res.response.unitTransactionsDto
 
 
@@ -262,7 +274,6 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -274,7 +285,7 @@ export class AddEditItemCardComponent implements OnInit {
       let sub = this.itemCardService.getItemCard(id).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.getUnitsByMainUnitId(res.response?.mainUnitId);
           this.itemCardForm.setValue({
             id: res.response.id,
@@ -321,7 +332,7 @@ export class AddEditItemCardComponent implements OnInit {
             isActive: res.response?.isActive
 
           });
-          
+
           if (res.response?.itemCardUnits != null) {
             this.itemCardUnit = res.response?.itemCardUnits;
           }
@@ -341,20 +352,19 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
 
     });
   }
-  getItemCardCode() {
+  getItemCardCode(itemGroupId:any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.itemCardService.getLastCode().subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-card");
           this.itemCardForm.patchValue({
-            code: res.response
+            code: itemGroupId + res.response
           });
 
         },
@@ -362,7 +372,6 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -392,7 +401,6 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
 
@@ -550,16 +558,16 @@ export class AddEditItemCardComponent implements OnInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('component-names.add-item');
-            if (this.itemCardForm.value.code != null) {
-              this.getItemCardCode()
-            }
+            // if (this.itemCardForm.value.code != null) {
+            //   this.getItemCardCode()
+            // }
             this.defineItemCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-            this.getItemCardCode();
+            //this.getItemCardCode();
           }
         }
       },
@@ -632,9 +640,9 @@ export class AddEditItemCardComponent implements OnInit {
 
   }
   confirmSave() {
-    
+
     return new Promise<void>((resolve, reject) => {
-      
+
       this.itemCardService.createItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -657,7 +665,7 @@ export class AddEditItemCardComponent implements OnInit {
     });
   }
   onSave() {
-    
+
     if (this.itemCardForm.valid) {
       this.setInputData();
       this.spinner.show();
@@ -674,7 +682,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.itemCardService.updateItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -778,7 +786,7 @@ export class AddEditItemCardComponent implements OnInit {
   }
 
   addItem() {
-    
+
     this.itemCardAlternative.push({
       id: 0,
       itemCardId: 0,
@@ -822,7 +830,7 @@ export class AddEditItemCardComponent implements OnInit {
 
   }
   addUnit() {
-    
+
     this.itemCardUnit.push({
       id: 0,
       itemCardId: 0,

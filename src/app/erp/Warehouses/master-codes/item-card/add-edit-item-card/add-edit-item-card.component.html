@@ -65,8 +65,15 @@
                                             <span class="text-danger">*</span>
 
                                             <div class="input-group  popup">
+<<<<<<< HEAD
                                                 <ng-select style="width:100%" formControlName="itemGroupId" name='itemGroupId' class="" id="itemGroupId">
                                                     <ng-option *ngFor="let itemGroup of itemGroupsList" [value]="itemGroup.id">
+=======
+                                                <ng-select style="width:100%" formControlName="itemGroupId"
+                                                    name='itemGroupId' class="" id="itemGroupId" (change)="getItemGroupData(itemCardForm.value.itemGroupId);getItemCardCode(itemCardForm.value.itemGroupId);">
+                                                    <ng-option *ngFor="let itemGroup of itemGroupsList"
+                                                        [value]="itemGroup.id">
+>>>>>>> 5265fff3d0f9861ebfadc58e339e47aee2a323ae
                                                         {{lang=="ar" ? itemGroup.nameAr:itemGroup.nameEn}}
                                                     </ng-option>
                                                 </ng-select>

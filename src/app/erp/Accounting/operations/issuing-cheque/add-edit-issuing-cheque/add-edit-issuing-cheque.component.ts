@@ -14,11 +14,14 @@ import { IssuingChequeServiceProxy } from '../../../services/issuing-cheque.serv
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
 import { ModuleType } from '../../../models/general-configurations';
+import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { format } from 'date-fns';
 @Component({
   selector: 'app-add-edit-issuing-cheque',
   templateUrl: './add-edit-issuing-cheque.component.html',
@@ -31,6 +34,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
   issuingChequeForm!: FormGroup;
   id: any = 0;
   currnetUrl;
+  fiscalPeriodId: number;
+  fiscalPeriodName: string;
+  fiscalPeriodStatus: number;
   public show: boolean = false;
   lang = localStorage.getItem("language")
   issuingCheque: [] = [];
@@ -106,6 +112,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private dateService: DateCalculation,
     private currencyServiceProxy: CurrencyServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 
   ) {
     this.defineIssuingChequeForm();
@@ -225,9 +232,13 @@ export class AddEditIssuingChequeComponent implements OnInit {
         next: (res) => {
           resolve();
           if (res.success && res.response.result.items.length > 0) {
-            this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
-            this.serial = res.response.result.items.find(c => c.id == 3).value;
-            this.mainCurrencyId = res.response.result.items.find(c => c.id == 1).value;
+            this.isMultiCurrency = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
+            this.serial = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
+            this.mainCurrencyId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value;
+            this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            if (this.fiscalPeriodId > 0) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
+            }
 
 
           }
@@ -263,6 +274,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
       companyId: this.companyId,
       branchId: this.branchId,
       status: 0,
+      fiscalPeriodId:this.fiscalPeriodId,
+
       issuingChequeDetail: this.fb.array([]),
       issuingChequeStatusDetail: this.fb.array([])
 
@@ -285,6 +298,25 @@ export class AddEditIssuingChequeComponent implements OnInit {
       //   this.cd.detectChanges()
       // });
     })
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   getDate(selectedDate: DateModel) {
     this.date = selectedDate;
@@ -406,6 +438,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
             statusName: res.response?.status,
             currencyId: res.response?.currencyId,
             currencyFactor: res.response?.currencyFactor,
+            fiscalPeriodId: res.response?.fiscalPeriodId,
+
             issuingChequeDetail: this.fb.array([]),
             issuingChequeStatusDetail: this.fb.array([])
 
@@ -456,7 +490,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
             }
             this.issuingChequeDetailStatusDTOList.push(this.fb.group({
-              date: element.date,
+              date: format(new Date(element.date), 'dd-MM-yyyy'),
               status: element.status,
               statusName: element.statusName
 
@@ -600,6 +634,19 @@ export class AddEditIssuingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
+    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+      if (this.fiscalPeriodStatus == null) {
+        this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-choose-open-fiscal-period");
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+
+      }
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+    }
 
     this.totalamount = 0;
     const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
@@ -748,7 +795,12 @@ export class AddEditIssuingChequeComponent implements OnInit {
     // }
     //  var entity = new CreateissuingChequeCommand();
     if (this.issuingChequeForm.valid) {
-
+      if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+        this.errorMessage = this.translate.instant("incoming-cheque.no-update-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();
@@ -897,8 +949,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
     });
 
   }
-
-
   ClickAccount(i) {
     this.showAccountsModalDebit = true;
     this.index = i;
@@ -907,9 +957,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
   numberOnly(event, i, type): boolean {
     this.index = i;
-
-
-
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
