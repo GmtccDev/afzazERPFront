@@ -114,7 +114,14 @@ export class ChangePasswordComponent implements OnInit {
       );
   }
 
-
+  onCancel() {
+    
+   
+         
+          this.passForm.reset();
+        this.modalService.dismissAll();
+    
+  }
   doesPasswordsMatch(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
