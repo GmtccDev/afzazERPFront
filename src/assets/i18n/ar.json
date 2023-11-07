@@ -728,7 +728,10 @@
         "bill-items-required": "من فضلك أدخل الأصناف"
     },
     "determinants": {
-        "type-value": "نوع القيمة"
+        "type-value": "نوع القيمة",
+        "textarea": "Textarea",
+        "text": "Text",
+        "number": "Number"
     },
     "tabulator": {
         "export-pdf": "تصدير PDF",

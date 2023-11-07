@@ -9,8 +9,8 @@ export class AddEditDeterminantsComponent implements OnInit {
 	addUrl: string = '/warehouses-master-codes/determinants/add-determinants';
 	updateUrl: string = '/warehouses-master-codes/determinants/update-determinants/';
 	listUrl: string = '/warehouses-master-codes/determinants';
-	countries = ['USA', 'Canada', 'Mexico', 'Brazil'];
-	selectedCountry: string;
+	valueType = ['Table', 'Number', 'Text', 'Textarea'];
+	selectValueType: string;
 	constructor() { }
 
 	ngOnInit(): void {

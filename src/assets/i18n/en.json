@@ -736,7 +736,11 @@
         "bill-items-required": "Please enter Items"
     },
     "determinants": {
-        "type-value": "Type value"
+        "type-value": "Type value",
+        "textarea": "Textarea",
+        "text": "Text",
+        "number": "Number"
+
     },
     "tabulator": {
         "export-pdf": "Export PDF",

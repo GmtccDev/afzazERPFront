@@ -13,7 +13,7 @@
 
 								<h3>{{'component-names.determinants'|translate}}</h3>
 								<hr>
-								<div class="row align-items-center">
+								<div class="align-items-end row">
 
 									<div class="col-md-6 col-12 offset-6">
 										<label for="code" class="label-name">
@@ -51,6 +51,7 @@
 
 
 
+
 									<div class="col-md-6 col-12">
 										<label for="" class="label-name">
 											{{'determinants.type-value'|translate}}
@@ -58,34 +59,75 @@
 										<span class="text-danger">*</span>
 
 										<div class="">
-											<ng-select [items]="countries" [(ngModel)]="selectedCountry"></ng-select>
+											<ng-select [items]="valueType" [(ngModel)]="selectValueType"></ng-select>
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="media">
+											<label class="label-name"> {{'general.status'|translate}}
+											</label>
+											<div class="icon-state media-body">
+												<label class="switch">
+													<input type="checkbox" class="form-control" name="isActive"
+														formControlName="isActive">
+													<span class="switch-state"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 mt-4" *ngIf="selectValueType === 'Table'">
+										<table class="table table-sm m-b-0 table-broder"
+											style="overflow-y: scroll !important;">
+											<thead>
+												<th>#</th>
+												<th>code</th>
+												<th>name</th>
+												<th>value</th>
+											</thead>
+
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>01</td>
+													<td>test</td>
+													<td>44</td>
+
+												</tr>
+												<tr>
+													<td>2</td>
+													<td>02</td>
+													<td>test2</td>
+													<td>99</td>
+
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="col-md-6 col-12 mt-3" *ngIf="selectValueType === 'Number'">
+										<label for="" class="label-name">{{'determinants.number'|translate}}
+										</label>
+										<div class="input-group ">
+											<input type="number" required class="form-control required" name="">
+										</div>
+									</div>
+									<div class="col-md-6 col-12 mt-3" *ngIf="selectValueType === 'Text'">
+										<label for="" class="label-name">{{'determinants.text'|translate}}
+										</label>
+										<div class="input-group ">
+											<input type="text" required class="form-control required" name="">
+										</div>
+									</div>
+									<div class="col-md-6 col-12 mt-3" *ngIf="selectValueType === 'Textarea'">
+										<label for="" class="label-name">{{'determinants.textarea'|translate}}
+										</label>
+										<div class="input-group ">
+											<textarea required class="form-control required" name=""
+												rows="4"></textarea>
 										</div>
 									</div>
 
-									<table *ngIf="selectedCountry === 'USA'" class="table table-sm m-b-0 table-broder"
-										style="overflow-y: scroll !important;">
-										<tr>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-										</tr>
-										<tr>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-										</tr>
-										<tr>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-											<td>j</td>
-										</tr>
-									</table>
+
+
 								</div>
 
 							</div>

@@ -1212,6 +1212,7 @@
     textarea.form-control {
         min-height: 35px !important;
         width: 200px;
+        max-height: 200px !important;
     }
     
     .table th {
@@ -1556,6 +1557,12 @@
     
     // start style layout=LosAngeles
     .input-search {}
+    
+    .page-wrapper.compact-wrapper.dark-sidebar {
+        .page-body-wrapper div.sidebar-wrapper {
+            min-height: 100vh;
+        }
+    }
     
     @import "../scss/themes/responsive";
     // @media only screen and (max-width: 767.98px) {
