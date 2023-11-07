@@ -1239,7 +1239,7 @@ viewRpt(selectedRpt: ReportFile) {
   + "&reportParameter=companyId!" + this.companyId
   + "&reportParameter=lang!" + lang
   + "&reportParameter=userId!" + this.userId
-  + "&reportParameter=JournalEntryId!" +JournalEntryId;
+  + "&reportParameter=id!" +JournalEntryId;
   
   var newUrl = this.apiurl?.replace('api', '') + "/Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + this.reportType + "&reportParameter=reportTypeID!" + this.reportTypeId + "&" + this.reportParams;
   window.open(newUrl, "_blank");

@@ -37,6 +37,9 @@ export class ReportViewerService {
 
     });
   }
+  // JournalEntryId = this.id;
+   
+
 
   viewRpt(selectedRpt: ReportFile, reportType, reportTypeId, ItemId) {
     ;
