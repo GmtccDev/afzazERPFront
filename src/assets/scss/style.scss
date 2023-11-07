@@ -1564,6 +1564,15 @@
         }
     }
     
+    .page-wrapper.compact-sidebar {
+        main {
+            margin-top: 85px;
+        }
+        .page-body {
+            margin-left: 150px;
+        }
+    }
+    
     @import "../scss/themes/responsive";
     // @media only screen and (max-width: 767.98px) {
     //     //   add by rania
