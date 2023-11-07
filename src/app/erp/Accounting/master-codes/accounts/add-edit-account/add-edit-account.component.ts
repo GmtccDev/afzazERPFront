@@ -20,6 +20,7 @@ import { GeneralConfigurationServiceProxy } from '../../../services/general-conf
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { AccountClassificationsArEnum, AccountClassificationsEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ModuleType } from '../../../models/general-configurations';
+import { NotificationService } from 'src/app/shared/common-services/notification.service';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -78,6 +79,7 @@ export class AddEditAccountComponent implements OnInit {
   budgetList: { nameAr: string; nameEn: string; value: any; }[];
   isMultiCompanies = true;
   isMultiCurrency = true;
+  isLeafAccount: any;
 
   constructor(
     private accountService: AccountServiceProxy,
@@ -89,6 +91,7 @@ export class AddEditAccountComponent implements OnInit {
     private sharedServices: SharedService, private translate: TranslateService,
     public subscriptionService: SubscriptionService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private notificationService: NotificationService
 
   ) {
     this.defineaccountForm();
@@ -97,7 +100,7 @@ export class AddEditAccountComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+
     // this.defineGridColumn();
     this.spinner.show();
     this.getAccountClassifications();
@@ -108,7 +111,7 @@ export class AddEditAccountComponent implements OnInit {
       , this.getAccountClassificationsForIncomeStatement()
     ])
       .then(a => {
-        
+
         this.getRouteData();
         this.currnetUrl = this.router.url;
         if (this.currnetUrl == this.addUrl) {
@@ -124,13 +127,13 @@ export class AddEditAccountComponent implements OnInit {
         this.spinner.hide();
       })
 
-  
+
 
 
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      
+
       if (params['id'] != null) {
         this.id = params['id'];
 
@@ -145,7 +148,7 @@ export class AddEditAccountComponent implements OnInit {
 
         }
         else {
-          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);          
+          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
           this.spinner.hide();
         }
       }
@@ -200,8 +203,8 @@ export class AddEditAccountComponent implements OnInit {
       isLeafAccount: false,
       parentId: null,
       companyId: null,
-     // openBalanceDebit: null,
-     // openBalanceCredit: null,
+      // openBalanceDebit: null,
+      // openBalanceCredit: null,
       debitLimit: null,
       creditLimit: null,
       taxNumber: null,
@@ -259,7 +262,7 @@ export class AddEditAccountComponent implements OnInit {
           this.toolbarPathData.componentList = this.translate.instant("component-names.account");
           if (res.success) {
 
-            if (res.response.result.items.length>0) {
+            if (res.response.result.items.length > 0) {
               this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
               if (this.isMultiCurrency) {
                 this.getCurrency();
@@ -286,7 +289,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   getAccount() {
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.accountService.getDdl().subscribe({
         next: (res) => {
 
@@ -395,7 +398,7 @@ export class AddEditAccountComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            
+
             this.accountGroupList = res.response;
 
           }
@@ -460,9 +463,9 @@ export class AddEditAccountComponent implements OnInit {
       let sub = this.accountService.getAccount(id).subscribe({
         next: (res: any) => {
           resolve();
-          
+
           this.accountForm.setValue({
-            
+
             id: res.response?.id,
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
@@ -471,8 +474,8 @@ export class AddEditAccountComponent implements OnInit {
             isLeafAccount: res.response?.isLeafAccount,
             parentId: res.response?.parentId,
             companyId: res.response?.companyId,
-          //  openBalanceDebit: res.response?.openBalanceDebit,
-           // openBalanceCredit: res.response?.openBalanceCredit,
+            //  openBalanceDebit: res.response?.openBalanceDebit,
+            // openBalanceCredit: res.response?.openBalanceCredit,
             debitLimit: res.response?.debitLimit,
             creditLimit: res.response?.creditLimit,
             taxNumber: res.response?.taxNumber,
@@ -486,7 +489,7 @@ export class AddEditAccountComponent implements OnInit {
             noteNotActive: res.response?.noteNotActive,
 
           });
-
+          this.isLeafAccount =res.response?.isLeafAccount;
           console.log(
             'this.accountForm.value set value',
             this.accountForm.value
@@ -513,42 +516,42 @@ export class AddEditAccountComponent implements OnInit {
         next: (res: any) => {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.account");
-          
+
           this.accountForm.patchValue({
             code: res.response
           });
           if (this.parentId != undefined || this.parentId != null) {
             this.accountForm.controls.parentId.setValue((this.parentId));
-            
+
             this.accountService.getAccount(this.parentId).subscribe(res1 => {
-			
-              debugger
-              this.accountForm.patchValue({
-                
+
               
+              this.accountForm.patchValue({
+
+
                 isActive: res1.response?.isActive,
                 isLeafAccount: res1.response?.isLeafAccount,
-               
+
                 companyId: res1.response?.companyId,
-           
-               
+
+
                 currencyId: res1.response?.currencyId,
                 costCenterId: res1.response?.costCenterId,
                 accountGroupId: res1.response?.accountGroupId,
                 accountType: res1.response?.accountType,
-              
+
                 accountClassificationId: res1.response?.accountClassificationId,
                 accountClassificationIdOfIncomeStatement: res1.response?.accountClassificationIdOfIncomeStatement,
                 noteNotActive: res1.response?.noteNotActive,
-    
+
               });
-    
+
               console.log(
                 'this.accountForm.value set value',
                 this.accountForm.value
               );
             })
-            
+
           }
 
         },
@@ -609,7 +612,12 @@ export class AddEditAccountComponent implements OnInit {
   }
   confirmSave() {
     var entity = new AccountDto();
-    entity= this.accountForm.value;
+    entity = this.accountForm.value;
+    if (this.accountForm.value.isLeafAccount == true && this.accountForm.value.parentId == null) {
+      this.notificationService.error("من فضلك ادخل الاب");
+      this.spinner.hide();
+      return;
+    }
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountService.createAccount(entity).subscribe({
         next: (result: any) => {
@@ -656,7 +664,11 @@ export class AddEditAccountComponent implements OnInit {
     this.accountForm.value.id = this.id;
     entity = this.accountForm.value;
     entity.id = this.id;
-
+    if (this.accountForm.value.isLeafAccount == true && this.accountForm.value.parentId == null) {
+      this.notificationService.error("من فضلك ادخل الاب");
+      this.spinner.hide();
+      return;
+    }
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.accountService.updateAccount(entity).subscribe({
@@ -729,17 +741,25 @@ export class AddEditAccountComponent implements OnInit {
     this.accountForm.controls.costCenterId.setValue(event.id);
     this.showSearchModalCostCenter = false;
   }
-  checkAccount(id) {
+  checkAccount(id, event) {
     let sub = this.accountService.checkAccount(id).subscribe({
-      
+
       next: (result: any) => {
         
+        var parentId = this.accountForm?.value?.parentId;
+        if (result.response == false ) {
+          this.accountForm.controls.isLeafAccount.setValue((this.isLeafAccount));
+        }
+        else if (result.response == true) {
+          this.accountForm.controls.isLeafAccount.setValue((event.target.checked));
+        }
         console.log(result);
-    
+
+
       },
       error: (err: any) => {
-     //   reject(err);
-     console.log(err);
+        //   reject(err);
+        console.log(err);
       },
       complete: () => {
         //console.log('complete');
@@ -747,13 +767,14 @@ export class AddEditAccountComponent implements OnInit {
     });
   }
   onChangeLeaf(event) {
-    
+
     if (this.id && this.currnetUrl.includes(this.updateUrl)) {
       var entity = new DeleteAccountCommand();
-      entity.id=this.id;
-      this.checkAccount(entity);
+      entity.id = this.id;
+
+      this.checkAccount(entity, event);
       console.log(entity);
-     // this.accountForm.controls.isLeafAccount.setValue((event.target));
+      // this.accountForm.controls.isLeafAccount.setValue((event.target));
     }
   }
 }

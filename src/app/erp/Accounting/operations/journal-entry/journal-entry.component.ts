@@ -114,7 +114,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-            debugger
+
             this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
 
 
@@ -217,7 +217,18 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       } : {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
+    this.lang == 'ar'
+      ? {
+        title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum, cellClick: (e, cell) => {
 
+          this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+        }
+      } : {
+        title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum, cellClick: (e, cell) => {
+
+          this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+        }
+      },
     this.lang == "ar" ? {
       title: "عرض التقرير",
       field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
@@ -291,10 +302,22 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onViewReportClicked(id) {
-    debugger;
+    ;
     let reportType = 1;
     let reportTypeId = 1000;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+  }
+  onViewClicked(parentType, id) {
+    
+    if (parentType == 1) {
+      window.open('accounting-operations/vouchers/update-voucher/' + id, "_blank")
+    }
+    if (parentType == 2) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
+    }
+    if (parentType ==3) {
+      window.open('accounting-operations//issuingCheque/add-issuingCheque/' + id, "_blank")
+    }
   }
   onCheckUpdate() {
 
@@ -422,6 +445,48 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
       default:
         text = 'Not Post';
+        break;
+    }
+    return text;
+
+  }
+  translateParentArEnum(cell, formatterParams, onRendered) {
+
+    const status = cell.getValue();
+    let text;
+    switch (status) {
+      case 1:
+        text = 'سندات';
+        break;
+      case 2:
+        text = 'شيكات ورداة ';
+        break;
+      case 3:
+        text = ' شيكات صادرة';
+        break;
+      default:
+        text = '  قيد';
+        break;
+    }
+    return text;
+
+  }
+  translateParentEnEnum(cell, formatterParams, onRendered) {
+
+    const status = cell.getValue();
+    let text;
+    switch (status) {
+      case 1:
+        text = 'Voucher';
+        break;
+      case 2:
+        text = 'Incoming Cheque';
+        break;
+      case 3:
+        text = ' Issuing Cheque ';
+        break;
+      default:
+        text = ' Journal Entry';
         break;
     }
     return text;

@@ -14,7 +14,7 @@ import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { AccountClassificationsEnum, EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, EntryStatusArEnum, EntryStatusEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { DateModel } from 'src/app/shared/model/date-model';
@@ -28,6 +28,8 @@ import { NgbdModalContent } from 'src/app/shared/components/modal/modal-componen
 import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
 import { ReportFile } from 'src/app/shared/model/report-file';
 import { environment } from 'src/environments/environment';
+import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -98,6 +100,9 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
   showSearchCashAccountModal = false;
   listDetail: JournalEntryDetail[] = [];
   disableFlag: boolean = false;
+  fiscalPeriodId: any;
+  fiscalPeriodName: any;
+  fiscalPeriodStatus: any;
   constructor(
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
@@ -112,6 +117,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
     private rptSrv: ReportServiceProxy,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 
     private modalService: NgbModal,
   ) {
@@ -292,6 +298,10 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
 
             this.isMultiCurrency = res?.response?.result?.items?.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res?.response?.result?.items?.find(c => c.id == 3).value;
+            this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            if (this.fiscalPeriodId > 0) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
+            }
             // if (this.isMultiCurrency) {
             //   this.getCurrency();
             // }
@@ -310,6 +320,25 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
       this.subsList.push(sub);
     });
 
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   definejournalEntryForm() {
     this.journalEntryForm = this.fb.group({
@@ -683,7 +712,19 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
     //   )
     //   return;
     // }
+    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+      if (this.fiscalPeriodStatus == null) {
+        this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-open-fiscal-period");
 
+      }
+      else {
+        this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-open-fiscal-period");
+
+      }
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+    }
     if (this.counter < 2) {
       this.alertsService.showError(
         this.translate.instant('twoRows'),
@@ -857,6 +898,12 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
     
 
     if (this.journalEntryForm.valid) {
+      if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+        this.errorMessage = this.translate.instant("general.no-edit-fiscal-period-choose-open-fiscal-period") + " : " + this.fiscalPeriodName;
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();
@@ -877,7 +924,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
         next: (res) => {
 
           if (res.success) {
-            this.journalList = res.response;
+            this.journalList = res.response.filter(x=>x.isActive);
             this.journalList.forEach(element => {
               if (this.lang == "ar") {
                 element.nameAr = element.nameAr;
@@ -910,7 +957,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
         next: (res) => {
 
           if (res.success) {
-            this.accountList = res.response;
+            this.accountList = res.response.filter(x=>x.isActive);
 
           }
 
@@ -936,7 +983,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
         next: (res) => {
 
           if (res.success) {
-            this.costCenterList = res.response;
+            this.costCenterList = res.response.filter(x=>x.isActive);
 
           }
 
@@ -962,7 +1009,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
         next: (res) => {
 
           if (res.success) {
-            this.currencyList = res.response;
+            this.currencyList = res.response.filter(x=>x.isActive);
 
 
           }
@@ -988,7 +1035,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
 
           if (res.success) {
 
-            this.fiscalPeriodList = res.response;
+            this.fiscalPeriodList = res.response.filter(x=>x.isActive);
             this.fiscalPeriodList.forEach(element => {
               if (this.lang == "ar") {
                 element.nameAr = element.nameAr;
@@ -1157,7 +1204,7 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
 
   reportTypeId = 1000;
   reportType=1;
-  branchId
+  branchId=Number(localStorage.getItem("branchId")) 
   reportParams="";
   reportList: ReportFile[] = [];
   gotoViewer(){
@@ -1180,10 +1227,10 @@ export class AddEditJournalEntryComponent implements OnInit,OnDestroy {
 }
 
 viewRpt(selectedRpt: ReportFile) {
-  debugger;
+  ;
   let JournalEntryId ;
   let lang = localStorage.getItem("language");
-  if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined" || this.branchId == "") {
+  if (this.branchId == null || this.branchId == undefined) {
     this.branchId = 0;
   }
   // JournalEntryId = this.id;

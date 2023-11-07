@@ -87,6 +87,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
+    
     Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getVouchers() ])
       .then(a => {
         this.spinner.hide();
@@ -207,10 +208,12 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   getVouchers() {
+    
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
+            
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }

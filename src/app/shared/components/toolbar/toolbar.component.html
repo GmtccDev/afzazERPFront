@@ -48,7 +48,7 @@
 										{{ 'toolbar.copy'|translate}}
 									</span>
 								</button>
-						
+
 								<button *ngIf="showButtons?.showUpdate" (click)="doUpdateEvent()"
 									[disabled]="disabledUpdate" [ngClass]="{'disabled':disabledUpdate}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md " type="button">
@@ -120,7 +120,7 @@
                                           {{ 'toolbar.export'|translate}}
                                         </span>
                                 </button> -->
-								<div ngbDropdown class="d-inline-block" placement="bottom">
+								<!-- <div ngbDropdown class="d-inline-block" placement="bottom">
 									<button id="dropdownBasic1" *ngIf="showButtons?.showExport"
 										(click)="doExportEvent();" disabled="disabledExport"
 										[ngClass]="{'disabled':disabledExport}" ngbDropdownToggle
@@ -131,16 +131,34 @@
 										</span>
 									</button>
 									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-										<button class="dropdown-item">export pdf</button>
-										<button class="dropdown-item">export excel</button>
-										<button class="dropdown-item">export csv</button>
-										<button class="dropdown-item">export html</button>
-										<button class="dropdown-item">export json</button>
+										<button class="dropdown-item" ngbDropdownItem>export pdf</button>
+										<button class="dropdown-item" ngbDropdownItem>export excel</button>
+										<button class="dropdown-item" ngbDropdownItem>export csv</button>
+										<button class="dropdown-item" ngbDropdownItem>export html</button>
+										<button class="dropdown-item" ngbDropdownItem>export json</button>
 
 
 									</div>
+									
 
+								</div> -->
+								<div ngbDropdown class="d-inline-block" *ngIf="showButtons?.showExport">
+									<button class="btn btn-outline-primary" id="dropdownBasic1"
+										ngbDropdownToggle>{{'tabulator.export'|translate}}</button>
+									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+										<button ngbDropdownItem
+											(click)="exportPdf()">{{'tabulator.export-pdf'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportExcel()">{{'tabulator.export-excel'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportCsv()">{{'tabulator.export-csv'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportHtml()">{{'tabulator.export-html'|translate}}</button>
+										<button ngbDropdownItem
+											(click)="exportJson()">{{'tabulator.export-json'|translate}}</button>
+									</div>
 								</div>
+
 
 
 							</div>

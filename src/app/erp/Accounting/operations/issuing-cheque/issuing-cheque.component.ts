@@ -18,6 +18,7 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 @Component({
   selector: 'app-issuing-cheque',
   templateUrl: './issuing-cheque.component.html',
@@ -28,6 +29,10 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   //#region Main Declarations
   editFormatIcon() { //plain text value
     return "<i class=' fa fa-edit'></i>";
+  };
+  printReportFormatIcon() { //plain text value
+
+    return "<i class='fa fa-print' aria-hidden='true'></i>";
   };
   errorMessage = '';
   errorClass = '';
@@ -75,7 +80,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnInit(): void {
     //  this.defineGridColumn();
     this.spinner.show();
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getIssuingChequees()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getIssuingChequees()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -195,7 +200,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     });
   }
   edit(id: string) {
-    
+
     this.router.navigate([
       '/accounting-operations/issuingCheque/update-issuingCheque',
       id,
@@ -221,16 +226,16 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           return;
         }
         else {
-        this.spinner.show();
+          this.spinner.show();
 
-        let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
-          (resonse) => {
+          let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
+            (resonse) => {
 
-            this.getIssuingChequees();
+              this.getIssuingChequees();
 
-          });
-        this.subsList.push(sub);
-        this.spinner.hide();
+            });
+          this.subsList.push(sub);
+          this.spinner.hide();
         }
 
       }
@@ -273,7 +278,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           return;
         }
         else {
-        this.showConfirmCollectMessage(cell.getRow().getData().id);
+          this.showConfirmCollectMessage(cell.getRow().getData().id);
         }
       }
     } :
@@ -287,7 +292,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
             return;
           }
           else {
-          this.showConfirmCollectMessage(cell.getRow().getData().id);
+            this.showConfirmCollectMessage(cell.getRow().getData().id);
           }
         },
       },
@@ -301,7 +306,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           return;
         }
         else {
-        this.showConfirmRejectMessage(cell.getRow().getData().id);
+          this.showConfirmRejectMessage(cell.getRow().getData().id);
         }
       }
     } :
@@ -315,9 +320,27 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
             return;
           }
           else {
-          this.showConfirmRejectMessage(cell.getRow().getData().id);
+            this.showConfirmRejectMessage(cell.getRow().getData().id);
           }
         },
+      },
+
+    this.lang == "ar" ? {
+      title: "عرض التقرير",
+      field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+
+        this.onViewReportClicked(cell.getRow().getData().id);
+      }
+    }
+      :
+
+      {
+        title: "View Report",
+        field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+
+
+          this.onViewReportClicked(cell.getRow().getData().id);
+        }
       }
   ];
 
@@ -341,7 +364,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
   openIssuingChequees() { }
   onCheck(id) {
-      const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+    const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listIds.splice(index, 1);
     } else {
@@ -355,7 +378,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     } as ToolbarData);
   }
   onEdit(id) {
-    
+
     if (id != undefined) {
       this.edit(id);
       this.sharedServices.changeButton({
@@ -391,7 +414,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         }
         else {
 
-        this.showConfirmDeleteMessage(event.item.id);
+          this.showConfirmDeleteMessage(event.item.id);
         }
       }
     }
@@ -421,7 +444,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
               return;
             }
             else {
-            this.onDelete();
+              this.onDelete();
             }
           }
         }
@@ -481,7 +504,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
         this.spinner.show();
-        let sub=this.issuingChequeService.reject(id).subscribe({
+        let sub = this.issuingChequeService.reject(id).subscribe({
           next: (result: any) => {
             this.alertsService.showError(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
@@ -499,5 +522,14 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         this.spinner.hide();
       }
     });
+  }
+  onViewReportClicked(id) {
+    let reportParams: string =
+      "reportParameter=id!" + id
+      + "&reportParameter=lang!" + this.lang
+    const modalRef = this.modalService.open(NgbdModalContent);
+    modalRef.componentInstance.reportParams = reportParams;
+    modalRef.componentInstance.reportType = 1;
+    modalRef.componentInstance.reportTypeID = 10;
   }
 }

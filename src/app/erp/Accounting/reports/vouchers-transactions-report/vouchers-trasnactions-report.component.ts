@@ -106,7 +106,7 @@ export class VouchersTransactionsReportComponent implements OnInit, OnDestroy, A
 
 
   gotoViewer() {
-debugger;
+;
 
     let monthFrom;
     let monthTo;

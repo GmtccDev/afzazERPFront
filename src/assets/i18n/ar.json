@@ -445,7 +445,9 @@
         "mail-box": "صندوق البريد",
         "credit-limit": "حد الأئتمان",
         "initial-balance": "الرصيد الأفتتاحى",
-        "postal-code": "الرمز البريدى"
+        "postal-code": "الرمز البريدى",
+        "no-add-fiscal-period-choose-open-fiscal-period":"لا يمكن اضافة . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-edit-fiscal-period-choose-open-fiscal-period":"لا يمكن التعديل . يجب اختيار فترة محاسبية مفتوحة من الإعدادات"
     },
     "sales-person-commission": {
         "sales-person": "المندوب",
@@ -727,6 +729,7 @@
         "bill-items-required": "من فضلك أدخل الأصناف"
     },
     "tabulator": {
+        "export": "تصدير",
         "export-pdf": "تصدير PDF",
         "export-excel": "تصدير أكسيل",
         "export-csv": "تصدير CSV",

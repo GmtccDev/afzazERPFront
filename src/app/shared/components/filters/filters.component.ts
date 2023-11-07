@@ -580,7 +580,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLeafAccountName:any='';
   getLeafAccounName()
   {
-    debugger
+    
     if(this.selectedLeafAccountId!=null && this.selectedLeafAccountId!=undefined)
     {
       let item= this.leafAccountsList.find(x=>x.id==this.selectedLeafAccountId)
@@ -634,7 +634,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedMainAccountName:any='';
   getMainAccounName()
   {
-    debugger
+    
     if(this.selectedMainAccountId!=null && this.selectedMainAccountId!=undefined)
     {
       let item= this.mainAccountsList.find(x=>x.id==this.selectedMainAccountId)
@@ -647,7 +647,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedAccountGroupName:any='';
   getAccountGroupName()
   {
-    debugger
+    
     if(this.selectedAccountGroupId!=null && this.selectedAccountGroupId!=undefined)
     {
       let item= this.accountGroupList.find(x=>x.id==this.selectedAccountGroupId)

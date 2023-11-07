@@ -312,7 +312,7 @@ export class ItemGroupsCardComponent implements OnInit, OnDestroy, AfterViewInit
     }}
   // }
   // collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
-  //   debugger
+  //   
   //   if (!$event) {
   //     if (data.children) {
   //       data.children.forEach(d => {
