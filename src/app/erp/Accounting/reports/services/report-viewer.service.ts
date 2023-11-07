@@ -39,7 +39,7 @@ export class ReportViewerService {
   }
 
   viewRpt(selectedRpt: ReportFile, reportType, reportTypeId, ItemId) {
-    debugger;
+    ;
     let JournalEntryId = '';
     let lang = localStorage.getItem("language");
     if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined" || this.branchId == "") {

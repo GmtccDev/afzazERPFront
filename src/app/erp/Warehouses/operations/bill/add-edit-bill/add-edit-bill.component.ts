@@ -1132,7 +1132,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
     };
-    debugger
+    
     this.bill.billItems = this.billItem;
     this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 

@@ -114,7 +114,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-            debugger
+            
             this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
 
 
@@ -291,7 +291,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onViewReportClicked(id) {
-    debugger;
+    ;
     let reportType = 1;
     let reportTypeId = 1000;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);

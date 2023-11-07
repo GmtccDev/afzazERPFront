@@ -233,7 +233,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	ngAfterViewInit() {
-		debugger
+		
 		if (!localStorage.getItem('foo')) {
 			localStorage.setItem('foo', 'no reload')
 			location.reload()

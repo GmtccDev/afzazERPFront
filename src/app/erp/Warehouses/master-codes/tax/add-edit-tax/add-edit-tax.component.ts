@@ -254,10 +254,10 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    // debugger
+    // 
     // if (this.taxDetail.length > 0 && this.taxDetail != null) {
     //   this.taxDetail.forEach(element => {
-    //     debugger
+    //     
     //     let fromDate = element.fromDate;
     //     let toDate = element.toDate;
     //     let date;
@@ -278,7 +278,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     //     date = this.selectedTaxDetail?.fromDate.year + '-' + month + '-' + day
 
     //     if (date >= fromDate && date <= toDate) {
-    //       debugger
+    //       
     //       this.errorMessage = this.translate.instant("tax.date-exist");
     //       this.errorClass = 'errorMessage';
     //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));

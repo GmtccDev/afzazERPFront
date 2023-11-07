@@ -525,7 +525,7 @@ export class AddEditAccountComponent implements OnInit {
 
             this.accountService.getAccount(this.parentId).subscribe(res1 => {
 
-              debugger
+              
               this.accountForm.patchValue({
 
 
@@ -745,7 +745,7 @@ export class AddEditAccountComponent implements OnInit {
     let sub = this.accountService.checkAccount(id).subscribe({
 
       next: (result: any) => {
-        debugger
+        
         var parentId = this.accountForm?.value?.parentId;
         if (result.response == false ) {
           this.accountForm.controls.isLeafAccount.setValue((this.isLeafAccount));
