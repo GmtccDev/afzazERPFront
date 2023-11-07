@@ -217,11 +217,17 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       } : {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
-      this.lang == 'ar'
+    this.lang == 'ar'
       ? {
-        title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum
+        title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum, cellClick: (e, cell) => {
+
+          this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+        }
       } : {
-        title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum
+        title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum, cellClick: (e, cell) => {
+
+          this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+        }
       },
     this.lang == "ar" ? {
       title: "عرض التقرير",
@@ -300,6 +306,18 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     let reportType = 1;
     let reportTypeId = 1000;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+  }
+  onViewClicked(parentType, id) {
+    debugger
+    if (parentType == 1) {
+      window.open('accounting-operations/vouchers/update-voucher/' + id, "_blank")
+    }
+    if (parentType == 2) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
+    }
+    if (parentType ==3) {
+      window.open('accounting-operations//issuingCheque/add-issuingCheque/' + id, "_blank")
+    }
   }
   onCheckUpdate() {
 
