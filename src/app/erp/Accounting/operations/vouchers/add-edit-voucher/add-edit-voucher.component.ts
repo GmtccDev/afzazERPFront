@@ -24,6 +24,7 @@ import { DateCalculation, DateModel } from 'src/app/shared/services/date-service
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 
 @Component({
   selector: 'app-add-edit-voucher',
@@ -124,6 +125,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private alertsService: NotificationsAlertsService,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private reportViewerService:ReportViewerService
+    
 
 
 
@@ -169,6 +172,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.voucherTypeId = params['voucherTypeId'];
         if (this.voucherTypeId) {
           this.getVoucherTypes(this.voucherTypeId);
+          
 
         }
       }
@@ -178,6 +182,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         if (this.id) {
 
           this.getVoucherById(this.id).then(a => {
+            this.sharedServices.changeButton({action:'Update'}as ToolbarData)
 
             this.spinner.hide();
 
@@ -1111,11 +1116,13 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
             this.voucherDetail = [];
 
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update  && currentBtn.submitMode ) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
             this.getVoucherCode();
+          }else if (currentBtn.action == ToolbarActions.Print) {
+            this.onViewReportClicked(this.id);
           }
         }
       },
@@ -1287,6 +1294,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       this.voucherDetail[i].beneficiaryAccountId = this.voucherDetail[i].beneficiaryId;
     }
 
+  }
+  onViewReportClicked(id) {
+    let reportType = 1;
+    let reportTypeId = 1001;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 
 }

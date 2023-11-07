@@ -186,11 +186,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   doSaveEvent() {
 
     this.checkButtonClicked('Save');
-    // (this.toolbarData.action = 'Save'),
+
+    this.toolbarData.submitMode=true;
     this.SharedService.changeButton({ action: 'Save' } as ToolbarData);
   }
   doUpdateEvent() {
     this.checkButtonClicked('Update');
+     this.toolbarData.submitMode=true;
     (this.toolbarData.action = 'Update'),
       this.SharedService.changeButton(this.toolbarData);
   }
@@ -302,6 +304,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     else if (button == 'Print') {
       this.disabledSave = true;
+      this.disabledView=true;
       this.disabledPrint = true;
       this.disabledView = true;
       this.disabledPrint = false;
@@ -314,6 +317,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     } else if (button == 'Copy') {
     } else if (button == 'Update') {
       this.disabledSave = true;
+      this.disabledView=true;
+      this.disabledPrint = false;
+      this.disabledCancel=true;
       this.disabledView = true;
       this.disabledPrint = false;
       this.disabledCancel = true;
