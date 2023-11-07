@@ -387,6 +387,7 @@
         "generate-entry": "Generate Entry"
     },
     "component-names": {
+        "determinants": "Determinants",
         "country-information": "Country information",
         "modulesType": "Modules Type",
         "search-roles": "Filter permissions",
@@ -643,7 +644,7 @@
         "tax-ratio": "Tax Ratio",
         "tax-details-required": "Tax details is required",
         "add-tax": "Add Tax",
-        "date-exist":"This date is added before"
+        "date-exist": "This date is added before"
     },
     "item": {
         "item-group": "Item Group",
@@ -733,6 +734,9 @@
         "item-description": "Item Description",
         "additions-and-discounts": "Additions And Discounts on Bill",
         "bill-items-required": "Please enter Items"
+    },
+    "determinants": {
+        "type-value": "Type value"
     },
     "tabulator": {
         "export-pdf": "Export PDF",
