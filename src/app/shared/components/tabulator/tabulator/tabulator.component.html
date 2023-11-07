@@ -1,89 +1,14 @@
-<div [id]="'export'+divId">
-    <!--Start Setting Menu -->
-
-    <div id="exportdevices" class="exportdevices_main">
-
-        <div class="export-toolbar d-flex justify-content-between align-items-center">
-            <!-- <app-tabulator-setting (onSortItemsChange)="sortItems($event)"
-                (onColumnItemsChange)="showHideArraneColums($event)" (onGroupbyItemsChange)="groupByItems($event)"
-                (onGroupbyItemsSave)="saveGroupBy($event)" (onSortItemsSave)="saveSortBy($event)"
-                (onColumnItemsSave)="saveColumnsSetting($event)" [componentName]="componentName"
-                [columnSettings]="columnSettings" [sortByList]="sortByList" [groupByList]="groupByList">
-            </app-tabulator-setting> -->
-            <div class="exportdevices_main_icons" style="display: flex;">
-
-                <button title="{{'tabulator.export-pdf'|translate}}" class="sniper-icon-btn-pdf  btn-export"
-                    (click)="exportPdf()"><span>
-                        <!-- <img src="../../../assets/sniper/images/pdf.svg"> -->
-                        {{'tabulator.export-pdf'|translate}}
-                    </span></button>
-                <button title="{{'tabulator.export-excel'|translate}}" class="sniper-icon-btn-excel  btn-export"
-                    (click)="exportExcel()"><span>
-                        <!-- {{'tabulator.exportExcel'|translate}} -->
-                        <!-- <img src="../../../assets/sniper/images/excel.svg"> -->
-                        {{'tabulator.export-excel'|translate}}
-                    </span></button>
-                <button title="{{'tabulator.export-csv'|translate}}" class="sniper-icon-btn-csv btn-export"
-                    (click)="exportCsv()"><span>
-                        <!-- <img src="../../../assets/sniper/images/csv.svg"> -->
-                        {{'tabulator.export-csv'|translate}}
-                    </span></button>
-                <button title="{{'tabulator.export-html'|translate}}" class="sniper-icon-btn-html btn-export"
-                    (click)="exportHtml()"><span>
-                        <!-- {{'tabulator.exportHtml'|translate}} -->
-                        <!-- <img src="../../../assets/sniper/images/html.svg"> -->
-                        {{'tabulator.export-html'|translate}}
-                    </span></button>
-                <button title="{{'tabulator.export-json'|translate}}" class="sniper-icon-btn-json btn-export"
-                    (click)="exportJson()"><span>
-                        <!-- <img src="../../../assets/sniper/images/file-json.svg"> -->
-                        {{'tabulator.export-json'|translate}}
-                    </span></button>
-                <!-- <button title="{{'tabulator.save'|translate}}" class="sniper-icon-btn-save btn-export"
-                    (click)="saveAllSetting()"><span>
-                        {{'tabulator.save'|translate}}
-                    </span></button> -->
-                <!-- <button title="save" class="sniper-icon-btn-save"(click)="showGridFilter()"><span><img src="../../../assets/sniper/images/save-file-new.svg"> </span></button>             -->
-                <button title="filter" class="sniper-icon-btn-save" *ngIf="showMenuOptions.showAddGroup"
-                    (click)="openAddGroup()"><span><img src="../../../assets/sniper/images/folder.svg"> </span>
-                </button>
-                <button title="filter" class="sniper-icon-btn-save" *ngIf="showMenuOptions.showAddItem"
-                    (click)="openAddItem()"><span><img src="../../../assets/sniper/images/plus_gray.svg"> </span>
-                </button>
-
-            </div>
-            <!-- <div class="search_area_on_export_setting">
-                <div class="align-items-center d-flex search-box">
-                    <input class="search-txt" type="text" name="" placeholder="{{'general.search'|translate}}"
-                        [(ngModel)]="searchTxt" (keyup)="search()" #searchInput (blur)="showSearchButton()">
-                    <button class="search-btn0 btn btn-primary" (click)="showSearch()" #searchButton>
-
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-
-            </div> -->
 
 
-
-        </div>
-
-
-
-        <!--End Setting Menu -->
-
-
-    </div>
-
-
-</div>
 <div class="search_area_on_export_setting">
+
     <div class="align-items-center d-flex justify-content-end search-box">
         <input class="search-txt" type="text" name="" placeholder="{{'general.search'|translate}}"
             [(ngModel)]="searchTxt" (change)="search()" #searchInput (blur)="showSearchButton()">
         <button class="search-btn0 btn btn-primary" (click)="showSearch()" #searchButton> <i
                 class="fa fa-search"></i></button>
     </div>
+
     <div [style]="tabulatorStyle" class="tabulator-container">
         <div [style]="customStyle" [id]="'my-tabular-table'+divId"></div>
     </div>

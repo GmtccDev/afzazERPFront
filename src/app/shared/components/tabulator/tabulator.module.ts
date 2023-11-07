@@ -5,9 +5,10 @@ import { DraggableMenuItemsComponent } from './draggable-menu-items/draggable-me
 import { TabulatorSettingComponent } from './tabulator-setting/tabulator-setting.component';
 import { TabulatorComponent } from './tabulator/tabulator.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
     declarations: [TabulatorComponent, TabulatorSettingComponent, DraggableMenuItemsComponent],
-    imports: [FormsModule, CommonModule,TranslateModule,
+    imports: [FormsModule, CommonModule,TranslateModule,NgxSpinnerModule
     ],
     exports: [TabulatorComponent]
 })
