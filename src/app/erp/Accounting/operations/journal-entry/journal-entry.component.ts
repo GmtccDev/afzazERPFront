@@ -308,7 +308,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
   onViewClicked(parentType, id) {
-    debugger
+    
     if (parentType == 1) {
       window.open('accounting-operations/vouchers/update-voucher/' + id, "_blank")
     }
