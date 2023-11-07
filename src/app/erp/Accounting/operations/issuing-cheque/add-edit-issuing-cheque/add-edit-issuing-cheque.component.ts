@@ -22,6 +22,8 @@ import { ModuleType } from '../../../models/general-configurations';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-add-edit-issuing-cheque',
   templateUrl: './add-edit-issuing-cheque.component.html',
@@ -113,6 +115,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
     private dateService: DateCalculation,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private modalService: NgbModal,
+
 
   ) {
     this.defineIssuingChequeForm();
@@ -274,7 +278,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
       companyId: this.companyId,
       branchId: this.branchId,
       status: 0,
-      fiscalPeriodId:this.fiscalPeriodId,
+      fiscalPeriodId: this.fiscalPeriodId,
 
       issuingChequeDetail: this.fb.array([]),
       issuingChequeStatusDetail: this.fb.array([])
@@ -456,7 +460,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
               id: element.id,
               issuingChequeId: element.issuingChequeId,
               beneficiaryTypeId: element.beneficiaryTypeId,
-              beneficiaryId: element. beneficiaryId,
+              beneficiaryId: element.beneficiaryId,
               accountId: element.accountId,
               currencyId: element.currencyId,
               transactionFactor: element.transactionFactor,
@@ -584,11 +588,21 @@ export class AddEditIssuingChequeComponent implements OnInit {
             this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
-            
+
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
             this.getIssuingChequeCode();
+          }
+          else if (currentBtn.action == ToolbarActions.Print) {
+
+            let reportParams: string =
+              "reportParameter=id!" + this.id
+              + "&reportParameter=lang!" + this.lang
+            const modalRef = this.modalService.open(NgbdModalContent);
+            modalRef.componentInstance.reportParams = reportParams;
+            modalRef.componentInstance.reportType = 1;
+            modalRef.componentInstance.reportTypeID = 10
           }
         }
       },
@@ -673,7 +687,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     // }
 
     //  var entity = new CreateissuingChequeCommand();
-        
+
     if (this.issuingChequeForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -758,9 +772,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
       let sub = this.issuingChequeService.updateIssuingCheque(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
-
-          //  this.defineissuingChequeForm();
-
           this.submited = false;
           this.spinner.hide();
 
@@ -808,7 +819,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
         this.spinner.hide();
       });
     } else {
-      
+
       return this.issuingChequeForm.markAllAsTouched();
     }
   }
@@ -820,7 +831,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
         next: (res) => {
           if (res.success) {
             this.accountList = res.response;
-           // this.beneficiaryAccountList = res.response;
+            // this.beneficiaryAccountList = res.response;
 
           }
           resolve();
@@ -997,10 +1008,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
     this.showSearchBankAccountModal = false;
   }
   getBeneficiaryAccount(row) {
-        
+
     if (row != null) {
       if (row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Client || row.get('beneficiaryTypeId').value == BeneficiaryTypeEnum.Supplier) {
-            
+
         row.get('accountId').value = this.filterBeneficiaryList.filter(x => x.id == Number(row.get('beneficiaryId').value))[0].accountId;
 
 
@@ -1011,7 +1022,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     }
   }
   getBeneficiaryList(beneficiaryTypeId) {
-        
+
     this.filterBeneficiaryList = [];
     if (beneficiaryTypeId != null) {
       if (beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
