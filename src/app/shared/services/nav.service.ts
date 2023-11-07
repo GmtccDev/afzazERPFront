@@ -36,7 +36,7 @@ export class NavService implements OnInit, OnDestroy {
 	purchasesBillTypesNew: any = [];
 	salesReturnBillTypesNew: any = [];
 	purchasesReturnBillTypesNew: any = [];
-	firstPeriodGoodsBillTypesNew:any=[];
+	firstPeriodGoodsBillTypesNew: any = [];
 
 	private unsubscriber: Subject<any> = new Subject();
 	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
@@ -63,7 +63,7 @@ export class NavService implements OnInit, OnDestroy {
 
 	constructor(private router: Router, private translate: TranslateService) {
 
-	
+
 		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
@@ -106,7 +106,7 @@ export class NavService implements OnInit, OnDestroy {
 		});
 	}
 
-	
+
 	private setScreenWidth(width: number): void {
 		this.screenWidth.next(width);
 	}
@@ -197,10 +197,8 @@ export class NavService implements OnInit, OnDestroy {
 			]
 
 
-
-
 		},
-		
+
 		{
 			title: this.translate.instant("component-names.reports"), type: 'sub', icon: 'clipboard', active: false, children: [
 				{ path: '/accounting-reports/journalEntriesReport', title: this.translate.instant("component-names.journal-entries-report"), type: 'link', active: true },
@@ -245,15 +243,30 @@ export class NavService implements OnInit, OnDestroy {
 			]
 		},
 		{
-			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children: 
-				this.billTypes,
-
-			
-
-
-
-
-
+			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children:
+				//this.billTypes,
+				[
+					{
+						title: this.translate.instant("bill-type.sales-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.salesBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.purchases-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.purchasesBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.sales-return-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.salesReturnBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.purchases-return-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.purchasesReturnBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.firstPeriodGoodsBillTypesNew
+					},
+				]
 
 		}
 

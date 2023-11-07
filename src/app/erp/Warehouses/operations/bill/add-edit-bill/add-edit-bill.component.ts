@@ -439,19 +439,89 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             remainingAccountId: res.response?.remainingAccountId
 
           });
-          // if (res.response?.billItems != null) {
-          //   res.response?.billItems.forEach(element => {
-          //     var item = this.itemsList?.find(c => c.id == element.itemId)
-          //     if (item != null && item != undefined) {
-          //       element.itemName = this.lang = "ar" ? item.nameAr : item.nameEn;
-          //     }
+          var itemName;
+          var unitName;
+          var storeName;
+          var accountName;
+          var correspondingAccountName;
+          var currencyName;
+          if (res.response?.billItems != null) {
+            res.response?.billItems.forEach(element => {
+              if (element.itemId > 0) {
+                itemName = this.itemsList?.find(c => c.id == element.itemId)
 
-          //   });
-          //   //
+              }
+              if (element.unitId > 0) {
+                unitName = this.unitsList?.find(c => c.id == element.unitId)
 
-          // }
-          this.billItem = res.response?.billItems;
-          this.billAdditionAndDiscount = res.response?.billAdditionAndDiscounts;
+              }
+              if (element.storeId > 0) {
+                storeName = this.storesList?.find(c => c.id == element.storeId)
+
+              }
+              this.billItem.push(
+                {
+                  id: element.id,
+                  billId: element.billId,
+                  itemId: element.itemId,
+                  itemDescription: element.itemDescription,
+                  unitId: element.unitId,
+                  quantity: element.quantity,
+                  price: element.price,
+                  totalBeforeTax: element.totalBeforeTax,
+                  additionRatio: element.additionRatio,
+                  additionValue: element.additionValue,
+                  discountRatio: element.discountRatio,
+                  discountValue: element.discountValue,
+                  taxRatio: element.taxRatio,
+                  taxValue: element.taxValue,
+                  total: element.total,
+                  storeId: element.storeId,
+                  notes: element.notes,
+                  itemName: this.lang = "ar" ? itemName?.nameAr ?? '' : itemName?.nameEn ?? '',
+                  unitName: this.lang = "ar" ? unitName?.nameAr ?? '' : unitName?.nameEn ?? '',
+                  storeName: this.lang = "ar" ? storeName?.nameAr ?? '' : storeName?.nameEn ?? '',
+                }
+              )
+            });
+
+          }
+          if (res.response?.billAdditionAndDiscounts != null) {
+            res.response?.billAdditionAndDiscounts.forEach(element => {
+              if (element.accountId > 0) {
+                accountName = this.accountsList?.find(c => c.id == element.accountId)
+
+              }
+              if (element.correspondingAccountId > 0) {
+                correspondingAccountName = this.accountsList?.find(c => c.id == element.correspondingAccountId)
+
+              }
+              if (element.currencyId > 0) {
+                currencyName = this.currenciesList?.find(c => c.id == element.currencyId)
+
+              }
+              this.billAdditionAndDiscount.push(
+                {
+                  id: element.id,
+                  billId: element.billId,
+                  additionRatio: element.additionRatio,
+                  additionValue: element.additionValue,
+                  discountRatio: element.discountRatio,
+                  discountValue: element.discountValue,
+                  accountId: element.accountId,
+                  notes: element.notes,
+                  correspondingAccountId: element.correspondingAccountId,
+                  currencyId: element.currencyId,
+                  currencyValue: element.currencyValue,
+                  accountName: this.lang = "ar" ? accountName?.nameAr ?? '' : accountName?.nameEn ?? '',
+                  correspondingAccountName: this.lang = "ar" ? correspondingAccountName?.nameAr ?? '' : correspondingAccountName?.nameEn ?? '',
+                  currencyName: this.lang = "ar" ? currencyName?.nameAr ?? '' : currencyName?.nameEn ?? ''
+                })
+
+
+
+            });
+          }
         },
         error: (err: any) => {
           reject(err);
@@ -996,22 +1066,23 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
     this.bill!.billItems = this.billItem;
 
-    this.totalBeforeTax += this.selectedBillItem?.totalBeforeTax ?? 0;
-    this.total += this.selectedBillItem?.total ?? 0;
-    this.net += this.selectedBillItem?.total ?? 0;
-    this.netAfterTax += this.selectedBillItem?.total ?? 0;
-    this.remaining += this.selectedBillItem?.total - this.paid;
-    this.taxRatio = 0;
-    this.taxValue = 0;
+    // this.totalBeforeTax += this.selectedBillItem?.totalBeforeTax ?? 0;//comment
+    // this.total += this.selectedBillItem?.total ?? 0;
+    // this.net += this.selectedBillItem?.total ?? 0;
+    // this.netAfterTax += this.selectedBillItem?.total ?? 0;
+    // this.remaining += this.selectedBillItem?.total - this.paid;
+    // this.taxRatio = 0;
+    // this.taxValue = 0;
     this.clearSelectedItemData();
+    this.calculateValues();
 
   }
   deleteItem(index) {
-    this.totalBeforeTax = this.totalBeforeTax - this.billItem[index]?.totalBeforeTax ?? 0;
-    this.total = this.total - this.billItem[index]?.total ?? 0;
-    this.net = this.total ?? 0;
-    this.netAfterTax = this.net ?? 0;
-    this.remaining = this.netAfterTax - this.paid;
+    // this.totalBeforeTax = this.totalBeforeTax - this.billItem[index]?.totalBeforeTax ?? 0;//comment
+    // this.total = this.total - this.billItem[index]?.total ?? 0;
+    // this.net = this.total ?? 0;
+    // this.netAfterTax = this.net ?? 0;
+    // this.remaining = this.netAfterTax - this.paid;
     if (this.billItem.length) {
       if (this.billItem.length == 1) {
         this.billItem = [];
@@ -1021,14 +1092,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
 
     this.bill.billItems = this.billItem;
+    this.calculateValues();
 
 
 
   }
   deleteBillAdditionDiscount(index) {
-    this.net = this.net - this.billAdditionAndDiscount[index]?.additionValue + this.billAdditionAndDiscount[index].discountValue ?? 0;
-    this.netAfterTax = this.net;
-    this.remaining = this.netAfterTax - this.paid;
+    // this.net = this.net - this.billAdditionAndDiscount[index]?.additionValue + this.billAdditionAndDiscount[index].discountValue ?? 0;
+    // this.netAfterTax = this.net;
+    // this.remaining = this.netAfterTax - this.paid;
 
     if (this.billAdditionAndDiscount.length) {
       if (this.billAdditionAndDiscount.length == 1) {
@@ -1039,6 +1111,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
 
     this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
+    this.calculateValues();
 
   }
   clearSelectedItemData() {
@@ -1132,7 +1205,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
     };
-    
+
     this.bill.billItems = this.billItem;
     this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
@@ -1327,10 +1400,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillItem!.itemName = this.lang = "ar" ? data[0].nameAr :  data[0].nameEn;
+        this.selectedBillItem!.itemName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillItem!.itemId = data[0].id;
       } else {
-        this.billItem[i].itemName =  this.lang = "ar" ? data[0].nameAr :  data[0].nameEn;
+        this.billItem[i].itemName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billItem[i].itemId = data[0].id;
       }
       this.onChangeItem();
@@ -1377,7 +1450,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedBillItem!.unitName =this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
+        this.selectedBillItem!.unitName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillItem!.unitId = data[0].id;
       } else {
         this.billItem[i].unitName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
@@ -1426,7 +1499,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.selectedBillItem!.storeName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillItem!.storeId = data[0].id;
       } else {
-        this.billItem[i].storeName = this.lang = "ar" ? data[0].nameAr :data[0].nameEn;
+        this.billItem[i].storeName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billItem[i].storeId = data[0].id;
       }
     } else {
@@ -1441,7 +1514,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               this.selectedBillItem!.storeName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillItem!.storeId = d.id;
             } else {
-              this.billItem[i].storeName = this.lang = "ar" ? d.nameAr:d.nameEn;
+              this.billItem[i].storeName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billItem[i].storeId = d.id;
             }
           }
@@ -1472,7 +1545,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.selectedBillAdditionAndDiscount!.accountName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.selectedBillAdditionAndDiscount!.accountId = data[0].id;
       } else {
-        this.billAdditionAndDiscount[i].accountName =this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
+        this.billAdditionAndDiscount[i].accountName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billAdditionAndDiscount[i].accountId = data[0].id;
       }
 
@@ -1583,7 +1656,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedBillAdditionAndDiscount!.currencyName =this.lang = "ar" ? d.nameAr : d.nameEn;
+              this.selectedBillAdditionAndDiscount!.currencyName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.selectedBillAdditionAndDiscount!.currencyId = d.id;
               this.getCurrencyFactorForAdditionAndDiscount(data[0].id);
 
@@ -2003,10 +2076,73 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
     this.bill!.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
-    this.net = this.net + this.selectedBillAdditionAndDiscount?.additionValue - this.selectedBillAdditionAndDiscount?.discountValue ?? 0;
-    this.netAfterTax = this.net ?? 0;
-    this.remaining = this.netAfterTax - this.paid;
+    // this.net = this.net + this.selectedBillAdditionAndDiscount?.additionValue - this.selectedBillAdditionAndDiscount?.discountValue ?? 0;
+    // this.netAfterTax = this.net ?? 0;
+    // this.remaining = this.netAfterTax - this.paid; // comment
+
     this.clearSelectedBilladditionDiscountData();
+    this.calculateValues();
+  }
+  clearValues() {
+    this.totalBeforeTax = 0;
+    this.total = 0;
+    this.net = 0;
+    this.netAfterTax = 0;
+    this.remaining = 0;
+
+
+  }
+
+  calculateValues() {
+    this.clearValues();
+    debugger
+    if (this.billItem != null) {
+      this.billItem.forEach(element => {
+        debugger
+        this.totalBeforeTax +=element.totalBeforeTax;
+        this.total += element.total;
+        this.net += element.total;
+        this.netAfterTax += element.total;
+      });
+      if (this.billAdditionAndDiscount != null) {
+        this.billAdditionAndDiscount.forEach(element => {
+          element.additionValue= (this.total * element.additionRatio) / 100;
+          element.discountValue= (this.total * element.discountRatio) / 100;
+          this.net += element.additionValue - element.discountValue;
+          this.netAfterTax = this.net;
+        });
+      }
+      this.getNetAfterTax(1);
+
+      // this.billItem.forEach(function (element, index, array) {
+      //   debugger
+      //   console.log("element", element);
+      //   this.totalBeforeTax +=element.totalBeforeTax;
+      //   this.total += element.total;
+      //   this.net += element.total;
+      //   this.netAfterTax += element.total;
+      //   this.billItemCount++;
+      //   if (this.billItemCount === array.length) {
+      //     debugger
+      //     if (this.billAdditionAndDiscount != null) {
+      //       this.billAdditionAndDiscount.forEach(function (element, index, array) {
+      //         debugger
+      //         this.net += element.additionValue - element.discountValue;
+      //         this.netAfterTax = this.net;
+      //         this.billAdditionAndDiscountCount++;
+      //         if (this.billItemCount === array.length) {
+      //           debugger
+      //           this.getNetAfterTax(1);
+
+      //         }
+
+      //       });
+      //     }
+      //   }
+
+
+      // })
+    }
   }
 
 }
