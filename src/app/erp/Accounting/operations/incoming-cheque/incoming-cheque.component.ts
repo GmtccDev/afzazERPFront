@@ -70,7 +70,6 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private spinner: NgxSpinnerService,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private reportViewerService: ReportViewerService
 
   ) {
 
@@ -527,11 +526,11 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   }
   onViewReportClicked(id) {
     let reportParams: string =
-    "reportParameter=id!" + id
-    + "&reportParameter=lang!" + this.lang
+      "reportParameter=id!" + id
+      + "&reportParameter=lang!" + this.lang
     const modalRef = this.modalService.open(NgbdModalContent);
-		modalRef.componentInstance.reportParams = reportParams;
-		modalRef.componentInstance.reportType = 1;
-		modalRef.componentInstance.reportTypeID = 9;
+    modalRef.componentInstance.reportParams = reportParams;
+    modalRef.componentInstance.reportType = 1;
+    modalRef.componentInstance.reportTypeID = 9;
   }
 }
