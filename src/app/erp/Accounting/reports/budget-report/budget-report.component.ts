@@ -20,6 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
+  userId: any = localStorage.getItem("userId");
   lang = localStorage.getItem("language");
   companyId: string = localStorage.getItem("companyId");
 
@@ -153,26 +154,26 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
     let monthTo;
 
     if (this.fromDate == undefined || this.fromDate == null) {
-      // this.fromDate = this.dateConverterService.getCurrentDate();
+
       monthFrom = Number(this.fromDate.month + 1)
       this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-    }
-    else {
-      monthFrom = Number(this.fromDate.month + 1)
-      this.fromDate = (this.fromDate.year + '-' + monthFrom + "-" + this.fromDate.day).toString();
-
-    }
-
-    if (this.toDate == undefined || this.toDate == null) {
-      // this.toDate = this.dateConverterService.getCurrentDate();
+      }
+      else if(this.fromDate.month!=undefined) {
+        monthFrom = Number(this.fromDate.month + 1);
+        this.fromDate = (this.fromDate.year + "-" + monthFrom + "-" + this.fromDate.day).toString();
+      }
+  
+      if (this.toDate == undefined || this.toDate == null) {
+      
       monthTo = Number(this.toDate.month + 1)
       this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
-
+  
+      }
+      else if(this.toDate.month!=undefined) {
+      monthTo = Number(this.toDate.month + 1);
+      this.toDate = (this.toDate.year + "-" + monthTo + "-" + this.toDate.day).toString();
     }
-    else {
-      monthTo = Number(this.toDate.month + 1)
-      this.toDate = (this.toDate.year + '-' + monthTo + "-" + this.toDate.day).toString();
-    }
+  
     if (this.entriesStatusId == null || this.entriesStatusId == undefined) {
       this.entriesStatusId = 0;
     }
@@ -184,6 +185,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       "&reportParameter=toDate!" + this.toDate +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
       "&reportParameter=level!" + this.level +
+      "&reportParameter=userId!" + this.userId +
       "&reportParameter=reportOptionId!" + this.reportOptionId +
       "&reportParameter=lang!" + this.lang +
       "&reportParameter=companyId!" + this.companyId;

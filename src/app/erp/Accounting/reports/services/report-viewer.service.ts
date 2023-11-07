@@ -50,7 +50,7 @@ viewRpt(selectedRpt: ReportFile,reportType,reportTypeId,ItemId) {
    let reportParams =  "&reportParameter=companyId!" + this.companyId
   + "&reportParameter=lang!" + lang
   + "&reportParameter=userId!" + this.userId
-  + "&reportParameter=JournalEntryId!" +ItemId;
+  + "&reportParameter=id!" +ItemId;
   
   var newUrl = this.apiurl?.replace('api', '') + "/Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + reportType + "&reportParameter=reportTypeID!" + reportTypeId + "&" + reportParams;
   window.open(newUrl, "_blank");

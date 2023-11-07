@@ -19,6 +19,7 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { ReportViewerService } from '../../reports/services/report-viewer.service';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -65,6 +66,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
+    private reportViewerService:ReportViewerService
 
   ) {
 
@@ -312,6 +314,24 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       title: this.lang == 'ar' ? 'الوصف' : 'Description',
       field: 'description',
     },
+    this.lang == "ar" ? {
+      title: "عرض التقرير",
+      field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+
+        this.onViewReportClicked(cell.getRow().getData().id);
+      }
+    }
+      :
+
+      {
+        title: "View Report",
+        field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+
+
+          this.onViewReportClicked(cell.getRow().getData().id);
+        }
+      }
+
 
 
 
@@ -442,4 +462,14 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   //#endregion
+
+  onViewReportClicked(id) {
+    let reportType = 1;
+    let reportTypeId = 1001;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+  }
+  printReportFormatIcon() { //plain text value
+
+    return "<i class='fa fa-print' aria-hidden='true'></i>";
+  };
 }
