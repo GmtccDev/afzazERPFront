@@ -100,7 +100,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		let monthFrom;
 		let monthTo;
 
-		debugger;
+		;
 
 		if (this.fromDate == undefined || this.fromDate == null) {
 			//  this.fromDate = this.dateConverterService.getCurrentDate();

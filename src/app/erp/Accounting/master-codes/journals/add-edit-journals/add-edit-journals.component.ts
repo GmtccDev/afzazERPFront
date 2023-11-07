@@ -210,7 +210,7 @@ export class AddEditJournalsComponent implements OnInit {
     let sub = this.SharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-            debugger
+            
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
             this.SharedServices.changeToolbarPath({

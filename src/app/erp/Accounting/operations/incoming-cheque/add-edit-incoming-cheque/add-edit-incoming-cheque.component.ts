@@ -22,6 +22,8 @@ import { ModuleType } from '../../../models/general-configurations';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-add-edit-incoming-cheque',
   templateUrl: './add-edit-incoming-cheque.component.html',
@@ -112,6 +114,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private dateService: DateCalculation,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private modalService: NgbModal,
+
 
   ) {
     this.defineIncomingChequeForm();
@@ -267,7 +271,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       currencyFactor: '',
       companyId: this.companyId,
       branchId: this.branchId,
-      fiscalPeriodId:this.fiscalPeriodId,
+      fiscalPeriodId: this.fiscalPeriodId,
       status: 0,
       incomingChequeDetail: this.fb.array([]),
       incomingChequeStatusDetail: this.fb.array([])
@@ -586,6 +590,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
           else if (currentBtn.action == ToolbarActions.Copy) {
             this.getIncomingChequeCode();
           }
+          else if (currentBtn.action == ToolbarActions.Print) {
+
+            let reportParams: string =
+              "reportParameter=id!" + this.id
+              + "&reportParameter=lang!" + this.lang
+            const modalRef = this.modalService.open(NgbdModalContent);
+            modalRef.componentInstance.reportParams = reportParams;
+            modalRef.componentInstance.reportType = 1;
+            modalRef.componentInstance.reportTypeID = 9;
+          }
         }
       },
     });
@@ -632,7 +646,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     //   )
     //   return;
     // }
-    
+
     if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
       if (this.fiscalPeriodStatus == null) {
         this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-choose-open-fiscal-period");
@@ -771,7 +785,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
           this.spinner.hide();
 
           navigateUrl(this.listUrl, this.router);
-      
+
         },
         error: (err: any) => {
           reject(err);
@@ -784,7 +798,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
   }
   onUpdate() {
-   
+
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
     ctrl.controls.forEach(x => {

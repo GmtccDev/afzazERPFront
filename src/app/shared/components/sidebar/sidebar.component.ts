@@ -148,7 +148,6 @@ export class SidebarComponent {
 
   // Active Nave state
   setNavActive(item) {
-    debugger
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;

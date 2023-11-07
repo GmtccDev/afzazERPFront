@@ -13,6 +13,9 @@ import { Injectable } from "@angular/core";
     private pathSource: BehaviorSubject<ToolbarPath> =new BehaviorSubject<ToolbarPath>({} as ToolbarPath);
     private lageuageSource: BehaviorSubject<string> =new BehaviorSubject<string>("");
     private updateBtnSource: BehaviorSubject<string> =new BehaviorSubject<string>("");
+    public tabularSource: BehaviorSubject<object> =new BehaviorSubject<object>({});
+    public componentNameSource: BehaviorSubject<string> =new BehaviorSubject<string>("");
+
   
   
   
@@ -20,8 +23,6 @@ import { Injectable } from "@angular/core";
   
     constructor() {}
     public changeButton(toolbarData: ToolbarData) {
-      
-      
       this.buttonSource.next(toolbarData);
     }
     public getClickedbutton(): Observable<ToolbarData> {
@@ -44,7 +45,20 @@ import { Injectable } from "@angular/core";
     public getToolbarPath(): Observable<ToolbarPath> {
       return this.pathSource.asObservable();
     }
+    public setTabulator(obj: object) {
   
+      this.tabularSource.next(obj);
+    }
+    public getTabulator(): Observable<object> {
+      return this.tabularSource.asObservable();
+    }
+    public setComponentName(name: string) {
+      this.componentNameSource.next(name);
+    }
+  
+    public getComponentName(): Observable<string> {
+      return this.componentNameSource.asObservable();
+    }
   
     public setLanguage(lang: string) {
   
@@ -63,6 +77,7 @@ import { Injectable } from "@angular/core";
     public getUpdateBtn(): Observable<string> {
       return this.updateBtnSource.asObservable();
     }
+
   
   }
   

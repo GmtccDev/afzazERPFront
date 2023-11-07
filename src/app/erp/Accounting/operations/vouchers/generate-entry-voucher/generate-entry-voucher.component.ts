@@ -24,7 +24,7 @@ import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 })
 export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterViewInit {
 	//#region Main Declarations
-	noGenerateEntryVouchers: any[] = [];
+	generateEntryVouchers: any[] = [];
 	voucherTypeId: any;
 	fiscalPeriodId: number;
 	fiscalPeriodName: string;
@@ -163,7 +163,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 					this.toolbarPathData.componentList = this.translate.instant("component-names.generate-entry-vouchers");
 
 					if (res.success) {
-						this.noGenerateEntryVouchers = res.response.data.result
+						this.generateEntryVouchers = res.response.data.result
 
 					}
 					resolve();

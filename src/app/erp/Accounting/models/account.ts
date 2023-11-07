@@ -18,6 +18,7 @@ export class AccountDto {
     accountGroupId: number | undefined;
     isLeafAccount: boolean | undefined;
     accountType: number | undefined;
+    levelId?: number;
 }
 export class CreateAccountCommand {
     inputDto: AccountDto;
@@ -56,5 +57,5 @@ export interface TreeNodeInterface {
     isActive: boolean | undefined;
     parentId: number | undefined;
     parent?: TreeNodeInterface;
-    isLeafAccount: boolean | undefined;
+    isLeafAccount?: boolean;
 }
