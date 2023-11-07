@@ -114,7 +114,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-            
+
             this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
 
 
@@ -217,7 +217,12 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       } : {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
-
+      this.lang == 'ar'
+      ? {
+        title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum
+      } : {
+        title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum
+      },
     this.lang == "ar" ? {
       title: "عرض التقرير",
       field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
@@ -422,6 +427,48 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
       default:
         text = 'Not Post';
+        break;
+    }
+    return text;
+
+  }
+  translateParentArEnum(cell, formatterParams, onRendered) {
+
+    const status = cell.getValue();
+    let text;
+    switch (status) {
+      case 1:
+        text = 'سندات';
+        break;
+      case 2:
+        text = 'شيكات ورداة ';
+        break;
+      case 3:
+        text = ' شيكات صادرة';
+        break;
+      default:
+        text = '  قيد';
+        break;
+    }
+    return text;
+
+  }
+  translateParentEnEnum(cell, formatterParams, onRendered) {
+
+    const status = cell.getValue();
+    let text;
+    switch (status) {
+      case 1:
+        text = 'Voucher';
+        break;
+      case 2:
+        text = 'Incoming Cheque';
+        break;
+      case 3:
+        text = ' Issuing Cheque ';
+        break;
+      default:
+        text = ' Journal Entry';
         break;
     }
     return text;
