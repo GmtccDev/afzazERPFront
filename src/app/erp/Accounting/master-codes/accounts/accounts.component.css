@@ -5,3 +5,31 @@ td {
 th {
   text-align: center;
 }/*# sourceMappingURL=accounts.component.css.map */
+.markTrue {
+  color: green; /* Change color to your desired mark color */
+  font-weight: bold;
+}
+.markFalse {
+  color: red; /* Change color to your desired mark color */
+  font-weight: bold;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
