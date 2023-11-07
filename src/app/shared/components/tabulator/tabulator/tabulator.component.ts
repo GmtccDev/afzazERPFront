@@ -234,13 +234,6 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 	ngAfterViewInit() {
 		
-		if (!localStorage.getItem('foo')) {
-			localStorage.setItem('foo', 'no reload')
-			location.reload()
-		} else {
-			localStorage.removeItem('foo')
-		}
-
 		this.tab = document.createElement('div');
 		this.drawTable();
 		this.showDataOnGrid();

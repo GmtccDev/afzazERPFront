@@ -254,54 +254,58 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    // 
-    // if (this.taxDetail.length > 0 && this.taxDetail != null) {
-    //   this.taxDetail.forEach(element => {
-    //     
-    //     let fromDate = element.fromDate;
-    //     let toDate = element.toDate;
-    //     let date;
-    //     let month;
-    //     let day;
-    //     if (this.selectedTaxDetail?.fromDate.month + 1 > 9) {
-    //       month = this.selectedTaxDetail?.fromDate.month + 1
-    //     }
-    //     else {
-    //       month = '0' + this.selectedTaxDetail?.fromDate.month + 1
-    //     }
-    //     if (this.selectedTaxDetail?.fromDate.day < 10) {
-    //       day = '0' + this.selectedTaxDetail?.fromDate.day
-    //     }
-    //     else {
-    //       day = this.selectedTaxDetail?.fromDate.day
-    //     }
-    //     date = this.selectedTaxDetail?.fromDate.year + '-' + month + '-' + day
+    debugger
+    var result: boolean = false;
+   
+    if (this.taxDetail.length > 0 && this.taxDetail != null) {
+      this.taxDetail.forEach(element => {
 
-    //     if (date >= fromDate && date <= toDate) {
-    //       
-    //       this.errorMessage = this.translate.instant("tax.date-exist");
-    //       this.errorClass = 'errorMessage';
-    //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-    //       return;
-    //     }
-    //     else {
-    //       this.taxDetail.push({
-    //         id: 0,
-    //         taxId: this.selectedTaxDetail?.taxId ?? 0,
-    //         fromDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.fromDate)),
-    //         toDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.toDate)),
-    //         taxRatio: this.selectedTaxDetail?.taxRatio ?? 0,
+        let fromDate = element.fromDate;
+        let toDate = element.toDate;
+        let date;
+        let month;
+        let day;
+        if (this.selectedTaxDetail?.fromDate.month + 1 > 9) {
+          month = this.selectedTaxDetail?.fromDate.month + 1
+        }
+        else {
+          month = '0' + this.selectedTaxDetail?.fromDate.month + 1
+        }
+        if (this.selectedTaxDetail?.fromDate.day < 10) {
+          day = '0' + this.selectedTaxDetail?.fromDate.day
+        }
+        else {
+          day = this.selectedTaxDetail?.fromDate.day
+        }
+        date = this.selectedTaxDetail?.fromDate.year + '-' + month + '-' + day
 
-    //       });
-    //       this.taxMaster!.taxDetail = this.taxDetail;
-    //       this.clearSelectedItemData();
-    //       return;
-    //     }
+        if (date >= fromDate && date <= toDate) {
 
-    //   });
+          this.errorMessage = this.translate.instant("tax.date-exist");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          result = true;
+          return result;
+        }
 
-    // }
-    // else {
+
+      });
+      if (result == false) {
+        this.taxDetail.push({
+          id: 0,
+          taxId: this.selectedTaxDetail?.taxId ?? 0,
+          fromDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.fromDate)),
+          toDate: formatDate(this.dateService.getDateForInsert(this.selectedTaxDetail?.toDate)),
+          taxRatio: this.selectedTaxDetail?.taxRatio ?? 0,
+
+        });
+        this.taxMaster!.taxDetail = this.taxDetail;
+        this.clearSelectedItemData();
+        return;
+      }
+
+    }
+    else {
       this.taxDetail.push({
         id: 0,
         taxId: this.selectedTaxDetail?.taxId ?? 0,
@@ -312,12 +316,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       });
       this.taxMaster!.taxDetail = this.taxDetail;
       this.clearSelectedItemData();
-   // }
-    //
-
-
-
-
+    }
 
   }
   deleteItem(index) {
