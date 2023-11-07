@@ -39,6 +39,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   listIds: any[] = [];
   listOfMapData: any[];
   expandAll: boolean=true;
+  listOfMapDataNotSearch: any;
   //#endregion
 
   //#region Constructor
@@ -119,6 +120,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (res.success) {
 
             this.listOfMapData = res.response
+            this.listOfMapDataNotSearch = res.response
             this.listOfMapData.forEach(item => {
               this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
             });
@@ -310,7 +312,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     const stack: TreeNodeInterface[] = [];
     const array: TreeNodeInterface[] = [];
     const hashMap = {};
-    stack.push({ ...root, levelId: 0, expanded: false });
+    stack.push({ ...root, levelId: root.levelId, expanded: false });
     while (stack.length !== 0) {
       const node = stack.pop()!;
       this.visitNode(node, hashMap, array);
@@ -371,7 +373,73 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
   }
+  codeSearchText: string = ''; // Search input text for code
+  nameSearchText: string = ''; // Search input text for name
+  levelSearchText: string = ''; // Search input text for level
 
+  // Function to perform the search
+ 
 
+  searchData() {
+    if(this.codeSearchText===''&&this.nameSearchText===''&&this.levelSearchText==''){
+      this.getAccounts() 
+    }
+    
+    var listOfMapDataSearch = this.searchRecursive(this.listOfMapDataNotSearch);
+    const filteredData = listOfMapDataSearch.filter(item => {
+      const codeMatch = item.code.toLowerCase().includes(this.codeSearchText.toLowerCase());
+      const nameMatch = item.nameAr.toLowerCase().includes(this.nameSearchText.toLowerCase()) ||
+                        item.nameEn.toLowerCase().includes(this.nameSearchText.toLowerCase());
+      const levelMatch =((item.levelId + 1).toString().toLowerCase()).includes(this.levelSearchText.toLowerCase());
 
+      return codeMatch && nameMatch && levelMatch;
+    });
+
+    // Update the data source used in the template
+  
+    this.listOfMapData = this.convertToTree(filteredData);
+    this.listOfMapData.forEach(item => {
+      this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
+    });
+  }
+  convertToTree(data: any[]): any[] {
+    const map = new Map();
+    const roots: any[] = [];
+
+    data.forEach(item => {
+      map.set(item.id, item);
+      item.children = [];
+    });
+
+    data.forEach(item => {
+      const parent = map.get(item.parentId);
+      if (parent) {
+        parent.children.push(item);
+      } else {
+        roots.push(item);
+      }
+    });
+
+    return roots;
+  }
+  // Recursive function to search the tree structure
+  searchRecursive(data: any[]): any[] {
+    let filteredData: any[] = [];
+
+    for (const item of data) {
+     {
+        filteredData.push(item);
+      }
+
+      if (item.children && item.children.length > 0) {
+        const childResults = this.searchRecursive(item.children);
+        if (childResults.length > 0) {
+          // Add the matched children to the filteredData array
+          filteredData = filteredData.concat(childResults);
+        }
+      }
+    }
+
+    return filteredData;
+  }
 }
