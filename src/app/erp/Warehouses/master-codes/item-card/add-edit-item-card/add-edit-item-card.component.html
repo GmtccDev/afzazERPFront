@@ -76,7 +76,8 @@
 
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" formControlName="itemGroupId"
-                                                    name='itemGroupId' class="" id="itemGroupId" (change)="getItemGroupData(itemCardForm.value.itemGroupId);getItemCardCode(itemCardForm.value.itemGroupId);">
+                                                    name='itemGroupId' class="" id="itemGroupId"
+                                                    (change)="getItemGroupData(itemCardForm.value.itemGroupId);getItemCardCode(itemCardForm.value.itemGroupId);">
                                                     <ng-option *ngFor="let itemGroup of itemGroupsList"
                                                         [value]="itemGroup.id">
                                                         {{lang=="ar" ? itemGroup.nameAr:itemGroup.nameEn}}
@@ -157,9 +158,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
 
                                     </div>
                                     <hr>
@@ -806,6 +804,29 @@
 
                                                                 </div>
 
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </li>
+                                                <li [ngbNavItem]="6">
+                                                    <a ngbNavLink>{{'general.tax'|translate}}</a>
+                                                    <ng-template ngbNavContent>
+                                                        <div class="row  g-2 ">
+                                                            <div class="col-md-6 col-12">
+                                                                <label for="taxId" class="label-name">
+                                                                    {{'general.tax'|translate}}
+                                                                </label>
+
+                                                                <div class="input-group  popup">
+                                                                    <ng-select style="width:100%"
+                                                                        formControlName="taxId" name='taxId' class=""
+                                                                        id="taxId">
+                                                                        <ng-option *ngFor="let tax of taxesList"
+                                                                            [value]="tax.id">
+                                                                            {{lang=="ar" ? tax.nameAr:tax.nameEn}}
+                                                                        </ng-option>
+                                                                    </ng-select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </ng-template>
