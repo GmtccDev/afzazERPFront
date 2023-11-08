@@ -9,7 +9,7 @@ export class AddEditDeterminantsComponent implements OnInit {
 	addUrl: string = '/warehouses-master-codes/determinants/add-determinants';
 	updateUrl: string = '/warehouses-master-codes/determinants/update-determinants/';
 	listUrl: string = '/warehouses-master-codes/determinants';
-	valueType = ['Table', 'Number', 'Text', 'Textarea'];
+	valueType = ['Select of list', 'Number', 'Text', 'Date', 'Select Yes/No'];
 	selectValueType: string;
 	constructor() { }
 

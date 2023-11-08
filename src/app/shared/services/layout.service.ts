@@ -22,7 +22,8 @@ export class LayoutService {
 		settings: {
 			// layout: 'Seoul',
 			// layout: 'LosAngeles',
-			layout: 'Tokyo',
+			// layout: 'Tokyo',
+			layout: 'Madrid',
 			layout_type: 'rtl',
 			layout_version: 'light-only',
 			sidebar_type: 'default-sidebar',

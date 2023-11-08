@@ -75,56 +75,30 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-12 mt-4" *ngIf="selectValueType === 'Table'">
+									<div class="col-12 mt-4" *ngIf="selectValueType === 'Select of list'">
 										<table class="table table-sm m-b-0 table-broder"
 											style="overflow-y: scroll !important;">
 											<thead>
 												<th>#</th>
-												<th>code</th>
-												<th>name</th>
-												<th>value</th>
+												<th>Arabic name</th>
+												<th>English name</th>
 											</thead>
 
 											<tbody>
 												<tr>
 													<td>1</td>
-													<td>01</td>
-													<td>test</td>
-													<td>44</td>
+													<td>المقاس</td>
+													<td>size</td>
+
 
 												</tr>
-												<tr>
-													<td>2</td>
-													<td>02</td>
-													<td>test2</td>
-													<td>99</td>
 
-												</tr>
 											</tbody>
 										</table>
 									</div>
-									<div class="col-md-6 col-12 mt-3" *ngIf="selectValueType === 'Number'">
-										<label for="" class="label-name">{{'determinants.number'|translate}}
-										</label>
-										<div class="input-group ">
-											<input type="number" required class="form-control required" name="">
-										</div>
-									</div>
-									<div class="col-md-6 col-12 mt-3" *ngIf="selectValueType === 'Text'">
-										<label for="" class="label-name">{{'determinants.text'|translate}}
-										</label>
-										<div class="input-group ">
-											<input type="text" required class="form-control required" name="">
-										</div>
-									</div>
-									<div class="col-md-6 col-12 mt-3" *ngIf="selectValueType === 'Textarea'">
-										<label for="" class="label-name">{{'determinants.textarea'|translate}}
-										</label>
-										<div class="input-group ">
-											<textarea required class="form-control required" name=""
-												rows="4"></textarea>
-										</div>
-									</div>
+
+
+
 
 
 
