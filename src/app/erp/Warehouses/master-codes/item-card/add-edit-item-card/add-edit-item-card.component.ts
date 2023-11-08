@@ -52,6 +52,9 @@ export class AddEditItemCardComponent implements OnInit {
   routeItemCardApi = 'ItemCard/get-ddl?'
   itemsList: any;
 
+  routeTaxApi = 'Tax/get-ddl?'
+  taxesList: any;
+
   files: any;
   imagePath: string;
   fullPathUpdate: string;
@@ -121,7 +124,9 @@ export class AddEditItemCardComponent implements OnInit {
       this.getMainUnits(),
       this.getUnitTransactions(),
       this.getLeafAccounts(),
-      this.getItems()
+      this.getItems(),
+      this.getTaxes()
+
 
 
     ]).then(a => {
@@ -223,6 +228,7 @@ export class AddEditItemCardComponent implements OnInit {
       warrantyPeriod: '',
       warrantyType: '',
       itemKind: '',
+      taxId: '',
       heightFactor: '',
       widthFactor: '',
       lengthFactor: '',
@@ -319,6 +325,7 @@ export class AddEditItemCardComponent implements OnInit {
             warrantyPeriod: res.response?.warrantyPeriod,
             warrantyType: res.response?.warrantyType,
             itemKind: res.response?.itemKind + "",
+            taxId: res.response?.taxId,
             heightFactor: res.response?.heightFactor,
             widthFactor: res.response?.widthFactor,
             lengthFactor: res.response?.lengthFactor,
@@ -358,13 +365,13 @@ export class AddEditItemCardComponent implements OnInit {
 
     });
   }
-  getItemCardCode(itemGroupId:any) {
+  getItemCardCode(itemGroupId: any) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.itemCardService.getLastCode().subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-card");
           this.itemCardForm.patchValue({
-            code: itemGroupId + res.response
+            code: res.response == 1 ? itemGroupId + res.response : res.response
           });
 
         },
@@ -426,6 +433,30 @@ export class AddEditItemCardComponent implements OnInit {
         },
         complete: () => {
           //console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getTaxes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeTaxApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.taxesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
         },
       });
 
@@ -611,6 +642,8 @@ export class AddEditItemCardComponent implements OnInit {
       warrantyPeriod: this.itemCardForm.controls["warrantyPeriod"].value,
       warrantyType: this.itemCardForm.controls["warrantyType"].value,
       itemKind: this.itemCardForm.controls["itemKind"].value,
+      taxId: this.itemCardForm.controls["taxId"].value,
+
       heightFactor: this.itemCardForm.controls["heightFactor"].value,
       widthFactor: this.itemCardForm.controls["widthFactor"].value,
       lengthFactor: this.itemCardForm.controls["lengthFactor"].value,
@@ -840,7 +873,10 @@ export class AddEditItemCardComponent implements OnInit {
       minSellingPrice: this.selectedItemCardUnit.minSellingPrice ?? 0,
       consumerPrice: this.selectedItemCardUnit.consumerPrice ?? 0,
       openingCostPrice: this.selectedItemCardUnit.openingCostPrice ?? 0,
-      // unitName: this.selectedItemCardUnit?.uni?? ''
+      unitNameAr: '',
+      unitNameEn: '',
+      unitCode: ''
+
     });
 
 
@@ -858,6 +894,9 @@ export class AddEditItemCardComponent implements OnInit {
       minSellingPrice: 0,
       consumerPrice: 0,
       openingCostPrice: 0,
+      unitNameAr: '',
+      unitNameEn: '',
+      unitCode: ''
 
     }
   }

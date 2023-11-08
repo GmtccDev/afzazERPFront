@@ -144,6 +144,8 @@
 								</div> -->
 								<div ngbDropdown class="d-inline-block" *ngIf="showButtons?.showExport">
 									<button class="btn btn-outline-primary" id="dropdownBasic1"
+									[disabled]="disabledExport"
+									[ngClass]="{'disabled':disabledExport}"
 										ngbDropdownToggle>{{'tabulator.export'|translate}}</button>
 									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
 										<button ngbDropdownItem

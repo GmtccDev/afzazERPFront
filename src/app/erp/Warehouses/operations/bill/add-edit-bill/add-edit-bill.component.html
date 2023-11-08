@@ -193,7 +193,7 @@
                                             </label>
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="referenceNo"
-                                                    name='referenceNo' id="referenceNo">
+                                                    name='referenceNo' id="referenceNo" >
                                                     <ng-option *ngFor="let bill of filterBillsList" [value]="bill.id">
                                                         {{bill.code}}
                                                     </ng-option>
@@ -205,7 +205,7 @@
                                         </div>
                                         <div class="col-md-2 col-12">
                                             <br>
-                                            <button class="btn btn-success" type="button">
+                                            <button class="btn btn-success" type="button" (click)="getBillById(billForm.value.referenceNo,2)">
                                                 {{'general.fetch'|translate}}
                                             </button>
 
@@ -816,6 +816,7 @@
                                                                     <input type="number"
                                                                         [(ngModel)]="billAdditionAndDiscount[i].additionRatio"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
+                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(1,i)"
                                                                         class="form-control">
 
                                                                 </td>
@@ -823,6 +824,7 @@
                                                                     <input type="number"
                                                                         [(ngModel)]="billAdditionAndDiscount[i].additionValue"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
+                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(3,i)"
                                                                         class="form-control">
 
                                                                 </td>
@@ -831,6 +833,7 @@
                                                                     <input type="number"
                                                                         [(ngModel)]="billAdditionAndDiscount[i].discountRatio"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
+                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(2,i)"
                                                                         class="form-control">
 
                                                                 </td>
@@ -838,6 +841,7 @@
                                                                     <input type="number"
                                                                         [(ngModel)]="billAdditionAndDiscount[i].discountValue"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
+                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(4,i)"
                                                                         class="form-control">
 
                                                                 </td>
