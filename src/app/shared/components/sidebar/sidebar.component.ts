@@ -29,8 +29,6 @@ export class SidebarComponent {
 
   subdomain = localStorage.getItem('subDomain');
   constructor(private router: Router, public navServices: NavService,
-    private billTypeService: BillTypeServiceProxy,
-
     public layout: LayoutService) {
 
     let x = this.subdomain;
@@ -148,6 +146,16 @@ export class SidebarComponent {
 
   // Active Nave state
   setNavActive(item) {
+    
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+     
+    } else {
+      localStorage.removeItem('foo')
+     
+    }
+    
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {
         menuItem.active = false;

@@ -489,7 +489,7 @@ export class AddEditAccountComponent implements OnInit {
             noteNotActive: res.response?.noteNotActive,
 
           });
-          this.isLeafAccount =res.response?.isLeafAccount;
+          this.isLeafAccount = res.response?.isLeafAccount;
           console.log(
             'this.accountForm.value set value',
             this.accountForm.value
@@ -525,7 +525,7 @@ export class AddEditAccountComponent implements OnInit {
 
             this.accountService.getAccount(this.parentId).subscribe(res1 => {
 
-              
+debugger
               this.accountForm.patchValue({
 
 
@@ -542,9 +542,13 @@ export class AddEditAccountComponent implements OnInit {
 
                 accountClassificationId: res1.response?.accountClassificationId,
                 accountClassificationIdOfIncomeStatement: res1.response?.accountClassificationIdOfIncomeStatement,
+                budget: res1.response?.budget,
                 noteNotActive: res1.response?.noteNotActive,
 
               });
+              this.accountForm.get('budget').disable();
+              this.accountForm.get('accountClassificationIdOfIncomeStatement').disable();
+              this.accountForm.get('accountType').disable();
 
               console.log(
                 'this.accountForm.value set value',
@@ -612,7 +616,7 @@ export class AddEditAccountComponent implements OnInit {
   }
   confirmSave() {
     var entity = new AccountDto();
-    entity = this.accountForm.value;
+    entity = this.accountForm.getRawValue();
     if (this.accountForm.value.isLeafAccount == true && this.accountForm.value.parentId == null) {
       this.notificationService.error("من فضلك ادخل الاب");
       this.spinner.hide();
@@ -662,7 +666,7 @@ export class AddEditAccountComponent implements OnInit {
     var entity = new AccountDto();
 
     this.accountForm.value.id = this.id;
-    entity = this.accountForm.value;
+    entity = this.accountForm.getRawValue();;
     entity.id = this.id;
     if (this.accountForm.value.isLeafAccount == true && this.accountForm.value.parentId == null) {
       this.notificationService.error("من فضلك ادخل الاب");
@@ -745,9 +749,9 @@ export class AddEditAccountComponent implements OnInit {
     let sub = this.accountService.checkAccount(id).subscribe({
 
       next: (result: any) => {
-        
+
         var parentId = this.accountForm?.value?.parentId;
-        if (result.response == false ) {
+        if (result.response == false) {
           this.accountForm.controls.isLeafAccount.setValue((this.isLeafAccount));
         }
         else if (result.response == true) {

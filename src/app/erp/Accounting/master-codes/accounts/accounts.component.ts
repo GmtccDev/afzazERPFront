@@ -38,7 +38,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   listIds: any[] = [];
   listOfMapData: any[];
-  expandAll: boolean=true;
+  expandAll: boolean = true;
   listOfMapDataNotSearch: any;
   //#endregion
 
@@ -142,7 +142,38 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
   }
+  getAccountsList() {
+    return new Promise<void>((resolve, reject) => {
 
+      let sub = this.accountService.getAllTree(this.filter).subscribe({
+        next: (res) => {
+
+
+
+       
+          if (res.success) {
+
+           
+            this.listOfMapDataNotSearch = res.response
+           
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   //#endregion
 
   //#region CRUD Operations
@@ -190,16 +221,6 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   direction: string = 'ltr';
 
-  onSearchTextChange(searchTxt: string) {
-    this.searchFilters = [
-      [
-        { field: 'nameEn', type: 'like', value: searchTxt },
-        { field: 'nameAr', type: 'like', value: searchTxt },
-        { field: 'code', type: 'like', value: searchTxt },
-        ,
-      ],
-    ];
-  }
 
 
   onEdit(id) {
@@ -363,13 +384,13 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.listOfMapData.forEach(item => {
         this.mapOfExpandedData[item.treeId] = this.convertTreeToListExpanded(item);
       });
-      this.expandAll=false;
+      this.expandAll = false;
     }
     else {
       this.listOfMapData.forEach(item => {
         this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
       });
-      this.expandAll=true;
+      this.expandAll = true;
     }
 
   }
@@ -378,25 +399,33 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
   levelSearchText: string = ''; // Search input text for level
 
   // Function to perform the search
- 
 
-  searchData() {
-    if(this.codeSearchText===''&&this.nameSearchText===''&&this.levelSearchText==''){
-      this.getAccounts() 
+  onKeyUp(event: any) {
+    // Perform your action here
+    if (this.levelSearchText !== '') {
+      this.getAccountsList()
+      
     }
-    
+
+
+  }
+  searchData() {
+    if (this.codeSearchText === '' && this.nameSearchText === '' && this.levelSearchText == '') {
+      this.getAccounts()
+    }
+
     var listOfMapDataSearch = this.searchRecursive(this.listOfMapDataNotSearch);
     const filteredData = listOfMapDataSearch.filter(item => {
       const codeMatch = item.code.toLowerCase().includes(this.codeSearchText.toLowerCase());
       const nameMatch = item.nameAr.toLowerCase().includes(this.nameSearchText.toLowerCase()) ||
-                        item.nameEn.toLowerCase().includes(this.nameSearchText.toLowerCase());
-      const levelMatch =((item.levelId + 1).toString().toLowerCase()).includes(this.levelSearchText.toLowerCase());
+        item.nameEn.toLowerCase().includes(this.nameSearchText.toLowerCase());
+      const levelMatch = ((item.levelId + 1).toString().toLowerCase()).includes(this.levelSearchText.toLowerCase());
 
       return codeMatch && nameMatch && levelMatch;
     });
 
     // Update the data source used in the template
-  
+
     this.listOfMapData = this.convertToTree(filteredData);
     this.listOfMapData.forEach(item => {
       this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
@@ -427,7 +456,7 @@ export class AccountsComponent implements OnInit, OnDestroy, AfterViewInit {
     let filteredData: any[] = [];
 
     for (const item of data) {
-     {
+      {
         filteredData.push(item);
       }
 

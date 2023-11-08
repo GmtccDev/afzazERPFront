@@ -197,8 +197,6 @@ export class NavService implements OnInit, OnDestroy {
 			]
 
 
-
-
 		},
 
 		{
@@ -247,14 +245,29 @@ export class NavService implements OnInit, OnDestroy {
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children:
-				this.billTypes,
-
-
-
-
-
-
-
+				//this.billTypes,
+				[
+					{
+						title: this.translate.instant("bill-type.sales-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.salesBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.purchases-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.purchasesBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.sales-return-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.salesReturnBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.purchases-return-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.purchasesReturnBillTypesNew
+					},
+					{
+						title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.firstPeriodGoodsBillTypesNew
+					},
+				]
 
 		}
 

@@ -255,17 +255,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
 						if (this.salesBills.length > 0) {
-							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'link', active: true }),
-								// this.salesBills.forEach(element => {
-								// 	
-								// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-								// 		{ queryParams: { billTypeId: element.id } })
-								// 	this.navServices.billTypes.filter((value, index, self) => {
-								// 		return index === self.findIndex(obj => (
-								// 			obj.path === value.path && obj.title === value.title
-								// 		));
-								// 	});
-								// });
+							
 								this.salesBills.forEach(element => {
 									this.navServices.salesBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 										{ queryParams: { billTypeId: element.id } })
@@ -283,16 +273,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 						}
 						if (this.purchasesBills.length > 0) {
-							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-bills"), type: 'link', active: true }),
-							// 	this.purchasesBills.forEach(element => {
-							// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-							// 			{ queryParams: { billTypeId: element.id } })
-							// 		this.navServices.billTypes.filter((value, index, self) => {
-							// 			return index === self.findIndex(obj => (
-							// 				obj.path === value.path && obj.title === value.title
-							// 			));
-							// 		});
-							// 	});
+							
 							this.purchasesBills.forEach(element => {
 								this.navServices.purchasesBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { billTypeId: element.id } })
@@ -309,16 +290,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 						}
 						if (this.salesReturnBills.length > 0) {
-							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-return-bills"), type: 'link', active: true }),
-							// 	this.salesReturnBills.forEach(element => {
-							// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-							// 			{ queryParams: { billTypeId: element.id } })
-							// 		this.navServices.billTypes.filter((value, index, self) => {
-							// 			return index === self.findIndex(obj => (
-							// 				obj.path === value.path && obj.title === value.title
-							// 			));
-							// 		});
-							// 	});
+							
 
 							this.salesReturnBills.forEach(element => {
 								this.navServices.salesReturnBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
@@ -337,16 +309,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 						}
 						if (this.purchasesReturnBills.length > 0) {
-							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-return-bills"), type: 'link', active: true }),
-							// 	this.purchasesReturnBills.forEach(element => {
-							// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-							// 			{ queryParams: { billTypeId: element.id } })
-							// 		this.navServices.billTypes.filter((value, index, self) => {
-							// 			return index === self.findIndex(obj => (
-							// 				obj.path === value.path && obj.title === value.title
-							// 			));
-							// 		});
-							// 	});
+							
 							this.purchasesReturnBills.forEach(element => {
 								this.navServices.purchasesReturnBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { billTypeId: element.id } })
@@ -363,16 +326,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 						}
 						if (this.firstPeriodGoodsBills.length > 0) {
-							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'link', active: true }),
-							// 	this.firstPeriodGoodsBills.forEach(element => {
-							// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-							// 			{ queryParams: { billTypeId: element.id } })
-							// 		this.navServices.billTypes.filter((value, index, self) => {
-							// 			return index === self.findIndex(obj => (
-							// 				obj.path === value.path && obj.title === value.title
-							// 			));
-							// 		});
-							// 	});
+							
 							this.firstPeriodGoodsBills.forEach(element => {
 								this.navServices.firstPeriodGoodsBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { billTypeId: element.id } })
@@ -389,16 +343,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 						}
 
-						// res.response.items.forEach(element => {
-						// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-						// 		{ queryParams: { billTypeId: element.id } }
-						// 	)
-						// 	this.navServices.billTypes.filter((value, index, self) => {
-						// 		return index === self.findIndex(obj => (
-						// 			obj.path === value.path && obj.title === value.title
-						// 		));
-						// 	});
-						// });
+						
 					}
 					resolve();
 				},

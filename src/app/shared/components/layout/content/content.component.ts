@@ -53,8 +53,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
 			let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
 				next: (res) => {
 					if (res.success) {
-						
-						this.depositVouchers =res?.response?.items?.filter(x => x.voucherKindId == 1);
+
+						this.depositVouchers = res?.response?.items?.filter(x => x.voucherKindId == 1);
 						this.WithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == 2);
 
 						if (this.depositVouchers.length > 0) {
@@ -67,9 +67,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							})
-							this.navServices.voucherTypesNew= this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+							this.navServices.voucherTypesNew = this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
-								
+
 
 						}
 						if (this.WithdrawalVouchers.length > 0) {
@@ -82,11 +82,11 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							});
-							this.navServices.WithdrawalVouchersNew= this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+							this.navServices.WithdrawalVouchersNew = this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
-											
+
 						}
-					
+
 					}
 					resolve();
 				},
@@ -102,22 +102,22 @@ export class ContentComponent implements OnInit, AfterViewInit {
 		});
 
 	}
-	
-getBillTypes() {
-	return new Promise<void>((resolve, reject) => {
-		let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
-			next: (res) => {
-				if (res.success) {
-					this.billTypes = res.response.items
-					this.salesBills = this.billTypes.filter(x => x.kind == 1);
-					this.purchasesBills = this.billTypes.filter(x => x.kind == 2);
-					this.salesReturnBills = this.billTypes.filter(x => x.kind == 3);
-					this.purchasesReturnBills = this.billTypes.filter(x => x.kind == 4);
-					this.firstPeriodGoodsBills = this.billTypes.filter(x => x.kind == 5);
+
+	getBillTypes() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+				next: (res) => {
+					if (res.success) {
+						this.billTypes = res.response.items
+						this.salesBills = this.billTypes.filter(x => x.kind == 1);
+						this.purchasesBills = this.billTypes.filter(x => x.kind == 2);
+						this.salesReturnBills = this.billTypes.filter(x => x.kind == 3);
+						this.purchasesReturnBills = this.billTypes.filter(x => x.kind == 4);
+						this.firstPeriodGoodsBills = this.billTypes.filter(x => x.kind == 5);
 
 
-					if (this.salesBills.length > 0) {
-						// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'link', active: true }),
+						if (this.salesBills.length > 0) {
+							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'link', active: true }),
 							// this.salesBills.forEach(element => {
 							// 	
 							// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
@@ -139,143 +139,95 @@ getBillTypes() {
 							})
 							const distinctSalesBillTypes = this.navServices.salesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
-							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'sub', active: false,children:distinctSalesBillTypes })
-								
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'sub', active: false, children: distinctSalesBillTypes })
+
+
+
+						}
+						if (this.purchasesBills.length > 0) {
+
+							this.purchasesBills.forEach(element => {
+								this.navServices.purchasesBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+									{ queryParams: { billTypeId: element.id } })
+								this.navServices.purchasesBillTypesNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
+							})
+							const distinctPurchasesBillTypes = this.navServices.purchasesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-bills"), type: 'sub', active: false, children: distinctPurchasesBillTypes })
+
+
+						}
+						if (this.salesReturnBills.length > 0) {
+							this.salesReturnBills.forEach(element => {
+								this.navServices.salesReturnBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+									{ queryParams: { billTypeId: element.id } })
+								this.navServices.salesReturnBillTypesNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
+							})
+							const distinctSalesReturnBillTypes = this.navServices.salesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-return-bills"), type: 'sub', active: false, children: distinctSalesReturnBillTypes })
+
+
+
+						}
+						if (this.purchasesReturnBills.length > 0) {
+
+							this.purchasesReturnBills.forEach(element => {
+								this.navServices.purchasesReturnBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+									{ queryParams: { billTypeId: element.id } })
+								this.navServices.purchasesReturnBillTypesNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
+							})
+							const distinctPurchasesReturnBillTypes = this.navServices.purchasesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-return-bills"), type: 'sub', active: false, children: distinctPurchasesReturnBillTypes })
+
+
+						}
+						if (this.firstPeriodGoodsBills.length > 0) {
+							this.firstPeriodGoodsBills.forEach(element => {
+								this.navServices.firstPeriodGoodsBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+									{ queryParams: { billTypeId: element.id } })
+								this.navServices.firstPeriodGoodsBillTypesNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
+							})
+							const distinctFirstPeriodGoodsBillTypes = this.navServices.firstPeriodGoodsBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'sub', active: false, children: distinctFirstPeriodGoodsBillTypes })
+
+
+						}
 
 
 					}
-					if (this.purchasesBills.length > 0) {
-						// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-bills"), type: 'link', active: true }),
-						// 	this.purchasesBills.forEach(element => {
-						// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-						// 			{ queryParams: { billTypeId: element.id } })
-						// 		this.navServices.billTypes.filter((value, index, self) => {
-						// 			return index === self.findIndex(obj => (
-						// 				obj.path === value.path && obj.title === value.title
-						// 			));
-						// 		});
-						// 	});
-						this.purchasesBills.forEach(element => {
-							this.navServices.purchasesBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-								{ queryParams: { billTypeId: element.id } })
-							this.navServices.purchasesBillTypesNew.filter((value, index, self) => {
-								return index === self.findIndex(obj => (
-									obj.path === value.path && obj.title === value.title
-								));
-							});
-						})
-						const distinctPurchasesBillTypes = this.navServices.purchasesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+					resolve();
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
 
-						this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-bills"), type: 'sub', active: false,children:distinctPurchasesBillTypes })
-						
+			this.subsList.push(sub);
 
-					}
-					if (this.salesReturnBills.length > 0) {
-						// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-return-bills"), type: 'link', active: true }),
-						// 	this.salesReturnBills.forEach(element => {
-						// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-						// 			{ queryParams: { billTypeId: element.id } })
-						// 		this.navServices.billTypes.filter((value, index, self) => {
-						// 			return index === self.findIndex(obj => (
-						// 				obj.path === value.path && obj.title === value.title
-						// 			));
-						// 		});
-						// 	});
-
-						this.salesReturnBills.forEach(element => {
-							this.navServices.salesReturnBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-								{ queryParams: { billTypeId: element.id } })
-							this.navServices.salesReturnBillTypesNew.filter((value, index, self) => {
-								return index === self.findIndex(obj => (
-									obj.path === value.path && obj.title === value.title
-								));
-							});
-						})
-						const distinctSalesReturnBillTypes = this.navServices.salesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-						this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-return-bills"), type: 'sub', active: false,children:distinctSalesReturnBillTypes })
-						
-
-
-					}
-					if (this.purchasesReturnBills.length > 0) {
-						// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-return-bills"), type: 'link', active: true }),
-						// 	this.purchasesReturnBills.forEach(element => {
-						// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-						// 			{ queryParams: { billTypeId: element.id } })
-						// 		this.navServices.billTypes.filter((value, index, self) => {
-						// 			return index === self.findIndex(obj => (
-						// 				obj.path === value.path && obj.title === value.title
-						// 			));
-						// 		});
-						// 	});
-						this.purchasesReturnBills.forEach(element => {
-							this.navServices.purchasesReturnBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-								{ queryParams: { billTypeId: element.id } })
-							this.navServices.purchasesReturnBillTypesNew.filter((value, index, self) => {
-								return index === self.findIndex(obj => (
-									obj.path === value.path && obj.title === value.title
-								));
-							});
-						})
-						const distinctPurchasesReturnBillTypes = this.navServices.purchasesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-						this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-return-bills"), type: 'sub', active: false,children:distinctPurchasesReturnBillTypes })
-						
-
-					}
-					if (this.firstPeriodGoodsBills.length > 0) {
-						// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'link', active: true }),
-						// 	this.firstPeriodGoodsBills.forEach(element => {
-						// 		this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-						// 			{ queryParams: { billTypeId: element.id } })
-						// 		this.navServices.billTypes.filter((value, index, self) => {
-						// 			return index === self.findIndex(obj => (
-						// 				obj.path === value.path && obj.title === value.title
-						// 			));
-						// 		});
-						// 	});
-						this.firstPeriodGoodsBills.forEach(element => {
-							this.navServices.firstPeriodGoodsBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-								{ queryParams: { billTypeId: element.id } })
-							this.navServices.firstPeriodGoodsBillTypesNew.filter((value, index, self) => {
-								return index === self.findIndex(obj => (
-									obj.path === value.path && obj.title === value.title
-								));
-							});
-						})
-						const distinctFirstPeriodGoodsBillTypes = this.navServices.firstPeriodGoodsBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-						this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'sub', active: false,children:distinctFirstPeriodGoodsBillTypes })
-						
-
-					}
-
-					// res.response.items.forEach(element => {
-					// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-					// 		{ queryParams: { billTypeId: element.id } }
-					// 	)
-					// 	this.navServices.billTypes.filter((value, index, self) => {
-					// 		return index === self.findIndex(obj => (
-					// 			obj.path === value.path && obj.title === value.title
-					// 		));
-					// 	});
-					// });
-				}
-				resolve();
-			},
-			error: (err: any) => {
-				reject(err);
-			},
-			complete: () => {
-			},
 		});
 
-		this.subsList.push(sub);
-
-	});
-
-}
+	}
 	customizeLayoutType() {
 
 
