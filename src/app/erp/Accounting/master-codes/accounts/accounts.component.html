@@ -2,10 +2,10 @@
 	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <div class="search-bar">
-	<input type="text" [(ngModel)]="codeSearchText" placeholder="Search by Code">
-	<input type="text" [(ngModel)]="nameSearchText" placeholder="Search by Name">
-	<input type="text" [(ngModel)]="levelSearchText" placeholder="Search by Level">
-	<button nz-button nzType="primary" (click)="searchData()">{{'Search'|translate}}</button>
+	<input type="text" class="form-control icon-branch" [(ngModel)]="codeSearchText" placeholder=" {{'general.code'|translate}}">
+	<input type="text" class="form-control icon-branch" [(ngModel)]="nameSearchText" placeholder="{{'general.name'|translate}}">
+	<input type="text" class="form-control icon-branch" [(ngModel)]="levelSearchText" (keyup)="onKeyUp($event)" placeholder="{{'general.level'|translate}}">
+	<button nz-button nzType="primary" (click)="searchData()">{{'general.search'|translate}}</button>
 </div>
 <button nz-button nzType="primary" (click)="expandAllRows()">
 	{{ 'general.all' | translate }}
