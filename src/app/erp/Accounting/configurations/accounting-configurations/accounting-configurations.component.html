@@ -116,7 +116,7 @@
 
 					<ul class="list-group">
 						<li class="list-group-item" *ngFor="let item of cycleList">
-							<input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value" name="cycleSelected" 
+							<input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value" name="cycleSelected"
 								value="{{item.value}}" (change)="onItemChange(item)" />
 							{{lang=="ar"?item.nameAr:item.nameEn}}
 
@@ -135,7 +135,7 @@
 		</div>
 		<div class="card-body">
 			<div class="align-items-center m-0 row">
-				<div class="col-md-6 col-12">
+				<div class="col-md-6 col-12 mb-3">
 					<label for="account" class="label-name">
 						{{'accounting-configration.account'|translate}}
 
@@ -158,7 +158,7 @@
 					</div>
 
 				</div>
-				<div class="col-md-6 col-12">
+				<div class="col-md-6 col-12 mb-3">
 					<label for="account" class="label-name">
 						{{'accounting-configration.accountReceivables'|translate}}
 
@@ -182,7 +182,7 @@
 					</div>
 
 				</div>
-				<div class="col-md-6 col-12">
+				<div class="col-md-6 col-12 mb-3">
 					<label for="account" class="label-name">
 						{{'accounting-configration.account-exchange'|translate}}
 
@@ -205,7 +205,7 @@
 					</div>
 
 				</div>
-				<div class="col-md-6 col-12">
+				<div class="col-md-6 col-12 mb-3">
 					<label for="account" class="label-name">
 						{{'component-names.fiscalPeriod'|translate}}
 
@@ -224,7 +224,7 @@
 
 
 				</div>
-				<div class="col-md-6 col-12">
+				<div class="col-md-6 col-12 mb-3">
 					<!-- <div class="media"> -->
 					<label class="label-name"> {{'accounting-configration.idleTime'|translate}} </label>
 					<div class="icon-state media-body">

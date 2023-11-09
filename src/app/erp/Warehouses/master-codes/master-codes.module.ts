@@ -37,6 +37,8 @@ import { SalesPersonCardComponent } from './sales-person-card/sales-person-card.
 import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-person-card/add-sales-person-card.component';
 import { SalesPersonCommissionCardComponent } from './sales-person-commission-card/sales-person-commission-card.component';
 import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
+import { DeterminantsComponent } from './determinants/determinants.component';
+import { AddEditDeterminantsComponent } from './determinants/add-edit-determinants/add-edit-determinants.component';
 
 
 
@@ -46,7 +48,7 @@ import { AddSalesPersonCommissionCardComponent } from './sales-person-commission
     , StoreCardComponent, AddEditStoreCardComponent, PaymentMethodComponent, AddEditPaymentMethodComponent
     , CustomerCardComponent, AddEditCustomerCardComponent, SupplierCardComponent, AddEditSupplierCardComponent
     , ItemCardComponent, AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent,
-    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, 
+    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, DeterminantsComponent, AddEditDeterminantsComponent, 
   ],
   imports: [
     CommonModule,
