@@ -6,7 +6,7 @@ import { AddEditPeriodComponent } from './period/add-edit-period/add-edit-period
 import { UnitComponent } from 'src/app/erp/Warehouses/master-codes/unit/unit/unit.component';
 import { AddEditUnitComponent } from 'src/app/erp/Warehouses/master-codes/unit/add-edit-unit/add-edit-unit.component';
 import { AddEditTaxComponent } from 'src/app/erp/Warehouses/master-codes/tax/add-edit-tax/add-edit-tax.component';
-import { TaxComponent} from 'src/app/erp/Warehouses/master-codes/tax/tax.component'
+import { TaxComponent } from 'src/app/erp/Warehouses/master-codes/tax/tax.component'
 import { AddEditStoreCardComponent } from './store-card/add-edit-store-card/add-edit-store-card.component';
 import { StoreCardComponent } from './store-card/store-card.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
@@ -24,11 +24,13 @@ import { BillTypeComponent } from './bill-type/bill-type.component';
 import { SalesPersonCardComponent } from './sales-person-card/sales-person-card.component';
 import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-person-card/add-sales-person-card.component';
 import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
+import { DeterminantsComponent } from './determinants/determinants.component';
+import { AddEditDeterminantsComponent } from './determinants/add-edit-determinants/add-edit-determinants.component';
 const routes: Routes = [
 	{
 		path: '',
 		children: [
-		
+
 			{ path: 'period', component: PeriodComponent },
 			{ path: 'period/add-period', component: AddEditPeriodComponent },
 			{ path: 'period/update-period/:id', component: AddEditPeriodComponent },
@@ -40,7 +42,7 @@ const routes: Routes = [
 			{ path: 'tax', component: TaxComponent },
 			{ path: 'storeCard/add-storeCard', component: AddEditStoreCardComponent },
 			{ path: 'storeCard/update-storeCard/:id', component: AddEditStoreCardComponent },
-			{ path: 'storeCard', component: StoreCardComponent},
+			{ path: 'storeCard', component: StoreCardComponent },
 			{ path: 'storeCard/add-storeCard/:parentId', component: AddEditStoreCardComponent },
 			{ path: 'paymentMethod', component: PaymentMethodComponent },
 			{ path: 'paymentMethod/add-paymentMethod', component: AddEditPaymentMethodComponent },
@@ -56,7 +58,7 @@ const routes: Routes = [
 			{ path: 'itemCard/update-itemCard/:id', component: AddEditItemCardComponent },
 			{ path: 'itemGroupsCard/add-itemGroupsCard', component: AddEditItemGroupsCardComponent },
 			{ path: 'itemGroupsCard/update-itemGroupsCard/:id', component: AddEditItemGroupsCardComponent },
-			{ path: 'itemGroupsCard', component: ItemGroupsCardComponent},
+			{ path: 'itemGroupsCard', component: ItemGroupsCardComponent },
 			{ path: 'itemGroupsCard/add-itemGroupsCard/:parentId', component: AddEditItemGroupsCardComponent },
 			{ path: 'billType', component: BillTypeComponent },
 			{ path: 'billType/add-billType', component: AddEditBillTypeComponent },
@@ -67,6 +69,9 @@ const routes: Routes = [
 			{ path: 'sales-person-commission-card', component: SalesPersonCommissionCardComponent },
 			{ path: 'sales-person-commission-card/add-sales-person-commission-card', component: AddSalesPersonCommissionCardComponent },
 			{ path: 'sales-person-commission-card/update-sales-person-commission-card/:id', component: AddSalesPersonCommissionCardComponent },
+			{ path: 'determinants', component: DeterminantsComponent },
+			{ path: 'determinants/add-determinants', component: AddEditDeterminantsComponent },
+			{ path: 'determinants/update-determinants/:id', component: AddEditDeterminantsComponent },
 		]
 	}
 ];
@@ -74,7 +79,7 @@ const routes: Routes = [
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
-	
+
 })
 
 export class MasterCodesRoutingModule { }

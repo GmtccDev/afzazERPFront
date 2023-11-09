@@ -33,6 +33,8 @@ export class ItemCardDto {
     warrantyPeriod: number | undefined;
     warrantyType: number | undefined;
     itemKind: number | undefined;
+    taxId: number | undefined;
+
     heightFactor: number | undefined;
     widthFactor: number | undefined;
     lengthFactor: number | undefined;
@@ -56,7 +58,9 @@ export class ItemCardUnitDto {
     minSellingPrice: number | undefined;
     consumerPrice: number | undefined;
     openingCostPrice: number | undefined;
-   // unitName: string | undefined;
+    unitNameAr: string | undefined;
+    unitNameEn: string | undefined;
+    unitCode: string | undefined;
 
 
 }

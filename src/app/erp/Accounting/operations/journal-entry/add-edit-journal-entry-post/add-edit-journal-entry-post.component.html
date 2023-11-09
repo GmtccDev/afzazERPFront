@@ -6,17 +6,18 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card">
-					<div class="card-body">
-						<div class="col-md-6 col-12">
+				<div class="card card-absolute">
+					<div class="bg-primary card-header">
 
-							<div class="form-group position-relative">
+						<div class="form-group position-relative">
 
-								{{codeSerial}}
+							{{codeSerial}}
 
 
-							</div>
 						</div>
+					</div>
+					<div class="card-body mt-4">
+
 						<form [formGroup]="journalEntryForm" id="journalEntrySubmit" class="tabs-form">
 							<div class="main-branch ranoo">
 								<div class="wrapper-title">
@@ -169,16 +170,24 @@
 											<thead class="thead-light">
 												<tr>
 													<!-- <th># </th> -->
-													<th style="width: 15%;">{{ 'journalEntry.accountNumber' | translate }}</th>
-                                                    <th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
-                                                    <th style="width: 10%;">{{ 'journalEntry.debit' | translate }}</th>
-                                                    <th style="width: 15%;">{{ 'journalEntry.currency' | translate }}</th>
-                                                    <th style="width: 10%;">{{ 'journalEntry.balance' | translate }}</th>
-                                                    <th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}</th>
-                                                    <th style="width: 10%;">{{ 'journalEntry.localDebit' | translate }}</th>
-                                                    <th style="width: 15%;">{{ 'journalEntry.costCenter' | translate }}</th>
-                                                    <th style="width: 14%;">{{ 'journalEntry.description' | translate }}</th>
-                                                    <th style="width: 1%;">{{ 'journalEntry.actions' | translate }}</th>
+													<th style="width: 15%;">{{ 'journalEntry.accountNumber' | translate
+														}}
+													</th>
+													<th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
+													<th style="width: 10%;">{{ 'journalEntry.debit' | translate }}</th>
+													<th style="width: 15%;">{{ 'journalEntry.currency' | translate }}
+													</th>
+													<th style="width: 10%;">{{ 'journalEntry.balance' | translate }}
+													</th>
+													<th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}
+													</th>
+													<th style="width: 10%;">{{ 'journalEntry.localDebit' | translate }}
+													</th>
+													<th style="width: 15%;">{{ 'journalEntry.costCenter' | translate }}
+													</th>
+													<th style="width: 14%;">{{ 'journalEntry.description' | translate }}
+													</th>
+													<th style="width: 1%;">{{ 'journalEntry.actions' | translate }}</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -323,7 +332,7 @@
 
 
 													<td>
-														<!-- <button class="btn btn-danger btn-table px-3" 
+														<!-- <button class="btn btn-danger btn-table px-3"
                                                         value="{{'buttons.delete'|translate}}"
                                                         type="button" (click)="onDeleteRow(i)">
                                                         <i class="fa fa-trash"></i>
@@ -344,24 +353,26 @@
 								<i class="fa fa-plus"></i>
 							  </button> -->
 						</form>
-					    <table class="mt-4 total-table table table-borderless text-end w-100">
-                            <tr>
-                              <td>{{'journalEntry.totalDebit' | translate }}</td>
-                              <td class="text-start">{{ totalCredit }}</td>
-                            </tr>
-                            <tr>
-                              <td>{{'journalEntry.totalCredit' | translate }}</td>
-                              <td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebit }}</label></td>
-                            </tr>
-                            <tr>
-                              <td>{{'journalEntry.totalDebitLocal' | translate }}</td>
-                              <td class="text-start"><label class="p-0">{{ totalCreditLocal }}</label></td>
-                            </tr>
-                            <tr>
-                              <td>{{'journalEntry.totalCreditLocal' | translate }}</td>
-                              <td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebitLocal }}</label></td>
-                            </tr>
-                          </table>
+						<table class="mt-4 total-table table table-borderless text-end w-100">
+							<tr>
+								<td>{{'journalEntry.totalDebit' | translate }}</td>
+								<td class="text-start">{{ totalCredit }}</td>
+							</tr>
+							<tr>
+								<td>{{'journalEntry.totalCredit' | translate }}</td>
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebit }}</label>
+								</td>
+							</tr>
+							<tr>
+								<td>{{'journalEntry.totalDebitLocal' | translate }}</td>
+								<td class="text-start"><label class="p-0">{{ totalCreditLocal }}</label></td>
+							</tr>
+							<tr>
+								<td>{{'journalEntry.totalCreditLocal' | translate }}</td>
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebitLocal
+										}}</label></td>
+							</tr>
+						</table>
 
 
 					</div>

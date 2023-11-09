@@ -147,14 +147,14 @@ export class SidebarComponent {
   // Active Nave state
   setNavActive(item) {
     
-    if (!localStorage.getItem('foo')) {
-      localStorage.setItem('foo', 'no reload')
-      location.reload()
+    // if (!localStorage.getItem('foo')) {
+    //   localStorage.setItem('foo', 'no reload')
+    //   location.reload()
      
-    } else {
-      localStorage.removeItem('foo')
+    // } else {
+    //   localStorage.removeItem('foo')
      
-    }
+    // }
     
     this.menuItems.filter(menuItem => {
       if (menuItem !== item) {

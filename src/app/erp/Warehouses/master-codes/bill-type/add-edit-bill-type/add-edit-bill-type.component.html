@@ -1,216 +1,246 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form [formGroup]="billTypeForm" id="billTypeSubmit" class="tabs-form">
-                            <div class="main-branch ranoo">
-                                <div class="wrapper-title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<form [formGroup]="billTypeForm" id="billTypeSubmit" class="tabs-form">
+							<div class="main-branch ranoo">
+								<div class="wrapper-title">
 
-                                    <h3>{{'bill-type.bill-type-information'|translate}}</h3>
-                                    <hr>
-                                    <div class="row  ">
-                                        <div class="col-md-6 col-12 offset-6">
-                                            <label for="kind" class="label-name">
+									<h3>{{'bill-type.bill-type-information'|translate}}</h3>
+									<hr>
+									<div class="row  ">
+										<div class="col-md-6 col-12 offset-6">
+											<label for="kind" class="label-name">
 												{{'bill-type.bill-type'|translate}}
 
 											</label>
-                                            <div class="input-group  popup">
-                                                <ng-select class="custom" formControlName="kind" [items]="billKinds" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
-                                                <div *ngIf="(f['kind'].touched || f['kind'].dirty ) && f['kind'].invalid" class="alert alert-danger">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['kind'].errors && f['kind'].errors['required']">
+											<div class="input-group  popup">
+												<ng-select class="custom" formControlName="kind" [items]="billKinds"
+													bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+												<div *ngIf="(f['kind'].touched || f['kind'].dirty ) && f['kind'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['kind'].errors && f['kind'].errors['required']"
+														class="text-white">
 														{{'validation-messages.required-field'|translate}}</span>
-                                                </div>
-                                            </div>
+												</div>
+											</div>
 
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="nameAr" class="label-name">
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label>
-                                            <span class="text-danger">*</span>
-                                            <div class="form-group position-relative">
+											<span class="text-danger">*</span>
+											<div class="form-group position-relative">
 
-                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
-                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
+												<input type="text" class="form-control icon-branch"
+													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
+													name="nameAr" formControlName="nameAr">
+												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-                                                </div>
+												</div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label>
-                                            <div class="form-group position-relative">
-                                                <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="nameEn"
+												class="label-name">{{'general.nameEn'|translate}}</label>
+											<div class="form-group position-relative">
+												<input type="text" class="form-control icon-branch" name="nameEn"
+													formControlName="nameEn">
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <!-- start tabs -->
-                                    <nav ngbNav #nav="ngbNav" class="nav-tabs mt-12">
-                                        <li [ngbNavItem]="1">
-                                            <a ngbNavLink>{{'bill-type.basic-properties'|translate}}</a>
-                                            <ng-template ngbNavContent>
-                                                <div class="row ">
-                                                    <div class="col-6 col-md-6">
-                                                        <label for="warehouses-effect" class="label-name">{{'bill-type.warehouse-effect'|translate}}
+											</div>
+										</div>
+									</div>
+									<hr>
+									<!-- start tabs -->
+									<nav ngbNav #nav="ngbNav" class="nav-tabs mt-12">
+										<li [ngbNavItem]="1">
+											<a ngbNavLink>{{'bill-type.basic-properties'|translate}}</a>
+											<ng-template ngbNavContent>
+												<div class="row ">
+													<div class="col-6 col-md-6">
+														<label for="warehouses-effect"
+															class="label-name">{{'bill-type.warehouse-effect'|translate}}
 														</label>
-                                                        <ul class="list-group">
-                                                            <li class="list-group-item" *ngFor="let item of warehouseEffectList">
-                                                                <input type="radio" formControlName="warehouseEffect" name="warehouseEffect" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
+														<ul class="list-group">
+															<li class="list-group-item"
+																*ngFor="let item of warehouseEffectList">
+																<input type="radio" formControlName="warehouseEffect"
+																	name="warehouseEffect" value="{{item.value}}" />
+																{{lang=="ar"?item.nameAr:item.nameEn}}
 
-                                                            </li>
-                                                        </ul>
-                                                        <br />
-                                                        <div *ngIf="(f['warehouseEffect'].touched || f['warehouseEffect'].dirty ) && f['warehouseEffect'].invalid" class="validation alert-danger position-absolute">
-                                                            <i class="fa fa-close "></i>
-                                                            <span *ngIf="f['warehouseEffect'].errors && f['warehouseEffect'].errors['required']" class="f-12 ng-star-inserted text-white">
+															</li>
+														</ul>
+														<br />
+														<div *ngIf="(f['warehouseEffect'].touched || f['warehouseEffect'].dirty ) && f['warehouseEffect'].invalid"
+															class="validation alert-danger position-absolute">
+															<i class="fa fa-close "></i>
+															<span
+																*ngIf="f['warehouseEffect'].errors && f['warehouseEffect'].errors['required']"
+																class="f-12 ng-star-inserted text-white">
 																{{'error.required'|translate}}</span>
-                                                        </div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <label for="accounting-effect" class="label-name">{{'bill-type.accounting-effect'|translate}}
+													</div>
+													<div class="col-6 col-md-6">
+														<label for="accounting-effect"
+															class="label-name">{{'bill-type.accounting-effect'|translate}}
 														</label>
-                                                        <ul class="list-group">
-                                                            <li class="list-group-item" *ngFor="let item of accountingEffectList">
-                                                                <input type="radio" formControlName="accountingEffect" name="accountingEffect" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
+														<ul class="list-group">
+															<li class="list-group-item"
+																*ngFor="let item of accountingEffectList">
+																<input type="radio" formControlName="accountingEffect"
+																	name="accountingEffect" value="{{item.value}}" />
+																{{lang=="ar"?item.nameAr:item.nameEn}}
 
-                                                            </li>
-                                                        </ul>
-                                                        <br />
-                                                        <div *ngIf="(f['accountingEffect'].touched || f['accountingEffect'].dirty ) && f['accountingEffect'].invalid" class="validation alert-danger position-absolute">
-                                                            <i class="fa fa-close "></i>
-                                                            <span *ngIf="f['accountingEffect'].errors && f['accountingEffect'].errors['required']" class="f-12 ng-star-inserted text-white">
+															</li>
+														</ul>
+														<br />
+														<div *ngIf="(f['accountingEffect'].touched || f['accountingEffect'].dirty ) && f['accountingEffect'].invalid"
+															class="validation alert-danger position-absolute">
+															<i class="fa fa-close "></i>
+															<span
+																*ngIf="f['accountingEffect'].errors && f['accountingEffect'].errors['required']"
+																class="f-12 ng-star-inserted text-white">
 																{{'error.required'|translate}}</span>
-                                                        </div>
+														</div>
 
 
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <label for="coding-policy" class="label-name">{{'bill-type.coding-policy'|translate}}
+													</div>
+													<div class="col-6 col-md-6">
+														<label for="coding-policy"
+															class="label-name">{{'bill-type.coding-policy'|translate}}
 														</label>
-                                                        <ul class="d-flex flex-row list-group accounting-effect">
-                                                            <li class="list-group-item border-0" *ngFor="let item of codingPolicyList">
-                                                                <input type="radio" formControlName="codingPolicy" name="codingPolicy" value="{{item.value}}" /> {{lang=="ar"?item.nameAr:item.nameEn}}
+														<ul class="d-flex flex-row list-group accounting-effect">
+															<li class="list-group-item border-0"
+																*ngFor="let item of codingPolicyList">
+																<input type="radio" formControlName="codingPolicy"
+																	name="codingPolicy" value="{{item.value}}" />
+																{{lang=="ar"?item.nameAr:item.nameEn}}
 
-                                                            </li>
-                                                        </ul>
-                                                        <div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid" class="validation alert-danger position-absolute">
-                                                            <i class="fa fa-close "></i>
-                                                            <span *ngIf="f['codingPolicy'].errors && f['codingPolicy'].errors['required']" class="f-12 ng-star-inserted text-white">
+															</li>
+														</ul>
+														<div *ngIf="(f['codingPolicy'].touched || f['codingPolicy'].dirty ) && f['codingPolicy'].invalid"
+															class="validation alert-danger position-absolute">
+															<i class="fa fa-close "></i>
+															<span
+																*ngIf="f['codingPolicy'].errors && f['codingPolicy'].errors['required']"
+																class="f-12 ng-star-inserted text-white">
 																{{'error.required'|translate}}</span>
-                                                        </div>
+														</div>
 
 
-                                                    </div>
-                                                    <!-- <hr class="mb-1 mt-1 mr-0 ml-0"> -->
+													</div>
+													<!-- <hr class="mb-1 mt-1 mr-0 ml-0"> -->
 
-                                                    <div class="d-flex mb-3 mt-4">
-                                                        <div class="col-6 col-md-6">
-                                                            <div class="media">
-                                                                <label class="label-name">
+													<div class="d-flex mb-3 mt-4">
+														<div class="col-6 col-md-6">
+															<div class="media">
+																<label class="label-name">
 																	{{'bill-type.affect-on-cost-price'|translate}}
 																</label>
-                                                                <div class="icon-state media-body ">
-                                                                    <label class="switch">
+																<div class="icon-state media-body ">
+																	<label class="switch">
 																		<input type="checkbox" class="form-control"
 																			name="affectOnCostPrice"
 																			formControlName="affectOnCostPrice">
 																		<span class="switch-state"></span>
 																	</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-6 col-md-6">
-                                                            <div class="media">
-                                                                <label class="label-name">
+																</div>
+															</div>
+														</div>
+														<div class="col-6 col-md-6">
+															<div class="media">
+																<label class="label-name">
 																	{{'bill-type.post-to-accounts-automatically'|translate}}
 																</label>
-                                                                <div class="icon-state media-body ">
-                                                                    <label class="switch">
+																<div class="icon-state media-body ">
+																	<label class="switch">
 																		<input type="checkbox" class="form-control"
 																			name="postingToAccountsAutomatically"
 																			formControlName="postingToAccountsAutomatically">
 																		<span class="switch-state"></span>
 																	</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+																</div>
+															</div>
+														</div>
+													</div>
 
 
 
-                                                    <h3 class="b-b-secondary mt-2 pb-2">
-                                                        {{'bill-type.other-options'|translate}}
-                                                    </h3>
-                                                    <div class="d-flex mt-3">
-                                                        <div class=" col-md-6 col-12">
-                                                            <div class="media">
-                                                                <label class="label-name">
+													<h3 class="b-b-secondary mt-2 pb-2">
+														{{'bill-type.other-options'|translate}}
+													</h3>
+													<div class="d-flex mt-3">
+														<div class=" col-md-6 col-12">
+															<div class="media">
+																<label class="label-name">
 																	{{'bill-type.confirm-cost-center'|translate}}
 																</label>
-                                                                <div class="icon-state media-body ">
-                                                                    <label class="switch">
+																<div class="icon-state media-body ">
+																	<label class="switch">
 																		<input type="checkbox" class="form-control"
 																			name="confirmCostCenter"
 																			formControlName="confirmCostCenter">
 																		<span class="switch-state"></span>
 																	</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class=" col-md-6 col-12">
-                                                            <div class="media">
-                                                                <label class="label-name">
+																</div>
+															</div>
+														</div>
+														<div class=" col-md-6 col-12">
+															<div class="media">
+																<label class="label-name">
 																	{{'bill-type.confirm-analytical-code'|translate}}
 																</label>
-                                                                <div class="icon-state media-body ">
-                                                                    <label class="switch">
+																<div class="icon-state media-body ">
+																	<label class="switch">
 																		<input type="checkbox" class="form-control"
 																			name="confirmAnalyticalCode"
 																			formControlName="confirmAnalyticalCode">
 																		<span class="switch-state"></span>
 																	</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+																</div>
+															</div>
+														</div>
+													</div>
 
-                                                </div>
+												</div>
 
-                                            </ng-template>
-                                        </li>
-                                        <li [ngbNavItem]="2">
-                                            <a ngbNavLink>{{'bill-type.additional-options'|translate}}</a>
-                                            <ng-template ngbNavContent>
-                                                <div class="row ">
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+											</ng-template>
+										</li>
+										<li [ngbNavItem]="2">
+											<a ngbNavLink>{{'bill-type.additional-options'|translate}}</a>
+											<ng-template ngbNavContent>
+												<div class="row ">
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.calculating-tax'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="calculatingTax"
 																		formControlName="calculatingTax"
 																		(change)="calculatingTax()">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
+															</div>
+														</div>
 
-                                                    </div>
-                                                    <!-- <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax!=true">
+													</div>
+													<!-- <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax!=true">
                                                         <div class="media">
                                                             <label class="label-name">
                                                                 {{'bill-type.calculating-value-added-tax-after-luxury-tax'|translate}}
@@ -227,303 +257,334 @@
 
                                                     </div> -->
 
-                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax==true">
-                                                        <div class="media">
-                                                            <label class="label-name">
+													<div class="col-6 col-md-6"
+														*ngIf="billTypeForm.value.calculatingTax==true">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.calculating-tax-on-price-after-deduction-and-addition'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="calculatingTaxOnPriceAfterDeductionAndAddition"
 																		formControlName="calculatingTaxOnPriceAfterDeductionAndAddition">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
+															</div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-6 col-md-6" *ngIf="billTypeForm.value.calculatingTax==true">
-                                                        <div class="media">
-                                                            <label class="label-name">
+													</div>
+													<div class="col-6 col-md-6"
+														*ngIf="billTypeForm.value.calculatingTax==true">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.calculating-tax-manual'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="calculatingTaxManual"
 																		formControlName="calculatingTaxManual">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                            <div class="input-group  popup">
-                                                                <ng-select style="width:100%" formControlName="manuallyTaxType" name='manuallyTaxType' class="" id="manuallyTaxType">
-                                                                    <ng-option *ngFor="let taxManualEntryType of taxManualEntryTypeList" [value]="taxManualEntryType.value">
-                                                                        {{lang=="ar" ? taxManualEntryType.nameAr:taxManualEntryType.nameEn}}
-                                                                    </ng-option>
-                                                                </ng-select>
+															</div>
+															<div class="input-group  popup">
+																<ng-select style="width:100%"
+																	formControlName="manuallyTaxType"
+																	name='manuallyTaxType' class=""
+																	id="manuallyTaxType">
+																	<ng-option
+																		*ngFor="let taxManualEntryType of taxManualEntryTypeList"
+																		[value]="taxManualEntryType.value">
+																		{{lang=="ar" ?
+																		taxManualEntryType.nameAr:taxManualEntryType.nameEn}}
+																	</ng-option>
+																</ng-select>
 
 
-                                                            </div>
-                                                        </div>
+															</div>
+														</div>
 
-                                                    </div>
+													</div>
 
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.discount-affects-cost-price'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="discountAffectsCostPrice"
 																		formControlName="discountAffectsCostPrice">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
+															</div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+													</div>
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.addition-affects-cost-price'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="additionAffectsCostPrice"
 																		formControlName="additionAffectsCostPrice">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
+															</div>
+														</div>
 
-                                                    </div>
+													</div>
 
 
-                                                </div>
-                                            </ng-template>
-                                        </li>
-                                        <li [ngbNavItem]="3">
-                                            <a ngbNavLink>{{'bill-type.default-values'|translate}}</a>
-                                            <ng-template ngbNavContent>
-                                                <div class="row ">
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="defaultCurrencyId" class="label-name">
+												</div>
+											</ng-template>
+										</li>
+										<li [ngbNavItem]="3">
+											<a ngbNavLink>{{'bill-type.default-values'|translate}}</a>
+											<ng-template ngbNavContent>
+												<div class="row ">
+													<div class="col-md-6 col-12">
+														<label for="defaultCurrencyId" class="label-name">
 															{{'general.default-currency'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="defaultCurrencyId" name='defaultCurrencyId' class="" id="defaultCurrencyId">
-                                                                <ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
-                                                                    {{lang=="ar" ? currency.nameAr:currency.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%"
+																formControlName="defaultCurrencyId"
+																name='defaultCurrencyId' class=""
+																id="defaultCurrencyId">
+																<ng-option *ngFor="let currency of currenciesList"
+																	[value]="currency.id">
+																	{{lang=="ar" ? currency.nameAr:currency.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="defaultUnitId" class="label-name">
+													</div>
+													<div class="col-md-6 col-12">
+														<label for="defaultUnitId" class="label-name">
 															{{'general.default-unit'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="defaultUnitId" name='defaultUnitId' class="" id="defaultUnitId">
-                                                                <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
-                                                                    {{lang=="ar" ? unit.nameAr:unit.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%"
+																formControlName="defaultUnitId" name='defaultUnitId'
+																class="" id="defaultUnitId">
+																<ng-option *ngFor="let unit of unitsList"
+																	[value]="unit.id">
+																	{{lang=="ar" ? unit.nameAr:unit.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="storeId" class="label-name">
+													</div>
+													<div class="col-md-6 col-12">
+														<label for="storeId" class="label-name">
 															{{'bill-type.store'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="storeId" name='storeId' class="" id="storeId">
-                                                                <ng-option *ngFor="let store of storesList" [value]="store.id">
-                                                                    {{lang=="ar" ? store.nameAr:store.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%" formControlName="storeId"
+																name='storeId' class="" id="storeId">
+																<ng-option *ngFor="let store of storesList"
+																	[value]="store.id">
+																	{{lang=="ar" ? store.nameAr:store.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="costCenterId" class="label-name">
+													</div>
+													<div class="col-md-6 col-12">
+														<label for="costCenterId" class="label-name">
 															{{'bill-type.cost-center'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="costCenterId" name='costCenterId' class="" id="costCenterId">
-                                                                <ng-option *ngFor="let costCenter of costCentersList" [value]="costCenter.id">
-                                                                    {{lang=="ar" ? costCenter.nameAr:costCenter.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%" formControlName="costCenterId"
+																name='costCenterId' class="" id="costCenterId">
+																<ng-option *ngFor="let costCenter of costCentersList"
+																	[value]="costCenter.id">
+																	{{lang=="ar" ? costCenter.nameAr:costCenter.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="salesPersonId" class="label-name">
+													</div>
+													<div class="col-md-6 col-12">
+														<label for="salesPersonId" class="label-name">
 															{{'bill-type.vendor'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="salesPersonId" name='salesPersonId' class="" id="salesPersonId">
-                                                                <ng-option *ngFor="let vendor of salesPersonsList" [value]="vendor.id">
-                                                                    {{lang=="ar" ? vendor.nameAr:vendor.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%"
+																formControlName="salesPersonId" name='salesPersonId'
+																class="" id="salesPersonId">
+																<ng-option *ngFor="let vendor of salesPersonsList"
+																	[value]="vendor.id">
+																	{{lang=="ar" ? vendor.nameAr:vendor.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
+													</div>
 
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="paymentMethodId" class="label-name">
+													<div class="col-md-6 col-12">
+														<label for="paymentMethodId" class="label-name">
 															{{'bill-type.payment-method'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="paymentMethodId" name='paymentMethodId' class="" id="paymentMethodId">
-                                                                <ng-option *ngFor="let paymentMethod of paymentMethodsList" [value]="paymentMethod.id">
-                                                                    {{lang=="ar" ? paymentMethod.nameAr:paymentMethod.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%"
+																formControlName="paymentMethodId" name='paymentMethodId'
+																class="" id="paymentMethodId">
+																<ng-option
+																	*ngFor="let paymentMethod of paymentMethodsList"
+																	[value]="paymentMethod.id">
+																	{{lang=="ar" ?
+																	paymentMethod.nameAr:paymentMethod.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
+													</div>
 
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="projectId" class="label-name">
+													<div class="col-md-6 col-12">
+														<label for="projectId" class="label-name">
 															{{'bill-type.project'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="projectId" name='projectId' class="" id="projectId">
-                                                                <ng-option *ngFor="let project of projectsList" [value]="project.id">
-                                                                    {{lang=="ar" ? project.nameAr:project.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%" formControlName="projectId"
+																name='projectId' class="" id="projectId">
+																<ng-option *ngFor="let project of projectsList"
+																	[value]="project.id">
+																	{{lang=="ar" ? project.nameAr:project.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
+													</div>
 
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="defaultPrice" class="label-name">
+													<div class="col-md-6 col-12">
+														<label for="defaultPrice" class="label-name">
 															{{'bill-type.default-price'|translate}}
 
 														</label>
-                                                        <div class="input-group  popup">
-                                                            <ng-select style="width:100%" formControlName="defaultPrice" name='defaultPrice' class="" id="defaultPrice">
-                                                                <ng-option *ngFor="let price of pricesList" [value]="price.id">
-                                                                    {{lang=="ar" ? price.nameAr:price.nameEn}}
-                                                                </ng-option>
-                                                            </ng-select>
+														<div class="input-group  popup">
+															<ng-select style="width:100%" formControlName="defaultPrice"
+																name='defaultPrice' class="" id="defaultPrice">
+																<ng-option *ngFor="let price of pricesList"
+																	[value]="price.id">
+																	{{lang=="ar" ? price.nameAr:price.nameEn}}
+																</ng-option>
+															</ng-select>
 
 
-                                                        </div>
+														</div>
 
-                                                    </div>
+													</div>
 
-                                                </div>
-                                            </ng-template>
-                                        </li>
-                                        <li [ngbNavItem]="4">
-                                            <a ngbNavLink>{{'general.print'|translate}}</a>
-                                            <ng-template ngbNavContent>
-                                                <div class="row ">
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+												</div>
+											</ng-template>
+										</li>
+										<li [ngbNavItem]="4">
+											<a ngbNavLink>{{'general.print'|translate}}</a>
+											<ng-template ngbNavContent>
+												<div class="row ">
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.print-immediately-after-addition'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="printImmediatelyAfterAddition"
 																		formControlName="printImmediatelyAfterAddition">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+															</div>
+														</div>
+													</div>
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.print-expiry-dates'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="printExpiryDates"
 																		formControlName="printExpiryDates">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+															</div>
+														</div>
+													</div>
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.print-items-specifiers'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
-                                                                <label class="switch">
+															<div class="icon-state media-body ">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="printItemsSpecifiers"
 																		formControlName="printItemsSpecifiers">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        <div class="media">
-                                                            <label class="label-name">
+															</div>
+														</div>
+													</div>
+													<div class="col-6 col-md-6">
+														<div class="media">
+															<label class="label-name">
 																{{'bill-type.print-items-images'|translate}}
 															</label>
-                                                            <div class="icon-state media-body ">
+															<div class="icon-state media-body ">
 
-                                                                <label class="switch">
+																<label class="switch">
 																	<input type="checkbox" class="form-control"
 																		name="printItemsImages"
 																		formControlName="printItemsImages">
 																	<span class="switch-state"></span>
 																</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                        </li>
+															</div>
+														</div>
+													</div>
+												</div>
+											</ng-template>
+										</li>
 
-                                    </nav>
-                                    <div [ngbNavOutlet]="nav" class=""></div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+									</nav>
+									<div [ngbNavOutlet]="nav" class=""></div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    </div>
+	</div>
 
 </section>

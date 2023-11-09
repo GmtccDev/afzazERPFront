@@ -1,0 +1,116 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-units">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<!-- <form id=""> -->
+						<div class="">
+							<div class="wrapper-title">
+
+								<h3>{{'component-names.determinants'|translate}}</h3>
+								<hr>
+								<div class="align-items-end row">
+
+									<div class="col-md-6 col-12 offset-6">
+										<label for="code" class="label-name">
+											{{'general.code'|translate}}</label><span class="text-danger">*</span>
+										<div class="form-group position-relative">
+											<input type="text" class="form-control" name="code" formControlName="code">
+
+
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<label for="nameAr" class="label-name">
+											{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+										<div class="form-group position-relative">
+
+											<input type="text" class="form-control " name="nameAr"
+												formControlName="nameAr" maxlength="50">
+
+
+										</div>
+									</div>
+
+									<div class="col-md-6 col-12">
+										<label for="nameEn" class="label-name">
+											{{'general.nameEn'|translate}}</label>
+										<div class="form-group position-relative">
+
+											<input type="text" class="form-control " name="nameEn"
+												formControlName="nameEn">
+
+
+
+										</div>
+									</div>
+
+
+
+
+									<div class="col-md-6 col-12">
+										<label for="" class="label-name">
+											{{'determinants.type-value'|translate}}
+										</label>
+										<span class="text-danger">*</span>
+
+										<div class="">
+											<ng-select [items]="valueType" [(ngModel)]="selectValueType"></ng-select>
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="media">
+											<label class="label-name"> {{'general.status'|translate}}
+											</label>
+											<div class="icon-state media-body">
+												<label class="switch">
+													<input type="checkbox" class="form-control" name="isActive"
+														formControlName="isActive">
+													<span class="switch-state"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 mt-4" *ngIf="selectValueType === 'Select of list'">
+										<table class="table table-sm m-b-0 table-broder"
+											style="overflow-y: scroll !important;">
+											<thead>
+												<th>#</th>
+												<th>Arabic name</th>
+												<th>English name</th>
+											</thead>
+
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>المقاس</td>
+													<td>size</td>
+
+
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+
+
+
+
+
+
+								</div>
+
+							</div>
+						</div>
+
+						<!-- </form> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
