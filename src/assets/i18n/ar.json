@@ -197,6 +197,7 @@
         "generate-entry": "توليد القيد"
     },
     "component-names": {
+        "determinants": "المحددات",
         "country-information": "معلومات الدولة",
         "modulesType": "حدد البرنامج",
         "search-roles": "فلتر الصلاحيات",
@@ -638,7 +639,7 @@
         "tax-ratio": "نسبة الضريبة",
         "tax-details-required": "تفاصيل الضريبة مطلوب",
         "add-tax": "اضافة ضريبة",
-        "date-exist":"التاريخ مضاف من قبل"
+        "date-exist": "التاريخ مضاف من قبل"
 
     },
     "item": {
@@ -730,6 +731,12 @@
         "item-description": "وصف الصنف",
         "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
         "bill-items-required": "من فضلك أدخل الأصناف"
+    },
+    "determinants": {
+        "type-value": "نوع القيمة",
+        "textarea": "Textarea",
+        "text": "Text",
+        "number": "Number"
     },
     "tabulator": {
         "export": "تصدير",

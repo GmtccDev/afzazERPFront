@@ -258,7 +258,7 @@
             }
             .page-body-wrapper {
                 .page-body {
-                    margin-left: unset;
+                    margin-left: unset !important;
                     margin-right: 150px;
                 }
                 .footer {
@@ -2389,7 +2389,7 @@
                 }
                 div.sidebar-wrapper {
                     &.close_icon {
-                        right: -300px;
+                        // right: -300px;
                         left: unset;
                         ~.page-body,
                         ~footer {

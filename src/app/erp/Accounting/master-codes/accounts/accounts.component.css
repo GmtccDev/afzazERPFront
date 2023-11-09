@@ -4,15 +4,8 @@ td {
 
 th {
   text-align: center;
-}/*# sourceMappingURL=accounts.component.css.map */
-.markTrue {
-  color: green; /* Change color to your desired mark color */
-  font-weight: bold;
 }
-.markFalse {
-  color: red; /* Change color to your desired mark color */
-  font-weight: bold;
-}
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -32,4 +25,4 @@ th {
   color: #fff;
   border: none;
   cursor: pointer;
-}
+}/*# sourceMappingURL=accounts.component.css.map */

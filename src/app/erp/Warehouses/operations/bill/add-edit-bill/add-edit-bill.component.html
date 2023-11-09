@@ -2,6 +2,7 @@
     <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-bills">
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -193,7 +194,7 @@
                                             </label>
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="referenceNo"
-                                                    name='referenceNo' id="referenceNo" >
+                                                    name='referenceNo' id="referenceNo">
                                                     <ng-option *ngFor="let bill of filterBillsList" [value]="bill.id">
                                                         {{bill.code}}
                                                     </ng-option>
@@ -205,7 +206,8 @@
                                         </div>
                                         <div class="col-md-2 col-12">
                                             <br>
-                                            <button class="btn btn-success" type="button" (click)="getBillById(billForm.value.referenceNo,2)">
+                                            <button class="btn btn-success" type="button"
+                                                (click)="getBillById(billForm.value.referenceNo,2)">
                                                 {{'general.fetch'|translate}}
                                             </button>
 
@@ -248,7 +250,8 @@
                                                 <div *ngIf="(f['storeId'].touched || f['storeId'].dirty ) && f['storeId'].invalid"
                                                     class="alert alert-danger">
                                                     <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['storeId'].errors && f['storeId'].errors['required']">
+                                                    <span
+                                                        *ngIf="f['storeId'].errors && f['storeId'].errors['required']">
                                                         {{'validation-messages.required-field'|translate}}</span>
                                                 </div>
                                                 <div class="">
@@ -276,11 +279,12 @@
                                                     </ng-option>
                                                 </ng-select>
                                                 <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
-                                                class="alert alert-danger">
-                                                <i class="fa fa-close "></i>
-                                                <span *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']">
-                                                    {{'validation-messages.required-field'|translate}}</span>
-                                            </div>
+                                                    class="alert alert-danger">
+                                                    <i class="fa fa-close "></i>
+                                                    <span
+                                                        *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']">
+                                                        {{'validation-messages.required-field'|translate}}</span>
+                                                </div>
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
                                                         (click)="showSearchCurrencyModal=true" type="button"><i
@@ -293,10 +297,8 @@
                                             <label for="currencyValue"
                                                 class="label-name">{{'bill.transaction-factor'|translate}}</label>
                                             <div class="form-group position-relative">
-                                                <input type="text" class="form-control icon-branch"
-                                                    name="currencyValue"
-                                                    formControlName="currencyValue"
-                                                    [(ngModel)]="currencyValue">
+                                                <input type="text" class="form-control icon-branch" name="currencyValue"
+                                                    formControlName="currencyValue" [(ngModel)]="currencyValue">
                                             </div>
                                         </div>
 
@@ -654,15 +656,13 @@
 
                                                                 <td
                                                                     class="align-items-center d-flex justify-content-center gap-1">
-                                                                   
+
                                                                     <button class="btn btn-danger px-3"
                                                                         (click)="deleteItem(i)" type="button">
                                                                         {{'buttons.delete' | translate}}
                                                                     </button>
                                                                 </td>
-
                                                             </tr>
-
                                                             <tr>
                                                                 <td>{{billItem.length + 1}}</td>
                                                                 <td>
@@ -787,8 +787,9 @@
 
 
                                                         </table>
-
                                                     </ng-template>
+
+
                                                 </li>
 
 
@@ -803,205 +804,211 @@
                                                 <li ngbNavItem [destroyOnHide]="false">
                                                     <a ngbNavLink> {{'bill.additions-and-discounts' |translate}}</a>
                                                     <ng-template ngbNavContent>
-                                                        <table class="table table-responsive text-center"
-                                                            style="overflow-y: scroll !important;">
-                                                            <thead>
-                                                                <th>#</th>
-                                                                <th>
-                                                                    {{'general.addition-ratio'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.addition-value'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.discount-ratio'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.discount-value'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.account'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.notes'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.corresponding-account'|translate}}
-                                                                </th>
+                                                        <div class="table-responsive">
+                                                            <table class="table text-center"
+                                                                style="overflow-y: scroll !important;">
+                                                                <thead>
+                                                                    <th>#</th>
+                                                                    <th>
+                                                                        {{'general.addition-ratio'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.addition-value'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.discount-ratio'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.discount-value'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.account'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.notes'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.corresponding-account'|translate}}
+                                                                    </th>
 
-                                                                <th>
-                                                                    {{'general.currency'|translate}}
-                                                                </th>
-                                                                <th>
-                                                                    {{'general.currency-conversion-factor'|translate}}
-                                                                </th>
+                                                                    <th>
+                                                                        {{'general.currency'|translate}}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{'general.currency-conversion-factor'|translate}}
+                                                                    </th>
 
-                                                                <th></th>
-                                                            </thead>
-                                                            <tr
-                                                                *ngFor="let item of billAdditionAndDiscount; let i= index;">
-                                                                <td> {{i+1}}</td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].additionRatio"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(1,i)"
-                                                                        class="form-control">
+                                                                    <th></th>
+                                                                </thead>
+                                                                <tr
+                                                                    *ngFor="let item of billAdditionAndDiscount; let i= index;">
+                                                                    <td> {{i+1}}</td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].additionRatio"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(1,i)"
+                                                                            class="form-control">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].additionValue"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(3,i)"
-                                                                        class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].additionValue"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(3,i)"
+                                                                            class="form-control">
 
-                                                                </td>
+                                                                    </td>
 
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].discountRatio"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(2,i)"
-                                                                        class="form-control">
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].discountRatio"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(2,i)"
+                                                                            class="form-control">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].discountValue"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(4,i)"
-                                                                        class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].discountValue"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscountAdded(4,i)"
+                                                                            class="form-control">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].accountName"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openAccountSearchDialog(i)">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].notes"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="{{'general.search'|translate}}"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].accountName"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (keydown.Enter)="openAccountSearchDialog(i)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].notes"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            class="form-control">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].correspondingAccountName"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCorrespondingAccountSearchDialog(i)">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].currencyName"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCurrencySearchDialog(i)">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="billAdditionAndDiscount[i].currencyValue"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="{{'general.search'|translate}}"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].correspondingAccountName"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (keydown.Enter)="openCorrespondingAccountSearchDialog(i)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="{{'general.search'|translate}}"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].currencyName"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (keydown.Enter)="openCurrencySearchDialog(i)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="billAdditionAndDiscount[i].currencyValue"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0" class="form-control">
 
-                                                                </td>
-                                                                <td
-                                                                    class="align-items-center d-flex justify-content-center gap-1">
-                                                                    <!-- <button type="button"
-                                                                        class="btn btn-secondary px-3 "
-                                                                        (click)="updateBillAdditionsAndDiscountData(item)"><i
-                                                                            class="fa fa-edit"></i></button> -->
-                                                                    <button class="btn btn-danger px-3"
-                                                                        (click)="deleteBillAdditionDiscount(i)"
-                                                                        type="button">
-                                                                        {{'buttons.delete' | translate}}
-                                                                    </button>
-                                                                </td>
+                                                                    </td>
+                                                                    <td
+                                                                        class="align-items-center d-flex justify-content-center gap-1">
+                                                                        <!-- <button type="button"
+                                                                    class="btn btn-secondary px-3 "
+                                                                    (click)="updateBillAdditionsAndDiscountData(item)"><i
+                                                                        class="fa fa-edit"></i></button> -->
+                                                                        <button class="btn btn-danger px-3"
+                                                                            (click)="deleteBillAdditionDiscount(i)"
+                                                                            type="button">
+                                                                            {{'buttons.delete' | translate}}
+                                                                        </button>
+                                                                    </td>
 
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{billAdditionAndDiscount.length + 1}}</td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.additionRatio"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(1)">
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>{{billAdditionAndDiscount.length + 1}}</td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.additionRatio"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0" class="form-control"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(1)">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.additionValue"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(3)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.additionValue"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0" class="form-control"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(3)">
 
-                                                                </td>
+                                                                    </td>
 
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.discountRatio"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(2)">
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.discountRatio"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0" class="form-control"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(2)">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.discountValue"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control"
-                                                                        (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(4)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.discountValue"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0" class="form-control"
+                                                                            (change)="onChangeAdditionOrDiscountRatioInBillAdditionDiscount(4)">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.accountName"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openAccountSearchDialog(-1)">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.notes"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="{{'general.search'|translate}}"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.accountName"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (keydown.Enter)="openAccountSearchDialog(-1)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.notes"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            class="form-control">
 
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.correspondingAccountName"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCorrespondingAccountSearchDialog(-1)">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="{{'general.search'|translate}}"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.currencyName"
-                                                                        [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openCurrencySearchDialog(-1)">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                        [(ngModel)]="selectedBillAdditionAndDiscount.currencyValue"
-                                                                        [ngModelOptions]="{standalone: true}" min="0"
-                                                                        class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="{{'general.search'|translate}}"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.correspondingAccountName"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (keydown.Enter)="openCorrespondingAccountSearchDialog(-1)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="{{'general.search'|translate}}"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.currencyName"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (keydown.Enter)="openCurrencySearchDialog(-1)">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number"
+                                                                            [(ngModel)]="selectedBillAdditionAndDiscount.currencyValue"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            min="0" class="form-control">
 
-                                                                </td>
-                                                                <input type="button" class="btn btn-primary"
-                                                                    (click)="addItemAdditionsDiscounts()"
-                                                                    value="{{'buttons.add'|translate}}">
-                                                            </tr>
-                                                            <tr>
+                                                                    </td>
+                                                                    <input type="button" class="btn btn-primary"
+                                                                        (click)="addItemAdditionsDiscounts()"
+                                                                        value="{{'buttons.add'|translate}}">
+                                                                </tr>
+                                                                <tr>
 
-                                                            </tr>
+                                                                </tr>
 
-                                                        </table>
+                                                            </table>
+                                                        </div>
                                                     </ng-template>
                                                 </li>
                                             </ul>
@@ -1012,10 +1019,12 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-4 col-12">
-                                            <label for="totalBeforeTax" class="label-name">{{'general.total-before-tax'|translate}}</label>
+                                            <label for="totalBeforeTax"
+                                                class="label-name">{{'general.total-before-tax'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" disabled class="form-control icon-branch"
-                                                    name="totalBeforeTax" formControlName="totalBeforeTax" [(ngModel)]="totalBeforeTax">
+                                                    name="totalBeforeTax" formControlName="totalBeforeTax"
+                                                    [(ngModel)]="totalBeforeTax">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12">
@@ -1048,16 +1057,20 @@
                                                 class="label-name">{{'general.tax-value'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control icon-branch" name="taxValue"
-                                                    formControlName="taxValue" [(ngModel)]="taxValue" (change)="getNetAfterTax(2)">
+                                                    formControlName="taxValue" [(ngModel)]="taxValue"
+                                                    (change)="getNetAfterTax(2)">
                                             </div>
                                         </div>
-                                       
-                                        
-                                        <div class="col-md-4 col-12" *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual==true">
-                                            <label for="netAfterTax" class="label-name">{{'general.net-after-tax'|translate}}</label>
+
+
+                                        <div class="col-md-4 col-12"
+                                            *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual==true">
+                                            <label for="netAfterTax"
+                                                class="label-name">{{'general.net-after-tax'|translate}}</label>
                                             <div class="form-group position-relative">
                                                 <input type="number" disabled class="form-control icon-branch"
-                                                    name="netAfterTax" formControlName="netAfterTax" [(ngModel)]="netAfterTax">
+                                                    name="netAfterTax" formControlName="netAfterTax"
+                                                    [(ngModel)]="netAfterTax">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12">
@@ -1097,7 +1110,7 @@
                                             </div>
 
                                         </div>
-                                       
+
                                         <div class="col-md-6 col-12">
                                             <label for="remainingAccountId" class="label-name">
                                                 {{'general.remaining-account'|translate}}
@@ -1131,6 +1144,12 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+
 <app-public-search-modal [isVisible]="showSearchSupplierModal" [routeApi]="routeSupplierApi"
     (emitClose)="showSearchSupplierModal = false;" (emitSearch)="onSelectSupplier($event)">
 </app-public-search-modal>
