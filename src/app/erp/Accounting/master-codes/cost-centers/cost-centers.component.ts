@@ -159,7 +159,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log(rs);
       if (rs == 'Confirm') {
         this.spinner.show();
-
+debugger
         let sub = this.costCenterService.deleteCostCenter(id).subscribe(
           (resonse) => {
 

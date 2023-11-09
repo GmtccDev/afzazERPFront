@@ -91,7 +91,7 @@ export class CostCenterServiceProxy {
     deleteCostCenter(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/CostCenter/delete", { params: params });
+        return this.http.get<any>(environment.apiUrl + "/api/CostCenter/deleteCostCenter", { params: params });
     }
     deleteEntity(entity: any): Observable<any> {
 
