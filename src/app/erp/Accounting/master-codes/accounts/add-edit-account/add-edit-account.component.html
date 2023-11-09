@@ -25,7 +25,7 @@
 												<div class="flex-grow-1">
 													<div class="input-group  popup">
 														<ng-select style="width:100%" formControlName="parentId"
-															name='parentId' class="" id="parentId">
+															name='parentId' class="" id="parentId" (change)="onChange($event)">
 															<ng-option *ngFor="let account of accountList"
 																[value]="account.id">
 																{{lang=="ar"?account.nameAr:account.nameEn}}
