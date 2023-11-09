@@ -448,7 +448,9 @@
         "postal-code": "الرمز البريدى",
         "no-add-fiscal-period-choose-open-fiscal-period":"لا يمكن اضافة . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
         "no-edit-fiscal-period-choose-open-fiscal-period":"لا يمكن التعديل . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
-        "name":"الاسم"
+        "name":"الاسم",
+        "taxes":"الضرائب"
+
     },
     "sales-person-commission": {
         "sales-person": "المندوب",

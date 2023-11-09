@@ -33,7 +33,7 @@ export class ItemCardDto {
     warrantyPeriod: number | undefined;
     warrantyType: number | undefined;
     itemKind: number | undefined;
-    taxId: number | undefined;
+    taxIds: string | undefined;
 
     heightFactor: number | undefined;
     widthFactor: number | undefined;

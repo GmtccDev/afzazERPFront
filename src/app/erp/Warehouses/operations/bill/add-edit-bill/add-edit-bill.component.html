@@ -237,6 +237,7 @@
                                             <label for="storeId" class="label-name">
                                                 {{'bill.store'|translate}}
                                             </label>
+                                            <span class="text-danger">*</span>
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="storeId" name='storeId'
                                                     [(ngModel)]="storeId" id="storeId">
@@ -244,6 +245,12 @@
                                                         {{lang=="ar"?store.nameAr:store.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
+                                                <div *ngIf="(f['storeId'].touched || f['storeId'].dirty ) && f['storeId'].invalid"
+                                                    class="alert alert-danger">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['storeId'].errors && f['storeId'].errors['required']">
+                                                        {{'validation-messages.required-field'|translate}}</span>
+                                                </div>
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
                                                         (click)="showSearchStoreModal=true" type="button"><i
@@ -255,8 +262,10 @@
 
                                         </div>
                                         <div class="col-md-4 col-12">
-                                            <label for="currencyId" class="label-name">{{'general.currency'|translate}}
+                                            <label for="currencyId" class="label-name">
+                                                {{'general.currency'|translate}}
                                             </label>
+                                            <span class="text-danger">*</span>
                                             <div class="d-flex">
                                                 <ng-select class="flex-grow-1" formControlName="currencyId"
                                                     name='currencyId' id="currencyId" [(ngModel)]="currencyId"
@@ -266,6 +275,12 @@
                                                         {{lang=="ar"?currency.nameAr:currency.nameEn}}
                                                     </ng-option>
                                                 </ng-select>
+                                                <div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
+                                                class="alert alert-danger">
+                                                <i class="fa fa-close "></i>
+                                                <span *ngIf="f['currencyId'].errors && f['currencyId'].errors['required']">
+                                                    {{'validation-messages.required-field'|translate}}</span>
+                                            </div>
                                                 <div class="">
                                                     <button class="btn btn-rounded btn-dark"
                                                         (click)="showSearchCurrencyModal=true" type="button"><i
@@ -517,6 +532,9 @@
                                                                 <th>
                                                                     {{'bill.store'|translate}}
                                                                 </th>
+                                                                <th>
+                                                                    {{'general.cost-center'|translate}}
+                                                                </th>
 
                                                                 <th>
                                                                     {{'general.notes'|translate}}
@@ -621,6 +639,13 @@
                                                                         (keydown.Enter)="openStoreSearchDialog(i)">
                                                                 </td>
                                                                 <td>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="{{'general.search'|translate}}"
+                                                                        [(ngModel)]="billItem[i].costCenterName"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (keydown.Enter)="openCostCenterSearchDialog(i)">
+                                                                </td>
+                                                                <td>
                                                                     <input type="text" [(ngModel)]="billItem[i].notes"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         class="form-control">
@@ -629,10 +654,7 @@
 
                                                                 <td
                                                                     class="align-items-center d-flex justify-content-center gap-1">
-                                                                    <!-- <button type="button"
-                                                                        class="btn btn-secondary px-3 "
-                                                                        (click)="updateItemData(item)"><i
-                                                                            class="fa fa-edit"></i></button> -->
+                                                                   
                                                                     <button class="btn btn-danger px-3"
                                                                         (click)="deleteItem(i)" type="button">
                                                                         {{'buttons.delete' | translate}}
@@ -737,6 +759,13 @@
                                                                         [(ngModel)]="selectedBillItem.storeName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openStoreSearchDialog(-1)">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="{{'general.search'|translate}}"
+                                                                        [(ngModel)]="selectedBillItem.costCenterName"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (keydown.Enter)="openCostCenterSearchDialog(-1)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
