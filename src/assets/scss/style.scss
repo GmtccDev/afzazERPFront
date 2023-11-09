@@ -1571,6 +1571,31 @@
         .page-body {
             margin-left: 150px;
         }
+        .dashbord-page1 main {
+            margin-top: 0 !important;
+        }
+        .page-body-wrapper div.sidebar-wrapper {
+            width: min-content;
+        }
+        .sidebar-main .sidebar-links li a.active.submenu-title {
+            border-radius: 0px !important;
+            -webkit-border-radius: 0px !important;
+            -moz-border-radius: 0px !important;
+            -ms-border-radius: 0px !important;
+            -o-border-radius: 0px !important;
+        }
+    }
+    
+    .page-wrapper.compact-wrapper.color-sidebar {
+        .page-body-wrapper div.sidebar-wrapper {
+            height: 100vh;
+        }
+        .toggle-sidebar {
+            color: $white;
+        }
+        .sidebar-main .sidebar-links {
+            margin-top: 55px !important;
+        }
     }
     
     @import "../scss/themes/responsive";
