@@ -1210,9 +1210,13 @@
     }
     
     textarea.form-control {
-        min-height: 35px !important;
+        min-height: 75px !important;
         width: 200px;
         max-height: 200px !important;
+    }
+    
+    td textarea.form-control {
+        min-height: 35px !important;
     }
     
     .table th {
@@ -1595,6 +1599,9 @@
         }
         .sidebar-main .sidebar-links {
             margin-top: 55px !important;
+        }
+        img.img-fluid.for-light.rania1 {
+            display: initial !important;
         }
     }
     

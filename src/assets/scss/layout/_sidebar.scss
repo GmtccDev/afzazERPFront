@@ -1185,7 +1185,9 @@
                                     li {
                                         a {
                                             &.active {
-                                                color: var(--theme-deafult);
+                                                span {
+                                                    color: var(--theme-deafult) !important;
+                                                }
                                                 &:after {
                                                     border-color: var(--theme-deafult);
                                                 }
