@@ -165,7 +165,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 			+ "&reportParameter=selectedBranchName!" + this.selectedBranchName
 			+ "&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName
 			+ "&reportParameter=selectedMainAccountName!" + this.selectedMainAccountName
-			+ "&reportParameter=selectedAccountGroupName!" + this.selectedAccountGroupName
+			+ "&reportParameter=selectedAccountGroupName!" + this.selectedAccountGroupName;
 
 		const modalRef = this.modalService.open(NgbdModalContent);
 		modalRef.componentInstance.reportParams = reportParams;
@@ -263,8 +263,8 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					;
-					console.log("result data getbyid", res);
+					
+				
 					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
 					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
 				},
@@ -272,7 +272,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 					reject(err);
 				},
 				complete: () => {
-					console.log("complete");
+					
 				},
 			});
 			this.subsList.push(sub);
