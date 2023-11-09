@@ -159,9 +159,6 @@
 											</div>
 										</div>
 
-
-
-
 									</div>
 									<hr>
 									<div class="row">
@@ -334,31 +331,31 @@
 																		<input type="number"
 																			[(ngModel)]="itemCardUnit[i].transactionFactor"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="itemCardUnit[i].sellingPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="itemCardUnit[i].minSellingPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="itemCardUnit[i].consumerPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="itemCardUnit[i].openingCostPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="button"
@@ -387,31 +384,31 @@
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardUnit.transactionFactor"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardUnit.sellingPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardUnit.minSellingPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardUnit.consumerPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardUnit.openingCostPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 
@@ -597,13 +594,13 @@
 																		<input type="number"
 																			[(ngModel)]="itemCardAlternative[i].costPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="itemCardAlternative[i].sellingPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 
@@ -618,7 +615,7 @@
 																		<input type="number"
 																			[(ngModel)]="itemCardAlternative[i].currentBalance"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="form-control m-0 w-100">
+																			min="0" class="border-0 m-0 w-100">
 																	</td>
 																	<td>
 																		<input type="button"
@@ -645,13 +642,13 @@
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardAlternative.costPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardAlternative.sellingPrice"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 
@@ -666,7 +663,7 @@
 																		<input type="number"
 																			[(ngModel)]="selectedItemCardAlternative.currentBalance"
 																			[ngModelOptions]="{standalone: true}"
-																			min="0" class="w-100 form-control">
+																			min="0" class="w-100 border-0">
 																	</td>
 																	<td>
 																		<input type="button"
@@ -807,6 +804,29 @@
 
 																</div>
 
+															</div>
+														</div>
+													</ng-template>
+												</li>
+												<li [ngbNavItem]="6">
+													<a ngbNavLink>{{'general.tax'|translate}}</a>
+													<ng-template ngbNavContent>
+														<div class="row  g-2 ">
+															<div class="col-md-6 col-12">
+																<label for="taxId" class="label-name">
+																	{{'general.tax'|translate}}
+																</label>
+
+																<div class="input-group  popup">
+																	<ng-select style="width:100%"
+																		formControlName="taxId" name='taxId' class=""
+																		id="taxId">
+																		<ng-option *ngFor="let tax of taxesList"
+																			[value]="tax.id">
+																			{{lang=="ar" ? tax.nameAr:tax.nameEn}}
+																		</ng-option>
+																	</ng-select>
+																</div>
 															</div>
 														</div>
 													</ng-template>

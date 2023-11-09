@@ -18,7 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 	templateUrl: './countries.component.html',
 	styleUrls: ['./countries.component.css']
 })
-export class CountriesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CountriesComponent implements OnInit, OnDestroy {
 
 	//#region Main Declarations
 	countries: CountryDto[] = [];
@@ -67,14 +67,6 @@ export class CountriesComponent implements OnInit, OnDestroy, AfterViewInit {
 				this.spinner.hide();
 			})
 	}
-
-	ngAfterViewInit(): void {
-
-
-
-
-	}
-
 
 	//#endregion
 
