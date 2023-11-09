@@ -228,7 +228,7 @@ export class AddEditItemCardComponent implements OnInit {
       warrantyPeriod: '',
       warrantyType: '',
       itemKind: '',
-      taxId: '',
+      taxIds: '',
       heightFactor: '',
       widthFactor: '',
       lengthFactor: '',
@@ -325,7 +325,7 @@ export class AddEditItemCardComponent implements OnInit {
             warrantyPeriod: res.response?.warrantyPeriod,
             warrantyType: res.response?.warrantyType,
             itemKind: res.response?.itemKind + "",
-            taxId: res.response?.taxId,
+            taxIds: res.response?.taxIds,
             heightFactor: res.response?.heightFactor,
             widthFactor: res.response?.widthFactor,
             lengthFactor: res.response?.lengthFactor,
@@ -367,11 +367,12 @@ export class AddEditItemCardComponent implements OnInit {
   }
   getItemCardCode(itemGroupId: any) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.itemCardService.getLastCode().subscribe({
+      let sub = this.itemCardService.getLastCodeByItemGroupId(itemGroupId).subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.item-card");
           this.itemCardForm.patchValue({
-            code: res.response == 1 ? itemGroupId + res.response : res.response
+            code: res.response.data
+            //== 1 ? itemGroupId + res.response : res.response
           });
 
         },
@@ -642,7 +643,7 @@ export class AddEditItemCardComponent implements OnInit {
       warrantyPeriod: this.itemCardForm.controls["warrantyPeriod"].value,
       warrantyType: this.itemCardForm.controls["warrantyType"].value,
       itemKind: this.itemCardForm.controls["itemKind"].value,
-      taxId: this.itemCardForm.controls["taxId"].value,
+      taxIds: this.itemCardForm.controls["taxIds"].value,
 
       heightFactor: this.itemCardForm.controls["heightFactor"].value,
       widthFactor: this.itemCardForm.controls["widthFactor"].value,
@@ -675,7 +676,7 @@ export class AddEditItemCardComponent implements OnInit {
   confirmSave() {
 
     return new Promise<void>((resolve, reject) => {
-
+       
       this.itemCardService.createItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -692,14 +693,14 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
     });
   }
   onSave() {
-
+     
     if (this.itemCardForm.valid) {
+       
       this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {
