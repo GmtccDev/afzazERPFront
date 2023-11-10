@@ -3,18 +3,22 @@
 </ngx-spinner>
 <div class="card">
 	<div class="card-body">
-		<div class="search-bar">
-			<input type="text" class="form-control icon-branch" [(ngModel)]="codeSearchText"
-				placeholder=" {{'general.code'|translate}}">
-			<input type="text" class="form-control icon-branch" [(ngModel)]="nameSearchText"
-				placeholder="{{'general.name'|translate}}">
-			<input type="text" class="form-control icon-branch" [(ngModel)]="levelSearchText" (keyup)="onKeyUp($event)"
-				placeholder="{{'general.level'|translate}}">
-			<button nz-button nzType="primary" (click)="searchData()">{{'general.search'|translate}}</button>
+		<div class="d-flex justify-content-between mb-3">
+			<button nz-button nzType="primary" (click)="expandAllRows()">
+				{{ 'general.all' | translate }}
+			</button>
+			<div class="search-bar">
+				<input type="text" class="form-control icon-branch" [(ngModel)]="codeSearchText"
+					placeholder=" {{'general.code'|translate}}">
+				<input type="text" class="form-control icon-branch" [(ngModel)]="nameSearchText"
+					placeholder="{{'general.name'|translate}}">
+				<input type="text" class="form-control icon-branch" [(ngModel)]="levelSearchText"
+					(keyup)="onKeyUp($event)" placeholder="{{'general.level'|translate}}">
+				<button nz-button nzType="primary" (click)="searchData()"
+					class=" b-r-0 mx-2">{{'general.search'|translate}}</button>
+			</div>
 		</div>
-		<button nz-button nzType="primary" (click)="expandAllRows()">
-			{{ 'general.all' | translate }}
-		</button>
+
 
 		<nz-table #expandTable [nzBordered]="true" [nzData]="listOfMapData" nzTableLayout="fixed"
 			class="table table-broder">
@@ -56,13 +60,19 @@
 								<span *ngIf="item.accountType==2&&lang!=='ar'">Budget</span>
 							</td>
 							<td class="d-flex gap-2">
-								<button nz-button nzType="primary" (click)="addNode(item.id)"
-									class="btn-primary">{{'toolbar.new'|translate}}</button>
-								<button nz-button nzType="default" (click)="onEdit(item.id)" class="btn-secondary">
-									{{'buttons.edit'|translate}}</button>
-								<button nz-button nzType="danger" (click)="showConfirmDeleteMessage(item.id)"
-									[disabled]="!item.isLeafAccount" class="btn-danger">
-									{{'buttons.delete'|translate}}</button>
+								<button nz-button (click)="addNode(item.id)">
+									<i class="fa fa-file-o"></i>
+									<!-- {{'toolbar.new'|translate}} -->
+								</button>
+								<button nz-button (click)="onEdit(item.id)">
+									<!-- {{'buttons.edit'|translate}} -->
+									<i class="fa fa-edit"></i>
+								</button>
+								<button nz-button (click)="showConfirmDeleteMessage(item.id)"
+									[disabled]="!item.isLeafAccount">
+									<!-- {{'buttons.delete'|translate}} -->
+									<i class="fa fa-trash"></i>
+								</button>
 							</td>
 
 						</tr>

@@ -31,17 +31,25 @@
 							<td>{{ item.nameAr }}</td>
 							<td>{{ item.nameEn }}</td>
 							<td>
-								<button nz-button nzType="primary" (click)="addNode(item.id)" class="btn-primary">{{
+								<button nz-button (click)="addNode(item.id)">
+									<!-- {{
 									'toolbar.new' |
 									translate
-									}}</button>
-								<button nz-button nzType="default" (click)="onEdit(item.id)" class="btn-secondary">{{
+									}} -->
+									<i class="fa fa-file-o"></i>
+								</button>
+								<button nz-button (click)="onEdit(item.id)">
+									<!-- {{
 									'buttons.edit' |
 									translate
-									}}</button>
-								<button nz-button nzType="danger" (click)="showConfirmDeleteMessage(item.id)"
-									class="btn-danger">{{
-									'buttons.delete' | translate }}</button>
+									}} -->
+									<i class="fa fa-edit"></i>
+								</button>
+								<button nz-button (click)="showConfirmDeleteMessage(item.id)">
+									<!-- {{
+									'buttons.delete' | translate }} -->
+									<i class="fa fa-trash"></i>
+								</button>
 							</td>
 						</tr>
 						<ng-container *ngFor="let childItem of item.itemCards">
@@ -54,12 +62,17 @@
 								<td>{{ childItem.nameEn }}</td>
 								<td>
 									<!-- <button nz-button nzType="primary" (click)="addNodeChild(childItem.id)"></button> -->
-									<button nz-button nzType="default" (click)="onEditChild(childItem.id)">{{
+									<button nz-button (click)="onEditChild(childItem.id)">
+										<!-- {{
 										'buttons.edit' |
-										translate }}</button>
-									<button nz-button nzType="danger"
-										(click)="showConfirmDeleteMessageChild(childItem.id)" class="btn-danger">{{
-										'buttons.delete' | translate }}</button>
+										translate }} -->
+										<i class="fa fa-edit"></i>
+									</button>
+									<button nz-button (click)="showConfirmDeleteMessageChild(childItem.id)">
+										<!-- {{
+										'buttons.delete' | translate }} -->
+										<i class="fa fa-trash"></i>
+									</button>
 								</td>
 							</tr>
 						</ng-container>
