@@ -73,6 +73,11 @@ export class ItemCardServiceProxy {
     getLastCode(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/ItemCard/getLastCode?");
     }
+    getLastCodeByItemGroupId(itemGroupId:any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('itemGroupId', itemGroupId);
+        return this.http.get<any>(this.baseUrl + "/api/ItemCard/getLastCodeByItemGroupId", { params: params });
+    }
     deleteItemCard(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
