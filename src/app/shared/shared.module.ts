@@ -54,8 +54,6 @@ import { FilterPipe } from "../shared/pipes/filter-pipe";
 import { PublicSearchModalComponent } from './components/public-search-modal/public-search-modal.component';
 import { PublicService } from './services/public.service';
 import { EnumKeyValueListPipe } from '../shared/pipes/enumlist.pipe'
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzTableModule } from 'ng-zorro-antd/table';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -72,6 +70,7 @@ import { GregorianDateComponent } from 'src/app/shared/date/gregorian-date/grego
 import { filter } from 'rxjs';
 import { NgbdModalContent } from './components/modal/modal-component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { SearchModalComponent } from './components/public-search-modal/search-modal/search-modal.component';
 @NgModule({
 	declarations: [
 		HeaderComponent,
@@ -113,7 +112,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 		FiltersComponent,
 		NgbdModalContent,
 		HijriDateComponent,
-		GregorianDateComponent
+		GregorianDateComponent,SearchModalComponent
 	],
 	imports: [
 		CommonModule,
@@ -124,7 +123,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 		TabulatorModule,
 		DragulaModule.forRoot(),
 		TranslateModule,
-		NgxSpinnerModule, NzModalModule, NzTableModule, MatTableModule, MatPaginatorModule,
+		NgxSpinnerModule, MatTableModule, MatPaginatorModule,
 		MatButtonModule, MatInputModule,
 		MatFormFieldModule,
 		BidiModule,
