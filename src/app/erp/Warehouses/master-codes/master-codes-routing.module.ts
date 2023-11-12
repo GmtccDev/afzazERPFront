@@ -26,6 +26,8 @@ import { AddSalesPersonCardComponent } from './sales-person-card/add-sales-perso
 import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
 import { DeterminantsComponent } from './determinants/determinants.component';
 import { AddEditDeterminantsComponent } from './determinants/add-edit-determinants/add-edit-determinants.component';
+import { AddEditItemGuideComponent } from './item-guide/add-edit-item-guide/add-edit-item-guide.component';
+import { ItemGuideComponent } from './item-guide/item-guide.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -72,6 +74,10 @@ const routes: Routes = [
 			{ path: 'determinants', component: DeterminantsComponent },
 			{ path: 'determinants/add-determinants', component: AddEditDeterminantsComponent },
 			{ path: 'determinants/update-determinants/:id', component: AddEditDeterminantsComponent },
+			{ path: 'itemGuide/add-itemGuide', component: AddEditItemGuideComponent },
+			{ path: 'itemGuide/update-itemGuide/:id', component: AddEditItemGuideComponent },
+			{ path: 'itemGuide', component: ItemGuideComponent },
+			{ path: 'itemGuide/add-itemGuide/:parentId', component: AddEditItemGuideComponent },
 		]
 	}
 ];

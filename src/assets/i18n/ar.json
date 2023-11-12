@@ -291,7 +291,9 @@
         "general-configuration": "الإعدادات",
         "cheques-journal": "يومية الشيكات",
         "chart-account": "دليل الحسابات",
-        "generate-entry-vouchers": "توليد قيود السندات"
+        "generate-entry-vouchers": "توليد قيود السندات",
+        "item-guide": " دليل اصناف",
+        "item-guide-information": "معلومات  دليل اصناف"
     },
     "general": {
         "nameAr": "الاسم العربي",

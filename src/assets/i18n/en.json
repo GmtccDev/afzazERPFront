@@ -489,7 +489,9 @@
         "general-configuration": "General Configuration",
         "cheques-journal": "Cheques Journal",
         "chart-account": "Chart of Accounts",
-        "generate-entry-vouchers": "Generate Entry Vouchers"
+        "generate-entry-vouchers": "Generate Entry Vouchers",
+        "item-Guide": " Item Guide",
+        "item-Guide-information": " Item Guide Information"
     },
     "language": {
         "ARABIC": "Ar",
