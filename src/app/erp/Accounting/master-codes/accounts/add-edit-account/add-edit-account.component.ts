@@ -506,7 +506,41 @@ export class AddEditAccountComponent implements OnInit {
 
     });
   }
+  onChange(event: any) {
+    
+    this.accountService.getAccount(event).subscribe(res1 => {
 
+
+      this.accountForm.patchValue({
+
+
+        isActive: res1.response?.isActive,
+        isLeafAccount: res1.response?.isLeafAccount,
+
+        companyId: res1.response?.companyId,
+
+
+        currencyId: res1.response?.currencyId,
+        costCenterId: res1.response?.costCenterId,
+        accountGroupId: res1.response?.accountGroupId,
+        accountType: res1.response?.accountType,
+
+        accountClassificationId: res1.response?.accountClassificationId,
+        accountClassificationIdOfIncomeStatement: res1.response?.accountClassificationIdOfIncomeStatement,
+        budget: res1.response?.budget,
+        noteNotActive: res1.response?.noteNotActive,
+
+      });
+      this.accountForm.get('budget').disable();
+      this.accountForm.get('accountClassificationIdOfIncomeStatement').disable();
+      this.accountForm.get('accountType').disable();
+
+      console.log(
+        'this.accountForm.value set value',
+        this.accountForm.value
+      );
+    })
+  }
   getaccountCode() {
 
     return new Promise<void>((resolve, reject) => {
@@ -525,7 +559,7 @@ export class AddEditAccountComponent implements OnInit {
 
             this.accountService.getAccount(this.parentId).subscribe(res1 => {
 
-debugger
+
               this.accountForm.patchValue({
 
 

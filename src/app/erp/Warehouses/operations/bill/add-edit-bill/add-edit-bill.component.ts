@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { PublicService } from '../../../../../shared/services/public.service';
-import { Bill, BillAdditionAndDiscount, BillItem } from '../../../models/bill'
+import { Bill, BillAdditionAndDiscount, BillItem, BillItemTax } from '../../../models/bill'
 import { BillType } from '../../../models/bill-type'
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { SearchDialogService } from '../../../../../shared/services/search-dialog.service'
@@ -49,6 +49,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   deliveryDate: DateModel;
   bill: Bill = new Bill();
   billItem: BillItem[] = [];
+  billItemTax: BillItemTax[] = [];
+
   selectedBillItem: BillItem = new BillItem();
   billAdditionAndDiscount: BillAdditionAndDiscount[] = [];
   selectedBillAdditionAndDiscount: BillAdditionAndDiscount = new BillAdditionAndDiscount();
@@ -304,11 +306,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       referenceId: null,
       referenceNo: '',
       salesPersonId: null,
-      storeId: null,
+      storeId: REQUIRED_VALIDATORS,
       currencyId: REQUIRED_VALIDATORS,
       currencyValue: '',
       projectId: null,
-      costCenterId: REQUIRED_VALIDATORS,
+      costCenterId: '',
       notes: '',
       attachment: '',
       cashAccountId: null,
@@ -318,11 +320,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       purchasesAccountId: null,
       purchasesReturnAccountId: null,
       totalBeforeTax: '',
-      taxRatio: '',
-      taxValue: '',
+      taxRatio: null,
+      taxValue: null,
       total: '',
       net: '',
-      netAfterTax: '',
+      netAfterTax: null,
       paid: '',
       paidAccountId: null,
       remaining: '',
@@ -348,7 +350,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       currencyId: '',
       currencyValue: '',
       projectId: null,
-      costCenterId: '',
+      costCenterId: null,
       notes: '',
       attachment: '',
       cashAccountId: null,
@@ -502,6 +504,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           var accountName;
           var correspondingAccountName;
           var currencyName;
+          var costCenterName;
           if (res.response?.billItems != null) {
             res.response?.billItems.forEach(element => {
               if (element.itemId > 0) {
@@ -514,6 +517,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               }
               if (element.storeId > 0) {
                 storeName = this.storesList?.find(c => c.id == element.storeId)
+
+              }
+              if (element.costCenterId > 0) {
+                costCenterName = this.costCentersList?.find(c => c.id == element.costCenterId)
 
               }
               this.billItem.push(
@@ -530,18 +537,23 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   additionValue: element.additionValue,
                   discountRatio: element.discountRatio,
                   discountValue: element.discountValue,
-                  taxRatio: element.taxRatio,
-                  taxValue: element.taxValue,
+                  totalTax: element.totalTax,
                   total: element.total,
                   storeId: element.storeId,
+                  costCenterId: element.costCenterId,
                   notes: element.notes,
                   itemName: this.lang = "ar" ? itemName?.nameAr ?? '' : itemName?.nameEn ?? '',
                   unitName: this.lang = "ar" ? unitName?.nameAr ?? '' : unitName?.nameEn ?? '',
                   storeName: this.lang = "ar" ? storeName?.nameAr ?? '' : storeName?.nameEn ?? '',
+                  costCenterName: this.lang = "ar" ? costCenterName?.nameAr ?? '' : costCenterName?.nameEn ?? '',
+
                 }
               )
             });
 
+          }
+          if (res.response?.billItemTaxes != null) {
+          this.billItemTax=res.response?.billItemTaxes
           }
           if (res.response?.billAdditionAndDiscounts != null) {
             res.response?.billAdditionAndDiscounts.forEach(element => {
@@ -1093,10 +1105,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     var taxValue = 0;
     if (this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true) {
       if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
-        taxValue = (this.selectedBillItem?.totalBeforeTax ?? 0) * (this.selectedBillItem?.taxRatio ?? 0 / 100)
+      //  taxValue = (this.selectedBillItem?.totalBeforeTax ?? 0) * (this.selectedBillItem?.taxRatio ?? 0 / 100)
       }
       else {
-        taxValue = (this.selectedBillItem?.totalBeforeTax ?? 0 + this.selectedBillItem?.additionValue ?? 0 - this.selectedBillItem?.discountValue ?? 0) * (this.selectedBillItem?.taxRatio ?? 0 / 100)
+      //  taxValue = (this.selectedBillItem?.totalBeforeTax ?? 0 + this.selectedBillItem?.additionValue ?? 0 - this.selectedBillItem?.discountValue ?? 0) * (this.selectedBillItem?.taxRatio ?? 0 / 100)
 
       }
     }
@@ -1113,15 +1125,17 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       additionValue: this.selectedBillItem?.additionValue ?? 0,
       discountRatio: this.selectedBillItem?.discountRatio ?? 0,
       discountValue: this.selectedBillItem?.discountValue ?? 0,
-      taxRatio: this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true
-        ? this.selectedBillItem?.taxRatio ?? 0 : null,
-      taxValue: taxValue,
+      totalTax: this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true
+        ? this.selectedBillItem?.totalTax ?? 0 : null,
       total: this.selectedBillItem?.total ?? 0,
       storeId: this.selectedBillItem?.storeId ?? null,
+      costCenterId: this.selectedBillItem?.costCenterId ?? null,
       notes: this.selectedBillItem?.notes ?? '',
       itemName: this.selectedBillItem?.itemName,
       unitName: this.selectedBillItem?.unitName,
       storeName: this.selectedBillItem?.storeName,
+      costCenterName: this.selectedBillItem?.costCenterName,
+
     });
     this.bill!.billItems = this.billItem;
 
@@ -1187,14 +1201,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       additionValue: 0,
       discountRatio: 0,
       discountValue: 0,
-      taxRatio: 0,
-      taxValue: 0,
+      totalTax: 0,
       total: 0,
       storeId: null,
+      costCenterId: null,
       notes: '',
       itemName: '',
       unitName: '',
       storeName: '',
+      costCenterName: ''
+
     }
   }
   clearSelectedBilladditionDiscountData() {
@@ -1218,7 +1234,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   setInputData() {
-
     this.bill = {
       id: this.billForm.controls["id"].value,
       companyId: this.billForm.controls["companyId"].value,
@@ -1260,12 +1275,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       remaining: this.billForm.controls["remaining"].value,
       remainingAccountId: this.billForm.controls["remainingAccountId"].value,
       billItems: this.bill.billItems ?? [],
+      billItemTaxes: this.bill.billItemTaxes ?? [],
       billAdditionAndDiscounts: this.bill.billAdditionAndDiscounts ?? [],
 
 
     };
     debugger
     this.bill.billItems = this.billItem;
+    this.bill.billItemTaxes = this.billItemTax;
     this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
 
@@ -1273,6 +1290,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.billService.createBill(this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
@@ -1280,6 +1298,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           this.billItem = [];
           this.clearSelectedBilladditionDiscountData();
           this.billAdditionAndDiscount = [];
+          this.billItemTax = [];
           this.spinner.hide();
 
           navigateUrl(this.listUrl + this.billTypeId, this.router);
@@ -1295,6 +1314,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
   }
   onSave() {
+    debugger
     if (this.billForm.valid) {
       this.setInputData();
 
@@ -1327,6 +1347,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           this.defineBillForm();
           this.clearSelectedItemData();
           this.billItem = [];
+          this.billItemTax = [];
           this.clearSelectedBilladditionDiscountData();
           this.billAdditionAndDiscount = [];
           this.spinner.hide();
@@ -1458,7 +1479,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
       );
     });
-    var itemId;
     if (data.length == 1) {
       if (i == -1) {
         this.selectedBillItem!.itemName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
@@ -1467,7 +1487,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.billItem[i].itemName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
         this.billItem[i].itemId = data[0].id;
       }
-      this.onChangeItem(data[0].id);
+      this.onChangeItem(data[0].id,i);
 
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
@@ -1484,7 +1504,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               this.billItem[i].itemName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billItem[i].itemId = d.id;
             }
-            this.onChangeItem(d.id);
+            this.onChangeItem(d.id,i);
 
           }
         });
@@ -1511,10 +1531,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     if (data.length == 1) {
       if (i == -1) {
         this.selectedBillItem!.unitName = this.lang = "ar" ? data[0].unitNameAr : data[0].unitNameEn;
-        this.selectedBillItem!.unitId = data[0].id;
+        this.selectedBillItem!.unitId = data[0].unitId;
       } else {
         this.billItem[i].unitName = this.lang = "ar" ? data[0].unitNameAr : data[0].unitNameEn;
-        this.billItem[i].unitId = data[0].id;
+        this.billItem[i].unitId = data[0].unitId;
       }
     } else {
       let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
@@ -1526,10 +1546,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           if (d) {
             if (i == -1) {
               this.selectedBillItem!.unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
-              this.selectedBillItem!.unitId = d.id;
+              this.selectedBillItem!.unitId = d.unitId;
             } else {
               this.billItem[i].unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
-              this.billItem[i].unitId = d.id;
+              this.billItem[i].unitId = d.unitId;
             }
           }
         });
@@ -1575,6 +1595,50 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             } else {
               this.billItem[i].storeName = this.lang = "ar" ? d.nameAr : d.nameEn;
               this.billItem[i].storeId = d.id;
+            }
+          }
+        });
+      this.subsList.push(sub);
+    }
+
+  }
+  openCostCenterSearchDialog(i) {
+    let searchTxt = '';
+    if (i == -1) {
+      searchTxt = this.selectedBillItem?.costCenterName ?? '';
+    } else {
+      searchTxt = ''
+    }
+
+    let data = this.costCentersList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+
+    if (data.length == 1) {
+      if (i == -1) {
+        this.selectedBillItem!.costCenterName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
+        this.selectedBillItem!.costCenterId = data[0].id;
+      } else {
+        this.billItem[i].costCenterName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
+        this.billItem[i].costCenterId = data[0].id;
+      }
+    } else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن مركز التكلفة';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.costCentersList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            if (i == -1) {
+              this.selectedBillItem!.costCenterName = this.lang = "ar" ? d.nameAr : d.nameEn;
+              this.selectedBillItem!.costCenterId = d.id;
+            } else {
+              this.billItem[i].costCenterName = this.lang = "ar" ? d.nameAr : d.nameEn;
+              this.billItem[i].costCenterId = d.id;
             }
           }
         });
@@ -1733,18 +1797,26 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
 
-  onChangeItem(itemId: any) {
-    debugger
+  onChangeItem(itemId: any,i:any) {
     this.itemCardUnit=[];
+    if(i==-1)
+    {
+      this.selectedBillItem.unitName='';
+
+    }
+    else
+    {
+      this.billItem[i].unitName='';
+
+    }
     return new Promise<void>((resolve, reject) => {
       let sub = this.itemCardService.getItemCard(itemId).subscribe({
         next: (res: any) => {
           resolve();
           var unit;
          
-          debugger
           if (res.response?.mainUnitId != null) {
-            debugger
+            
             unit = this.unitsList?.find(c => c.id == res.response?.mainUnitId)
             this.itemCardUnit.push(
               {
@@ -1763,10 +1835,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               }
             )
           }
-          console.log("itemCardUnit",this.itemCardUnit)
 
           if (res.response?.itemCardUnits != null) {
-            debugger
             res.response?.itemCardUnits.forEach(element => {
               unit = this.unitsList?.find(c => c.id == element.unitId)
               this.itemCardUnit.push(
@@ -1787,12 +1857,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                 }
               )
             });
-            console.log("itemCardUnit",this.itemCardUnit)
 
 
           }
 
-          debugger
+          
           if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
             this.onChangeQuantityOrPrice();
           }
@@ -2040,14 +2109,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         additionValue: item.additionValue,
         discountRatio: item.discountRatio,
         discountValue: item.discountValue,
-        taxRatio: item.taxRatio,
-        taxValue: item.taxValue,
+        totalTax: item.totalTax,
         total: item.total,
         storeId: item.storeId,
+        costCenterId: item.costCenterId,
         notes: item.notes,
         itemName: item.itemName,
         unitName: item.unitName,
         storeName: item.storeName,
+        costCenterName: item.costCenterName
       }
     )
 
@@ -2128,6 +2198,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   getNetAfterTax(type: any) {
+    debugger
     if (this.billType[0].manuallyTaxType == ManuallyTaxType.Total) {
       if (type == 1) {
         this.taxValue = Math.round(Number(this.total) * Number(this.taxRatio / 100));

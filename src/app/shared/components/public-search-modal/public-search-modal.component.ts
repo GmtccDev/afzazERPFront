@@ -1,88 +1,62 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
-import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
-import { SharedService } from '../../common-services/shared-service';
-import { PublicService } from '../../services/public.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SearchModalComponent } from './search-modal/search-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
 	selector: 'app-public-search-modal',
 	templateUrl: './public-search-modal.component.html',
 	styleUrls: ['./public-search-modal.component.scss']
 })
 export class PublicSearchModalComponent implements OnInit {
-	@Output() emitSearch = new EventEmitter();
 	@Output() emitClose = new EventEmitter();
 	@Input() isVisible: boolean;
 	@Input() routeApi: string;
-	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-	dataSource = new MatTableDataSource([]);
-	displayedColumns = ['code','nameAr', 'nameEn', 'actions'];
-	constructor(private publicService: PublicService,
-		private router: Router,
-		private sharedServices: SharedService,
-		private modalService: NgbModal,
-		private translate: TranslateService) { }
+	@Output() emitSearch = new EventEmitter();
+	constructor(private dialog: MatDialog) { }
 
 	ngOnInit(): void {
-		this.dataSource.paginator = this.paginator;
+	
 	}
-	ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+	ngOnChanges(): void {
 
 		if (this.isVisible) {
-			this.getListSearch();
+			this.showModal()
+			
 		}
 	}
-	getListSearch() {
-		return new Promise<void>((resolve, reject) => {
-			let sub = this.publicService.getDdl(this.routeApi).subscribe({
-				next: (res) => {
-					
-					if (res.success) {
-						this.dataSource.data = res.response;
+	
 
-					}
-
-
-					resolve();
-
-				},
-				error: (err: any) => {
-					reject(err);
-				},
-				complete: () => {
-					//console.log('complete');
-				},
-			});
-
-			//     this.subsList.push(sub);
-		});
-
-	}
-
-	OnSelected(res) {
-
-		this.emitSearch.emit(res);
-	}
+	
 	handleCancel(): void {
 		this.isVisible = false;
 		this.emitClose.emit();
 	}
 	showModal(): void {
-		this.isVisible = true;
+		
+		const dialogRef = this.dialog.open(SearchModalComponent, {
+			width: '900px', 
+			autoFocus: false,
+			data:{isVisible:true,routeApi:this.routeApi}// Adjust the width as needed
+		  });
+	  
+		  dialogRef.componentInstance.cancelClicked.subscribe(() => {
+			
+			this.dialog.closeAll();
+		  });
+	  
+		  dialogRef.componentInstance.okClicked.subscribe(() => {
+			
+			this.dialog.closeAll();
+		  });
+		  dialogRef.componentInstance.emitSearch.subscribe((data) => {
+			
+			this.emitSearch.emit(data);
+			this.dialog.closeAll();
+		
+		  });
 	}
-
 	handleOk(): void {
 		this.isVisible = false;
+		this.dialog.closeAll();
 	}
-	applyFilter(filterValue: string) {
-		filterValue = filterValue.trim(); // Remove whitespace
-		filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-		this.dataSource.filter = filterValue;
-		if (this.dataSource.paginator) {
-			this.dataSource.paginator.firstPage();
-		}
-	}
+	
 }
