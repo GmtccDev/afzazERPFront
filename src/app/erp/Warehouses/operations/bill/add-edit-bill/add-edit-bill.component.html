@@ -522,11 +522,17 @@
                                                                 <th>
                                                                     {{'general.discount-ratio'|translate}}%
                                                                 </th>
+                                                               
                                                                 <th>
                                                                     {{'general.discount-value'|translate}}
                                                                 </th>
+                                                               
                                                                 <th>
                                                                     {{'general.total-before-tax'|translate}}
+                                                                </th>
+                                                                <th>
+                                                                    {{'general.total-tax'|translate}}
+
                                                                 </th>
                                                                 <th>
                                                                     {{'general.total'|translate}}
@@ -619,9 +625,17 @@
                                                                         (change)="onChangeAdditionOrDiscountRatioAdded(4,i)">
 
                                                                 </td>
+                                                               
                                                                 <td>
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="billItem[i].totalBeforeTax"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" disabled
+                                                                        [(ngModel)]="billItem[i].totalTax"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 
@@ -739,9 +753,17 @@
                                                                         (change)="onChangeAdditionOrDiscountRatio(4)">
 
                                                                 </td>
+                                                               
                                                                 <td>
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="selectedBillItem.totalBeforeTax"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" disabled
+                                                                        [(ngModel)]="selectedBillItem.totalTax"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 

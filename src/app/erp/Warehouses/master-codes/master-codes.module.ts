@@ -39,6 +39,10 @@ import { SalesPersonCommissionCardComponent } from './sales-person-commission-ca
 import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
 import { DeterminantsComponent } from './determinants/determinants.component';
 import { AddEditDeterminantsComponent } from './determinants/add-edit-determinants/add-edit-determinants.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -53,8 +57,8 @@ import { AddEditDeterminantsComponent } from './determinants/add-edit-determinan
   imports: [
     CommonModule,
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
-    NzButtonModule,
-    NzIconModule
+    NzButtonModule,NgSelectModule,NzIconModule
+
   ],
   providers: [PeriodServiceProxy,SalesPersonCommissionServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
   ]

@@ -39,7 +39,6 @@ export class Bill {
     remaining: number;
     remainingAccountId: number | undefined;
     billItems: BillItem[] = [];
-    billItemTaxes: BillItemTax[] = [];
     billAdditionAndDiscounts: BillAdditionAndDiscount[] = [];
 
 
@@ -67,6 +66,7 @@ export class BillItem {
     unitName:string;
     storeName:string;
     costCenterName:string;
+    billItemTaxes: BillItemTax[] = [];
 
 
 
