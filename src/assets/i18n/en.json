@@ -214,6 +214,7 @@
         "credit-limit": "Credit Limit",
         "initial-balance": "Initial Balance",
         "no-add-fiscal-period-choose-open-fiscal-period": "You can not add .You Should choose a open fiscal period from the settings",
+        "no-add-fiscal-period-choose-date-open-fiscal-period":"You can not add .You Should choose  a date in open fiscal period",
         "no-edit-fiscal-period-choose-open-fiscal-period": "You can not edit .You Should choose a open fiscal period from the settings",
         "name":"name",
         "taxes":"Taxes"
