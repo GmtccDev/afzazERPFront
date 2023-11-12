@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-item-card">
     <div class="container-fluid">
@@ -144,6 +144,45 @@
                                             <input class="form-control " (change)="onFileChange($event)" id=""
                                                 type="file">
 
+                                        </div>
+                                        <div class="row  g-2 ">
+                                            <div class="col-md-6 col-12">
+                                                <label for="taxIds" class="label-name">
+                                                    {{'general.taxes'|translate}}
+                                                </label>
+
+                                                <!-- <div class="input-group  popup">
+                                                    <ng-select style="width:100%"
+                                                        formControlName="taxIds" name='taxIds' class=""
+                                                        id="taxIds">
+                                                        <ng-option *ngFor="let tax of taxesList"
+                                                            [value]="tax.id">
+                                                            {{lang=="ar" ? tax.nameAr:tax.nameEn}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div> -->
+                                                <!-- <div class="input-group  popup">
+
+                                                    <p-multiSelect [options]="taxes" formControlName="taxIds"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="selectedTaxes"
+                                                        [virtualScroll]="true"
+                                                        optionLabel="{{lang=='ar'?'nameAr':'nameEn'}}"
+                                                        id="taxes" name="taxIds" class="w-100"
+                                                        defaultLabel="{{'general.select'|translate}}"></p-multiSelect>
+                                                </div> -->
+
+                                                <div class="input-group  popup">
+                                                    <ng-select style="width:100%" [multiple]="true"
+                                                        [virtualScroll]="true" formControlName="taxIds"
+                                                        [(ngModel)]="selectedTaxes" name='taxes' class="" id="taxes">
+                                                        <ng-option *ngFor="let tax of taxesList" [value]="tax.id">
+                                                            {{lang=="ar"?tax.nameAr:tax.nameEn}}
+                                                        </ng-option>
+                                                    </ng-select>
+
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="media">
@@ -808,29 +847,12 @@
                                                         </div>
                                                     </ng-template>
                                                 </li>
-                                                <li [ngbNavItem]="6">
+                                                <!-- <li [ngbNavItem]="6">
                                                     <a ngbNavLink>{{'general.tax'|translate}}</a>
                                                     <ng-template ngbNavContent>
-                                                        <div class="row  g-2 ">
-                                                            <div class="col-md-6 col-12">
-                                                                <label for="taxIds" class="label-name">
-                                                                    {{'general.taxes'|translate}}
-                                                                </label>
-
-                                                                <div class="input-group  popup">
-                                                                    <ng-select style="width:100%"
-                                                                        formControlName="taxIds" name='taxIds' class=""
-                                                                        id="taxIds">
-                                                                        <ng-option *ngFor="let tax of taxesList"
-                                                                            [value]="tax.id">
-                                                                            {{lang=="ar" ? tax.nameAr:tax.nameEn}}
-                                                                        </ng-option>
-                                                                    </ng-select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </ng-template>
-                                                </li>
+                                                </li> -->
 
                                             </nav>
                                             <div [ngbNavOutlet]="nav" class=""></div>

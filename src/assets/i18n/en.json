@@ -216,7 +216,14 @@
         "no-add-fiscal-period-choose-open-fiscal-period": "You can not add .You Should choose a open fiscal period from the settings",
         "no-edit-fiscal-period-choose-open-fiscal-period": "You can not edit .You Should choose a open fiscal period from the settings",
         "name":"name",
-        "taxes":"Taxes"
+        "taxes":"Taxes",
+        "total-tax":"Total Tax",
+        "item-required":"Item is required",
+        "quantity-required":"Item is required",
+        "price-required":"Item is required"
+
+
+
         },
     "sales-person-commission": {
         "sales-person": "Sales Person",
