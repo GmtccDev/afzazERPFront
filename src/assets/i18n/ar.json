@@ -454,6 +454,7 @@
         "no-edit-fiscal-period-choose-open-fiscal-period":"لا يمكن التعديل . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
         "name":"الاسم",
         "taxes":"الضرائب",
+        "determinants":"المحددات",
         "total-tax":"أجمالى الضريبة",
         "item-required":"الصنف مطلوب",
         "quantity-required":"الكمية مطلوب",

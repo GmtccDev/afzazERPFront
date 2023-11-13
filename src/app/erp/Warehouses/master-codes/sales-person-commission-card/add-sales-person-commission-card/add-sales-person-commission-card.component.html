@@ -98,8 +98,8 @@
 											<div>
 												<ul class="list-group">
 													<li class="list-group-item" *ngFor="let item of commissionOnList">
-														<input type="radio" type="radio" [(ngModel)]="commissionOn"
-															(change)="onItemChange(item)" [value]="item.value"
+														<input type="radio" type="radio" [(ngModel)]="commissionOnSelected"
+															(change)="onItemChange(item)" value="{{item.value}}"
 															[checked]="item.value" /> {{ lang == 'ar' ? item.nameAr :
 														item.nameEn }}
 													</li>
