@@ -24,7 +24,7 @@ export class SearchModalComponent implements OnInit ,AfterViewInit  {
 	constructor(private publicService: PublicService,@Inject(MAT_DIALOG_DATA) public data: any,
 		) { }
 ngAfterViewInit(): void {
-  debugger
+  
  this.dataSource.paginator = this.paginator;
   console.log(this.paginator); // Check if it's defined here
 }

@@ -17,6 +17,7 @@ import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum, WarrantyTypeEnum, WarrantyTypeArEnum, AccountClassificationsEnum } from '../../../../../shared/constants/enumrators/enums';
 import { environment } from 'src/environments/environment';
 import { UnitServiceProxy } from '../../../Services/unit.servies';
+import { TaxMaster } from '../../../models/tax';
 
 @Component({
   selector: 'app-add-edit-item-card',
@@ -40,7 +41,9 @@ export class AddEditItemCardComponent implements OnInit {
   inventoryAccountsList: any;
   unitTransactionsList: any;
   filterUnitTransactionsList: any;
-
+  taxes: TaxMaster[] = [];
+  selectedTaxes: TaxMaster[] = [];
+  taxIds: any = '';
 
   routeItemGroupApi = 'ItemGroupsCard/get-ddl?'
   itemGroupsList: any;
@@ -339,7 +342,23 @@ export class AddEditItemCardComponent implements OnInit {
             isActive: res.response?.isActive
 
           });
+          this.taxIds = res.response?.taxIds;
+          if (this.taxIds != '' && this.taxIds != null) {
+             
+            var spiltedIds: string[] = [];
+            this.selectedTaxes = [];
+            spiltedIds = this.taxIds.split(',');
+             
+            for (var i = 0; i <= spiltedIds.length - 1; i++) {
+               
+              let f = this.taxesList.find((x) => x?.id == parseInt(spiltedIds[i]))!
+              if (f) {
+                this.selectedTaxes.push(f);
+              }
 
+            }
+          }
+          this.taxIds = '';
           if (res.response?.itemCardUnits != null) {
             this.itemCardUnit = res.response?.itemCardUnits;
           }
@@ -610,6 +629,14 @@ export class AddEditItemCardComponent implements OnInit {
     this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
   setInputData() {
+     
+    this.taxIds = "";
+    this.selectedTaxes.forEach(c => {
+       
+      this.taxIds += c + ",";
+    })
+
+    this.taxIds = this.taxIds.substring(0, this.taxIds.length - 1);
     this.itemCard = {
       id: this.itemCardForm.controls["id"].value,
       companyId: this.itemCardForm.controls["companyId"].value,
@@ -643,7 +670,7 @@ export class AddEditItemCardComponent implements OnInit {
       warrantyPeriod: this.itemCardForm.controls["warrantyPeriod"].value,
       warrantyType: this.itemCardForm.controls["warrantyType"].value,
       itemKind: this.itemCardForm.controls["itemKind"].value,
-      taxIds: this.itemCardForm.controls["taxIds"].value,
+      taxIds: this.taxIds,
 
       heightFactor: this.itemCardForm.controls["heightFactor"].value,
       widthFactor: this.itemCardForm.controls["widthFactor"].value,
@@ -676,7 +703,7 @@ export class AddEditItemCardComponent implements OnInit {
   confirmSave() {
 
     return new Promise<void>((resolve, reject) => {
-       
+
       this.itemCardService.createItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -698,9 +725,9 @@ export class AddEditItemCardComponent implements OnInit {
     });
   }
   onSave() {
-     
+
     if (this.itemCardForm.valid) {
-       
+
       this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {

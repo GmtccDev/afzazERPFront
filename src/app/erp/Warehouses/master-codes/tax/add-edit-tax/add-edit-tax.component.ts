@@ -466,6 +466,9 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant('tax.add-tax');
             this.defineTaxForm();
+            this.clearSelectedItemData();
+            this.taxDetail = [];
+
             this.sharedService.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
 

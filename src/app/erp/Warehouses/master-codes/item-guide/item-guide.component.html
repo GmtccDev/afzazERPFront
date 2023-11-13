@@ -52,7 +52,30 @@
 								</button>
 							</td>
 						</tr>
-						
+						<ng-container *ngFor="let childItem of item.itemCards">
+							<tr *ngIf="item.expanded">
+								<td [nzIndentSize]="(item.levelId! + 1) * 20">
+
+									{{ childItem.code }}
+								</td>
+								<td>{{ childItem.nameAr }}</td>
+								<td>{{ childItem.nameEn }}</td>
+								<td>
+									<!-- <button nz-button nzType="primary" (click)="addNodeChild(childItem.id)"></button> -->
+									<button nz-button (click)="onEditChild(childItem.id)">
+										<!-- {{
+										'buttons.edit' |
+										translate }} -->
+										<i class="fa fa-edit"></i>
+									</button>
+									<button nz-button (click)="showConfirmDeleteMessageChild(childItem.id)">
+										<!-- {{
+										'buttons.delete' | translate }} -->
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</ng-container>
 					</ng-container>
 				</ng-container>
 			</tbody>
