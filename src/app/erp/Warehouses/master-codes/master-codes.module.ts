@@ -43,6 +43,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ItemGuideComponent } from './item-guide/item-guide.component';
+import { AddEditItemGuideComponent } from './item-guide/add-edit-item-guide/add-edit-item-guide.component';
 
 
 
@@ -52,7 +54,7 @@ import { BrowserModule } from '@angular/platform-browser';
     , StoreCardComponent, AddEditStoreCardComponent, PaymentMethodComponent, AddEditPaymentMethodComponent
     , CustomerCardComponent, AddEditCustomerCardComponent, SupplierCardComponent, AddEditSupplierCardComponent
     , ItemCardComponent, AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent,
-    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, DeterminantsComponent, AddEditDeterminantsComponent, 
+    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, DeterminantsComponent, AddEditDeterminantsComponent, ItemGuideComponent, AddEditItemGuideComponent, 
   ],
   imports: [
     CommonModule,
