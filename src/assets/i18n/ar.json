@@ -291,7 +291,9 @@
         "general-configuration": "الإعدادات",
         "cheques-journal": "يومية الشيكات",
         "chart-account": "دليل الحسابات",
-        "generate-entry-vouchers": "توليد قيود السندات"
+        "generate-entry-vouchers": "توليد قيود السندات",
+        "item-guide": " دليل اصناف",
+        "item-guide-information": "معلومات  دليل اصناف"
     },
     "general": {
         "nameAr": "الاسم العربي",
@@ -448,10 +450,16 @@
         "initial-balance": "الرصيد الأفتتاحى",
         "postal-code": "الرمز البريدى",
         "no-add-fiscal-period-choose-open-fiscal-period":"لا يمكن اضافة . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-add-fiscal-period-choose-date-open-fiscal-period":"لا يمكن اضافة . يجب اختيار تاريخ داخل فترة محاسبية مفتوحة  ",
         "no-edit-fiscal-period-choose-open-fiscal-period":"لا يمكن التعديل . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
         "name":"الاسم",
         "taxes":"الضرائب",
-        "determinants":"المحددات"
+        "determinants":"المحددات",
+        "total-tax":"أجمالى الضريبة",
+        "item-required":"الصنف مطلوب",
+        "quantity-required":"الكمية مطلوب",
+        "price-required":"السعر مطلوب"
+
 
     },
     "sales-person-commission": {

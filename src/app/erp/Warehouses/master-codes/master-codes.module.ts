@@ -40,6 +40,12 @@ import { SalesPersonCommissionCardComponent } from './sales-person-commission-ca
 import { AddSalesPersonCommissionCardComponent } from './sales-person-commission-card/add-sales-person-commission-card/add-sales-person-commission-card.component';
 import { DeterminantsComponent } from './determinants/determinants.component';
 import { AddEditDeterminantsComponent } from './determinants/add-edit-determinants/add-edit-determinants.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { ItemGuideComponent } from './item-guide/item-guide.component';
+import { AddEditItemGuideComponent } from './item-guide/add-edit-item-guide/add-edit-item-guide.component';
 
 
 
@@ -49,13 +55,13 @@ import { AddEditDeterminantsComponent } from './determinants/add-edit-determinan
     , StoreCardComponent, AddEditStoreCardComponent, PaymentMethodComponent, AddEditPaymentMethodComponent
     , CustomerCardComponent, AddEditCustomerCardComponent, SupplierCardComponent, AddEditSupplierCardComponent
     , ItemCardComponent, AddEditItemCardComponent, ItemGroupsCardComponent, AddEditItemGroupsCardComponent,
-    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, DeterminantsComponent, AddEditDeterminantsComponent, 
+    BillTypeComponent, AddEditBillTypeComponent, SalesPersonCardComponent, AddSalesPersonCardComponent, SalesPersonCommissionCardComponent, AddSalesPersonCommissionCardComponent, DeterminantsComponent, AddEditDeterminantsComponent, ItemGuideComponent, AddEditItemGuideComponent, 
   ],
   imports: [
     CommonModule,
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
-    NzButtonModule,
-    NzIconModule
+    NzButtonModule,NgSelectModule,NzIconModule
+
   ],
   providers: [PeriodServiceProxy,DeterminantsServiceProxy,SalesPersonCommissionServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
   ]

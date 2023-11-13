@@ -1,0 +1,151 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-units">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="itemGroupsCardForm" id="itemGroupsCard" class="tabs-form">
+                            <div class="main-branch ranoo">
+                                <div class="wrapper-title">
+
+                                    <h3>{{'component-names.item-guide-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row ">
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="parentId" class="label-name">
+												{{'general.parent'|translate}}
+
+											</label>
+                                            <div class="d-flex">
+                                                <div class="input-group  popup flex-grow-1">
+                                                    <ng-select style="width:100%" formControlName="parentId" name='parentId' class="" id="parentId">
+                                                        <ng-option *ngFor="let itemGroupsCard of itemGroupsCardList" [value]="itemGroupsCard.id">
+                                                            {{lang=="ar"?itemGroupsCard.nameAr:itemGroupsCard.nameEn}}
+                                                        </ng-option>
+                                                    </ng-select>
+
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark" (click)="showSearchModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="col-12 col-md-6">
+                                            <label for="code" class="label-name">
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+                                                <!-- [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" -->
+                                                <input type="text" class="form-control icon-branch" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}} </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="nameAr" class="label-name">
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="nameEn" formControlName="nameEn">
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="item-type" class="label-name">{{'item.item-type'|translate}}
+											</label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="itemType" [items]="itemTypeEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 ">
+                                            <label for="cost-calculate-method" class="label-name">{{'item.cost-calculate-method'|translate}}
+											</label>
+                                            <div class="input-group  popup">
+                                                <ng-select class="custom" formControlName="costCalculation" [items]="costCalculateMethodsEnum" bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="unitId" class="label-name">
+												{{'item.unit'|translate}}
+
+											</label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="unitId" name='unitId' class="" id="unitId">
+                                                    <ng-option *ngFor="let unit of unitsList" [value]="unit.id">
+                                                        {{lang=="ar" ? unit.nameAr:unit.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-branch" name="notes" formControlName="notes">
+
+
+                                            </div>
+                                        </div>
+
+                                        <hr class="mt-3 mb-3 p-0">
+                                        <div class="col-12 col-md-6">
+                                            <div class="media">
+                                                <label class="label-name"> {{'general.status'|translate}} </label>
+                                                <div class="icon-state media-body">
+                                                    <label class="switch">
+														<input type="checkbox" class="form-control" name="isActive"
+															formControlName="isActive">
+														<span class="switch-state"></span>
+													</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<app-public-search-modal [isVisible]="showSearchModal" [routeApi]="routeApi" (emitClose)="showSearchModal = false;" (emitSearch)="onSelectItemGroupsCard($event)">
+</app-public-search-modal>

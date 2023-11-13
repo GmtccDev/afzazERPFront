@@ -1,50 +1,52 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { DeleteListCostCenterCommand, CostCenterDto, TreeNodeInterface } from '../../models/cost-Center';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { SharedService } from '../../../../shared/common-services/shared-service';
-import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../../shared/common-services/notifications-alerts.service';
-import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
-import { Subscription } from 'rxjs';
-import { ITabulatorActionsSelected } from '../../../../shared/interfaces/ITabulator-action-selected';
-import { MessageModalComponent } from '../../../../shared/components/message-modal/message-modal.component'
-import { SettingMenuShowOptions } from '../../../../shared/components/models/setting-menu-show-options';
-import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
-import { CostCenterServiceProxy } from '../../services/cost-Center.services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
+import { SharedService } from 'src/app/shared/common-services/shared-service';
+import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
+import { SettingMenuShowOptions } from 'src/app/shared/components/models/setting-menu-show-options';
+import { ToolbarActions } from 'src/app/shared/enum/toolbar-actions';
+import { ITabulatorActionsSelected } from 'src/app/shared/interfaces/ITabulator-action-selected';
+import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
+import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
+import {ItemGroupsCardServiceProxy} from '../../Services/item-groups-card.service'
+import {ItemGroupsCardDto,DeleteListItemGroupsCard, TreeNodeInterface} from '../../models/item-groups-card'
+import { ItemCardServiceProxy } from '../../Services/item-card.service';
+
 @Component({
-  selector: 'app-cost-centers',
-  templateUrl: './cost-centers.component.html',
-  styleUrls: ['./cost-centers.component.scss']
+  selector: 'app-item-guide',
+  templateUrl: './item-guide.component.html',
+  styleUrls: ['./item-guide.component.scss']
 })
-export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ItemGuideComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Main Declarations
-  costCenter: CostCenterDto[] = [];
   currnetUrl: any;
-  addUrl: string = '/accounting-master-codes/costCenter/add-costCenter';
-  updateUrl: string = '/accounting-master-codes/costCenter/update-costCenter/';
-  listUrl: string = '/accounting-master-codes/costCenter';
+  addUrl: string = '/warehouses-master-codes/itemGuide/add-itemGuide';
+  updateUrl: string = '/warehouses-master-codes/itemGuide/update-itemGuide/';
+  listUrl: string = '/warehouses-master-codes/itemGuide';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,
     addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.costCenter"),
+    componentList: this.translate.instant("component-names.item-guide"),
     componentAdd: '',
 
   };
   listIds: any[] = [];
   listOfMapData: any[];
+  filter: any = { id: null, name: null, selectedId: null };
+
   //#endregion
 
   //#region Constructor
   constructor(
-    private costCenterService: CostCenterServiceProxy,
+    private itemGroupsCardService: ItemGroupsCardServiceProxy,
+    private itemsCardService: ItemCardServiceProxy,
     private router: Router,
     private sharedServices: SharedService,
-    private alertsService: NotificationsAlertsService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService
@@ -59,9 +61,8 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region ngOnInit
   ngOnInit(): void {
    // this.defineGridColumn();
-   
     this.spinner.show();
-    Promise.all([this.getCostCenters()])
+    Promise.all([ this.getItemGroupsCards()])
     .then(a=>{
       this.spinner.hide();
       this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -74,9 +75,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-  
-
-
+    
   }
 
 
@@ -105,19 +104,19 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Basic Data
   ///Geting form dropdown list data
-  filter: any = { id: null, name: null, selectedId: null };
-  getCostCenters() {
+  getItemGroupsCards() {
     return new Promise<void>((resolve, reject) => {
-     
-      let sub = this.costCenterService.getAllTree(this.filter).subscribe({
+
+      let sub = this.itemGroupsCardService.getAllTree(this.filter).subscribe({
         next: (res) => {
-          
+
           //console.log(res);
 
-          this.toolbarPathData.componentList = this.translate.instant("component-names.costCenter");
+          this.toolbarPathData.componentList = this.translate.instant("component-names.item-guide");
           if (res.success) {
 
-            this.listOfMapData = res.response
+            this.listOfMapData = res.response;
+            console.log(res.response)
             this.listOfMapData.forEach(item => {
               this.mapOfExpandedData[item.treeId] = this.convertTreeToList(item);
             });
@@ -158,23 +157,25 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.result.then((rs) => {
       console.log(rs);
       if (rs == 'Confirm') {
-        this.spinner.show();
-
-        let sub = this.costCenterService.deleteCostCenter(id).subscribe(
+        var entity={
+          tableName:"ItemGroupsCards",
+          id:id,
+          idName:"Id"
+        }
+        let sub = this.itemGroupsCardService.deleteItemGroupsCard(id).subscribe(
           (resonse) => {
 
-            this.getCostCenters();
+            //reloadPage()
+            this.getItemGroupsCards();
 
           });
         this.subsList.push(sub);
-        this.spinner.hide();
-
       }
     });
   }
   //#endregion
   //#region Tabulator
-
+ 
   panelId: number = 1;
   sortByCols: any[] = [];
   searchFilters: any;
@@ -210,8 +211,9 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
         submitMode: false
       } as ToolbarData);
 
+      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-master-codes/costCenter/update-costCenter/' + id])
+      this.router.navigate(['warehouses-master-codes/itemGuide/update-itemGuide/' + id])
     }
 
   }
@@ -227,7 +229,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
         } as ToolbarData);
 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
-        this.router.navigate(['accounting-master-codes/costCenter/update-costCenter/' + event.item.id])
+        this.router.navigate(['warehouses-master-codes/itemGuide/update-itemGuide/' + event.item.id])
 
       } else if (event.actionName == 'Delete') {
         this.showConfirmDeleteMessage(event.item.id);
@@ -245,7 +247,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
       } as ToolbarData);
 
       this.sharedServices.changeToolbarPath(this.toolbarPathData);
-      this.router.navigate(['accounting-master-codes/costCenter/add-costCenter/' + parentId])
+      this.router.navigate(['warehouses-master-codes/itemGuide/add-itemGuide/' + parentId])
     }
   }
   //#endregion
@@ -277,13 +279,13 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onDelete() {
 
-    let item = new DeleteListCostCenterCommand();
+    let item = new DeleteListItemGroupsCard();
     item.ids = this.listIds.map(item => item.id);
-    let sub = this.costCenterService.deleteListCostCenter(item).subscribe(
+    let sub = this.itemGroupsCardService.deleteListItemGroupsCard(item).subscribe(
       (resonse) => {
 
         //reloadPage()
-        this.getCostCenters();
+        this.getItemGroupsCards();
         this.listIds = [];
       });
     this.subsList.push(sub);
@@ -293,18 +295,41 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
   collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
 
     if (!$event) {
+      if (data.itemCards) {
+        data.itemCards.forEach(childItem => {
+          childItem.expanded = false;
+        });
+      }
       if (data.children) {
         data.children.forEach(d => {
+         
           const target = array.find(a => a.treeId === d.treeId)!;
           target.expanded = false;
           this.collapse(array, target, false);
         });
-      } else {
-
-        return;
-      }
-    }
-  }
+      } 
+    }}
+  // }
+  // collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
+  //   
+  //   if (!$event) {
+  //     if (data.children) {
+  //       data.children.forEach(d => {
+  //         const target = array.find(a => a.treeId === d.treeId)!;
+  //         target.expanded = false;
+  //         this.collapse(array, target, false);
+  //       });
+  //     } else {
+  //       // Handle collapse for itemCards
+  //       if (data.itemCards) {
+  //         data.itemCards.forEach(childItem => {
+  //           childItem.expanded = false;
+  //         });
+  //       }
+  //       return;
+  //     }
+  //   }
+  // }
   convertTreeToList(root: TreeNodeInterface): TreeNodeInterface[] {
 
     const stack: TreeNodeInterface[] = [];
@@ -333,6 +358,7 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
       array.push(node);
     }
   }
+
   expandAll: boolean=true;
   convertTreeToListExpanded(root: TreeNodeInterface): TreeNodeInterface[] {
 
@@ -371,8 +397,62 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
   }
+  addNodeChild(parentId) {
 
+    if (parentId != undefined) {
+      // this.edit(id);
+      this.sharedServices.changeButton({
+        action: 'New',
+        componentName: 'List',
+        submitMode: false
+      } as ToolbarData);
 
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.router.navigate(['warehouses-master-codes/itemCard/update-itemCard/' + parentId])
+    }
+  }
+  onEditChild(id) {
 
+    if (id != undefined) {
+      // this.edit(id);
+      this.sharedServices.changeButton({
+        action: 'Update',
+        componentName: 'List',
+        submitMode: false
+      } as ToolbarData);
 
+      // this.toolbarPathData.updatePath = "/control-panel/definitions/update-benefit-person/"
+      this.sharedServices.changeToolbarPath(this.toolbarPathData);
+      this.router.navigate(['warehouses-master-codes/itemCard/update-itemCard/' + id])
+    }
+
+  }
+  showConfirmDeleteMessageChild(id) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+    modalRef.componentInstance.isYesNo = true;
+    modalRef.result.then((rs) => {
+      console.log(rs);
+      if (rs == 'Confirm') {
+        this.spinner.show();
+        const input={
+          tableName:" ItemCards",
+          id:id,
+          idName:"Id"
+        };
+        let sub = this.itemsCardService.deleteEntity(input).subscribe(
+          (resonse) => {
+
+            this.getItemGroupsCards();
+
+          });
+        this.subsList.push(sub);
+        this.spinner.hide();
+
+      }
+    });
+  }
 }
+

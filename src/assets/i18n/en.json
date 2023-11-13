@@ -214,10 +214,18 @@
         "credit-limit": "Credit Limit",
         "initial-balance": "Initial Balance",
         "no-add-fiscal-period-choose-open-fiscal-period": "You can not add .You Should choose a open fiscal period from the settings",
+        "no-add-fiscal-period-choose-date-open-fiscal-period":"You can not add .You Should choose  a date in open fiscal period",
         "no-edit-fiscal-period-choose-open-fiscal-period": "You can not edit .You Should choose a open fiscal period from the settings",
         "name":"name",
         "taxes":"Taxes",
-        "determinants":"Determinants"
+        "determinants":"Determinants",
+        "total-tax":"Total Tax",
+        "item-required":"Item is required",
+        "quantity-required":"Item is required",
+        "price-required":"Item is required"
+
+
+
         },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -489,7 +497,9 @@
         "general-configuration": "General Configuration",
         "cheques-journal": "Cheques Journal",
         "chart-account": "Chart of Accounts",
-        "generate-entry-vouchers": "Generate Entry Vouchers"
+        "generate-entry-vouchers": "Generate Entry Vouchers",
+        "item-Guide": " Item Guide",
+        "item-Guide-information": " Item Guide Information"
     },
     "language": {
         "ARABIC": "Ar",
