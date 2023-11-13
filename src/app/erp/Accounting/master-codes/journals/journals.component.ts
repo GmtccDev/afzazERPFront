@@ -104,7 +104,7 @@ export class JournalsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 					this.toolbarPathData.componentList = this.translate.instant("component-names.journal");
 					if (res.success) {
-						this.journal = res.response.items;
+						this.journal = res.response.items.filter(c=>c.nameAr!=null||c.nameEn!=null);
 					}
 
 
