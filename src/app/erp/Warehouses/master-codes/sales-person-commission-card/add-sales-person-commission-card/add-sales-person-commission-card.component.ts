@@ -95,6 +95,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     })
 
   }
+  
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {

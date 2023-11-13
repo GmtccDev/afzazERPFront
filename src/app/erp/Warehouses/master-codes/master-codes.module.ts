@@ -1,3 +1,4 @@
+import { DeterminantsServiceProxy } from './../Services/determinants-service';
 import { SalesPersonCommissionServiceProxy } from './../Services/sales-person-commission.service';
 import { SalesPersonCardServiceProxy } from './../Services/sales-person-card.service';
 import { NgModule } from '@angular/core';
@@ -56,7 +57,7 @@ import { AddEditDeterminantsComponent } from './determinants/add-edit-determinan
     NzButtonModule,
     NzIconModule
   ],
-  providers: [PeriodServiceProxy,SalesPersonCommissionServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
+  providers: [PeriodServiceProxy,DeterminantsServiceProxy,SalesPersonCommissionServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
   ]
 })
 export class MasterCodesModule { }
