@@ -117,7 +117,7 @@ export class DeterminantsComponent implements OnInit, OnDestroy, AfterViewInit {
 	  return new Promise<void>((resolve, reject) => {
 		let sub = this.determinantsService.allDeterminants(undefined, undefined, undefined, undefined, undefined).subscribe({
 		  next: (res) => {
-			this.toolbarPathData.componentList = this.translate.instant("component-names.taxes");
+			this.toolbarPathData.componentList = this.translate.instant("component-names.determinants");
 			if (res.success) {
 			  this.determinants = res.response.items;
   

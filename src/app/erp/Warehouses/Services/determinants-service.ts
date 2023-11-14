@@ -28,17 +28,17 @@ export class DeterminantsServiceProxy {
         this.baseUrl = environment.apiUrl;
     }
 
-    createDeterminant(warehousesTax: any): Observable<any> {
+    createDeterminant(model: any): Observable<any> {
          
-        return this.http.post<any>(environment.apiUrl + "/api/Determinants/create?", warehousesTax);
+        return this.http.post<any>(environment.apiUrl + "/api/Determinants/create?", model);
     }
   
   
-    deleteListDeterminants(warehousesTax: any): Observable<number> {
-        return this.http.post<any>(environment.apiUrl + "/api/Determinants/deleteList?", warehousesTax);
+    deleteListDeterminants(model: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/Determinants/deleteList?", model);
     }
-    updateTax(warehousesTax: any): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + "/api/Determinants/update?", warehousesTax);
+    updateDeterminants(model: any): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + "/api/Determinants/update?", model);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(environment.apiUrl + "/api/Determinants/get-ddl?");

@@ -3,8 +3,9 @@ export class DeterminantsMaster {
     code: string;
     nameAr: string;
     nameEn: string;
+    valueType:any;
     status:boolean;
-    determinantsDetail:DeterminantsDetail[]=[];
+    determinantsDetails:DeterminantsDetail[]=[];
 
 
 }

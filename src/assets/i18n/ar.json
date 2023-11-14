@@ -745,7 +745,9 @@
         "type-value": "نوع القيمة",
         "textarea": "Textarea",
         "text": "Text",
-        "number": "Number"
+        "number": "Number",
+        "add-determinants":"اضافة المحددات",
+        "determinants-details-required": "ادخال قائمة الإختيا مطلوب"
     },
     "tabulator": {
         "export": "تصدير",

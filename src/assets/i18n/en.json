@@ -754,7 +754,9 @@
         "type-value": "Type value",
         "textarea": "Textarea",
         "text": "Text",
-        "number": "Number"
+        "number": "Number",
+        "add-determinants":"Add Determinants",
+        "determinants-details-required": "Determinants Select List Required"
 
     },
     "tabulator": {

@@ -262,5 +262,23 @@ export enum ManuallyTaxType {
   Total=2
 
 }
+export enum DeterminantsValueTypesEnEnum {
+
+  'Select of list' = 1,
+  'Number' = 2,
+  'Text' = 3,
+  'Date' = 4,
+  'Select Yes/No' = 5
+
+}
+export enum DeterminantsValueTypesArEnum {
+  'اختار من القائمة' = 1,
+  'رقم' = 2,
+  'نص' = 3,
+  'تاريخ' = 4,
+  ' اختار نعم/لا' = 5
+
+
+}
 
 
