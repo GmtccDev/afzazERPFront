@@ -7,7 +7,7 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-body">
-						<!-- <form id=""> -->
+						<form [formGroup]="determinantsForm" id="determinantsSubmit" class="tabs-form">
 						<div class="">
 							<div class="wrapper-title">
 
@@ -58,8 +58,12 @@
 										</label>
 										<span class="text-danger">*</span>
 
-										<div class="">
-											<ng-select [items]="valueType" [(ngModel)]="selectValueType"></ng-select>
+										<div class="input-group  popup">
+											<label for="0" class="label-name">
+												{{'general.entries-status'|translate}}</label>
+											<ng-select class="custom" formControlName="valueType"
+												[items]="determinantsValueTypes" bindLabel="name" bindValue="id"
+												style="width:100%"></ng-select>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -68,14 +72,14 @@
 											</label>
 											<div class="icon-state media-body">
 												<label class="switch">
-													<input type="checkbox" class="form-control" name="isActive"
-														formControlName="isActive">
+													<input type="checkbox" class="form-control" name="status"
+														formControlName="status">
 													<span class="switch-state"></span>
 												</label>
 											</div>
 										</div>
 									</div>
-									<div class="col-12 mt-4" *ngIf="selectValueType === 'Select of list'">
+									<!-- <div class="col-12 mt-4" *ngIf="selectValueType === 'Select of list'">
 										<table class="table table-sm m-b-0 table-broder"
 											style="overflow-y: scroll !important;">
 											<thead>
@@ -95,9 +99,91 @@
 
 											</tbody>
 										</table>
+									</div> -->
+
+									<div class="row" *ngIf="determinantsForm.value.valueType==1" >
+										<div class="col gap-12 grid grid-cols-12 ">
+											<ul ngbNav #nav="ngbNav" class="nav-tabs">
+												<li ngbNavItem [destroyOnHide]="false">
+													<a ngbNavLink> {{'general.details' |translate}}</a>
+													<ng-template ngbNavContent>
+													 	<table class="table table-broder"
+															style="overflow-y: scroll !important;">
+															<thead>
+																<th>#</th>
+															
+																<th>
+																	{{'general.nameAr'|translate}}
+																</th>
+																<th>
+																	{{'general.nameEn'|translate}}
+																</th>
+
+																<th></th>
+															</thead>
+															<tr *ngFor="let item of determinantsDetail; let i= index;">
+																<td> {{i+1}}</td>
+											
+																<td>
+																	<input type="text"
+																		[(ngModel)]="determinantsDetail[i].nameAr"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="border-0 m-0 w-100">
+																</td>
+																<td>
+																	<input type="text"
+																		[(ngModel)]="determinantsDetail[i].nameEn"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="border-0 m-0 w-100">
+																</td>
+
+
+
+																<td>
+																	<input type="button"
+																		class="btn btn-danger btn-table"
+																		value="{{'buttons.delete'|translate}}"
+																		(click)="deleteItem(i)">
+																</td>
+															</tr>
+
+															<tr>
+																<td class="p-0 m-0">{{determinantsDetail?.length + 1}}</td>
+															
+																<td>
+																	<input type="text"
+																	[(ngModel)]="selectedDeterminantsDetail.nameAr"
+																	[ngModelOptions]="{standalone: true}" min="0"
+																	class="border-0 m-0 w-100">
+
+
+																</td>
+																<td>
+																	<input type="text"
+																		[(ngModel)]="selectedDeterminantsDetail.nameEn"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="border-0 m-0 w-100">
+																</td>
+
+																<td>
+
+																	<input type="button"
+																		class="btn btn-primary btn-table "
+																		(click)="addItem()"
+																		value="{{'buttons.add'|translate}}">
+
+																</td>
+															</tr>
+														</table>
+
+													</ng-template>
+												</li>
+
+
+											</ul>
+											<div [ngbNavOutlet]="nav" class=""></div>
+										</div>
 									</div>
-
-
 
 
 
@@ -107,7 +193,7 @@
 							</div>
 						</div>
 
-						<!-- </form> -->
+						</form>
 					</div>
 				</div>
 			</div>
