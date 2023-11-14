@@ -23,11 +23,13 @@ export class Bill {
     notes: string | undefined;
     attachment: string | undefined;
     cashAccountId: number | undefined;
-    supplierAccountId: number | undefined;
+   // supplierAccountId: number | undefined;
     salesAccountId: number | undefined;
     salesReturnAccountId: number | undefined;
     purchasesAccountId: number | undefined;
     purchasesReturnAccountId: number | undefined;
+   // discountAccountId: number | undefined;
+    taxAccountId: number | undefined;
     totalBeforeTax: number;
     total: number;
     taxRatio: number | undefined;
@@ -74,6 +76,7 @@ export class BillItem {
 export class BillItemTax {
     id: number;
     billItemId: number;
+    taxId: number;
     taxRatio: number;
     taxValue: number;
     

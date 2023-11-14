@@ -350,7 +350,7 @@
                                             </label>
                                             <textarea class="form-control" formControlName="notes"
                                                 name='notes'></textarea>
-                                        </div> 
+                                        </div>
 
                                         <div class="col-md-6 col-12">
                                             <label for="cashAccountId" class="label-name">
@@ -374,7 +374,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
+                                        <!-- <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
                                             <label for="supplierAccountId" class="label-name">
                                                 {{'general.supplier-account'|translate}}
                                             </label>
@@ -394,7 +394,7 @@
                                                 </div>
                                             </div>
 
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-md-6 col-12" *ngIf="billTypeKind==1">
                                             <label for="salesAccountId" class="label-name">
@@ -522,15 +522,16 @@
                                                                 <th>
                                                                     {{'general.discount-ratio'|translate}}%
                                                                 </th>
-                                                               
+
                                                                 <th>
                                                                     {{'general.discount-value'|translate}}
                                                                 </th>
-                                                               
+
                                                                 <th>
                                                                     {{'general.total-before-tax'|translate}}
                                                                 </th>
-                                                                <th>
+                                                                <th
+                                                                    *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual!=true">
                                                                     {{'general.total-tax'|translate}}
 
                                                                 </th>
@@ -625,7 +626,7 @@
                                                                         (change)="onChangeAdditionOrDiscountRatioAdded(4,i)">
 
                                                                 </td>
-                                                               
+
                                                                 <td>
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="billItem[i].totalBeforeTax"
@@ -633,7 +634,8 @@
                                                                         class="form-control">
 
                                                                 </td>
-                                                                <td>
+                                                                <td
+                                                                    *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual!=true">
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="billItem[i].totalTax"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
@@ -753,7 +755,7 @@
                                                                         (change)="onChangeAdditionOrDiscountRatio(4)">
 
                                                                 </td>
-                                                               
+
                                                                 <td>
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="selectedBillItem.totalBeforeTax"
@@ -761,7 +763,8 @@
                                                                         class="form-control">
 
                                                                 </td>
-                                                                <td>
+                                                                <td
+                                                                    *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual!=true">
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="selectedBillItem.totalTax"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
@@ -1155,6 +1158,50 @@
                                             </div>
 
                                         </div>
+
+                                        <!-- <div class="col-md-6 col-12">
+                                            <label for="discountAccountId" class="label-name">
+                                                {{'general.discount-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="discountAccountId"
+                                                    name='discountAccountId' id="discountAccountId">
+                                                    <ng-option *ngFor="let account of accountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchDiscountAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div> -->
+
+                                        <div class="col-md-6 col-12">
+                                            <label for="taxAccountId" class="label-name">
+                                                {{'general.tax-account'|translate}}
+                                            </label>
+                                            <div class="d-flex">
+                                                <ng-select class="flex-grow-1" formControlName="taxAccountId"
+                                                    name='taxAccountId' id="taxAccountId">
+                                                    <ng-option *ngFor="let account of accountsList"
+                                                        [value]="account.id">
+                                                        {{lang=="ar"?account.nameAr:account.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark"
+                                                        (click)="showSearchTaxAccountModal=true" type="button"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1182,9 +1229,9 @@
     (emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
 </app-public-search-modal>
 
-<app-public-search-modal [isVisible]="showSearchSupplierAccountModal" [routeApi]="routeSupplierAccountApi"
+<!-- <app-public-search-modal [isVisible]="showSearchSupplierAccountModal" [routeApi]="routeSupplierAccountApi"
     (emitClose)="showSearchSupplierAccountModal = false;" (emitSearch)="onSelectSupplierAccount($event)">
-</app-public-search-modal>
+</app-public-search-modal> -->
 
 <app-public-search-modal [isVisible]="showSearchSalesAccountModal" [routeApi]="routeSalesAccountApi"
     (emitClose)="showSearchSalesAccountModal = false;" (emitSearch)="onSelectSalesAccount($event)">
@@ -1203,6 +1250,14 @@
 <app-public-search-modal [isVisible]="showSearchPurchasesReturnAccountModal" [routeApi]="routePurchasesAccountApi"
     (emitClose)="showSearchPurchasesReturnAccountModal = false;" (emitSearch)="onSelectPurchasesReturnAccount($event)">
 </app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchTaxAccountModal" [routeApi]="routeAccountApi"
+    (emitClose)="showSearchTaxAccountModal = false;" (emitSearch)="onSelectTaxAccount($event)">
+</app-public-search-modal>
+
+<!-- <app-public-search-modal [isVisible]="showSearchDiscountAccountModal" [routeApi]="routeAccountApi"
+    (emitClose)="showSearchDiscountAccountModal = false;" (emitSearch)="onSelectDiscountAccount($event)">
+</app-public-search-modal> -->
 
 <app-public-search-modal [isVisible]="showSearchPaidAccountModal" [routeApi]="routeAccountApi"
     (emitClose)="showSearchPaidAccountModal = false;" (emitSearch)="onSelectPaidAccount($event)">

@@ -18,13 +18,12 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { DateCalculation, DateModel } from '../../../../../shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from '../../../../master-codes/services/currency.servies';
 import { GeneralConfigurationServiceProxy } from '../../../../Accounting/services/general-configurations.services'
-import { convertEnumToArray, AccountClassificationsEnum, PayWayEnum, PayWayArEnum, ShipMethodEnum, ShipKindEnum, ShipKindArEnum, ManuallyTaxType, GeneralConfigurationEnum } from '../../../../../shared/constants/enumrators/enums';
+import { convertEnumToArray, AccountClassificationsEnum, PayWayEnum, PayWayArEnum, ShipMethodEnum, ShipKindEnum, ShipKindArEnum, ManuallyTaxType, GeneralConfigurationEnum, CreateFinancialEntryEnum, BillKindEnum } from '../../../../../shared/constants/enumrators/enums';
 import { BillServiceProxy } from '../../../services/bill.service';
 import { navigateUrl } from 'src/app/shared/helper/helper-url';
 import { ItemCardUnitDto } from '../../../models/item-card';
 import { ItemCardServiceProxy } from '../../../Services/item-card.service';
 import { TaxServiceProxy } from '../../../Services/tax.service';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -41,7 +40,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   storeId: any;
   costCenterId: any;
   cashAccountId: any;
-  supplierAccountId: any;
+  //supplierAccountId: any;
   salesAccountsList: any;
   salesReturnAccountsList: any;
   purchasesAccountsList: any;
@@ -139,6 +138,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchSalesReturnAccountModal = false;
   showSearchPurchasesAccountModal = false;
   showSearchPurchasesReturnAccountModal = false;
+  showSearchDiscountAccountModal = false;
+  showSearchTaxAccountModal = false;
+
   showSearchPaidAccountModal = false;
   showSearchRemainingAccountModal = false;
   showSearchCostCenterModal = false;
@@ -319,11 +321,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       notes: '',
       attachment: '',
       cashAccountId: null,
-      supplierAccountId: null,
+      // supplierAccountId: null,
       salesAccountId: null,
       salesReturnAccountId: null,
       purchasesAccountId: null,
       purchasesReturnAccountId: null,
+      // discountAccountId: null,
+      taxAccountId: null,
       totalBeforeTax: '',
       taxRatio: null,
       taxValue: null,
@@ -359,11 +363,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       notes: '',
       attachment: '',
       cashAccountId: null,
-      supplierAccountId: null,
+      //supplierAccountId: null,
       salesAccountId: null,
       salesReturnAccountId: null,
       purchasesAccountId: null,
       purchasesReturnAccountId: null,
+      // discountAccountId: null,
+      taxAccountId: null,
+
       totalBeforeTax: '',
       taxRatio: '',
       taxValue: '',
@@ -485,11 +492,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             notes: res.response?.notes,
             attachment: res.response?.attachment,
             cashAccountId: res.response?.cashAccountId,
-            supplierAccountId: res.response?.supplierAccountId,
+            // supplierAccountId: res.response?.supplierAccountId,
             salesAccountId: res.response?.salesAccountId,
             salesReturnAccountId: res.response?.salesReturnAccountId,
             purchasesAccountId: res.response?.purchasesAccountId,
             purchasesReturnAccountId: res.response?.purchasesReturnAccountId,
+            // discountAccountId: res.response?.discountAccountId,
+            taxAccountId: res.response?.taxAccountId,
             totalBeforeTax: res.response?.totalBeforeTax,
             total: res.response?.total,
             taxRatio: res.response?.taxRatio,
@@ -1061,10 +1070,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.billForm.controls.cashAccountId.setValue(event.id);
     this.showSearchCashAccountModal = false;
   }
-  onSelectSupplierAccount(event) {
-    this.billForm.controls.supplierAccountId.setValue(event.id);
-    this.showSearchSupplierAccountModal = false;
-  }
+  // onSelectSupplierAccount(event) {
+  //   this.billForm.controls.supplierAccountId.setValue(event.id);
+  //   this.showSearchSupplierAccountModal = false;
+  // }
   onSelectSalesAccount(event) {
     this.billForm.controls.salesAccountId.setValue(event.id);
     this.showSearchSalesAccountModal = false;
@@ -1080,6 +1089,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   onSelectPurchasesReturnAccount(event) {
     this.billForm.controls.purchasesReturnAccountId.setValue(event.id);
     this.showSearchPurchasesReturnAccountModal = false;
+  }
+  // onSelectDiscountAccount(event) {
+  //   this.billForm.controls.discountAccountId.setValue(event.id);
+  //   this.showSearchDiscountAccountModal = false;
+  // }
+  onSelectTaxAccount(event) {
+    this.billForm.controls.taxAccountId.setValue(event.id);
+    this.showSearchTaxAccountModal = false;
   }
   onSelectPaidAccount(event) {
     this.billForm.controls.paidAccountId.setValue(event.id);
@@ -1289,17 +1306,19 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       notes: this.billForm.controls["notes"].value,
       attachment: this.billForm.controls["attachment"].value,
       cashAccountId: this.billForm.controls["cashAccountId"].value,
-      supplierAccountId: this.billForm.controls["supplierAccountId"].value,
+      //supplierAccountId: this.billForm.controls["supplierAccountId"].value,
       salesAccountId: this.billForm.controls["salesAccountId"].value,
       salesReturnAccountId: this.billForm.controls["salesReturnAccountId"].value,
       purchasesAccountId: this.billForm.controls["purchasesAccountId"].value,
       purchasesReturnAccountId: this.billForm.controls["purchasesReturnAccountId"].value,
+      // discountAccountId: this.billForm.controls["discountAccountId"].value,
+      taxAccountId: this.billForm.controls["taxAccountId"].value,
       totalBeforeTax: this.billForm.controls["totalBeforeTax"].value,
       total: this.billForm.controls["total"].value,
       taxRatio: this.billForm.controls["taxRatio"].value,
       taxValue: this.billForm.controls["taxValue"].value,
       net: this.billForm.controls["net"].value,
-      netAfterTax: this.billForm.controls["netAfterTax"].value,
+      netAfterTax: this.netAfterTax,
       paid: this.billForm.controls["paid"].value,
       paidAccountId: this.billForm.controls["paidAccountId"].value,
       remaining: this.billForm.controls["remaining"].value,
@@ -1343,15 +1362,92 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
   }
   onSave() {
-
     if (this.billForm.valid) {
       this.setInputData();
+      if (this.billType[0].kind == BillKindEnum['Sales Bill'] || this.billType[0].kind == BillKindEnum['Sales Returns Bill']) {
+        if (this.bill.customerId == null) {
+          this.errorMessage = this.translate.instant("bill.customer-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
 
+      }
+      if (this.billType[0].kind == BillKindEnum['Purchases Bill'] || this.billType[0].kind == BillKindEnum['Purchases Returns Bill']) {
+        if (this.bill.supplierId == null) {
+          this.errorMessage = this.translate.instant("bill.supplier-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+      }
       if (this.bill.billItems.length == 0) {
         this.errorMessage = this.translate.instant("bill.bill-items-required");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
+      }
+      if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically']) {
+        if (this.billType[0].kind != BillKindEnum['First Period Goods Bill']) {
+          if (this.bill.payWay == PayWayEnum.Cash) {
+            if (this.bill.cashAccountId == null) {
+              this.errorMessage = this.translate.instant("bill.cash-account-required");
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+          }
+        }
+
+        if (this.billType[0].kind == BillKindEnum['Sales Bill']) {
+          if (this.bill.salesAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.sales-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+
+        if (this.billType[0].kind == BillKindEnum['Sales Returns Bill']) {
+          if (this.bill.salesReturnAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.sales-return-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+        if (this.billType[0].kind == BillKindEnum['Purchases Bill']) {
+          if (this.bill.purchasesAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.purchases-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+        if (this.billType[0].kind == BillKindEnum['Purchases Returns Bill']) {
+          if (this.bill.purchasesReturnAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.purchases-return-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+        if (this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual == true) {
+          if (this.bill.taxAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.tax-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+
+
+
       }
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -1395,15 +1491,90 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   onUpdate() {
     if (this.billForm.valid) {
-
       this.setInputData();
+      if (this.billType[0].kind == BillKindEnum['Sales Bill'] || this.billType[0].kind == BillKindEnum['Sales Returns Bill']) {
+        if (this.bill.customerId == null) {
+          this.errorMessage = this.translate.instant("bill.customer-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+      }
+      if (this.billType[0].kind == BillKindEnum['Purchases Bill'] || this.billType[0].kind == BillKindEnum['Purchases Returns Bill']) {
+        if (this.bill.supplierId == null) {
+          this.errorMessage = this.translate.instant("bill.supplier-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+      }
       if (this.bill.billItems.length == 0) {
         this.errorMessage = this.translate.instant("bill.bill-items-required");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
+      if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically']) {
+        if (this.bill.payWay == PayWayEnum.Cash) {
+          if (this.bill.cashAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.cash-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
 
+        if (this.billType[0].kind == BillKindEnum['Sales Bill']) {
+          if (this.bill.salesAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.sales-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+
+        if (this.billType[0].kind == BillKindEnum['Sales Returns Bill']) {
+          if (this.bill.salesReturnAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.sales-return-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+        if (this.billType[0].kind == BillKindEnum['Purchases Bill']) {
+          if (this.bill.purchasesAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.purchases-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+        if (this.billType[0].kind == BillKindEnum['Purchases Returns Bill']) {
+          if (this.bill.purchasesReturnAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.purchases-return-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+
+        }
+        if (this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual == true) {
+          if (this.bill.taxAccountId == null) {
+            this.errorMessage = this.translate.instant("bill.tax-account-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+
+
+
+      }
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();
@@ -1950,11 +2121,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               currentDate = now.getFullYear() + '-' + month + '-' + day
 
               if (currentDate >= fromDate && currentDate <= toDate) {
-                debugger
+
                 this.billItemTax.push(
                   {
                     id: 0,
                     billItemId: 0,
+                    taxId: res.response?.id,
                     taxRatio: element.taxRatio,
                     taxValue: this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100)
                   }
@@ -1962,7 +2134,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
                 if (i == -1) {
-                  debugger
+
                   this.selectedBillItem.totalTax += this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100);
                   this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + this.selectedBillItem.totalTax;
 
@@ -2017,7 +2189,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         else {
           this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax)
         }
-        debugger
+
         //this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + this.selectedBillItem.totalTax;
 
       }
@@ -2104,20 +2276,20 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     if (this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true) {
 
-      debugger
+
       if (this.billItemTax != null) {
-        debugger
+
         this.selectedBillItem.totalTax = 0;
         this.selectedBillItem.total = 0;
         this.billItemTax.forEach(element => {
           if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
-            debugger
+
             this.selectedBillItem.totalTax += (Number(Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)) * (element.taxRatio / 100))
             element.taxValue = (Number(Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)) * (element.taxRatio / 100));
 
           }
           else {
-            debugger
+
             this.selectedBillItem.totalTax += Number(this.selectedBillItem.quantity * this.selectedBillItem.price * (element.taxRatio / 100))
 
             element.taxValue = Number(this.selectedBillItem.quantity * this.selectedBillItem.price * (element.taxRatio / 100));
@@ -2198,20 +2370,20 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     // }
     if (this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true) {
 
-      debugger
+
       if (this.billItemTax != null) {
-        debugger
+
         this.billItem[i].totalTax = 0;
         this.billItem[i].total = 0;
         this.billItemTax.forEach(element => {
           if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
-            debugger
+
             this.billItem[i].totalTax += (Number(Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)) * (element.taxRatio / 100))
             element.taxValue = (Number(Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)) * (element.taxRatio / 100));
 
           }
           else {
-            debugger
+
             this.billItem[i].totalTax += Number(this.billItem[i].quantity * this.billItem[i].price * (element.taxRatio / 100))
 
             element.taxValue = Number(this.billItem[i].quantity * this.billItem[i].price * (element.taxRatio / 100));
@@ -2243,7 +2415,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   onChangeAdditionOrDiscountRatioInBillAdditionDiscount(i: any) {
-    debugger
+
     if (i == 1) {
       this.selectedBillAdditionAndDiscount.additionValue =
         Number(this.total) * Number(this.selectedBillAdditionAndDiscount.additionRatio / 100);
@@ -2418,7 +2590,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   getNetAfterTax(type: any) {
-
+    debugger
     if (this.billType[0].manuallyTaxType == ManuallyTaxType.Total) {
       if (type == 1) {
         this.taxValue = Math.round(Number(this.total) * Number(this.taxRatio / 100));
@@ -2451,6 +2623,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   addItemAdditionsDiscounts() {
+    if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically']) {
+      if (this.billType[0].kind != BillKindEnum['First Period Goods Bill']) {
+        if (this.selectedBillAdditionAndDiscount.accountId == null) {
+          this.errorMessage = this.translate.instant("bill.account-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+      }
+    }
     this.billAdditionAndDiscount.push({
       id: 0,
       billId: this.selectedBillAdditionAndDiscount?.billId ?? 0,
@@ -2493,6 +2675,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.totalBeforeTax += element.totalBeforeTax;
         this.total += element.total;
         this.net += element.total;
+        debugger
         this.netAfterTax += element.total;
       });
       if (this.billAdditionAndDiscount != null) {

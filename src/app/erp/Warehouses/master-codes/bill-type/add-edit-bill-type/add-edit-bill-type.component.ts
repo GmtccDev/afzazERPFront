@@ -317,8 +317,8 @@ export class AddEditBillTypeComponent implements OnInit {
   getAccountingEffect() {
     this.accountingEffectList = [
       { nameAr: 'لا تولد سند قيد', nameEn: 'No generate entry', value: '1' },
-      { nameAr: 'لا تولد سند قيد تلقائي', nameEn: 'No generate entry automatically', value: '2' },
-      { nameAr: ' تولد سند قيد تلقائي', nameEn: 'Generate entry automatically', value: '3' },
+      { nameAr: ' تولد سند قيد تلقائي', nameEn: 'Generate entry automatically', value: '2' },
+      { nameAr: 'لا تولد سند قيد تلقائي', nameEn: 'No generate entry automatically', value: '3' }
 
     ];
   }

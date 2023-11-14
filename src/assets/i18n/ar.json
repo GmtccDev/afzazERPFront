@@ -458,7 +458,9 @@
         "total-tax":"أجمالى الضريبة",
         "item-required":"الصنف مطلوب",
         "quantity-required":"الكمية مطلوب",
-        "price-required":"السعر مطلوب"
+        "price-required":"السعر مطلوب",
+        "discount-account":"حساب الخصم",
+        "tax-account":"حساب الضريبة"
 
 
     },
@@ -739,7 +741,17 @@
         "item": "الصنف",
         "item-description": "وصف الصنف",
         "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
-        "bill-items-required": "من فضلك أدخل الأصناف"
+        "bill-items-required": "من فضلك أدخل الأصناف",
+        "cash-account-required":"حساب النقدية مطلوب",
+
+        "sales-account-required":"حساب المبيعات مطلوب",
+        "sales-return-account-required":"حساب مرتجع المبيعات مطلوب",
+        "purchases-account-required":"حساب المشتريات مطلوب",
+        "purchases-return-account-required":"حساب مرتجع المشتريات مطلوب",
+        "tax-account-required":"حساب الضريبة مطلوب",
+        "account-required":"الحساب مطلوب",
+        "customer-required":"العميل مطلوب",
+        "supplier-required":"المورد مطلوب"
     },
     "determinants": {
         "type-value": "نوع القيمة",
