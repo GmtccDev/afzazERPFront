@@ -20,6 +20,7 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -66,7 +67,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
-    private reportViewerService:ReportViewerService
+    private reportViewerService: ReportViewerService
 
   ) {
 
@@ -87,8 +88,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
-    
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getVouchers() ])
+
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getVouchers()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -166,8 +167,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve();
           if (res.response.value > 0) {
             this.fiscalPeriodId = res.response.value;
-            if(this.fiscalPeriodId!=null)
-            {
+            if (this.fiscalPeriodId != null) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
 
             }
@@ -208,12 +208,12 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   getVouchers() {
-    
+
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            
+
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
@@ -276,7 +276,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           (resonse) => {
             this.getVouchers();
             this.router.navigate([this.listUrl + this.voucherTypeId])
-              
+
           });
         this.subsList.push(sub);
         this.spinner.hide();
@@ -467,9 +467,16 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   onViewReportClicked(id) {
-    let reportType = 1;
-    let reportTypeId = 1001;
-    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+    // let reportType = 1;
+    // let reportTypeId = 1001;
+    // this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+    let reportParams: string =
+      "reportParameter=id!" + id
+      + "&reportParameter=lang!" + this.lang
+    const modalRef = this.modalService.open(NgbdModalContent);
+    modalRef.componentInstance.reportParams = reportParams;
+    modalRef.componentInstance.reportType = 1;
+    modalRef.componentInstance.reportTypeID = 11;
   }
   printReportFormatIcon() { //plain text value
 

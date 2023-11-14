@@ -11,13 +11,15 @@ import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { PublicService } from '../../../../../shared/services/public.service';
-import { ItemCardAlternativeDto, ItemCardDto, ItemCardUnitDto } from '../../../models/item-card';
+import { ItemCardAlternativeDto, ItemCardDeterminantDto, ItemCardDto, ItemCardUnitDto } from '../../../models/item-card';
 import { ItemCardServiceProxy } from '../../../Services/item-card.service';
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
 import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMethodsArEnum, convertEnumToArray, LifeTimeTypeEnum, LifeTimeTypeArEnum, WarrantyTypeEnum, WarrantyTypeArEnum, AccountClassificationsEnum } from '../../../../../shared/constants/enumrators/enums';
 import { environment } from 'src/environments/environment';
 import { UnitServiceProxy } from '../../../Services/unit.servies';
 import { TaxMaster } from '../../../models/tax';
+import { DeterminantsMaster } from '../../../models/determinants';
+
 
 @Component({
   selector: 'app-add-edit-item-card',
@@ -45,6 +47,9 @@ export class AddEditItemCardComponent implements OnInit {
   selectedTaxes: TaxMaster[] = [];
   taxIds: any = '';
 
+  determinants: ItemCardDeterminantDto[] = [];
+  selectedDeterminants: ItemCardDeterminantDto[] = [];
+
   routeItemGroupApi = 'ItemGroupsCard/get-ddl?'
   itemGroupsList: any;
 
@@ -58,6 +63,9 @@ export class AddEditItemCardComponent implements OnInit {
   routeTaxApi = 'Tax/get-ddl?'
   taxesList: any;
 
+  routeDeterminantApi = 'Determinants/get-ddl?'
+  determinantsList: any;
+
   files: any;
   imagePath: string;
   fullPathUpdate: string;
@@ -68,6 +76,9 @@ export class AddEditItemCardComponent implements OnInit {
 
   itemCardAlternative: ItemCardAlternativeDto[] = [];
   selectedItemCardAlternative: ItemCardAlternativeDto = new ItemCardAlternativeDto();
+
+  itemCardDeterminant: ItemCardDeterminantDto[] = [];
+  selectedItemCardDeterminant: ItemCardDeterminantDto = new ItemCardDeterminantDto();
 
   addUrl: string = '/warehouses-master-codes/itemCard/add-itemCard';
   updateUrl: string = '/warehouses-master-codes/itemCard/update-itemCard/';
@@ -128,8 +139,8 @@ export class AddEditItemCardComponent implements OnInit {
       this.getUnitTransactions(),
       this.getLeafAccounts(),
       this.getItems(),
-      this.getTaxes()
-
+      this.getTaxes(),
+      this.getDeterminants()
 
 
     ]).then(a => {
@@ -294,8 +305,10 @@ export class AddEditItemCardComponent implements OnInit {
       let sub = this.itemCardService.getItemCard(id).subscribe({
         next: (res: any) => {
           resolve();
+          if (res.response?.mainUnitId != null) {
+            this.getUnitsByMainUnitId(res.response?.mainUnitId);
 
-          this.getUnitsByMainUnitId(res.response?.mainUnitId);
+          }
           this.itemCardForm.setValue({
             id: res.response.id,
             companyId: res.response.companyId,
@@ -344,13 +357,13 @@ export class AddEditItemCardComponent implements OnInit {
           });
           this.taxIds = res.response?.taxIds;
           if (this.taxIds != '' && this.taxIds != null) {
-             
+
             var spiltedIds: string[] = [];
             this.selectedTaxes = [];
             spiltedIds = this.taxIds.split(',');
-             
+
             for (var i = 0; i <= spiltedIds.length - 1; i++) {
-               
+
               let f = this.taxesList.find((x) => x?.id == parseInt(spiltedIds[i]))!
               if (f) {
                 this.selectedTaxes.push(f);
@@ -359,6 +372,18 @@ export class AddEditItemCardComponent implements OnInit {
             }
           }
           this.taxIds = '';
+          debugger
+          if (res.response?.itemCardDeterminants != null) {
+            this.itemCardDeterminant = res.response?.itemCardDeterminants
+            /*  res.response?.itemCardDeterminants.forEach(element => {
+               this.itemCardDeterminant.push({
+                 id:0,
+                 itemCardId:element.itemCardId,
+                 determinantId:element.determinantId
+               })
+             }); */
+
+          }
           if (res.response?.itemCardUnits != null) {
             this.itemCardUnit = res.response?.itemCardUnits;
           }
@@ -467,6 +492,30 @@ export class AddEditItemCardComponent implements OnInit {
 
           if (res.success) {
             this.taxesList = res.response.filter(x => x.isActive == true);
+
+          }
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getDeterminants() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeDeterminantApi).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.determinantsList = res.response.filter(x => x.isActive == true);
 
           }
 
@@ -629,14 +678,17 @@ export class AddEditItemCardComponent implements OnInit {
     this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
   setInputData() {
-     
+    debugger
     this.taxIds = "";
-    this.selectedTaxes.forEach(c => {
-       
-      this.taxIds += c + ",";
-    })
+    if (this.selectedTaxes != null && this.selectedTaxes.toString()!="") {
+      this.selectedTaxes.forEach(c => {
 
-    this.taxIds = this.taxIds.substring(0, this.taxIds.length - 1);
+        this.taxIds += c + ",";
+      })
+      this.taxIds = this.taxIds.substring(0, this.taxIds.length - 1);
+
+    }
+
     this.itemCard = {
       id: this.itemCardForm.controls["id"].value,
       companyId: this.itemCardForm.controls["companyId"].value,
@@ -685,6 +737,7 @@ export class AddEditItemCardComponent implements OnInit {
 
       itemCardUnits: this.itemCard.itemCardUnits ?? [],
       itemCardAlternatives: this.itemCard.itemCardAlternatives ?? [],
+      itemCardDeterminants: this.itemCardDeterminant ?? [],
 
 
 
@@ -695,6 +748,9 @@ export class AddEditItemCardComponent implements OnInit {
 
     this.itemCard.itemCardUnits = this.itemCardUnit;
     this.itemCard.itemCardAlternatives = this.itemCardAlternative;
+    debugger
+    this.itemCard.itemCardDeterminants = this.itemCardDeterminant;
+
 
 
 
@@ -725,9 +781,7 @@ export class AddEditItemCardComponent implements OnInit {
     });
   }
   onSave() {
-
     if (this.itemCardForm.valid) {
-
       this.setInputData();
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -743,7 +797,6 @@ export class AddEditItemCardComponent implements OnInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.itemCardService.updateItemCard(this.itemCard).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -758,7 +811,6 @@ export class AddEditItemCardComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -780,6 +832,22 @@ export class AddEditItemCardComponent implements OnInit {
       return this.itemCardForm.markAllAsTouched();
 
     }
+  }
+  onChangeDeterminants(values) {
+    debugger
+    this.itemCardDeterminant = [];
+    values.forEach(element => {
+      this.itemCardDeterminant.push(
+        {
+          id: 0,
+          itemCardId: 0,
+          determinantId: element
+        }
+      )
+    });
+
+
+
   }
   onFileChange(event) {
     let reader = new FileReader();
