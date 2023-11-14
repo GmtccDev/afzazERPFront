@@ -316,12 +316,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     } else if (button == 'Copy') {
     } else if (button == 'Update') {
+      debugger;
       this.disabledSave = true;
       this.disabledView=true;
       this.disabledPrint = false;
       this.disabledCancel=true;
+      this.disabledDelete=true;
       this.disabledView = true;
-      this.disabledPrint = false;
+      this.disabledPrint = this.toolbarCompnentData.disabledPrint==false?false:true;
       this.disabledCancel = true;
       this.disableCancelDefaultReport = true;
       this.disabledExport = true;

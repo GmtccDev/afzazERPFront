@@ -467,6 +467,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   onViewReportClicked(id) {
+    localStorage.removeItem("itemId")
+    localStorage.setItem("itemId",id)
     let reportType = 1;
     let reportTypeId = 1001;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
