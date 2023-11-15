@@ -111,7 +111,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.allJournalEntryes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
+            debugger;
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
 
