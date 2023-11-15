@@ -127,11 +127,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private alertsService: NotificationsAlertsService,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
-    private reportViewerService: ReportViewerService,
     private modalService: NgbModal,
-
-
-
 
   ) {
     this.defineVoucherForm();
@@ -593,13 +589,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openCurrencySearchDialog(i) {
-
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyName ?? '';
     } else {
       searchTxt = ''
-      // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
     let data = this.currenciesListInDetail.filter((x) => {
@@ -681,7 +675,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       searchTxt = this.selectedVoucherDetail?.beneficiaryName ?? '';
     } else {
       searchTxt = ''
-      // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
     let data = this.filterBeneficiaryList.filter((x) => {
@@ -753,7 +746,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       searchTxt = this.selectedVoucherDetail?.costCenterName ?? '';
     } else {
       searchTxt = ''
-      // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
     let data = this.costCentersInDetailsList.filter((x) => {
@@ -824,10 +816,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       debit: this.selectedVoucherDetail?.debit ?? 0,
       credit: this.selectedVoucherDetail?.credit ?? 0,
-      currencyId: this.selectedVoucherDetail?.currencyId ?? 0,
-      currencyConversionFactor: this.selectedVoucherDetail?.currencyConversionFactor ?? 0,
+      currencyId:  this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyId ?? 0 : this.mainCurrencyId,
+      currencyConversionFactor: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyConversionFactor ?? 0 : 1,
       debitLocal: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.debitLocal ?? 0 : this.selectedVoucherDetail?.debit ?? 0,
-      creditLocal:this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.creditLocal ?? 0 : this.selectedVoucherDetail?.credit ?? 0,
+      creditLocal: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.creditLocal ?? 0 : this.selectedVoucherDetail?.credit ?? 0,
       description: this.selectedVoucherDetail?.description ?? '',
       costCenterId: this.selectedVoucherDetail?.costCenterId ?? 0,
       currencyName: this.selectedVoucherDetail?.currencyName ?? '',
@@ -837,7 +829,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     this.voucher!.voucherDetail = this.voucherDetail;
 
-    debugger
     this.totalDebitLocal += this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.debitLocal ?? 0 : this.selectedVoucherDetail?.debit ?? 0;
     this.totalCreditLocal += this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.creditLocal ?? 0 : this.selectedVoucherDetail?.credit ?? 0;
     this.calculateTotals();
@@ -847,7 +838,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   }
   calculateTotals() {
     let currencyConversionFactor;
-    debugger
     if (this.voucherkindId == VoucherTypeEnum.Deposit) {
 
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
@@ -865,20 +855,28 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         }
       }
       else {
+
         this.voucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal)
       }
 
     }
     if (this.voucherkindId == VoucherTypeEnum.Withdrawal) {
       this.voucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
-      if (this.currencyId != this.mainCurrencyId) {
+      if (this.enableMultiCurrencies == true) {
 
-        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
+        if (this.currencyId != this.mainCurrencyId) {
 
-        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-        this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal * currencyConversionFactor)
+          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
+
+          currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
+          this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal * currencyConversionFactor)
+        }
+        else {
+          this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
+        }
       }
       else {
+
         this.voucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
       }
     }
@@ -925,11 +923,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     this.voucher.voucherDetail = this.voucherDetail;
 
-    // this.currencyFactor = 0;
-    // this.currencyId = null;
-
   }
   clearSelectedItemData() {
+    debugger
     this.selectedVoucherDetail = {
       id: 0,
       voucherId: 0,
@@ -949,9 +945,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       costCenterName: '',
     }
   }
-  calculateTotal(a) {
-
-  }
+  
   setInputData() {
     this.voucher = {
       id: this.voucherForm.controls["id"].value,
@@ -975,7 +969,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     this.voucher.voucherDetail = this.voucherDetail;
     this.voucherTotal = this.voucherForm.controls["voucherTotal"].value;
-    if (this.voucherkindId == 1) {
+    if (this.voucherkindId == VoucherTypeEnum.Deposit) {
       this.totalDebitLocal = this.voucherForm.controls["voucherTotalLocal"].value
     }
     else {

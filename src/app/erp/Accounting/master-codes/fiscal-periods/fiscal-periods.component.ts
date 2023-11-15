@@ -58,7 +58,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
 	//#region ngOnInit
 	ngOnInit(): void {
-		// this.defineGridColumn();
 
 		this.spinner.show();
 		Promise.all([this.getFiscalPeriods()])
@@ -311,7 +310,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 		let sub = this.sharedServices.getClickedbutton().subscribe({
 			next: (currentBtn: ToolbarData) => {
 
-				//currentBtn;
 				if (currentBtn != null) {
 					if (currentBtn.action == ToolbarActions.List) {
 
@@ -338,7 +336,6 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 		let sub = this.fiscalPeriodService.deleteListEntity(input).subscribe(
 			(resonse) => {
 
-				//reloadPage()
 				this.getFiscalPeriods();
 				this.listIds = [];
 			});
