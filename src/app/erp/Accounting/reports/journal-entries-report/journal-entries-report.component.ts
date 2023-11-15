@@ -257,11 +257,19 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					
-				    this.defualtFromDate=res.response.fromDate;
-					this.defualtToDate =res.response.toDate;
-					this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
-					this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
+					debugger
+					if(res!=null)
+					{
+						
+						this.defualtFromDate=res.response.fromDate;
+						this.defualtToDate =res.response.toDate;
+						this.fromDate = this.dateConverterService.getDateForCalender(res.response.fromDate);
+						this.toDate = this.dateConverterService.getDateForCalender(res.response.toDate);
+					}else{
+						this.fromDate = this.dateConverterService.getDateForCalender(this.dateConverterService.getCurrentDateTime());
+						this.toDate = this.dateConverterService.getDateForCalender(this.dateConverterService.getCurrentDateTime());
+					}
+				    
 				},
 				error: (err: any) => {
 					reject(err);

@@ -165,13 +165,16 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getRouteData() {
+    localStorage.removeItem("itemId")
     let sub = this.route.params.subscribe((params) => {
 
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = params['voucherTypeId'];
         if (this.voucherTypeId) {
           this.getVoucherTypes(this.voucherTypeId);
-
+         
+        
+          
 
         }
       }
@@ -179,9 +182,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
 
         if (this.id) {
-
+          localStorage.setItem("itemId",this.id)
           this.getVoucherById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update' } as ToolbarData)
+            this.sharedServices.changeButton({action:'Update',disabledPrint:false}as ToolbarData)
 
             this.spinner.hide();
 

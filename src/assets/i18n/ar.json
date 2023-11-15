@@ -216,7 +216,7 @@
         "master-code": "التعريفات الاساسية",
         "dashboard": "لوحة التحكم",
         "users-permissions": "المستخدمين والصلاحيات",
-        "subscriptions": "الاشتركات ",
+        "subscriptions": "التطبيقات ",
         "customer": "العملاء",
         "customer-information": "معلومات العميل",
         "permissions": " الصلاحيات",
@@ -298,7 +298,7 @@
     "general": {
         "nameAr": "الاسم العربي",
         "nameEn": "الاسم الانجليزى",
-        "code": "التسلسل",
+        "code": "الكود",
         "barcode": "الباركود",
         "currencySymbol": "رمز العملة",
         "unit-symbol": "رمز الوحدة",
@@ -759,7 +759,7 @@
         "text": "Text",
         "number": "Number",
         "add-determinants":"اضافة المحددات",
-        "determinants-details-required": "ادخال قائمة الإختيا مطلوب"
+        "determinants-details-required": " برجاء ادخال تفاصيل المحددات "
     },
     "tabulator": {
         "export": "تصدير",

@@ -48,7 +48,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 	  listPath: '',
 	  updatePath: this.updateUrl,
 	  addPath: this.addUrl,
-	  componentList: this.translate.instant("component-names.determinants"),
+	  componentList: "component-names.determinants",
 	  componentAdd: '',
   
 	};
@@ -96,6 +96,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 		  if (this.id) {
 			this.getDeterminantsById(this.id).then(a => {
 			  this.spinner.hide();
+			  this.sharedService.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
   
 			}).catch(err => {
 			  this.spinner.hide();
@@ -398,9 +399,10 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 			  this.determinantsDetail = [];
   
 			  this.sharedService.changeToolbarPath(this.toolbarPathData);
-			} else if (currentBtn.action == ToolbarActions.Update) {
+			} else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
   
 			  this.onUpdate();
+	
 			}
 		  }
 		},

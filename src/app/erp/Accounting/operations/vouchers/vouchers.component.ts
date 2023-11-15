@@ -63,6 +63,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    private reportViewerService :ReportViewerService,
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
@@ -476,16 +477,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   onViewReportClicked(id) {
-    // let reportType = 1;
-    // let reportTypeId = 1001;
-    // this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
-    let reportParams: string =
-      "reportParameter=id!" + id
-      + "&reportParameter=lang!" + this.lang
-    const modalRef = this.modalService.open(NgbdModalContent);
-    modalRef.componentInstance.reportParams = reportParams;
-    modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 11;
+    localStorage.removeItem("itemId")
+    localStorage.setItem("itemId",id)
+    let reportType = 1;
+    let reportTypeId = 1001;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
   printReportFormatIcon() { //plain text value
 
