@@ -116,9 +116,10 @@
 
 					<ul class="list-group">
 						<li class="list-group-item" *ngFor="let item of cycleList">
-							<input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value" name="cycleSelected"
+							<input type="radio" [(ngModel)]="cycleSelected" [checked]="item.value==cycleSelected" name="cycleSelected"
 								value="{{item.value}}" (change)="onItemChange(item)" />
 							{{lang=="ar"?item.nameAr:item.nameEn}}
+				
 
 						</li>
 					</ul>

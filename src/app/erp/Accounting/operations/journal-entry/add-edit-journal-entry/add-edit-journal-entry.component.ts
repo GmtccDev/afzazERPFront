@@ -31,6 +31,7 @@ import { environment } from 'src/environments/environment';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { DatePipe } from '@angular/common';
+import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -39,10 +40,11 @@ import { DatePipe } from '@angular/common';
 export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   //#region Main Declarations
   userId: any = localStorage.getItem("userId");
+  branchId: string = localStorage.getItem("branchId");
+  companyId: string = localStorage.getItem("companyId");
   private readonly apiurl = environment.apiUrl;
   // = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
   orderBy: any;
-  companyId: string = localStorage.getItem("companyId");
   lang = localStorage.getItem("language");
   journalEntryForm!: FormGroup;
   sub: any;
@@ -115,6 +117,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     private sharedServices: SharedService, private translate: TranslateService,
     private cd: ChangeDetectorRef,
     private publicService: PublicService,
+    private reportViewerService:ReportViewerService,
     private dateService: DateCalculation,
     private rptSrv: ReportServiceProxy,
     private alertsService: NotificationsAlertsService,
@@ -163,15 +166,15 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   }
   getRouteData() {
-    localStorage.removeItem("journalEntryId")
+  
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
         if (this.id > 0) {
-          localStorage.setItem("journalEntryId", this.id);
+        
           this.getjournalEntryById(this.id).then(a => {
             this.spinner.hide();
-            this.sharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
+            this.sharedServices.changeButton({ action: 'Update', submitMode: false,disabledPrint:false } as ToolbarData);
 
           }).catch(err => {
             this.spinner.hide();
@@ -441,7 +444,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   //#region CRUD operations
   postType: any;
   getjournalEntryById(id: any) {
-
+    
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
@@ -649,7 +652,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           else if (currentBtn.action == ToolbarActions.Copy) {
             this.getjournalEntryCode();
           } else if (currentBtn.action == ToolbarActions.Print) {
-            this.gotoViewer();
+            this.onViewReportClicked(this.id);
           }
         }
       },
@@ -1202,51 +1205,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   // Print Page Report
 
-  reportTypeId = 1000;
-  reportType = 1;
-  branchId = Number(localStorage.getItem("branchId"))
-  reportParams = "";
-  reportList: ReportFile[] = [];
-  gotoViewer() {
-    this.rptSrv.setReportList(this.reportType, this.reportTypeId).then(a => {
-
-      this.rptSrv.getReportList().subscribe(r => {
-        this.reportList = r["response"]
-
-        if (this.reportList.length > 0) {
-          this.reportList.forEach(element => {
-
-            this.viewRpt(element);
-
-          });
-        }
-
-      });
-
-    });
-  }
-
-  viewRpt(selectedRpt: ReportFile) {
-    ;
-    let JournalEntryId;
-    let lang = localStorage.getItem("language");
-    if (this.branchId == null || this.branchId == undefined) {
-      this.branchId = 0;
-    }
-    // JournalEntryId = this.id;
-    JournalEntryId = localStorage.getItem("journalEntryId")
-    this.reportParams = "reportParameter=branchId!" + this.branchId
-      + "&reportParameter=companyId!" + this.companyId
-      + "&reportParameter=lang!" + lang
-      + "&reportParameter=userId!" + this.userId
-      + "&reportParameter=id!" + JournalEntryId;
-
-    var newUrl = this.apiurl?.replace('api', '') + "/Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + this.reportType + "&reportParameter=reportTypeID!" + this.reportTypeId + "&" + this.reportParams;
-    window.open(newUrl, "_blank");
-
-    // this.close();
-
-
+ 
+  onViewReportClicked(id) {
+    localStorage.removeItem("itemId")
+    localStorage.setItem("itemId",id);
+    let reportType = 1;
+    let reportTypeId = 1000;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 
 

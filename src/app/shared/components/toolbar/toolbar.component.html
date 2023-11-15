@@ -5,7 +5,9 @@
 
 				<div class="col-md- 6 col">
 					<h4 class="m-0 py-2">
-						{{toolbarPathData.componentList}}</h4>
+						{{toolbarPathData.componentList|translate}}
+					
+					</h4>
 				</div>
 				<!-- <app-breadcrumb [title]="'Product List'" [items]="['Apps', 'Ecommerce']" [active_item]="'Product List'"></app-breadcrumb> -->
 
@@ -144,8 +146,8 @@
 								</div> -->
 								<div ngbDropdown class="d-inline-block" *ngIf="showButtons?.showExport">
 									<button class="k-button k-button-md k-button-solid-base k-rounded-md"
-										id="dropdownBasic1" [disabled]="disabledExport"
-										[ngClass]="{'disabled':disabledExport}"
+										id="dropdownBasic1" [hidden]="hiddenExport"
+										[ngClass]="{'hidden':hiddenExport}"
 										ngbDropdownToggle>{{'tabulator.export'|translate}}</button>
 									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
 										<button ngbDropdownItem

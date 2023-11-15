@@ -20,6 +20,7 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
+import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -62,11 +63,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    private reportViewerService :ReportViewerService,
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
-    private reportViewerService:ReportViewerService
 
   ) {
 
@@ -77,6 +78,16 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+
+    } else {
+      localStorage.removeItem('foo')
+
+    }
+
     let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
@@ -87,8 +98,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
-    
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getVouchers() ])
+
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getVouchers()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -138,9 +149,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   nameAr: any;
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
             this.voucherType = res.response;
             this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn)
 
@@ -166,8 +179,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve();
           if (res.response.value > 0) {
             this.fiscalPeriodId = res.response.value;
-            if(this.fiscalPeriodId!=null)
-            {
+            if (this.fiscalPeriodId != null) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
 
             }
@@ -208,12 +220,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   getVouchers() {
-    
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
@@ -276,7 +286,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           (resonse) => {
             this.getVouchers();
             this.router.navigate([this.listUrl + this.voucherTypeId])
-              
+
           });
         this.subsList.push(sub);
         this.spinner.hide();
@@ -467,6 +477,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   onViewReportClicked(id) {
+    localStorage.removeItem("itemId")
+    localStorage.setItem("itemId",id)
     let reportType = 1;
     let reportTypeId = 1001;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);

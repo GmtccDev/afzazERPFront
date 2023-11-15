@@ -20,6 +20,7 @@ export class ReportViewerService {
   reportParams = "";
   reportList: ReportFile[] = [];
   gotoViewer(reportType, reportTypeId, itemId) {
+    debugger;
     this.rptSrv.setReportList(reportType, reportTypeId).then(a => {
 
       this.rptSrv.getReportList().subscribe(r => {
@@ -43,7 +44,7 @@ export class ReportViewerService {
 
   viewRpt(selectedRpt: ReportFile, reportType, reportTypeId, ItemId) {
     ;
-    let JournalEntryId = '';
+     debugger;
     let lang = localStorage.getItem("language");
     if (this.branchId == null || this.branchId == undefined || this.branchId == "undefined" || this.branchId == "") {
       this.branchId = 0;
@@ -53,7 +54,7 @@ export class ReportViewerService {
     let reportParams = "&reportParameter=companyId!" + this.companyId
       + "&reportParameter=lang!" + lang
       + "&reportParameter=userId!" + this.userId
-      + "&reportParameter=JournalEntryId!" + ItemId;
+      + "&reportParameter=id!" +   localStorage.getItem("itemId");
 
     var newUrl = this.apiurl?.replace('api', '') + "/Viewer/Reports?id=" + selectedRpt.id + "&reportParameter=reportType!" + reportType + "&reportParameter=reportTypeID!" + reportTypeId + "&" + reportParams;
     window.open(newUrl, "_blank");

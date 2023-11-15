@@ -7,7 +7,7 @@ export class SalesPersonCommissionCardDto {
     calculationMethod: number;
     type: number;
     target: number;
-    commissionOn: number;
+    commissionOn: any;
     isActive:boolean;
     achievedTargetRatio: number;
     notAchievedTargetRatio: number;
