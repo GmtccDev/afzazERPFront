@@ -157,226 +157,252 @@
 									</div>
 
 								</div>
-
-								<div formArrayName="journalEntriesDetail" style="width: 100% ; overflow-x: scroll;">
-									<div style="width: 1500px;" class="table-container">
-										<table class="table table-broder">
-											<thead class="thead-light">
-												<tr>
-													<!-- <th># </th> -->
-													<th style="width: 15%;">{{ 'journalEntry.accountNumber' | translate
-														}}
-													</th>
-													<th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
-													<th style="width: 10%;">{{ 'journalEntry.debit' | translate }}</th>
-													<th style="width: 15%;">{{ 'journalEntry.currency' | translate }}
-													</th>
-													<th style="width: 10%;">{{ 'journalEntry.balance' | translate }}
-													</th>
-													<th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}
-													</th>
-													<th style="width: 10%;">{{ 'journalEntry.localDebit' | translate }}
-													</th>
-													<th style="width: 15%;">{{ 'journalEntry.costCenter' | translate }}
-													</th>
-													<th style="width: 14%;">{{ 'journalEntry.description' | translate }}
-													</th>
-													<th style="width: 1%;">{{ 'journalEntry.actions' | translate }}</th>
-
-												</tr>
-											</thead>
-											<tbody>
-
-												<tr *ngFor="let row of journalEntryForm.get('journalEntriesDetail')['controls']; let i = index"
-													[formGroupName]="i">
-													<!-- <td> -->
-													<!-- {{ i+1 }} -->
-													<!-- <input type="text"
-                                                            style="border: none; border-color: transparent;" hidden
-                                                            formControlName="jEDetailSerial" name="jEDetailSerial"> -->
-													<!-- </td> -->
-													<td>
-
-														<div class="input-group ">
-
-															<!-- <select required class="form-control required" (change)="onChangeGetDefaultCurrency($event,i)" name="accountId" formControlName="accountId">
-
-																<option *ngFor="let account of accountList"
-																	[value]="account.id">
-																	<span>{{lang=="ar"?account.nameAr:account.nameEn}}</span>
-																</option>
-
-															</select>
-
-                                                            <div class="">
-                                                                <button class="btn btn-rounded btn-dark"
-                                                                    (click)="showSearchCashAccountModal=true" type="button"><i
-                                                                        class="fa fa-search"></i></button>
-                                                            </div> -->
-															<input class="form-control" formControlName="accountName"
-																[ngModelOptions]="{standalone: true}"
-																[ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
-																type="text" name="accountId"
-																(keyup.Enter)="openModalSearchAccount(i)">
-															<div *ngIf="row.get('accountName')?.errors?.required && row.get('accountName')?.touched"
-																class="invalid-feedback">
-																Account Name is required.
+								<div class="row">
+									<div class="col gap-12 grid grid-cols-12 ">
+										<ul ngbNav #nav="ngbNav" class="nav-tabs">
+											<li ngbNavItem [destroyOnHide]="false">
+												<a ngbNavLink> {{'general.details' |translate}}</a>
+												<ng-template ngbNavContent>
+													<div class="overflow-auto0">
+														<div formArrayName="journalEntriesDetail" style="width: 100% ; overflow-x: scroll;">
+															<div style="width: 1500px;" class="table-container">
+																<table class="table table-broder">
+																	<thead class="thead-light">
+																		<tr>
+																			 <th># </th>
+																			<th >{{ 'journalEntry.accountNumber' | translate
+																				}}
+																			</th>
+																			<th >{{ 'journalEntry.credit' | translate }}</th>
+																			<th >{{ 'journalEntry.debit' | translate }}</th>
+																			<th >{{ 'journalEntry.currency' | translate }}
+																			</th>
+																			<th >{{ 'journalEntry.balance' | translate }}
+																			</th>
+																			<th >{{ 'journalEntry.localCredit' | translate }}
+																			</th>
+																			<th >{{ 'journalEntry.localDebit' | translate }}
+																			</th>
+																			<th>{{ 'journalEntry.costCenter' | translate }}
+																			</th>
+																			<th >{{ 'journalEntry.description' | translate }}
+																			</th>
+																			<!-- <th>{{ 'journalEntry.actions' | translate }}</th> -->
+																			<th></th>
+																		</tr>
+																	</thead>
+																	<tbody>
+						
+																		<tr *ngFor="let row of journalEntryForm.get('journalEntriesDetail')['controls']; let i = index"
+																			[formGroupName]="i">
+																			<!-- <td> -->
+																			<!-- {{ i+1 }} -->
+																			<!-- <input type="text"
+																					style="border: none; border-color: transparent;" hidden
+																					formControlName="jEDetailSerial" name="jEDetailSerial"> -->
+																			<!-- </td> -->
+																			<td> {{i+1}}</td>
+																			<td>
+						
+																				<div class="input-group ">
+						
+																					<!-- <select required class="form-control required" (change)="onChangeGetDefaultCurrency($event,i)" name="accountId" formControlName="accountId">
+						
+																						<option *ngFor="let account of accountList"
+																							[value]="account.id">
+																							<span>{{lang=="ar"?account.nameAr:account.nameEn}}</span>
+																						</option>
+						
+																					</select>
+						
+																					<div class="">
+																						<button class="btn btn-rounded btn-dark"
+																							(click)="showSearchCashAccountModal=true" type="button"><i
+																								class="fa fa-search"></i></button>
+																					</div> -->
+																					<input class="form-control" formControlName="accountName"
+																						[ngModelOptions]="{standalone: true}" 	placeholder="{{'general.search'|translate}}"
+																						[ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
+																						type="text" name="accountId"
+																						(keydown.Enter)="openSearchAccount(i)">
+																					<div *ngIf="row.get('accountName')?.errors?.required && row.get('accountName')?.touched"
+																						class="invalid-feedback">
+																						Account Name is required.
+																					</div>
+																				</div>
+						
+																			</td>
+						
+																			<td>
+						
+																				<div class="input-group ">
+																					<input type="number" required class="form-control required"
+																						(keypress)="numberOnly($event,i,'Credit')" 
+																						(input)="onInput($event.target.value,i,'Credit')"
+																						formControlName="jEDetailCredit" name="jEDetailCredit"
+																						style="width: 70px;">
+																				</div>
+						
+						
+																			</td>
+																			<td>
+						
+																				<div class="input-group">
+																					<input type="number" required class="form-control required"
+																						(keypress)="numberOnly($event,i,'Debit')"
+																						(input)="onInput($event.target.value,i,'Debit')"
+																						formControlName="jEDetailDebit" name="jEDetailDebit"
+																						style="width: 70px;">
+																				</div>
+						
+						
+																			</td>
+																			<td>
+						
+																				<div class="input-group">
+						
+																					<!-- <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
+						
+						
+																						<option *ngFor="let currency of currencyList"
+																							[value]="currency.id">
+																							<span>{{lang=="ar"?currency.nameAr:currency.nameEn}}</span>
+																						</option>
+																					</select>
+																					<div class="">
+																						<button class="btn btn-rounded btn-dark"
+																							(click)="showSearchCurrencyModal=true" type="button"><i
+																								class="fa fa-search"></i></button>
+																					</div> -->
+																					<input class="form-control" formControlName="currencyName"
+																						[ngModelOptions]="{standalone: true}" type="text" 	placeholder="{{'general.search'|translate}}"
+																						name="currencyId"
+																						[ngClass]="{ 'required': (row.get('accountId')?.errors?.required)}"
+																						(keydown.Enter)="openSearchCurrency(i)"
+																						(change)="onChangeCurrency($event,i)">
+																				</div>
+						
+						
+																			</td>
+																			<td>
+						
+																				<div class="input-group ">
+																					<input type="number" required disabled="disabled"
+																						class="form-control required"
+																						formControlName="transactionFactor"
+																						name="transactionFactor" style="width: 70px;">
+																				</div>
+						
+						
+																			</td>
+																			<td>
+						
+																				<div class="input-group ">
+																					<input type="number" required class="form-control required"
+																						disabled="disabled"
+																						formControlName="jEDetailCreditLocal"
+																						name="jEDetailCreditLocal" style="width: 70px;">
+																				</div>
+						
+						
+																			</td>
+																			<td>
+						
+																				<div class="input-group ">
+																					<input type="number" required class="form-control required"
+																						disabled="disabled" formControlName="jEDetailDebitLocal"
+																						name="jEDetailDebitLocal" style="width: 70px;">
+																				</div>
+						
+																			</td>
+																			<td>
+						
+																				<div class="input-group ">
+						
+																					<!-- <select class="form-control" name="costCenterId" formControlName="costCenterId" [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}">
+						
+																						<option *ngFor="let costCenter of costCenterList"
+																							[value]="costCenter.id">
+																							<span>{{costCenter.nameAr}}</span>
+																						</option>
+						
+																					</select> -->
+																					<input class="form-control" formControlName="costCenterName"
+																						[ngModelOptions]="{standalone: true}" type="text" 	placeholder="{{'general.search'|translate}}"
+																						name="costCenterId"
+																						[ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
+																						(keydown.Enter)="openSearchCostCenter(i)">
+						
+																				</div>
+						
+																			</td>
+																			<td>
+						
+																				<textarea class="form-control" formControlName="notes"
+																					name='notes'></textarea>
+						
+																			</td>
+						
+																			<td>
+																	
+																				<input type="button" *ngIf="journalEntriesDetailList.length-1==i||journalEntriesDetailList.length-1==0"
+																					class="btn btn-primary btn-table"
+																					(click)="initGroup()"
+																					value="{{'buttons.add'|translate}}">
+																					
+																					<button class="btn btn-danger btn-table px-3" *ngIf="journalEntriesDetailList.length-1!==i"
+																					value="{{'buttons.delete'|translate}}" type="button"
+																					(click)="onDeleteRow(i)">
+																					<i class="fa fa-trash"></i>
+																				</button>
+																			</td>
+						
+																			<!-- <td>
+																				
+																				<button class="btn btn-danger btn-table px-3"
+																					value="{{'buttons.delete'|translate}}" type="button"
+																					(click)="onDeleteRow(i)">
+																					<i class="fa fa-trash"></i>
+																				</button>
+																			</td> -->
+																			<!-- <td>
+																			<button type="button"  (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2"> <i
+																				class="fa fa-plus"></i>
+																		   </button>
+																		</td> -->
+																		</tr>
+						
+																	</tbody>
+						
+						
+																</table>
+																<!-- <table>
+																	<tr>
+																		<td></td>
+																		<td> -->
+																<!-- <button type="button" (click)="initGroup()"
+																	class="btn btn-rounded btn-primary d-flex align-items-center gap-2 mt-3">
+																	<i class="fa fa-plus"></i>
+																</button> -->
+																<!-- </td>
+																	</tr>
+																</table> -->
 															</div>
+						
+						
+						
 														</div>
-
-													</td>
-
-													<td>
-
-														<div class="input-group ">
-															<input type="number" required class="form-control required"
-																(keypress)="numberOnly($event,i,'Credit')"
-																(input)="onInput($event.target.value,i,'Credit')"
-																formControlName="jEDetailCredit" name="jEDetailCredit"
-																style="width: 70px;">
-														</div>
+													</div>
+												</ng-template>
+											</li>
 
 
-													</td>
-													<td>
-
-														<div class="input-group">
-															<input type="number" required class="form-control required"
-																(keypress)="numberOnly($event,i,'Debit')"
-																(input)="onInput($event.target.value,i,'Debit')"
-																formControlName="jEDetailDebit" name="jEDetailDebit"
-																style="width: 70px;">
-														</div>
-
-
-													</td>
-													<td>
-
-														<div class="input-group">
-
-															<!-- <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
-
-
-																<option *ngFor="let currency of currencyList"
-																	[value]="currency.id">
-																	<span>{{lang=="ar"?currency.nameAr:currency.nameEn}}</span>
-																</option>
-															</select>
-                                                            <div class="">
-                                                                <button class="btn btn-rounded btn-dark"
-                                                                    (click)="showSearchCurrencyModal=true" type="button"><i
-                                                                        class="fa fa-search"></i></button>
-                                                            </div> -->
-															<input class="form-control" formControlName="currencyName"
-																[ngModelOptions]="{standalone: true}" type="text"
-																name="currencyId"
-																[ngClass]="{ 'required': (row.get('accountId')?.errors?.required)}"
-																(keyup.Enter)="openModalSearchCurrency(i)"
-																(change)="onChangeCurrency($event,i)">
-														</div>
-
-
-													</td>
-													<td>
-
-														<div class="input-group ">
-															<input type="number" required disabled="disabled"
-																class="form-control required"
-																formControlName="transactionFactor"
-																name="transactionFactor" style="width: 70px;">
-														</div>
-
-
-													</td>
-													<td>
-
-														<div class="input-group ">
-															<input type="number" required class="form-control required"
-																disabled="disabled"
-																formControlName="jEDetailCreditLocal"
-																name="jEDetailCreditLocal" style="width: 70px;">
-														</div>
-
-
-													</td>
-													<td>
-
-														<div class="input-group ">
-															<input type="number" required class="form-control required"
-																disabled="disabled" formControlName="jEDetailDebitLocal"
-																name="jEDetailDebitLocal" style="width: 70px;">
-														</div>
-
-													</td>
-													<td>
-
-														<div class="input-group ">
-
-															<!-- <select class="form-control" name="costCenterId" formControlName="costCenterId" [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}">
-
-																<option *ngFor="let costCenter of costCenterList"
-																	[value]="costCenter.id">
-																	<span>{{costCenter.nameAr}}</span>
-																</option>
-
-															</select> -->
-															<input class="form-control" formControlName="costCenterName"
-																[ngModelOptions]="{standalone: true}" type="text"
-																name="costCenterId"
-																[ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
-																(keyup.Enter)="openModalSearchCostCenter(i)">
-
-														</div>
-
-													</td>
-													<td>
-
-														<textarea class="form-control" formControlName="notes"
-															name='notes'></textarea>
-
-													</td>
-
-
-
-													<td
-														class="align-items-center border-0 d-flex justify-content-center gap-1">
-														<!-- <button type="button"
-                                                        class="btn btn-secondary btn-table px-3"
-                                                        ><i
-                                                            class="fa fa-edit"></i></button> -->
-														<button class="btn btn-danger btn-table px-3"
-															value="{{'buttons.delete'|translate}}" type="button"
-															(click)="onDeleteRow(i)">
-															<i class="fa fa-trash"></i>
-														</button>
-													</td>
-													<!-- <td>
-                                                    <button type="button"  (click)="initGroup()" class="btn btn-rounded btn-primary d-flex align-items-center gap-2"> <i
-                                                        class="fa fa-plus"></i>
-                                                   </button>
-                                                </td> -->
-												</tr>
-
-											</tbody>
-
-
-										</table>
-										<!-- <table>
-											<tr>
-												<td></td>
-												<td> -->
-										<button type="button" (click)="initGroup()"
-											class="btn btn-rounded btn-primary d-flex align-items-center gap-2 mt-3">
-											<i class="fa fa-plus"></i>
-										</button>
-										<!-- </td>
-											</tr>
-										</table> -->
+										</ul>
+										<div [ngbNavOutlet]="nav" class=""></div>
 									</div>
-
-
-
 								</div>
+							
+							
 							</div>
 							<br>
 
@@ -388,20 +414,20 @@
 						<table class="mt-4 total-table table table-borderless text-end w-100">
 							<tr>
 								<td>{{'journalEntry.totalDebit' | translate }}</td>
-								<td class="text-start">{{ totalCredit }}</td>
+								<td class="text-start">{{  totalDebit }}</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCredit' | translate }}</td>
-								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebit }}</label>
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCredit }}</label>
 								</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalDebitLocal' | translate }}</td>
-								<td class="text-start"><label class="p-0">{{ totalCreditLocal }}</label></td>
+								<td class="text-start"><label class="p-0">{{  totalDebitLocal }}</label></td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCreditLocal' | translate }}</td>
-								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebitLocal
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCreditLocal
 										}}</label></td>
 							</tr>
 						</table>
