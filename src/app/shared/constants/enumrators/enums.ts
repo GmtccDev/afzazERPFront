@@ -280,5 +280,11 @@ export enum DeterminantsValueTypesArEnum {
 
 
 }
+export enum ChequeStatusEnum{
+  Registered=0,
+  EditRegistered=1,
+  Collected=2,
+  Rejected=3
+}
 
 
