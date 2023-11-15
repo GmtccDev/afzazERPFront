@@ -148,8 +148,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         this.getjournalEntryCode();
         this.getGeneralConfiguration()
       }
-    
-        this.changePath();
+
+      this.changePath();
       this.listenToClickedButton();
     }).catch(err => {
       this.spinner.hide();
@@ -363,6 +363,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         this.cd.detectChanges()
       });
     })
+    this.initGroup();
   }
   get jEMasterStatusId() {
 
@@ -395,7 +396,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     },
 
     ));
-
+    debugger
     const currentIndex = journalEntriesDetail.length - 1;
     this.index = currentIndex;
     this.onOpenNewRow();
@@ -687,7 +688,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
-    
+
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
@@ -834,7 +835,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   }
   onUpdate() {
-    
+
     if (this.journalEntryForm.touched) {
 
       this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
@@ -1173,13 +1174,15 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.showSearchCurrencyModal = false;
   }
   onOpenNewRow() {
+    if (this.currencyList != undefined) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      var event = this.currencyList.find(c => c.id == this.defaultCurrencyId);
+      faControl['controls'].currencyId.setValue(event.id);
+      faControl['controls'].currencyName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
+      this.onChangeCurrency(event.id, this.index)
+      this.showSearchCurrencyModal = false;
+    }
 
-    const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
-    var event = this.currencyList.find(c => c.id == this.defaultCurrencyId);
-    faControl['controls'].currencyId.setValue(event.id);
-    faControl['controls'].currencyName.setValue(this.lang = "ar" ? event.nameAr : event.nameEn);
-    this.onChangeCurrency(event.id, this.index)
-    this.showSearchCurrencyModal = false;
   }
   openModalSearchCostCenter(i) {
 
