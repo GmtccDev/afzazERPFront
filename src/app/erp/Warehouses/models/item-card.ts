@@ -47,6 +47,7 @@ export class ItemCardDto {
     inventoryAccountId: number | undefined;
     itemCardUnits: ItemCardUnitDto[] = [];
     itemCardAlternatives: ItemCardAlternativeDto[] = [];
+    itemCardDeterminants: ItemCardDeterminantDto[] = [];
 
 }
 export class ItemCardUnitDto {
@@ -73,6 +74,13 @@ export class ItemCardAlternativeDto {
     alternativeType: number;
     currentBalance: number;
 
+
+}
+export class ItemCardDeterminantDto {
+    id: number;
+    itemCardId: any;
+    determinantId: any;
+  
 
 }
 export class CreateItemCard {

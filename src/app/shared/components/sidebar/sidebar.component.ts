@@ -146,26 +146,31 @@ export class SidebarComponent {
 
   // Active Nave state
   setNavActive(item) {
-    
+
     // if (!localStorage.getItem('foo')) {
     //   localStorage.setItem('foo', 'no reload')
     //   location.reload()
-     
+
     // } else {
     //   localStorage.removeItem('foo')
-     
+
     // }
-    
+
     this.menuItems.filter(menuItem => {
+       
       if (menuItem !== item) {
+         
         menuItem.active = false;
       }
       if (menuItem.children && menuItem.children.includes(item)) {
+         
         menuItem.active = true;
       }
       if (menuItem.children) {
         menuItem.children.filter(submenuItems => {
+           
           if (submenuItems.children && submenuItems.children.includes(item)) {
+             
             menuItem.active = true;
             submenuItems.active = true;
           }

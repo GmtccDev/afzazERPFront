@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { CODE_REQUIRED_VALIDATORS, REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-validators';
-import {  FiscalPeriodDto } from '../../../models/fiscal-period';
+import { FiscalPeriodDto } from '../../../models/fiscal-period';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { ToolbarPath } from '../../../../../shared/interfaces/toolbar-path';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -51,7 +51,8 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private SharedServices: SharedService, private translate: TranslateService,
-    private dateService: DateCalculation
+    private dateService: DateCalculation,
+
 
   ) {
     this.definefiscalPeriodForm();
@@ -60,6 +61,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+
     this.spinner.show();
 
     this.getRouteData();
@@ -70,9 +72,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     this.changePath();
     this.listenToClickedButton();
     this.spinner.hide();
-
-
-
 
   }
   getRouteData() {
@@ -166,7 +165,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           });
           this.fromDate = this.dateService.getDateForCalender(res.response.fromDate);
           this.toDate = this.dateService.getDateForCalender(res.response.toDate);
-         
+
         },
         error: (err: any) => {
           reject(err);
@@ -233,11 +232,14 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
             }
             this.definefiscalPeriodForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update) {
             this.onUpdate();
+            // this.SharedServices.changeButton({ action: 'Update' } as ToolbarData);
+            // this.listenToClickedButton();
+            // this.SharedServices.changeToolbarPath(this.toolbarPathData);
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getfiscalPeriodCode();
+            this.getfiscalPeriodCode();
           }
         }
       },
@@ -342,6 +344,6 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 }
 
 
-  //#endregion
+//#endregion
 
 
