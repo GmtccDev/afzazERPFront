@@ -65,7 +65,15 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    //  this.defineGridColumn();
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+
+    } else {
+      localStorage.removeItem('foo')
+
+    }
     let sub = this.route.params.subscribe(params => {
       if (params['billTypeId'] != null) {
         this.billTypeId = +params['billTypeId'];
@@ -208,7 +216,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
           (resonse) => {
             this.getBills();
             this.router.navigate([this.listUrl + this.billTypeId])
-             
+
           });
         this.subsList.push(sub);
         this.spinner.hide();
@@ -235,11 +243,11 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
       field: 'date', width: 300, formatter: function (cell, formatterParams, onRendered) {
-				var value = cell.getValue();
-				value = format(new Date(value), 'dd-MM-yyyy');;
-				return value;
-			}
-      
+        var value = cell.getValue();
+        value = format(new Date(value), 'dd-MM-yyyy');;
+        return value;
+      }
+
     },
     {
       title: this.lang == 'ar' ? 'الاجمالى قبل الضريبة' : 'Total Before Tax',
@@ -384,5 +392,5 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   //#endregion
 
-  
+
 }

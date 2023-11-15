@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
 import { Subscription } from 'rxjs';
+import { BillKindEnum, VoucherTypeEnum } from 'src/app/shared/constants/enumrators/enums';
 
 @Component({
 	selector: 'app-content',
@@ -54,8 +55,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
 				next: (res) => {
 					if (res.success) {
 
-						this.depositVouchers = res?.response?.items?.filter(x => x.voucherKindId == 1);
-						this.WithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == 2);
+						this.depositVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum.Deposit);
+						this.WithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum.Withdrawal);
 
 						if (this.depositVouchers.length > 0) {
 							this.depositVouchers.forEach(element => {
@@ -109,25 +110,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
 				next: (res) => {
 					if (res.success) {
 						this.billTypes = res.response.items
-						this.salesBills = this.billTypes.filter(x => x.kind == 1);
-						this.purchasesBills = this.billTypes.filter(x => x.kind == 2);
-						this.salesReturnBills = this.billTypes.filter(x => x.kind == 3);
-						this.purchasesReturnBills = this.billTypes.filter(x => x.kind == 4);
-						this.firstPeriodGoodsBills = this.billTypes.filter(x => x.kind == 5);
+						this.salesBills = this.billTypes.filter(x => x.kind == BillKindEnum['Sales Bill']);
+						this.purchasesBills = this.billTypes.filter(x => x.kind == BillKindEnum['Purchases Bill']);
+						this.salesReturnBills = this.billTypes.filter(x => x.kind == BillKindEnum['Sales Returns Bill']);
+						this.purchasesReturnBills = this.billTypes.filter(x => x.kind == BillKindEnum['Purchases Returns Bill']);
+						this.firstPeriodGoodsBills = this.billTypes.filter(x => x.kind == BillKindEnum['First Period Goods Bill']);
 
 
 						if (this.salesBills.length > 0) {
-							// this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'link', active: true }),
-							// this.salesBills.forEach(element => {
-							// 	
-							// 	this.navServices.billTypes.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
-							// 		{ queryParams: { billTypeId: element.id } })
-							// 	this.navServices.billTypes.filter((value, index, self) => {
-							// 		return index === self.findIndex(obj => (
-							// 			obj.path === value.path && obj.title === value.title
-							// 		));
-							// 	});
-							// });
+							
 							this.salesBills.forEach(element => {
 								this.navServices.salesBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { billTypeId: element.id } })

@@ -38,7 +38,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   disabledCopy = false;
   disabledDelete = false
   disabledCancel = false;
-  disabledExport = false;
+  hiddenExport = false;
   disabledPrint = false;
   disabledView = false;
   disabledPost = true;
@@ -266,7 +266,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledNew = false;
       this.disabledCopy = true;
       this.disabledList = true;
-      this.disabledExport = false;
+      this.hiddenExport = false;
       this.disabledPrint = true;
       this.disabledUpdate = true;
       this.disabledCancel = true;
@@ -281,7 +281,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledNew = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledPrint = true;
       this.disabledDelete = true;
       this.disabledView = true;
@@ -292,7 +292,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     } else if (button == 'New') {
       this.disabledUpdate = true;
       this.disabledCopy = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledPrint = true;
       this.disabledDelete = true;
       this.disabledView = true;
@@ -309,7 +309,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledView = true;
       this.disabledPrint = false;
       this.disableCancelDefaultReport = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledGenerateEntry = true;
       this.disabledPost = true;
 
@@ -324,7 +324,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPrint = false;
       this.disabledCancel = true;
       this.disableCancelDefaultReport = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledGenerateEntry = true;
       this.disabledPost = true;
 
@@ -335,7 +335,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPost = false;
       this.disabledUpdate = true;
       this.disabledCopy = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledPrint = true;
       this.disabledDelete = true;
       this.disabledView = true;
@@ -350,7 +350,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     else if (button == 'Delete') {
       this.disabledUpdate = true;
       this.disabledCopy = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledPrint = true;
       this.disabledSave = true;
       this.disabledDelete = false;
@@ -362,7 +362,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledNew = true;
       this.disabledCopy = true;
       this.disabledList = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledUpdate = true;
       this.disabledCancel = true;
       this.disabledDelete = true;
@@ -380,7 +380,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledNew = true;
       this.disabledCopy = true;
       this.disabledList = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledUpdate = false;
       this.disabledCancel = true;
       this.disabledDelete = true;
@@ -398,7 +398,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPost = true;
       this.disabledUpdate = true;
       this.disabledCopy = true;
-      this.disabledExport = true;
+      this.hiddenExport = true;
       this.disabledPrint = true;
       this.disabledDelete = true;
       this.disabledView = true;
@@ -414,7 +414,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.disabledNew = false;
     this.disabledCopy = false;
     this.disabledList = false;
-    this.disabledExport = false;
+    this.hiddenExport = false;
     this.disabledPrint = false;
     this.disabledUpdate = false;
     this.disableCancelDefaultReport = false;

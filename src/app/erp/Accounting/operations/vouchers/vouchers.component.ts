@@ -67,7 +67,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
-    private reportViewerService: ReportViewerService
 
   ) {
 
@@ -78,6 +77,16 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+
+    } else {
+      localStorage.removeItem('foo')
+
+    }
+
     let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
         this.voucherTypeId = +params['voucherTypeId'];
@@ -139,9 +148,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   nameAr: any;
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
             this.voucherType = res.response;
             this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn)
 
@@ -208,12 +219,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   getVouchers() {
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
