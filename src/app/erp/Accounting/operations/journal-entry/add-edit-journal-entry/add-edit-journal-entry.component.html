@@ -221,10 +221,10 @@
 																								class="fa fa-search"></i></button>
 																					</div> -->
 																					<input class="form-control" formControlName="accountName"
-																						[ngModelOptions]="{standalone: true}"
+																						[ngModelOptions]="{standalone: true}" 	placeholder="{{'general.search'|translate}}"
 																						[ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
 																						type="text" name="accountId"
-																						(keyup.Enter)="openModalSearchAccount(i)">
+																						(keydown.Enter)="openSearchAccount(i)">
 																					<div *ngIf="row.get('accountName')?.errors?.required && row.get('accountName')?.touched"
 																						class="invalid-feedback">
 																						Account Name is required.
@@ -237,7 +237,7 @@
 						
 																				<div class="input-group ">
 																					<input type="number" required class="form-control required"
-																						(keypress)="numberOnly($event,i,'Credit')"
+																						(keypress)="numberOnly($event,i,'Credit')" 
 																						(input)="onInput($event.target.value,i,'Credit')"
 																						formControlName="jEDetailCredit" name="jEDetailCredit"
 																						style="width: 70px;">
@@ -275,10 +275,10 @@
 																								class="fa fa-search"></i></button>
 																					</div> -->
 																					<input class="form-control" formControlName="currencyName"
-																						[ngModelOptions]="{standalone: true}" type="text"
+																						[ngModelOptions]="{standalone: true}" type="text" 	placeholder="{{'general.search'|translate}}"
 																						name="currencyId"
 																						[ngClass]="{ 'required': (row.get('accountId')?.errors?.required)}"
-																						(keyup.Enter)="openModalSearchCurrency(i)"
+																						(keydown.Enter)="openSearchCurrency(i)"
 																						(change)="onChangeCurrency($event,i)">
 																				</div>
 						
@@ -328,10 +328,10 @@
 						
 																					</select> -->
 																					<input class="form-control" formControlName="costCenterName"
-																						[ngModelOptions]="{standalone: true}" type="text"
+																						[ngModelOptions]="{standalone: true}" type="text" 	placeholder="{{'general.search'|translate}}"
 																						name="costCenterId"
 																						[ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
-																						(keyup.Enter)="openModalSearchCostCenter(i)">
+																						(keydown.Enter)="openSearchCostCenter(i)">
 						
 																				</div>
 						
@@ -345,7 +345,7 @@
 						
 																			<td>
 																	
-																				<input type="button" *ngIf="journalEntriesDetailList.length-1==i&&journalEntriesDetailList.length-1>0"
+																				<input type="button" *ngIf="journalEntriesDetailList.length-1==i||journalEntriesDetailList.length-1==0"
 																					class="btn btn-primary btn-table"
 																					(click)="initGroup()"
 																					value="{{'buttons.add'|translate}}">

@@ -250,7 +250,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
 	openFiscalPeriodes() { }
 	onCheck(id) {
-
+debugger
 		const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
 		if (index !== -1) {
 			this.listIds.splice(index, 1);
@@ -258,6 +258,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 			const newItem = { id, isChecked: true };
 			this.listIds.push(newItem);
 		}
+		
 		this.sharedServices.changeButton({
 			action: 'Delete',
 			componentName: 'List',
@@ -329,12 +330,13 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 	onDelete() {
 
 		let item = new DeleteListFiscalPeriodCommand();
-		item.ids = this.listIds.map(item => item.id);
+		var ids = this.listIds.map(item => item.id);
 		const input = {
 			tableName: "FiscalPeriods",
-			ids: this.listIds,
+			ids: ids,
 			idName: "Id"
 		};
+		
 		let sub = this.fiscalPeriodService.deleteListEntity(input).subscribe(
 			(resonse) => {
 
