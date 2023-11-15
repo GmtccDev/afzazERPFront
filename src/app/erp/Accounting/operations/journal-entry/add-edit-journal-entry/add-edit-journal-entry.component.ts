@@ -147,6 +147,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       if (this.currnetUrl == this.addUrl) {
         this.getjournalEntryCode();
         this.getGeneralConfiguration()
+
       }
 
       this.changePath();
@@ -303,7 +304,10 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.isMultiCurrency = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
             this.serial = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
-
+           
+            if (this.currnetUrl == this.addUrl) {
+              this.initGroup();
+            }
             // if (this.isMultiCurrency) {
             //   this.getCurrency();
             // }
@@ -318,7 +322,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
         },
       });
-
+    
       this.subsList.push(sub);
     });
 
@@ -363,7 +367,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         this.cd.detectChanges()
       });
     })
-    this.initGroup();
+    //this.initGroup();
   }
   get jEMasterStatusId() {
 
@@ -396,7 +400,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     },
 
     ));
-    debugger
+    
     const currentIndex = journalEntriesDetail.length - 1;
     this.index = currentIndex;
     this.onOpenNewRow();
@@ -1174,7 +1178,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.showSearchCurrencyModal = false;
   }
   onOpenNewRow() {
-    if (this.currencyList != undefined) {
+    if (this.currencyList != undefined && this.defaultCurrencyId != undefined) {
       const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
       var event = this.currencyList.find(c => c.id == this.defaultCurrencyId);
       faControl['controls'].currencyId.setValue(event.id);

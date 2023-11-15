@@ -345,11 +345,16 @@
 						
 																			<td>
 																	
-																				<input type="button"
+																				<input type="button" *ngIf="journalEntriesDetailList.length-1==i&&journalEntriesDetailList.length-1>0"
 																					class="btn btn-primary btn-table"
 																					(click)="initGroup()"
 																					value="{{'buttons.add'|translate}}">
-		
+																					
+																					<button class="btn btn-danger btn-table px-3" *ngIf="journalEntriesDetailList.length-1!==i"
+																					value="{{'buttons.delete'|translate}}" type="button"
+																					(click)="onDeleteRow(i)">
+																					<i class="fa fa-trash"></i>
+																				</button>
 																			</td>
 						
 																			<!-- <td>
