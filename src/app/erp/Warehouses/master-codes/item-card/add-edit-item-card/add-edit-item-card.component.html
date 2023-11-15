@@ -145,43 +145,39 @@
                                                 type="file">
 
                                         </div>
-                                        <div class="row  g-2 ">
-                                            <div class="col-md-6 col-12">
-                                                <label for="taxIds" class="label-name">
-                                                    {{'general.taxes'|translate}}
-                                                </label>
 
-                                                <!-- <div class="input-group  popup">
-                                                    <ng-select style="width:100%"
-                                                        formControlName="taxIds" name='taxIds' class=""
-                                                        id="taxIds">
-                                                        <ng-option *ngFor="let tax of taxesList"
-                                                            [value]="tax.id">
-                                                            {{lang=="ar" ? tax.nameAr:tax.nameEn}}
-                                                        </ng-option>
-                                                    </ng-select>
-                                                </div> -->
-                                                <!-- <div class="input-group  popup">
+                                        <div class="col-md-6 col-12">
+                                            <label for="taxIds" class="label-name">
+                                                {{'general.taxes'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" [multiple]="true" [virtualScroll]="true"
+                                                    formControlName="taxIds" [(ngModel)]="selectedTaxes" name='taxes'
+                                                    class="" id="taxes">
+                                                    <ng-option *ngFor="let tax of taxesList" [value]="tax.id">
+                                                        {{lang=="ar"?tax.nameAr:tax.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
 
-                                                    <p-multiSelect [options]="taxes" formControlName="taxIds"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        [(ngModel)]="selectedTaxes"
-                                                        [virtualScroll]="true"
-                                                        optionLabel="{{lang=='ar'?'nameAr':'nameEn'}}"
-                                                        id="taxes" name="taxIds" class="w-100"
-                                                        defaultLabel="{{'general.select'|translate}}"></p-multiSelect>
-                                                </div> -->
+                                            </div>
+                                        </div>
 
-                                                <div class="input-group  popup">
-                                                    <ng-select style="width:100%" [multiple]="true"
-                                                        [virtualScroll]="true" formControlName="taxIds"
-                                                        [(ngModel)]="selectedTaxes" name='taxes' class="" id="taxes">
-                                                        <ng-option *ngFor="let tax of taxesList" [value]="tax.id">
-                                                            {{lang=="ar"?tax.nameAr:tax.nameEn}}
-                                                        </ng-option>
-                                                    </ng-select>
 
-                                                </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="determinants" class="label-name">
+                                                {{'general.determinants'|translate}}
+                                            </label>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" [multiple]="true"
+                                                    (change)="onChangeDeterminants($event)" [virtualScroll]="true"
+                                                    [(ngModel)]="itemCardDeterminant" name='determinants' class=""
+                                                    id="determinants">
+                                                    <ng-option *ngFor="let determinant of determinantsList"
+                                                        [value]="determinant.id">
+                                                        {{lang=="ar"?determinant.nameAr:determinant.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
+
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
