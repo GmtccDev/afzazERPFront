@@ -301,7 +301,7 @@ export class AddEditBillTypeComponent implements OnInit {
   }
   getWarehouseEffect() {
     this.warehouseEffectList = [
-      { nameAr: ' ليس لها تأثير مستودعى', nameEn: 'It has no warehouse effect', value: '1' },
+      { nameAr: ' ليس لها تأثير مستودعى', nameEn: 'No warehouse effect', value: '1' },
       { nameAr: 'لا ترحل إلى المستودع تلقائياً', nameEn: 'No post to the warehouses automatically', value: '2' },
       { nameAr: 'ترحل إلى المستودعات تلقائياً', nameEn: 'Post to the warehouses automatically', value: '3' }
 

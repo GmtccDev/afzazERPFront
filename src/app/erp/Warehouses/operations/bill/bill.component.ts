@@ -261,10 +261,10 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
       title: this.lang == 'ar' ? 'الصافى' : 'Net',
       field: 'net',
     },
-    {
-      title: this.lang == 'ar' ? 'الصافى بعد الضريبة' : 'Net After Tax',
-      field: 'netAfterTax',
-    },
+    // {
+    //   title: this.lang == 'ar' ? 'الصافى بعد الضريبة' : 'Net After Tax',
+    //   field: 'netAfterTax',
+    // },
     {
       title: this.lang == 'ar' ? 'المدفوع' : 'Paid',
       field: 'paid',
@@ -290,7 +290,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
         { field: 'totalBeforeTax', type: 'like', value: searchTxt },
         { field: 'total', type: 'like', value: searchTxt },
         { field: 'net', type: 'like', value: searchTxt },
-        { field: 'netAfterTax', type: 'like', value: searchTxt },
+        // { field: 'netAfterTax', type: 'like', value: searchTxt },
         { field: 'paid', type: 'like', value: searchTxt },
         { field: 'remaining', type: 'like', value: searchTxt },
 
@@ -300,7 +300,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     ];
   }
 
-  openBillTypes() { }
   onCheck(id) {
 
     const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);

@@ -25,6 +25,7 @@ export class ItemCardDto {
     consumerPrice: number | undefined;
     minSellingPrice: number | undefined;
     openingCostPrice: number | undefined;
+    costPrice: number | undefined;
     hasExpiredDate: boolean | undefined;
     lifeTime: number | undefined;
     lifeTimeType: number | undefined;
