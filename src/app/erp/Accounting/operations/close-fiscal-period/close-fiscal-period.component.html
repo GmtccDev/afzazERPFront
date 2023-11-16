@@ -68,6 +68,20 @@
 
 											</div>
 										</div>
+										<div class="col-md-6 col-12" *ngIf="showDates">
+											<label for="fromDate" class="label-name">
+												{{'general.fromDate'|translate}} : 
+											</label>
+
+											<label> {{fromDate}} </label>
+
+										</div>
+										<div class="col-md-6 col-12" *ngIf="showDates">
+											<label for="toDate" class="label-name">
+												{{'general.toDate'|translate}} :
+											</label>
+											<label> {{toDate}} </label>
+										</div>
 									</div>
 								</div>
 							</div>

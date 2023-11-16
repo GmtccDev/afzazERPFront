@@ -34,7 +34,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
   lang = localStorage.getItem("language")
   companyId = localStorage.getItem("companyId")
   branchId = localStorage.getItem("branchId")
-
+  showDates: boolean = false
   addUrl: string = '';
   updateUrl: string = '';
   listUrl: string = '/accounting-operations/closeFiscalPeriod';
@@ -72,6 +72,9 @@ export class CloseFiscalPeriodComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+    this.listenToClickedButton();
+    this.sharedServices.changeToolbarPath(this.toolbarPathData);
     this.spinner.show();
     Promise.all([
       this.getFiscalPeriods(),
@@ -135,7 +138,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
 
           }
 
-
           resolve();
 
         },
@@ -143,7 +145,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
 
@@ -168,6 +169,12 @@ export class CloseFiscalPeriodComponent implements OnInit {
   }
   getCloseDate(selectedDate: DateModel) {
     this.closeDate = selectedDate;
+  }
+  getFromDate(selectedDate: DateModel) {
+    this.closeDate = selectedDate;
+  }
+  getToDate(selectedDate: DateModel) {
+    this.toDate = selectedDate;
   }
 
   //#endregion
@@ -246,25 +253,35 @@ export class CloseFiscalPeriodComponent implements OnInit {
     }
   }
   getFiscalPeriodById(id: any) {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
-        next: (res: any) => {
-          resolve();
-          this.fromDate = formatDate(Date.parse(res.response.fromDate));
-          this.toDate = formatDate(Date.parse(res.response.toDate));
+    debugger
+    if (id != null) {
+      return new Promise<void>((resolve, reject) => {
+        let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+          next: (res: any) => {
+            resolve();
+            debugger
+            this.showDates = true;
+            this.fromDate = formatDate(Date.parse(res.response.fromDate));
+            this.toDate = formatDate(Date.parse(res.response.toDate));
 
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          //console.log('complete');
-        },
+          },
+          error: (err: any) => {
+            reject(err);
+          },
+          complete: () => {
+          },
+        });
+        this.subsList.push(sub);
+
       });
-      this.subsList.push(sub);
+    }
+    else {
+      this.showDates = false;
+      this.fromDate = '';
+      this.toDate = '';
+    }
 
-    });
   }
   getGeneralConfigurationsOfCloseAccount() {
     return new Promise<void>((resolve, reject) => {

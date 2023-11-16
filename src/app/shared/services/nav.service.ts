@@ -246,7 +246,6 @@ export class NavService implements OnInit, OnDestroy {
 		},
 		{
 			title: this.translate.instant("general.operations"), type: 'sub', icon: 'dollar-sign', active: false, children:
-				//this.billTypes,
 				[
 					{
 						title: this.translate.instant("bill-type.sales-bills"), type: 'sub', icon: 'dollar-sign', active: false,

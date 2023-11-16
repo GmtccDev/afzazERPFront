@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
@@ -211,7 +211,7 @@ export class AddEditAccountComponent implements OnInit {
       currencyId: null,
       costCenterId: null,
       accountGroupId: null,
-      accountType: null,
+      accountType: REQUIRED_VALIDATORS,
       budget: null,
       accountClassificationId: REQUIRED_VALIDATORS,
       accountClassificationIdOfIncomeStatement: null,
@@ -507,7 +507,7 @@ export class AddEditAccountComponent implements OnInit {
     });
   }
   onChange(event: any) {
-    
+
     this.accountService.getAccount(event).subscribe(res1 => {
 
 
@@ -814,6 +814,25 @@ export class AddEditAccountComponent implements OnInit {
       console.log(entity);
       // this.accountForm.controls.isLeafAccount.setValue((event.target));
     }
+  }
+  onAccountTypeChange(event: any) {
+    
+    // access the selected value using event
+    const selectedValue = event;
+    if (event == 2) {
+      this.accountForm.get('budget')?.setValidators([Validators.required]);
+      this.accountForm.get('accountClassificationIdOfIncomeStatement')?.clearValidators();
+      this.accountForm.get('budget')?.updateValueAndValidity();
+      this.accountForm.get('accountClassificationIdOfIncomeStatement')?.updateValueAndValidity();
+    }
+    else  if (event == 1){
+      this.accountForm.get('accountClassificationIdOfIncomeStatement')?.setValidators([Validators.required]);
+      this.accountForm.get('budget')?.clearValidators();
+      this.accountForm.get('accountClassificationIdOfIncomeStatement')?.updateValueAndValidity();
+      this.accountForm.get('budget')?.updateValueAndValidity();
+
+    }
+    // perform additional actions on change if needed
   }
 }
 

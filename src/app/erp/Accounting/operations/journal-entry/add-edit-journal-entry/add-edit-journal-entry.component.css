@@ -3,3 +3,9 @@ input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }/*# sourceMappingURL=add-edit-journal-entry.component.css.map */
+@media only screen and (max-width: 767.98px) {
+  .overflow-auto-x {
+    overflow-x: auto !important;
+    overflow-y: visible;
+  }
+}/*# sourceMappingURL=add-edit-voucher.component.css.map */

@@ -71,13 +71,13 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    ;
+   this.getCommissionOnList();
     Promise.all([
     
       this.getSalesPersons(),
       this.getCommissionTypeList(),
       this.getCalculationMethodsList(),
-      this.getCommissionOnList(),
+     
 
 
     ]).then(a => {
@@ -85,8 +85,9 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getSalesPersonCommissionCardCode();
-        this.getSelecteditem();
+       
       }
+      this.getSelecteditem();
       this.changePath();
       this.listenToClickedButton();
     }).catch((err) => {
@@ -103,7 +104,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
         if (this.id > 0) {
           this.getSalesPersonCommissionCardId(this.id).then(a => {
             this.spinner.hide();
-
+            this.sharedService.changeButton({ action: 'Update', submitMode:false } as ToolbarData);
           }).catch(err => {
             this.spinner.hide();
 
@@ -179,7 +180,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     return new Promise<void>((resolve, reject) => {
       let sub = this.salesPersonCommissionServiceProxy.getSalesPersonCommission(id).subscribe({
         next: (res: any) => {
-       
+       debugger
           resolve();
           this.salesPersonCommissionCardForm.patchValue({
             id: res.response?.id,
@@ -194,7 +195,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
             notAchievedTargetRatio:res.response?.notAchievedTargetRatio ,
 
           });
-
+        this.commissionOnSelected= res.response?.commissionOn
 
         },
         error: (err: any) => {
@@ -273,23 +274,25 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
 
     }
   }
-  commissionOn
-  commissionOnList:any[]=[]
+
+  commissionOnList: { nameAr: string; nameEn: string; value: string; }[];
   getCommissionOnList() {
     this.commissionOnList = [
       { nameAr: 'المبيعات', nameEn: 'Sales',value: '1' },
-      { nameAr: 'التحصيل', nameEn: 'Collection', value: '2' },
+      { nameAr: 'التحصيل', nameEn: 'Collection', value: '2' }
+  
 
     ];
   }
   radioSel: any;
   radioSelectedString: string;
-  commissionOnSelected
+  commissionOnSelected:any='1'
   getSelecteditem() {
-    this.radioSel = this.commissionOnList.find(Item => Item.value === this.commissionOnSelected);
+    this.radioSel = this.commissionOnList.find(Item => Item.value == this.commissionOnSelected);
     this.radioSelectedString = JSON.stringify(this.radioSel);
   }
   onItemChange(item) {
+    this.commissionOnSelected=item.value;
     this.getSelecteditem();
   }
  
@@ -328,7 +331,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
            }
             this.definesalesPersonCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
@@ -348,6 +351,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     var inputDto = new SalesPersonCommissionCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.salesPersonCommissionCardForm.value;
+      inputDto.commissionOn =this.commissionOnSelected;
       this.salesPersonCommissionServiceProxy.createSalesPersonCommission(inputDto).subscribe({
         next: (result: any) => {
           this.response = { ...result.response };
@@ -379,10 +383,10 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
   }
   confirmUpdate() {
     
-    console.log("this.salesPersonCommissionCardForm.value",this.salesPersonCommissionCardForm.value)
     var inputDto = new SalesPersonCommissionCardDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.salesPersonCommissionCardForm.value;
+      inputDto.commissionOn =this.commissionOnSelected;
       inputDto.id = this.id;
 
       let sub = this.salesPersonCommissionServiceProxy.updateSalesPersonCommission(inputDto).subscribe({

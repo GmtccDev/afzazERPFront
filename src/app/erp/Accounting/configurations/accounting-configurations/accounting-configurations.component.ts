@@ -101,7 +101,7 @@ export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
         // this.cycleSelected = this.lang == "ar" ? "رقم" : "Number";
 
         this.sharedService.changeButton({ action: "ConfigMode" } as ToolbarData);
-        this.getSelecteditem();
+       // this.getSelecteditem();
       }).catch(err => {
         this.spinner.hide();
       })
@@ -129,7 +129,7 @@ export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
   getCycle() {
     this.cycleList = [
       { nameAr: 'مسودة – تمت مراجعته – مرحل ', nameEn: 'Draft - revised - carried over', value: '1' },
-      { nameAr: ' مسودة – مرحل', nameEn: 'Draft  - carried over', value: '2' },
+      { nameAr: 'مسودة – مرحل', nameEn: 'Draft  - carried over', value: '2' },
       { nameAr: "  مرحل  ", nameEn: 'carried over', value: '3' }
     ];
   }
@@ -172,7 +172,7 @@ export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
   }
   routeJournalApi = 'Journal/get-ddl?'
   journalList: JournalDto[] = [];
-  d
+  
   getJournals() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({

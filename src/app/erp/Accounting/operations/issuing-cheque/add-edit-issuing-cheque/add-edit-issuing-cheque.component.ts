@@ -14,7 +14,7 @@ import { IssuingChequeServiceProxy } from '../../../services/issuing-cheque.serv
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, ChequeStatusEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
@@ -479,22 +479,22 @@ export class AddEditIssuingChequeComponent implements OnInit {
           this.issuingChequeDetailStatusDTOList.clear();
           ListDetailStatus.forEach(element => {
 
-            if (element.status == 0) {
+            if (element.status == ChequeStatusEnum.Registered) {
               element.statusName = this.translate.instant("incoming-cheque.registered");
             }
-            if (element.status == 1) {
+            if (element.status == ChequeStatusEnum.EditRegistered) {
               element.statusName = this.translate.instant("incoming-cheque.edit-registered");
             }
-            else if (element.status == 2) {
+            else if (element.status == ChequeStatusEnum.Collected) {
               element.statusName = this.translate.instant("incoming-cheque.collected");
 
             }
-            else if (element.status == 3) {
+            else if (element.status == ChequeStatusEnum.Rejected) {
               element.statusName = this.translate.instant("incoming-cheque.rejected");
 
             }
             this.issuingChequeDetailStatusDTOList.push(this.fb.group({
-              date: format(new Date(element.date), 'dd-MM-yyyy'),
+              date: format(new Date(element.date), 'MM/dd/yyyy'),
               status: element.status,
               statusName: element.statusName
 
@@ -769,6 +769,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
       entity.status = 1;
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
+      debugger
       let sub = this.issuingChequeService.updateIssuingCheque(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();

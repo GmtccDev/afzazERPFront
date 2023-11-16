@@ -111,7 +111,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.allJournalEntryes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-
+            debugger;
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
 
@@ -283,7 +283,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     } as ToolbarData);
   }
   onCheckEdit(id) {
-
+    debugger
+    localStorage.removeItem("itemId");
+    localStorage.setItem("itemId", id);
     const index = this.listUpdateIds.findIndex(item => item.id === id && item.isChecked === true);
     if (index !== -1) {
       this.listUpdateIds.splice(index, 1);
@@ -302,7 +304,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onViewReportClicked(id) {
-    ;
+    localStorage.removeItem("itemId")
+    localStorage.setItem("itemId",id)
     let reportType = 1;
     let reportTypeId = 1000;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
