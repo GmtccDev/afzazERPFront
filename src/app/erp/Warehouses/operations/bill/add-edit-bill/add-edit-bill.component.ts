@@ -1126,17 +1126,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   addItem() {
-    // var taxValue = 0;
-    // if (this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true) {
-    //   if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
-    //     //  taxValue = (this.selectedBillItem?.totalBeforeTax ?? 0) * (this.selectedBillItem?.taxRatio ?? 0 / 100)
-    //   }
-    //   else {
-    //     //  taxValue = (this.selectedBillItem?.totalBeforeTax ?? 0 + this.selectedBillItem?.additionValue ?? 0 - this.selectedBillItem?.discountValue ?? 0) * (this.selectedBillItem?.taxRatio ?? 0 / 100)
 
-    //   }
-    // }
-    //here 
     if (this.selectedBillItem?.itemId == null) {
       this.errorMessage = this.translate.instant("general.item-required");
       this.errorClass = 'errorMessage';
@@ -1717,7 +1707,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       searchTxt = this.selectedBillItem?.unitName ?? '';
     } else {
       searchTxt = ''
-      // this.selectedRentContractUnits[i].unitNameAr!;
     }
 
     let data = this.itemCardUnit.filter((x) => {
@@ -1731,12 +1720,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       if (i == -1) {
         this.selectedBillItem!.unitName = this.lang = "ar" ? data[0].unitNameAr : data[0].unitNameEn;
         this.selectedBillItem!.unitId = data[0].unitId;
-        this.selectedBillItem!.price = data[0].sellingPrice;
+        this.selectedBillItem!.price =
+          this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+            ? data[0].sellingPrice : 0;
         this.onChangeQuantityOrPrice();
       } else {
         this.billItem[i].unitName = this.lang = "ar" ? data[0].unitNameAr : data[0].unitNameEn;
         this.billItem[i].unitId = data[0].unitId;
-        this.billItem[i]!.price = data[0].sellingPrice;
+        this.billItem[i]!.price =
+        this.billTypeKind ==  BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+            ? data[0].sellingPrice : 0;
         this.onChangeQuantityOrPriceAdded(i);
 
 
@@ -1752,14 +1745,19 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             if (i == -1) {
               this.selectedBillItem!.unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
               this.selectedBillItem!.unitId = d.unitId;
-              this.selectedBillItem!.price = d.sellingPrice;
+              debugger
+              this.selectedBillItem!.price =
+              this.billTypeKind ==  BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+                  ? d.sellingPrice : 0;
               this.onChangeQuantityOrPrice();
 
 
             } else {
               this.billItem[i].unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
               this.billItem[i].unitId = d.unitId;
-              this.billItem[i]!.price = d.sellingPrice;
+              this.billItem[i]!.price = 
+              this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+                  ? d.sellingPrice : 0;
               this.onChangeQuantityOrPriceAdded(i);
 
             }

@@ -18,7 +18,6 @@ import { ItemTypeEnum, ItemTypeArEnum, CostCalculateMethodsEnum, CostCalculateMe
 import { environment } from 'src/environments/environment';
 import { UnitServiceProxy } from '../../../Services/unit.servies';
 import { TaxMaster } from '../../../models/tax';
-import { DeterminantsMaster } from '../../../models/determinants';
 
 
 @Component({
@@ -234,6 +233,7 @@ export class AddEditItemCardComponent implements OnInit {
       consumerPrice: '',
       minSellingPrice: '',
       openingCostPrice: '',
+      costPrice: '',
       hasExpiredDate: false,
       lifeTime: '',
       lifeTimeType: '',
@@ -333,6 +333,7 @@ export class AddEditItemCardComponent implements OnInit {
             consumerPrice: res.response?.consumerPrice,
             minSellingPrice: res.response?.minSellingPrice,
             openingCostPrice: res.response?.openingCostPrice,
+            costPrice: res.response?.costPrice,
             hasExpiredDate: res.response?.hasExpiredDate,
             lifeTime: res.response?.lifeTime,
             lifeTimeType: res.response?.lifeTimeType,
@@ -375,13 +376,7 @@ export class AddEditItemCardComponent implements OnInit {
           debugger
           if (res.response?.itemCardDeterminants != null) {
             this.itemCardDeterminant = res.response?.itemCardDeterminants
-            /*  res.response?.itemCardDeterminants.forEach(element => {
-               this.itemCardDeterminant.push({
-                 id:0,
-                 itemCardId:element.itemCardId,
-                 determinantId:element.determinantId
-               })
-             }); */
+           
 
           }
           if (res.response?.itemCardUnits != null) {
@@ -714,6 +709,7 @@ export class AddEditItemCardComponent implements OnInit {
       consumerPrice: this.itemCardForm.controls["consumerPrice"].value,
       minSellingPrice: this.itemCardForm.controls["minSellingPrice"].value,
       openingCostPrice: this.itemCardForm.controls["openingCostPrice"].value,
+      costPrice: this.itemCardForm.controls["costPrice"].value,
       hasExpiredDate: this.itemCardForm.controls["hasExpiredDate"].value,
       lifeTime: this.itemCardForm.controls["lifeTime"].value,
       lifeTimeType: this.itemCardForm.controls["lifeTimeType"].value,
