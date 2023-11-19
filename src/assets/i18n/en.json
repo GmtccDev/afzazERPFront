@@ -364,7 +364,8 @@
         "text-siz-error": "The text size should not exceed 700 characters",
         "unit-offer-repeated": "This unit has been selected before",
         "faild-login": "Login credentials are not correct !",
-        "connection-error": "Connection error !"
+        "connection-error": "Connection error !",
+        "nameEn-not-Found":"Latin name not entered "
     },
     "user-manager": {
         "add-user": "Add User",

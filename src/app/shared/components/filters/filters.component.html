@@ -51,7 +51,8 @@
 					<ng-select style="width:100%" [(ngModel)]='selectedAccountGroupId' name='accountGroupId' class=""
 						id="accountGroupId" (change)="getAccounts()" (ngModelChange)="onSelectAccountGroup()">
 						<ng-option *ngFor="let accountGroup of accountGroupList" [value]="accountGroup.id">
-							{{lang=="ar"?accountGroup.nameAr:accountGroup.nameEn}}
+							{{lang=="ar"?accountGroup.nameAr:(accountGroup.nameEn!=''?accountGroup.nameEn:('validation-messages.nameEn-not-Found'|translate) +accountGroup.nameAr)}}
+
 						</ng-option>
 					</ng-select>
 				</div>
@@ -63,7 +64,9 @@
 					<ng-select style="width:100%" [(ngModel)]='selectedMainAccountId' name='mainAccountId' class=""
 						id="mainAccountId" (change)="getAccounts()" (ngModelChange)="onSelectMainAccount()">
 						<ng-option *ngFor="let account of mainAccountsList" [value]="account.id">
-							{{lang=="ar"?account.nameAr:account.nameEn}}
+						
+							{{lang=="ar"?account.nameAr:(account.nameEn!=''?account.nameEn:('validation-messages.nameEn-not-Found'|translate) +account.nameAr)}}
+
 						</ng-option>
 					</ng-select>
 				</div>
@@ -75,7 +78,9 @@
 					<ng-select style="width:100%" [(ngModel)]='selectedLeafAccountId' name='leafAccountId' class=""
 						id="leafAccountId" (ngModelChange)="onSelectLeafAccount()">
 						<ng-option *ngFor="let account of leafAccountsList" [value]="account.id">
-							{{lang=="ar"?account.nameAr:account.nameEn}}
+							
+							{{lang=="ar"?account.nameAr:(account.nameEn!=''?account.nameEn:('validation-messages.nameEn-not-Found'|translate) +account.nameAr)}}
+
 						</ng-option>
 					</ng-select>
 				</div>
@@ -87,7 +92,9 @@
 					<ng-select style="width:100%" [(ngModel)]='selectedCostCenterId' name='costCenterId' class=""
 						id="costCenterId" (ngModelChange)="onSelectCostCenter()">
 						<ng-option *ngFor="let costCenter of costCenterList" [value]="costCenter.id">
-							{{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
+							
+							{{lang=="ar"?costCenter.nameAr:(costCenter.nameEn!=''?costCenter.nameEn:('validation-messages.nameEn-not-Found'|translate) +costCenter.nameAr)}}
+
 						</ng-option>
 					</ng-select>
 				</div>
@@ -109,7 +116,9 @@
 					<ng-select style="width:100%" [(ngModel)]='selectedCurrencyId' name='currencyId' class=""
 						id="currencyId" (ngModelChange)="onSelectCurrency()">
 						<ng-option *ngFor="let currency of currenciesList" [value]="currency.id">
-							{{lang=="ar"?currency.nameAr:currency.nameEn}}
+					
+							{{lang=="ar"?currency.nameAr:(currency.nameEn!=''?currency.nameEn:('validation-messages.nameEn-not-Found'|translate) +currency.nameAr)}}
+
 						</ng-option>
 					</ng-select>
 
@@ -140,7 +149,9 @@
 						[(ngModel)]="selectedBranchId" (ngModelChange)="onSelectBranch()" name='branches' class=""
 						id="branches">
 						<ng-option *ngFor="let branch of branchesList" [value]="branch.id">
-							{{lang=="ar"?branch.nameAr:branch.nameEn}}
+						
+							{{lang=="ar"?branch.nameAr:(branch.nameEn!=''?branch.nameEn:('validation-messages.nameEn-not-Found'|translate) +branch.nameAr)}}
+
 						</ng-option>
 					</ng-select>
 
@@ -152,9 +163,14 @@
 				<div class="input-group  popup">
 
 
-					<ng-select class="custom" [(ngModel)]='selectedVoucherKindId' [items]="voucherTypes"
-						bindLabel="name" bindValue="id" style="width:100%"
-						(ngModelChange)="onSelectVoucherKind()"></ng-select>
+					<ng-select class="custom" [(ngModel)]='selectedVoucherKindId' 
+						         style="width:100%"
+						(ngModelChange)="onSelectVoucherKind()">
+						<ng-option *ngFor="let voucher of VoucherTypesList" [value]="voucher.id">
+							{{lang=="ar"?voucher.nameAr:(voucher.nameEn!=''?voucher.nameEn:('validation-messages.nameEn-not-Found'|translate) +voucher.nameAr)}}
+						</ng-option>
+					
+					</ng-select>
 
 				</div>
 			</div>
