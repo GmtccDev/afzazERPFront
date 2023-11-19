@@ -3,9 +3,22 @@
 </ngx-spinner>
 <div class="card">
 	<div class="card-body">
-		<button nz-button nzType="primary" (click)="expandAllRows()">
-			{{ 'general.all' | translate }}
-		</button>
+		<div class="d-flex justify-content-between mb-3">
+			<button nz-button nzType="primary" (click)="expandAllRows()">
+				{{ 'general.all' | translate }}
+			</button>
+			<div class="search-bar">
+				<input type="text" class="form-control icon-branch" [(ngModel)]="codeSearchText"
+					placeholder=" {{'general.code'|translate}}">
+				<input type="text" class="form-control icon-branch" [(ngModel)]="nameSearchText"
+					placeholder="{{'general.name'|translate}}">
+				<input type="text" class="form-control icon-branch" [(ngModel)]="levelSearchText"
+					(keyup)="onKeyUp($event)" placeholder="{{'general.level'|translate}}">
+				<button nz-button nzType="primary" (click)="searchData()"
+					class=" b-r-0 mx-2">{{'general.search'|translate}}</button>
+			</div>
+		</div>
+		
 		<nz-table #expandTable [nzBordered]="true" [nzData]="listOfMapData" nzTableLayout="fixed"
 			class="table table-broder p-0 mt-2">
 			<thead>

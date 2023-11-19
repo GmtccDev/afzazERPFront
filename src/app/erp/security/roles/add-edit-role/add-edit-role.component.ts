@@ -240,7 +240,7 @@ export class AddEditRoleComponent implements OnInit {
           this.permission = res.response.permissions
           this.screens = res.response.screens;
           const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
-          this.permission = res.response?.permissions?.items;
+         // this.permission = res.response?.permissions?.items;
           this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
         //  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
         
@@ -413,7 +413,20 @@ export class AddEditRoleComponent implements OnInit {
     entity.isChecked = evt.target.checked;
     //  this.masterSelected = this.permission.every((item) => item.isChecked == true);
   }
+  updateCheckedOption(item, evt) {
 
+    // this.permission[item.id].isChecked = evt.target.checked
+    item.permissions.forEach(
+        (c) => {
+
+          c.isChecked = evt.target.checked;
+          let entity = this.permission.find(x => x.id == c.id);
+          entity.isChecked = evt.target.checked;
+        }
+      )
+
+    
+  }
 
   getModulesType() {
     this.modulesType = [

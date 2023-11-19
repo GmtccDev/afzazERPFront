@@ -356,24 +356,23 @@
 						<table class="mt-4 total-table table table-borderless text-end w-100">
 							<tr>
 								<td>{{'journalEntry.totalDebit' | translate }}</td>
-								<td class="text-start">{{ totalCredit }}</td>
+								<td class="text-start">{{  totalDebit }}</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCredit' | translate }}</td>
-								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebit }}</label>
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCredit }}</label>
 								</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalDebitLocal' | translate }}</td>
-								<td class="text-start"><label class="p-0">{{ totalCreditLocal }}</label></td>
+								<td class="text-start"><label class="p-0">{{  totalDebitLocal }}</label></td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCreditLocal' | translate }}</td>
-								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalDebitLocal
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCreditLocal
 										}}</label></td>
 							</tr>
 						</table>
-
 
 					</div>
 				</div>

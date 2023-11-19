@@ -183,6 +183,10 @@ export class DateCalculation {
     let d = new Date();
     return (selectedDate.month + 1) + "/" + selectedDate.day + "/" + selectedDate.year ;
   }
+  getDateForInsertS(selectedDate: { year: number, month: number, day: number }) {
+    let d = new Date();
+    return (selectedDate.month) + "/" + selectedDate.day + "/" + selectedDate.year ;
+  }
   getDateForInsert2(e:{ year: number, month: number, day: number })
   {
     let d = new Date();
