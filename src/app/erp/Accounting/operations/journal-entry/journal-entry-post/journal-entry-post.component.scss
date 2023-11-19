@@ -40,3 +40,8 @@ td.ant-table-cell:nth-of-type(5) {
     min-width: 50px;
     max-width: max-content;
 }
+
+button.ant-btn.b-r-0.w-100.ant-btn-primary.ant-btn-rtl {
+    border-radius: 2px !important;
+    min-height: 35px;
+}
