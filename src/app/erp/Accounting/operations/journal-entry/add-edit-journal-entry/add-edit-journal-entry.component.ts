@@ -1157,7 +1157,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.date = selectedDate;
     let checkDate = this.dateService.getDateForInsert(this.date)
     const date = new Date(checkDate);
-    const formattedDate = this.datePipe.transform(date, 'yyyy-MM-01T00:00:00');
+    const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
     this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
 
   }
