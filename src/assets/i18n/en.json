@@ -224,7 +224,8 @@
         "quantity-required": "Item is required",
         "price-required": "Item is required",
         "discount-account": "Discount Account",
-        "tax-account": "Tax Account"
+        "tax-account": "Tax Account",
+        "close-account-required":"Please choose close account from the settings"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",

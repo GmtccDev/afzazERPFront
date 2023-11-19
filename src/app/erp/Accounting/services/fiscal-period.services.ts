@@ -33,7 +33,6 @@ export class FiscalPeriodServiceProxy {
 
         return this.http.post<any>(environment.apiUrl + "/api/FiscalPeriod/add?", fiscalPeriod);
     }
-    // ids: number[] | undefined;
     deleteListFiscalPeriod(fiscalPeriod: DeleteListFiscalPeriodCommand): Observable<number> {
         return this.http.post<any>(environment.apiUrl + "/api/FiscalPeriod/deleteList?", fiscalPeriod);
     }
@@ -59,7 +58,6 @@ export class FiscalPeriodServiceProxy {
 
         return this.http.get<any>(this.baseUrl + "/api/FiscalPeriod/all?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/FiscalPeriod/GetFiscalPeriods");
     }
 
 
@@ -76,17 +74,10 @@ export class FiscalPeriodServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(environment.apiUrl + "/api/FiscalPeriod/delete", { params: params });
     }
-    closeFiscalPeriod(companyId:any,branchId:any,fiscalPeriodId:any,closeDate:any,fromDateFisCalPeriod:any,toDateFisCalPeriod:any,closeAccountId:any): Observable<any> {
-        
+    closeFiscalPeriod(fiscalPeriodId:any,fromDateFisCalPeriod:any,toDateFisCalPeriod:any,closeAccountId:any): Observable<any> {
         let params = new HttpParams();
-
-        params = params.append('companyId', companyId);
-        params = params.append('branchId', branchId);
         params = params.append('fiscalPeriodId', fiscalPeriodId);
-
-        params = params.append('closeDate', closeDate);
         params = params.append('fromDateFisCalPeriod', fromDateFisCalPeriod);
-
         params = params.append('toDateFisCalPeriod', toDateFisCalPeriod);
         params = params.append('closeAccountId', closeAccountId);
 
