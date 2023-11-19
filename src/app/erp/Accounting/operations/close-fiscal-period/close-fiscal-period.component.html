@@ -15,7 +15,7 @@
 									<h3>{{'component-names.close-fiscal-period'|translate}}</h3>
 									<hr>
 									<div class="row">
-										<div class="col-md-6 col-12">
+										<!-- <div class="col-md-6 col-12">
 											<label for="closeDate" class="label-name">
 												{{'general.date'|translate}}
 											</label>
@@ -37,9 +37,9 @@
 												</div>
 
 											</div>
-										</div>
+										</div> -->
 
-										<div class="col-md-6 col-12">
+										<div class="col-md-4 col-12">
 											<label for="fiscalPeriodId"
 												class="label-name">{{'component-names.fiscalPeriod'|translate}}
 											</label>
@@ -68,15 +68,17 @@
 
 											</div>
 										</div>
-										<div class="col-md-6 col-12" *ngIf="showDates">
+										<div class="col-md-4 col-12" *ngIf="showDates">
+											<br />
 											<label for="fromDate" class="label-name">
-												{{'general.fromDate'|translate}} : 
+												{{'general.fromDate'|translate}} :
 											</label>
 
 											<label> {{fromDate}} </label>
 
 										</div>
-										<div class="col-md-6 col-12" *ngIf="showDates">
+										<div class="col-md-4 col-12" *ngIf="showDates">
+											<br />
 											<label for="toDate" class="label-name">
 												{{'general.toDate'|translate}} :
 											</label>
