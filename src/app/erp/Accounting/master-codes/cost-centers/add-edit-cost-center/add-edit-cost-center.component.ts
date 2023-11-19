@@ -55,7 +55,7 @@ export class AddEditCostCenterComponent implements OnInit {
   parentId: any;
   companyList: CompanyDto[] = [];
   routeApi = 'CostCenter/get-ddl?'
-  companyId: any;
+  companyId=Number(localStorage.getItem("companyId"));
   routeCompanyApi = 'Company/get-ddl?'
   constructor(private companyService: CompanyServiceProxy,
     private costCenterService: CostCenterServiceProxy,
@@ -191,7 +191,7 @@ export class AddEditCostCenterComponent implements OnInit {
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       parentId: null,
-      companyId: null
+      companyId: this.companyId
     });
 
   }

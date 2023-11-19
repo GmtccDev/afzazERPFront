@@ -31,7 +31,9 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedAccountGroupId: any;
   level: any = 1;
   accountGroupList: any;
+  VoucherTypesList:any[]=[];
   routeAccountGroupApi = "AccountGroup/get-ddl?"
+  routeVoucherTypespApi = "VoucherType/get-ddl?"
 
   selectedLeafAccountId: any;
   selectedMainAccountId: any;
@@ -153,7 +155,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getCostCenter(),
       this.getCurrencies(),
       this.getBranches(),
-      this.getVouchers()
+      this.getVouchers(),
+      this.getVoucherTypes()
 
 
     ]).then(a => {
@@ -173,6 +176,33 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  getVoucherTypes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeVoucherTypespApi).subscribe({
+        next: (res) => {
+             debugger
+          if (res.success) {
+
+            this.VoucherTypesList = res.response;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getAccountGroup() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountGroupApi).subscribe({
@@ -621,10 +651,11 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   getSelectedVoucherKindName()
   {
 
+    debugger
     if(this.selectedVoucherKindId!=null && this.selectedVoucherKindId!=undefined)
     {
-      let itemName =this.voucherTypes.find(x=>x.id==this.selectedVoucherKindId).name;
-      this.selectedVoucherKindName=itemName;
+      let item =this.VoucherTypesList.find(x=>x.id==this.selectedVoucherKindId);
+      this.selectedVoucherKindName= this.lang=='ar'?item.nameAr:item.nameEn;
     }else{
       this.selectedVoucherKindName=''
     }

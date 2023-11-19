@@ -118,7 +118,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
 
 						if (this.salesBills.length > 0) {
-							
+
 							this.salesBills.forEach(element => {
 								this.navServices.salesBillTypesNew.push({ path: '/warehouses-operations/bill/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { billTypeId: element.id } })
@@ -128,9 +128,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							})
-							const distinctSalesBillTypes = this.navServices.salesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-bills"), type: 'sub', active: false, children: distinctSalesBillTypes })
+							this.navServices.salesBillTypesNew = this.navServices.salesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 
 
@@ -146,10 +144,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							})
-							const distinctPurchasesBillTypes = this.navServices.purchasesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-bills"), type: 'sub', active: false, children: distinctPurchasesBillTypes })
-
+							this.navServices.purchasesBillTypesNew = this.navServices.purchasesBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 						}
 						if (this.salesReturnBills.length > 0) {
@@ -162,10 +157,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							})
-							const distinctSalesReturnBillTypes = this.navServices.salesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.sales-return-bills"), type: 'sub', active: false, children: distinctSalesReturnBillTypes })
-
+							this.navServices.salesReturnBillTypesNew = this.navServices.salesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 
 						}
@@ -180,9 +172,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							})
-							const distinctPurchasesReturnBillTypes = this.navServices.purchasesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.purchases-return-bills"), type: 'sub', active: false, children: distinctPurchasesReturnBillTypes })
+							this.navServices.purchasesReturnBillTypesNew = this.navServices.purchasesReturnBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 
 						}
@@ -196,10 +186,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 									));
 								});
 							})
-							const distinctFirstPeriodGoodsBillTypes = this.navServices.firstPeriodGoodsBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
-
-							this.navServices.billTypes.push({ path: '/dashboard/default', title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'sub', active: false, children: distinctFirstPeriodGoodsBillTypes })
-
+							this.navServices.firstPeriodGoodsBillTypesNew = this.navServices.firstPeriodGoodsBillTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 						}
 
