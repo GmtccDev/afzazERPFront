@@ -13,6 +13,9 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import format from 'date-fns/format';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
+import { DateModel } from 'src/app/shared/model/date-model';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
   selector: 'app-journal-entry-post',
   templateUrl: './journal-entry-post.component.html',
@@ -46,6 +49,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    private datePipe: DatePipe,
+    private dateService: DateCalculation,
 
   ) {
 
@@ -102,15 +107,59 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
   //#region Basic Data
   ///Geting form dropdown list data
+  filteredData = [];
+  searchCode: any;
+  searchFromDate: any=undefined;
+  searchToDate: any=undefined;
+  toggleButton: boolean = true;
+  // Function to filter the data based on code and date
+  filterData(code, fromDate, toDate) {
+    debugger
+    this.filteredData = this.journalEntry;
+    if (code != undefined) {
+      this.filteredData = this.filteredData.filter(item =>
+        item.code === code
+      );
+    }
+    if (fromDate != undefined) {
+      
+      this.filteredData = this.filteredData.filter(item =>
+
+        item.date >= (fromDate)
+      );
+      if (toDate != undefined) {
+       
+        this.filteredData = this.filteredData.filter(item =>
+
+          (item.date) <= (toDate)
+        );
+      }
+    }
+  }
+  getDate(selectedDate: DateModel) {
+
+    let checkDate = this.dateService.getDateForInsert(selectedDate)
+    const date = new Date(checkDate);
+    this.searchFromDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+
+  }
+  getDate2(selectedDate: DateModel) {
+
+    let checkDate = this.dateService.getDateForInsert(selectedDate)
+    const date = new Date(checkDate);
+    this.searchToDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+
+  }
   getJournalEntryes() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.allJournalEntryes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntryPost");
           if (res.success) {
+
             this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
-
-
+            this.filteredData = this.journalEntry;
+            console.log(this.journalEntry)
           }
 
 
@@ -121,7 +170,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
           reject(err);
         },
         complete: () => {
-          
+
         },
       });
 
@@ -180,8 +229,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
           return value;
         }
       },
-      this.lang == 'ar'
-			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
+    this.lang == 'ar'
+      ? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
 
 
     this.lang == 'ar'
@@ -190,6 +239,19 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
       } : {
         title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
       },
+    this.lang == 'ar'
+      ? {
+        title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum, cellClick: (e, cell) => {
+
+          this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+        }
+      } : {
+        title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum, cellClick: (e, cell) => {
+
+          this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+        }
+      },
+
   ];
 
   menuOptions: SettingMenuShowOptions = {
@@ -212,16 +274,16 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
   openJournalEntryes() { }
   onCheck(id) {
-;
+    ;
     const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
-  if (index !== -1) {
-    this.listIds.splice(index, 1);
-  } else {
-    const newItem = { id, isChecked: true };
-    this.listIds.push(newItem);
-  }
+    if (index !== -1) {
+      this.listIds.splice(index, 1);
+    } else {
+      const newItem = { id, isChecked: true };
+      this.listIds.push(newItem);
+    }
 
-}
+  }
   onEdit(id) {
 
     if (id != undefined) {
@@ -304,18 +366,18 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
   onCheckUpdate() {
 
     var ids = this.listIds.map(item => item.id);
-    if(ids.length>0){
+    if (ids.length > 0) {
       let sub = this.journalEntryService.updateList(ids).subscribe(
         (resonse) => {
-    
+
           //reloadPage()
           this.getJournalEntryes();
           this.listUpdateIds = [];
-          this.listIds=[]
+          this.listIds = []
         });
       this.subsList.push(sub);
     }
-  
+
   }
   translateArEnum(cell, formatterParams, onRendered) {
 
@@ -330,7 +392,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
         break;
 
       default:
-        text = status;
+        text = 'غير مرحل';
         break;
     }
     return text;
@@ -349,11 +411,69 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
         break;
 
       default:
-        text = status;
+        text = 'Not Post';
         break;
     }
     return text;
 
+  }
+  translateParentArEnum(cell, formatterParams, onRendered) {
+
+    const status = cell.getValue();
+    let text;
+    switch (status) {
+      case 1:
+        text = 'سندات';
+        break;
+      case 2:
+        text = 'شيكات ورداة ';
+        break;
+      case 3:
+        text = ' شيكات صادرة';
+        break;
+      default:
+        text = '  قيد';
+        break;
+    }
+    return text;
+
+  }
+  translateParentEnEnum(cell, formatterParams, onRendered) {
+
+    const status = cell.getValue();
+    let text;
+    switch (status) {
+      case 1:
+        text = 'Voucher';
+        break;
+      case 2:
+        text = 'Incoming Cheque';
+        break;
+      case 3:
+        text = ' Issuing Cheque ';
+        break;
+      default:
+        text = ' Journal Entry';
+        break;
+    }
+    return text;
+
+  }
+  CheckBoxFormatIcon() { //plain text value
+
+    return "<input id='checkId' type='checkbox' />";
+  };
+  onViewClicked(parentType, id) {
+
+    if (parentType == 1) {
+      window.open('accounting-operations/vouchers/update-voucher/' + id, "_blank")
+    }
+    if (parentType == 2) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
+    }
+    if (parentType == 3) {
+      window.open('accounting-operations//issuingCheque/add-issuingCheque/' + id, "_blank")
+    }
   }
   //#endregion
 }

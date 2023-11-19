@@ -170,8 +170,8 @@
                                             <div class="input-group  popup">
                                                 <ng-select style="width:100%" [multiple]="true"
                                                     (change)="onChangeDeterminants($event)" [virtualScroll]="true"
-                                                    [(ngModel)]="itemCardDeterminant" name='determinants' class=""
-                                                    id="determinants">
+                                                    [(ngModel)]="itemCardDeterminant" name='itemCardDeterminant' class=""
+                                                    id="itemCardDeterminant">
                                                     <ng-option *ngFor="let determinant of determinantsList"
                                                         [value]="determinant.id">
                                                         {{lang=="ar"?determinant.nameAr:determinant.nameEn}}
@@ -326,6 +326,16 @@
                                                                     <input type="number" class="form-control"
                                                                         name="openingCostPrice"
                                                                         formControlName="openingCostPrice">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <label for="costPrice"
+                                                                    class="label-name">{{'item.cost-price'|translate}}
+                                                                </label>
+                                                                <div class="input-group  popup">
+                                                                    <input type="number" class="form-control"
+                                                                        name="costPrice"
+                                                                        formControlName="costPrice" disabled>
                                                                 </div>
                                                             </div>
 

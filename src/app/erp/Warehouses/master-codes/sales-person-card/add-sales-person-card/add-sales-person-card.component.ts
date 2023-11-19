@@ -228,7 +228,9 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
      return new Promise<void>((resolve, reject) => {
        let sub = this.publicService.getDdl(this.routeEmployeeAccountApi).subscribe({
          next: (res) => {
+          debugger
            if (res.success) {
+
              this.employeeAccountsList = res.response;
  
            }
@@ -359,7 +361,7 @@ export class AddSalesPersonCardComponent implements OnInit,OnDestroy {
      return new Promise<void>((resolve, reject) => {
        inputDto = this.salesPersonCardForm.value;
        inputDto.id = this.id;
- 
+           
        let sub = this.salesPersonCardService.updateSalesPersonCard(inputDto).subscribe({
          next: (result: any) => {
            this.response = { ...result.response };
