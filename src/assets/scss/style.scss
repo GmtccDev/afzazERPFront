@@ -1757,3 +1757,8 @@ html[dir=rtl] .table-tree {
         }
     }
 }
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
