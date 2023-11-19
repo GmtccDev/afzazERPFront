@@ -16,6 +16,8 @@ import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 
 
 @Component({
@@ -78,7 +80,9 @@ export class CloseFiscalPeriodComponent implements OnInit {
     this.spinner.show();
     Promise.all([
       this.getFiscalPeriods(),
-      this.getGeneralConfigurationsOfCloseAccount()
+      this.getGeneralConfigurationsOfCloseAccount(),
+      this.getGeneralConfigurationsOfAccountingPeriod()
+
     ]).then(a => {
       this.changePath();
       this.listenToClickedButton();
@@ -118,7 +122,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
   ///Geting form dropdown list data
   defineCloseFiscalPeriodForm() {
     this.closeFiscalPeriodForm = this.fb.group({
-      // id: 0,
       closeDate: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       fiscalPeriodId: REQUIRED_VALIDATORS
 
@@ -134,7 +137,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.fiscalPeriodList = res.response.filter(x => x.fiscalPeriodStatus == 1);
+            this.fiscalPeriodList = res.response.filter(x => x.fiscalPeriodStatus == FiscalPeriodStatus.Opened);
 
           }
 
@@ -199,7 +202,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("component-names.close-fiscal-period");
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update) {
-            //this.onUpdate();
           }
         }
       },
@@ -210,25 +212,26 @@ export class CloseFiscalPeriodComponent implements OnInit {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-    this.closeFiscalPeriodForm.value.closeDate = this.dateService.getDateForInsert(this.closeFiscalPeriodForm.controls["closeDate"].value);
+   
     return new Promise<void>((resolve, reject) => {
-
-      this.closeDate = formatDate(Date.parse(this.closeFiscalPeriodForm.value.closeDate))
-      let sub = this.fiscalPeriodService.closeFiscalPeriod(this.companyId, this.branchId, this.fiscalPeriodId, this.closeDate, this.fromDate, this.toDate, this.closeAccountId).subscribe({
+      
+      let sub = this.fiscalPeriodService.closeFiscalPeriod(this.fiscalPeriodId, this.fromDate, this.toDate, this.closeAccountId).subscribe({
         next: (result: any) => {
-
-          this.response = { ...result.response };
+          
           this.defineCloseFiscalPeriodForm();
           this.getFiscalPeriods();
+          this.showDates = false;
+          this.fromDate = '';
+          this.toDate = '';
           this.submited = false;
           this.spinner.hide();
+          return;
 
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -236,8 +239,14 @@ export class CloseFiscalPeriodComponent implements OnInit {
     });
   }
   onSave() {
-
     if (this.closeFiscalPeriodForm.valid) {
+      if (this.closeAccountId == null || this.closeAccountId == "") {
+        this.errorMessage = this.translate.instant("general.close-account-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
+
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
@@ -253,13 +262,13 @@ export class CloseFiscalPeriodComponent implements OnInit {
     }
   }
   getFiscalPeriodById(id: any) {
-    debugger
+
     if (id != null) {
       return new Promise<void>((resolve, reject) => {
         let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
           next: (res: any) => {
             resolve();
-            debugger
+
             this.showDates = true;
             this.fromDate = formatDate(Date.parse(res.response.fromDate));
             this.toDate = formatDate(Date.parse(res.response.toDate));
@@ -285,22 +294,50 @@ export class CloseFiscalPeriodComponent implements OnInit {
   }
   getGeneralConfigurationsOfCloseAccount() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.getGeneralConfiguration(5).subscribe({
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.ClosingAccount).subscribe({
         next: (res: any) => {
           resolve();
-          //console.log('result data getbyid', res);
-
           if (res.response.value > 0) {
             this.closeAccountId = res.response.value;
           }
-
 
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getGeneralConfigurationsOfAccountingPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+            if (this.fiscalPeriodList != null) {
+              this.fiscalPeriodList.forEach(element => {
+                if (element.id == Number(res.response.value)) {
+                  this.fiscalPeriodId = Number(res.response.value);
+                  this.getFiscalPeriodById(this.fiscalPeriodId);
+                }
+
+              });
+
+            }
+
+
+          }
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
         },
       });
       this.subsList.push(sub);

@@ -462,7 +462,9 @@
         "quantity-required":"الكمية مطلوب",
         "price-required":"السعر مطلوب",
         "discount-account":"حساب الخصم",
-        "tax-account":"حساب الضريبة"
+        "tax-account":"حساب الضريبة",
+        "close-account-required":"من فضلك أختر حساب الأغلاق من الأعدادات"
+
 
 
     },
