@@ -99,6 +99,8 @@ export class AddEditCostCenterComponent implements OnInit {
 
         if (this.id > 0) {
           this.getCostCenterById(this.id).then(a => {
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+
             
             this.spinner.hide();
 

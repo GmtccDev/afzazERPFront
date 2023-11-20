@@ -108,6 +108,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
         this.id = +params['id'];
         if (this.id > 0) {
           this.getfiscalPeriodById(this.id).then(a => {
+            this.SharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
             this.spinner.hide();
 
           }).catch(err => {
