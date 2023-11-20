@@ -26,7 +26,7 @@
 
 							<div class="form-group">
 								<label class="col-form-label label-name">{{'login.user-name'|translate}}</label>
-								<input class="form-control" type="input" required="" formControlName="userName">
+								<input class="form-control" (keyup.enter)="login()" type="input" required="" formControlName="userName">
 								<div *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.errors?.required"
 									class="text text-danger mt-1">
 									{{'error.required'|translate}}
@@ -35,7 +35,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-form-label label-name"> {{'login.password'|translate}} </label>
-								<input class="form-control" [type]="show ? 'text' : 'password'"
+								<input class="form-control" (keyup.enter)="login()" [type]="show ? 'text' : 'password'"
 									formControlName="password" required="" placeholder="{{'login.password'|translate}}">
 								<div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span>
 								</div>
@@ -53,7 +53,7 @@
 
 								<!-- <a [routerLink]="'/authentication/forgot-password'" class="link">Forgot password?</a> -->
 								<button class="btn btn-block btn-primary w-100" [class.loader--text]="showLoader"
-									[disabled]="!loginForm.valid || showLoader" (click)="login()"
+									[disabled]="!loginForm.valid || showLoader"  (click)="login()"
 									type="button"><span>{{'login.login'|translate}}</span>
 								</button>
 							</div>
