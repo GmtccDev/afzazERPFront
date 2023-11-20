@@ -323,6 +323,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getVoucherById(id: any) {
+    this.lang = localStorage.getItem("language");
+
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.getVoucher(id).subscribe({
         next: (res: any) => {
@@ -366,6 +368,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
               if (element.costCenterId > 0) {
                 costCenterName = this.costCentersInDetailsList.find(x => x.id == element.costCenterId);
               }
+              debugger
+              console.log("lang",this.lang);
+
               this.voucherDetail.push(
                 {
                   id: element.id,
@@ -528,6 +533,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
             this.currenciesList = res.response;
             this.currenciesListInDetail = res.response;
 
@@ -594,6 +600,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openCurrencySearchDialog(i) {
+    this.lang = localStorage.getItem("language");
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.currencyName ?? '';
@@ -645,7 +653,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetail!.currencyName = this.lang == 'ar' ? d.nameAr : d.namEn;
+              this.selectedVoucherDetail!.currencyName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.selectedVoucherDetail!.currencyId = d.id;
               if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
 
@@ -659,7 +667,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
               }
             } else {
 
-              this.voucherDetail[i].currencyName = this.lang == 'ar' ? d.nameAr : d.namEn;
+              this.voucherDetail[i].currencyName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.voucherDetail[i].currencyId = d.id;
               if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
 
@@ -675,6 +683,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openBeneficiarySearchDialog(i) {
+    debugger
+    this.lang = localStorage.getItem("language");
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.beneficiaryName ?? '';
@@ -691,11 +702,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? data[0].nameAr : data[0].namEn;
+        this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
         this.selectedVoucherDetail!.beneficiaryId = data[0].id;
         this.getBeneficiaryAccount();
       } else {
-        this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? data[0].nameAr : data[0].namEn;
+        this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
         this.voucherDetail[i].beneficiaryId = data[0].id;
         this.getBeneficiaryAccountAdded(i);
 
@@ -709,12 +720,14 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? d.nameAr : d.namEn;
+              debugger
+              this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.selectedVoucherDetail!.beneficiaryId = d.id;
               this.getBeneficiaryAccount();
 
             } else {
-              this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? d.nameAr : d.namEn;
+              debugger
+              this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.voucherDetail[i].beneficiaryId = d.id;
               this.getBeneficiaryAccountAdded(i);
 
@@ -746,6 +759,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     }
   }
   openCostCenterSearchDialog(i) {
+    this.lang = localStorage.getItem("language");
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedVoucherDetail?.costCenterName ?? '';
@@ -762,10 +777,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
     if (data.length == 1) {
       if (i == -1) {
-        this.selectedVoucherDetail!.costCenterName = this.lang == 'ar' ? data[0].nameAr : data[0].namEn;
+        this.selectedVoucherDetail!.costCenterName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
         this.selectedVoucherDetail!.costCenterId = data[0].id;
       } else {
-        this.voucherDetail[i].costCenterName = this.lang == 'ar' ? data[0].nameAr : data[0].namEn;
+        this.voucherDetail[i].costCenterName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
         this.voucherDetail[i].costCenterId = data[0].id;
       }
     } else {
@@ -777,10 +792,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              this.selectedVoucherDetail!.costCenterName = this.lang == 'ar' ? d.nameAr : d.namEn;
+              this.selectedVoucherDetail!.costCenterName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.selectedVoucherDetail!.costCenterId = d.id;
             } else {
-              this.voucherDetail[i].costCenterName = this.lang == 'ar' ? d.nameAr : d.namEn;
+              this.voucherDetail[i].costCenterName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.voucherDetail[i].costCenterId = d.id;
             }
           }

@@ -24,6 +24,7 @@ import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
 import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 @Component({
   selector: 'app-add-edit-incoming-cheque',
   templateUrl: './add-edit-incoming-cheque.component.html',
@@ -117,6 +118,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private modalService: NgbModal,
+    private reportViewerService: ReportViewerService,
+
 
 
   ) {
@@ -597,13 +600,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
           }
           else if (currentBtn.action == ToolbarActions.Print) {
 
-            let reportParams: string =
-              "reportParameter=id!" + this.id
-              + "&reportParameter=lang!" + this.lang
-            const modalRef = this.modalService.open(NgbdModalContent);
-            modalRef.componentInstance.reportParams = reportParams;
-            modalRef.componentInstance.reportType = 1;
-            modalRef.componentInstance.reportTypeID = 9;
+            // let reportParams: string =
+            //   "reportParameter=id!" + this.id
+            //   + "&reportParameter=lang!" + this.lang
+            // const modalRef = this.modalService.open(NgbdModalContent);
+            // modalRef.componentInstance.reportParams = reportParams;
+            // modalRef.componentInstance.reportType = 1;
+            // modalRef.componentInstance.reportTypeID = 9;
+            let reportType = 1;
+            let reportTypeId = 9;
+            this.reportViewerService.gotoViewer(reportType, reportTypeId, this.id);
           }
         }
       },

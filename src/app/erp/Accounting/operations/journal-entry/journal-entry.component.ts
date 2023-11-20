@@ -15,6 +15,10 @@ import { JournalEntryServiceProxy } from '../../services/journal-entry'
 import format from 'date-fns/format';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 @Component({
   selector: 'app-journal-entry',
   templateUrl: './journal-entry.component.html',
@@ -38,6 +42,12 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   listIds: any[] = [];
   listUpdateIds: any[] = [];
+  errorMessage = '';
+  errorClass = '';
+  subsList: Subscription[] = [];
+  fiscalPeriodId: any;
+  fiscalPeriodName: any;
+  fiscalPeriodStatus: any;
   //#endregion
 
   //#region Constructor
@@ -49,7 +59,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    private reportViewerService: ReportViewerService
+    private reportViewerService: ReportViewerService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 
   ) {
 
@@ -57,12 +69,12 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   //#endregion
-
+ 
   //#region ngOnInit
   ngOnInit(): void {
     //  this.defineGridColumn();
     this.spinner.show();
-    Promise.all([this.getJournalEntryes()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getJournalEntryes()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -111,11 +123,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.allJournalEntryes(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-            ;
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           if (res.success) {
-
-            this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
+             debugger
+            this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true && x.fiscalPeriodId==this.fiscalPeriodId);
 
 
           }
@@ -157,27 +168,52 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   showConfirmDeleteMessage(id) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
-    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
-    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
-    modalRef.componentInstance.isYesNo = true;
-    modalRef.result.then((rs) => {
-      ;
-      if (rs == 'Confirm') {
-        this.spinner.show();
+    
+    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+      this.errorMessage = this.translate.instant("journalEntry.no-delete-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+    }
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalEntryService.getJournalEntry(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          
+          if (res.response?.parentType == null) {
+            const modalRef = this.modalService.open(MessageModalComponent);
+            modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+            modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+            modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+            modalRef.componentInstance.isYesNo = true;
+            modalRef.result.then((rs) => {
+              if (rs == 'Confirm') {
+      
+                this.spinner.show();
+                
+                let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
+                  (resonse) => {
+      
+                    this.getJournalEntryes();
+      
+                  });
+                this.spinner.hide();
+      
+              }
+            });
+          }
+          else {
+            this.errorMessage = this.translate.instant("journalEntry.no-delete-entry");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+      })
+      this.subsList.push(sub);
 
-        let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
-          (resonse) => {
+    })
 
-            this.getJournalEntryes();
-
-          });
-        this.subsList.push(sub);
-        this.spinner.hide();
-
-      }
-    });
   }
   //#endregion
   //#region Tabulator
@@ -283,7 +319,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     } as ToolbarData);
   }
   onCheckEdit(id) {
-    
+
     localStorage.removeItem("itemId");
     localStorage.setItem("itemId", id);
     const index = this.listUpdateIds.findIndex(item => item.id === id && item.isChecked === true);
@@ -300,26 +336,25 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       submitMode: false
     } as ToolbarData);
 
-    // this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
 
   onViewReportClicked(id) {
     localStorage.removeItem("itemId")
-    localStorage.setItem("itemId",id)
+    localStorage.setItem("itemId", id)
     let reportType = 1;
-    let reportTypeId = 1000;
+    let reportTypeId = 6;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
   onViewClicked(parentType, id) {
-    
+    debugger
     if (parentType == 1) {
       window.open('accounting-operations/vouchers/update-voucher/1/' + id, "_blank")
     }
     if (parentType == 2) {
       window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
     }
-    if (parentType ==3) {
-      window.open('accounting-operations//issuingCheque/update-issuingCheque/' + id, "_blank")
+    if (parentType == 3) {
+      window.open('accounting-operations/issuingCheque/update-issuingCheque/' + id, "_blank")
     }
   }
   onCheckUpdate() {
@@ -330,7 +365,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.journalEntryService.updateList(ids).subscribe(
         (resonse) => {
 
-          //reloadPage()
           this.getJournalEntryes();
           this.listUpdateIds = [];
         });
@@ -379,13 +413,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Toolbar Service
   currentBtn!: string;
-  subsList: Subscription[] = [];
   listenToClickedButton() {
 
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
 
-        //currentBtn;
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
@@ -393,7 +425,15 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
             this.router.navigate([this.addUrl]);
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
+            if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+              this.errorMessage = this.translate.instant("journalEntry.no-delete-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+            else {
             this.onDelete();
+            }
           }
           else if (currentBtn.action == ToolbarActions.Post) {
             this.onCheckUpdate();
@@ -404,12 +444,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   onDelete() {
-    ;
     var ids = this.listIds.map(item => item.id);
     let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
       (resonse) => {
 
-        //reloadPage()
         this.getJournalEntryes();
         this.listIds = [];
       });
@@ -504,4 +542,49 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
     return "<i class='fa fa-print' aria-hidden='true'></i>";
   };
   //#endregion
+  getGeneralConfigurationsOfFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+            this.fiscalPeriodId = res.response.value;
+            if (this.fiscalPeriodId != null) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
+
+            }
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 }

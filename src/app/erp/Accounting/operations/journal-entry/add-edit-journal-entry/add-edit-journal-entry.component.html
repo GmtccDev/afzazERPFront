@@ -182,8 +182,8 @@
 																			<th >{{ 'journalEntry.accountNumber' | translate
 																				}}
 																			</th>
-																			<th >{{ 'journalEntry.credit' | translate }}</th>
 																			<th >{{ 'journalEntry.debit' | translate }}</th>
+																			<th >{{ 'journalEntry.credit' | translate }}</th>
 																			<th >{{ 'journalEntry.currency' | translate }}
 																			</th>
 																			<th >{{ 'journalEntry.balance' | translate }}
@@ -241,19 +241,6 @@
 																				</div>
 						
 																			</td>
-						
-																			<td>
-						
-																				<div class="input-group ">
-																					<input type="number" required class="form-control required"
-																						(keypress)="numberOnly($event,i,'Credit')" 
-																						(input)="onInput($event.target.value,i,'Credit')"
-																						formControlName="jEDetailCredit" name="jEDetailCredit"
-																						style="width: 70px;">
-																				</div>
-						
-						
-																			</td>
 																			<td>
 						
 																				<div class="input-group">
@@ -266,6 +253,19 @@
 						
 						
 																			</td>
+																			<td>
+						
+																				<div class="input-group ">
+																					<input type="number" required class="form-control required"
+																						(keypress)="numberOnly($event,i,'Credit')" 
+																						(input)="onInput($event.target.value,i,'Credit')"
+																						formControlName="jEDetailCredit" name="jEDetailCredit"
+																						style="width: 70px;">
+																				</div>
+						
+						
+																			</td>
+																		
 																			<td>
 						
 																				<div class="input-group">
