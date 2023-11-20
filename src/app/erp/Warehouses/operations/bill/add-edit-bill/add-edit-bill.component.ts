@@ -24,6 +24,8 @@ import { navigateUrl } from 'src/app/shared/helper/helper-url';
 import { ItemCardUnitDto } from '../../../models/item-card';
 import { ItemCardServiceProxy } from '../../../Services/item-card.service';
 import { TaxServiceProxy } from '../../../Services/tax.service';
+import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -149,7 +151,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchStoreModal = false;
   showSearchProjectModal = false;
 
-
+  fiscalPeriodId: number;
+  fiscalPeriodName: string;
+  fiscalPeriodStatus: number;
+  fromDate: any;
+  toDate: any;
   addUrl: string = '/warehouses-operations/bill/add-bill';
   updateUrl: string = '/warehouses-operations/bill/update-bill/';
   listUrl: string = '/warehouses-operations/bill/';
@@ -178,6 +184,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private alertsService: NotificationsAlertsService,
     private itemCardService: ItemCardServiceProxy,
     private taxServiceProxy: TaxServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+
 
 
 
@@ -199,6 +207,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     Promise.all([
       this.getGeneralConfigurationsOfMainCurrency(),
+      this.getGeneralConfigurationsOfFiscalPeriod(),
+
       this.getSuppliers(),
       this.getCustomers(),
       this.getCurrencies(),
@@ -301,6 +311,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       companyId: this.companyId,
       branchId: this.branchId,
       billTypeId: this.billTypeId,
+      fiscalPeriodId: this.fiscalPeriodId,
+
       code: REQUIRED_VALIDATORS,
       date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       deliveryDate: [this.dateService.getCurrentDate()],
@@ -472,6 +484,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             companyId: type == 1 ? res.response?.companyId : this.companyId,
             branchId: type == 1 ? res.response?.branchId : this.branchId,
             billTypeId: type == 1 ? res.response?.billTypeId : this.billTypeId,
+            fiscalPeriodId: res.response?.fiscalPeriodId,
             code: type == 1 ? res.response?.code : this.billForm.value.code,
             date: this.dateService.getDateForCalender(res.response?.date),
             supplierId: res.response?.supplierId,
@@ -492,12 +505,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             notes: res.response?.notes,
             attachment: res.response?.attachment,
             cashAccountId: res.response?.cashAccountId,
-            // supplierAccountId: res.response?.supplierAccountId,
             salesAccountId: res.response?.salesAccountId,
             salesReturnAccountId: res.response?.salesReturnAccountId,
             purchasesAccountId: res.response?.purchasesAccountId,
             purchasesReturnAccountId: res.response?.purchasesReturnAccountId,
-            // discountAccountId: res.response?.discountAccountId,
             taxAccountId: res.response?.taxAccountId,
             totalBeforeTax: res.response?.totalBeforeTax,
             total: res.response?.total,
@@ -1277,6 +1288,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       branchId: this.billForm.controls["branchId"].value,
       billTypeId: this.billTypeId,
       code: this.billForm.controls["code"].value,
+      fiscalPeriodId: this.billForm.controls["fiscalPeriodId"].value,
+
       date: this.dateService.getDateForInsert(this.billForm.controls["date"].value),
       supplierId: this.billForm.controls["supplierId"].value,
       supplierReference: this.billForm.controls["supplierReference"].value,
@@ -1296,12 +1309,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       notes: this.billForm.controls["notes"].value,
       attachment: this.billForm.controls["attachment"].value,
       cashAccountId: this.billForm.controls["cashAccountId"].value,
-      //supplierAccountId: this.billForm.controls["supplierAccountId"].value,
       salesAccountId: this.billForm.controls["salesAccountId"].value,
       salesReturnAccountId: this.billForm.controls["salesReturnAccountId"].value,
       purchasesAccountId: this.billForm.controls["purchasesAccountId"].value,
       purchasesReturnAccountId: this.billForm.controls["purchasesReturnAccountId"].value,
-      // discountAccountId: this.billForm.controls["discountAccountId"].value,
       taxAccountId: this.billForm.controls["taxAccountId"].value,
       totalBeforeTax: this.billForm.controls["totalBeforeTax"].value,
       total: this.billForm.controls["total"].value,
@@ -1354,6 +1365,45 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   onSave() {
     if (this.billForm.valid) {
       this.setInputData();
+      if (this.fiscalPeriodId > 0) {
+        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+          this.errorMessage = this.translate.instant("bill.no-add-bill-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+
+        let billDate = this.billForm.controls["date"].value;
+        let date;
+        let month;
+        let day;
+        if (billDate?.month + 1 > 9) {
+          month = billDate?.month + 1
+        }
+        else {
+          month = '0' + billDate.month + 1
+        }
+        if (billDate.day < 10) {
+          day = '0' + billDate?.day
+        }
+        else {
+          day = billDate.day
+        }
+        date = billDate.year + '-' + month + '-' + day
+
+        if (date >= this.fromDate && date <= this.toDate) {
+
+
+        }
+        else {
+          this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+
+        }
+      }
       if (this.billType[0].kind == BillKindEnum['Sales Bill'] || this.billType[0].kind == BillKindEnum['Sales Returns Bill']) {
         if (this.bill.customerId == null) {
           this.errorMessage = this.translate.instant("bill.customer-required");
@@ -1378,7 +1428,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
-      if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically']) {
+      if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically'] && this.fiscalPeriodId > 0) {
         if (this.billType[0].kind != BillKindEnum['First Period Goods Bill']) {
           if (this.bill.payWay == PayWayEnum.Cash) {
             if (this.bill.cashAccountId == null) {
@@ -1482,6 +1532,45 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   onUpdate() {
     if (this.billForm.valid) {
       this.setInputData();
+      if (this.fiscalPeriodId > 0) {
+        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+          this.errorMessage = this.translate.instant("bill.no-edit-bill-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+
+        let billDate = this.billForm.controls["date"].value;
+        let date;
+        let month;
+        let day;
+        if (billDate?.month + 1 > 9) {
+          month = billDate?.month + 1
+        }
+        else {
+          month = '0' + billDate.month + 1
+        }
+        if (billDate.day < 10) {
+          day = '0' + billDate?.day
+        }
+        else {
+          day = billDate.day
+        }
+        date = billDate.year + '-' + month + '-' + day
+
+        if (date >= this.fromDate && date <= this.toDate) {
+
+
+        }
+        else {
+          this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+
+        }
+      }
       if (this.billType[0].kind == BillKindEnum['Sales Bill'] || this.billType[0].kind == BillKindEnum['Sales Returns Bill']) {
         if (this.bill.customerId == null) {
           this.errorMessage = this.translate.instant("bill.customer-required");
@@ -1506,7 +1595,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
-      if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically']) {
+      if (this.billType[0].accountingEffect == CreateFinancialEntryEnum['Create the entry automatically'] && this.fiscalPeriodId > 0) {
         if (this.bill.payWay == PayWayEnum.Cash) {
           if (this.bill.cashAccountId == null) {
             this.errorMessage = this.translate.instant("bill.cash-account-required");
@@ -1728,7 +1817,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.billItem[i].unitName = this.lang = "ar" ? data[0].unitNameAr : data[0].unitNameEn;
         this.billItem[i].unitId = data[0].unitId;
         this.billItem[i]!.price =
-        this.billTypeKind ==  BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+          this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
             ? data[0].sellingPrice : 0;
         this.onChangeQuantityOrPriceAdded(i);
 
@@ -1745,9 +1834,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             if (i == -1) {
               this.selectedBillItem!.unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
               this.selectedBillItem!.unitId = d.unitId;
-              debugger
+
               this.selectedBillItem!.price =
-              this.billTypeKind ==  BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+                this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
                   ? d.sellingPrice : 0;
               this.onChangeQuantityOrPrice();
 
@@ -1755,8 +1844,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             } else {
               this.billItem[i].unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
               this.billItem[i].unitId = d.unitId;
-              this.billItem[i]!.price = 
-              this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
+              this.billItem[i]!.price =
+                this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
                   ? d.sellingPrice : 0;
               this.onChangeQuantityOrPriceAdded(i);
 
@@ -2089,6 +2178,51 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
 
+  }
+  getGeneralConfigurationsOfFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          if (res.response.value > 0) {
+            this.fiscalPeriodId = res.response.value;
+            this.getfiscalPeriodById(this.fiscalPeriodId);
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn;
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString();
+          this.fromDate = res.response?.fromDate;
+          this.toDate = res.response?.toDate;
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   getTaxData(id, i) {
     return new Promise<void>((resolve, reject) => {
@@ -2588,7 +2722,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   getNetAfterTax(type: any) {
-    debugger
+
     if (this.billType[0].manuallyTaxType == ManuallyTaxType.Total) {
       if (type == 1) {
         this.taxValue = Math.round(Number(this.total) * Number(this.taxRatio / 100));
@@ -2673,7 +2807,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.totalBeforeTax += element.totalBeforeTax;
         this.total += element.total;
         this.net += element.total;
-        debugger
+
         this.netAfterTax += element.total;
       });
       if (this.billAdditionAndDiscount != null) {

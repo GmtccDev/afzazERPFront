@@ -463,7 +463,9 @@
         "price-required":"السعر مطلوب",
         "discount-account":"حساب الخصم",
         "tax-account":"حساب الضريبة",
-        "close-account-required":"من فضلك أختر حساب الأغلاق من الأعدادات"
+        "close-account-required":"من فضلك أختر حساب الأغلاق من الأعدادات",
+        "date-out-fiscal-period":" التاريخ خارج تاريخ الفترة المحاسبية"
+
 
 
 
@@ -747,7 +749,6 @@
         "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
         "bill-items-required": "من فضلك أدخل الأصناف",
         "cash-account-required":"حساب النقدية مطلوب",
-
         "sales-account-required":"حساب المبيعات مطلوب",
         "sales-return-account-required":"حساب مرتجع المبيعات مطلوب",
         "purchases-account-required":"حساب المشتريات مطلوب",
@@ -755,7 +756,16 @@
         "tax-account-required":"حساب الضريبة مطلوب",
         "account-required":"الحساب مطلوب",
         "customer-required":"العميل مطلوب",
-        "supplier-required":"المورد مطلوب"
+        "supplier-required":"المورد مطلوب",
+        "no-add-bill-fiscal-period-closed": "لا يمكن اضافة فاتورة لهذة الفترة المحاسبية المغلقة",
+        "no-edit-bill-fiscal-period-closed": "لا يمكن تعديل الفاتورة لهذة الفترة المحاسبية المغلقة",
+
+        "no-add-bill-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة فاتورة. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-update-bill-fiscal-period-closed": "لا يمكن تعديل هذا الفاتورة لهذة الفترة المحاسبية المغلقة",
+        "no-delete-bill-fiscal-period-closed": "لا يمكن حذف هذا الفاتورة لهذة الفترة المحاسبية المغلقة",
+        "no-generate-entry-bill-fiscal-period-closed": "لا يمكن توليد القيد للفاتورة لهذة الفترة المحاسبية المغلقة"
+
+
     },
     "determinants": {
         "type-value": "نوع القيمة",

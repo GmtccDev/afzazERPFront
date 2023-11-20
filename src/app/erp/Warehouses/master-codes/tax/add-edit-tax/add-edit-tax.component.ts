@@ -254,7 +254,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    debugger
+    
     var result: boolean = false;
    
     if (this.taxDetail.length > 0 && this.taxDetail != null) {

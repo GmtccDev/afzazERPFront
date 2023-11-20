@@ -225,7 +225,8 @@
         "price-required": "Item is required",
         "discount-account": "Discount Account",
         "tax-account": "Tax Account",
-        "close-account-required":"Please choose close account from the settings"
+        "close-account-required":"Please choose close account from the settings",
+        "date-out-fiscal-period":"The date is out fiscal period date"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -758,7 +759,14 @@
         "tax-account-required":"Tax account is required",
         "account-required":"Account is required",
         "customer-required":"Customer is required",
-        "supplier-required":"Supplier is required"
+        "supplier-required":"Supplier is required",
+        "no-add-bill-fiscal-period-closed": "You can not add a bill to this closed fiscal period",
+        "no-edit-fiscal-period-closed": "You can not edit the bill to this closed fiscal period",
+
+        "no-add-bill-fiscal-period-choose-open-fiscal-period": "You can not add a bill.You Should choose a open fiscal period from the settings",
+        "no-update-bill-fiscal-period-closed": "You can not update the bill to this closed fiscal period",
+        "no-delete-bill-fiscal-period-closed": "You can not delete the bill to this closed fiscal period",
+        "no-generate-entry-bill-fiscal-period-closed": "You can not generate entry to this bill to this closed fiscal period"
 
 
     },

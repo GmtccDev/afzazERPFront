@@ -14,6 +14,11 @@ import { SettingMenuShowOptions } from '../../../../shared/components/models/set
 import { BillTypeServiceProxy } from '../../Services/bill-type.service';
 import { BillServiceProxy } from '../../services/bill.service';
 import { format } from 'date-fns';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
+import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
+import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 
 @Component({
   selector: 'app-bill',
@@ -29,7 +34,9 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   currnetUrl: any;
   queryParams: any;
-
+  fiscalPeriodId: number;
+  fiscalPeriodName: string;
+  fiscalPeriodStatus: number;
   addUrl: string = '/warehouses-operations/bill/add-bill/';
   updateUrl: string = '/warehouses-operations/bill/update-bill/';
   listUrl: string = '/warehouses-operations/bill/';
@@ -42,7 +49,8 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   };
   listIds: any[] = [];
-
+  errorMessage = '';
+  errorClass = '';
   //#endregion
 
   //#region Constructor
@@ -55,6 +63,9 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
     private billTypeService: BillTypeServiceProxy,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private alertsService: NotificationsAlertsService,
 
   ) {
 
@@ -84,7 +95,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
-    Promise.all([this.getBills()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getBills()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -132,6 +143,26 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   ///Geting form dropdown list data
   nameEn: any;
   nameAr: any;
+
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
   getBillTypes(id) {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billTypeService.getBillType(id).subscribe({
@@ -158,13 +189,39 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   //#endregion
+  getGeneralConfigurationsOfFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+            this.fiscalPeriodId = res.response.value;
+            if (this.fiscalPeriodId != null) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
 
+            }
+
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
   getBills() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.billService.allBills(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            this.bills = res.response.items.filter(x => x.billTypeId == this.billTypeId && x.branchId == this.branchId && x.companyId == this.companyId)
+            this.bills = res.response.items.filter(x => x.billTypeId == this.billTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
           resolve();
@@ -211,6 +268,14 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
       if (rs == 'Confirm') {
+        if (this.fiscalPeriodId > 0) {
+          if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+            this.errorMessage = this.translate.instant("bill.no-delete-bill-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
         this.spinner.show();
         let sub = this.billService.deleteBill(id).subscribe(
           (resonse) => {
@@ -343,7 +408,21 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
       } else if (event.actionName == 'Delete') {
-        this.showConfirmDeleteMessage(event.item.id);
+        if (this.fiscalPeriodId > 0) {
+          if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+            this.errorMessage = this.translate.instant("bill.no-delete-bill-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+
+          }
+          else {
+            this.showConfirmDeleteMessage(event.item.id);
+          }
+        }
+        else {
+          this.showConfirmDeleteMessage(event.item.id);
+        }
       }
     }
   }
@@ -369,7 +448,22 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
           }
           else if (currentBtn.action == ToolbarActions.DeleteCheckList) {
-            this.onDelete();
+            if (this.fiscalPeriodId > 0) {
+              if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+                this.errorMessage = this.translate.instant("bill.no-delete-bill-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                return;
+              }
+              else {
+                this.onDelete();
+              }
+            }
+            else {
+              this.onDelete();
+
+            }
+
           }
         }
       },
