@@ -165,6 +165,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
         if (this.id > 0) {
           this.getincomingChequeById(this.id).then(a => {
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+
             this.spinner.hide();
 
           }).catch(err => {
