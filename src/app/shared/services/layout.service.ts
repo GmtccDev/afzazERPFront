@@ -20,10 +20,10 @@ export class LayoutService {
 
 	public config = {
 		settings: {
-			// layout: 'Seoul',
+			layout: 'Seoul',
 			// layout: 'LosAngeles',
 			// layout: 'Tokyo',
-			layout: 'Madrid',
+			// layout: 'Madrid',
 			layout_type: 'rtl',
 			layout_version: 'light-only',
 			sidebar_type: 'default-sidebar',
