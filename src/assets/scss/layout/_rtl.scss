@@ -3,6 +3,12 @@
 ==========================**/
 
 .rtl {
+    input {
+        direction: rtl;
+    }
+    p {
+        letter-spacing: 0 !important;
+    }
     ul {
         padding-right: 0;
     }

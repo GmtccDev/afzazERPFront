@@ -50,6 +50,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   url: any;
   id: any = 0;
   currnetUrl;
+  fromDate: any;
+  toDate: any;
   public show: boolean = false;
   journalEntry: [] = [];
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
@@ -282,6 +284,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     let fiscalPeriodModel = this.fiscalPeriodList?.find(x => x.id == event);
     if (fiscalPeriodModel != null) {
       this.fiscalPeriod = this.lang == 'ar' ? fiscalPeriodModel.nameAr : fiscalPeriodModel.nameEn;
+      this.fromDate = fiscalPeriodModel.fromDate;
+      this.toDate = fiscalPeriodModel?.toDate;
     }
     if (this.serial == '3') {
 
@@ -723,6 +727,36 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
+
+    let entryDate = this.journalEntryForm.controls["date"].value;
+    let _date;
+    let month;
+    let day;
+    if (entryDate?.month + 1 > 9) {
+      month = entryDate?.month + 1
+    }
+    else {
+      month = '0' + entryDate.month + 1
+    }
+    if (entryDate.day < 10) {
+      day = '0' + entryDate?.day
+    }
+    else {
+      day = entryDate.day
+    }
+    _date = entryDate.year + '-' + month + '-' + day
+
+    if (_date >= this.fromDate && _date <= this.toDate) {
+
+
+    }
+    else {
+      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+
+    }
     if (this.counter < 2) {
       this.alertsService.showError(
         this.translate.instant('twoRows'),
@@ -861,17 +895,46 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
           return;
         }
-        let checkDate = this.dateService.getDateForInsert(this.date)
-        const date = new Date(checkDate);
-        const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
-        this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+        let entryDate = this.journalEntryForm.controls["date"].value;
+    let _date;
+    let month;
+    let day;
+    if (entryDate?.month + 1 > 9) {
+      month = entryDate?.month + 1
+    }
+    else {
+      month = '0' + entryDate.month + 1
+    }
+    if (entryDate.day < 10) {
+      day = '0' + entryDate?.day
+    }
+    else {
+      day = entryDate.day
+    }
+    _date = entryDate.year + '-' + month + '-' + day
 
-        if (this.fiscalPeriodcheckDate == undefined) {
-          this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          return;
-        }
+    if (_date >= this.fromDate && _date <= this.toDate) {
+
+
+    }
+    else {
+      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+
+    }
+        // let checkDate = this.dateService.getDateForInsert(this.date)
+        // const date = new Date(checkDate);
+        // const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+        // this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+
+        // if (this.fiscalPeriodcheckDate == undefined) {
+        //   this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
+        //   this.errorClass = 'errorMessage';
+        //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        //   return;
+        // }
       }
       if (this.counter < 2) {
         this.alertsService.showError(
