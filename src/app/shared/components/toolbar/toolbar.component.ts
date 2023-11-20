@@ -375,6 +375,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledPost = true;
 
     }
+    else if (button == 'CancelDefaultReport') {
+
+      this.disabledList = true;
+      this.disabledSave = true;
+      this.disabledNew = true;
+      this.disabledCopy = true;
+      this.disabledList = true;
+      this.hiddenExport = true;
+      this.disabledUpdate = true;
+      this.disabledCancel = true;
+      this.disabledDelete = true;
+      this.disabledPrint = false;
+      this.disabledView = false;
+      this.disableCancelDefaultReport = false;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
+
+    }
     else if (button == 'ConfigMode') {
 
       this.disabledList = true;
