@@ -20,7 +20,8 @@ export class LayoutService {
 
 	public config = {
 		settings: {
-			layout: 'Seoul',
+			layout: 'Dubai',
+			// layout: 'Seoul',
 			// layout: 'LosAngeles',
 			// layout: 'Tokyo',
 			// layout: 'Madrid',
