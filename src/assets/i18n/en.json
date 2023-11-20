@@ -13,6 +13,8 @@
     "can't-delete-record": "can't delete record",
     "NotAuthorized": "NotAuthorized",
     "general": {
+        "searchFromDate": "From Date",
+        "searchToDate": "To Date",
         "nameAr": "Name In Arabic",
         "nameEn": "Name In English",
         "code": "Code",
@@ -224,7 +226,9 @@
         "quantity-required": "Item is required",
         "price-required": "Item is required",
         "discount-account": "Discount Account",
-        "tax-account": "Tax Account"
+        "tax-account": "Tax Account",
+        "close-account-required":"Please choose close account from the settings",
+        "date-out-fiscal-period":"The date is out fiscal period date"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -329,7 +333,7 @@
         "productFound": "This item already exists !",
         "failedSaveDataFlag": "An unexpected error occurred",
         "whentenentshouldpayError": "Duration must be greater than zero!",
-        "invalidPassword": "invalid Password",
+        "invalidPassword": "Invalid Password",
         "userNameRequired": "Failed Required",
         "invalid-code": "Invalid Code"
     },
@@ -365,7 +369,7 @@
         "unit-offer-repeated": "This unit has been selected before",
         "faild-login": "Login credentials are not correct !",
         "connection-error": "Connection error !",
-        "nameEn-not-Found":"Latin name not entered "
+        "nameEn-not-Found": "Latin name not entered "
     },
     "user-manager": {
         "add-user": "Add User",
@@ -551,7 +555,8 @@
     },
     "fiscal-period": {
         "fiscal-period-status": "status",
-        "add-fiscal-period": "Add Fiscal Period"
+        "add-fiscal-period": "Add Fiscal Period",
+        "Intersection":"There is an overlap in date  "
     },
     "voucher-type": {
         "voucher-type-information": "Voucher Type Information",
@@ -749,15 +754,23 @@
         "item-description": "Item Description",
         "additions-and-discounts": "Additions And Discounts on Bill",
         "bill-items-required": "Please enter Items",
-        "cash-account-required":"Cash account is required",
-        "sales-account-required":"Sales account is required",
-        "sales-return-account-required":"Sales return account is required",
-        "purchases-account-required":"Purchases account is required",
-        "purchases-return-account-required":"Purchases return account is required",
-        "tax-account-required":"Tax account is required",
-        "account-required":"Account is required",
-        "customer-required":"Customer is required",
-        "supplier-required":"Supplier is required"
+      
+        "no-add-bill-fiscal-period-closed": "You can not add a bill to this closed fiscal period",
+        "no-edit-fiscal-period-closed": "You can not edit the bill to this closed fiscal period",
+
+        "no-add-bill-fiscal-period-choose-open-fiscal-period": "You can not add a bill.You Should choose a open fiscal period from the settings",
+        "no-update-bill-fiscal-period-closed": "You can not update the bill to this closed fiscal period",
+        "no-delete-bill-fiscal-period-closed": "You can not delete the bill to this closed fiscal period",
+        "no-generate-entry-bill-fiscal-period-closed": "You can not generate entry to this bill to this closed fiscal period",
+        "cash-account-required": "Cash account is required",
+        "sales-account-required": "Sales account is required",
+        "sales-return-account-required": "Sales return account is required",
+        "purchases-account-required": "Purchases account is required",
+        "purchases-return-account-required": "Purchases return account is required",
+        "tax-account-required": "Tax account is required",
+        "account-required": "Account is required",
+        "customer-required": "Customer is required",
+        "supplier-required": "Supplier is required"
 
 
     },
@@ -766,7 +779,7 @@
         "textarea": "Textarea",
         "text": "Text",
         "number": "Number",
-        "add-determinants":"Add Determinants",
+        "add-determinants": "Add Determinants",
         "determinants-details-required": "Determinants Details Required"
     },
     "tabulator": {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,9 @@ import { NotificationsAlertsService } from 'src/app/shared/common-services/notif
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { TabulatorComponent } from 'src/app/shared/components/tabulator/tabulator/tabulator.component';
+import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
+
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -39,6 +41,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   fiscalPeriodStatus: number;
   errorMessage = '';
   errorClass = '';
+
   addUrl: string = '/accounting-operations/vouchers/add-voucher/';
   updateUrl: string = '/accounting-operations/vouchers/update-voucher/';
   listUrl: string = '/accounting-operations/vouchers/';
@@ -51,8 +54,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   };
   listIds: any[] = [];
+  tabular: any;
 
   //#endregion
+  @ViewChild(TabulatorComponent) child;
 
   //#region Constructor
   constructor(
@@ -63,7 +68,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    private reportViewerService :ReportViewerService,
+    private reportViewerService: ReportViewerService,
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
@@ -78,7 +83,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     if (!localStorage.getItem('foo')) {
       localStorage.setItem('foo', 'no reload')
       location.reload()
@@ -90,6 +96,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let sub = this.route.params.subscribe(params => {
       if (params['voucherTypeId'] != null) {
+
         this.voucherTypeId = +params['voucherTypeId'];
         this.getVoucherTypes(this.voucherTypeId);
 
@@ -149,11 +156,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   nameAr: any;
   getVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
-      debugger
+
       let sub = this.voucherTypeService.getVoucherType(id).subscribe({
         next: (res) => {
           if (res.success) {
-            debugger
+
             this.voucherType = res.response;
             this.sharedServices.changeToolbarPath(this.toolbarPathData.componentList = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn)
 
@@ -357,7 +364,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   direction: string = 'ltr';
-
   onSearchTextChange(searchTxt: string) {
     this.searchFilters = [
       [
@@ -440,6 +446,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.List) {
 
+
           } else if (currentBtn.action == ToolbarActions.New) {
 
             this.router.navigate([this.addUrl + this.voucherTypeId]);
@@ -478,7 +485,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onViewReportClicked(id) {
     localStorage.removeItem("itemId")
-    localStorage.setItem("itemId",id)
+    localStorage.setItem("itemId", id)
     let reportType = 1;
     let reportTypeId = 11;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);

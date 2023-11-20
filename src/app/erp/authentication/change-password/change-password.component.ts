@@ -13,25 +13,25 @@ import { UserServiceProxy } from '../../security/services/user-service';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  ngOnInit() { 
+  ngOnInit() {
     this.initForm();
   }
 
   closeResult: string;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal,private fb: FormBuilder, private route: ActivatedRoute, private userService: UserServiceProxy,
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private fb: FormBuilder, private route: ActivatedRoute, private userService: UserServiceProxy,
     public router: Router) {
-  	// customize default values of modals used by this component tree
+    // customize default values of modals used by this component tree
     config.backdrop = 'static';
     config.keyboard = false;
 
   }
 
   open(content) {
-    
-    console.log("contetn---------",content)
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log(" modalService content",content)
+
+    console.log("contetn---------", content)
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      console.log(" modalService content", content)
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -44,7 +44,7 @@ export class ChangePasswordComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 
@@ -54,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   openBackDropCustomClass(content) {
-    this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
+    this.modalService.open(content, { backdropClass: 'light-blue-backdrop' });
   }
 
   openWindowCustomClass(content) {
@@ -82,8 +82,8 @@ export class ChangePasswordComponent implements OnInit {
   }
   passForm: FormGroup;
   initForm(): void {
-  
-   
+
+
     this.passForm = this.fb.group({
       oldPassword: ['', [Validators.required, Validators.minLength(8)]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -96,31 +96,31 @@ export class ChangePasswordComponent implements OnInit {
   get f() { return this.passForm.controls; }
 
   onSubmit() {
-    
-    this.userService.changePassWord(this.passForm.getRawValue())
-      .subscribe(res => {
-        if (res.success) {
+    if (this.passForm.valid) {
+      this.userService.changePassWord(this.passForm.getRawValue())
+        .subscribe(res => {
+          if (res.success) {
+            this.passForm.reset();
+            this.modalService.dismissAll();
+            this.router.navigate(['/authentication/login']);
+          }
+        },
+          (err) => {
+            console.log(err)
 
-         
-          this.passForm.reset();
-      this.modalService.dismissAll();
-          this.router.navigate(['/authentication/login']);
-        } 
-      },
-        (err) => {
-          console.log(err)
-        
-        }
-      );
+          }
+        );
+    }
+
   }
 
   onCancel() {
-    
-   
-         
-          this.passForm.reset();
-        this.modalService.dismissAll();
-    
+
+
+
+    this.passForm.reset();
+    this.modalService.dismissAll();
+
   }
   doesPasswordsMatch(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {

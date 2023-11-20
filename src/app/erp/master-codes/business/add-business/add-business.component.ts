@@ -218,7 +218,7 @@ export class AddBusinessComponent implements OnInit {
             }
             this.defineBusinessForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {

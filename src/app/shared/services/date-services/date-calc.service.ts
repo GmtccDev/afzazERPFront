@@ -13,8 +13,8 @@ export class DateCalculation {
   }
 
   calculateEndDateForHijri(period: number, rentMethodType: number,
-     startDate: { year: number, month: number, day: number },
-      daysBefore: number): { year: number, month: number, day: number } {
+    startDate: { year: number, month: number, day: number },
+    daysBefore: number): { year: number, month: number, day: number } {
     let endDate: { year: number, month: number, day: number } = { year: 0, month: 0, day: 0 };
     let addedYears;
     let addedMonth;
@@ -75,7 +75,7 @@ export class DateCalculation {
 
     // console.log("Before Convert to Hijri ##################################33 ", hijriStartDate);
     d = this.ngbCalendar.toGregorian(hijriStartDate);
-    
+
     endDate = {
       year: d.getFullYear(),
       month: d.getMonth(),
@@ -178,28 +178,47 @@ export class DateCalculation {
     return endDate;
   }
 
-//+ " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()
+  //+ " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()
   getDateForInsert(selectedDate: { year: number, month: number, day: number }) {
     let d = new Date();
-    return (selectedDate.month + 1) + "/" + selectedDate.day + "/" + selectedDate.year ;
+    return (selectedDate.month + 1) + "/" + selectedDate.day + "/" + selectedDate.year;
+  }
+  getDateForInsertCheck(inputDate) {
+    let d = new Date(inputDate);
+    const day = d.getDate();
+    const month = d.getMonth() + 1; // Months are zero-based, so adding 1
+    const year = d.getFullYear();
+
+    const formattedDate = `${month}/${day}/${year}`;
+    return formattedDate;
+  }
+  splitDate(formattedDate) {
+    const dateParts = formattedDate.split('/');
+
+    // Extract day, month, and year components
+    const month = parseInt(dateParts[0], 10);
+    const day = parseInt(dateParts[1], 10);
+    const year = parseInt(dateParts[2], 10);
+
+    // Create a new Date object
+    const convertedDate = new Date(year, month - 1, day);
+    return convertedDate;
   }
   getDateForInsertS(selectedDate: { year: number, month: number, day: number }) {
     let d = new Date();
-    return (selectedDate.month) + "/" + selectedDate.day + "/" + selectedDate.year ;
+    return (selectedDate.month) + "/" + selectedDate.day + "/" + selectedDate.year;
   }
-  getDateForInsert2(e:{ year: number, month: number, day: number })
-  {
+  getDateForInsert2(e: { year: number, month: number, day: number }) {
     let d = new Date();
-      return (e.month+1)+"/"+e.day+"/"+e.year+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+    return (e.month + 1) + "/" + e.day + "/" + e.year + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
   }
-  getCurrentDate():{ year: number, month: number, day: number }
-  {
-      let d = new Date();
-      return {year:d.getFullYear(), month:d.getMonth(), day:d.getDate()}
+  getCurrentDate(): { year: number, month: number, day: number } {
+    let d = new Date();
+    return { year: d.getFullYear(), month: d.getMonth(), day: d.getDate() }
   }
 
   getDateForCalender(date: any) {
-    let dateString: string|null = this.datePipe.transform(date, "dd/M/yyyy");
+    let dateString: string | null = this.datePipe.transform(date, "dd/M/yyyy");
     let dateParts: string[] = [];
     let selectedDate: { year: number, month: number, day: number } = {
       year: 0,
@@ -224,16 +243,16 @@ export class DateCalculation {
 
 
   AddDaysToGregorian(periodPerDay: number, startDate: { year: number, month: number, day: number }): { year: number, month: number, day: number } {
-   
+
     let endDate: { year: number, month: number, day: number } = {
       day: 0,
       month: 0,
       year: 0
     };
 
-    
+
     let workDate: { year: number, month: number, day: number };
-   
+
     workDate = {
       day: startDate.day,
       month: startDate.month,
@@ -241,65 +260,60 @@ export class DateCalculation {
     };
 
     workDate.month = workDate.month + 1;
-   
 
 
 
-      endDate = {
-        year: workDate.year ,
-        month: workDate.month,
-        day: workDate.day+periodPerDay
-      };
 
-    
+    endDate = {
+      year: workDate.year,
+      month: workDate.month,
+      day: workDate.day + periodPerDay
+    };
+
+
     let mDay: number = endDate.day;
     let mMonth: number = endDate.month;
-    let mYear:number = endDate.year;
+    let mYear: number = endDate.year;
     if (endDate.year % 4 != 0 && endDate.month == 2 && endDate.day > 28) {
-      mDay = mDay-28;
-      mMonth = mMonth+1;
-      if(mMonth > 12)
-      {
+      mDay = mDay - 28;
+      mMonth = mMonth + 1;
+      if (mMonth > 12) {
         mMonth = 1;
         mYear = mYear + 1;
-        
+
       }
     }
-    else if(endDate.year % 4 == 0 && endDate.month == 2 && endDate.day > 29)
-    {
+    else if (endDate.year % 4 == 0 && endDate.month == 2 && endDate.day > 29) {
 
-      mDay = mDay-29;
-      mMonth = mMonth+1;
-      if(mMonth > 12)
-      {
+      mDay = mDay - 29;
+      mMonth = mMonth + 1;
+      if (mMonth > 12) {
         mMonth = 1;
         mYear = mYear + 1;
-        
+
       }
     }
     else if ([1, 3, 5, 7, 10, 12].filter(x => x == mMonth).length == 1 && mDay > 31) {
-      mDay = mDay-31;
-      mMonth = mMonth+1;
-      if(mMonth > 12)
-      {
+      mDay = mDay - 31;
+      mMonth = mMonth + 1;
+      if (mMonth > 12) {
         mMonth = 1;
         mYear = mYear + 1;
-        
+
       }
 
     }
     else if ([4, 6, 9, 11].filter(x => x == mMonth).length == 1 && mDay > 30) {
       mDay = mDay - 30;
-      mMonth = mMonth+1;
-      if(mMonth > 12)
-      {
+      mMonth = mMonth + 1;
+      if (mMonth > 12) {
         mMonth = 1;
         mYear = mYear + 1;
-        
+
       }
     }
-    
-    
+
+
     endDate.month = mMonth - 1;
     endDate.day = mDay;
     endDate.year = mYear;
@@ -312,11 +326,11 @@ export class DateCalculation {
 
 
 }
-export interface DateModel{
-  year:number;
-  month:number;
-  day:number;
- hour?:number;
- min?:number;
- sec?:number;
+export interface DateModel {
+  year: number;
+  month: number;
+  day: number;
+  hour?: number;
+  min?: number;
+  sec?: number;
 }

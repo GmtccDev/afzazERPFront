@@ -565,7 +565,7 @@ export class AddEditAccountComponent implements OnInit {
 
 
                 isActive: res1.response?.isActive,
-                isLeafAccount: res1.response?.isLeafAccount,
+                isLeafAccount: false,
 
                 companyId: res1.response?.companyId,
 

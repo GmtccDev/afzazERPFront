@@ -1,40 +1,50 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
-</ngx-spinner>  
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
 <section class="inner-page-wrapper inner-page-auction">
-    <div class="container-fluid p-0">
-        <div class="col-6 text-right">
-            <button mat-button (click)="toggleButton=!toggleButton">
-                <i class="ri-equalizer-line"></i>{{"ADVANCEDSEARCH"|translate}} <i class="ri-arrow-down-s-line"></i>
-            </button>
-            <!-- <button class="btn btn_with_icon success_large_btn" (click)="navigateToCreate()">
-                <i class="ri-add-line"></i> Create
-            </button> -->
-        </div>
-        <!-- Search input fields -->
-        <div class="col-12">
-        <div class="row">
-           
-          <div class="row advanced_Search search-bar" [ngClass]="toggleButton?'d-none':'d-block'">
-            <input type="text"  class="form-control icon-branch col-3" [(ngModel)]="searchCode"
-                placeholder=" {{'general.code'|translate}}">
-           
-                <app-full-date name="date" [(ngModel)]="searchFromDate"
-													ngDefaultControl 
-													(OnDateSelect)="getDate($event)"></app-full-date>
+	<div class="container-fluid p-0">
+		
+		<div class="card">
+			<div class="card-body">
+				<div class="col-12">
+					<div class="row">
 
-                                                    <app-full-date name="date" [(ngModel)]="searchToDate"
-													ngDefaultControl 
-													(OnDateSelect)="getDate2($event)"></app-full-date>
+						<div class="row advanced_Search search-bar">
+							<div class="col-md-3 col-12 mb-3">
+								<label for="" class="label-name">
+									{{'general.number'|translate}}</label>
+								<input type="text" class="form-control icon-branch col-3" [(ngModel)]="searchCode"
+									placeholder=" {{'general.number'|translate}}">
+							</div>
+							<div class="col-md-3 col-12">
+								<label for="" class="label-name">
+									{{'general.searchFromDate'|translate}}</label>
+								<app-full-date name="date" [(ngModel)]="searchFromDate" ngDefaultControl
+									(OnDateSelect)="getDate($event)"></app-full-date>
+							</div>
+							<div class="col-md-3 col-12">
+								<label for="" class="label-name">
+									{{'general.searchToDate'|translate}}</label>
+								<app-full-date name="date" [(ngModel)]="searchToDate" ngDefaultControl
+									(OnDateSelect)="getDate2($event)"></app-full-date>
+							</div>
 
-           
-            <button nz-button nzType="primary" (click)="filterData(searchCode, searchFromDate, searchToDate)"
-                class=" b-r-0 mx-2">{{'general.search'|translate}}</button>
-        </div>
-    </div>
-    </div>
-        <app-tabulator  [idColName]="'id'" [childRowData]="filteredData" (onCheckPost)="onCheckUpdate()" (onCheckItem)="onCheck($event)" (onEditItem)="onEdit($event)" (onDeleteItem)="showConfirmDeleteMessage($event)" [parentColName]="'groupId'" [divId]="'journalEntryPost'" [columnSettings]="columnNames" [componentName]="'journalEntryPost'" (onMenuActionSelected)="onMenuActionSelected($event)"
-            [showMenuOptions]="menuOptions" [direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId" [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)" [groupType]="1"></app-tabulator>
-    </div>
-  </section>
-  
+
+							<div class="col-md-3 col-12"><button nz-button nzType="primary"
+									(click)="filterData(searchCode, searchFromDate, searchToDate)"
+									class=" b-r-0 w-100 ">{{'general.search'|translate}}</button></div>
+						</div>
+					</div>
+				</div>
+				<app-tabulator [idColName]="'id'" [childRowData]="filteredData" (onCheckPost)="onCheckUpdate()"
+					(onCheckItem)="onCheck($event)" (onEditItem)="onEdit($event)"
+					(onDeleteItem)="showConfirmDeleteMessage($event)" [parentColName]="'groupId'"
+					[divId]="'journalEntryPost'" [columnSettings]="columnNames" [componentName]="'journalEntryPost'"
+					(onMenuActionSelected)="onMenuActionSelected($event)" [showMenuOptions]="menuOptions"
+					[direction]="direction" [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId"
+					[searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)"
+					[groupType]="1"></app-tabulator>
+			</div>
+		</div>
+	</div>
+</section>

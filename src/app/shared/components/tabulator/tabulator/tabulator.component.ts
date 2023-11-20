@@ -233,7 +233,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
 
 	ngAfterViewInit() {
-		
+		   
 		this.tab = document.createElement('div');
 		this.drawTable();
 		this.showDataOnGrid();
