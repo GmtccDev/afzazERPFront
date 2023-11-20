@@ -1285,7 +1285,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     localStorage.removeItem("itemId")
     localStorage.setItem("itemId", id);
     let reportType = 1;
-    let reportTypeId = 6;
+    let reportTypeId = 12;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 
