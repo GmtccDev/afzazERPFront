@@ -4,6 +4,7 @@ export class Bill {
     companyId: number;
     branchId: number;
     billTypeId: number;
+    fiscalPeriodId: number|undefined;
     date: any;
     supplierId: number | undefined;
     supplierReference: string | undefined;

@@ -316,7 +316,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     } else if (button == 'Copy') {
     } else if (button == 'Update') {
-      debugger;
+     
       this.disabledSave = true;
       this.disabledView=true;
       this.disabledPrint = false;
