@@ -39,12 +39,19 @@
 			<tbody>
 				<ng-container *ngFor="let data of expandTable.data">
 					<ng-container *ngFor="let item of mapOfExpandedData[data.treeId]">
-						<tr *ngIf="(item.parent && item.parent.expanded) || !item.parent"
+						<!-- <tr *ngIf="(item.parent && item.parent.expanded) || !item.parent"
 							[class.item-children]="(item.parent && item.parent.expanded)">
+							<td [nzIndentSize]="item.levelId! * 20" [nzShowExpand]="!!item.children"
+								[(nzExpand)]="item.expanded"
+								(nzExpandChange)="collapse(mapOfExpandedData[data.treeId], item, $event)"> -->
+						<tr *ngIf="(item.parent && item.parent.expanded) || !item.parent"
+							[class.item-children]="(item.parent && item.parent.expanded)"
+							[ngClass]="'level-' + item.levelId">
 							<td [nzIndentSize]="item.levelId! * 20" [nzShowExpand]="!!item.children"
 								[(nzExpand)]="item.expanded"
 								(nzExpandChange)="collapse(mapOfExpandedData[data.treeId], item, $event)">
 								{{ item.code }}
+
 
 							</td>
 							<td>{{ item.nameAr }}</td>

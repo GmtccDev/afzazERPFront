@@ -163,8 +163,8 @@
         "unit-offer-repeated": "هذا الوحدة تم اختيارها من قبل",
         "faild-login": "بيانات اعتماد تسجيل الدخول غير صحيحة",
         "connection-error": "خطأ في الخادم !",
-        "nameEn-not-Found":"لا يوجد اسم لاتيني  "
-        
+        "nameEn-not-Found": "لا يوجد اسم لاتيني  "
+
     },
     "user-manager": {
         "add-user": "إضافة مستخدم",
@@ -298,6 +298,8 @@
         "item-guide-information": "معلومات  دليل اصناف"
     },
     "general": {
+        "searchFromDate": "من تاريخ",
+        "searchToDate": "إلي تاريخ",
         "nameAr": "الاسم العربي",
         "nameEn": "الاسم الانجليزى",
         "code": "الكود",
@@ -451,19 +453,19 @@
         "credit-limit": "حد الأئتمان",
         "initial-balance": "الرصيد الأفتتاحى",
         "postal-code": "الرمز البريدى",
-        "no-add-fiscal-period-choose-open-fiscal-period":"لا يمكن اضافة . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
-        "no-add-fiscal-period-choose-date-open-fiscal-period":"لا يمكن اضافة . يجب اختيار تاريخ داخل فترة محاسبية مفتوحة  ",
-        "no-edit-fiscal-period-choose-open-fiscal-period":"لا يمكن التعديل . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
-        "name":"الاسم",
-        "taxes":"الضرائب",
-        "determinants":"المحددات",
-        "total-tax":"أجمالى الضريبة",
-        "item-required":"الصنف مطلوب",
-        "quantity-required":"الكمية مطلوب",
-        "price-required":"السعر مطلوب",
-        "discount-account":"حساب الخصم",
-        "tax-account":"حساب الضريبة",
-        "close-account-required":"من فضلك أختر حساب الأغلاق من الأعدادات"
+        "no-add-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-add-fiscal-period-choose-date-open-fiscal-period": "لا يمكن اضافة . يجب اختيار تاريخ داخل فترة محاسبية مفتوحة  ",
+        "no-edit-fiscal-period-choose-open-fiscal-period": "لا يمكن التعديل . يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "name": "الاسم",
+        "taxes": "الضرائب",
+        "determinants": "المحددات",
+        "total-tax": "أجمالى الضريبة",
+        "item-required": "الصنف مطلوب",
+        "quantity-required": "الكمية مطلوب",
+        "price-required": "السعر مطلوب",
+        "discount-account": "حساب الخصم",
+        "tax-account": "حساب الضريبة",
+        "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات"
 
 
 
@@ -747,23 +749,23 @@
         "item-description": "وصف الصنف",
         "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
         "bill-items-required": "من فضلك أدخل الأصناف",
-        "cash-account-required":"حساب النقدية مطلوب",
+        "cash-account-required": "حساب النقدية مطلوب",
 
-        "sales-account-required":"حساب المبيعات مطلوب",
-        "sales-return-account-required":"حساب مرتجع المبيعات مطلوب",
-        "purchases-account-required":"حساب المشتريات مطلوب",
-        "purchases-return-account-required":"حساب مرتجع المشتريات مطلوب",
-        "tax-account-required":"حساب الضريبة مطلوب",
-        "account-required":"الحساب مطلوب",
-        "customer-required":"العميل مطلوب",
-        "supplier-required":"المورد مطلوب"
+        "sales-account-required": "حساب المبيعات مطلوب",
+        "sales-return-account-required": "حساب مرتجع المبيعات مطلوب",
+        "purchases-account-required": "حساب المشتريات مطلوب",
+        "purchases-return-account-required": "حساب مرتجع المشتريات مطلوب",
+        "tax-account-required": "حساب الضريبة مطلوب",
+        "account-required": "الحساب مطلوب",
+        "customer-required": "العميل مطلوب",
+        "supplier-required": "المورد مطلوب"
     },
     "determinants": {
         "type-value": "نوع القيمة",
         "textarea": "Textarea",
         "text": "Text",
         "number": "Number",
-        "add-determinants":"اضافة المحددات",
+        "add-determinants": "اضافة المحددات",
         "determinants-details-required": " برجاء ادخال تفاصيل المحددات "
     },
     "tabulator": {
