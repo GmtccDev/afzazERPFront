@@ -330,7 +330,7 @@
         "productFound": "This item already exists !",
         "failedSaveDataFlag": "An unexpected error occurred",
         "whentenentshouldpayError": "Duration must be greater than zero!",
-        "invalidPassword": "invalid Password",
+        "invalidPassword": "Invalid Password",
         "userNameRequired": "Failed Required",
         "invalid-code": "Invalid Code"
     },
@@ -552,7 +552,8 @@
     },
     "fiscal-period": {
         "fiscal-period-status": "status",
-        "add-fiscal-period": "Add Fiscal Period"
+        "add-fiscal-period": "Add Fiscal Period",
+        "Intersection":"There is an overlap in date  "
     },
     "voucher-type": {
         "voucher-type-information": "Voucher Type Information",

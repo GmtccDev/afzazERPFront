@@ -249,7 +249,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
 	openFiscalPeriodes() { }
 	onCheck(id) {
-debugger
+
 		const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
 		if (index !== -1) {
 			this.listIds.splice(index, 1);
@@ -257,7 +257,7 @@ debugger
 			const newItem = { id, isChecked: true };
 			this.listIds.push(newItem);
 		}
-		
+
 		this.sharedServices.changeButton({
 			action: 'Delete',
 			componentName: 'List',
@@ -334,7 +334,7 @@ debugger
 			ids: ids,
 			idName: "Id"
 		};
-		
+
 		let sub = this.fiscalPeriodService.deleteListEntity(input).subscribe(
 			(resonse) => {
 

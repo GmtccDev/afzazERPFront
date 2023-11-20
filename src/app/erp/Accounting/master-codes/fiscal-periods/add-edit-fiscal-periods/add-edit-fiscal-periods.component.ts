@@ -15,6 +15,7 @@ import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { FiscalPeriodStatus } from '../../../../../shared/enum/fiscal-period-status';
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 @Component({
   selector: 'app-add-edit-fiscal-periods',
   templateUrl: './add-edit-fiscal-periods.component.html',
@@ -44,6 +45,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   submited: boolean = false;
   fromDate!: DateModel;
   toDate!: DateModel;
+  fiscalPeriods: any;
   constructor(
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private router: Router,
@@ -52,7 +54,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private SharedServices: SharedService, private translate: TranslateService,
     private dateService: DateCalculation,
-
+    private alertsService: NotificationsAlertsService,
 
   ) {
     this.definefiscalPeriodForm();
@@ -63,7 +65,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   ngOnInit(): void {
 
     this.spinner.show();
-
+    this.getFiscalPeriods()
     this.getRouteData();
     this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
@@ -72,6 +74,32 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     this.changePath();
     this.listenToClickedButton();
     this.spinner.hide();
+
+  }
+  getFiscalPeriods() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.allFiscalPeriodes(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+
+          this.toolbarPathData.componentList = this.translate.instant("component-names.fiscalPeriod");
+          if (res.success) {
+            this.fiscalPeriods = res.response.items
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
 
   }
   getRouteData() {
@@ -249,10 +277,35 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   changePath() {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
+  checkDateOverlap(startDate, endDate, list: any[]): boolean {
+    
+    for (const item of list) {
+      const itemStartDate = this.dateService.getDateForInsertCheck(item.fromDate);
+      const itemEndDate = this.dateService.getDateForInsertCheck(item.toDate);
+      if ( this.dateService.splitDate(startDate)  <=  this.dateService.splitDate(itemEndDate)  &&  this.dateService.splitDate(endDate)  >= this.dateService.splitDate(itemStartDate) ) {
+        return true; // Overlapping dates found
+      }
+    }
+
+    return false; // No overlapping dates found
+  }
   confirmSave() {
     var inputDto = new FiscalPeriodDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.fiscalPeriodForm.value;
+      
+      const fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
+      const toDate = this.dateService.getDateForInsert(inputDto.toDate);
+      let hasIntersectionCheck = this.checkDateOverlap(fromDate, toDate, this.fiscalPeriods);
+
+      if (hasIntersectionCheck) {
+        this.errorMessage = this.translate.instant("fiscal-period.Intersection");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        this.spinner.hide()
+        return;
+      }
+    
       inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
@@ -261,6 +314,8 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           this.definefiscalPeriodForm();
           this.submited = false;
           navigateUrl(this.listUrl, this.router);
+          this.spinner.hide()
+        
         },
         error: (err: any) => {
           reject(err);

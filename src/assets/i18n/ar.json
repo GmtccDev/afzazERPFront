@@ -492,7 +492,8 @@
     },
     "fiscal-period": {
         "fiscal-period-status": "الحالة",
-        "add-fiscal-period": "اضافة الفترة المحاسبية"
+        "add-fiscal-period": "اضافة الفترة المحاسبية",
+        "Intersection":"يوجد تداخل في التاريخ"
     },
     "accounting-configration": {
         "multiCurrency": "عملات متعددة ",
@@ -543,7 +544,7 @@
         "productFound": "This item already exists !",
         "failedSaveDataFlag": "An unexpected error occurred",
         "whentenentshouldpayError": "Duration must be greater than zero!",
-        "invalidPassword": "invalid Password",
+        "invalidPassword": "الرقم السري غير صالح",
         "userNameRequired": "Failed Required",
         "required": "هذا الحقل مطلوب",
         "invalid-code": "كود غير صحيح"
