@@ -140,6 +140,7 @@ export class AddEditAccountComponent implements OnInit {
         if (this.id) {
           this.getaccountById(this.id).then(a => {
             this.spinner.hide();
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
 
           }).catch(err => {
             this.spinner.hide();
@@ -628,7 +629,7 @@ export class AddEditAccountComponent implements OnInit {
               listPath: this.listUrl,
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
-          } else if (currentBtn.action == ToolbarActions.Save) {
+          } else if (currentBtn.action == ToolbarActions.Save,currentBtn.submitMode) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'Add account';
@@ -637,7 +638,7 @@ export class AddEditAccountComponent implements OnInit {
             }
             this.defineaccountForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
         }
