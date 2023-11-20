@@ -101,6 +101,7 @@ export class AddEditBranchComponent implements OnInit {
 
         if (this.id) {
           this.getbranchById(this.id).then(a => {
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
 
             this.spinner.hide();
 

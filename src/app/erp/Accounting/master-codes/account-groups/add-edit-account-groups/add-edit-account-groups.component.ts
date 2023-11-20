@@ -94,6 +94,8 @@ export class AddEditAccountGroupsComponent implements OnInit {
 
         if (this.id) {
           this.getaccountGroupById(this.id).then(a => {
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+
             this.spinner.hide();
           }).catch(err => {
             this.spinner.hide();

@@ -74,6 +74,7 @@ export class AddBusinessComponent implements OnInit {
 
         if (this.id) {
           this.getBusinessById(this.id).then(a => {
+            this.SharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
 
             this.spinner.hide();
 

@@ -85,6 +85,7 @@ export class AddEditJournalsComponent implements OnInit {
         this.id = +params['id'];
         if (this.id > 0) {
           this.getJournalById(this.id).then(a => {
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
             this.spinner.hide();
 
           }).catch(err => {
