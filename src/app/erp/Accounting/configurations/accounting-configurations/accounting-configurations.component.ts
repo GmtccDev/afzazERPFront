@@ -361,7 +361,7 @@ export class AccountingConfigurationsComponent implements OnInit, OnDestroy {
             currentBtn.action = this.updateUrl
 
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
 
             this.onUpdate();
           }

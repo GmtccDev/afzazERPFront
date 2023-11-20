@@ -41,7 +41,7 @@
 
 												<input type="text" class="form-control "
 													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-													name="nameAr" formControlName="nameAr" maxlength="10">
+													name="nameAr" formControlName="nameAr" >
 												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
@@ -58,7 +58,7 @@
 											<div class="form-group position-relative">
 
 												<input type="text" class="form-control " name="nameEn"
-													formControlName="nameEn" maxlength="10">
+													formControlName="nameEn" >
 												<div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>

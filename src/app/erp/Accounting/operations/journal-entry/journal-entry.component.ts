@@ -313,13 +313,13 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
   onViewClicked(parentType, id) {
     
     if (parentType == 1) {
-      window.open('accounting-operations/vouchers/update-voucher/' + id, "_blank")
+      window.open('accounting-operations/vouchers/update-voucher/1/' + id, "_blank")
     }
     if (parentType == 2) {
       window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
     }
     if (parentType ==3) {
-      window.open('accounting-operations//issuingCheque/add-issuingCheque/' + id, "_blank")
+      window.open('accounting-operations//issuingCheque/update-issuingCheque/' + id, "_blank")
     }
   }
   onCheckUpdate() {
