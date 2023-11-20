@@ -126,7 +126,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
         if (this.id > 0) {
           this.getjournalEntryById(this.id).then(a => {
             this.spinner.hide();
-
+            this.sharedServices.changeButton({ action: 'Update' } as ToolbarData);
           }).catch(err => {
             this.spinner.hide();
 
@@ -538,7 +538,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
             //   this.toolbarPathData.componentAdd = 'Add journalEntry';
             //  this.definejournalEntryForm();
             //   this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {

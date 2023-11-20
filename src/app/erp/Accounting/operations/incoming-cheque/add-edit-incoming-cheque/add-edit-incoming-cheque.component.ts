@@ -48,6 +48,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   public show: boolean = false;
   lang = localStorage.getItem("language")
   incomingCheque: [] = [];
+  fromDate: any;
+  toDate: any;
   addUrl: string = '/accounting-operations/incomingCheque/add-incomingCheque';
   updateUrl: string = '/accounting-operations/incomingCheque/update-incomingCheque/';
   listUrl: string = '/accounting-operations/incomingCheque';
@@ -302,9 +304,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
           resolve();
-          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
-          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
-
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn;
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString();
+          this.fromDate = res.response?.fromDate;
+          this.toDate = res.response?.toDate;
         },
         error: (err: any) => {
           reject(err);
@@ -584,7 +587,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             }
             this.defineIncomingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
@@ -660,6 +663,35 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
+    let chequeDate = this.incomingChequeForm.controls["date"].value;
+    let date;
+    let month;
+    let day;
+    if (chequeDate?.month + 1 > 9) {
+      month = chequeDate?.month + 1
+    }
+    else {
+      month = '0' + chequeDate.month + 1
+    }
+    if (chequeDate.day < 10) {
+      day = '0' + chequeDate?.day
+    }
+    else {
+      day = chequeDate.day
+    }
+    date = chequeDate.year + '-' + month + '-' + day
+
+    if (date >= this.fromDate && date <= this.toDate) {
+
+
+    }
+    else {
+      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+
+    }
 
     this.totalamount = 0;
     const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
@@ -703,10 +735,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
 
   onChangeCurrency(event, index) {
-    // this.amount = 0;
-    // this.amountLocal = 0;
-    // this.currencyFactor = 0;
-    // this.currencyId = null;
+   
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
@@ -773,8 +802,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
         )
         return;
       }
-      entity.status = 1;
-      debugger
+      entity.status = 1 ;
+      
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
 
@@ -815,6 +844,35 @@ export class AddEditIncomingChequeComponent implements OnInit {
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
+      }
+      let chequeDate = this.incomingChequeForm.controls["date"].value;
+      let date;
+      let month;
+      let day;
+      if (chequeDate?.month + 1 > 9) {
+        month = chequeDate?.month + 1
+      }
+      else {
+        month = '0' + chequeDate.month + 1
+      }
+      if (chequeDate.day < 10) {
+        day = '0' + chequeDate?.day
+      }
+      else {
+        day = chequeDate.day
+      }
+      date = chequeDate.year + '-' + month + '-' + day
+
+      if (date >= this.fromDate && date <= this.toDate) {
+
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+
       }
       this.spinner.show();
       this.confirmUpdate().then(a => {

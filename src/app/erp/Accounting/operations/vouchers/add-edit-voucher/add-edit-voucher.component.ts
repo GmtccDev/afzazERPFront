@@ -24,7 +24,6 @@ import { DateCalculation, DateModel } from 'src/app/shared/services/date-service
 import { CurrencyServiceProxy } from 'src/app/erp/master-codes/services/currency.servies';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
-import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -61,7 +60,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   voucherDetail: VoucherDetail[] = [];
   selectedVoucherDetail: VoucherDetail = new VoucherDetail();
   beneficiaryTypesEnum: ICustomEnum[] = [];
-
+  fromDate: any;
+  toDate: any;
   sub: any;
   url: any;
   id: any = 0;
@@ -172,9 +172,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.voucherTypeId = params['voucherTypeId'];
         if (this.voucherTypeId) {
           this.getVoucherTypes(this.voucherTypeId);
-         
-        
-          
+
+
+
 
         }
       }
@@ -182,9 +182,9 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
 
         if (this.id) {
-          localStorage.setItem("itemId",this.id)
+          localStorage.setItem("itemId", this.id)
           this.getVoucherById(this.id).then(a => {
-            this.sharedServices.changeButton({action:'Update',disabledPrint:false}as ToolbarData)
+            this.sharedServices.changeButton({ action: 'Update', disabledPrint: false } as ToolbarData)
 
             this.spinner.hide();
 
@@ -262,8 +262,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
         next: (res: any) => {
           resolve();
-          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
-          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn;
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString();
+          this.fromDate = res.response?.fromDate;
+          this.toDate = res.response?.toDate;
 
         },
         error: (err: any) => {
@@ -819,7 +821,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
       debit: this.selectedVoucherDetail?.debit ?? 0,
       credit: this.selectedVoucherDetail?.credit ?? 0,
-      currencyId:  this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyId ?? 0 : this.mainCurrencyId,
+      currencyId: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyId ?? 0 : this.mainCurrencyId,
       currencyConversionFactor: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyConversionFactor ?? 0 : 1,
       debitLocal: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.debitLocal ?? 0 : this.selectedVoucherDetail?.debit ?? 0,
       creditLocal: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.creditLocal ?? 0 : this.selectedVoucherDetail?.credit ?? 0,
@@ -928,7 +930,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   clearSelectedItemData() {
-    debugger
+
     this.selectedVoucherDetail = {
       id: 0,
       voucherId: 0,
@@ -948,7 +950,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       costCenterName: '',
     }
   }
-  
+
   setInputData() {
     this.voucher = {
       id: this.voucherForm.controls["id"].value,
@@ -1022,6 +1024,37 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       return;
     }
 
+
+    let voucherDate = this.voucherForm.controls["voucherDate"].value;
+    let date;
+    let month;
+    let day;
+    if (voucherDate?.month + 1 > 9) {
+      month = voucherDate?.month + 1
+    }
+    else {
+      month = '0' + voucherDate.month + 1
+    }
+    if (voucherDate.day < 10) {
+      day = '0' + voucherDate?.day
+    }
+    else {
+      day = voucherDate.day
+    }
+    date = voucherDate.year + '-' + month + '-' + day
+
+    if (date >= this.fromDate && date <= this.toDate) {
+
+
+    }
+    else {
+      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+
+    }
+
     if (this.voucherForm.valid) {
       if (this.voucher.voucherDetail.length == 0) {
         this.errorMessage = this.translate.instant("voucher.voucher-details-required");
@@ -1073,6 +1106,36 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
+      }
+
+      let voucherDate = this.voucherForm.controls["voucherDate"].value;
+      let date;
+      let month;
+      let day;
+      if (voucherDate?.month + 1 > 9) {
+        month = voucherDate?.month + 1
+      }
+      else {
+        month = '0' + voucherDate.month + 1
+      }
+      if (voucherDate.day < 10) {
+        day = '0' + voucherDate?.day
+      }
+      else {
+        day = voucherDate.day
+      }
+      date = voucherDate.year + '-' + month + '-' + day
+
+      if (date >= this.fromDate && date <= this.toDate) {
+
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+
       }
 
       if (this.voucher.voucherDetail.length == 0) {
@@ -1293,9 +1356,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onViewReportClicked(id) {
-    // let reportType = 1;
-    // let reportTypeId = 1001;
-    // this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+
     let reportParams: string =
       "reportParameter=id!" + id
       + "&reportParameter=lang!" + this.lang

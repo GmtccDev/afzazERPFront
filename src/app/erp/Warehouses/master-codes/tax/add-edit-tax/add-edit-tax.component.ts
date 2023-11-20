@@ -254,7 +254,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   addItem() {
-    debugger
+    
     var result: boolean = false;
    
     if (this.taxDetail.length > 0 && this.taxDetail != null) {
@@ -470,7 +470,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
             this.taxDetail = [];
 
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
 
             this.onUpdate();
           }

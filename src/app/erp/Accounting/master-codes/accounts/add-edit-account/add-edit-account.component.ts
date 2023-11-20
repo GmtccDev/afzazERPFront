@@ -140,7 +140,7 @@ export class AddEditAccountComponent implements OnInit {
         if (this.id) {
           this.getaccountById(this.id).then(a => {
             this.spinner.hide();
-
+            this.sharedServices.changeButton({ action: 'Update' } as ToolbarData);
           }).catch(err => {
             this.spinner.hide();
 
@@ -564,7 +564,7 @@ export class AddEditAccountComponent implements OnInit {
 
 
                 isActive: res1.response?.isActive,
-                isLeafAccount: res1.response?.isLeafAccount,
+                isLeafAccount: false,
 
                 companyId: res1.response?.companyId,
 
@@ -637,7 +637,7 @@ export class AddEditAccountComponent implements OnInit {
             }
             this.defineaccountForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
         }

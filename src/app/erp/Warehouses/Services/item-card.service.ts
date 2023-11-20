@@ -38,7 +38,7 @@ export class ItemCardServiceProxy {
         return this.http.post<any>(environment.apiUrl + "/api/ItemCard/deleteList?", ItemCard);
     }
     updateItemCard(ItemCard: any): Observable<any> {
-        debugger
+        
         return this.http.post<any>(environment.apiUrl + "/api/ItemCard/edit?", ItemCard);
     }
     getDdl(): Observable<any> {

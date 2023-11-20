@@ -373,7 +373,7 @@ export class AddEditItemCardComponent implements OnInit {
             }
           }
           this.taxIds = '';
-          debugger
+             
           if (res.response?.itemCardDeterminants != null) {
             this.itemCardDeterminant = res.response?.itemCardDeterminants
            
@@ -658,7 +658,7 @@ export class AddEditItemCardComponent implements OnInit {
             // }
             this.defineItemCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
@@ -673,7 +673,7 @@ export class AddEditItemCardComponent implements OnInit {
     this.sharedService.changeToolbarPath(this.toolbarPathData);
   }
   setInputData() {
-    debugger
+       
     this.taxIds = "";
     if (this.selectedTaxes != null && this.selectedTaxes.toString()!="") {
       this.selectedTaxes.forEach(c => {
@@ -744,7 +744,7 @@ export class AddEditItemCardComponent implements OnInit {
 
     this.itemCard.itemCardUnits = this.itemCardUnit;
     this.itemCard.itemCardAlternatives = this.itemCardAlternative;
-    debugger
+       
     this.itemCard.itemCardDeterminants = this.itemCardDeterminant;
 
 
@@ -830,7 +830,7 @@ export class AddEditItemCardComponent implements OnInit {
     }
   }
   onChangeDeterminants(values) {
-    debugger
+       
     this.itemCardDeterminant = [];
     values.forEach(element => {
       this.itemCardDeterminant.push(
