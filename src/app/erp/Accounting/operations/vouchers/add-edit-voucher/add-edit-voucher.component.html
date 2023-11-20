@@ -101,7 +101,7 @@
 													(change)="getAmount()">
 													<ng-option *ngFor="let currency of currenciesList"
 														[value]="currency.id">
-														{{lang=="ar"?currency.nameAr:currency.nameEn}}
+														{{lang=="en"?currency.nameEn:currency.nameAr}}
 													</ng-option>
 												</ng-select>
 
@@ -156,7 +156,7 @@
 													name='cashAccountId' id="cashAccountId" [(ngModel)]="cashAccountId">
 													<ng-option *ngFor="let account of cashAccountsList"
 														[value]="account.id">
-														{{lang=="ar"?account.nameAr:account.nameEn}}
+														{{lang=="en"?account.nameEn:account.nameAr}}
 													</ng-option>
 												</ng-select>
 												<div *ngIf="(f['cashAccountId'].touched || f['cashAccountId'].dirty ) && f['cashAccountId'].invalid"

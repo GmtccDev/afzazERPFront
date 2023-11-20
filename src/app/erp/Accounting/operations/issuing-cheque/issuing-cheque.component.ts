@@ -19,6 +19,7 @@ import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/en
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { ReportViewerService } from '../../reports/services/report-viewer.service';
 @Component({
   selector: 'app-issuing-cheque',
   templateUrl: './issuing-cheque.component.html',
@@ -69,6 +70,9 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     private spinner: NgxSpinnerService,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private reportViewerService: ReportViewerService,
+
+
 
   ) {
 
@@ -222,7 +226,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -274,7 +278,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -288,7 +292,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
             this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
             this.errorClass = 'errorMessage';
-            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
             return;
           }
           else {
@@ -302,7 +306,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -316,7 +320,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
             this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
             this.errorClass = 'errorMessage';
-            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
             return;
           }
           else {
@@ -409,7 +413,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -440,7 +444,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
             if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
               this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
               this.errorClass = 'errorMessage';
-              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
               return;
             }
             else {
@@ -475,7 +479,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         this.spinner.show();
         let sub = this.issuingChequeService.collect(id).subscribe({
           next: (result: any) => {
-            this.alertsService.showError(
+            this.alertsService.showSuccess(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
               ""
             )
@@ -506,7 +510,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
         this.spinner.show();
         let sub = this.issuingChequeService.reject(id).subscribe({
           next: (result: any) => {
-            this.alertsService.showError(
+            this.alertsService.showSuccess(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
               ""
             )
@@ -524,12 +528,15 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     });
   }
   onViewReportClicked(id) {
-    let reportParams: string =
-      "reportParameter=id!" + id
-      + "&reportParameter=lang!" + this.lang
-    const modalRef = this.modalService.open(NgbdModalContent);
-    modalRef.componentInstance.reportParams = reportParams;
-    modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 10;
+    // let reportParams: string =
+    //   "reportParameter=id!" + id
+    //   + "&reportParameter=lang!" + this.lang
+    // const modalRef = this.modalService.open(NgbdModalContent);
+    // modalRef.componentInstance.reportParams = reportParams;
+    // modalRef.componentInstance.reportType = 1;
+    // modalRef.componentInstance.reportTypeID = 10;
+    let reportType = 1;
+    let reportTypeId = 10;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 }
