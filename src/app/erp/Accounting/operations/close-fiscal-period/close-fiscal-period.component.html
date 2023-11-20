@@ -1,21 +1,21 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-body">
-						<form [formGroup]="closeFiscalPeriodForm" id="closeFiscalPeriodSubmit" class="tabs-form">
-							<div class="main-branch ranoo">
-								<div class="wrapper-title">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="closeFiscalPeriodForm" id="closeFiscalPeriodSubmit" class="tabs-form">
+                            <div class="main-branch ranoo">
+                                <div class="wrapper-title">
 
-									<h3>{{'component-names.close-fiscal-period'|translate}}</h3>
-									<hr>
-									<div class="row">
-										<!-- <div class="col-md-6 col-12">
+                                    <h3>{{'component-names.close-fiscal-period'|translate}}</h3>
+                                    <hr>
+                                    <div class="align-items-center row">
+                                        <!-- <div class="col-md-6 col-12">
 											<label for="closeDate" class="label-name">
 												{{'general.date'|translate}}
 											</label>
@@ -39,58 +39,48 @@
 											</div>
 										</div> -->
 
-										<div class="col-md-4 col-12">
-											<label for="fiscalPeriodId"
-												class="label-name">{{'component-names.fiscalPeriod'|translate}}
+                                        <div class="col-md-4 col-12">
+                                            <label for="fiscalPeriodId" class="label-name">{{'component-names.fiscalPeriod'|translate}}
 											</label>
-											<span class="text-danger">*</span>
+                                            <span class="text-danger">*</span>
 
-											<div class="input-group  popup">
-												<ng-select style="width:100%" formControlName="fiscalPeriodId"
-													name='fiscalPeriodId' class="" id="fiscalPeriodId"
-													[(ngModel)]="fiscalPeriodId"
-													(change)="getFiscalPeriodById(fiscalPeriodId)">
-													<ng-option *ngFor="let period of fiscalPeriodList"
-														[value]="period.id">
-														{{lang=="ar"?period.nameAr:period.nameEn}}
-													</ng-option>
-												</ng-select>
+                                            <div class="input-group  popup">
+                                                <ng-select style="width:100%" formControlName="fiscalPeriodId" name='fiscalPeriodId' class="" id="fiscalPeriodId" [(ngModel)]="fiscalPeriodId" (change)="getFiscalPeriodById(fiscalPeriodId)">
+                                                    <ng-option *ngFor="let period of fiscalPeriodList" [value]="period.id">
+                                                        {{lang=="ar"?period.nameAr:period.nameEn}}
+                                                    </ng-option>
+                                                </ng-select>
 
-												<div *ngIf="(f['fiscalPeriodId'].touched || f['fiscalPeriodId'].dirty ) && f['fiscalPeriodId'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span
-														*ngIf="f['fiscalPeriodId'].errors && f['fiscalPeriodId'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <div *ngIf="(f['fiscalPeriodId'].touched || f['fiscalPeriodId'].dirty ) && f['fiscalPeriodId'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['fiscalPeriodId'].errors && f['fiscalPeriodId'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
 
-											</div>
-										</div>
-										<div class="col-md-4 col-12" *ngIf="showDates">
-											<br />
-											<label for="fromDate" class="label-name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12" *ngIf="showDates">
+                                            <label for="fromDate" class="label-name">
 												{{'general.fromDate'|translate}} :
 											</label>
 
-											<label> {{fromDate}} </label>
+                                            <h6> {{fromDate}} </h6>
 
-										</div>
-										<div class="col-md-4 col-12" *ngIf="showDates">
-											<br />
-											<label for="toDate" class="label-name">
+                                        </div>
+                                        <div class="col-md-4 col-12" *ngIf="showDates">
+                                            <label for="toDate" class="label-name">
 												{{'general.toDate'|translate}} :
 											</label>
-											<label> {{toDate}} </label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                            <h6> {{toDate}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

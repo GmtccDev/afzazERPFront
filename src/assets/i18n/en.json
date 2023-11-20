@@ -227,8 +227,8 @@
         "price-required": "Item is required",
         "discount-account": "Discount Account",
         "tax-account": "Tax Account",
-        "close-account-required":"Please choose close account from the settings",
-        "date-out-fiscal-period":"The date is out fiscal period date"
+        "close-account-required": "Please choose close account from the settings",
+        "date-out-fiscal-period": "The date is out fiscal period date"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -280,6 +280,7 @@
         "password-no-match": "Password No Match ",
         "code": "code",
         "newPasswordMEdit": "Your new password must be different from your previous passwords",
+
         "newPasswordM": "Your new password must be at least 8 Letters, Numbers or Symbols",
         "newPassword": "Add New password"
     },
@@ -556,7 +557,7 @@
     "fiscal-period": {
         "fiscal-period-status": "status",
         "add-fiscal-period": "Add Fiscal Period",
-        "Intersection":"There is an overlap in date  "
+        "Intersection": "There is an overlap in date  "
     },
     "voucher-type": {
         "voucher-type-information": "Voucher Type Information",
@@ -754,7 +755,7 @@
         "item-description": "Item Description",
         "additions-and-discounts": "Additions And Discounts on Bill",
         "bill-items-required": "Please enter Items",
-      
+
         "no-add-bill-fiscal-period-closed": "You can not add a bill to this closed fiscal period",
         "no-edit-fiscal-period-closed": "You can not edit the bill to this closed fiscal period",
 
