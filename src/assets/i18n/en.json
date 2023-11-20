@@ -304,7 +304,7 @@
         "success": "Data has been Deleted Successfully",
         "wrong": "Wrong",
         "confirm-delete": "Are you sure to delete the item ?",
-        "done": "Doneddsfgsfgdfgdfgdfgdfg",
+        "done": "Done",
         "alert": "Alert",
         "info": "Info",
         "error": "Error"
@@ -575,7 +575,8 @@
     },
     "message-title": {
         "done": "Done",
-        "wrong": "Wrong"
+        "wrong": "Wrong",
+        "warning":"Warning"
     },
     "voucher": {
         "voucher-information": "Voucher Information",
@@ -607,7 +608,9 @@
         "totalDebit": "Total Debit",
         "totalCredit": "Total Credit",
         "totalDebitLocal": "Total Debit Local",
-        "totalCreditLocal": "Total Credit Local"
+        "totalCreditLocal": "Total Credit Local",
+        "no-delete-entry":"You can not delete this entry (Transaction entry)",
+        "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal period"
     },
     "account-classification": {
         "add-account-classification": "Add Account Classification",

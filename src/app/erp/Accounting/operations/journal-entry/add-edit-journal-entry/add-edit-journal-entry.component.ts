@@ -43,8 +43,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   userId: any = localStorage.getItem("userId");
   branchId: string = localStorage.getItem("branchId");
   companyId: string = localStorage.getItem("companyId");
-  private readonly apiurl = environment.apiUrl;
-  // = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
   orderBy: any;
   lang = localStorage.getItem("language");
   journalEntryForm!: FormGroup;
@@ -423,7 +421,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
     modalRef.componentInstance.isYesNo = true;
     modalRef.result.then((rs) => {
-      ;
       if (rs == 'Confirm') {
         this.spinner.show();
 
@@ -703,7 +700,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
-
+    debugger
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
@@ -1225,7 +1222,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     localStorage.removeItem("itemId")
     localStorage.setItem("itemId", id);
     let reportType = 1;
-    let reportTypeId = 1000;
+    let reportTypeId = 6;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 

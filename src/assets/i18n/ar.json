@@ -566,7 +566,9 @@
     },
     "message-title": {
         "done": "نجاح",
-        "wrong": "خطأ"
+        "wrong": "خطأ",
+        "warning":"تنوية"
+
     },
     "voucher": {
         "voucher-information": "بيانات السند",
@@ -598,7 +600,11 @@
         "totalDebit": "اجمالي المدين",
         "totalCredit": "اجمالي الدائن",
         "totalDebitLocal": "اجمالي المدين محلي",
-        "totalCreditLocal": "اجمالي الدائن محلي"
+        "totalCreditLocal": "اجمالي الدائن محلي",
+        "no-delete-entry":"لايمكن حذف هذا القيد (قيد حركات)",
+        "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة"
+
+
     },
     "account-classification": {
         "add-account-classification": "اضافة تصنيف الحساب",
