@@ -15,6 +15,9 @@ import { ToolbarActions } from '../../../../shared/enum/toolbar-actions'
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 import format from 'date-fns/format';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
+import { ModuleType } from '../../models/general-configurations';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 @Component({
 	selector: 'app-fiscal-periods',
 	templateUrl: './fiscal-periods.component.html',
@@ -37,6 +40,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
 	};
 	listIds: any[] = [];
+	fiscalPeriodId: any;
 	//#endregion
 
 	//#region Constructor
@@ -48,11 +52,38 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 		private modalService: NgbModal,
 		private translate: TranslateService,
 		private spinner: NgxSpinnerService,
+		private generalConfigurationService: GeneralConfigurationServiceProxy,
 
 	) {
 
 	}
-
+	getGeneralConfiguration() {
+		return new Promise<void>((resolve, reject) => {
+		  let sub = this.generalConfigurationService.allGeneralConfiguration(ModuleType.Accounting, undefined, undefined, undefined, undefined, undefined).subscribe({
+			next: (res) => {
+			  resolve();
+			  if (res.success && res.response.result.items.length > 0) {
+	
+				this.fiscalPeriodId =Number(res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value);
+	
+	
+			  }
+	
+	
+			  resolve();
+	
+			},
+			error: (err: any) => {
+			  reject(err);
+			},
+			complete: () => {
+			},
+		  });
+	
+		  this.subsList.push(sub);
+		});
+	
+	  }
 
 	//#endregion
 
@@ -60,7 +91,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 	ngOnInit(): void {
 
 		this.spinner.show();
-		Promise.all([this.getFiscalPeriods()])
+		Promise.all([this.getFiscalPeriods(),this.getGeneralConfiguration()])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -151,6 +182,8 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
 	showConfirmDeleteMessage(id) {
+		
+		
 		const modalRef = this.modalService.open(MessageModalComponent);
 		modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
 		modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
@@ -158,6 +191,10 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 		modalRef.componentInstance.isYesNo = true;
 		modalRef.result.then((rs) => {
 			if (rs == 'Confirm') {
+				if (id == this.fiscalPeriodId) {
+					this.alertsService.showError( this.translate.instant("can't-delete-record"), "")
+					return;
+				  }
 				this.spinner.show();
 				const input = {
 					tableName: "FiscalPeriods",
@@ -294,6 +331,7 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 				this.router.navigate(['accounting-master-codes/fiscalPeriod/update-fiscalPeriod/' + event.item.id])
 
 			} else if (event.actionName == 'Delete') {
+				
 				this.showConfirmDeleteMessage(event.item.id);
 			}
 		}
@@ -334,7 +372,13 @@ export class FiscalPeriodsComponent implements OnInit, OnDestroy, AfterViewInit 
 			ids: ids,
 			idName: "Id"
 		};
-
+		var checkDelete = this.listIds.filter(c => c.id == this.fiscalPeriodId);
+		this.listIds = [];
+		if (checkDelete.length!==0) {
+		  this.alertsService.showError( this.translate.instant("can't-delete-some-records"), "");
+		 
+		  return;
+		}
 		let sub = this.fiscalPeriodService.deleteListEntity(input).subscribe(
 			(resonse) => {
 

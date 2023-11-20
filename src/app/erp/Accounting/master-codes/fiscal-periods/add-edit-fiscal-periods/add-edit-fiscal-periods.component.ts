@@ -161,8 +161,8 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   definefiscalPeriodForm() {
     this.fiscalPeriodForm = this.fb.group({
       id: 0,
-      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
-      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
+      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+      nameEn: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
       fromDate: REQUIRED_VALIDATORS,
@@ -260,7 +260,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
             }
             this.definefiscalPeriodForm();
             this.SharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
             // this.SharedServices.changeButton({ action: 'Update' } as ToolbarData);
             // this.listenToClickedButton();
@@ -278,11 +278,11 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     this.SharedServices.changeToolbarPath(this.toolbarPathData);
   }
   checkDateOverlap(startDate, endDate, list: any[]): boolean {
-    
+
     for (const item of list) {
       const itemStartDate = this.dateService.getDateForInsertCheck(item.fromDate);
       const itemEndDate = this.dateService.getDateForInsertCheck(item.toDate);
-      if ( this.dateService.splitDate(startDate)  <=  this.dateService.splitDate(itemEndDate)  &&  this.dateService.splitDate(endDate)  >= this.dateService.splitDate(itemStartDate) ) {
+      if (this.dateService.splitDate(startDate) <= this.dateService.splitDate(itemEndDate) && this.dateService.splitDate(endDate) >= this.dateService.splitDate(itemStartDate)) {
         return true; // Overlapping dates found
       }
     }
@@ -293,7 +293,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
     var inputDto = new FiscalPeriodDto()
     return new Promise<void>((resolve, reject) => {
       inputDto = this.fiscalPeriodForm.value;
-      
+
       const fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       const toDate = this.dateService.getDateForInsert(inputDto.toDate);
       let hasIntersectionCheck = this.checkDateOverlap(fromDate, toDate, this.fiscalPeriods);
@@ -305,7 +305,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
         this.spinner.hide()
         return;
       }
-    
+
       inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       this.fiscalPeriodService.createFiscalPeriod(inputDto).subscribe({
@@ -315,7 +315,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
           this.submited = false;
           navigateUrl(this.listUrl, this.router);
           this.spinner.hide()
-        
+
         },
         error: (err: any) => {
           reject(err);
@@ -342,8 +342,22 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   confirmUpdate() {
     var inputDto = new FiscalPeriodDto()
     return new Promise<void>((resolve, reject) => {
+      debugger
       inputDto = this.fiscalPeriodForm.value;
       inputDto.id = this.id;
+      const fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
+      const toDate = this.dateService.getDateForInsert(inputDto.toDate);
+      this.fiscalPeriods = this.fiscalPeriods.filter(c => c.id !== inputDto.id);
+      let hasIntersectionCheck = this.checkDateOverlap(fromDate, toDate, this.fiscalPeriods);
+
+      if (hasIntersectionCheck) {
+        this.errorMessage = this.translate.instant("fiscal-period.Intersection");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        this.spinner.hide()
+        return;
+      }
+
       inputDto.fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       inputDto.toDate = this.dateService.getDateForInsert(inputDto.toDate);
       let sub = this.fiscalPeriodService.updateFiscalPeriod(inputDto).subscribe({

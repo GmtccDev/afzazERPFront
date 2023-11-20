@@ -11,7 +11,7 @@
 
 						<div class="form-group position-relative">
 
-							<!-- {{codeSerial}} -->
+							{{codeSerial}}
 
 
 						</div>
@@ -30,21 +30,29 @@
 												{{'component-names.journal'|translate}}
 
 											</label>
+											<span class="text-danger">*</span>
 											<div class="input-group  popup">
 												<ng-select style="width:100%" formControlName="journalId"
 													(change)="onChangeJournal($event)" name='journalId' class=""
 													id="journalId">
 													<ng-option *ngFor="let journal of journalList" [value]="journal.id">
-														<span>{{journal.nameAr}}</span>
+													
+														<span>{{lang=="ar"?journal.nameAr:journal.nameEn}}</span>
 													</ng-option>
 												</ng-select>
 
 											</div>
-
+											<div *ngIf="(f['journalId'].touched || f['journalId'].dirty ) && f['journalId'].invalid"
+											class="validation alert-danger position-absolute">
+											<i class="fa fa-close "></i>
+											<span *ngIf="f['journalId'].errors && f['journalId'].errors['required']"
+												class="f-12 ng-star-inserted text-white">
+												{{'error.required'|translate}} </span>
+										</div>
 										</div>
 
 
-										<div class="col-md-6 col-12">
+										<!-- <div class="col-md-6 col-12">
 											<label for="fiscalPeriodId" class="label-name">
 												{{'component-names.fiscalPeriod'|translate}}
 
@@ -55,13 +63,14 @@
 													class="" id="fiscalPeriodId">
 													<ng-option *ngFor="let fiscalPeriod of fiscalPeriodList"
 														[value]="fiscalPeriod.id">
-														{{fiscalPeriod.nameAr}}
+														
+														<span>{{lang=="ar"?fiscalPeriod.nameAr:fiscalPeriod.nameEn}}</span>
 													</ng-option>
 												</ng-select>
 
 											</div>
 
-										</div>
+										</div> -->
 										<div class="col-md-6 col-12">
 											<label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>

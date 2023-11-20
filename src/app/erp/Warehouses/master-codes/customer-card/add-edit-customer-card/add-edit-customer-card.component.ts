@@ -323,7 +323,7 @@ export class AddEditCustomerCardComponent implements OnInit {
             }
             this.defineCustomerCardForm();
             this.sharedService.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {

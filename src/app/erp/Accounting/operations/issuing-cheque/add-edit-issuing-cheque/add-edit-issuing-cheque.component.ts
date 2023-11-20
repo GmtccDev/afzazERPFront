@@ -587,7 +587,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
             }
             this.defineIssuingChequeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
 
             this.onUpdate();
           }
