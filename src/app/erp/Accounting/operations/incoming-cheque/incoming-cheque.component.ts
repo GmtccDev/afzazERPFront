@@ -70,6 +70,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private spinner: NgxSpinnerService,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private reportViewerService: ReportViewerService,
 
   ) {
 
@@ -221,7 +222,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -272,7 +273,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -286,7 +287,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
             this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
             this.errorClass = 'errorMessage';
-            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
             return;
           }
           else {
@@ -300,7 +301,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -314,7 +315,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
             this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
             this.errorClass = 'errorMessage';
-            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
             return;
           }
           else {
@@ -407,7 +408,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
         else {
@@ -437,7 +438,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
             if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
               this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
               this.errorClass = 'errorMessage';
-              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
               return;
             }
             else {
@@ -472,7 +473,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
         this.spinner.show();
         let sub = this.incomingChequeService.collect(id).subscribe({
           next: (result: any) => {
-            this.alertsService.showError(
+            this.alertsService.showSuccess(
               this.translate.instant("incoming-cheque.collect-cheque-done"),
               ""
             )
@@ -505,7 +506,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
         let sub = this.incomingChequeService.reject(id).subscribe({
           next: (result: any) => {
-            this.alertsService.showError(
+            this.alertsService.showSuccess(
               this.translate.instant("incoming-cheque.reject-cheque-done"),
               ""
             )
@@ -525,12 +526,16 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
   onViewReportClicked(id) {
-    let reportParams: string =
-      "reportParameter=id!" + id
-      + "&reportParameter=lang!" + this.lang
-    const modalRef = this.modalService.open(NgbdModalContent);
-    modalRef.componentInstance.reportParams = reportParams;
-    modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 9;
+    // let reportParams: string =
+    //   "reportParameter=id!" + id
+    //   + "&reportParameter=lang!" + this.lang
+    // const modalRef = this.modalService.open(NgbdModalContent);
+    // modalRef.componentInstance.reportParams = reportParams;
+    // modalRef.componentInstance.reportType = 1;
+    // modalRef.componentInstance.reportTypeID = 9;
+
+    let reportType = 1;
+    let reportTypeId = 9;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 }
