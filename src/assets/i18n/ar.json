@@ -172,7 +172,8 @@
         "unit-offer-repeated": "هذا الوحدة تم اختيارها من قبل",
         "faild-login": "بيانات اعتماد تسجيل الدخول غير صحيحة",
         "connection-error": "خطأ في الخادم !",
-        "nameEn-not-Found": "لا يوجد اسم لاتيني  "
+        "nameEn-not-Found": "لا يوجد اسم لاتيني  ",
+        "account-level-limit":"لا يمكن اختيار مستوى أقل من "
     },
     "user-manager": {
         "add-user": "إضافة مستخدم",

@@ -95,12 +95,13 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 	selectedLeafAccountName = ''
 	selectedMainAccountName = ''
 	selectedAccountGroupName = ''
+	levelId
 	gotoViewer() {
 
 		let monthFrom;
 		let monthTo;
 
-		;
+		debugger
 
 		if (this.fromDate == undefined || this.fromDate == null) {
 			//  this.fromDate = this.dateConverterService.getCurrentDate();
@@ -148,8 +149,28 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 			this.parentAccountId = 0;
 		}
 
-	
-		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
+	    if(this.parentAccountId)
+		{
+			let reportParams: string = "reportParameter=fromDate!" + this.fromDate
+			+ "&reportParameter=toDate!" + this.toDate
+			+ "&reportParameter=branchId!" + this.branchId
+			+ "&reportParameter=currencyId!" + this.currencyId
+			+ "&reportParameter=companyId!" + this.companyId
+			+ "&reportParameter=levelId!" + this.levelId
+			+ "&reportParameter=mainAccountId!" + Number(this.parentAccountId)
+			+ "&reportParameter=entriesStatusId!" + this.entriesStatusId
+			+ "&reportParameter=lang!" + this.lang
+			+ "&reportParameter=userId!" + this.userId
+			+ "&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName
+			+ "&reportParameter=selectedBranchName!" + this.selectedBranchName
+			
+		const modalRef = this.modalService.open(NgbdModalContent);
+		modalRef.componentInstance.reportParams = reportParams;
+		modalRef.componentInstance.reportType = 1;
+		modalRef.componentInstance.reportTypeID = 13;
+			
+		}else{
+			let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 			+ "&reportParameter=toDate!" + this.toDate
 			+ "&reportParameter=branchId!" + this.branchId
 			+ "&reportParameter=currencyId!" + this.currencyId
@@ -171,6 +192,8 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		modalRef.componentInstance.reportParams = reportParams;
 		modalRef.componentInstance.reportType = 1;
 		modalRef.componentInstance.reportTypeID = 7;
+		}
+	
 	}
 	cancelDefaultReportStatus() {
 		this.reportService.cancelDefaultReport(1, 7).subscribe((resonse) => { });
@@ -182,14 +205,15 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		ShowCurrency: boolean;
 		ShowBranch: boolean;
 		ShowEntriesStatus: boolean;
+		ShowLevel: boolean;
 		ShowFromEntryNo: boolean;
 		ShowAccountGroup: boolean;
 		ShowToEntryNo: boolean;
-		ShowMainAccount: boolean;
-	} = {
+		ShowMainAccount: boolean;} = {
 			ShowFromDate: true,
 			ShowToDate: true,
 			ShowSearch: false,
+			ShowLevel: false,
 			ShowAccountGroup: true,
 			ShowMainAccount: true,
 			ShowCurrency: true,
@@ -199,13 +223,51 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 			ShowToEntryNo: true,
 		};
 
-	OnFilter(e: { fromDate; toDate; currencyId; currencyName; branchId; branchName; fromEntryNo; toEntryNo; entriesStatusId; entriesStatusName; mainAccountId; mainAccountName; accountGroupName, accountGroupId }) {
+
+		showLevels(mainAccount)
+		{  debugger
+			if(mainAccount)
+			{
+				this.ShowOptions = {
+					ShowFromDate: true,
+					ShowToDate: true,
+					ShowSearch: false,
+					ShowLevel: true,
+					ShowAccountGroup: true,
+					ShowMainAccount: true,
+					ShowCurrency: true,
+					ShowBranch: true,
+					ShowEntriesStatus: true,
+					ShowFromEntryNo: true,
+					ShowToEntryNo: true,
+				};
+			}else{
+				this.ShowOptions = {
+					ShowFromDate: true,
+					ShowToDate: true,
+					ShowSearch: false,
+					ShowLevel: false,
+					ShowAccountGroup: true,
+					ShowMainAccount: true,
+					ShowCurrency: true,
+					ShowBranch: true,
+					ShowEntriesStatus: true,
+					ShowFromEntryNo: true,
+					ShowToEntryNo: true,
+				};
+			}
+		
+		}
+
+	OnFilter(e: { fromDate; toDate; currencyId;level; currencyName; branchId; branchName; fromEntryNo; toEntryNo; entriesStatusId; entriesStatusName; mainAccountId; mainAccountName; accountGroupName, accountGroupId }) {
+		debugger;
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
 		this.toEntryNo = e.toEntryNo;
 		this.currencyId = e.currencyId;
 		this.branchId = e.branchId;
+		this.levelId =e.level;
 		this.entriesStatusId = e.entriesStatusId;
 		this.parentAccountId = e.mainAccountId;
 		this.accountGroupId = e.accountGroupId;
@@ -214,6 +276,9 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		this.selectedCurrencyName = e.currencyName;
 		this.selectedEntriesStatusName = e.entriesStatusName;
 		this.selectedBranchName = e.branchName;
+		this.showLevels(e.mainAccountId);
+		 
+		
 
 	}
 

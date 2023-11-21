@@ -164,7 +164,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			next: (res: any) => {
 			  debugger;
 			  
-		     	res?.response?.useHijri
+		     	// res?.response?.useHijri
 			 
 			  resolve();
 		  
