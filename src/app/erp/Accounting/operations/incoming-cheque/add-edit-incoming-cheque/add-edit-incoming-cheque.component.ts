@@ -145,6 +145,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getIncomingChequeCode();
+        
+        if (this.mainCurrencyId > 0) {
+          this.currencyId = Number(this.mainCurrencyId);
+          this.getAmount();
+
+        }
       }
       this.changePath();
       this.listenToClickedButton();
@@ -165,7 +171,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
         if (this.id > 0) {
           this.getincomingChequeById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.sharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
 
             this.spinner.hide();
 
@@ -244,6 +250,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.serial = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.mainCurrencyId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            
             if (this.fiscalPeriodId > 0) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
             }
@@ -591,6 +598,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
               this.getIncomingChequeCode()
             }
             this.defineIncomingChequeForm();
+           
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
@@ -743,7 +751,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
 
   onChangeCurrency(event, index) {
-   
+
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
@@ -810,8 +818,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
         )
         return;
       }
-      entity.status = 1 ;
-      
+      entity.status = 1;
+
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
 

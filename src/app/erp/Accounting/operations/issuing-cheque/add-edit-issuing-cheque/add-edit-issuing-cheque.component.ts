@@ -146,6 +146,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getIssuingChequeCode();
+        if (this.mainCurrencyId > 0) {
+          this.currencyId = Number(this.mainCurrencyId);
+          this.getAmount();
+        }
       }
       this.changePath();
       this.listenToClickedButton();

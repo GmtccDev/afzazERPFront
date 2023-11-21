@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { EntryTypesEnum } from 'src/app/shared/constants/enumrators/enums';
 @Component({
 	selector: 'app-journal-entry-post',
 	templateUrl: './journal-entry-post.component.html',
@@ -114,7 +115,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	toggleButton: boolean = true;
 	// Function to filter the data based on code and date
 	filterData(code, fromDate, toDate) {
-		debugger
+		    
 		this.filteredData = this.journalEntry;
 		if (code != undefined) {
 			this.filteredData = this.filteredData.filter(item =>
@@ -157,9 +158,9 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 					this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntryPost");
 					if (res.success) {
 
-						this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true);
+						this.journalEntry = res.response.data.result;
+						//res.response.items.filter(x => x.isCloseFiscalPeriod != true);
 						this.filteredData = this.journalEntry;
-						console.log(this.journalEntry)
 					}
 
 
@@ -230,28 +231,40 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 				}
 			},
 		this.lang == 'ar'
-			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
+			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: 'Journal Name ', field: 'journalNameEn' },
 
 
 		this.lang == 'ar'
 			? {
-				title: '  الحالة  ', width: 300, field: 'postType', formatter: this.translateArEnum
+				title: '  الحالة  ', width: 300, field: 'statusAr'
+				//, formatter: this.translateArEnum
 			} : {
-				title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
+				title: '   Status', width: 300, field: 'statusEn'
+				//, formatter: this.translateEnEnum
 			},
 		this.lang == 'ar'
 			? {
-				title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum,
+				title: '  النوع  ', width: 300, field: 'entryTypeAr',
+				//, formatter: this.translateParentArEnum,
 
 				cellClick: (e, cell) => {
 
-					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			} : {
-				title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum, cellClick: (e, cell) => {
+				title: '   Type', width: 300, field: 'entryTypeEn'
+				//, formatter: this.translateParentEnEnum
+				, cellClick: (e, cell) => {
 
-					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
+			},
+
+		this.lang == 'ar'
+			? {
+				title: '  النمط  ', width: 300, field: 'settingAr'
+			} : {
+				title: 'Setting', width: 300, field: 'settingEn'
 			},
 
 	];
@@ -276,7 +289,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
 	openJournalEntryes() { }
 	onCheck(id) {
-		;
 		const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
 		if (index !== -1) {
 			this.listIds.splice(index, 1);
@@ -316,7 +328,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 				this.router.navigate(['accounting-operations/journalEntryPost/update-journalEntryPost/' + event.item.id])
 
 			} else if (event.actionName == 'Delete') {
-				// this.showConfirmDeleteMessage(event.item.id);
 			}
 		}
 	}
@@ -466,17 +477,21 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		return "<input id='checkId' type='checkbox' />";
 	};
 
-	onViewClicked(parentType, id) {
-
-		if (parentType == 1) {
-			window.open('accounting-operations/vouchers/update-voucher/1/' + id, "_blank")
-
+	onViewClicked(parentType, id, settingId) {
+		    
+		if (parentType == EntryTypesEnum.Voucher) {
+			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
-		if (parentType == 2) {
+		if (parentType == EntryTypesEnum.IncomingCheque) {
 			window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
 		}
-		if (parentType == 3) {
-			window.open('accounting-operations//issuingCheque/update-issuingCheque/' + id, "_blank")
+		if (parentType == EntryTypesEnum.IssuingCheque) {
+			window.open('accounting-operations/issuingCheque/update-issuingCheque/' + id, "_blank")
+		}
+		if (parentType == EntryTypesEnum.SalesBill || parentType == EntryTypesEnum.SalesReturnBill
+			|| parentType == EntryTypesEnum.PurchasesBill || parentType == EntryTypesEnum.PurchasesReturnBill) {
+
+			window.open('warehouses-operations/bill/update-bill/' + settingId + '/' + id, "_blank")
 		}
 	}
 	//#endregion

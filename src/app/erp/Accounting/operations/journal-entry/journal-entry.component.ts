@@ -15,7 +15,7 @@ import { JournalEntryServiceProxy } from '../../services/journal-entry'
 import format from 'date-fns/format';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
-import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { EntryTypesEnum, GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
@@ -125,8 +125,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				next: (res) => {
 					this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
 					if (res.success) {
-						debugger
-						this.journalEntry = res.response.items.filter(x => x.isCloseFiscalPeriod != true && x.fiscalPeriodId == this.fiscalPeriodId);
+						 
+						this.journalEntry = res.response.data.result;
+						//res.response.items.filter(x => x.isCloseFiscalPeriod != true && x.fiscalPeriodId == this.fiscalPeriodId);
 
 
 					}
@@ -168,7 +169,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 	showConfirmDeleteMessage(id) {
-
+		 
 		if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 			this.errorMessage = this.translate.instant("journalEntry.no-delete-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
 			this.errorClass = 'errorMessage';
@@ -176,10 +177,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			return;
 		}
 		return new Promise<void>((resolve, reject) => {
+			 
 			let sub = this.journalEntryService.getJournalEntry(id).subscribe({
 				next: (res: any) => {
 					resolve();
-
+					 
 					if (res.response?.parentType == null) {
 						const modalRef = this.modalService.open(MessageModalComponent);
 						modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
@@ -190,7 +192,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 							if (rs == 'Confirm') {
 
 								this.spinner.show();
-
+								 
 								let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
 									(resonse) => {
 
@@ -244,26 +246,38 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			},
 		this.lang == 'ar'
-			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: ' Name Journal ', field: 'journalNameEn' },
+			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: 'Journal Name', field: 'journalNameEn' },
 
 
 		this.lang == 'ar'
 			? {
-				title: '  الحالة  ', width: 300, field: 'postType', formatter: this.translateArEnum
+				title: '  الحالة  ', width: 300, field: 'statusAr'
+				//, formatter: this.translateArEnum
 			} : {
-				title: '   Status', width: 300, field: 'postType', formatter: this.translateEnEnum
+				title: '   Status', width: 300, field: 'statusEn'
+				//, formatter: this.translateEnEnum
 			},
 		this.lang == 'ar'
 			? {
-				title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum, cellClick: (e, cell) => {
+				title: '  النوع  ', width: 300, field: 'entryTypeAr'
+				//, formatter: this.translateParentArEnum
+				, cellClick: (e, cell) => {
 
-					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			} : {
-				title: '   Type', width: 300, field: 'parentType', formatter: this.translateParentEnEnum, cellClick: (e, cell) => {
+				title: '   Type', width: 300, field: 'entryTypeEn'
+				//formatter: this.translateParentEnEnum
+				, cellClick: (e, cell) => {
 
-					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
+					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
+			},
+		this.lang == 'ar'
+			? {
+				title: '  النمط  ', width: 300, field: 'settingAr'
+			} : {
+				title: 'Setting', width: 300, field: 'settingEn'
 			},
 		this.lang == "ar" ? {
 			title: "عرض التقرير",
@@ -339,22 +353,28 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	onViewReportClicked(id) {
+		 
 		localStorage.removeItem("itemId")
 		localStorage.setItem("itemId", id)
 		let reportType = 1;
 		let reportTypeId = 12;
 		this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
 	}
-	onViewClicked(parentType, id) {
-		debugger
-		if (parentType == 1) {
-			window.open('accounting-operations/vouchers/update-voucher/1/' + id, "")
+	onViewClicked(parentType, id, settingId) {
+		 
+		if (parentType == EntryTypesEnum.Voucher) {
+			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
-		if (parentType == 2) {
+		if (parentType == EntryTypesEnum.IncomingCheque) {
 			window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
 		}
-		if (parentType == 3) {
+		if (parentType == EntryTypesEnum.IssuingCheque) {
 			window.open('accounting-operations/issuingCheque/update-issuingCheque/' + id, "_blank")
+		}
+		if (parentType == EntryTypesEnum.SalesBill || parentType == EntryTypesEnum.SalesReturnBill
+			|| parentType == EntryTypesEnum.PurchasesBill || parentType == EntryTypesEnum.PurchasesReturnBill) {
+
+			window.open('warehouses-operations/bill/update-bill/' + settingId + '/' + id, "_blank")
 		}
 	}
 	onCheckUpdate() {
@@ -402,6 +422,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + event.item.id])
 
 			} else if (event.actionName == 'Delete') {
+				 
 				this.showConfirmDeleteMessage(event.item.id);
 			}
 		}
