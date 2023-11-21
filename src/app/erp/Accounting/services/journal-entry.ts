@@ -57,9 +57,9 @@ export class JournalEntryServiceProxy {
         if (filter != undefined)
             queryParams = queryParams.append("filter", filter);
 
-        return this.http.get<any>(this.baseUrl + "/api/JournalEntry/all?", { params: queryParams });
+       // return this.http.get<any>(this.baseUrl + "/api/JournalEntry/all?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/JournalEntry/getJournalEntries?", { params: queryParams });
 
-        // return this.http.get<any>(environment.apiUrl + "/api/JournalEntry/GetJournalEntrys");
     }
 
 
