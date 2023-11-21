@@ -19,7 +19,8 @@ import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/en
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
   selector: 'app-incoming-cheque',
   templateUrl: './incoming-cheque.component.html',
@@ -57,6 +58,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   };
   listIds: any[] = [];
+  dateType: any;
   //#endregion
 
   //#region Constructor
@@ -71,6 +73,10 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private reportViewerService: ReportViewerService,
+    private companyService: CompanyServiceProxy,
+    private dateService: DateCalculation,
+
+
 
   ) {
 
@@ -82,7 +88,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getIncomingChequees()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId), this.getIncomingChequees()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -255,16 +261,24 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     },
     this.lang == 'ar'
       ? {
-        title: '  تاريخ  ', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
-          var value = cell.getValue();
-          value = format(new Date(value), 'dd-MM-yyyy');;
-          return value;
+        title: '  تاريخ  ', width: 300, field: 'date', formatter:  (cell, formatterParams, onRendered) => {
+          if (this.dateType == 2) {
+						return this.dateService.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
         }
       } : {
-        title: 'Date', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
-          var value = cell.getValue();
-          value = format(new Date(value), 'dd-MM-yyyy');;
-          return value;
+        title: 'Date', width: 300, field: 'date', formatter:  (cell, formatterParams, onRendered)=>{
+          if (this.dateType == 2) {
+						return this.dateService.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
         }
       },
     this.lang == "ar" ? {
@@ -538,4 +552,34 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     let reportTypeId = 9;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
+  getCompanyById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+
+			let sub = this.companyService.getCompany(id).subscribe({
+				next: (res: any) => {
+					debugger;
+
+					res?.response?.useHijri
+					if (res?.response?.useHijri) {
+						this.dateType = 2
+					} else {
+						this.dateType = 1
+					}
+
+					resolve();
+
+
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
+
+		});
+	}
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,16 +21,20 @@ import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services'
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { UserService } from 'src/app/shared/common-services/user.service';
+import { FullDateComponent } from 'src/app/shared/date/full-date/full-date.component';
+import { IslamicI18n } from 'src/app/shared/services/date-services/hijriservice';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
 	selector: 'app-journal-entry',
 	templateUrl: './journal-entry.component.html',
 	styleUrls: ['./journal-entry.component.scss']
 })
 export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
-
+	@ViewChild(FullDateComponent) fullDate;
 	//#region Main Declarations
 	journalEntry: any[] = [];
 	currnetUrl: any;
+	dateType: any;
 	addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
 	updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
 	listUrl: string = '/accounting-operations/journalEntry';
@@ -51,13 +55,15 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	fiscalPeriodId: any;
 	fiscalPeriodName: any;
 	fiscalPeriodStatus: any;
+	refreshGrid: boolean = false;
+
 	//#endregion
 
 	//#region Constructor
 	constructor(
 		private journalEntryService: JournalEntryServiceProxy,
 		private router: Router,
-		private companyService:CompanyServiceProxy,
+		private companyService: CompanyServiceProxy,
 		private sharedServices: SharedService,
 		private alertsService: NotificationsAlertsService,
 		private modalService: NgbModal,
@@ -67,6 +73,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		private reportViewerService: ReportViewerService,
 		private generalConfigurationService: GeneralConfigurationServiceProxy,
 		private fiscalPeriodService: FiscalPeriodServiceProxy,
+		private dateCalculation: DateCalculation
 
 	) {
 
@@ -81,9 +88,9 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.spinner.show();
 		Promise.all([
 			this.getGeneralConfigurationsOfFiscalPeriod(),
-			 this.getJournalEntryes(),
-			 this.getCompanyById(this.companyId)
-			])
+			this.getCompanyById(this.companyId),
+			this.getJournalEntryes(),
+		])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -134,7 +141,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				next: (res) => {
 					this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
 					if (res.success) {
-						 
+
 						this.journalEntry = res.response.data.result;
 						//res.response.items.filter(x => x.isCloseFiscalPeriod != true && x.fiscalPeriodId == this.fiscalPeriodId);
 
@@ -159,31 +166,36 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 	getCompanyById(id: any) {
 		return new Promise<void>((resolve, reject) => {
-		 
-		  let sub = this.companyService.getCompany(id).subscribe({
-			next: (res: any) => {
-			  debugger;
-			  
-		     	res?.response?.useHijri
-			 
-			  resolve();
-		  
-		   
-	
-			},
-			error: (err: any) => {
-			  reject(err);
-			},
-			complete: () => {
-			  //console.log('complete');
-			},
-		  });
-		  this.subsList.push(sub);
-	
+
+			let sub = this.companyService.getCompany(id).subscribe({
+				next: (res: any) => {
+					debugger;
+
+					res?.response?.useHijri
+					if (res?.response?.useHijri) {
+						this.dateType = 2
+					} else {
+						this.dateType = 1
+					}
+
+					resolve();
+
+
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
+
 		});
-	  }
-	
-	
+	}
+
+
 
 	//#endregion
 
@@ -205,7 +217,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 	showConfirmDeleteMessage(id) {
-		 
+
 		if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 			this.errorMessage = this.translate.instant("journalEntry.no-delete-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
 			this.errorClass = 'errorMessage';
@@ -213,11 +225,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			return;
 		}
 		return new Promise<void>((resolve, reject) => {
-			 
+
 			let sub = this.journalEntryService.getJournalEntry(id).subscribe({
 				next: (res: any) => {
 					resolve();
-					 
+
 					if (res.response?.parentType == null) {
 						const modalRef = this.modalService.open(MessageModalComponent);
 						modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
@@ -228,7 +240,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 							if (rs == 'Confirm') {
 
 								this.spinner.show();
-								 
+
 								let sub = this.journalEntryService.deleteJournalEntry(id).subscribe(
 									(resonse) => {
 
@@ -261,6 +273,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	searchFilters: any;
 	groupByCols: string[] = [];
 	lang: string = localStorage.getItem("language");
+
+
 	columnNames = [
 
 		{
@@ -269,16 +283,29 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		},
 		this.lang == 'ar'
 			? {
-				title: '  تاريخ  ', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
-					var value = cell.getValue();
-					value = format(new Date(value), 'dd-MM-yyyy');;
-					return value;
+				title: '  تاريخ  ', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
+
+					if (this.dateType == 2) {
+						return this.dateCalculation.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
+
+
+
+
 				}
 			} : {
-				title: 'Date', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
-					var value = cell.getValue();
-					value = format(new Date(value), 'dd-MM-yyyy');;
-					return value;
+				title: 'Date', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
+					if (this.dateType == 2) {
+						return this.dateCalculation.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
 				}
 			},
 		this.lang == 'ar'
@@ -368,6 +395,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			submitMode: false
 		} as ToolbarData);
 	}
+
 	onCheckEdit(id) {
 
 		localStorage.removeItem("itemId");
@@ -389,7 +417,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	onViewReportClicked(id) {
-		 
+
 		localStorage.removeItem("itemId")
 		localStorage.setItem("itemId", id)
 		let reportType = 1;
@@ -397,7 +425,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
 	}
 	onViewClicked(parentType, id, settingId) {
-		 
+
 		if (parentType == EntryTypesEnum.Voucher) {
 			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
@@ -458,7 +486,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				this.router.navigate(['accounting-operations/journalEntry/update-journalEntry/' + event.item.id])
 
 			} else if (event.actionName == 'Delete') {
-				 
+
 				this.showConfirmDeleteMessage(event.item.id);
 			}
 		}
@@ -554,7 +582,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		let text;
 		switch (status) {
 			case 1:
-				text = 'سندات' ;
+				text = 'سندات';
 				break;
 			case 2:
 				text = 'شيكات ورداة ';
@@ -566,11 +594,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				text = 'قيد';
 				break;
 		}
-    if(text=='قيد'){
-      return text;
-    }
-    const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
-    return iconHtml;
+		if (text == 'قيد') {
+			return text;
+		}
+		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+		return iconHtml;
 
 	}
 	translateParentEnEnum(cell, formatterParams, onRendered) {
@@ -591,11 +619,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				text = 'Journal Entry';
 				break;
 		}
-    if(text=='Journal Entry'){
-      return text;
-    }
-    const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
-    return iconHtml;
+		if (text == 'Journal Entry') {
+			return text;
+		}
+		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+		return iconHtml;
 	}
 	CheckBoxFormatIcon() { //plain text value
 
@@ -651,4 +679,94 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 		});
 	}
+	kuwaiticalendar(adjust: any) {
+		debugger
+		var today = new Date();
+		if (adjust) {
+			var adjustmili = 1000 * 60 * 60 * 24 * adjust;
+			var todaymili = today.getTime() + adjustmili;
+			today = new Date(todaymili);
+		}
+		var day = today.getDate();
+		var month = today.getMonth();
+		var year = today.getFullYear();
+		var m = month + 1;
+		var y = year;
+		if (m < 3) {
+			y -= 1;
+			m += 12;
+		}
+
+		var a = Math.floor(y / 100.);
+		var b = 2 - a + Math.floor(a / 4.);
+		if (y < 1583) b = 0;
+		if (y == 1582) {
+			if (m > 10) b = -10;
+			if (m == 10) {
+				b = 0;
+				if (day > 4) b = -10;
+			}
+		}
+
+		var jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + b - 1524;
+
+		b = 0;
+		if (jd > 2299160) {
+			a = Math.floor((jd - 1867216.25) / 36524.25);
+			b = 1 + a - Math.floor(a / 4.);
+		}
+		var bb = jd + b + 1524;
+		var cc = Math.floor((bb - 122.1) / 365.25);
+		var dd = Math.floor(365.25 * cc);
+		var ee = Math.floor((bb - dd) / 30.6001);
+		day = (bb - dd) - Math.floor(30.6001 * ee);
+		month = ee - 1;
+		if (ee > 13) {
+			cc += 1;
+			month = ee - 13;
+		}
+		year = cc - 4716;
+
+		if (adjust) {
+			var wd = this.gmod(jd + 1 - adjust, 7) + 1;
+		} else {
+			var wd = this.gmod(jd + 1, 7) + 1;
+		}
+
+		var iyear = 10631. / 30.;
+		var epochastro = 1948084;
+		var epochcivil = 1948085;
+
+		var shift1 = 8.01 / 60.;
+
+		var z = jd - epochastro;
+		var cyc = Math.floor(z / 10631.);
+		z = z - 10631 * cyc;
+		var j = Math.floor((z - shift1) / iyear);
+		var iy = 30 * cyc + j;
+		z = z - Math.floor(j * iyear + shift1);
+		var im = Math.floor((z + 28.5001) / 29.5);
+		if (im == 13) im = 12;
+		var id = z - Math.floor(29.5001 * im - 29);
+
+		//var myRes = new Array(8);
+
+		// myRes[0] = day; //calculated day (CE)
+		// myRes[1] = month-1; //calculated month (CE)
+		// myRes[2] = year; //calculated year (CE)
+		// myRes[3] = jd-1; //julian day number
+		// myRes[4] = wd-1; //weekday number
+		// myRes[5] = id; //islamic date
+		// myRes[6] = im-1; //islamic month
+		// myRes[7] = iy; //islamic year
+
+		return id;
+	}
+	gmod(n, m) {
+		return ((n % m) + m) % m;
+	}
+
+
 }
+
+

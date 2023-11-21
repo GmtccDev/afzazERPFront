@@ -1,10 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/common-services/shared-service';
 import { ToolbarPath } from 'src/app/shared/interfaces/toolbar-path';
-import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarData } from 'src/app/shared/interfaces/toolbar-data';
 import { Subscription } from 'rxjs';
 import { ITabulatorActionsSelected } from '../../../../../shared/interfaces/ITabulator-action-selected';
@@ -20,10 +18,12 @@ import { EntryTypesEnum } from 'src/app/shared/constants/enumrators/enums';
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { UserService } from 'src/app/shared/common-services/user.service';
 @Component({
-  selector: 'app-journal-entry-post',
-  templateUrl: './journal-entry-post.component.html',
-  styleUrls: ['./journal-entry-post.component.scss']
+	selector: 'app-journal-entry-post',
+	templateUrl: './journal-entry-post.component.html',
+	styleUrls: ['./journal-entry-post.component.scss']
 })
 export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -42,7 +42,10 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
 	};
 	listIds: any[] = [];
-  fiscalPeriodId: any;
+	fiscalPeriodId: any;
+	dateType: any;
+	companyId: string = this.userService.getCompanyId();
+
 
 	//#endregion
 
@@ -51,14 +54,17 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		private journalEntryService: JournalEntryServiceProxy,
 		private router: Router,
 		private sharedServices: SharedService,
-		private alertsService: NotificationsAlertsService,
-		private modalService: NgbModal,
 		private translate: TranslateService,
 		private spinner: NgxSpinnerService,
 		private datePipe: DatePipe,
 		private dateService: DateCalculation,
-    private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private fiscalPeriodService: FiscalPeriodServiceProxy,
+		private generalConfigurationService: GeneralConfigurationServiceProxy,
+		private fiscalPeriodService: FiscalPeriodServiceProxy,
+		private companyService: CompanyServiceProxy,
+		private userService: UserService,
+
+
+
 	) {
 
 	}
@@ -68,9 +74,9 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
 	//#region ngOnInit
 	ngOnInit(): void {
-		//  this.defineGridColumn();
 		this.spinner.show();
-		Promise.all([this.getJournalEntryes()])
+		Promise.all([this.getCompanyById(this.companyId),
+		this.getJournalEntryes()])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);
@@ -121,7 +127,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	toggleButton: boolean = true;
 	// Function to filter the data based on code and date
 	filterData(code, fromDate, toDate) {
-		    
+
 		this.filteredData = this.journalEntry;
 		if (code != undefined) {
 			this.filteredData = this.filteredData.filter(item =>
@@ -224,16 +230,24 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		},
 		this.lang == 'ar'
 			? {
-				title: '  تاريخ  ', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
-					var value = cell.getValue();
-					value = format(new Date(value), 'dd-MM-yyyy');;
-					return value;
+				title: '  تاريخ  ', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
+					if (this.dateType == 2) {
+						return this.dateService.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
 				}
 			} : {
-				title: 'Date', width: 300, field: 'date', formatter: function (cell, formatterParams, onRendered) {
-					var value = cell.getValue();
-					value = format(new Date(value), 'dd-MM-yyyy');;
-					return value;
+				title: 'Date', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
+					if (this.dateType == 2) {
+						return this.dateService.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
 				}
 			},
 		this.lang == 'ar'
@@ -484,7 +498,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	};
 
 	onViewClicked(parentType, id, settingId) {
-		    
+
 		if (parentType == EntryTypesEnum.Voucher) {
 			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
@@ -501,53 +515,83 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		}
 	}
 	//#endregion
-  
-  getGeneralConfigurationsOfFiscalPeriod() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
-        next: (res: any) => {
-          resolve();
 
-          if (res.response.value > 0) {
-            this.fiscalPeriodId = res.response.value;
-            if (this.fiscalPeriodId != null) {
-              this.getfiscalPeriodById(this.fiscalPeriodId);
+	getGeneralConfigurationsOfFiscalPeriod() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+				next: (res: any) => {
+					resolve();
 
-            }
-          }
+					if (res.response.value > 0) {
+						this.fiscalPeriodId = res.response.value;
+						if (this.fiscalPeriodId != null) {
+							this.getfiscalPeriodById(this.fiscalPeriodId);
+
+						}
+					}
 
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
-      this.subsList.push(sub);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
 
-    });
+		});
 
-  }
-  getfiscalPeriodById(id: any) {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
-        next: (res: any) => {
-          resolve();
+	}
+	getfiscalPeriodById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+				next: (res: any) => {
+					resolve();
 
-          this.searchFromDate = this.dateService.getDateForCalender(res.response?.fromDate);
-          this.searchToDate == this.dateService.getDateForCalender(res.response?.toDate);
+					this.searchFromDate = this.dateService.getDateForCalender(res.response?.fromDate);
+					this.searchToDate == this.dateService.getDateForCalender(res.response?.toDate);
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
-      this.subsList.push(sub);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
 
-    });
-  }
-  //#endregion
+		});
+	}
+	getCompanyById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+
+			let sub = this.companyService.getCompany(id).subscribe({
+				next: (res: any) => {
+					debugger;
+
+					res?.response?.useHijri
+					if (res?.response?.useHijri) {
+						this.dateType = 2
+					} else {
+						this.dateType = 1
+					}
+
+					resolve();
+
+
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
+
+		});
+	}
+	//#endregion
 }

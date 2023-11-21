@@ -49,6 +49,7 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 	@Input() groupType: number = 0;
 	@Input() path: string = "";
 	@Input() showExport: boolean = true;
+	@Input() refereshGrid:boolean = false;
 
 	filterOperations: { nameAr: string, nameEn: string, symbol: string }[] = [
 		{
@@ -276,6 +277,13 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 			this.showDataOnGrid();
 		}
 
+		if(this.refereshGrid)
+		{
+			debugger
+			this.drawTable();
+			this.showDataOnGrid();
+		}
+
 
 
 	}
@@ -370,8 +378,10 @@ export class TabulatorComponent implements OnInit, OnChanges, AfterViewInit, OnD
 					this.columnNames = [...this.columnSettings];
 					this.setHeaderMenu();
 					this.setHeaderContextMenu();
-					this.tabular.setColumns(this.columnNames);
-					this.tabular.setData(this.childRowData);
+					this.tabular.setColumns(this.columnNames);					
+					let data = [...this.childRowData];
+					this.tabular.setData(data);
+					
 				}
 			}
 		}
