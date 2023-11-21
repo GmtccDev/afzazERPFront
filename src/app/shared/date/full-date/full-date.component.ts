@@ -75,6 +75,7 @@ export class FullDateComponent implements OnInit,OnDestroy {
           }else{
             this.dateType=1
           }
+          
 
           resolve();
       
