@@ -108,7 +108,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
         this.id = +params['id'];
         if (this.id > 0) {
           this.getfiscalPeriodById(this.id).then(a => {
-            this.SharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.SharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
             this.spinner.hide();
 
           }).catch(err => {
@@ -297,6 +297,14 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
       const fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       const toDate = this.dateService.getDateForInsert(inputDto.toDate);
+      if (this.dateService.splitDate(toDate) < this.dateService.splitDate(fromDate)) {
+        //dateGreater
+        this.errorMessage = this.translate.instant("dateGreater");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        this.spinner.hide();
+        return;
+      }
       let hasIntersectionCheck = this.checkDateOverlap(fromDate, toDate, this.fiscalPeriods);
 
       if (hasIntersectionCheck) {
@@ -348,6 +356,14 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
       inputDto.id = this.id;
       const fromDate = this.dateService.getDateForInsert(inputDto.fromDate);
       const toDate = this.dateService.getDateForInsert(inputDto.toDate);
+      if (this.dateService.splitDate(toDate) < this.dateService.splitDate(fromDate)) {
+        //dateGreater
+        this.errorMessage = this.translate.instant("dateGreater");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        this.spinner.hide();
+        return;
+      }
       this.fiscalPeriods = this.fiscalPeriods.filter(c => c.id !== inputDto.id);
       let hasIntersectionCheck = this.checkDateOverlap(fromDate, toDate, this.fiscalPeriods);
 
