@@ -17,10 +17,13 @@ import { DatePipe } from '@angular/common';
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { EntryTypesEnum } from 'src/app/shared/constants/enumrators/enums';
+import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
+import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 @Component({
-	selector: 'app-journal-entry-post',
-	templateUrl: './journal-entry-post.component.html',
-	styleUrls: ['./journal-entry-post.component.scss']
+  selector: 'app-journal-entry-post',
+  templateUrl: './journal-entry-post.component.html',
+  styleUrls: ['./journal-entry-post.component.scss']
 })
 export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -39,6 +42,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
 	};
 	listIds: any[] = [];
+  fiscalPeriodId: any;
+
 	//#endregion
 
 	//#region Constructor
@@ -52,7 +57,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		private spinner: NgxSpinnerService,
 		private datePipe: DatePipe,
 		private dateService: DateCalculation,
-
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
 	) {
 
 	}
@@ -495,4 +501,53 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		}
 	}
 	//#endregion
+  
+  getGeneralConfigurationsOfFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          if (res.response.value > 0) {
+            this.fiscalPeriodId = res.response.value;
+            if (this.fiscalPeriodId != null) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
+
+            }
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          this.searchFromDate = this.dateService.getDateForCalender(res.response?.fromDate);
+          this.searchToDate == this.dateService.getDateForCalender(res.response?.toDate);
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+  //#endregion
 }
