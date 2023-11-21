@@ -146,6 +146,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getIssuingChequeCode();
+        if (this.mainCurrencyId > 0) {
+          this.currencyId = Number(this.mainCurrencyId);
+          this.getAmount();
+        }
       }
       this.changePath();
       this.listenToClickedButton();
@@ -164,7 +168,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
         if (this.id > 0) {
           this.getIssuingChequeById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.sharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
 
             this.spinner.hide();
 
@@ -384,17 +388,18 @@ export class AddEditIssuingChequeComponent implements OnInit {
     ));
   }
   getAmount() {
-    if (this.issuingChequeForm.value.currencyId == this.mainCurrencyId) {
+    debugger
+    if (this.currencyId == this.mainCurrencyId) {
       this.amount = this.amountLocal;
       this.currencyFactor = 1;
     }
     else {
-      let sub = this.currencyServiceProxy.getCurrency(this.issuingChequeForm.value.currencyId).subscribe({
+      let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
-
+          debugger
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = 1 / currencyModel.transactionFactor;
+          this.currencyFactor =  1 /currencyModel.transactionFactor;
           this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
         }
       })
@@ -771,13 +776,15 @@ export class AddEditIssuingChequeComponent implements OnInit {
           }
           let issuingChequeDetail = this.issuingChequeForm.get('issuingChequeDetail') as FormArray;
           if (issuingChequeDetail.length > 0) {
-            this.amountLocal = this.amountLocal + this.issuingChequeForm.get('issuingChequeDetail').value[index].currencyLocal;
+            this.amountLocal =
+              //this.amountLocal + 
+              this.issuingChequeForm.get('issuingChequeDetail').value[index].currencyLocal;
             if (event.target.value == this.mainCurrencyId) {
               this.amount = this.amountLocal;
 
             }
             else {
-              let currencyModel = this.currency.find(x => x.id == event.target.value);
+              let currencyModel = this.currencyList.find(x => x.id == event.target.value);
               this.amount = currencyModel.transactionFactor * this.amountLocal;
 
             }
@@ -810,7 +817,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
       entity.status = 1;
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
-         
+
       let sub = this.issuingChequeService.updateIssuingCheque(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();

@@ -286,5 +286,16 @@ export enum ChequeStatusEnum{
   Collected=2,
   Rejected=3
 }
+export enum EntryTypesEnum
+{
+    Voucher=1,
+    IncomingCheque=2,
+    IssuingCheque=3,
+    SalesBill=4,
+    SalesReturnBill=5,
+    PurchasesBill=6,
+    PurchasesReturnBill=7
+
+}
 
 

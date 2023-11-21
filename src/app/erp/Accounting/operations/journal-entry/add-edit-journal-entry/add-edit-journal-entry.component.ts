@@ -936,14 +936,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         //   return;
         // }
       }
-      if (this.counter < 2) {
-        this.alertsService.showError(
-          this.translate.instant('twoRows'),
-          ""
+      // if (this.counter < 2) {
+      //   this.alertsService.showError(
+      //     this.translate.instant('twoRows'),
+      //     ""
 
-        )
-        return;
-      }
+      //   )
+      //   return;
+      // }
       if ((this.totalCredit == 0 || this.totalDebit == 0)) {
         this.alertsService.showError(
           this.translate.instant('debitCreditValues'),

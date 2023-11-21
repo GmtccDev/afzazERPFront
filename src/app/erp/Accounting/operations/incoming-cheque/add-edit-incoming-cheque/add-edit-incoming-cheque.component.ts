@@ -145,6 +145,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getIncomingChequeCode();
+        
+        if (this.mainCurrencyId > 0) {
+          this.currencyId = Number(this.mainCurrencyId);
+          this.getAmount();
+
+        }
       }
       this.changePath();
       this.listenToClickedButton();
@@ -165,7 +171,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
         if (this.id > 0) {
           this.getincomingChequeById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.sharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
 
             this.spinner.hide();
 
@@ -244,6 +250,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.serial = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.mainCurrencyId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            
             if (this.fiscalPeriodId > 0) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
             }
@@ -382,15 +389,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getAmount() {
-    if (this.incomingChequeForm.value.currencyId == this.mainCurrencyId) {
+    debugger
+    if (this.currencyId == this.mainCurrencyId) {
       this.amount = this.amountLocal;
       this.currencyFactor = 1;
     }
     else {
-      let sub = this.currencyServiceProxy.getCurrency(this.incomingChequeForm.value.currencyId).subscribe({
+      let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
 
-
+          debugger
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = 1 / currencyModel.transactionFactor;
@@ -591,6 +599,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
               this.getIncomingChequeCode()
             }
             this.defineIncomingChequeForm();
+           
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
@@ -743,13 +752,13 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
 
   onChangeCurrency(event, index) {
-   
-    return new Promise<void>((resolve, reject) => {
 
+    return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-
+          debugger
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -775,18 +784,22 @@ export class AddEditIncomingChequeComponent implements OnInit {
           let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
 
           if (incomingChequeDetail.length > 0) {
-            this.amountLocal = this.amountLocal + this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
+            this.amountLocal =
+            // this.amountLocal + 
+            this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
             if (event.target.value == this.mainCurrencyId) {
               this.amount = this.amountLocal;
 
             }
             else {
-              let currencyModel = this.currency.find(x => x.id == event.target.value);
+              debugger
+              let currencyModel = this.currencyList.find(x => x.id == event.target.value);
               this.amount = currencyModel.transactionFactor * this.amountLocal;
 
             }
 
           }
+         // this.getAmount();
 
         },
         error: (err: any) => {
@@ -798,6 +811,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.subsList.push(sub);
 
     });
+
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
@@ -810,8 +824,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
         )
         return;
       }
-      entity.status = 1 ;
-      
+      entity.status = 1;
+
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
 
