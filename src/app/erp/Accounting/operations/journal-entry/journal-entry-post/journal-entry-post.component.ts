@@ -242,7 +242,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		this.lang == 'ar'
 			? {
 				title: '  النوع  ', width: 300, field: 'parentType', formatter: this.translateParentArEnum,
-
 				cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId);
