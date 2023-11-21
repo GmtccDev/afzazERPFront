@@ -389,15 +389,16 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getAmount() {
-    if (this.incomingChequeForm.value.currencyId == this.mainCurrencyId) {
+    debugger
+    if (this.currencyId == this.mainCurrencyId) {
       this.amount = this.amountLocal;
       this.currencyFactor = 1;
     }
     else {
-      let sub = this.currencyServiceProxy.getCurrency(this.incomingChequeForm.value.currencyId).subscribe({
+      let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
 
-
+          debugger
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = 1 / currencyModel.transactionFactor;
@@ -753,11 +754,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
   onChangeCurrency(event, index) {
 
     return new Promise<void>((resolve, reject) => {
-
+      debugger
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-
+          debugger
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -783,18 +784,22 @@ export class AddEditIncomingChequeComponent implements OnInit {
           let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
 
           if (incomingChequeDetail.length > 0) {
-            this.amountLocal = this.amountLocal + this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
+            this.amountLocal =
+            // this.amountLocal + 
+            this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
             if (event.target.value == this.mainCurrencyId) {
               this.amount = this.amountLocal;
 
             }
             else {
-              let currencyModel = this.currency.find(x => x.id == event.target.value);
+              debugger
+              let currencyModel = this.currencyList.find(x => x.id == event.target.value);
               this.amount = currencyModel.transactionFactor * this.amountLocal;
 
             }
 
           }
+         // this.getAmount();
 
         },
         error: (err: any) => {
@@ -806,6 +811,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.subsList.push(sub);
 
     });
+
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
