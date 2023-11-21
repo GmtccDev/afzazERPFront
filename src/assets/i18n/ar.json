@@ -12,6 +12,11 @@
     "can't-delete-some-records": "لايمكن حذف بعض السجلات",
     "can't-delete-record": "لا يمكن حذف السجل",
     "NotAuthorized": "ليس لديك صلاحية",
+    "password-no-match": "كلمة المرور غير متاطبقة",
+    "newPasswordMEdit": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة",
+    "code": "كود التاكيد",
+    "newPasswordM": "يجب أن تكون كلمة مرورك الجديدة مختلفة عن كلمات مرورك السابقة",
+    "newPassword": "كلمة المرور الجديدة",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"

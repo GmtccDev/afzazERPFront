@@ -434,10 +434,14 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 				text = ' شيكات صادرة';
 				break;
 			default:
-				text = '  قيد';
+				text = 'قيد';
 				break;
 		}
-		return text;
+    if(text=='قيد'){
+      return text;
+    }
+    const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+    return iconHtml;
 
 	}
 	translateParentEnEnum(cell, formatterParams, onRendered) {
@@ -455,10 +459,14 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 				text = ' Issuing Cheque ';
 				break;
 			default:
-				text = ' Journal Entry';
+				text = 'Journal Entry';
 				break;
 		}
-		return text;
+    if(text=='Journal Entry'){
+      return text;
+    }
+    const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+    return iconHtml;
 
 	}
 	CheckBoxFormatIcon() { //plain text value

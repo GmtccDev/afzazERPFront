@@ -497,7 +497,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		let text;
 		switch (status) {
 			case 1:
-				text = 'سندات';
+				text = 'سندات' ;
 				break;
 			case 2:
 				text = 'شيكات ورداة ';
@@ -506,10 +506,14 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				text = ' شيكات صادرة';
 				break;
 			default:
-				text = '  قيد';
+				text = 'قيد';
 				break;
 		}
-		return text;
+    if(text=='قيد'){
+      return text;
+    }
+    const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+    return iconHtml;
 
 	}
 	translateParentEnEnum(cell, formatterParams, onRendered) {
@@ -527,11 +531,14 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				text = ' Issuing Cheque ';
 				break;
 			default:
-				text = ' Journal Entry';
+				text = 'Journal Entry';
 				break;
 		}
-		return text;
-
+    if(text=='Journal Entry'){
+      return text;
+    }
+    const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+    return iconHtml;
 	}
 	CheckBoxFormatIcon() { //plain text value
 
