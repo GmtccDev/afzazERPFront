@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,12 +21,14 @@ import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/en
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
 import { TabulatorComponent } from 'src/app/shared/components/tabulator/tabulator/tabulator.component';
-import * as Tabulator from 'tabulator-tables/dist/js/tabulator';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
-  styleUrls: ['./vouchers.component.scss']
+  styleUrls: ['./vouchers.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -55,6 +57,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   listIds: any[] = [];
   tabular: any;
+  dateType: any;
+
 
   //#endregion
   @ViewChild(TabulatorComponent) child;
@@ -73,6 +77,9 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
+    private cd:ChangeDetectorRef,
+    private companyService: CompanyServiceProxy,
+    private dateService: DateCalculation,
 
   ) {
 
@@ -83,6 +90,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    debugger
+    this.vouchers = [];
 
    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     if (!localStorage.getItem('foo')) {
@@ -106,7 +115,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
     this.spinner.show();
 
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getVouchers()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId), ,this.getVouchers()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -231,7 +240,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
+            
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
+            this.vouchers =[...this.vouchers];
+            this.cd.detectChanges();
+            
 
           }
           resolve();
@@ -319,10 +332,14 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'voucherDate', width: 300, formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
+      field: 'voucherDate', width: 300, formatter:  (cell, formatterParams, onRendered) => {
+         if (this.dateType == 2) {
+						return this.dateService.getHijriDate(new Date(cell.getValue()));
+					}
+					else {
+						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+					}
       }
 
     },
@@ -494,4 +511,34 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     return "<i class='fa fa-print' aria-hidden='true'></i>";
   };
+  getCompanyById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+
+			let sub = this.companyService.getCompany(id).subscribe({
+				next: (res: any) => {
+					debugger;
+
+					res?.response?.useHijri
+					if (res?.response?.useHijri) {
+						this.dateType = 2
+					} else {
+						this.dateType = 1
+					}
+
+					resolve();
+
+
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
+
+		});
+	}
 }
