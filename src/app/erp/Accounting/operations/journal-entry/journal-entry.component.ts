@@ -19,6 +19,8 @@ import { EntryTypesEnum, GeneralConfigurationEnum } from 'src/app/shared/constan
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { UserService } from 'src/app/shared/common-services/user.service';
 @Component({
 	selector: 'app-journal-entry',
 	templateUrl: './journal-entry.component.html',
@@ -40,6 +42,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		componentAdd: '',
 
 	};
+	companyId: string = this.userService.getCompanyId()
 	listIds: any[] = [];
 	listUpdateIds: any[] = [];
 	errorMessage = '';
@@ -54,9 +57,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	constructor(
 		private journalEntryService: JournalEntryServiceProxy,
 		private router: Router,
+		private companyService:CompanyServiceProxy,
 		private sharedServices: SharedService,
 		private alertsService: NotificationsAlertsService,
 		private modalService: NgbModal,
+		private userService: UserService,
 		private translate: TranslateService,
 		private spinner: NgxSpinnerService,
 		private reportViewerService: ReportViewerService,
@@ -74,7 +79,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	ngOnInit(): void {
 		//  this.defineGridColumn();
 		this.spinner.show();
-		Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getJournalEntryes()])
+		Promise.all([
+			this.getGeneralConfigurationsOfFiscalPeriod(),
+			 this.getJournalEntryes(),
+			 this.getCompanyById(this.companyId)
+			])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -148,6 +157,33 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 
 	}
+	getCompanyById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+		 
+		  let sub = this.companyService.getCompany(id).subscribe({
+			next: (res: any) => {
+			  debugger;
+			  
+		     	res?.response?.useHijri
+			 
+			  resolve();
+		  
+		   
+	
+			},
+			error: (err: any) => {
+			  reject(err);
+			},
+			complete: () => {
+			  //console.log('complete');
+			},
+		  });
+		  this.subsList.push(sub);
+	
+		});
+	  }
+	
+	
 
 	//#endregion
 
