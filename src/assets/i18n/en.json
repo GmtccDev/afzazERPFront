@@ -12,6 +12,14 @@
     "can't-delete-some-records": "can't delete some records",
     "can't-delete-record": "can't delete record",
     "NotAuthorized": "NotAuthorized",
+    "password-no-match": "Password No Match ",
+    "code": "code",
+    "newPasswordMEdit": "Your new password must be different from your previous passwords",
+
+    "newPasswordM": "Your new password must be at least 8 Letters, Numbers or Symbols",
+    "newPassword": "Add New password",
+    "canChangeToParent":"The sub account parent cannot be changed to a main account",
+    "dateGreater":"To date is small than from date", 
     "general": {
         "searchFromDate": "From Date",
         "searchToDate": "To Date",

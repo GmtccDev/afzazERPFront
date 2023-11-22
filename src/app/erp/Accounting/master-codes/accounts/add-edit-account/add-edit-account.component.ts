@@ -629,7 +629,7 @@ export class AddEditAccountComponent implements OnInit {
               listPath: this.listUrl,
             } as ToolbarPath);
             this.router.navigate([this.listUrl]);
-          } else if (currentBtn.action == ToolbarActions.Save && currentBtn.submitMode) {
+          } else if (currentBtn.action == ToolbarActions.Save) {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New || this.currnetUrl == this.addParentUrl) {
             this.toolbarPathData.componentAdd = 'Add account';
@@ -658,6 +658,7 @@ export class AddEditAccountComponent implements OnInit {
       this.spinner.hide();
       return;
     }
+   // this.checkParentAccount()
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountService.createAccount(entity).subscribe({
         next: (result: any) => {
@@ -791,6 +792,32 @@ export class AddEditAccountComponent implements OnInit {
         }
         else if (result.response == true) {
           this.accountForm.controls.isLeafAccount.setValue((event.target.checked));
+        }
+        console.log(result);
+
+
+      },
+      error: (err: any) => {
+        //   reject(err);
+        console.log(err);
+      },
+      complete: () => {
+        //console.log('complete');
+      },
+    });
+  }
+  checkParentAccount() {
+    let sub = this.accountService.checkAccount(this.accountForm?.value?.parentId).subscribe({
+
+      next: (result: any) => {
+debugger
+     
+        if (result.response == false) {
+        this.errorMessage=this.translate.instant('canChangeToParent');
+        this.notificationService.error( this.errorMessage);
+        }
+        else if (result.response == true) {
+        
         }
         console.log(result);
 

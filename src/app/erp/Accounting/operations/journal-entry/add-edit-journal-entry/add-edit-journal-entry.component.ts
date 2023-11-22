@@ -936,14 +936,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         //   return;
         // }
       }
-      if (this.counter < 2) {
-        this.alertsService.showError(
-          this.translate.instant('twoRows'),
-          ""
+      // if (this.counter < 2) {
+      //   this.alertsService.showError(
+      //     this.translate.instant('twoRows'),
+      //     ""
 
-        )
-        return;
-      }
+      //   )
+      //   return;
+      // }
       if ((this.totalCredit == 0 || this.totalDebit == 0)) {
         this.alertsService.showError(
           this.translate.instant('debitCreditValues'),
@@ -1285,7 +1285,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     localStorage.removeItem("itemId")
     localStorage.setItem("itemId", id);
     let reportType = 1;
-    let reportTypeId = 6;
+    let reportTypeId = 12;
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 

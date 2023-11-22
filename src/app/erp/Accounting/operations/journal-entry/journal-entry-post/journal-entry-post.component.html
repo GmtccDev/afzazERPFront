@@ -19,13 +19,13 @@
 							<div class="col-md-3 col-12">
 								<label for="" class="label-name">
 									{{'general.searchFromDate'|translate}}</label>
-								<app-full-date name="date" [(ngModel)]="searchFromDate" ngDefaultControl
+								<app-full-date name="date" [(ngModel)]="searchFromDate" ngDefaultControl [selectedDate]="searchFromDate"
 									(OnDateSelect)="getDate($event)"></app-full-date>
 							</div>
 							<div class="col-md-3 col-12">
 								<label for="" class="label-name">
 									{{'general.searchToDate'|translate}}</label>
-								<app-full-date name="date" [(ngModel)]="searchToDate" ngDefaultControl
+								<app-full-date name="date" [(ngModel)]="searchToDate" ngDefaultControl [selectedDate]="searchToDate"
 									(OnDateSelect)="getDate2($event)"></app-full-date>
 							</div>
 
