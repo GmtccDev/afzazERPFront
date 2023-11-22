@@ -16,6 +16,9 @@ import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.servic
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { UserService } from 'src/app/shared/common-services/user.service';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 
 @Component({
 	selector: 'app-generate-entry-voucher',
@@ -43,6 +46,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 
 	};
 	listIds: any[] = [];
+	dateType: any;
+	companyId: string = this.userService.getCompanyId();
 
 	//#endregion
 
@@ -57,6 +62,11 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		private generalConfigurationService: GeneralConfigurationServiceProxy,
 		private fiscalPeriodService: FiscalPeriodServiceProxy,
 		private alertsService: NotificationsAlertsService,
+		private userService: UserService,
+		private companyService: CompanyServiceProxy,
+		private dateService: DateCalculation,
+
+
 
 
 	) {
@@ -69,7 +79,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	//#region ngOnInit
 	ngOnInit(): void {
 		this.spinner.show();
-		Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getNotGenerateEntryVouchers()])
+		Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId), this.getNotGenerateEntryVouchers()])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'GenerateEntry' } as ToolbarData);
@@ -266,10 +276,14 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		},
 		{
 			title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-			field: 'voucherDate', width: 300, formatter: function (cell, formatterParams, onRendered) {
-				var value = cell.getValue();
-				value = format(new Date(value), 'dd-MM-yyyy');;
-				return value;
+			field: 'voucherDate', width: 300, formatter:  (cell, formatterParams, onRendered) =>{
+				if (this.dateType == 2) {
+					return this.dateService.getHijriDate(new Date(cell.getValue()));
+				}
+				else {
+					return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+				}
 			}
 
 		},
@@ -401,6 +415,36 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			this.subsList.push(sub);
 		}
 
+	}
+	getCompanyById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+
+			let sub = this.companyService.getCompany(id).subscribe({
+				next: (res: any) => {
+					debugger;
+
+					res?.response?.useHijri
+					if (res?.response?.useHijri) {
+						this.dateType = 2
+					} else {
+						this.dateType = 1
+					}
+
+					resolve();
+
+
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
+
+		});
 	}
 
 	//#endregion

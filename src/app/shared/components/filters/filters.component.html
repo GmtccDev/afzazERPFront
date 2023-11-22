@@ -71,6 +71,7 @@
 					</ng-select>
 				</div>
 			</div>
+			
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLeafAccount">
 				<label for="0" class="label-name"> {{'general.leaf-account'|translate}}</label>
 				<div class="input-group  popup">
@@ -85,6 +86,7 @@
 					</ng-select>
 				</div>
 			</div>
+		
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowCostCenter">
 				<label for="0" class="label-name"> {{'component-names.costCenter'|translate}}</label>
 				<div class="input-group  popup">
@@ -99,6 +101,7 @@
 					</ng-select>
 				</div>
 			</div>
+		
 
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowEntriesStatus">
 				<label for="0" class="label-name"> {{'general.entries-status'|translate}}</label>
@@ -108,6 +111,20 @@
 						(ngModelChange)="onSelectEntriesStatus()" [items]="entriesStatusEnum" bindLabel="name"
 						bindValue="id" style="width:100%"></ng-select>
 				</div>
+			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLevel">
+				<label for="0" class="label-name"> {{'general.level'|translate}}</label>
+				<!-- <div class="input-group  popup"> -->
+
+				<div class="form-group position-relative">
+					<input type="number" class="form-control icon-branch" maxlength="level" [(ngModel)]='level' name='level' id="level"
+						(ngModelChange)="onChangeLevel()">
+				</div>
+				<div *ngIf="(level<levelLimit) && setLevelLimit ">
+                      
+				  <span class="text-danger" >*{{'validation-messages.account-level-limit'|translate}} {{levelLimit}} </span>	
+				</div>
+				<!-- </div> -->
 			</div>
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowCurrency">
 				<label for="0" class="label-name"> {{'general.currency'|translate}}</label>
@@ -123,6 +140,7 @@
 					</ng-select>
 
 				</div>
+	
 			</div>
 
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowBranch">
@@ -190,16 +208,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowLevel">
-				<label for="0" class="label-name"> {{'general.level'|translate}}</label>
-				<!-- <div class="input-group  popup"> -->
-
-				<div class="form-group position-relative">
-					<input type="number" class="form-control icon-branch" [(ngModel)]='level' name='level' id="level"
-						(ngModelChange)="onChangeLevel()">
-				</div>
-				<!-- </div> -->
-			</div>
+			
 
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowReportOptions">
 				<label for="0" class="label-name"> {{'general.report-options'|translate}}</label>

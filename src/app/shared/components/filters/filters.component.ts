@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateModel } from '../../model/date-model';
 import { SharedService } from '../../common-services/shared-service';
@@ -10,6 +10,7 @@ import { EntriesStatusEnum, EntriesStatusArEnum, convertEnumToArray, VoucherType
 import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { BranchDto } from 'src/app/erp/master-codes/models/branch';
+import { AccountDto } from 'src/app/erp/Accounting/models/account';
 
 
 @Component({
@@ -292,6 +293,21 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
   }
+  setLevelLimit:boolean=false;
+  levelLimit:number
+  getAccountLevels()
+  {
+    debugger;
+    this.setLevelLimit= true;
+    let AccountItem:AccountDto= this.mainAccountsList.find(x=>x.id==this.selectedMainAccountId);
+    if(AccountItem!=null)
+    {
+      this.levelLimit = AccountItem?.levelId+1;
+      this.level = AccountItem?.levelId+1;
+    }
+ 
+  }
+
   getLeafAccountsByMainAccount() {
 
     if (this.selectedMainAccountId != null && this.selectedMainAccountId != undefined) {
@@ -527,7 +543,9 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectMainAccount() {
+    debugger;
     this.getMainAccounName();
+    this.getAccountLevels();
     this.FireSearch()
 
   }
@@ -584,6 +602,10 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onChangeLevel() {
+    if(this.setLevelLimit)
+    {
+      
+    }
     this.FireSearch()
 
   }

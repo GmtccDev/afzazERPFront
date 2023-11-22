@@ -103,7 +103,9 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
 
   }
   getRouteData() {
+    
     let sub = this.route.params.subscribe((params) => {
+      debugger
       if (params['id'] != null) {
         this.id = +params['id'];
         if (this.id > 0) {
@@ -124,8 +126,9 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
         }
       }
       else {
-        this.spinner.hide();
         this.SharedServices.changeButton({ action: 'New' } as ToolbarData);
+        this.spinner.hide();
+     
       }
     });
     this.subsList.push(sub);
