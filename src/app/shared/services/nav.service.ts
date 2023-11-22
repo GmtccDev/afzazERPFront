@@ -280,6 +280,12 @@ export class NavService implements OnInit, OnDestroy {
 		{
 			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
 		},
+		{
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'layers', active: false, children: [
+				{ path: '/pointOfSale-master-codes/pointOfSale', title: this.translate.instant("component-names.pointOfSale"), type: 'link', active: true },
+				
+			]
+		},
 	];
 	// Array
 
