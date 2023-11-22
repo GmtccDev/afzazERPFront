@@ -286,6 +286,6 @@ export class NavService implements OnInit, OnDestroy {
 	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 	itemsAccount = new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
 	itemsWarehouses = new BehaviorSubject<Menu[]>(this.MENUITEMSWarehouses);
-	itemsPOS = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+	itemsPOS = new BehaviorSubject<Menu[]>(this.MENUITEMSPOS);
 
 }

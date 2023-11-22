@@ -8,218 +8,245 @@ import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.
 import { refreshPaging } from '../../helper/helper';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+	selector: 'app-sidebar',
+	templateUrl: './sidebar.component.html',
+	styleUrls: ['./sidebar.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class SidebarComponent {
 
-  public iconSidebar;
-  public menuItems: Menu[];
-  public url: any;
-  public fileurl: any;
-  subsList: Subscription[] = [];
+	public iconSidebar;
+	public menuItems: Menu[];
+	public url: any;
+	public fileurl: any;
+	subsList: Subscription[] = [];
 
-  // For Horizontal Menu
-  public margin: any = 0;
-  public width: any = window.innerWidth;
-  public leftArrowNone: boolean = true;
-  public rightArrowNone: boolean = false;
+	// For Horizontal Menu
+	public margin: any = 0;
+	public width: any = window.innerWidth;
+	public leftArrowNone: boolean = true;
+	public rightArrowNone: boolean = false;
 
-  subdomain = localStorage.getItem('subDomain');
-  constructor(private router: Router, public navServices: NavService,
-    public layout: LayoutService) {
+	subdomain = localStorage.getItem('subDomain');
+	constructor(private router: Router, public navServices: NavService,
+		public layout: LayoutService) {
 
-    let x = this.subdomain;
-    let menu = localStorage.getItem("Menu");
-    if (menu == '0') {
+		let x = this.subdomain;
+		let menu = localStorage.getItem("Menu");
+		if (menu == '0') {
 
-      this.navServices.itemsSettings.subscribe(menuItems => {
-        this.menuItems = menuItems;
+			this.navServices.itemsSettings.subscribe(menuItems => {
+				this.menuItems = menuItems;
 
-        this.router.events.subscribe((event) => {
-          if (event instanceof NavigationEnd) {
-            menuItems.filter(items => {
+				this.router.events.subscribe((event) => {
+					if (event instanceof NavigationEnd) {
+						menuItems.filter(items => {
 
-              if (items.path === event.url) {
+							if (items.path === event.url) {
 
-                this.setNavActive(items);
-              }
-              if (!items.children) { return false; }
-              items.children.filter(subItems => {
-                if (subItems.path === event.url) {
+								this.setNavActive(items);
+							}
+							if (!items.children) { return false; }
+							items.children.filter(subItems => {
+								if (subItems.path === event.url) {
 
-                  this.setNavActive(subItems);
-                }
-                if (!subItems.children) { return false; }
-                subItems.children.filter(subSubItems => {
+									this.setNavActive(subItems);
+								}
+								if (!subItems.children) { return false; }
+								subItems.children.filter(subSubItems => {
 
-                  if (subSubItems.path === event.url) {
+									if (subSubItems.path === event.url) {
 
-                    this.setNavActive(subSubItems);
-                  }
-                });
-              });
-            });
-          }
-        });
-      });
-    }
-    else if (menu == '5') {
-      this.navServices.itemsAccount.subscribe(menuItems => {
+										this.setNavActive(subSubItems);
+									}
+								});
+							});
+						});
+					}
+				});
+			});
+		}
+		else if (menu == '5') {
+			this.navServices.itemsAccount.subscribe(menuItems => {
 
-        this.menuItems = menuItems;
+				this.menuItems = menuItems;
 
-        this.router.events.subscribe((event) => {
-          if (event instanceof NavigationEnd) {
-            menuItems.filter(items => {
-              if (items.path === event.url) {
-                this.setNavActive(items);
-              }
-              if (!items.children) { return false; }
-              items.children.filter(subItems => {
-                if (subItems.path === event.url) {
-                  this.setNavActive(subItems);
-                }
-                if (!subItems.children) { return false; }
-                subItems.children.filter(subSubItems => {
-                  if (subSubItems.path === event.url) {
-                    this.setNavActive(subSubItems);
-                  }
-                });
-              });
-            });
-          }
-        });
-      });
-    }
-    else if (menu == '6') {
-      this.navServices.itemsWarehouses.subscribe(menuItems => {
-        this.menuItems = menuItems;
+				this.router.events.subscribe((event) => {
+					if (event instanceof NavigationEnd) {
+						menuItems.filter(items => {
+							if (items.path === event.url) {
+								this.setNavActive(items);
+							}
+							if (!items.children) { return false; }
+							items.children.filter(subItems => {
+								if (subItems.path === event.url) {
+									this.setNavActive(subItems);
+								}
+								if (!subItems.children) { return false; }
+								subItems.children.filter(subSubItems => {
+									if (subSubItems.path === event.url) {
+										this.setNavActive(subSubItems);
+									}
+								});
+							});
+						});
+					}
+				});
+			});
+		}
+		else if (menu == '6') {
+			this.navServices.itemsWarehouses.subscribe(menuItems => {
+				this.menuItems = menuItems;
 
-        this.router.events.subscribe((event) => {
+				this.router.events.subscribe((event) => {
 
-          if (event instanceof NavigationEnd) {
-            menuItems.filter(items => {
-              if (items.path === event.url) {
-                this.setNavActive(items);
-              }
-              if (!items.children) { return false; }
-              items.children.filter(subItems => {
-                if (subItems.path === event.url) {
-                  this.setNavActive(subItems);
-                }
-                if (!subItems.children) { return false; }
-                subItems.children.filter(subSubItems => {
-                  if (subSubItems.path === event.url) {
-                    this.setNavActive(subSubItems);
-                  }
-                });
-              });
-            });
-          }
-        });
-      });
-    }
+					if (event instanceof NavigationEnd) {
+						menuItems.filter(items => {
+							if (items.path === event.url) {
+								this.setNavActive(items);
+							}
+							if (!items.children) { return false; }
+							items.children.filter(subItems => {
+								if (subItems.path === event.url) {
+									this.setNavActive(subItems);
+								}
+								if (!subItems.children) { return false; }
+								subItems.children.filter(subSubItems => {
+									if (subSubItems.path === event.url) {
+										this.setNavActive(subSubItems);
+									}
+								});
+							});
+						});
+					}
+				});
+			});
+		}
+		else if (menu == '1') {
+			this.navServices.itemsPOS.subscribe(menuItems => {
+				this.menuItems = menuItems;
+
+				this.router.events.subscribe((event) => {
+
+					if (event instanceof NavigationEnd) {
+						menuItems.filter(items => {
+							if (items.path === event.url) {
+								this.setNavActive(items);
+							}
+							if (!items.children) { return false; }
+							items.children.filter(subItems => {
+								if (subItems.path === event.url) {
+									this.setNavActive(subItems);
+								}
+								if (!subItems.children) { return false; }
+								subItems.children.filter(subSubItems => {
+									if (subSubItems.path === event.url) {
+										this.setNavActive(subSubItems);
+									}
+								});
+							});
+						});
+					}
+				});
+			});
+		}
+
+	}
+	//#region ngOnDestroy
+	ngOnDestroy() {
+		this.subsList.forEach((s) => {
+			if (s) {
+				s.unsubscribe();
+			}
+		});
+	}
+	//#endregion
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		this.width = event.target.innerWidth - 500;
+	}
+
+	sidebarToggle() {
+
+		this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
+	}
+
+	// Active Nave state
+	setNavActive(item) {
+
+		// if (!localStorage.getItem('foo')) {
+		//   localStorage.setItem('foo', 'no reload')
+		//   location.reload()
+
+		// } else {
+		//   localStorage.removeItem('foo')
+
+		// }
+
+		this.menuItems.filter(menuItem => {
+
+			if (menuItem !== item) {
+
+				menuItem.active = false;
+			}
+			if (menuItem.children && menuItem.children.includes(item)) {
+
+				menuItem.active = true;
+			}
+			if (menuItem.children) {
+				menuItem.children.filter(submenuItems => {
+
+					if (submenuItems.children && submenuItems.children.includes(item)) {
+
+						menuItem.active = true;
+						submenuItems.active = true;
+					}
+				});
+			}
+		});
+	}
+
+	// Click Toggle menu
+	toggletNavActive(item) {
+
+		if (!item.active) {
+			this.menuItems.forEach(a => {
+				if (this.menuItems.includes(item)) {
+					a.active = false;
+				}
+				if (!a.children) { return false; }
+				a.children.forEach(b => {
+					if (a.children.includes(item)) {
+						b.active = false;
+					}
+				});
+			});
+		}
+		item.active = !item.active;
+	}
 
 
-  }
-  //#region ngOnDestroy
-  ngOnDestroy() {
-    this.subsList.forEach((s) => {
-      if (s) {
-        s.unsubscribe();
-      }
-    });
-  }
-  //#endregion
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.width = event.target.innerWidth - 500;
-  }
+	// For Horizontal Menu
+	scrollToLeft() {
+		if (this.margin >= -this.width) {
+			this.margin = 0;
+			this.leftArrowNone = true;
+			this.rightArrowNone = false;
+		} else {
+			this.margin += this.width;
+			this.rightArrowNone = false;
+		}
+	}
 
-  sidebarToggle() {
-
-    this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
-  }
-
-  // Active Nave state
-  setNavActive(item) {
-
-    // if (!localStorage.getItem('foo')) {
-    //   localStorage.setItem('foo', 'no reload')
-    //   location.reload()
-
-    // } else {
-    //   localStorage.removeItem('foo')
-
-    // }
-
-    this.menuItems.filter(menuItem => {
-       
-      if (menuItem !== item) {
-         
-        menuItem.active = false;
-      }
-      if (menuItem.children && menuItem.children.includes(item)) {
-         
-        menuItem.active = true;
-      }
-      if (menuItem.children) {
-        menuItem.children.filter(submenuItems => {
-           
-          if (submenuItems.children && submenuItems.children.includes(item)) {
-             
-            menuItem.active = true;
-            submenuItems.active = true;
-          }
-        });
-      }
-    });
-  }
-
-  // Click Toggle menu
-  toggletNavActive(item) {
-
-    if (!item.active) {
-      this.menuItems.forEach(a => {
-        if (this.menuItems.includes(item)) {
-          a.active = false;
-        }
-        if (!a.children) { return false; }
-        a.children.forEach(b => {
-          if (a.children.includes(item)) {
-            b.active = false;
-          }
-        });
-      });
-    }
-    item.active = !item.active;
-  }
-
-
-  // For Horizontal Menu
-  scrollToLeft() {
-    if (this.margin >= -this.width) {
-      this.margin = 0;
-      this.leftArrowNone = true;
-      this.rightArrowNone = false;
-    } else {
-      this.margin += this.width;
-      this.rightArrowNone = false;
-    }
-  }
-
-  scrollToRight() {
-    if (this.margin <= -3051) {
-      this.margin = -3464;
-      this.leftArrowNone = false;
-      this.rightArrowNone = true;
-    } else {
-      this.margin += -this.width;
-      this.leftArrowNone = false;
-    }
-  }
+	scrollToRight() {
+		if (this.margin <= -3051) {
+			this.margin = -3464;
+			this.leftArrowNone = false;
+			this.rightArrowNone = true;
+		} else {
+			this.margin += -this.width;
+			this.leftArrowNone = false;
+		}
+	}
 
 }
