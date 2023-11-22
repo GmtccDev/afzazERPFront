@@ -8,8 +8,8 @@
 <mat-dialog-content class="mat-typography">
 	<div class="row">
 		<div class="col-md-12">
-			<input type="search" class="form-control" [(ngModel)]="searchText" (change)="Search()"
-				placeholder="{{'general.search'|translate}}">
+			<input type="search" class="form-control" [(ngModel)]="searchText" (keyup)="Search()"
+				placeholder="{{'general.search'|translate}}" (keydown.Enter)="OnDataFirstSelect(0)">
 		</div>
 	</div>
 	<table class="table table-responsive table-popup">

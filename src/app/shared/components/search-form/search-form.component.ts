@@ -32,8 +32,14 @@ export class SearchFormComponent implements OnInit {
 
 	OnDataSelect(selectedItem) {
 		////(("Selected Item is", selectedItem);
+		debugger
 		this.OnSelect.emit(selectedItem);
 		this.matDialogRef.close()
+	}
+	OnDataFirstSelect(value:number)
+	{
+		this.OnSelect.emit(this.dataList[value]);
+		this.matDialogRef.close();
 	}
 
 	Search() {
