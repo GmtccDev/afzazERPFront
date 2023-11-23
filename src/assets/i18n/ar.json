@@ -476,7 +476,9 @@
         "price-required": "السعر مطلوب",
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
-        "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات"
+        "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
+        "unit-transaction-factor":"معامل تحويل الوحدة"
+
     },
     "sales-person-commission": {
         "sales-person": "المندوب",
@@ -728,6 +730,7 @@
         "calculating-tax-on-price-after-deduction-and-addition": "أحتساب ضريبة على السعر بعد الخصم و الأضافة",
         "discount-affects-cost-price": "الخصم يؤثر على سعر التكلفة",
         "addition-affects-cost-price": "الأضافة يؤثر على سعر التكلفة",
+        "tax-affects-cost-price": "الضريبة يؤثر على سعر التكلفة",
         "default-values": "القيم الأفتراضية",
         "store": "المستودع",
         "cost-center": " مركز التكلفة",

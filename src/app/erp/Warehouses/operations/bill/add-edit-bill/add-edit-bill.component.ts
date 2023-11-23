@@ -201,6 +201,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
+
     this.getPayWays();
     this.getShipKinds();
     this.getShipMethods();
@@ -460,7 +461,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   getBillById(id: any, type: any) {
-
     if (id > 0) {
       this.clearBillFormForReference();
       this.clearSelectedItemData();
@@ -555,6 +555,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   itemId: element.itemId,
                   itemDescription: element.itemDescription,
                   unitId: element.unitId,
+                  unitTransactionFactor: element.unitTransactionFactor,
                   quantity: element.quantity,
                   price: element.price,
                   totalBeforeTax: element.totalBeforeTax,
@@ -1162,6 +1163,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       itemId: this.selectedBillItem?.itemId ?? null,
       itemDescription: this.selectedBillItem?.itemDescription ?? '',
       unitId: this.selectedBillItem?.unitId ?? null,
+      unitTransactionFactor: this.selectedBillItem?.unitTransactionFactor ?? null,
       quantity: this.selectedBillItem?.quantity ?? 0,
       price: this.selectedBillItem?.price ?? 0,
       totalBeforeTax: this.selectedBillItem?.totalBeforeTax ?? 0,
@@ -1185,23 +1187,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
     this.bill!.billItems = this.billItem;
 
-    // this.totalBeforeTax += this.selectedBillItem?.totalBeforeTax ?? 0;//comment
-    // this.total += this.selectedBillItem?.total ?? 0;
-    // this.net += this.selectedBillItem?.total ?? 0;
-    // this.netAfterTax += this.selectedBillItem?.total ?? 0;
-    // this.remaining += this.selectedBillItem?.total - this.paid;
-    // this.taxRatio = 0;
-    // this.taxValue = 0;
+
     this.clearSelectedItemData();
     this.calculateValues();
 
   }
   deleteItem(index) {
-    // this.totalBeforeTax = this.totalBeforeTax - this.billItem[index]?.totalBeforeTax ?? 0;//comment
-    // this.total = this.total - this.billItem[index]?.total ?? 0;
-    // this.net = this.total ?? 0;
-    // this.netAfterTax = this.net ?? 0;
-    // this.remaining = this.netAfterTax - this.paid;
+
     if (this.billItem.length) {
       if (this.billItem.length == 1) {
         this.billItem = [];
@@ -1240,6 +1232,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       itemId: null,
       itemDescription: '',
       unitId: null,
+      unitTransactionFactor: 1,
       quantity: 0,
       price: 0,
       totalBeforeTax: 0,
@@ -1834,6 +1827,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             if (i == -1) {
               this.selectedBillItem!.unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
               this.selectedBillItem!.unitId = d.unitId;
+              this.selectedBillItem!.unitTransactionFactor = d.transactionFactor;
 
               this.selectedBillItem!.price =
                 this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
@@ -1844,6 +1838,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             } else {
               this.billItem[i].unitName = this.lang = "ar" ? d.unitNameAr : d.unitNameEn;
               this.billItem[i].unitId = d.unitId;
+              this.billItem[i].unitTransactionFactor = d.transactionFactor;
               this.billItem[i]!.price =
                 this.billTypeKind == BillKindEnum['Sales Bill'] || this.billTypeKind == BillKindEnum['Sales Returns Bill']
                   ? d.sellingPrice : 0;
@@ -2121,7 +2116,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                 id: 0,
                 itemCardId: undefined,
                 unitId: res.response?.mainUnitId,
-                transactionFactor: res.response?.transactionFactor,
+                transactionFactor: 1,
                 sellingPrice: res.response?.sellingPrice,
                 minSellingPrice: res.response?.minSellingPrice,
                 consumerPrice: res.response?.consumerPrice,
@@ -2263,8 +2258,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                     taxValue: this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100)
                   }
                 )
-
-
                 if (i == -1) {
 
                   this.selectedBillItem.totalTax += this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100);
@@ -2624,6 +2617,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         itemId: item.itemId,
         itemDescription: item.itemDescription,
         unitId: item.unitId,
+        unitTransactionFactor: item.unitTransactionFactor,
         quantity: item.quantity,
         price: item.price,
         totalBeforeTax: item.totalBeforeTax,

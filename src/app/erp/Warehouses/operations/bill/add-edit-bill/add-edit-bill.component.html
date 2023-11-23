@@ -505,6 +505,7 @@
                                                                 <th>
                                                                     {{'general.unit'|translate}}
                                                                 </th>
+                                                                <th>{{'general.unit-transaction-factor'|translate}}</th>
                                                                 <th>
                                                                     {{'general.quantity'|translate}}
                                                                 </th>
@@ -573,6 +574,13 @@
                                                                         [(ngModel)]="billItem[i].unitName"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (keydown.Enter)="openUnitSearchDialog(i)">
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        [(ngModel)]="billItem[i].unitTransactionFactor"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control" disabled>
 
                                                                 </td>
                                                                 <td>
@@ -705,12 +713,20 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="number"
+                                                                        [(ngModel)]="selectedBillItem.unitTransactionFactor"
+                                                                        [ngModelOptions]="{standalone: true}" min="0"
+                                                                        class="form-control" disabled>
+
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
                                                                         [(ngModel)]="selectedBillItem.quantity"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control"
                                                                         (change)="onChangeQuantityOrPrice()">
 
                                                                 </td>
+
                                                                 <td>
                                                                     <input type="number"
                                                                         [(ngModel)]="selectedBillItem.price"

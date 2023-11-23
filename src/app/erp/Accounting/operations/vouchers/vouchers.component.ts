@@ -115,7 +115,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
     this.spinner.show();
 
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId), ,this.getVouchers()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId) ,this.getVouchers()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -534,7 +534,6 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 					reject(err);
 				},
 				complete: () => {
-					//console.log('complete');
 				},
 			});
 			this.subsList.push(sub);
