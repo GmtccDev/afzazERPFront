@@ -505,7 +505,7 @@
                                                                 <th>
                                                                     {{'general.unit'|translate}}
                                                                 </th>
-                                                                <th>{{'general.unit-transaction-factor'|translate}}</th>
+                                                                <th *ngIf="false">{{'general.unit-transaction-factor'|translate}}</th>
                                                                 <th>
                                                                     {{'general.quantity'|translate}}
                                                                 </th>
@@ -576,7 +576,7 @@
                                                                         (keydown.Enter)="openUnitSearchDialog(i)">
 
                                                                 </td>
-                                                                <td>
+                                                                <td *ngIf="false">
                                                                     <input type="number"
                                                                         [(ngModel)]="billItem[i].unitTransactionFactor"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
@@ -711,7 +711,7 @@
                                                                         (keydown.Enter)="openUnitSearchDialog(-1)">
 
                                                                 </td>
-                                                                <td>
+                                                                <td *ngIf="false">
                                                                     <input type="number"
                                                                         [(ngModel)]="selectedBillItem.unitTransactionFactor"
                                                                         [ngModelOptions]="{standalone: true}" min="0"

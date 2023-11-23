@@ -55,8 +55,7 @@ export class BillItem {
     unitId: number | undefined;
     unitTransactionFactor: number | undefined;
     quantity: number;
-    //totalQuantity: number| undefined;
-
+    totalQuantity: number| undefined;
     price: number;
     totalBeforeTax: number;
     additionRatio: number | undefined;
@@ -67,7 +66,7 @@ export class BillItem {
     total: number;
     storeId: number | undefined;
     costCenterId: number | undefined;
-    //totalCostPrice: number | undefined;
+    totalCostPrice: number | undefined;
     notes: string | undefined;
     itemName:string;
     unitName:string;
