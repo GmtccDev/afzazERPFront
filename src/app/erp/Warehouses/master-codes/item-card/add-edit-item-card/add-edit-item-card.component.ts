@@ -341,7 +341,7 @@ export class AddEditItemCardComponent implements OnInit {
             quantity: res.response?.quantity,
             warrantyPeriod: res.response?.warrantyPeriod,
             warrantyType: res.response?.warrantyType,
-            itemKind: res.response?.itemKind + "",
+            itemKind: res.response?.itemKind,
             taxIds: res.response?.taxIds,
             heightFactor: res.response?.heightFactor,
             widthFactor: res.response?.widthFactor,
@@ -375,6 +375,7 @@ export class AddEditItemCardComponent implements OnInit {
           this.taxIds = '';
              
           if (res.response?.itemCardDeterminants != null) {
+            debugger
             this.itemCardDeterminant = res.response?.itemCardDeterminants
            
 
@@ -508,7 +509,6 @@ export class AddEditItemCardComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeDeterminantApi).subscribe({
         next: (res) => {
-
           if (res.success) {
             this.determinantsList = res.response.filter(x => x.isActive == true);
 
