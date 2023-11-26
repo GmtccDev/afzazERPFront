@@ -19,6 +19,8 @@ import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/service
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 
 @Component({
   selector: 'app-bill',
@@ -31,6 +33,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   bills: any[] = [];
   billType: any[] = [];
   billTypeId: any;
+  dateType: any;
 
   currnetUrl: any;
   queryParams: any;
@@ -66,6 +69,8 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
+    private companyService: CompanyServiceProxy,
+    private dateService: DateCalculation,
 
   ) {
 
@@ -95,7 +100,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getBills()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getCompanyById(this.companyId), this.getBills()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -307,10 +312,14 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'date', width: 300, formatter: function (cell, formatterParams, onRendered) {
-        var value = cell.getValue();
-        value = format(new Date(value), 'dd-MM-yyyy');;
-        return value;
+      field: 'date', width: 300, formatter: (cell, formatterParams, onRendered) => {
+        if (this.dateType == 2) {
+          return this.dateService.getHijriDate(new Date(cell.getValue()));
+        }
+        else {
+          return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+
+        }
       }
 
     },
@@ -484,6 +493,35 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
   }
   //#endregion
+
+  getCompanyById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+
+      let sub = this.companyService.getCompany(id).subscribe({
+        next: (res: any) => {
+
+          res?.response?.useHijri
+          if (res?.response?.useHijri) {
+            this.dateType = 2
+          } else {
+            this.dateType = 1
+          }
+
+          resolve();
+
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
 
 }

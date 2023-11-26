@@ -13,12 +13,12 @@ export class BillType {
     confirmCostCenter: boolean | undefined;
     confirmAnalyticalCode: boolean | undefined;
     calculatingTax: boolean | undefined;
-    //calculatingValueAddedTaxAfterLuxuryTax: boolean | undefined;
     calculatingTaxOnPriceAfterDeductionAndAddition: boolean | undefined;
     calculatingTaxManual: boolean | undefined;
     manuallyTaxType: number | undefined;
     discountAffectsCostPrice: boolean | undefined;
     additionAffectsCostPrice: boolean | undefined;
+    taxAffectsCostPrice: boolean | undefined;
     defaultCurrencyId: number | undefined;
     defaultUnitId: number | undefined;
     storeId: number | undefined;

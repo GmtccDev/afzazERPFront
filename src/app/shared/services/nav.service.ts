@@ -273,10 +273,25 @@ export class NavService implements OnInit, OnDestroy {
 
 
 	];
+	MENUITEMSPOS: Menu[] = [
+		{
+			path: '/Subscription', title: this.translate.instant("component-names.subscriptions"), type: 'link', icon: 'briefcase', active: true,
+		},
+		{
+			path: '/dashboard/default', title: this.translate.instant("component-names.dashboard"), type: 'link', icon: 'home', active: true,
+		},
+		{
+			title: this.translate.instant("component-names.master-code"), type: 'sub', icon: 'layers', active: false, children: [
+				{ path: '/pointOfSale-master-codes/pointOfSale', title: this.translate.instant("component-names.pointOfSale"), type: 'link', active: true },
+				
+			]
+		},
+	];
 	// Array
 
 	itemsSettings = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 	itemsAccount = new BehaviorSubject<Menu[]>(this.MENUITEMSAccount);
 	itemsWarehouses = new BehaviorSubject<Menu[]>(this.MENUITEMSWarehouses);
+	itemsPOS = new BehaviorSubject<Menu[]>(this.MENUITEMSPOS);
 
 }

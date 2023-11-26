@@ -118,18 +118,18 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 	getApplications() {
 		this.applications = [
 			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
-			{ descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
+			{ descriptionAr: 'نقط البيع', descriptionEn: 'POS', value: '1', check: true, image: 'assets/images/applications/pos.png', link: '/dashboard/default' },
 			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
 			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
 			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
 			{ descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
-			{ descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: false, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
+			{ descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: true, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
 
 		];
 	}
 	openLink(object) {
-		
-	//let	subdomain=localStorage.getItem('subDomain');
+
+		//let	subdomain=localStorage.getItem('subDomain');
 		localStorage.setItem("Menu", object.value)
 		this.router.navigate([object.link]);
 
@@ -144,7 +144,7 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 					this.getApplications();
 					//   this.router.navigate(['/dashboard/default']);
 					if (next.response != null) {
-						
+
 						this.applicationsRoute = [...next.response?.applications?.split(",")]
 						//console.log(this.applicationsRoute);
 						for (var i = 0; i < this.applications.length; i++) {

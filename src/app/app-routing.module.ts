@@ -139,8 +139,21 @@ const routes: Routes = [
 			}
 		]
 
-	}
-	,
+	},
+	{
+		path: 'pointOfSale-master-codes',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('././erp/pos/master-codes/master-codes.module').then(m => m.MasterCodesModule)
+			}
+		]
+
+	},
+	
 
 	{
 		path: '**',

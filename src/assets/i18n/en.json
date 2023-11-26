@@ -236,7 +236,8 @@
         "discount-account": "Discount Account",
         "tax-account": "Tax Account",
         "close-account-required": "Please choose close account from the settings",
-        "date-out-fiscal-period": "The date is out fiscal period date"
+        "date-out-fiscal-period": "The date is out fiscal period date",
+        "unit-transaction-factor":"Unit Transaction Factor"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -745,6 +746,7 @@
         "calculating-tax-on-price-after-deduction-and-addition": "Calculating Tax On Price After Deduction And Addition",
         "discount-affects-cost-price": "Discount Affects Cost Price",
         "addition-affects-cost-price": "Addition Affects Cost Price",
+        "tax-affects-cost-price": "Tax Affects Cost Price",
         "default-values": "Default Values",
         "store": "Store",
         "cost-center": "Cost Center",

@@ -597,7 +597,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'قيد') {
 			return text;
 		}
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
 		return iconHtml;
 
 	}
@@ -622,7 +622,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'Journal Entry') {
 			return text;
 		}
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;">${text}</span>`;
+		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
 		return iconHtml;
 	}
 	CheckBoxFormatIcon() { //plain text value

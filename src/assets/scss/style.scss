@@ -1768,3 +1768,31 @@ html[dir=rtl] .table-tree {
     display: flex;
     align-items: center;
 }
+
+.mat-table {
+    border: 1px solid #e0e0e0;
+    mat-header-row {
+        min-height: 40px !important;
+    }
+    .mat-header-cell {
+        color: var(--theme-deafult);
+        font-weight: 600;
+        font-size: 14px;
+    }
+    mat-row,
+    mat-footer-row {
+        min-height: 35px;
+    }
+}
+
+.ant-btn-primary:focus,
+.ant-btn-primary:hover {
+    border-color: #232a64;
+    background: #232a64;
+}
+
+p.ant-empty-description {
+    display: none;
+}
+
+.customLink {}

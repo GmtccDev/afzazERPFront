@@ -368,8 +368,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
               if (element.costCenterId > 0) {
                 costCenterName = this.costCentersInDetailsList.find(x => x.id == element.costCenterId);
               }
-              debugger
-              console.log("lang",this.lang);
 
               this.voucherDetail.push(
                 {
@@ -533,7 +531,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
         next: (res) => {
           if (res.success) {
-            debugger
+              
             this.currenciesList = res.response;
             this.currenciesListInDetail = res.response;
 
@@ -683,7 +681,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   openBeneficiarySearchDialog(i) {
-    debugger
+      
     this.lang = localStorage.getItem("language");
 
     let searchTxt = '';
@@ -720,13 +718,13 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         .subscribe((d) => {
           if (d) {
             if (i == -1) {
-              debugger
+                
               this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.selectedVoucherDetail!.beneficiaryId = d.id;
               this.getBeneficiaryAccount();
 
             } else {
-              debugger
+                
               this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? d.nameAr : d.nameEn;
               this.voucherDetail[i].beneficiaryId = d.id;
               this.getBeneficiaryAccountAdded(i);
