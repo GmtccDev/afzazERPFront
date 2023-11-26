@@ -179,9 +179,10 @@ export class AddEditBillTypeComponent implements OnInit {
       calculatingTax: false,
       calculatingTaxOnPriceAfterDeductionAndAddition: false,
       calculatingTaxManual: false,
-      manuallyTaxType: '',
+      manuallyTaxType: null,
       discountAffectsCostPrice: false,
       additionAffectsCostPrice: false,
+      taxAffectsCostPrice: false,
       defaultCurrencyId: '',
       defaultUnitId: '',
       storeId: '',
@@ -254,9 +255,10 @@ export class AddEditBillTypeComponent implements OnInit {
             calculatingTax: res.response?.calculatingTax,
             calculatingTaxOnPriceAfterDeductionAndAddition: res.response?.calculatingTaxOnPriceAfterDeductionAndAddition,
             calculatingTaxManual: res.response?.calculatingTaxManual,
-            manuallyTaxType: res.response?.manuallyTaxType +"",
+            manuallyTaxType: res.response?.manuallyTaxType,
             discountAffectsCostPrice: res.response?.discountAffectsCostPrice,
             additionAffectsCostPrice: res.response?.additionAffectsCostPrice,
+            taxAffectsCostPrice: res.response?.taxAffectsCostPrice,
             defaultCurrencyId: res.response?.defaultCurrencyId,
             defaultUnitId: res.response?.defaultUnitId,
             storeId: res.response?.storeId,
@@ -653,7 +655,7 @@ export class AddEditBillTypeComponent implements OnInit {
     if (this.billTypeForm.value.calculatingTax == false) {
       this.billTypeForm.value.calculatingTaxOnPriceAfterDeductionAndAddition = false;
       this.billTypeForm.value.calculatingTaxManual = false;
-      this.billTypeForm.value.manuallyTaxType = '';
+      this.billTypeForm.value.manuallyTaxType = null;
      
 
 
