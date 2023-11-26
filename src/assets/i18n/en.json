@@ -678,7 +678,18 @@
         "tax-ratio": "Tax Ratio",
         "tax-details-required": "Tax details is required",
         "add-tax": "Add Tax",
-        "date-exist": "This date is added before"
+        "date-exist": "This date is added before",
+        "sub-tax-code":"Sub Tax Code",
+        "tax-reasonAr":"Tax Reason For In Arabic ",
+        "tax-reasonEn":"Tax Reason For In Engilsh",
+        "sub-tax-details":"Sub Tax Details",
+        "sub-code-tax-required":"Sub code tax is required",
+        "sub-tax-ratio-details":"Sub Tax Ratio Details",
+        "sub-tax-reason-details":"Sub Tax Reason Details",
+        "sub-tax-nameAr":"Name in Arabic",
+        "sub-tax-nameEn":"Name in English",
+        "add-ratio-details":"Add Ratio",
+        "add-reason-details":"Add Reason"
     },
     "item": {
         "item-group": "Item Group",

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,17 +12,20 @@ import { SharedService } from '../../../../../shared/common-services/shared-serv
 import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { DateCalculation, DateModel } from '../../../../../shared/services/date-services/date-calc.service';
-import { TaxDetail, TaxMaster } from '../../../models/tax';
+import { SubTaxDetail, TaxDetail, TaxMaster } from '../../../models/tax';
 import { TaxServiceProxy } from '../../../Services/tax.service';
 import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-edit-tax',
   templateUrl: './add-edit-tax.component.html',
   styleUrls: ['./add-edit-tax.component.scss']
 })
+
 export class AddEditTaxComponent implements OnInit, AfterViewInit {
   //#region Main Declarations
+  @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
   taxForm: FormGroup = new FormGroup({});
   companyId: any = localStorage.getItem("companyId");
   branchId: any = localStorage.getItem("branchId");
@@ -33,7 +36,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   taxMaster: TaxMaster = new TaxMaster();
   taxDetail: TaxDetail[] = [];
   selectedTaxDetail: TaxDetail = new TaxDetail();
-
+  subTaxDetail: SubTaxDetail[] = [];
+  selectedSubTaxDetail: SubTaxDetail = new SubTaxDetail();
   id: any = 0;
   currnetUrl;
   errorMessage = '';
@@ -63,6 +67,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     private publicService: PublicService,
     private taxService: TaxServiceProxy,
     private dateService: DateCalculation,
+    private dialog: MatDialog,
     private sharedService: SharedService,
     private alertsService: NotificationsAlertsService,
 
@@ -97,6 +102,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
         if (this.id) {
           this.getTaxById(this.id).then(a => {
+            this.sharedService.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
             this.spinner.hide();
 
           }).catch(err => {
@@ -149,9 +155,10 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   defineTaxForm() {
     this.taxForm = this.fb.group({
       id: 0,
+      //subTaxCode:'',
       companyId: this.companyId,
       branchId: this.branchId,
-      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(10)])],
+      nameAr: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
       nameEn: '',
       code: CODE_REQUIRED_VALIDATORS,
       accountId: REQUIRED_VALIDATORS,
@@ -175,9 +182,11 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       let sub = this.taxService.getTax(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           this.taxForm.setValue({
             id: res.response.id,
             companyId: res.response?.companyId,
+            // subTaxCode:res.response?.subTaxCode,
             branchId: res.response?.branchId,
             code: res.response.code,
             nameAr: res.response.nameAr,
@@ -186,6 +195,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
             isActive: res.response?.isActive,
           });
           this.taxDetail = res.response?.taxDetail;
+          this.subTaxDetail = res.response?.subTaxDetail;
+          this.setInputData();
 
         },
         error: (err: any) => {
@@ -332,6 +343,48 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   }
+  addSubTaxItem() {
+	  debugger
+		var errorStatus: boolean = false;
+    
+    if (!this.selectedSubTaxDetail.code) {
+
+      this.errorMessage = this.translate.instant("tax.sub-code-tax-required");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      errorStatus = true;
+      return errorStatus;
+    }
+    if(!errorStatus)
+    {
+      this.subTaxDetail.push({
+        id:0,
+        code:this.selectedSubTaxDetail?.code??0,
+        subTaxNameAr:this.selectedSubTaxDetail?.subTaxNameAr??'',
+        subTaxNameEn:this.selectedSubTaxDetail?.subTaxNameEn??'',
+        taxId:this.selectedSubTaxDetail?.taxId??0
+      
+      });
+      this.taxMaster!.subTaxDetail = this.subTaxDetail;
+      this.clearSelectedItemData();
+    }
+		
+	  
+
+	}
+	deleteSubTaxItem(index) {
+	  if (this.subTaxDetail.length) {
+		if (this.subTaxDetail.length == 1) {
+		  this.subTaxDetail = [];
+		} else {
+		  this.subTaxDetail.splice(index, 1);
+		}
+	  }
+  
+	  this.taxMaster.subTaxDetail = this.subTaxDetail;
+  
+  
+	}
   clearSelectedItemData() {
     this.selectedTaxDetail = {
       id: 0,
@@ -340,10 +393,20 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       toDate: this.dateService.getCurrentDate(),
       taxRatio: 0
 
+    };
+    this.selectedSubTaxDetail = {
+      id: 0,
+      taxId: 0,
+      subTaxNameAr:'',
+      subTaxNameEn:'',
+      code:''
+
+
     }
   }
 
   setInputData() {
+    
     this.taxMaster = {
       id: this.taxForm.controls["id"].value,
       companyId: this.taxForm.controls["companyId"].value,
@@ -353,8 +416,9 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       nameEn: this.taxForm.controls["nameEn"].value,
       accountId: this.taxForm.controls["accountId"].value,
       isActive: this.taxForm.controls["isActive"].value,
-
-      taxDetail: this.taxMaster.taxDetail ?? [],
+      //subTaxCode:this.taxForm.controls["subTaxCode"].value,
+      subTaxDetail: this.subTaxDetail ?? [],
+      taxDetail: this.taxDetail ?? [],
 
     };
 
@@ -362,6 +426,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
+      debugger;
       let sub = this.taxService.createTax(this.taxMaster).subscribe({
         next: (result: any) => {
           this.defineTaxForm();
@@ -425,7 +490,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   onUpdate() {
 
     if (this.taxForm.valid) {
-      if (this.taxMaster.taxDetail.length == 0) {
+      if (this.taxMaster.taxDetail.length===0) {
         this.errorMessage = this.translate.instant("tax.tax-details-required");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -494,6 +559,24 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   getSelectedToDate(selectedDate: DateModel) {
     this.selectedTaxDetail.toDate = selectedDate;
   }
+
+ 
+  dialogOpen: boolean = false;
+  openDialog() {
+    const dialogRef = this.dialog.open(this.dialogContent, {
+      width: '500px',
+      // Add any other dialog configuration options here
+    });
+
+    // Subscribe to the afterClosed event to get the result when the dialog is closed
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle the result or perform any necessary actions
+      console.log('Dialog result:', result);
+    });
+  }
+
+
+  
 
 }
 
