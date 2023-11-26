@@ -680,7 +680,19 @@
         "tax-ratio": "نسبة الضريبة",
         "tax-details-required": "تفاصيل الضريبة مطلوب",
         "add-tax": "اضافة ضريبة",
-        "date-exist": "التاريخ مضاف من قبل"
+        "date-exist": "التاريخ مضاف من قبل",
+        "sub-tax-code":"الكود الضريبي",
+        "tax-reasonAr":" سبب الضريبة بالعربية",
+        "tax-reasonEn":" سبب الضريبة بالانجليزية",
+        "sub-tax-details":"تفاصيل الضرائب الفرعية",
+        "sub-code-tax-required":"كود الضريبة الفرعي مطلوب",
+        "sub-tax-ratio-details":"نسبة الضريبة ",
+        "sub-tax-reason-details":"سبب الضريبة ",
+        "sub-tax-nameAr":"الاسم العربي",
+        "sub-tax-nameEn":"الاسم الإنجليزي",
+        "add-ratio-details":"اضافة نسبة",
+        "add-reason-details":"اضافة سبب"
+        
     },
     "item": {
         "item-group": "مجموعة الصنف",
