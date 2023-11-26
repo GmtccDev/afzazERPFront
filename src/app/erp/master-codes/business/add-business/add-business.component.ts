@@ -277,8 +277,6 @@ export class AddBusinessComponent implements OnInit {
       let sub = this.businessService.updateBusiness(this.businessFieldForm.value).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          console.log('result update ', result);
-          this.response = { ...result.response };
           this.defineBusinessForm();
           this.submited = false;
           setTimeout(() => {

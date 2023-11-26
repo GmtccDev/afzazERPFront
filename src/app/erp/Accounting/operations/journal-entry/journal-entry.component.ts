@@ -292,10 +292,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
 
 					}
-
-
-
-
 				}
 			} : {
 				title: 'Date', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
@@ -310,8 +306,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			},
 		this.lang == 'ar'
 			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: 'Journal Name', field: 'journalNameEn' },
-
-
 		this.lang == 'ar'
 			? {
 				title: '  الحالة  ', width: 300, field: 'statusAr'

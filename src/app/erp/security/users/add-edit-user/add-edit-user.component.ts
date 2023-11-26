@@ -309,6 +309,7 @@ export class AddEditUserComponent implements OnInit {
       let sub = this.userService.getLastCode().subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.user");
+          debugger
           this.userForm.patchValue({
             code: res.response
           });
@@ -318,7 +319,6 @@ export class AddEditUserComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -354,6 +354,7 @@ export class AddEditUserComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-user");
             this.defineUserForm();
+            this.getUserCode();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           }else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
@@ -375,20 +376,16 @@ export class AddEditUserComponent implements OnInit {
       user.companiesUserDtos = this.companiesUserDto
       let sub = this.userService.createUser(user).subscribe({
         next: (result: any) => {
-          this.spinner.show();
-          this.response = { ...result.response };
+          debugger
           this.defineUserForm();
-
           this.submited = false;
           this.spinner.hide();
-
           navigateUrl(this.listUrl, this.router);
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);

@@ -6,7 +6,7 @@
     "editSuccessfully": "تم التعديل بنجاح",
     "deleteSuccessfully": "تم الحذف بنجاح",
     "SameCodeExistsBefore": "الكود معرف سابقا",
-    "emailNumberFoundBefore": "الميل معرف سابقا",
+    "emailNumberFoundBefore": "الأيميل معرف سابقا",
     "userNameFoundBefore": "الاسم معرف سابقا",
     "phoneNumberFoundBefore": "الموبايل معرف سابقا",
     "can't-delete-some-records": "لايمكن حذف بعض السجلات",
@@ -205,7 +205,9 @@
         "view": "عرض",
         "cancelDefaultReport": "الغاء التقرير الافتراضى",
         "post": "ترحيل",
-        "generate-entry": "توليد القيد"
+        "generate-entry": "توليد القيد",
+        "close":"اغلاق",
+        "open":"فتح"
     },
     "component-names": {
         "determinants": "المحددات",
@@ -262,7 +264,7 @@
         "analytical-budget-report": "تقرير الميزانية التوزيعى",
         "income-statement-report": "تقرير قائمة الدخل",
         "vouchers-transactions-report": "تقرير حركة السندات",
-        "close-fiscal-period": "اغلاق الفترة المحاسبية",
+        "close-fiscal-period": "اغلاق / فتح الفترة المحاسبية",
         "incomingCheque": "الشيكات الواردة",
         "incomingCheque-information": "معلومات الشيك الوراد",
         "issuing-cheque": "الشيكات الصادرة",
@@ -505,7 +507,9 @@
     "fiscal-period": {
         "fiscal-period-status": "الحالة",
         "add-fiscal-period": "اضافة الفترة المحاسبية",
-        "Intersection": "يوجد تداخل في التاريخ"
+        "Intersection": "يوجد تداخل في التاريخ",
+        "close-success":"تم الاغلاق بنجاح",
+        "open-success":"تم الفتح بنجاح"
     },
     "accounting-configration": {
         "multiCurrency": "عملات متعددة ",
@@ -614,7 +618,10 @@
         "totalDebitLocal": "اجمالي المدين محلي",
         "totalCreditLocal": "اجمالي الدائن محلي",
         "no-delete-entry":"لايمكن حذف هذا القيد (قيد حركات)",
-        "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة"
+        "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة",
+        "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة الفترة المحاسبية المغلقة",
+        "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-update-entry-fiscal-period-closed": "لا يمكن تعديل هذا القيد لهذة الفترة المحاسبية المغلقة"
 
 
     },

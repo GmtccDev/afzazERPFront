@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
@@ -32,11 +32,13 @@ export class CloseFiscalPeriodComponent implements OnInit {
   closeDate: any;
   fromDate: any;
   toDate: any;
+  status: string = '';
+
   closeAccountId: any;
   lang = localStorage.getItem("language")
   companyId = localStorage.getItem("companyId")
   branchId = localStorage.getItem("branchId")
-  showDates: boolean = false
+  showDetails: boolean = false
   addUrl: string = '';
   updateUrl: string = '';
   listUrl: string = '/accounting-operations/closeFiscalPeriod';
@@ -74,9 +76,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
-    this.listenToClickedButton();
-    this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
     this.spinner.show();
     Promise.all([
       this.getFiscalPeriods(),
@@ -85,7 +85,11 @@ export class CloseFiscalPeriodComponent implements OnInit {
 
     ]).then(a => {
       this.changePath();
+      debugger
+
       this.listenToClickedButton();
+
+
     }).catch(err => {
       this.spinner.hide();
     });
@@ -135,9 +139,8 @@ export class CloseFiscalPeriodComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeApiPeriod).subscribe({
         next: (res) => {
-
           if (res.success) {
-            this.fiscalPeriodList = res.response.filter(x => x.fiscalPeriodStatus == FiscalPeriodStatus.Opened);
+            this.fiscalPeriodList = res.response;
 
           }
 
@@ -188,20 +191,15 @@ export class CloseFiscalPeriodComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-
+        debugger
         if (currentBtn != null) {
-          if (currentBtn.action == ToolbarActions.List) {
-            this.sharedServices.changeToolbarPath({
-              listPath: this.listUrl,
-            } as ToolbarPath);
-            this.router.navigate([this.listUrl]);
-          } else if (currentBtn.action == ToolbarActions.Save) {
+          if (currentBtn.action == ToolbarActions.Close && currentBtn.submitMode) {
 
-            this.onSave();
-          } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = this.translate.instant("component-names.close-fiscal-period");
-            this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
+            this.onClose();
+          }
+          else if (currentBtn.action == ToolbarActions.Open && currentBtn.submitMode) {
+
+            this.onOpen();
           }
         }
       },
@@ -211,16 +209,17 @@ export class CloseFiscalPeriodComponent implements OnInit {
   changePath() {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
-  confirmSave() {
-   
+  confirmClose() {
     return new Promise<void>((resolve, reject) => {
-      
       let sub = this.fiscalPeriodService.closeFiscalPeriod(this.fiscalPeriodId, this.fromDate, this.toDate, this.closeAccountId).subscribe({
         next: (result: any) => {
-          
+          this.alertsService.showSuccess(
+            this.translate.instant("fiscal-period.close-success"),
+            ""
+          )
           this.defineCloseFiscalPeriodForm();
           this.getFiscalPeriods();
-          this.showDates = false;
+          this.showDetails = false;
           this.fromDate = '';
           this.toDate = '';
           this.submited = false;
@@ -238,7 +237,51 @@ export class CloseFiscalPeriodComponent implements OnInit {
 
     });
   }
-  onSave() {
+  confirmOpen() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.openFiscalPeriod(this.fiscalPeriodId).subscribe({
+        next: (result: any) => {
+          this.alertsService.showSuccess(
+            this.translate.instant("fiscal-period.open-success"),
+            ""
+          )
+          this.defineCloseFiscalPeriodForm();
+          this.getFiscalPeriods();
+          this.showDetails = false;
+          this.fromDate = '';
+          this.toDate = '';
+          this.submited = false;
+          this.spinner.hide();
+          return;
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+  onOpen() {
+    if (this.closeFiscalPeriodForm.valid) {
+      this.spinner.show();
+      this.confirmOpen().then(a => {
+        this.spinner.hide();
+      }).catch(e => {
+        this.spinner.hide();
+      });
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.closeFiscalPeriodForm.markAllAsTouched();
+    }
+  }
+  onClose() {
     if (this.closeFiscalPeriodForm.valid) {
       if (this.closeAccountId == null || this.closeAccountId == "") {
         this.errorMessage = this.translate.instant("general.close-account-required");
@@ -248,7 +291,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
       }
 
       this.spinner.show();
-      this.confirmSave().then(a => {
+      this.confirmClose().then(a => {
         this.spinner.hide();
       }).catch(e => {
         this.spinner.hide();
@@ -262,16 +305,39 @@ export class CloseFiscalPeriodComponent implements OnInit {
     }
   }
   getFiscalPeriodById(id: any) {
-
     if (id != null) {
       return new Promise<void>((resolve, reject) => {
         let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
           next: (res: any) => {
             resolve();
-
-            this.showDates = true;
+            this.showDetails = true;
             this.fromDate = formatDate(Date.parse(res.response.fromDate));
             this.toDate = formatDate(Date.parse(res.response.toDate));
+            if (res.response.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+              this.status = this.lang == 'ar' ? 'مفتوحة' : 'Opened';
+              this.sharedServices.changeButton({ action: 'Close', submitMode: false } as ToolbarData);
+              // this.listenToClickedButton();
+              this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
+            }
+            else if (res.response.fiscalPeriodStatus == FiscalPeriodStatus.Closed) {
+              this.status = this.lang == 'ar' ? 'مغلقة' : 'Closed';
+              this.sharedServices.changeButton({ action: 'Open', submitMode: false } as ToolbarData);
+              //this.listenToClickedButton();
+              this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
+            }
+
+            else if (res.response.fiscalPeriodStatus == FiscalPeriodStatus.ClosedForRevision) {
+              this.status = this.lang == 'ar' ? 'مغلقة للمراجعة' : 'Closed for revision';
+              this.sharedServices.changeButton({ action: 'Open', submitMode: false } as ToolbarData);
+              //this.listenToClickedButton();
+              this.sharedServices.changeToolbarPath(this.toolbarPathData);
+
+            }
+            debugger
+            this.submited = true;
+
 
 
           },
@@ -286,7 +352,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
       });
     }
     else {
-      this.showDates = false;
+      this.showDetails = false;
       this.fromDate = '';
       this.toDate = '';
     }

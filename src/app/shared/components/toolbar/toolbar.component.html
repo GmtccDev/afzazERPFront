@@ -6,7 +6,7 @@
 				<div class="col-md- 6 col">
 					<h4 class="m-0 py-2">
 						{{toolbarPathData.componentList|translate}}
-					
+
 					</h4>
 				</div>
 				<!-- <app-breadcrumb [title]="'Product List'" [items]="['Apps', 'Ecommerce']" [active_item]="'Product List'"></app-breadcrumb> -->
@@ -31,6 +31,24 @@
 									<i data-feather="save"></i>
 									<span class="k-button-text">
 										{{ 'toolbar.save'|translate}}
+									</span>
+								</button>
+								<button type="submit" *ngIf="showButtons?.showClose" (click)="doCloseEvent()" [hidden]="hiddenClose"
+									[ngClass]="{'hidden':hiddenClose}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button"
+									form="#GroundsFormSubmit">
+									<i data-feather="save"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.close'|translate}}
+									</span>
+								</button>
+								<button type="submit" *ngIf="showButtons?.showOpen" (click)="doOpenEvent()" [hidden]="hiddenOpen"
+									[ngClass]="{'hidden':hiddenOpen}"
+									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button"
+									form="#GroundsFormSubmit">
+									<i data-feather="save"></i>
+									<span class="k-button-text">
+										{{ 'toolbar.open'|translate}}
 									</span>
 								</button>
 								<button *ngIf="showButtons?.showNew" (click)="doNewEvent()" [disabled]="disabledNew"
@@ -67,6 +85,8 @@
 										{{ 'toolbar.delete'|translate}}
 									</span>
 								</button>
+
+
 								<button *ngIf="showButtons?.showPost" (click)="doPostEvent();" [hidden]="disabledPost"
 									[disabled]="disabledPost" [ngClass]="{'disabled':disabledPost}"
 									class="k-button k-button-md k-button-solid-base k-rounded-md" type="button">
@@ -146,8 +166,7 @@
 								</div> -->
 								<div ngbDropdown class="d-inline-block" *ngIf="showButtons?.showExport">
 									<button class="k-button k-button-md k-button-solid-base k-rounded-md"
-										id="dropdownBasic1" [hidden]="hiddenExport"
-										[ngClass]="{'hidden':hiddenExport}"
+										id="dropdownBasic1" [hidden]="hiddenExport" [ngClass]="{'hidden':hiddenExport}"
 										ngbDropdownToggle>{{'tabulator.export'|translate}}</button>
 									<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
 										<button ngbDropdownItem

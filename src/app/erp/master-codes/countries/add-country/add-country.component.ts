@@ -155,7 +155,6 @@ export class AddCountryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -177,7 +176,6 @@ export class AddCountryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -251,7 +249,6 @@ export class AddCountryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -276,10 +273,11 @@ export class AddCountryComponent implements OnInit {
   confirmUpdate() {
     this.countriesForm.value.id = this.id;
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.countryService.updateCountry(this.countriesForm.value).subscribe({
         next: (result: any) => {
+          debugger
           this.spinner.show();
-          this.response = { ...result.response };
           this.defineCountryForm();
           this.submited = false;
           this.spinner.hide();
@@ -290,7 +288,6 @@ export class AddCountryComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
