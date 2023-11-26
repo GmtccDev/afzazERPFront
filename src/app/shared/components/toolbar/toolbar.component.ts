@@ -44,6 +44,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   disabledPost = true;
   disableCancelDefaultReport = false;
   disabledGenerateEntry = true;
+  hiddenClose = true;
+  hiddenOpen = true;
+
+
   toolbarPathData!: ToolbarPath;
   toolbarData: ToolbarData = {} as ToolbarData;
   toolbarCompnentData: ToolbarData = {} as ToolbarData;
@@ -53,7 +57,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   updateUrl;
   ngOnInit(): void {
-    
+
     this.tabular = this.SharedService.getTabulator();
     this.tabular = this.tabular.source._value;
     this.componentName = this.SharedService.getComponentName();
@@ -145,6 +149,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           if (this.toolbarCompnentData.action == 'GenerateEntry') {
             this.checkButtonClicked('GenerateEntry');
           }
+          if (this.toolbarCompnentData.action == 'Close') {
+            this.checkButtonClicked('Close');
+          }
+          if (this.toolbarCompnentData.action == 'Open') {
+            this.checkButtonClicked('Open');
+          }
 
 
         }
@@ -187,12 +197,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     this.checkButtonClicked('Save');
 
-    this.toolbarData.submitMode=true;
+    this.toolbarData.submitMode = true;
     this.SharedService.changeButton({ action: 'Save' } as ToolbarData);
+  }
+  doCloseEvent() {
+    this.checkButtonClicked('Close');
+    this.toolbarData.submitMode = true;
+    (this.toolbarData.action = 'Close'),
+      this.SharedService.changeButton(this.toolbarData);
+  }
+  doOpenEvent() {
+    this.checkButtonClicked('Open');
+    this.toolbarData.submitMode = true;
+    (this.toolbarData.action = 'Open'),
+      this.SharedService.changeButton(this.toolbarData);
   }
   doUpdateEvent() {
     this.checkButtonClicked('Update');
-     this.toolbarData.submitMode=true;
+    this.toolbarData.submitMode = true;
     (this.toolbarData.action = 'Update'),
       this.SharedService.changeButton(this.toolbarData);
   }
@@ -263,6 +285,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.resetCLickedButtons();
     if (button == 'List') {
       this.disabledSave = true;
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledNew = false;
       this.disabledCopy = true;
       this.disabledList = true;
@@ -274,10 +298,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledView = true;
       this.disabledPost = true;
       this.disabledGenerateEntry = true;
-
       this.disableCancelDefaultReport = true;
 
     } else if (button == 'Save') {
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.disabledNew = true;
@@ -289,7 +314,49 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledGenerateEntry = true;
       this.disabledPost = true;
 
-    } else if (button == 'New') {
+    }
+    else if (button == 'Close') {
+      this.disabledList = true;
+      this.disabledCancel = true;
+      this.hiddenClose = false;
+      this.hiddenOpen = true;
+      this.disabledSave = true;
+      this.disabledUpdate = true;
+      this.disabledCopy = true;
+      this.disabledNew = true;
+      this.hiddenExport = true;
+      this.disabledPrint = true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disableCancelDefaultReport = true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
+      this.hiddenExport = true;
+
+    }
+    else if (button == 'Open') {
+      this.disabledList = true;
+      this.disabledCancel = true;
+      this.hiddenClose = true;
+      this.hiddenOpen = false;
+      this.disabledSave = true;
+      this.disabledUpdate = true;
+      this.disabledCopy = true;
+      this.disabledNew = true;
+      this.hiddenExport = true;
+      this.disabledPrint = true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disableCancelDefaultReport = true;
+      this.disabledGenerateEntry = true;
+      this.disabledPost = true;
+      this.hiddenExport = true;
+
+    }
+
+    else if (button == 'New') {
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledSave = false;
       this.disabledNew = false;
       this.disabledCopy = true;
@@ -307,8 +374,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     else if (button == 'Print') {
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledSave = true;
-      this.disabledView=true;
+      this.disabledView = true;
       this.disabledPrint = true;
       this.disabledView = true;
       this.disabledPrint = false;
@@ -320,14 +389,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     } else if (button == 'Copy') {
     } else if (button == 'Update') {
-     
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledSave = true;
-      this.disabledView=true;
-      this.disabledPrint = false;
-      this.disabledCancel=true;
-      this.disabledDelete=true;
       this.disabledView = true;
-      this.disabledPrint = this.toolbarCompnentData.disabledPrint==false?false:true;
+      this.disabledPrint = false;
+      this.disabledCancel = true;
+      this.disabledDelete = true;
+      this.disabledView = true;
+      this.disabledPrint = this.toolbarCompnentData.disabledPrint == false ? false : true;
       this.disabledCancel = true;
       this.disableCancelDefaultReport = true;
       this.hiddenExport = true;
@@ -337,6 +407,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     } else if (button == 'Cancel') {
     }
     else if (button == 'Post') {
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledSave = true;
       this.disabledPost = false;
       this.disabledUpdate = true;
@@ -351,9 +423,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledGenerateEntry = true;
 
     }
-    // else if (button == 'Print') {
-    // }
+
     else if (button == 'Delete') {
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledUpdate = true;
       this.disabledCopy = true;
       this.hiddenExport = true;
@@ -362,7 +435,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.disabledDelete = false;
     }
     else if (button == 'Report') {
-
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledList = true;
       this.disabledSave = true;
       this.disabledNew = true;
@@ -380,7 +454,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     else if (button == 'CancelDefaultReport') {
-
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledList = true;
       this.disabledSave = true;
       this.disabledNew = true;
@@ -398,7 +473,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     else if (button == 'ConfigMode') {
-
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledList = true;
       this.disabledSave = true;
       this.disabledNew = true;
@@ -417,6 +493,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     else if (button == 'GenerateEntry') {
+      this.hiddenClose = true;
+      this.hiddenOpen = true;
       this.disabledGenerateEntry = false;
       this.disabledSave = true;
       this.disabledPost = true;
@@ -445,6 +523,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.disabledView = false;
     this.disabledPost = false;
     this.disabledGenerateEntry = false;
+    this.hiddenClose = false;
+    this.hiddenOpen = false;
 
 
   }
@@ -463,6 +543,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.showToolbarButtonsObj.showCancelDefaultReport = true;
     this.showToolbarButtonsObj.showPost = true;
     this.showToolbarButtonsObj.showGenerateEntry = true;
+    this.showToolbarButtonsObj.showClose = true;
+    this.showToolbarButtonsObj.showOpen = true;
+
+
 
     this.SharedService.changeButtonApperance(this.showToolbarButtonsObj);
   }

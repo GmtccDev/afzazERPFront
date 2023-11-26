@@ -59,7 +59,6 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-   // this.defineGridColumn();
    
     this.spinner.show();
     Promise.all([this.getCostCenters()])
@@ -133,7 +132,6 @@ export class CostCentersComponent implements OnInit, OnDestroy, AfterViewInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
 

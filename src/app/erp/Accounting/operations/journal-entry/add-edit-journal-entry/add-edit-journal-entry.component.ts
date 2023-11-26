@@ -302,13 +302,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           resolve();
 
           if (res.success) {
-            
+
             this.defaultCurrencyId = Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value)
             this.financialEntryCycle = Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.FinancialEntryCycle).value)
             if (!this.id) {
               this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value))
               this.journalEntryForm.controls.journalId.patchValue(Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value))
-            
+
             }
 
             this.isMultiCurrency = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
@@ -704,14 +704,20 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
-    debugger
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
     }
 
     if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-      this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-open-fiscal-period");
+      if (this.fiscalPeriodStatus == null) {
+        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-choose-open-fiscal-period");
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+
+      }
       this.errorClass = 'errorMessage';
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
@@ -890,40 +896,40 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       }
       if (this.journalEntryForm.valid) {
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-          this.errorMessage = this.translate.instant("general.no-edit-fiscal-period-choose-open-fiscal-period") + " : " + this.fiscalPeriodName;
+          this.errorMessage = this.translate.instant("journalEntry.no-update-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
           this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
           return;
         }
         let entryDate = this.journalEntryForm.controls["date"].value;
-    let _date;
-    let month;
-    let day;
-    if (entryDate?.month + 1 > 9) {
-      month = entryDate?.month + 1
-    }
-    else {
-      month = '0' + entryDate.month + 1
-    }
-    if (entryDate.day < 10) {
-      day = '0' + entryDate?.day
-    }
-    else {
-      day = entryDate.day
-    }
-    _date = entryDate.year + '-' + month + '-' + day
+        let _date;
+        let month;
+        let day;
+        if (entryDate?.month + 1 > 9) {
+          month = entryDate?.month + 1
+        }
+        else {
+          month = '0' + entryDate.month + 1
+        }
+        if (entryDate.day < 10) {
+          day = '0' + entryDate?.day
+        }
+        else {
+          day = entryDate.day
+        }
+        _date = entryDate.year + '-' + month + '-' + day
 
-    if (_date >= this.fromDate && _date <= this.toDate) {
+        if (_date >= this.fromDate && _date <= this.toDate) {
 
 
-    }
-    else {
-      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
+        }
+        else {
+          this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
 
-    }
+        }
         // let checkDate = this.dateService.getDateForInsert(this.date)
         // const date = new Date(checkDate);
         // const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
@@ -1002,7 +1008,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             //   else {
             //     element.nameAr = element.nameEn;
             //   }
-           // })
+            // })
           }
 
 
