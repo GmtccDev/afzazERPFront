@@ -18,8 +18,8 @@
 
     "newPasswordM": "Your new password must be at least 8 Letters, Numbers or Symbols",
     "newPassword": "Add New password",
-    "canChangeToParent":"The sub account parent cannot be changed to a main account",
-    "dateGreater":"To date is small than from date", 
+    "canChangeToParent": "The sub account parent cannot be changed to a main account",
+    "dateGreater": "To date is small than from date",
     "general": {
         "searchFromDate": "From Date",
         "searchToDate": "To Date",
@@ -379,7 +379,7 @@
         "faild-login": "Login credentials are not correct !",
         "connection-error": "Connection error !",
         "nameEn-not-Found": "Latin name not entered ",
-        "account-level-limit":"You can't choose account level less than"
+        "account-level-limit": "You can't choose account level less than"
     },
     "user-manager": {
         "add-user": "Add User",
@@ -414,6 +414,8 @@
         "generate-entry": "Generate Entry"
     },
     "component-names": {
+        "pointOfSale": "Point of sale",
+        "shifts": "Shifts",
         "determinants": "Determinants",
         "country-information": "Country information",
         "modulesType": "Modules Type",
@@ -586,7 +588,7 @@
     "message-title": {
         "done": "Done",
         "wrong": "Wrong",
-        "warning":"Warning"
+        "warning": "Warning"
     },
     "voucher": {
         "voucher-information": "Voucher Information",
@@ -619,7 +621,7 @@
         "totalCredit": "Total Credit",
         "totalDebitLocal": "Total Debit Local",
         "totalCreditLocal": "Total Credit Local",
-        "no-delete-entry":"You can not delete this entry (Transaction entry)",
+        "no-delete-entry": "You can not delete this entry (Transaction entry)",
         "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal period"
     },
     "account-classification": {
