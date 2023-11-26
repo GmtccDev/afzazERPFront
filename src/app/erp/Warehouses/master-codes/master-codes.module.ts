@@ -46,6 +46,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ItemGuideComponent } from './item-guide/item-guide.component';
 import { AddEditItemGuideComponent } from './item-guide/add-edit-item-guide/add-edit-item-guide.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -60,7 +62,7 @@ import { AddEditItemGuideComponent } from './item-guide/add-edit-item-guide/add-
   imports: [
     CommonModule,
     MasterCodesRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
-    NzButtonModule,NgSelectModule,NzIconModule
+    NzButtonModule,NgSelectModule,NzIconModule,MatDialogModule, MatButtonModule,
 
   ],
   providers: [PeriodServiceProxy,DeterminantsServiceProxy,SalesPersonCommissionServiceProxy,SalesPersonCardServiceProxy, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura
