@@ -13,5 +13,8 @@ export interface ToolbarButtonsAppearance {
   showPost: boolean,
   showCancelDefaultReport: boolean,
   showGenerateEntry: boolean,
+  showClose: boolean,
+  showOpen: boolean,
+
 
 }

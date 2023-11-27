@@ -14,7 +14,7 @@ import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { AccountClassificationsEnum, EntryStatusArEnum, EntryStatusEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { EntryStatusArEnum, EntryStatusEnum, EntryTypesEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { DateModel } from 'src/app/shared/model/date-model';
@@ -24,10 +24,7 @@ import { ModuleType } from '../../../models/general-configurations';
 import { JournalEntryDetail } from '../../../models/journal';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
-import { ReportFile } from 'src/app/shared/model/report-file';
-import { environment } from 'src/environments/environment';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { DatePipe } from '@angular/common';
@@ -54,6 +51,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   toDate: any;
   public show: boolean = false;
   journalEntry: [] = [];
+  status: string = '';
+  type: string = '';
+  setting: string = '';
+  parentType: number | undefined;
+  parentTypeId: number | undefined;
+  settingId: number | undefined;
+
+
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
   listUrl: string = '/accounting-operations/journalEntry';
@@ -108,6 +113,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   fiscalPeriodName: any;
   fiscalPeriodStatus: any;
   fiscalPeriodcheckDate: any;
+  showDetails: boolean = false;
+
   constructor(
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
@@ -120,10 +127,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     private publicService: PublicService,
     private reportViewerService: ReportViewerService,
     private dateService: DateCalculation,
-    private rptSrv: ReportServiceProxy,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private fiscalPeriodService: FiscalPeriodServiceProxy,
     private datePipe: DatePipe,
     private searchDialog: SearchDialogService,
     private modalService: NgbModal,
@@ -170,13 +175,12 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   }
   getRouteData() {
-
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
         if (this.id > 0) {
-
           this.getjournalEntryById(this.id).then(a => {
+            this.getJournalEntryAdditionalById(this.id);
             this.spinner.hide();
             this.sharedServices.changeButton({ action: 'Update', submitMode: false, disabledPrint: false } as ToolbarData);
 
@@ -302,13 +306,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           resolve();
 
           if (res.success) {
-            
+
             this.defaultCurrencyId = Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value)
             this.financialEntryCycle = Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.FinancialEntryCycle).value)
             if (!this.id) {
               this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value))
               this.journalEntryForm.controls.journalId.patchValue(Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value))
-            
+
             }
 
             this.isMultiCurrency = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
@@ -463,9 +467,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
           resolve();
-
           this.lang = localStorage.getItem("language")
-
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
@@ -520,7 +522,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.onChangeJournal(res.response?.journalId);
             this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
             this.onChangeCode(null);
-            console.log(this.journalList)
             this.counter = element.jeDetailSerial;
           });
           this.totalCredit = 0;
@@ -704,14 +705,20 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
-    debugger
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
     }
 
     if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-      this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-open-fiscal-period");
+      if (this.fiscalPeriodStatus == null) {
+        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-choose-open-fiscal-period");
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+
+      }
       this.errorClass = 'errorMessage';
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
@@ -890,40 +897,40 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       }
       if (this.journalEntryForm.valid) {
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-          this.errorMessage = this.translate.instant("general.no-edit-fiscal-period-choose-open-fiscal-period") + " : " + this.fiscalPeriodName;
+          this.errorMessage = this.translate.instant("journalEntry.no-update-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
           this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
           return;
         }
         let entryDate = this.journalEntryForm.controls["date"].value;
-    let _date;
-    let month;
-    let day;
-    if (entryDate?.month + 1 > 9) {
-      month = entryDate?.month + 1
-    }
-    else {
-      month = '0' + entryDate.month + 1
-    }
-    if (entryDate.day < 10) {
-      day = '0' + entryDate?.day
-    }
-    else {
-      day = entryDate.day
-    }
-    _date = entryDate.year + '-' + month + '-' + day
+        let _date;
+        let month;
+        let day;
+        if (entryDate?.month + 1 > 9) {
+          month = entryDate?.month + 1
+        }
+        else {
+          month = '0' + entryDate.month + 1
+        }
+        if (entryDate.day < 10) {
+          day = '0' + entryDate?.day
+        }
+        else {
+          day = entryDate.day
+        }
+        _date = entryDate.year + '-' + month + '-' + day
 
-    if (_date >= this.fromDate && _date <= this.toDate) {
+        if (_date >= this.fromDate && _date <= this.toDate) {
 
 
-    }
-    else {
-      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
+        }
+        else {
+          this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
 
-    }
+        }
         // let checkDate = this.dateService.getDateForInsert(this.date)
         // const date = new Date(checkDate);
         // const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
@@ -985,7 +992,51 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.spinner.hide();
   }
 
+  getJournalEntryAdditionalById(id: number) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalEntryService.getJournalEntryAdditionalById(id).subscribe({
+        next: (res) => {
+          resolve();
+          if (res.success) {
+            this.showDetails = true;
+            this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
+            this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
+            this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
+            this.parentType = res.response.data.result[0].parentType;
+            this.parentTypeId = res.response.data.result[0].parentTypeId;
+            this.settingId = res.response.data.result[0].settingId;
 
+
+          }
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  onViewClicked() {
+    if (this.parentType == EntryTypesEnum.Voucher) {
+      window.open('accounting-operations/vouchers/update-voucher/' + this.settingId + '/' + this.parentTypeId, "")
+    }
+    if (this.parentType == EntryTypesEnum.IncomingCheque) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.IssuingCheque) {
+      window.open('accounting-operations/issuingCheque/update-issuingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.SalesBill || this.parentType == EntryTypesEnum.SalesReturnBill
+      || this.parentType == EntryTypesEnum.PurchasesBill || this.parentType == EntryTypesEnum.PurchasesReturnBill) {
+      window.open('warehouses-operations/bill/update-bill/' + this.settingId + '/' + this.parentTypeId, "_blank")
+    }
+  }
 
   getJournals() {
     return new Promise<void>((resolve, reject) => {
@@ -1002,7 +1053,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             //   else {
             //     element.nameAr = element.nameEn;
             //   }
-           // })
+            // })
           }
 
 

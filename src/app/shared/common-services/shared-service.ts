@@ -26,7 +26,6 @@ import { Injectable } from "@angular/core";
       this.buttonSource.next(toolbarData);
     }
     public getClickedbutton(): Observable<ToolbarData> {
-   
       return this.buttonSource.asObservable();
     }
     public changeButtonApperance(toolbarButtons: ToolbarButtonsAppearance) {

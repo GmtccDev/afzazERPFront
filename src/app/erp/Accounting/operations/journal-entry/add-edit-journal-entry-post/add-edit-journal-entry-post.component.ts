@@ -14,7 +14,7 @@ import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { EntryStatusArEnum, EntryStatusEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { EntryStatusArEnum, EntryStatusEnum, EntryTypesEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { ModuleType } from '../../../models/general-configurations';
 @Component({
@@ -29,6 +29,14 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   url: any;
   id: any = 0;
   currnetUrl;
+  status: string = '';
+  type: string = '';
+  setting: string = '';
+  parentType: number | undefined;
+  parentTypeId: number | undefined;
+  settingId: number | undefined;
+  showDetails: boolean = false;
+
   public show: boolean = false;
   lang = localStorage.getItem("language")
   journalEntry: [] = [];
@@ -125,6 +133,8 @@ export class AddEditJournalEntryPostComponent implements OnInit {
 
         if (this.id > 0) {
           this.getjournalEntryById(this.id).then(a => {
+            this.getJournalEntryAdditionalById(this.id);
+
             this.spinner.hide();
             this.sharedServices.changeButton({ action: 'Update' } as ToolbarData);
           }).catch(err => {
@@ -908,6 +918,52 @@ export class AddEditJournalEntryPostComponent implements OnInit {
     else {
       this.entriesStatusEnum = convertEnumToArray(EntryStatusArEnum);
 
+    }
+  }
+  getJournalEntryAdditionalById(id: number) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalEntryService.getJournalEntryAdditionalById(id).subscribe({
+        next: (res) => {
+          resolve();
+          if (res.success) {
+            this.showDetails = true;
+            this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
+            this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
+            this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
+            this.parentType = res.response.data.result[0].parentType;
+            this.parentTypeId = res.response.data.result[0].parentTypeId;
+            this.settingId = res.response.data.result[0].settingId;
+
+
+          }
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  onViewClicked() {
+    
+    if (this.parentType == EntryTypesEnum.Voucher) {
+      window.open('accounting-operations/vouchers/update-voucher/' + this.settingId + '/' + this.parentTypeId, "")
+    }
+    if (this.parentType == EntryTypesEnum.IncomingCheque) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.IssuingCheque) {
+      window.open('accounting-operations/issuingCheque/update-issuingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.SalesBill || this.parentType == EntryTypesEnum.SalesReturnBill
+      || this.parentType == EntryTypesEnum.PurchasesBill || this.parentType == EntryTypesEnum.PurchasesReturnBill) {
+      window.open('warehouses-operations/bill/update-bill/' + this.settingId + '/' + this.parentTypeId, "_blank")
     }
   }
 }

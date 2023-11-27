@@ -18,7 +18,7 @@
 					class=" b-r-0 mx-2">{{'general.search'|translate}}</button>
 			</div>
 		</div>
-		
+
 		<nz-table #expandTable [nzBordered]="true" [nzData]="listOfMapData" nzTableLayout="fixed"
 			class="table table-broder p-0 mt-2">
 			<thead>
@@ -26,7 +26,13 @@
 					<th> {{'general.code'|translate}}</th>
 					<th> {{'general.nameAr'|translate}}</th>
 					<th> {{'general.nameEn'|translate}}</th>
-					<th>{{'general.actions'|translate}}</th>
+					<!-- <th>{{'general.actions'|translate}}</th> -->
+					<th> {{'buttons.add'|translate}}</th>
+					<th> {{'buttons.edit'|translate}}</th>
+					<th> {{'buttons.delete'|translate}}</th>
+
+
+
 				</tr>
 			</thead>
 			<tbody>
@@ -41,17 +47,21 @@
 							</td>
 							<td>{{ item.nameAr }}</td>
 							<td>{{ item.nameEn }}</td>
-							<td class="d-flex gap-2">
-								<button nz-button (click)="addNode(item.id)">
+							<td>
+								<button (click)="addNode(item.id)">
 									<!-- {{'toolbar.new'|translate}} -->
 									<i class="fa fa-file-o"></i>
 								</button>
-								<button nz-button (click)="onEdit(item.id)">
+							</td>
+							<td>
+
+								<button (click)="onEdit(item.id)">
 									<!-- {{'buttons.edit'|translate}} -->
 									<i class="fa fa-edit"></i>
 								</button>
-
-								<button nz-button (click)="showConfirmDeleteMessage(item.id)">
+							</td>
+							<td>
+								<button (click)="showConfirmDeleteMessage(item.id)">
 									<!-- {{'buttons.delete'|translate}} -->
 									<i class="fa fa-trash"></i>
 								</button>

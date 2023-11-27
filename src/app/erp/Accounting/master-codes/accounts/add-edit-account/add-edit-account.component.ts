@@ -652,7 +652,7 @@ export class AddEditAccountComponent implements OnInit {
   confirmSave() {
     var entity = new AccountDto();
     entity = this.accountForm.getRawValue();
-    debugger
+          
     if (this.accountForm.value.isLeafAccount == true && this.accountForm.value.parentId == null) {
       this.notificationService.error("من فضلك ادخل الاب");
       this.spinner.hide();
@@ -810,7 +810,7 @@ export class AddEditAccountComponent implements OnInit {
     let sub = this.accountService.checkAccount(this.accountForm?.value?.parentId).subscribe({
 
       next: (result: any) => {
-debugger
+      
      
         if (result.response == false) {
         this.errorMessage=this.translate.instant('canChangeToParent');

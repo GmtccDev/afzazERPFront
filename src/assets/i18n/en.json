@@ -237,7 +237,11 @@
         "tax-account": "Tax Account",
         "close-account-required": "Please choose close account from the settings",
         "date-out-fiscal-period": "The date is out fiscal period date",
-        "unit-transaction-factor":"Unit Transaction Factor"
+        "unit-transaction-factor":"Unit Transaction Factor",
+        "company-name":"Company Name",
+        "branch-name":"Branch Name",
+        "copy-right":"Copy Right",
+        "afzaz":"Afzaz"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -412,7 +416,9 @@
         "view": "View",
         "cancelDefaultReport": "Cancel Default Report",
         "post": "Post",
-        "generate-entry": "Generate Entry"
+        "generate-entry": "Generate Entry",
+        "close":"Close",
+        "open":"Open"
     },
     "component-names": {
         "determinants": "Determinants",
@@ -471,7 +477,7 @@
         "vouchers-transactions-report": "Vouchers Transactions Report",
         "bankAccount": " Bank Account",
         "bankAccount-information": "  Bank Account Information",
-        "close-fiscal-period": "Close Fiscal Period",
+        "close-fiscal-period": "Close / Open Fiscal Period",
         "incomingCheque": " Incoming Cheque",
         "incomingCheque-information": "Incoming Cheque Information ",
         "issuing-cheque": " Issuing Cheque",
@@ -567,7 +573,10 @@
     "fiscal-period": {
         "fiscal-period-status": "status",
         "add-fiscal-period": "Add Fiscal Period",
-        "Intersection": "There is an overlap in date  "
+        "Intersection": "There is an overlap in date",
+        "close-success":"Closed successfully",
+        "open-success":"opened successfully"
+
     },
     "voucher-type": {
         "voucher-type-information": "Voucher Type Information",
@@ -621,7 +630,13 @@
         "totalDebitLocal": "Total Debit Local",
         "totalCreditLocal": "Total Credit Local",
         "no-delete-entry":"You can not delete this entry (Transaction entry)",
-        "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal period"
+        "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal period",
+        "no-add-entry-fiscal-period-closed": "You can not add an entry to this closed fiscal period",
+        "no-add-entry-fiscal-period-choose-open-fiscal-period": "You can not add an entry.You Should choose a open fiscal period from the settings",
+        "no-update-entry-fiscal-period-closed": "You can not update the entry to this closed fiscal period",
+        "entry-status":"Entry Status"
+
+
     },
     "account-classification": {
         "add-account-classification": "Add Account Classification",
