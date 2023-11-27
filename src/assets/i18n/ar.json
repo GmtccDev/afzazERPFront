@@ -400,7 +400,7 @@
         "leaf-account": "الحساب الفرعى",
         "type": "النوع",
         "level": "المستوى",
-        "setting": "نمط",
+        "setting": "النمط",
         "choose-template": "أختر النموذج",
         "template-name": "أسم النموذج",
         "report-options": "خيارات التقرير",
@@ -479,7 +479,13 @@
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
         "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
-        "unit-transaction-factor":"معامل تحويل الوحدة"
+        "unit-transaction-factor":"معامل تحويل الوحدة",
+        "company-name":"أسم الشركة",
+        "branch-name":"أسم الفرع",
+        "copy-right":"حق النشر",
+        "afzaz":"أفذاذ"
+
+
 
     },
     "sales-person-commission": {
@@ -621,7 +627,8 @@
         "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة",
         "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة الفترة المحاسبية المغلقة",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
-        "no-update-entry-fiscal-period-closed": "لا يمكن تعديل هذا القيد لهذة الفترة المحاسبية المغلقة"
+        "no-update-entry-fiscal-period-closed": "لا يمكن تعديل هذا القيد لهذة الفترة المحاسبية المغلقة",
+        "entry-status":"حالة القيد"
 
 
     },

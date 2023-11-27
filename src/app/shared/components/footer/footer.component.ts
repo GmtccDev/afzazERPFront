@@ -8,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
   
   public today: number = Date.now();
+  lang = localStorage.getItem('language');
+  companyNameAr =localStorage.getItem('companyNameAr');
+  companyNameEn= localStorage.getItem('companyNameEn');
+  branchNameAr =localStorage.getItem('branchNameAr');
+  branchNameEn= localStorage.getItem('branchNameEn');
 
   constructor() { }
 
   ngOnInit(): void {
   }
+  
 
 }

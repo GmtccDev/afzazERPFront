@@ -166,16 +166,12 @@ export class AddCurrencyComponent implements OnInit {
           });
           this.currencyTransactionsDto = res.response?.currencyTransactionsDto;
           this.drawTable();
-          console.log(
-            'this.currenciesForm.value set value',
-            this.currenciesForm.value
-          );
+         
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -257,7 +253,6 @@ export class AddCurrencyComponent implements OnInit {
       let sub = this.currencyService.createCurrency(this.currenciesForm.value).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          this.response = { ...result.response };
           this.defineCurrencyForm();
           this.submited = false;
           this.spinner.hide();
@@ -294,7 +289,6 @@ export class AddCurrencyComponent implements OnInit {
       let sub = this.currencyService.updateCurrency(this.currenciesForm.value).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          this.response = { ...result.response };
           this.defineCurrencyForm();
           this.submited = false;
           this.spinner.hide();
@@ -304,7 +298,6 @@ export class AddCurrencyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);

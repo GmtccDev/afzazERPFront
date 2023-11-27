@@ -237,7 +237,11 @@
         "tax-account": "Tax Account",
         "close-account-required": "Please choose close account from the settings",
         "date-out-fiscal-period": "The date is out fiscal period date",
-        "unit-transaction-factor":"Unit Transaction Factor"
+        "unit-transaction-factor":"Unit Transaction Factor",
+        "company-name":"Company Name",
+        "branch-name":"Branch Name",
+        "copy-right":"Copy Right",
+        "afzaz":"Afzaz"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -629,7 +633,10 @@
         "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal period",
         "no-add-entry-fiscal-period-closed": "You can not add an entry to this closed fiscal period",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "You can not add an entry.You Should choose a open fiscal period from the settings",
-        "no-update-entry-fiscal-period-closed": "You can not update the entry to this closed fiscal period"
+        "no-update-entry-fiscal-period-closed": "You can not update the entry to this closed fiscal period",
+        "entry-status":"Entry Status"
+
+
     },
     "account-classification": {
         "add-account-classification": "Add Account Classification",
