@@ -67,7 +67,7 @@ export class FullDateComponent implements OnInit,OnDestroy {
      
       let sub = this.companyService.getCompany(id).subscribe({
         next: (res: any) => {
-          debugger;
+      
           
           if(res?.response?.useHijri)
           {

@@ -689,7 +689,9 @@
         "sub-tax-nameAr":"Name in Arabic",
         "sub-tax-nameEn":"Name in English",
         "add-ratio-details":"Add Ratio",
-        "add-reason-details":"Add Reason"
+        "add-reason-details":"Add Reason",
+        "sub-tax-ratio-detail":"Sub Tax Ratio Detail",
+        "sub-tax-reason-detail":"Sub Tax Reason Detail "
     },
     "item": {
         "item-group": "Item Group",

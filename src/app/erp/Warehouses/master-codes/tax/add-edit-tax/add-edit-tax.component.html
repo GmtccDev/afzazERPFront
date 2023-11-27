@@ -250,7 +250,7 @@
 												<li ngbNavItem [destroyOnHide]="false">
 													<a ngbNavLink> {{'tax.sub-tax-details' |translate}}</a>
 													<ng-template ngbNavContent>
-													 	<table class="table table-broder"
+														<table class="table table-broder"
 															style="overflow-y: scroll !important;">
 															<thead>
 																<th>#</th>
@@ -264,10 +264,10 @@
 																	{{'tax.sub-tax-nameEn'|translate}}
 																</th>
 																<th>
-																	{{'tax.sub-tax-ratio-details'|translate}}
+																	{{'tax.sub-tax-ratio'|translate}}
 																</th>
 																<th>
-																	{{'tax.sub-tax-reason-details'|translate}}
+																	{{'tax.sub-tax-reason'|translate}}
 																</th>
 
 																<th>{{'general.actions'|translate}}</th>
@@ -280,7 +280,7 @@
 																		[ngModelOptions]="{standalone: true}" min="0"
 																		class="border-0 m-0 w-100">
 																</td>
-											
+
 																<td>
 																	<input type="text"
 																		[(ngModel)]="subTaxDetail[i].subTaxNameAr"
@@ -292,6 +292,22 @@
 																		[(ngModel)]="subTaxDetail[i].subTaxNameEn"
 																		[ngModelOptions]="{standalone: true}" min="0"
 																		class="border-0 m-0 w-100">
+																</td>
+																<td>
+
+																	<input type="button"
+																		class="btn btn-secondary btn-table " mat-button
+																		(click)="openSubTaxRatioDialog(i)"
+																		value="{{'tax.add-ratio-details'|translate}}">
+
+																</td>
+																<td>
+
+																	<input type="button"
+																		class="btn btn-secondary btn-table "
+																		(click)="openSubTaxReasonDialog(i)"
+																		value="{{'tax.add-reason-details'|translate}}">
+
 																</td>
 
 
@@ -308,18 +324,17 @@
 																<td class="p-0 m-0">{{subTaxDetail?.length + 1}}</td>
 																<td>
 																	<input type="text"
-																	
-																	[(ngModel)]="selectedSubTaxDetail.code"
-																	[ngModelOptions]="{standalone: true}" min="0"
-																	class=" border-0 m-0 w-100">
+																		[(ngModel)]="selectedSubTaxDetail.code"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class=" border-0 m-0 w-100">
 
 
 																</td>
 																<td>
 																	<input type="text"
-																	[(ngModel)]="selectedSubTaxDetail.subTaxNameAr"
-																	[ngModelOptions]="{standalone: true}" min="0"
-																	class="border-0 m-0 w-100">
+																		[(ngModel)]="selectedSubTaxDetail.subTaxNameAr"
+																		[ngModelOptions]="{standalone: true}" min="0"
+																		class="border-0 m-0 w-100">
 
 
 																</td>
@@ -333,9 +348,8 @@
 																<td>
 
 																	<input type="button"
-																		class="btn btn-secondary btn-table "
-																		mat-button 
-																		(click)="openDialog()"
+																		class="btn btn-secondary btn-table " mat-button
+																		(click)="openSubTaxRatioDialog(-1)"
 																		value="{{'tax.add-ratio-details'|translate}}">
 
 																</td>
@@ -343,7 +357,7 @@
 
 																	<input type="button"
 																		class="btn btn-secondary btn-table "
-																		(click)="addSubTaxItem()"
+																		(click)="openSubTaxReasonDialog(-1)"
 																		value="{{'tax.add-reason-details'|translate}}">
 
 																</td>
@@ -364,11 +378,11 @@
 
 
 											</ul>
-											
+
 											<div [ngbNavOutlet]="nav" class=""></div>
 										</div>
 									</div>
-								
+
 								</div>
 							</div>
 						</form>
@@ -380,120 +394,207 @@
 </section>
 
 
-<ng-template #dialogContent>
-  <h2 mat-dialog-title> {{'tax.sub-tax-details' |translate}}</h2>
-  <div mat-dialog-content>
-    <!-- Add your content here -->
-    	<div class="row">
-										<div class="col gap-12 grid grid-cols-12 ">
-											<ul ngbNav #nav="ngbNav" class="nav-tabs">
-									
-												<li ngbNavItem [destroyOnHide]="false">
-													<a ngbNavLink> {{'tax.sub-tax-details' |translate}}</a>
-													<ng-template ngbNavContent>
-													 	<table class="table table-broder"
-															style="overflow-y: scroll !important;">
-															<thead>
-																<th>#</th>
-																<th>
-																	{{'general.code'|translate}}
-																</th>
-																<th>
-																	{{'tax.sub-tax-nameAr'|translate}}
-																</th>
-																<th>
-																	{{'tax.sub-tax-nameEn'|translate}}
-																</th>
-															
+<ng-template #dialogSubTaxRatioContent>
+	<h2 mat-dialog-title> {{'tax.sub-tax-details' |translate}}</h2>
+	<div mat-dialog-content>
+		<!-- Add your content here -->
+		<div class="row">
+			<div class="col gap-12 grid grid-cols-12 ">
+				<ul ngbNav #nav="ngbNav" class="nav-tabs">
 
-																<th>{{'general.actions'|translate}}</th>
-															</thead>
-															<tr *ngFor="let item of subTaxDetail; let i= index;">
-																<td> {{i+1}}</td>
-																<td>
-																	<input type="text"
-																		[(ngModel)]="subTaxDetail[i].code"
-																		[ngModelOptions]="{standalone: true}" min="0"
-																		class="border-0 m-0 w-100">
-																</td>
-											
-																<td>
-																	<input type="text"
-																		[(ngModel)]="subTaxDetail[i].subTaxNameAr"
-																		[ngModelOptions]="{standalone: true}" min="0"
-																		class="border-0 m-0 w-100">
-																</td>
-																<td>
-																	<input type="text"
-																		[(ngModel)]="subTaxDetail[i].subTaxNameEn"
-																		[ngModelOptions]="{standalone: true}" min="0"
-																		class="border-0 m-0 w-100">
-																</td>
+					<li ngbNavItem [destroyOnHide]="false">
+						<a ngbNavLink> {{'tax.sub-tax-ratio-detail' |translate}}</a>
+						<ng-template ngbNavContent>
+							<table class="table table-broder" style="overflow-y: scroll !important;">
+								<thead>
+									<th>#</th>
+									<th>
+										{{'general.fromDate'|translate}}
+									</th>
+									<th>
+										{{'general.toDate'|translate}}
+									</th>
+									<th>
+										{{'tax.tax-ratio'|translate}}
+									</th>
+
+									<th></th>
+								</thead>
+								<tr *ngFor="let item of subTaxRatioDetail; let i= index;">
+									<td> {{i+1}}</td>
+									<td>
+										{{subTaxRatioDetail[i].fromDate}}
 
 
 
-																<td>
-																	<input type="button"
-																		class="btn btn-danger btn-table"
-																		value="{{'buttons.delete'|translate}}"
-																		(click)="deleteSubTaxItem(i)">
-																</td>
-															</tr>
-
-															<tr>
-																<td class="p-0 m-0">{{subTaxDetail?.length + 1}}</td>
-																<td>
-																	<input type="text"
-																	
-																	[(ngModel)]="selectedSubTaxDetail.code"
-																	[ngModelOptions]="{standalone: true}" min="0"
-																	class=" border-0 m-0 w-100">
-
-
-																</td>
-																<td>
-																	<input type="text"
-																	[(ngModel)]="selectedSubTaxDetail.subTaxNameAr"
-																	[ngModelOptions]="{standalone: true}" min="0"
-																	class="border-0 m-0 w-100">
-
-
-																</td>
-																<td>
-																	<input type="text"
-																		[(ngModel)]="selectedSubTaxDetail.subTaxNameEn"
-																		[ngModelOptions]="{standalone: true}" min="0"
-																		class="border-0 m-0 w-100">
-																</td>
-
-															
-																<td>
-
-																	<input type="button"
-																		class="btn btn-primary btn-table "
-																		(click)="addSubTaxItem()"
-																		value="{{'buttons.add'|translate}}">
-
-																</td>
-															</tr>
-														</table>
-
-													</ng-template>
-												</li>
+									</td>
+									<td>
+										{{subTaxRatioDetail[i].toDate}}
 
 
 
-											</ul>
-											
-											<div [ngbNavOutlet]="nav" class=""></div>
-										</div>
-									</div>
-  </div>
-  <!-- <div mat-dialog-actions>
+
+									</td>
+									<td>
+										<input type="number" [(ngModel)]="subTaxRatioDetail[i].taxRatio"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+									</td>
+
+
+
+									<td>
+										<input type="button" class="btn btn-danger btn-table"
+											value="{{'buttons.delete'|translate}}" (click)="deleteSubTaxRatioItem(i)">
+									</td>
+								</tr>
+
+								<tr>
+									<td class="p-0 m-0">{{subTaxRatioDetail?.length + 1}}</td>
+									<td>
+										<app-full-date [(ngModel)]="selectedSubTaxRatioDetail.fromDate" ngDefaultControl
+											[selectedDate]="selectedSubTaxRatioDetail.fromDate"
+											[ngModelOptions]="{standalone: true}"
+											(OnDateSelect)="getSelectedFromDate($event)"
+											class="p-0 m-0"></app-full-date>
+
+
+									</td>
+									<td>
+										<app-full-date [(ngModel)]="selectedSubTaxRatioDetail.toDate" ngDefaultControl
+											[selectedDate]="selectedSubTaxRatioDetail.toDate"
+											[ngModelOptions]="{standalone: true}"
+											(OnDateSelect)="getSelectedToDate($event)" class="p-0 m-0"></app-full-date>
+
+
+									</td>
+									<td>
+										<input type="number" [(ngModel)]="selectedSubTaxRatioDetail.taxRatio"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+									</td>
+
+									<td>
+
+										<input type="button" class="btn btn-primary btn-table " (click)="addSubTaxRatioItem()"
+											value="{{'buttons.add'|translate}}">
+
+									</td>
+								</tr>
+							</table>
+
+						</ng-template>
+					</li>
+
+
+
+				</ul>
+
+				<div [ngbNavOutlet]="nav" class=""></div>
+			</div>
+		</div>
+	</div>
+	<!-- <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="true">OK</button>
     <button mat-button [mat-dialog-close]="false">Cancel</button>
   </div> -->
 </ng-template>
+
+<ng-template #dialogSubTaxReasonContent>
+	<h2 mat-dialog-title> {{'tax.sub-tax-details' |translate}}</h2>
+	<div mat-dialog-content>
+		<!-- Add your content here -->
+		<div class="row">
+			<div class="col gap-12 grid grid-cols-12 ">
+				<ul ngbNav #nav="ngbNav" class="nav-tabs">
+
+					<li ngbNavItem [destroyOnHide]="false">
+						<a ngbNavLink> {{'tax.sub-tax-reason-detail' |translate}}</a>
+						<ng-template ngbNavContent>
+							<table class="table table-broder" style="overflow-y: scroll !important;">
+								<thead>
+									<th>#</th>
+									<th>
+										{{'general.code'|translate}}
+									</th>
+									<th>
+										{{'tax.sub-tax-nameAr'|translate}}
+									</th>
+									<th>
+										{{'tax.sub-tax-nameEn'|translate}}
+									</th>
+
+
+									<th>{{'general.actions'|translate}}</th>
+								</thead>
+								<tr *ngFor="let item of subTaxReasonDetail; let i= index;">
+									<td> {{i+1}}</td>
+									<td>
+										<input type="text" [(ngModel)]="subTaxReasonDetail[i].code"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+									</td>
+
+									<td>
+										<input type="text" [(ngModel)]="subTaxReasonDetail[i].taxReasonAr"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+									</td>
+									<td>
+										<input type="text" [(ngModel)]="subTaxReasonDetail[i].taxReasonEn"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+									</td>
+
+
+
+									<td>
+										<input type="button" class="btn btn-danger btn-table"
+											value="{{'buttons.delete'|translate}}" (click)="deleteSubTaxReasonItem(i)">
+									</td>
+								</tr>
+
+								<tr>
+									<td class="p-0 m-0">{{subTaxReasonDetail?.length + 1}}</td>
+									<td>
+										<input type="text" [(ngModel)]="selectedSubTaxReasonDetail.code"
+											[ngModelOptions]="{standalone: true}" min="0" class=" border-0 m-0 w-100">
+
+
+									</td>
+									<td>
+										<input type="text" [(ngModel)]="selectedSubTaxReasonDetail.taxReasonAr"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+
+
+									</td>
+									<td>
+										<input type="text" [(ngModel)]="selectedSubTaxReasonDetail.taxReasonEn"
+											[ngModelOptions]="{standalone: true}" min="0" class="border-0 m-0 w-100">
+									</td>
+
+
+									<td>
+
+										<input type="button" class="btn btn-primary btn-table "
+											(click)="addSubTaxReasonItem()" value="{{'buttons.add'|translate}}">
+
+									</td>
+								</tr>
+							</table>
+
+						</ng-template>
+					</li>
+
+
+
+				</ul>
+
+				<div [ngbNavOutlet]="nav" class=""></div>
+			</div>
+		</div>
+	</div>
+	<!-- <div mat-dialog-actions>
+	  <button mat-button [mat-dialog-close]="true">OK</button>
+	  <button mat-button [mat-dialog-close]="false">Cancel</button>
+	</div> -->
+</ng-template>
+
 
 
 
