@@ -252,8 +252,8 @@
 																						[ngModelOptions]="{standalone: true}"
 																						placeholder="{{'general.search'|translate}}"
 																						[ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
-																						type="text" name="accountId"
-																						(keydown.Enter)="openSearchAccount(i)">
+																						type="text" name="accountId" 
+																						(keydown.Enter)="openSearchAccount(i,row.value.accountName)">
 																					<div *ngIf="row.get('accountName')?.errors?.required && row.get('accountName')?.touched"
 																						class="invalid-feedback">
 																						Account Name is required.
@@ -314,7 +314,7 @@
 																						placeholder="{{'general.search'|translate}}"
 																						name="currencyId"
 																						[ngClass]="{ 'required': (row.get('accountId')?.errors?.required)}"
-																						(keydown.Enter)="openSearchCurrency(i)"
+																						(keydown.Enter)="openSearchCurrency(i,row.value.currencyName)"
 																						(change)="onChangeCurrency($event,i)">
 																				</div>
 
@@ -377,7 +377,7 @@
 																						placeholder="{{'general.search'|translate}}"
 																						name="costCenterId"
 																						[ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
-																						(keydown.Enter)="openSearchCostCenter(i)">
+																						(keydown.Enter)="openSearchCostCenter(i,row.value.costCenterName)">
 
 																				</div>
 
@@ -396,7 +396,7 @@
 																					*ngIf="journalEntriesDetailList.length-1==i||journalEntriesDetailList.length-1==0"
 																					class="btn btn-primary btn-table"
 																					(click)="initGroup()"
-																					value="{{'buttons.add'|translate}}">
+																					value="{{'general.add-new-row'|translate}}">
 
 																				<button
 																					class="btn btn-danger btn-table px-3"

@@ -125,10 +125,10 @@
 										<div class="item-permissions">
 											<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
 												{{lang=="ar"?option.screenNameAr:option.screenNameEn}}
-												<label>	<input type="checkbox" name="options" value="{{option.id}}"
+												<label> <input type="checkbox" name="options" value="{{option.id}}"
 														[(ngModel)]="option.isChecked"
 														(change)="updateCheckedOption(option, $event)" />
-													</label>
+												</label>
 											</h6>
 											<div class="check-item" *ngFor="let item of option.permissions;">
 												<label>
