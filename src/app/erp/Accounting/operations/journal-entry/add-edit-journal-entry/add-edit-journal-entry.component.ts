@@ -30,6 +30,7 @@ import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { DatePipe } from '@angular/common';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { SearchDialogService } from 'src/app/shared/services/search-dialog.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -57,7 +58,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   parentType: number | undefined;
   parentTypeId: number | undefined;
   settingId: number | undefined;
-
+  costCenterName: any;
 
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
@@ -392,7 +393,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   }
   get journalEntriesDetailList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
   initGroup() {
-
+    debugger
     this.counter += 1;
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     journalEntriesDetail.push(this.fb.group({
@@ -678,6 +679,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
+    debugger
     return new Promise<void>((resolve, reject) => {
       this.journalEntryForm.value.postType = this.financialEntryCycle == 3 ? 1 : 2;
       this.journalEntryForm.value.date = this.dateService.getDateForInsert(this.date)
@@ -705,6 +707,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
+
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
@@ -787,7 +790,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       return;
     }
 
-    //  var entity = new CreateJournalEntryCommand();
+    debugger
+    let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+    var count = journalEntriesDetail.length;
+    var index = count - 1;
+    if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+      journalEntriesDetail.removeAt(index);
+    }
     if (this.journalEntryForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -804,7 +813,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   isSelectCurrency: boolean = false;
   onChangeGetDefaultCurrency(event, index) {
-    ;
     if (!this.isSelectCurrency) {
       let currencyId;
       var accountData = this.accountList.find(x => x.id == event.target.value) as AccountDto;
@@ -895,6 +903,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       if (this.fiscalPeriodId > 0) {
         this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
       }
+      debugger
+      // let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+      // var count = journalEntriesDetail.length;
+      // var index = count - 1;
+      // if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+      //   journalEntriesDetail.removeAt(index);
+      // }
       if (this.journalEntryForm.valid) {
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("journalEntry.no-update-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
@@ -1355,12 +1370,15 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.subsList.push(sub);
   }
   openSearchCostCenter(i) {
+    debugger
     this.index = i;
+    let searchTxt = '';
+    // searchTxt = costCenterName ?? '';
     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
     let names = ['code', 'nameAr', 'nameEn'];
     let title = 'بحث عن مركز التكلفة';
     let sub = this.searchDialog
-      .showDialog(lables, names, this.costCenterList, title, '')
+      .showDialog(lables, names, this.costCenterList, title, searchTxt)
       .subscribe((d) => {
         if (d) {
           this.onSelectCostCenter(d);

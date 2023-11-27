@@ -15,13 +15,13 @@ import format from 'date-fns/format';
 import { IssuingChequeServiceProxy } from '../../services/issuing-cheque.services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FiscalPeriodServiceProxy } from '../../services/fiscal-period.services';
-import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { ChequeStatusEnum, GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { GeneralConfigurationServiceProxy } from '../../services/general-configurations.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { ReportViewerService } from '../../reports/services/report-viewer.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
   selector: 'app-issuing-cheque',
   templateUrl: './issuing-cheque.component.html',
@@ -59,6 +59,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
   };
   dateType: any;
+  accountExchangeId: any;
 
   listIds: any[] = [];
   //#endregion
@@ -78,10 +79,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     private dateService: DateCalculation,
     private companyService: CompanyServiceProxy,
 
-
-
-
-
   ) {
 
   }
@@ -91,7 +88,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getCompanyById(this.companyId), this.getIssuingChequees()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getGeneralConfigurationsOfExchangeAccount(), this.getCompanyById(this.companyId), this.getIssuingChequees()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -145,6 +142,29 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
               this.getfiscalPeriodById(this.fiscalPeriodId);
 
             }
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getGeneralConfigurationsOfExchangeAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountExchange).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+            this.accountExchangeId = res.response.value;
+            
           }
 
 
@@ -223,34 +243,59 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
   showConfirmDeleteMessage(id) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
-    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
-    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
-    modalRef.componentInstance.isYesNo = true;
-    modalRef.result.then((rs) => {
-      if (rs == 'Confirm') {
-        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-          this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-          this.errorClass = 'errorMessage';
-          this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
-          return;
-        }
-        else {
-          this.spinner.show();
-
-          let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
-            (resonse) => {
-
-              this.getIssuingChequees();
-
-            });
-          this.subsList.push(sub);
-          this.spinner.hide();
+    var status;
+    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+      this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+      this.errorClass = 'errorMessage';
+      this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
+      return;
+    }
+    if (this.issuingCheque != null) {
+      this.issuingCheque.forEach(element => {
+        if (element.id == id) {
+          status = element.status;
         }
 
-      }
-    });
+      });
+
+    }
+
+    if (status == ChequeStatusEnum.Collected || status == ChequeStatusEnum.Rejected) {
+      this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+    }
+    else {
+      const modalRef = this.modalService.open(MessageModalComponent);
+      modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+      modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+      modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+      modalRef.componentInstance.isYesNo = true;
+      modalRef.result.then((rs) => {
+        if (rs == 'Confirm') {
+          if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+            this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+            this.errorClass = 'errorMessage';
+            this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
+            return;
+          }
+          else {
+            this.spinner.show();
+
+            let sub = this.issuingChequeService.deleteIssuingCheque(id).subscribe(
+              (resonse) => {
+
+                this.getIssuingChequees();
+
+              });
+            this.subsList.push(sub);
+            this.spinner.hide();
+          }
+
+        }
+      });
+    }
   }
   //#endregion
   //#region Tabulator
@@ -260,7 +305,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   searchFilters: any;
   groupByCols: string[] = [];
   columnNames = [
-
     {
       title: this.lang == 'ar' ? ' الكود' : 'code ',
       field: 'code',
@@ -296,6 +340,20 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
+        else if (cell.getRow().getData().status == ChequeStatusEnum.Collected || cell.getRow().getData().status == ChequeStatusEnum.Rejected) {
+          this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+        else if (stringIsNullOrEmpty(this.accountExchangeId)) {
+          this.errorMessage = this.translate.instant("general.account-exchange-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+  
+  
+        }
         else {
           this.showConfirmCollectMessage(cell.getRow().getData().id);
         }
@@ -309,6 +367,20 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
             this.errorClass = 'errorMessage';
             this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
             return;
+          }
+          else if (cell.getRow().getData().status == ChequeStatusEnum.Collected || cell.getRow().getData().status == ChequeStatusEnum.Rejected) {
+            this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+          else if (stringIsNullOrEmpty(this.accountExchangeId)) {
+            this.errorMessage = this.translate.instant("general.account-exchange-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+    
+    
           }
           else {
             this.showConfirmCollectMessage(cell.getRow().getData().id);
@@ -324,6 +396,20 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
+        else if (cell.getRow().getData().status == ChequeStatusEnum.Collected || cell.getRow().getData().status == ChequeStatusEnum.Rejected) {
+          this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+        else if (stringIsNullOrEmpty(this.accountExchangeId)) {
+          this.errorMessage = this.translate.instant("general.account-exchange-required");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+  
+  
+        }
         else {
           this.showConfirmRejectMessage(cell.getRow().getData().id);
         }
@@ -337,6 +423,20 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
             this.errorClass = 'errorMessage';
             this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
             return;
+          }
+          else if (cell.getRow().getData().status == ChequeStatusEnum.Collected || cell.getRow().getData().status == ChequeStatusEnum.Rejected) {
+            this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+          else if (stringIsNullOrEmpty(this.accountExchangeId)) {
+            this.errorMessage = this.translate.instant("general.account-exchange-required");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+    
+    
           }
           else {
             this.showConfirmRejectMessage(cell.getRow().getData().id);
@@ -431,6 +531,12 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
           this.alertsService.showWarning(this.errorMessage, this.translate.instant("message-title.warning"));
           return;
         }
+        else if (event.item.status == ChequeStatusEnum.Collected || event.item.status == ChequeStatusEnum.Rejected) {
+          this.errorMessage = this.translate.instant("incoming-cheque.no-delete-cheque");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
         else {
 
           this.showConfirmDeleteMessage(event.item.id);
@@ -498,6 +604,8 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
               this.translate.instant("incoming-cheque.collect-cheque-done"),
               ""
             )
+            this.getIssuingChequees();
+
             return;
 
           },
@@ -529,6 +637,8 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
               this.translate.instant("incoming-cheque.reject-cheque-done"),
               ""
             )
+            this.getIssuingChequees();
+
             return;
 
           },

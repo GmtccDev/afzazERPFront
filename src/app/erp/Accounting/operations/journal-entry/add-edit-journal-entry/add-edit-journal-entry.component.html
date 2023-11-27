@@ -36,19 +36,19 @@
 													(change)="onChangeJournal($event)" name='journalId' class=""
 													id="journalId">
 													<ng-option *ngFor="let journal of journalList" [value]="journal.id">
-													
+
 														<span>{{lang=="ar"?journal.nameAr:journal.nameEn}}</span>
 													</ng-option>
 												</ng-select>
 
 											</div>
 											<div *ngIf="(f['journalId'].touched || f['journalId'].dirty ) && f['journalId'].invalid"
-											class="validation alert-danger position-absolute">
-											<i class="fa fa-close "></i>
-											<span *ngIf="f['journalId'].errors && f['journalId'].errors['required']"
-												class="f-12 ng-star-inserted text-white">
-												{{'error.required'|translate}} </span>
-										</div>
+												class="validation alert-danger position-absolute">
+												<i class="fa fa-close "></i>
+												<span *ngIf="f['journalId'].errors && f['journalId'].errors['required']"
+													class="f-12 ng-star-inserted text-white">
+													{{'error.required'|translate}} </span>
+											</div>
 										</div>
 
 
@@ -124,7 +124,8 @@
 										</div>
 
 										<div class="col-12 col-md-2" *ngIf="showDetails">
-											<label for="entry-status" class="label-name">{{'journalEntry.entry-status'|translate}} : </label>
+											<label for="entry-status"
+												class="label-name">{{'journalEntry.entry-status'|translate}} : </label>
 											<div class="form-group position-relative">
 												<label>{{status}}</label>
 											</div>
@@ -136,7 +137,8 @@
 											</div>
 										</div>
 										<div class="col-12 col-md-2" *ngIf="showDetails">
-											<label for="setting" class="label-name">{{'general.setting'|translate}} :</label>
+											<label for="setting" class="label-name">{{'general.setting'|translate}}
+												:</label>
 											<div class="form-group position-relative">
 												<label>{{setting}}</label>
 											</div>
@@ -182,35 +184,42 @@
 												<a ngbNavLink> {{'general.details' |translate}}</a>
 												<ng-template ngbNavContent>
 													<div class="overflow-auto0">
-														<div formArrayName="journalEntriesDetail" style="width: 100% ; overflow-x: scroll;">
+														<div formArrayName="journalEntriesDetail"
+															style="width: 100% ; overflow-x: scroll;">
 															<div style="width: 1500px;" class="table-container">
 																<table class="table table-broder">
 																	<thead class="thead-light">
 																		<tr>
-																			 <th># </th>
-																			<th >{{ 'journalEntry.accountNumber' | translate
+																			<th># </th>
+																			<th>{{ 'general.account' | translate}}
+																			</th>
+																			<th>{{ 'journalEntry.debit' | translate }}
+																			</th>
+																			<th>{{ 'journalEntry.credit' | translate }}
+																			</th>
+																			<th>{{ 'journalEntry.currency' | translate
 																				}}
 																			</th>
-																			<th >{{ 'journalEntry.debit' | translate }}</th>
-																			<th >{{ 'journalEntry.credit' | translate }}</th>
-																			<th >{{ 'journalEntry.currency' | translate }}
+																			<th>{{ 'journalEntry.balance' | translate }}
 																			</th>
-																			<th >{{ 'journalEntry.balance' | translate }}
+																			<th>{{ 'journalEntry.localCredit' |
+																				translate }}
 																			</th>
-																			<th >{{ 'journalEntry.localCredit' | translate }}
+																			<th>{{ 'journalEntry.localDebit' | translate
+																				}}
 																			</th>
-																			<th >{{ 'journalEntry.localDebit' | translate }}
+																			<th>{{ 'journalEntry.costCenter' | translate
+																				}}
 																			</th>
-																			<th>{{ 'journalEntry.costCenter' | translate }}
-																			</th>
-																			<th >{{ 'journalEntry.description' | translate }}
+																			<th>{{ 'journalEntry.description' |
+																				translate }}
 																			</th>
 																			<!-- <th>{{ 'journalEntry.actions' | translate }}</th> -->
 																			<th></th>
 																		</tr>
 																	</thead>
 																	<tbody>
-						
+
 																		<tr *ngFor="let row of journalEntryForm.get('journalEntriesDetail')['controls']; let i = index"
 																			[formGroupName]="i">
 																			<!-- <td> -->
@@ -221,9 +230,9 @@
 																			<!-- </td> -->
 																			<td> {{i+1}}</td>
 																			<td>
-						
+
 																				<div class="input-group ">
-						
+
 																					<!-- <select required class="form-control required" (change)="onChangeGetDefaultCurrency($event,i)" name="accountId" formControlName="accountId">
 						
 																						<option *ngFor="let account of accountList"
@@ -238,8 +247,10 @@
 																							(click)="showSearchCashAccountModal=true" type="button"><i
 																								class="fa fa-search"></i></button>
 																					</div> -->
-																					<input class="form-control" formControlName="accountName"
-																						[ngModelOptions]="{standalone: true}" 	placeholder="{{'general.search'|translate}}"
+																					<input class="form-control"
+																						formControlName="accountName"
+																						[ngModelOptions]="{standalone: true}"
+																						placeholder="{{'general.search'|translate}}"
 																						[ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
 																						type="text" name="accountId"
 																						(keydown.Enter)="openSearchAccount(i)">
@@ -248,37 +259,41 @@
 																						Account Name is required.
 																					</div>
 																				</div>
-						
+
 																			</td>
 																			<td>
-						
+
 																				<div class="input-group">
-																					<input type="number" required class="form-control required"
+																					<input type="number" required
+																						class="form-control required"
 																						(keypress)="numberOnly($event,i,'Debit')"
 																						(input)="onInput($event.target.value,i,'Debit')"
-																						formControlName="jEDetailDebit" name="jEDetailDebit"
+																						formControlName="jEDetailDebit"
+																						name="jEDetailDebit"
 																						style="width: 70px;">
 																				</div>
-						
-						
+
+
 																			</td>
 																			<td>
-						
+
 																				<div class="input-group ">
-																					<input type="number" required class="form-control required"
-																						(keypress)="numberOnly($event,i,'Credit')" 
+																					<input type="number" required
+																						class="form-control required"
+																						(keypress)="numberOnly($event,i,'Credit')"
 																						(input)="onInput($event.target.value,i,'Credit')"
-																						formControlName="jEDetailCredit" name="jEDetailCredit"
+																						formControlName="jEDetailCredit"
+																						name="jEDetailCredit"
 																						style="width: 70px;">
 																				</div>
-						
-						
+
+
 																			</td>
-																		
+
 																			<td>
-						
+
 																				<div class="input-group">
-						
+
 																					<!-- <select class="form-control" name="currencyId" (change)="onChangeCurrency($event,i)" formControlName="currencyId" [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
 						
 						
@@ -292,51 +307,61 @@
 																							(click)="showSearchCurrencyModal=true" type="button"><i
 																								class="fa fa-search"></i></button>
 																					</div> -->
-																					<input class="form-control" formControlName="currencyName"
-																						[ngModelOptions]="{standalone: true}" type="text" 	placeholder="{{'general.search'|translate}}"
+																					<input class="form-control"
+																						formControlName="currencyName"
+																						[ngModelOptions]="{standalone: true}"
+																						type="text"
+																						placeholder="{{'general.search'|translate}}"
 																						name="currencyId"
 																						[ngClass]="{ 'required': (row.get('accountId')?.errors?.required)}"
 																						(keydown.Enter)="openSearchCurrency(i)"
 																						(change)="onChangeCurrency($event,i)">
 																				</div>
-						
-						
+
+
 																			</td>
 																			<td>
-						
+
 																				<div class="input-group ">
-																					<input type="number" required disabled="disabled"
+																					<input type="number" required
+																						disabled="disabled"
 																						class="form-control required"
 																						formControlName="transactionFactor"
-																						name="transactionFactor" style="width: 70px;">
+																						name="transactionFactor"
+																						style="width: 70px;">
 																				</div>
-						
-						
+
+
 																			</td>
 																			<td>
-						
+
 																				<div class="input-group ">
-																					<input type="number" required class="form-control required"
+																					<input type="number" required
+																						class="form-control required"
 																						disabled="disabled"
 																						formControlName="jEDetailCreditLocal"
-																						name="jEDetailCreditLocal" style="width: 70px;">
+																						name="jEDetailCreditLocal"
+																						style="width: 70px;">
 																				</div>
-						
-						
+
+
 																			</td>
 																			<td>
-						
+
 																				<div class="input-group ">
-																					<input type="number" required class="form-control required"
-																						disabled="disabled" formControlName="jEDetailDebitLocal"
-																						name="jEDetailDebitLocal" style="width: 70px;">
+																					<input type="number" required
+																						class="form-control required"
+																						disabled="disabled"
+																						formControlName="jEDetailDebitLocal"
+																						name="jEDetailDebitLocal"
+																						style="width: 70px;">
 																				</div>
-						
+
 																			</td>
 																			<td>
-						
+
 																				<div class="input-group ">
-						
+
 																					<!-- <select class="form-control" name="costCenterId" formControlName="costCenterId" [ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}">
 						
 																						<option *ngFor="let costCenter of costCenterList"
@@ -345,36 +370,44 @@
 																						</option>
 						
 																					</select> -->
-																					<input class="form-control" formControlName="costCenterName"
-																						[ngModelOptions]="{standalone: true}" type="text" 	placeholder="{{'general.search'|translate}}"
+																					<input class="form-control"
+																						formControlName="costCenterName"
+																						[ngModelOptions]="{standalone: true}"
+																						type="text"
+																						placeholder="{{'general.search'|translate}}"
 																						name="costCenterId"
 																						[ngClass]="{ 'required': (row.get('costCenterId')?.errors?.required)}"
 																						(keydown.Enter)="openSearchCostCenter(i)">
-						
+
 																				</div>
-						
+
 																			</td>
 																			<td>
-						
-																				<textarea class="form-control" formControlName="notes"
+
+																				<textarea class="form-control"
+																					formControlName="notes"
 																					name='notes'></textarea>
-						
+
 																			</td>
-						
+
 																			<td>
-																	
-																				<input type="button" *ngIf="journalEntriesDetailList.length-1==i||journalEntriesDetailList.length-1==0"
+
+																				<input type="button"
+																					*ngIf="journalEntriesDetailList.length-1==i||journalEntriesDetailList.length-1==0"
 																					class="btn btn-primary btn-table"
 																					(click)="initGroup()"
 																					value="{{'buttons.add'|translate}}">
-																					
-																					<button class="btn btn-danger btn-table px-3" *ngIf="journalEntriesDetailList.length-1!==i"
-																					value="{{'buttons.delete'|translate}}" type="button"
+
+																				<button
+																					class="btn btn-danger btn-table px-3"
+																					*ngIf="journalEntriesDetailList.length-1!==i"
+																					value="{{'buttons.delete'|translate}}"
+																					type="button"
 																					(click)="onDeleteRow(i)">
 																					<i class="fa fa-trash"></i>
 																				</button>
 																			</td>
-						
+
 																			<!-- <td>
 																				
 																				<button class="btn btn-danger btn-table px-3"
@@ -389,10 +422,10 @@
 																		   </button>
 																		</td> -->
 																		</tr>
-						
+
 																	</tbody>
-						
-						
+
+
 																</table>
 																<!-- <table>
 																	<tr>
@@ -406,9 +439,9 @@
 																	</tr>
 																</table> -->
 															</div>
-						
-						
-						
+
+
+
 														</div>
 													</div>
 												</ng-template>
@@ -419,8 +452,8 @@
 										<div [ngbNavOutlet]="nav" class=""></div>
 									</div>
 								</div>
-							
-							
+
+
 							</div>
 							<br>
 
@@ -432,16 +465,17 @@
 						<table class="mt-4 total-table table table-borderless text-end w-100">
 							<tr>
 								<td>{{'journalEntry.totalDebit' | translate }}</td>
-								<td class="text-start">{{  totalDebit }}</td>
+								<td class="text-start">{{ totalDebit }}</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCredit' | translate }}</td>
-								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCredit }}</label>
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCredit
+										}}</label>
 								</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalDebitLocal' | translate }}</td>
-								<td class="text-start"><label class="p-0">{{  totalDebitLocal }}</label></td>
+								<td class="text-start"><label class="p-0">{{ totalDebitLocal }}</label></td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCreditLocal' | translate }}</td>
