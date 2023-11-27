@@ -693,12 +693,14 @@
         "tax-reasonEn":" سبب الضريبة بالانجليزية",
         "sub-tax-details":"تفاصيل الضرائب الفرعية",
         "sub-code-tax-required":"كود الضريبة الفرعي مطلوب",
-        "sub-tax-ratio-details":"نسبة الضريبة ",
-        "sub-tax-reason-details":"سبب الضريبة ",
+        "sub-tax-ratio":"نسبة الضريبة ",
+        "sub-tax-reason":"سبب الضريبة ",
         "sub-tax-nameAr":"الاسم العربي",
         "sub-tax-nameEn":"الاسم الإنجليزي",
         "add-ratio-details":"اضافة نسبة",
-        "add-reason-details":"اضافة سبب"
+        "add-reason-details":"اضافة سبب",
+        "sub-tax-ratio-detail":"تفاصيل نسبة الضريبة",
+        "sub-tax-reason-detail":"تفاصيل سبب الضريبة "
         
     },
     "item": {
