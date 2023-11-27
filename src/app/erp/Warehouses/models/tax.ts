@@ -27,12 +27,14 @@ export class SubTaxDetail {
     code:any;
     subTaxNameAr: any;
     subTaxNameEn: any;
+    subTaxReasonsDetail:SubTaxReasonsDetail[]=[];
+    subTaxRatioDetail:SubTaxRatioDetail[]=[];
  
 
 }
 export class SubTaxReasonsDetail {
-    id: number;
-    subTaxId: number; 
+    id: any;
+    subTaxId: any; 
     code:any;
     taxReasonAr: any;
     taxReasonEn: any;
@@ -40,11 +42,11 @@ export class SubTaxReasonsDetail {
 }
 
 export class SubTaxRatioDetail {
-    id: number;
-    subTaxId: number; 
+    id: any;
+    subTaxId: any; 
     fromDate: any;
     toDate: any | undefined;
-    taxRatio:number;
+    taxRatio:any;
 
 
 }
