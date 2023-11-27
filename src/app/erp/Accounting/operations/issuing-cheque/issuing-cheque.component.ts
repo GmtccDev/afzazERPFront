@@ -559,8 +559,6 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
       let sub = this.companyService.getCompany(id).subscribe({
         next: (res: any) => {
-          debugger;
-
           res?.response?.useHijri
           if (res?.response?.useHijri) {
             this.dateType = 2

@@ -305,7 +305,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
         let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
           next: (res: any) => {
             resolve();
-            debugger
             this.showDetails = true;
             this.fromDate = formatDate(Date.parse(res.response.fromDate));
             this.toDate = formatDate(Date.parse(res.response.toDate));
