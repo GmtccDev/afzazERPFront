@@ -14,7 +14,7 @@ import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { AccountClassificationsEnum, EntryStatusArEnum, EntryStatusEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { EntryStatusArEnum, EntryStatusEnum, EntryTypesEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { DateModel } from 'src/app/shared/model/date-model';
@@ -24,10 +24,7 @@ import { ModuleType } from '../../../models/general-configurations';
 import { JournalEntryDetail } from '../../../models/journal';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
-import { ReportFile } from 'src/app/shared/model/report-file';
-import { environment } from 'src/environments/environment';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { DatePipe } from '@angular/common';
@@ -54,6 +51,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   toDate: any;
   public show: boolean = false;
   journalEntry: [] = [];
+  status: string = '';
+  type: string = '';
+  setting: string = '';
+  parentType: number | undefined;
+  parentTypeId: number | undefined;
+  settingId: number | undefined;
+
+
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
   listUrl: string = '/accounting-operations/journalEntry';
@@ -108,6 +113,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   fiscalPeriodName: any;
   fiscalPeriodStatus: any;
   fiscalPeriodcheckDate: any;
+  showDetails: boolean = false;
+
   constructor(
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
@@ -120,10 +127,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     private publicService: PublicService,
     private reportViewerService: ReportViewerService,
     private dateService: DateCalculation,
-    private rptSrv: ReportServiceProxy,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private fiscalPeriodService: FiscalPeriodServiceProxy,
     private datePipe: DatePipe,
     private searchDialog: SearchDialogService,
     private modalService: NgbModal,
@@ -170,13 +175,12 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   }
   getRouteData() {
-
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
         if (this.id > 0) {
-
           this.getjournalEntryById(this.id).then(a => {
+            this.getJournalEntryAdditionalById(this.id);
             this.spinner.hide();
             this.sharedServices.changeButton({ action: 'Update', submitMode: false, disabledPrint: false } as ToolbarData);
 
@@ -463,9 +467,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
           resolve();
-
           this.lang = localStorage.getItem("language")
-
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
             date: formatDate(Date.parse(res.response.date)),
@@ -520,7 +522,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.onChangeJournal(res.response?.journalId);
             this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
             this.onChangeCode(null);
-            console.log(this.journalList)
             this.counter = element.jeDetailSerial;
           });
           this.totalCredit = 0;
@@ -991,7 +992,51 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.spinner.hide();
   }
 
+  getJournalEntryAdditionalById(id: number) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalEntryService.getJournalEntryAdditionalById(id).subscribe({
+        next: (res) => {
+          resolve();
+          if (res.success) {
+            this.showDetails = true;
+            this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
+            this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
+            this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
+            this.parentType = res.response.data.result[0].parentType;
+            this.parentTypeId = res.response.data.result[0].parentTypeId;
+            this.settingId = res.response.data.result[0].settingId;
 
+
+          }
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  onViewClicked() {
+    if (this.parentType == EntryTypesEnum.Voucher) {
+      window.open('accounting-operations/vouchers/update-voucher/' + this.settingId + '/' + this.parentTypeId, "")
+    }
+    if (this.parentType == EntryTypesEnum.IncomingCheque) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.IssuingCheque) {
+      window.open('accounting-operations/issuingCheque/update-issuingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.SalesBill || this.parentType == EntryTypesEnum.SalesReturnBill
+      || this.parentType == EntryTypesEnum.PurchasesBill || this.parentType == EntryTypesEnum.PurchasesReturnBill) {
+      window.open('warehouses-operations/bill/update-bill/' + this.settingId + '/' + this.parentTypeId, "_blank")
+    }
+  }
 
   getJournals() {
     return new Promise<void>((resolve, reject) => {

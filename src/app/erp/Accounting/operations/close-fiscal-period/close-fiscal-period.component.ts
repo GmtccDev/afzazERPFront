@@ -85,8 +85,6 @@ export class CloseFiscalPeriodComponent implements OnInit {
 
     ]).then(a => {
       this.changePath();
-      debugger
-
       this.listenToClickedButton();
 
 
@@ -191,14 +189,11 @@ export class CloseFiscalPeriodComponent implements OnInit {
     let sub = this.sharedServices.getClickedbutton().subscribe({
       next: (currentBtn: ToolbarData) => {
         currentBtn;
-        debugger
         if (currentBtn != null) {
           if (currentBtn.action == ToolbarActions.Close && currentBtn.submitMode) {
-
             this.onClose();
           }
           else if (currentBtn.action == ToolbarActions.Open && currentBtn.submitMode) {
-
             this.onOpen();
           }
         }
@@ -316,14 +311,12 @@ export class CloseFiscalPeriodComponent implements OnInit {
             if (res.response.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
               this.status = this.lang == 'ar' ? 'مفتوحة' : 'Opened';
               this.sharedServices.changeButton({ action: 'Close', submitMode: false } as ToolbarData);
-              // this.listenToClickedButton();
               this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
             }
             else if (res.response.fiscalPeriodStatus == FiscalPeriodStatus.Closed) {
               this.status = this.lang == 'ar' ? 'مغلقة' : 'Closed';
               this.sharedServices.changeButton({ action: 'Open', submitMode: false } as ToolbarData);
-              //this.listenToClickedButton();
               this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
             }
@@ -331,15 +324,9 @@ export class CloseFiscalPeriodComponent implements OnInit {
             else if (res.response.fiscalPeriodStatus == FiscalPeriodStatus.ClosedForRevision) {
               this.status = this.lang == 'ar' ? 'مغلقة للمراجعة' : 'Closed for revision';
               this.sharedServices.changeButton({ action: 'Open', submitMode: false } as ToolbarData);
-              //this.listenToClickedButton();
               this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
             }
-            debugger
-            this.submited = true;
-
-
-
           },
           error: (err: any) => {
             reject(err);

@@ -83,6 +83,46 @@ export class UserService {
         if(name)return name;
         else return '';
     }
+    setCompanyNameAr(name: string) {
+        if (name) {
+            localStorage.setItem('companyNameAr', name);
+        }
+    }
+    getCompanyNameAr(){
+        let name = localStorage.getItem('companyNameAr');
+        if(name)return name;
+        else return '';
+    }
+    setCompanyNameEn(name: string) {
+        if (name) {
+            localStorage.setItem('companyNameEn', name);
+        }
+    }
+    getCompanyNameEn(){
+        let name = localStorage.getItem('companyNameEn');
+        if(name)return name;
+        else return '';
+    }
+    setBranchNameAr(name: string) {
+        if (name) {
+            localStorage.setItem('branchNameAr', name);
+        }
+    }
+    getBranchNameAr(){
+        let name = localStorage.getItem('branchNameAr');
+        if(name)return name;
+        else return '';
+    }
+    setBranchNameEn(name: string) {
+        if (name) {
+            localStorage.setItem('branchNameEn', name);
+        }
+    }
+    getBranchNameEn(){
+        let name = localStorage.getItem('branchNameEn');
+        if(name)return name;
+        else return '';
+    }
     setBranchId(name: string) {
         if (name) {
             localStorage.setItem('branchId', name);

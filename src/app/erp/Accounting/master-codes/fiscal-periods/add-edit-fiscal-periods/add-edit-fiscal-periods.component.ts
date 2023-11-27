@@ -105,7 +105,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   getRouteData() {
     
     let sub = this.route.params.subscribe((params) => {
-      debugger
+        
       if (params['id'] != null) {
         this.id = +params['id'];
         if (this.id > 0) {
@@ -354,7 +354,7 @@ export class AddEditFiscalPeriodsComponent implements OnInit {
   confirmUpdate() {
     var inputDto = new FiscalPeriodDto()
     return new Promise<void>((resolve, reject) => {
-      debugger
+        
       inputDto = this.fiscalPeriodForm.value;
       inputDto.id = this.id;
       const fromDate = this.dateService.getDateForInsert(inputDto.fromDate);

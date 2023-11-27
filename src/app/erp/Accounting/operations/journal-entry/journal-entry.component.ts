@@ -22,7 +22,6 @@ import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { FullDateComponent } from 'src/app/shared/date/full-date/full-date.component';
-import { IslamicI18n } from 'src/app/shared/services/date-services/hijriservice';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 @Component({
 	selector: 'app-journal-entry',
@@ -169,7 +168,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 			let sub = this.companyService.getCompany(id).subscribe({
 				next: (res: any) => {
-					debugger;
+					 ;
 
 					res?.response?.useHijri
 					if (res?.response?.useHijri) {
@@ -276,7 +275,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 	columnNames = [
-
 		{
 			title: this.lang == 'ar' ? ' الكود' : 'code ',
 			field: 'code',
@@ -308,10 +306,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: 'Journal Name', field: 'journalNameEn' },
 		this.lang == 'ar'
 			? {
-				title: '  الحالة  ', width: 300, field: 'statusAr'
+				title: 'الحالة', width: 300, field: 'statusAr'
 				//, formatter: this.translateArEnum
 			} : {
-				title: '   Status', width: 300, field: 'statusEn'
+				title: 'Status', width: 300, field: 'statusEn'
 				//, formatter: this.translateEnEnum
 			},
 		this.lang == 'ar'
@@ -332,24 +330,20 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			},
 		this.lang == 'ar'
 			? {
-				title: '  النمط  ', width: 300, field: 'settingAr'
+				title: 'النمط', field: 'settingAr'
 			} : {
-				title: 'Setting', width: 300, field: 'settingEn'
+				title: 'Setting', field: 'settingEn'
 			},
 		this.lang == "ar" ? {
 			title: "عرض التقرير",
 			field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
-
 				this.onViewReportClicked(cell.getRow().getData().id);
 			}
 		}
 			:
-
 			{
 				title: "View Report",
 				field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
-
-
 					this.onViewReportClicked(cell.getRow().getData().id);
 				}
 			}
@@ -391,7 +385,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	onCheckEdit(id) {
-
 		localStorage.removeItem("itemId");
 		localStorage.setItem("itemId", id);
 		const index = this.listUpdateIds.findIndex(item => item.id === id && item.isChecked === true);
@@ -436,8 +429,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 	onCheckUpdate() {
-
-
 		var ids = this.listUpdateIds.map(item => item.id);
 		if (ids.length > 0) {
 			let sub = this.journalEntryService.updateList(ids).subscribe(
@@ -451,7 +442,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	}
 	onEdit(id) {
-
 		if (id != undefined) {
 			this.edit(id);
 			this.sharedServices.changeButton({
@@ -466,8 +456,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	}
 	onMenuActionSelected(event: ITabulatorActionsSelected) {
-
 		if (event != null) {
+			 
 			if (event.actionName == 'Edit') {
 				this.edit(event.item.id);
 				this.sharedServices.changeButton({
@@ -674,7 +664,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 	kuwaiticalendar(adjust: any) {
-		debugger
+		 
 		var today = new Date();
 		if (adjust) {
 			var adjustmili = 1000 * 60 * 60 * 24 * adjust;

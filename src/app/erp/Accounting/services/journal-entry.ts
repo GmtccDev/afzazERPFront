@@ -68,6 +68,11 @@ export class JournalEntryServiceProxy {
         params = params.append('id', id);
         return this.http.get<any>(this.baseUrl + "/api/JournalEntry/getById", { params: params });
     }
+    getJournalEntryAdditionalById(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.get<any>(this.baseUrl + "/api/JournalEntry/getJournalEntryAdditionalById", { params: params });
+    }
     getLastCode(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/JournalEntry/getLastCode?");
     }

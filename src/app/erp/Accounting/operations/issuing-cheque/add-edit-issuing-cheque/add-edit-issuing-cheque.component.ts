@@ -388,7 +388,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     ));
   }
   getAmount() {
-    debugger
+              
     if (this.currencyId == this.mainCurrencyId) {
       this.amount = this.amountLocal;
       this.currencyFactor = 1;
@@ -396,7 +396,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
-          debugger
+                    
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor =  1 /currencyModel.transactionFactor;
