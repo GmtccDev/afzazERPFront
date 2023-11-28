@@ -241,7 +241,10 @@
         "company-name":"Company Name",
         "branch-name":"Branch Name",
         "copy-right":"Copy Right",
-        "afzaz":"Afzaz"
+        "afzaz":"Afzaz",
+        "account-receivables-required":"Please choose receivables account from the settings",
+        "account-exchange-required":"Please choose Exchange account from the settings"
+
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -665,7 +668,12 @@
         "no-update-cheque-fiscal-period-closed": "You can not update the cheque to this closed fiscal period",
         "no-delete-cheque-fiscal-period-closed": "You can not delete the cheque to this closed fiscal period",
         "no-collect-cheque-fiscal-period-closed": "You can not collect the cheque to this closed fiscal period",
-        "no-reject-cheque-fiscal-period-closed": "You can not reject the cheque to this closed fiscal period"
+        "no-reject-cheque-fiscal-period-closed": "You can not reject the cheque to this closed fiscal period",
+        "no-collect-cheque": "You can not collect the cheque",
+        "no-reject-cheque": "You can not reject the cheque",
+        "no-delete-cheque": "You can not delete the cheque"
+
+
     },
     "account-groups": {
         "add-account-group": "Add Account Group"

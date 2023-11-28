@@ -483,7 +483,10 @@
         "company-name":"أسم الشركة",
         "branch-name":"أسم الفرع",
         "copy-right":"حق النشر",
-        "afzaz":"أفذاذ"
+        "afzaz":"أفذاذ",
+        "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات"
+
 
 
 
@@ -659,7 +662,11 @@
         "no-update-cheque-fiscal-period-closed": "لا يمكن تعديل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
         "no-delete-cheque-fiscal-period-closed": "لا يمكن حذف هذا الشيك لهذة الفترة المحاسبية المغلقة",
         "no-collect-cheque-fiscal-period-closed": "لا يمكن تحصيل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
-        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة"
+        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة",
+        "no-collect-cheque": "لا يمكنك تحصيل الشيك",
+        "no-reject-cheque": "لا يمكنك رفض الشيك",
+        "no-delete-cheque": "لا يمكنك حذف الشيك"
+
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"

@@ -25,6 +25,7 @@ import { format } from 'date-fns';
 import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
   selector: 'app-add-edit-issuing-cheque',
   templateUrl: './add-edit-issuing-cheque.component.html',
@@ -103,6 +104,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
   customerList: any;
   supplierList: any;
   filterBeneficiaryList: any;
+  accountExchangeId: any;
+
   constructor(
     private issuingChequeService: IssuingChequeServiceProxy,
     private router: Router,
@@ -250,6 +253,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
             this.serial = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.mainCurrencyId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            this.accountExchangeId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountExchange).value;
+
             if (this.fiscalPeriodId > 0) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
             }
@@ -388,7 +393,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
     ));
   }
   getAmount() {
-              
     if (this.currencyId == this.mainCurrencyId) {
       this.amount = this.amountLocal;
       this.currencyFactor = 1;
@@ -396,10 +400,10 @@ export class AddEditIssuingChequeComponent implements OnInit {
     else {
       let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
-                    
+
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor =  1 /currencyModel.transactionFactor;
+          this.currencyFactor = 1 / currencyModel.transactionFactor;
           this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
         }
       })
@@ -678,6 +682,14 @@ export class AddEditIssuingChequeComponent implements OnInit {
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
+    if (stringIsNullOrEmpty(this.accountExchangeId)) {
+      this.errorMessage = this.translate.instant("general.account-exchange-required");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+
+
+    }
     let chequeDate = this.issuingChequeForm.controls["date"].value;
     let date;
     let month;
@@ -860,6 +872,14 @@ export class AddEditIssuingChequeComponent implements OnInit {
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
+      }
+      if (stringIsNullOrEmpty(this.accountExchangeId)) {
+        this.errorMessage = this.translate.instant("general.account-exchange-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+
+
       }
       let chequeDate = this.issuingChequeForm.controls["date"].value;
       let date;
