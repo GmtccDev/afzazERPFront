@@ -128,7 +128,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	toggleButton: boolean = true;
 	// Function to filter the data based on code and date
 	filterData(code, fromDate, toDate) {
-		  
+
 		this.filteredData = this.journalEntry;
 		if (!stringIsNullOrEmpty(code)) {
 			this.filteredData = this.filteredData.filter(item =>
@@ -136,15 +136,15 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 			);
 		}
 		if (!stringIsNullOrEmpty(fromDate)) {
-			  
+
 			this.filteredData = this.filteredData.filter(item =>
-				
+
 				item.date >= (fromDate)
 			);
 			if (!stringIsNullOrEmpty(toDate)) {
-				  
+
 				this.filteredData = this.filteredData.filter(item =>
-					
+
 					(item.date) <= (toDate)
 				);
 			}
@@ -499,10 +499,12 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		if (parentType == EntryTypesEnum.Voucher) {
 			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
-		if (parentType == EntryTypesEnum.IncomingCheque) {
+		if (parentType == EntryTypesEnum.RegisterIncomingCheque || parentType == EntryTypesEnum.CollectIncomingCheque
+			|| parentType == EntryTypesEnum.RejectIncomingCheque
+		) {
 			window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
 		}
-		if (parentType == EntryTypesEnum.IssuingCheque) {
+		if (parentType == EntryTypesEnum.RegisterIssuingCheque || parentType == EntryTypesEnum.CollectIssuingCheque || parentType == EntryTypesEnum.RejectIssuingCheque) {
 			window.open('accounting-operations/issuingCheque/update-issuingCheque/' + id, "_blank")
 		}
 		if (parentType == EntryTypesEnum.SalesBill || parentType == EntryTypesEnum.SalesReturnBill
@@ -565,7 +567,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
 			let sub = this.companyService.getCompany(id).subscribe({
 				next: (res: any) => {
-					  ;
+					;
 
 					res?.response?.useHijri
 					if (res?.response?.useHijri) {

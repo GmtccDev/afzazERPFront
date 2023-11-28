@@ -393,7 +393,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   }
   get journalEntriesDetailList(): FormArray { return this.journalEntryForm.get('journalEntriesDetail') as FormArray; }
   initGroup() {
-                
+
     this.counter += 1;
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     journalEntriesDetail.push(this.fb.group({
@@ -662,7 +662,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.isSelectCurrency = false;
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
-                        
+
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
@@ -679,7 +679,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
-                
+
     return new Promise<void>((resolve, reject) => {
       this.journalEntryForm.value.postType = this.financialEntryCycle == 3 ? 1 : 2;
       this.journalEntryForm.value.date = this.dateService.getDateForInsert(this.date)
@@ -790,7 +790,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       return;
     }
 
-                
+
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     var count = journalEntriesDetail.length;
     var index = count - 1;
@@ -896,14 +896,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   }
   onUpdate() {
-                
+
     // if (this.journalEntryForm.touched || this.journalEntriesDetailDTOList.touched) {
 
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
     }
-                
+
     // let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     // var count = journalEntriesDetail.length;
     // var index = count - 1;
@@ -980,7 +980,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       )
       return;
     }
-                
+
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     var count = journalEntriesDetail.length;
     var index = count - 1;
@@ -1048,10 +1048,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     if (this.parentType == EntryTypesEnum.Voucher) {
       window.open('accounting-operations/vouchers/update-voucher/' + this.settingId + '/' + this.parentTypeId, "")
     }
-    if (this.parentType == EntryTypesEnum.IncomingCheque) {
+    if (this.parentType == EntryTypesEnum.RegisterIncomingCheque || this.parentType == EntryTypesEnum.CollectIncomingCheque
+      || this.parentType == EntryTypesEnum.RejectIncomingCheque
+    ) {
       window.open('accounting-operations/incomingCheque/update-incomingCheque/' + this.parentTypeId, "_blank")
     }
-    if (this.parentType == EntryTypesEnum.IssuingCheque) {
+    if (this.parentType == EntryTypesEnum.RegisterIssuingCheque || this.parentType == EntryTypesEnum.CollectIssuingCheque
+      || this.parentType == EntryTypesEnum.RejectIssuingCheque) {
       window.open('accounting-operations/issuingCheque/update-issuingCheque/' + this.parentTypeId, "_blank")
     }
     if (this.parentType == EntryTypesEnum.SalesBill || this.parentType == EntryTypesEnum.SalesReturnBill
@@ -1377,7 +1380,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       });
     this.subsList.push(sub);
   }
-  openSearchCostCenter(i,costCenterName:any) {
+  openSearchCostCenter(i, costCenterName: any) {
     this.index = i;
     let searchTxt = '';
     searchTxt = costCenterName ?? '';

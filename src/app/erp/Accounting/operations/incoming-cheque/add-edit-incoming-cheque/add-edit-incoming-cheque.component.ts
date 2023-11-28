@@ -22,8 +22,6 @@ import { ModuleType } from '../../../models/general-configurations';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
@@ -120,7 +118,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private dateService: DateCalculation,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
-    private modalService: NgbModal,
     private reportViewerService: ReportViewerService,
 
 
@@ -402,10 +399,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
 
-
+          
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = 1 / currencyModel.transactionFactor;
+          this.currencyFactor = currencyModel.transactionFactor;
           this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
         }
       })
@@ -516,6 +513,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
             }
             else if (element.status == ChequeStatusEnum.Rejected) {
               element.statusName = this.translate.instant("incoming-cheque.rejected");
+
+            }
+            else if (element.status == ChequeStatusEnum.CancelCollected) {
+              element.statusName = this.translate.instant("incoming-cheque.cancel-collect");
+
+            }
+            else if (element.status == ChequeStatusEnum.CancelRejected) {
+              element.statusName = this.translate.instant("incoming-cheque.cancel-reject");
 
             }
             this.incomingChequeDetailStatusDTOList.push(this.fb.group({
@@ -828,7 +833,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-      if (entity.status > 1) {
+      if (entity.status == ChequeStatusEnum.Collected || entity.status == ChequeStatusEnum.Rejected) {
         this.spinner.hide();
         this.alertsService.showError(
           this.translate.instant("incoming-cheque.cannot-edit"),
@@ -836,7 +841,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         )
         return;
       }
-      entity.status = 1;
+      entity.status = ChequeStatusEnum.EditRegistered;
 
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);

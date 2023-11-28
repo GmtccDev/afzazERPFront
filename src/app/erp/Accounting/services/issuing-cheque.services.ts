@@ -104,6 +104,20 @@ export class IssuingChequeServiceProxy {
         , { params: params }
         );
     }
+    cancelCollect(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('Id', id);
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/cancelCollect?Id="+id
+        , { params: params }
+        );
+    }
+    cancelReject(id: any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('Id', id);
+        return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/cancelReject?Id="+id
+        , { params: params }
+        );
+    }
     deleteEntity(entity: any): Observable<any> {
 
         return this.http.post<any>(environment.apiUrl + "/api/IssuingCheque/deleteEntity?", entity);
