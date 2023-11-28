@@ -300,7 +300,6 @@ export class AddEditRoleComponent implements OnInit {
       let sub = this.roleService.createRole(this.roleForm.value).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          this.response = { ...result.response };
           this.defineRoleForm();
 
           this.submited = false;

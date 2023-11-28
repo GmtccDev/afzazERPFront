@@ -84,7 +84,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   branchId: string = this.userService.getBranchId();
   companyId: string = this.userService.getCompanyId()
   constructor(
-    private journalEntryService: JournalEntryServiceProxy,private userService: UserService,
+    private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -127,7 +127,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      
+
       if (params['id'] != null) {
         this.id = params['id'];
 
@@ -590,30 +590,30 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   onSave() {
 
-   
-   // console.log("getRawValue=>", this.journalEntryForm.getRawValue());
-   if (this.counter < 2) {
-    this.alertsService.showError(
-      this.translate.instant('twoRows'),
-      ""
 
-    )
-    return;
-  }
-  if ((this.totalCredit == 0 || this.totalDebit == 0)) {
-    this.alertsService.showError(
-      this.translate.instant('debitCreditValues'),
-      ""
-    )
-    return;
-  }
-  if ((this.totalCredit !== this.totalDebit)) {
-    this.alertsService.showError(
-      this.translate.instant('totalValues'),
-      ""
-    )
-    return;
-  }
+    // console.log("getRawValue=>", this.journalEntryForm.getRawValue());
+    if (this.counter < 2) {
+      this.alertsService.showError(
+        this.translate.instant('twoRows'),
+        ""
+
+      )
+      return;
+    }
+    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+      this.alertsService.showError(
+        this.translate.instant('debitCreditValues'),
+        ""
+      )
+      return;
+    }
+    if ((this.totalCredit !== this.totalDebit)) {
+      this.alertsService.showError(
+        this.translate.instant('totalValues'),
+        ""
+      )
+      return;
+    }
     if (this.journalEntryForm.valid) {
       this.spinner.show();
       this.confirmSave().then(a => {
@@ -643,8 +643,8 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      
-   
+
+
       var entity = this.journalEntryForm.getRawValue();
       entity.branchId = this.branchId;
       entity.companyId = this.companyId;
@@ -951,14 +951,16 @@ export class AddEditJournalEntryPostComponent implements OnInit {
 
   }
   onViewClicked() {
-    
+
     if (this.parentType == EntryTypesEnum.Voucher) {
       window.open('accounting-operations/vouchers/update-voucher/' + this.settingId + '/' + this.parentTypeId, "")
     }
-    if (this.parentType == EntryTypesEnum.IncomingCheque) {
+    if (this.parentType == EntryTypesEnum.RegisterIncomingCheque || this.parentType == EntryTypesEnum.CollectIncomingCheque
+      || this.parentType == EntryTypesEnum.RejectIncomingCheque
+    ) {
       window.open('accounting-operations/incomingCheque/update-incomingCheque/' + this.parentTypeId, "_blank")
     }
-    if (this.parentType == EntryTypesEnum.IssuingCheque) {
+    if (this.parentType == EntryTypesEnum.RegisterIssuingCheque || this.parentType == EntryTypesEnum.CollectIssuingCheque || this.parentType == EntryTypesEnum.RejectIssuingCheque) {
       window.open('accounting-operations/issuingCheque/update-issuingCheque/' + this.parentTypeId, "_blank")
     }
     if (this.parentType == EntryTypesEnum.SalesBill || this.parentType == EntryTypesEnum.SalesReturnBill

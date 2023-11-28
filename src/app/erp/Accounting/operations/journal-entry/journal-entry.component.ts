@@ -416,10 +416,12 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (parentType == EntryTypesEnum.Voucher) {
 			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
-		if (parentType == EntryTypesEnum.IncomingCheque) {
+		if (parentType == EntryTypesEnum.RegisterIncomingCheque || parentType == EntryTypesEnum.CollectIncomingCheque
+			|| parentType == EntryTypesEnum.RejectIncomingCheque
+			) {
 			window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
 		}
-		if (parentType == EntryTypesEnum.IssuingCheque) {
+		if (parentType == EntryTypesEnum.RegisterIssuingCheque || parentType == EntryTypesEnum.CollectIssuingCheque || parentType == EntryTypesEnum.RejectIssuingCheque) {
 			window.open('accounting-operations/issuingCheque/update-issuingCheque/' + id, "_blank")
 		}
 		if (parentType == EntryTypesEnum.SalesBill || parentType == EntryTypesEnum.SalesReturnBill

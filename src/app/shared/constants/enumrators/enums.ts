@@ -258,8 +258,8 @@ export enum GeneralConfigurationEnum {
   IdleTime = 10001
 }
 export enum ManuallyTaxType {
-  Net=1,
-  Total=2
+  Net = 1,
+  Total = 2
 
 }
 export enum DeterminantsValueTypesEnEnum {
@@ -280,21 +280,26 @@ export enum DeterminantsValueTypesArEnum {
 
 
 }
-export enum ChequeStatusEnum{
-  Registered=0,
-  EditRegistered=1,
-  Collected=2,
-  Rejected=3
+export enum ChequeStatusEnum {
+  Registered = 0,
+  EditRegistered = 1,
+  Collected = 2,
+  Rejected = 3,
+  CancelCollected = 4,
+  CancelRejected = 5
 }
-export enum EntryTypesEnum
-{
-    Voucher=1,
-    IncomingCheque=2,
-    IssuingCheque=3,
-    SalesBill=4,
-    SalesReturnBill=5,
-    PurchasesBill=6,
-    PurchasesReturnBill=7
+export enum EntryTypesEnum {
+  Voucher = 1,
+  RegisterIncomingCheque = 2,
+  RegisterIssuingCheque = 3,
+  SalesBill = 4,
+  SalesReturnBill = 5,
+  PurchasesBill = 6,
+  PurchasesReturnBill = 7,
+  CollectIncomingCheque = 8,
+  RejectIncomingCheque = 9,
+  CollectIssuingCheque = 10,
+  RejectIssuingCheque = 11
 
 }
 
