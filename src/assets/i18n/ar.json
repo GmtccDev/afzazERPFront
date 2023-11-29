@@ -484,6 +484,10 @@
         "branch-name":"أسم الفرع",
         "copy-right":"حق النشر",
         "afzaz":"أفذاذ",
+        "commercial-registratio-no":"رقم السجل التجاري",
+        "zip-code":"الرمز البريدي",
+    
+        
         "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
         "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات"
 

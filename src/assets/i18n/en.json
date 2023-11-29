@@ -242,6 +242,8 @@
         "branch-name":"Branch Name",
         "copy-right":"Copy Right",
         "afzaz":"Afzaz",
+        "commercial-registratio-no":"Commercial Registratio No",
+        "zip-code":"Zip Code",
         "account-receivables-required":"Please choose receivables account from the settings",
         "account-exchange-required":"Please choose Exchange account from the settings"
 
