@@ -153,8 +153,8 @@ export class LoginCompanyComponent implements OnInit {
     let sub = this.authService.UserLoginCompany(this.loginForm.value).subscribe(
       next => {
 
-
-        console.log(next);
+   
+  debugger
 
         if (next.success == true) {
 

@@ -27,7 +27,6 @@ import { MatDialog } from '@angular/material/dialog';
 export class AddEditTaxComponent implements OnInit, AfterViewInit {
   //#region Main Declarations
   @ViewChild('dialogSubTaxReasonContent') dialogSubTaxReasonContent!: TemplateRef<any>;
-
   @ViewChild('dialogSubTaxRatioContent') dialogSubTaxRatioContent!: TemplateRef<any>;
   taxForm: FormGroup = new FormGroup({});
   companyId: any = localStorage.getItem("companyId");
@@ -45,7 +44,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   selectedSubTaxReasonDetail:SubTaxReasonsDetail = new SubTaxReasonsDetail ;
   subTaxReasonDetail: SubTaxReasonsDetail[] = [];
   selectedSubTaxDetail: SubTaxDetail = new SubTaxDetail();
-  dataList:SubTaxList[]=[];
+
   id: any = 0;
   currnetUrl;
   errorMessage = '';
@@ -192,7 +191,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
       let sub = this.taxService.getTax(id).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+          
 
          
           this.taxForm.setValue({
@@ -377,7 +376,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
   }
   addSubTaxItem() {
-	  debugger
+	  
 		var errorStatus: boolean = false;
     
     if (!this.selectedSubTaxDetail.code) {
@@ -422,7 +421,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 	}
 
   addSubTaxReasonItem() {
-	  debugger
+	  
 		var errorStatus: boolean = false;
     
     if (!this.selectedSubTaxReasonDetail.code) {
@@ -468,7 +467,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   addSubTaxRatioItem() {
     console.log("subtaxdetial before",this.subTaxDetail)
     var result: boolean = false;
-     debugger
+     
     if (this.subTaxRatioDetail.length > 0 && this.subTaxRatioDetail != null) {
       this.subTaxRatioDetail.forEach(element => {
 
@@ -601,7 +600,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 
   setInputData() {
-    debugger
+    
     this.subTaxDetail.forEach(elment => {
      elment.subTaxRatioDetail=this.subTaxRatioDetail;
      elment.subTaxReasonsDetail = this.subTaxReasonDetail;
@@ -625,7 +624,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
-      debugger;
+      ;
       let sub = this.taxService.createTax(this.taxMaster).subscribe({
         next: (result: any) => {
           this.defineTaxForm();
@@ -668,7 +667,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     }
   }
   confirmUpdate() {
-    debugger
+    
     return new Promise<void>((resolve, reject) => {
       let sub = this.taxService.updateTax(this.taxMaster).subscribe({
         next: (result: any) => {
@@ -688,10 +687,8 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-     debugger
      
     if (this.taxForm.valid) {
-    
       if (this.taxMaster.taxDetail.length===0 && this.subTaxDetail.length===0) {
         this.errorMessage = this.translate.instant("tax.tax-details-required");
         this.errorClass = 'errorMessage';
@@ -699,9 +696,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
         return;
       }
       this.setInputData();
-    
       this.spinner.show();
-      
       this.confirmUpdate().then(a => {
         this.spinner.hide();
       }).catch(e => {
@@ -766,7 +761,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
   dialogOpen: boolean = false;
   openSubTaxRatioDialog(index:number) {
     console.log(this.subTaxDetail);
-    debugger;
+    ;
     this.subTaxRatioDetail = [];
     if(index != -1)
     {
@@ -798,7 +793,7 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
   openSubTaxReasonDialog(index:number) {
     console.log(this.subTaxDetail);
-    debugger;
+    ;
     this.subTaxReasonDetail = [];
     if(index != -1)
     {
@@ -832,8 +827,5 @@ export class AddEditTaxComponent implements OnInit, AfterViewInit {
 
 }
 
-class SubTaxList{
-  id:number = 0;
-  data:SubTaxReasonsDetail[]=[]
-}
+
 

@@ -241,7 +241,9 @@
         "company-name":"Company Name",
         "branch-name":"Branch Name",
         "copy-right":"Copy Right",
-        "afzaz":"Afzaz"
+        "afzaz":"Afzaz",
+        "commercial-registratio-no":"Commercial Registratio No",
+        "zip-code":"Zip Code"
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",

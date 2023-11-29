@@ -483,7 +483,13 @@
         "company-name":"أسم الشركة",
         "branch-name":"أسم الفرع",
         "copy-right":"حق النشر",
-        "afzaz":"أفذاذ"
+        "afzaz":"أفذاذ",
+        "commercial-registratio-no":"رقم السجل التجاري",
+        "zip-code":"الرمز البريدي"
+        
+      
+        
+
 
 
 
