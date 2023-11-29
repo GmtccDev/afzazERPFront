@@ -24,6 +24,7 @@ import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
+import { AccountServiceProxy } from '../../../services/account.services';
 @Component({
   selector: 'app-add-edit-incoming-cheque',
   templateUrl: './add-edit-incoming-cheque.component.html',
@@ -46,7 +47,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
   accountReceivablesId: any;
-
+  balance: number = 0;
+  tempListDetail: any[] = [];
+  oldAmountLocal:number=0;
   public show: boolean = false;
   lang = localStorage.getItem("language")
   incomingCheque: [] = [];
@@ -119,6 +122,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private reportViewerService: ReportViewerService,
+    private accountService: AccountServiceProxy,
+
 
 
 
@@ -399,7 +404,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
 
-          
+
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
           this.currencyFactor = currencyModel.transactionFactor;
@@ -472,7 +477,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
           this.dueDate = this.dateService.getDateForCalender(res.response.dueDate);
 
           let ListDetail = res.response?.incomingChequeDetail;
-
+          this.tempListDetail = res.response?.incomingChequeDetail;
+          this.oldAmountLocal = res.response.amountLocal;
           this.incomingChequeDetailDTOList.clear();
 
 
@@ -664,6 +670,28 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
     });
   }
+
+  getAccountBalance(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.getAccountBalance(id).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          this.balance = res.response.data.result[0].balance;
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+
   onSave() {
 
     // if (this.checkPeriod == null) {
@@ -752,19 +780,112 @@ export class AddEditIncomingChequeComponent implements OnInit {
     // }
 
     //  var entity = new CreateIncomingChequeCommand();
+    var incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
+    var i = 0;
 
-    if (this.incomingChequeForm.valid) {
-      this.spinner.show();
-      this.confirmSave().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
-      });
+    if (incomingChequeDetail != null) {
+      this.incomingChequeForm.value.incomingChequeDetail.forEach(element => {
 
-    } else {
+        if (element.accountId != null) {
+          var value = 0;
+          if (element.jEDetailDebitLocal > 0) {
+            value = element.jEDetailDebitLocal;
+          }
+          if (element.jEDetailCreditLocal > 0) {
+            value = element.jEDetailCreditLocal;
 
-      return this.incomingChequeForm.markAllAsTouched();
+          }
+
+          this.getAccountBalance(element.accountId).then(a => {
+            var account = this.accountList.find(x => x.id == element.accountId);
+
+            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+                              
+            if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+              if (Number(this.balance) + value > account.debitLimit) {
+                                  
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+            }
+            else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+              if (-(this.balance) + value > account.creditLimit) {
+                                  
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+
+            }
+
+
+          });
+
+
+        }
+
+
+      })
+
     }
+    this.getAccountBalance(this.accountReceivablesId).then(a => {
+      var account = this.accountList.find(x => x.id == this.accountReceivablesId);
+
+      var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+                        
+      if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+        if (Number(this.balance) + this.amountLocal > account.debitLimit) {
+                            
+
+          this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
+
+      }
+      else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+        if (-(this.balance) + this.amountLocal > account.creditLimit) {
+                            
+          this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
+
+
+      }
+
+
+    });
+    setTimeout(() => {
+      if (i == 0) {
+        if (this.incomingChequeForm.valid) {
+          this.spinner.show();
+          this.confirmSave().then(a => {
+            this.spinner.hide();
+          }).catch(e => {
+            this.spinner.hide();
+          });
+
+        } else {
+
+          return this.incomingChequeForm.markAllAsTouched();
+        }
+      }
+
+    }, 1000);
+
   }
 
 
@@ -921,12 +1042,98 @@ export class AddEditIncomingChequeComponent implements OnInit {
         return;
 
       }
-      this.spinner.show();
-      this.confirmUpdate().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
+
+      var incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
+      var i = 0;
+
+      if (incomingChequeDetail != null) {
+        this.incomingChequeForm.value.incomingChequeDetail.forEach(element => {
+          var oldElement = this.tempListDetail.find(x => x.accountId == element.accountId);
+
+          if (element.accountId != null) {
+            var value = 0;
+            if (element.jEDetailDebitLocal > 0) {
+              value = element.jEDetailDebitLocal;
+            }
+            if (element.jEDetailCreditLocal > 0) {
+              value = element.jEDetailCreditLocal;
+
+            }
+
+            this.getAccountBalance(element.accountId).then(a => {
+              var account = this.accountList.find(x => x.id == element.accountId);
+
+              var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+                                
+              if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+                if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit) {
+                                    
+
+                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+
+              }
+              else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+                if (-(this.balance) + value - oldElement.jeDetailCreditLocal > account.creditLimit) {
+                                    
+                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+              }
+            });
+          }
+        })
+
+      }
+      this.getAccountBalance(this.accountReceivablesId).then(a => {
+        var account = this.accountList.find(x => x.id == this.accountReceivablesId);
+
+        var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+                          
+        if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+          if (Number(this.balance) + this.amountLocal - this.oldAmountLocal  > account.debitLimit) {
+                              
+
+            this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            i++;
+          }
+
+        }
+        else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+          if (-(this.balance) + this.amountLocal - this.oldAmountLocal > account.creditLimit) {
+                              
+            this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            i++;
+          }
+
+
+        }
+
+
       });
+      setTimeout(() => {
+        if (i == 0) {
+          this.spinner.show();
+          this.confirmUpdate().then(a => {
+            this.spinner.hide();
+          }).catch(e => {
+            this.spinner.hide();
+          });
+        }
+      }, 1000);
 
     } else {
 

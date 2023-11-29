@@ -485,7 +485,9 @@
         "copy-right":"حق النشر",
         "afzaz":"أفذاذ",
         "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
-        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات"
+        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات",
+        "debit-limit-exceed-account":"لقد تجاوز حد الائتمان المدين للحساب",
+        "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب"
 
 
 

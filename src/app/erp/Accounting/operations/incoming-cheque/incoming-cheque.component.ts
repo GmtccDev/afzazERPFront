@@ -22,6 +22,8 @@ import { ReportViewerService } from '../../reports/services/report-viewer.servic
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
+import { AccountServiceProxy } from '../../services/account.services';
+import { PublicService } from 'src/app/shared/services/public.service';
 @Component({
   selector: 'app-incoming-cheque',
   templateUrl: './incoming-cheque.component.html',
@@ -39,12 +41,14 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   };
   errorMessage = '';
   errorClass = '';
+  routeAccountApi = 'Account/GetLeafAccounts?'
+
   lang: string = localStorage.getItem("language");
   branchId: string = localStorage.getItem("branchId");
   companyId: string = localStorage.getItem("companyId");
   incomingCheque: any[] = [];
   filterIncomingCheque: any;
-
+  account: any;
   currnetUrl: any;
   fiscalPeriodId: number;
   fiscalPeriodName: string;
@@ -60,9 +64,13 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     componentAdd: '',
 
   };
+  listDetail: any[] = [];
+
   listIds: any[] = [];
   dateType: any;
   accountReceivablesId: any;
+  balance: number = 0;
+  accountList: any;
 
   //#endregion
 
@@ -80,6 +88,9 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private reportViewerService: ReportViewerService,
     private companyService: CompanyServiceProxy,
     private dateService: DateCalculation,
+    private accountService: AccountServiceProxy,
+    private publicService: PublicService,
+
   ) {
 
   }
@@ -90,7 +101,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getGeneralConfigurationsOfAccountReceivables(), this.getCompanyById(this.companyId), this.getIncomingChequees()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getGeneralConfigurationsOfAccountReceivables(), this.getCompanyById(this.companyId), this.getIncomingChequees(), this.getAccount()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -130,6 +141,28 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   //#region Basic Data
   ///Geting form dropdown list data
+  getAccount() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountList = res.response;
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getGeneralConfigurationsOfFiscalPeriod() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
@@ -349,7 +382,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
         }
         else {
-          this.showConfirmCollectMessage(cell.getRow().getData().id);
+          this.showConfirmCollectMessage(cell.getRow().getData());
         }
       }
     },
@@ -638,39 +671,148 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
   //#endregion
-  showConfirmCollectMessage(id: any) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-collect');
-    modalRef.componentInstance.title = this.translate.instant('general.confirm');
-    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.collect');
+  getAccountBalance(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.getAccountBalance(id).subscribe({
+        next: (res: any) => {
+          resolve();
 
-    modalRef.componentInstance.isYesNo = true;
-    modalRef.result.then((rs) => {
-      if (rs == 'Confirm') {
-        this.spinner.show();
-        let sub = this.incomingChequeService.collect(id).subscribe({
-          next: (result: any) => {
-            this.alertsService.showSuccess(
-              this.translate.instant("incoming-cheque.collect-cheque-done"),
-              ""
-            )
-            this.getIncomingChequees();
+          this.balance = res.response.data.result[0].balance;
 
-            return;
 
-          },
-          error: (err: any) => {
-          },
-          complete: () => {
-          },
-        });
-        this.subsList.push(sub);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
 
-        this.spinner.hide();
+    });
+  }
+  getaccountById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.getAccount(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.account = res.response;
+
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+  showConfirmCollectMessage(obj: any) {
+    var i = 0;
+    debugger
+    this.getAccountBalance(obj.bankAccountId).then(a => {
+      debugger
+      var account = this.accountList.find(x => x.id == obj.bankAccountId);
+      var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+      if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+        if (Number(this.balance) > account.debitLimit) {
+          debugger
+
+          this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
+
+      }
+      else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+        if (-(this.balance) > account.creditLimit) {
+          debugger
+          this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
 
 
       }
+    }).catch(err => {
+
     });
+
+    this.getAccountBalance(this.accountReceivablesId).then(a => {
+      var account = this.accountList.find(x => x.id == this.accountReceivablesId);
+      var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+      debugger
+      if (Number(this.balance) > 0 && account.debitLimit > 0) {
+        debugger
+        if (Number(this.balance) > account.debitLimit) {
+          debugger
+
+          this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
+
+      }
+      else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+        debugger
+        if (-(this.balance) > account.creditLimit) {
+          debugger
+          this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
+
+
+      }
+    }).catch(err => {
+
+    });
+    setTimeout(() => {
+      if (i == 0) {
+        const modalRef = this.modalService.open(MessageModalComponent);
+        modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-collect');
+        modalRef.componentInstance.title = this.translate.instant('general.confirm');
+        modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.collect');
+
+        modalRef.componentInstance.isYesNo = true;
+        modalRef.result.then((rs) => {
+          if (rs == 'Confirm') {
+            debugger
+            this.spinner.show();
+            let sub = this.incomingChequeService.collect(obj.id).subscribe({
+              next: (result: any) => {
+                this.alertsService.showSuccess(
+                  this.translate.instant("incoming-cheque.collect-cheque-done"),
+                  ""
+                )
+                this.getIncomingChequees();
+
+                return;
+
+              },
+              error: (err: any) => {
+              },
+              complete: () => {
+              },
+            });
+            this.subsList.push(sub);
+            this.spinner.hide();
+          }
+        })
+      }
+    }, 1000);
+
   }
   showConfirmCancelCollectMessage(id: any) {
     const modalRef = this.modalService.open(MessageModalComponent);
@@ -707,37 +849,141 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
   showConfirmRejectMessage(id: any) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-reject');
-    modalRef.componentInstance.title = this.translate.instant('general.confirm');
-    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.reject');
+    var i = 0;
+    this.getincomingChequeById(id).then(a => {
+      this.listDetail.forEach(
+        element => {
+          if (element.accountId != null) {
+            var value = 0;
+            if (element.jEDetailDebitLocal > 0) {
+              value = element.jEDetailDebitLocal;
+            }
+            if (element.jEDetailCreditLocal > 0) {
+              value = element.jEDetailCreditLocal;
 
-    modalRef.componentInstance.isYesNo = true;
-    modalRef.result.then((rs) => {
-      if (rs == 'Confirm') {
-        this.spinner.show();
+            }
 
-        let sub = this.incomingChequeService.reject(id).subscribe({
-          next: (result: any) => {
-            this.alertsService.showSuccess(
-              this.translate.instant("incoming-cheque.reject-cheque-done"),
-              ""
-            )
-            this.getIncomingChequees();
+            this.getAccountBalance(element.accountId).then(a => {
+              var account = this.accountList.find(x => x.id == element.accountId);
 
-            return;
+              var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
-          },
-          error: (err: any) => {
-          },
-          complete: () => {
-          },
-        });
-        this.subsList.push(sub);
-        this.spinner.hide();
+              if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+                if (Number(this.balance) + value > account.debitLimit) {
+                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+
+              }
+              else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+                if (-(this.balance) + value > account.creditLimit) {
+
+                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+              }
+            });
+          }
+
+        }
+      )
+
+
+    }).catch(err => {
+
+    });
+    this.getAccountBalance(this.accountReceivablesId).then(a => {
+      var account = this.accountList.find(x => x.id == this.accountReceivablesId);
+      var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+      debugger
+      if (Number(this.balance) > 0 && account.debitLimit > 0) {
+        debugger
+        if (Number(this.balance) > account.debitLimit) {
+          debugger
+
+          this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
+
+      }
+      else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+        debugger
+        if (-(this.balance) > account.creditLimit) {
+          debugger
+          this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          i++;
+        }
 
 
       }
+    }).catch(err => {
+
+    });
+
+
+    setTimeout(() => {
+      if (i == 0) {
+
+        const modalRef = this.modalService.open(MessageModalComponent);
+        modalRef.componentInstance.message = this.translate.instant('incoming-cheque.confirm-reject');
+        modalRef.componentInstance.title = this.translate.instant('general.confirm');
+        modalRef.componentInstance.btnConfirmTxt = this.translate.instant('incoming-cheque.reject');
+
+        modalRef.componentInstance.isYesNo = true;
+        modalRef.result.then((rs) => {
+          if (rs == 'Confirm') {
+            this.spinner.show();
+
+            let sub = this.incomingChequeService.reject(id).subscribe({
+              next: (result: any) => {
+                this.alertsService.showSuccess(
+                  this.translate.instant("incoming-cheque.reject-cheque-done"),
+                  ""
+                )
+                this.getIncomingChequees();
+
+                return;
+
+              },
+              error: (err: any) => {
+              },
+              complete: () => {
+              },
+            });
+            this.subsList.push(sub);
+            this.spinner.hide();
+
+
+          }
+        });
+      }
+    }, 1000)
+  }
+  getincomingChequeById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.incomingChequeService.getIncomingCheque(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.listDetail = res.response?.incomingChequeDetail;
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
     });
   }
   showConfirmCancelRejectMessage(id: any) {
