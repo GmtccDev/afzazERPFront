@@ -22,9 +22,8 @@ import { ModuleType } from '../../../models/general-configurations';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
   selector: 'app-add-edit-incoming-cheque',
   templateUrl: './add-edit-incoming-cheque.component.html',
@@ -46,6 +45,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   fiscalPeriodId: number;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
+  accountReceivablesId: any;
+
   public show: boolean = false;
   lang = localStorage.getItem("language")
   incomingCheque: [] = [];
@@ -117,7 +118,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private dateService: DateCalculation,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
-    private modalService: NgbModal,
     private reportViewerService: ReportViewerService,
 
 
@@ -145,7 +145,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.currnetUrl = this.router.url;
       if (this.currnetUrl == this.addUrl) {
         this.getIncomingChequeCode();
-        
+
         if (this.mainCurrencyId > 0) {
           this.currencyId = Number(this.mainCurrencyId);
           this.getAmount();
@@ -250,7 +250,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.serial = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.mainCurrencyId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
-            
+            this.accountReceivablesId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountReceivables).value;
+
             if (this.fiscalPeriodId > 0) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
             }
@@ -389,7 +390,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getAmount() {
-         
+
     if (this.currencyId == this.mainCurrencyId) {
       this.amount = this.amountLocal;
       this.currencyFactor = 1;
@@ -398,10 +399,10 @@ export class AddEditIncomingChequeComponent implements OnInit {
       let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
         next: (res: any) => {
 
-               
+          
           this.currency = res;
           let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = 1 / currencyModel.transactionFactor;
+          this.currencyFactor = currencyModel.transactionFactor;
           this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
         }
       })
@@ -514,6 +515,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
               element.statusName = this.translate.instant("incoming-cheque.rejected");
 
             }
+            else if (element.status == ChequeStatusEnum.CancelCollected) {
+              element.statusName = this.translate.instant("incoming-cheque.cancel-collect");
+
+            }
+            else if (element.status == ChequeStatusEnum.CancelRejected) {
+              element.statusName = this.translate.instant("incoming-cheque.cancel-reject");
+
+            }
             this.incomingChequeDetailStatusDTOList.push(this.fb.group({
               date: format(new Date(element.date), 'MM/dd/yyyy'),
               status: element.status,
@@ -599,7 +608,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
               this.getIncomingChequeCode()
             }
             this.defineIncomingChequeForm();
-           
+
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
@@ -680,6 +689,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
+    if (stringIsNullOrEmpty(this.accountReceivablesId)) {
+      this.errorMessage = this.translate.instant("general.account-receivables-required");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+
+
+    }
     let chequeDate = this.incomingChequeForm.controls["date"].value;
     let date;
     let month;
@@ -754,11 +771,11 @@ export class AddEditIncomingChequeComponent implements OnInit {
   onChangeCurrency(event, index) {
 
     return new Promise<void>((resolve, reject) => {
-           
+
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
-               
+
           this.currency = res;
           if (event.target.value == this.mainCurrencyId) {
             const faControl =
@@ -785,21 +802,21 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
           if (incomingChequeDetail.length > 0) {
             this.amountLocal =
-            // this.amountLocal + 
-            this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
+              // this.amountLocal + 
+              this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
             if (event.target.value == this.mainCurrencyId) {
               this.amount = this.amountLocal;
 
             }
             else {
-                   
+
               let currencyModel = this.currencyList.find(x => x.id == event.target.value);
               this.amount = currencyModel.transactionFactor * this.amountLocal;
 
             }
 
           }
-         // this.getAmount();
+          // this.getAmount();
 
         },
         error: (err: any) => {
@@ -816,7 +833,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-      if (entity.status > 1) {
+      if (entity.status == ChequeStatusEnum.Collected || entity.status == ChequeStatusEnum.Rejected) {
         this.spinner.hide();
         this.alertsService.showError(
           this.translate.instant("incoming-cheque.cannot-edit"),
@@ -824,7 +841,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         )
         return;
       }
-      entity.status = 1;
+      entity.status = ChequeStatusEnum.EditRegistered;
 
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
@@ -866,6 +883,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
+      }
+      if (stringIsNullOrEmpty(this.accountReceivablesId)) {
+        this.errorMessage = this.translate.instant("general.account-receivables-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+
+
       }
       let chequeDate = this.incomingChequeForm.controls["date"].value;
       let date;

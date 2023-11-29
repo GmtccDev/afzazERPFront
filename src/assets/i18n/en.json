@@ -243,7 +243,10 @@
         "copy-right":"Copy Right",
         "afzaz":"Afzaz",
         "commercial-registratio-no":"Commercial Registratio No",
-        "zip-code":"Zip Code"
+        "zip-code":"Zip Code",
+        "account-receivables-required":"Please choose receivables account from the settings",
+        "account-exchange-required":"Please choose Exchange account from the settings"
+
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -651,10 +654,16 @@
         "register": "Register",
         "confirm-collect": "Are you sure to collect this check?",
         "collect": "Collect",
+        "confirm-cancel-collect": "Are you sure to cancel collect this check?",
+        "cancel-collect": "Cancel Collect",
         "confirm-reject": "Are you sure to reject this check?",
         "reject": "Reject",
+        "confirm-cancel-reject": "Are you sure to cancel reject this check?",
+        "cancel-reject": "Cancel Reject",
         "collect-cheque-done": "The cheque is collected successfully.",
         "reject-cheque-done": "The cheque is rejected successfully.",
+        "cancel-collect-cheque-done": "The cheque is cancel collected successfully.",
+        "cancel-reject-cheque-done": "The cheque is cancel rejected successfully.",
         "cannot-edit": "You can not update this cheque",
         "registered": "Registered",
         "edit-registered": "Edited the registeration",
@@ -667,7 +676,15 @@
         "no-update-cheque-fiscal-period-closed": "You can not update the cheque to this closed fiscal period",
         "no-delete-cheque-fiscal-period-closed": "You can not delete the cheque to this closed fiscal period",
         "no-collect-cheque-fiscal-period-closed": "You can not collect the cheque to this closed fiscal period",
-        "no-reject-cheque-fiscal-period-closed": "You can not reject the cheque to this closed fiscal period"
+        "no-reject-cheque-fiscal-period-closed": "You can not reject the cheque to this closed fiscal period",
+        "no-collect-cheque": "You can not collect the cheque",
+        "no-reject-cheque": "You can not reject the cheque",
+        "no-delete-cheque": "You can not delete the cheque",
+        "no-cancel-collect-cheque-fiscal-period-closed": "You can not cancel collect the cheque to this closed fiscal period",
+        "no-cancel-reject-cheque-fiscal-period-closed": "You can not cancel reject the cheque to this closed fiscal period",
+        "no-cancel-collect-cheque": "You can not cancel collect the cheque",
+        "no-cancel-reject-cheque": "You can not cancel reject the cheque"
+
     },
     "account-groups": {
         "add-account-group": "Add Account Group"

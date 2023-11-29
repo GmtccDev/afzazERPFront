@@ -485,10 +485,11 @@
         "copy-right":"حق النشر",
         "afzaz":"أفذاذ",
         "commercial-registratio-no":"رقم السجل التجاري",
-        "zip-code":"الرمز البريدي"
+        "zip-code":"الرمز البريدي",
+    
         
-      
-        
+        "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات"
 
 
 
@@ -649,6 +650,8 @@
         "register": "تسجيل",
         "collect-cheque-done": "تم تحصيل الشيك بنجاح",
         "reject-cheque-done": "تم رفض الشيك بنجاح",
+        "cancel-collect-cheque-done": "تم الغاء تحصيل الشيك بنجاح",
+        "cancel-reject-cheque-done": "تم الغاء رفض الشيك بنجاح",
         "cannot-edit": "لا يمكنك تعديل الشيك",
         "registered": "تم التسجيل",
         "edit-registered": "تم تعديل التسجيل",
@@ -665,7 +668,19 @@
         "no-update-cheque-fiscal-period-closed": "لا يمكن تعديل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
         "no-delete-cheque-fiscal-period-closed": "لا يمكن حذف هذا الشيك لهذة الفترة المحاسبية المغلقة",
         "no-collect-cheque-fiscal-period-closed": "لا يمكن تحصيل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
-        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة"
+        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة",
+        "no-collect-cheque": "لا يمكنك تحصيل الشيك",
+        "no-reject-cheque": "لا يمكنك رفض الشيك",
+        "no-delete-cheque": "لا يمكنك حذف الشيك",
+        "no-cancel-collect-cheque-fiscal-period-closed": "لا يمكن الغاء تحصيل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
+        "no-cancel-reject-cheque-fiscal-period-closed": "لا يمكن الغاء رفض هذا الشيك لهذة الفترة المحاسبية المغلقة",
+        "no-cancel-reject-cheque": "لا يمكنك الغاء رفض الشيك",
+        "no-cancel-collect-cheque": "لا يمكنك الغاء تحصيل الشيك",
+        "confirm-cancel-collect": "هل أنت متأكد من الغاء تحصيل هذا الشيك؟",
+        "cancel-collect": "الغاء تحصيل",
+        "confirm-cancel-reject": "هل انت متأكد من الغاء رفض هذا الشيك ؟",
+        "cancel-reject": "الغاء رفض"
+
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"

@@ -44,14 +44,14 @@ export class AddEditRoleComponent implements OnInit {
   modulesType: any;
   screensList: any;
   applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; link: string; }[];
-	applicationsRoute: any[];
+  applicationsRoute: any[];
   constructor(
     private roleService: RoleServiceProxy,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private sharedServices: SharedService, private translate: TranslateService,public service: SubscriptionService,
+    private sharedServices: SharedService, private translate: TranslateService, public service: SubscriptionService,
   ) {
     this.defineRoleForm();
   }
@@ -60,7 +60,7 @@ export class AddEditRoleComponent implements OnInit {
   //#region ngOnInit
   ngOnInit(): void {
     this.getLastSubscription();
-  //  this.getModulesType();
+    //  this.getModulesType();
     this.spinner.show();
     this.getRouteData();
     this.changePath();
@@ -85,54 +85,51 @@ export class AddEditRoleComponent implements OnInit {
   }
   //#endregion
   getApplications() {
-		this.applications = [
-			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
-			{ descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
-			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
-			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
-			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
-			{ descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
-			{ descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: false, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
+    this.applications = [
+      { descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
+      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
+      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
+      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
+      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
+      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
+      { descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: false, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
 
-		];
-	}
+    ];
+  }
   getLastSubscription() {
 
-		this.service.getLastSubscription().subscribe(
-			next => {
-				
+    this.service.getLastSubscription().subscribe(
+      next => {
 
-				if (next.success == true) {
-					this.getApplications();
-					//   this.router.navigate(['/dashboard/default']);
-					if (next.response != null) {
-						this.applicationsRoute = [...next.response?.applications?.split(",")]
-						console.log(this.applicationsRoute);
-						for (var i = 0; i < this.applications.length; i++) {
 
-							var find = this.applicationsRoute.includes(this.applications[i].value);
+        if (next.success == true) {
+          this.getApplications();
+          //   this.router.navigate(['/dashboard/default']);
+          if (next.response != null) {
+            this.applicationsRoute = [...next.response?.applications?.split(",")]
+            for (var i = 0; i < this.applications.length; i++) {
 
-							if (find) {
+              var find = this.applicationsRoute.includes(this.applications[i].value);
 
-								this.applications[i].check = true;
+              if (find) {
 
-							}
+                this.applications[i].check = true;
 
-						}
-					}
+              }
+
+            }
+          }
 
           this.modulesType = this.applications.filter(c => c.check == true)
-				}
-			},
-			error => {
+        }
+      },
+      error => {
 
-				//this.showLoader = false;
-				console.log(error)
 
-			}
-		)
+      }
+    )
 
-	}
+  }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
@@ -198,27 +195,23 @@ export class AddEditRoleComponent implements OnInit {
             code: res.response?.code,
             isActive: res.response?.isActive
           });
-          console.log(
-            'this.roleForm.value set value',
-            this.roleForm.value
-          );
+        
 
           this.permission = res.response?.permissions?.items;
           this.screens = res.response?.screens;
           this.screensList = res.response?.screens;
-          
+
           const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
           this.permission = res.response?.permissions?.items;
           this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
           this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-        
+
 
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -240,17 +233,16 @@ export class AddEditRoleComponent implements OnInit {
           this.permission = res.response.permissions
           this.screens = res.response.screens;
           const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
-         // this.permission = res.response?.permissions?.items;
+          // this.permission = res.response?.permissions?.items;
           this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-        //  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-        
+          //  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+
 
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -288,11 +280,11 @@ export class AddEditRoleComponent implements OnInit {
             this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-role");
             this.defineRoleForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getRoleCode();
+            this.getRoleCode();
           }
         }
       },
@@ -308,7 +300,6 @@ export class AddEditRoleComponent implements OnInit {
       let sub = this.roleService.createRole(this.roleForm.value).subscribe({
         next: (result: any) => {
           this.spinner.show();
-          this.response = { ...result.response };
           this.defineRoleForm();
 
           this.submited = false;
@@ -320,7 +311,6 @@ export class AddEditRoleComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -342,13 +332,12 @@ export class AddEditRoleComponent implements OnInit {
     }
   }
   confirmUpdate() {
-    
+
     this.roleForm.value.id = this.id;
     this.roleForm.value.permissions = this.permission;
     return new Promise<void>((resolve, reject) => {
       let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
         next: (result: any) => {
-          this.response = { ...result.response };
           this.defineRoleForm();
           this.submited = false;
           this.spinner.hide();
@@ -358,7 +347,6 @@ export class AddEditRoleComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -391,18 +379,23 @@ export class AddEditRoleComponent implements OnInit {
   masterSelected = false;
   searchText: string;
   checkUncheckAll(evt) {
-
-    this.screens.forEach(
-      item => item.permissions.forEach(
-        (c) => {
-
-          c.isChecked = evt.target.checked;
-          let entity = this.permission.find(x => x.id == c.id);
-          entity.isChecked = evt.target.checked;
-        }
+    // evt.isChecked = true;
+    if (this.screens != null) {
+      this.screens.forEach(
+        item => item.permissions.forEach(
+          (c) => {
+                         
+            c.isChecked = evt.target.checked;
+            let entity = this.permission.find(x => x.id == c.id);
+            entity.isChecked = evt.target.checked;
+          }
+        )
       )
+      this.screens.forEach(item => {
+        item.isChecked = evt.target.checked
+      })
+    }
 
-    )
     // this.permission.forEach((c) => c.isChecked = evt.target.checked)
   }
 
@@ -417,15 +410,15 @@ export class AddEditRoleComponent implements OnInit {
 
     // this.permission[item.id].isChecked = evt.target.checked
     item.permissions.forEach(
-        (c) => {
+      (c) => {
 
-          c.isChecked = evt.target.checked;
-          let entity = this.permission.find(x => x.id == c.id);
-          entity.isChecked = evt.target.checked;
-        }
-      )
+        c.isChecked = evt.target.checked;
+        let entity = this.permission.find(x => x.id == c.id);
+        entity.isChecked = evt.target.checked;
+      }
+    )
 
-    
+
   }
 
   getModulesType() {
@@ -439,13 +432,13 @@ export class AddEditRoleComponent implements OnInit {
     ];
   }
   onChange(event) {
-    
+
     if (this.screensList != undefined) {
 
       this.screens = this.screensList.filter(x => x.moduleType == Number(event));
 
     }
-  
+
   }
 
 
