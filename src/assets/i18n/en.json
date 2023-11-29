@@ -245,7 +245,9 @@
         "commercial-registratio-no":"Commercial Registratio No",
         "zip-code":"Zip Code",
         "account-receivables-required":"Please choose receivables account from the settings",
-        "account-exchange-required":"Please choose Exchange account from the settings"
+        "account-exchange-required":"Please choose Exchange account from the settings",
+        "debit-limit-exceed-account":"The debit limit has been exceeded for account",
+        "credit-limit-exceed-account":"The Credit limit has been exceeded for account"
 
     },
     "sales-person-commission": {
