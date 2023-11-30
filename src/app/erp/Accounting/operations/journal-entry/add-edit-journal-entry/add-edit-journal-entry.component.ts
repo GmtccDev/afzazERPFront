@@ -60,6 +60,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   parentTypeId: number | undefined;
   settingId: number | undefined;
   costCenterName: any;
+  parentTypeCode: string;
 
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
@@ -607,11 +608,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   getjournalEntryCode() {
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.journalEntryService.getLastCode().subscribe({
-
         next: (res: any) => {
-
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           this.journalEntryForm.patchValue({
             code: res.response
@@ -813,13 +811,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             var account = this.accountList.find(x => x.id == element.accountId);
 
             var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-                              
-            if (Number(this.balance) > 0 && account.debitLimit >0) {
+
+            if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
               if (Number(this.balance) + value > account.debitLimit) {
-                                
 
-                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 i++;
@@ -831,8 +829,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
               if (-(this.balance) + value > account.creditLimit) {
-                                 
-                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 i++;
@@ -1071,14 +1069,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
 
     ///////here
-                     
+
     var i = 0;
     if (journalEntriesDetail != null) {
 
       this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
-                         
+
         var oldElement = this.tempListDetail.find(x => x.accountId == element.accountId);
-                         
+
         if (element.accountId != null) {
           var value = 0;
           if (element.jEDetailDebitLocal > 0) {
@@ -1095,11 +1093,11 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
             if (Number(this.balance) > 0) {
-                                
-              if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit && account.debitLimit>0) {
-                                 
 
-                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+              if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit && account.debitLimit > 0) {
+
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 i++;
@@ -1107,10 +1105,10 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
             }
             else if (Number(this.balance) < 0) {
-                               
+
               if (-(this.balance) + value - oldElement.jeDetailCreditLocal > account.creditLimit && account.creditLimit > 0) {
-                                 
-                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 i++;
@@ -1174,13 +1172,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           resolve();
           if (res.success) {
             this.showDetails = true;
+            debugger
             this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
             this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
             this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
             this.parentType = res.response.data.result[0].parentType;
             this.parentTypeId = res.response.data.result[0].parentTypeId;
             this.settingId = res.response.data.result[0].settingId;
-
+            this.parentTypeCode = res.response.data.result[0].parentTypeCode;
 
           }
 
@@ -1344,7 +1343,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             //   // }
             // })
             this.checkPeriod = res.response.fiscalPeriodStatus;
-            this.fiscalPeriodName = this.lang == 'ar' ? res.response.nameAr : res.resonse.nameEn;
+            this.fiscalPeriodName = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn;
 
           }
 
@@ -1523,33 +1522,59 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   openSearchCurrency(i, currencyName: any) {
     this.index = i;
     let searchTxt = currencyName;
-    let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-    let names = ['code', 'nameAr', 'nameEn'];
-    let title = 'بحث عن العملة';
-    let sub = this.searchDialog
-      .showDialog(lables, names, this.currencyList, title, searchTxt)
-      .subscribe((d) => {
-        if (d) {
-          this.onSelectCurrencyPopup(d);
-        }
-      });
-    this.subsList.push(sub);
+    let data = this.currencyList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+    if (data.length == 1) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      faControl['controls'].currencyId.setValue(data[0].id);
+      faControl['controls'].currencyName.setValue(this.lang == "ar" ? data[0].nameAr : data[0].nameEn);
+    }
+    else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن العملة';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.currencyList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            this.onSelectCurrencyPopup(d);
+          }
+        });
+      this.subsList.push(sub);
+    }
   }
   openSearchCostCenter(i, costCenterName: any) {
     this.index = i;
     let searchTxt = '';
     searchTxt = costCenterName ?? '';
-    let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-    let names = ['code', 'nameAr', 'nameEn'];
-    let title = 'بحث عن مركز التكلفة';
-    let sub = this.searchDialog
-      .showDialog(lables, names, this.costCenterList, title, searchTxt)
-      .subscribe((d) => {
-        if (d) {
-          this.onSelectCostCenter(d);
-        }
-      });
-    this.subsList.push(sub);
+    let data = this.costCenterList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+    if (data.length == 1) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      faControl['controls'].costCenterId.setValue(data[0].id);
+      faControl['controls'].costCenterName.setValue(this.lang == "ar" ? data[0].nameAr : data[0].nameEn);
+    }
+    else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن مركز التكلفة';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.costCenterList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            this.onSelectCostCenter(d);
+          }
+        });
+      this.subsList.push(sub);
+    }
   }
   changeSearchAccountName() {
 
@@ -1557,17 +1582,31 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   openSearchAccount(i, accountName: any) {
     this.index = i;
     let searchTxt = accountName;
-    let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-    let names = ['code', 'nameAr', 'nameEn'];
-    let title = 'بحث عن  الحساب';
-    let sub = this.searchDialog
-      .showDialog(lables, names, this.accountList, title, searchTxt)
-      .subscribe((d) => {
-        if (d) {
-          this.onSelectCashAccount(d);
-        }
-      });
-    this.subsList.push(sub);
+
+    let data = this.accountList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+    if (data.length == 1) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      faControl['controls'].accountId.setValue(data[0].id);
+      faControl['controls'].accountName.setValue(this.lang == "ar" ? data[0].nameAr : data[0].nameEn);
+    }
+    else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن  الحساب';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.accountList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            this.onSelectCashAccount(d);
+          }
+        });
+      this.subsList.push(sub);
+    }
   }
   getfiscalPeriodById(id: any) {
     return new Promise<void>((resolve, reject) => {

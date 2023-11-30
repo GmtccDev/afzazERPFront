@@ -31,8 +31,6 @@ export class SearchFormComponent implements OnInit {
 	}
 
 	OnDataSelect(selectedItem) {
-		////(("Selected Item is", selectedItem);
-		debugger
 		this.OnSelect.emit(selectedItem);
 		this.matDialogRef.close()
 	}
@@ -40,6 +38,12 @@ export class SearchFormComponent implements OnInit {
 	{
 		this.OnSelect.emit(this.dataList[value]);
 		this.matDialogRef.close();
+	}
+	escape()
+	{
+		debugger
+		this.matDialogRef.close();
+
 	}
 
 	Search() {
@@ -49,7 +53,6 @@ export class SearchFormComponent implements OnInit {
 				this.colomnNames.forEach(name => {
 					txt = txt + " " + (a[name] ? a[name] : "");
 				});
-				////((txt);
 				return txt.toUpperCase().includes(this.searchText) || txt.toLowerCase().includes(this.searchText);
 			});
 		}

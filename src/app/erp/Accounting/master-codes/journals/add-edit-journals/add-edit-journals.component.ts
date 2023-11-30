@@ -22,7 +22,6 @@ import { NgbdModalContent } from 'src/app/shared/components/modal/modal-componen
 export class AddEditJournalsComponent implements OnInit {
   //#region Main Declarations
   userId: any = localStorage.getItem("userId");
-	// = "2e992e3d-3bc9-41f5-9b6e-98fbc97d770a";
 	orderBy: any;
 	companyId: string = localStorage.getItem("companyId");
 	lang = localStorage.getItem("language");

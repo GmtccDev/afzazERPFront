@@ -282,6 +282,10 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			},
+		{
+			title: this.lang == 'ar' ? ' كود النوع' : 'Type Code',
+			field: 'parentTypeCode',
+		},
 
 		this.lang == 'ar'
 			? {

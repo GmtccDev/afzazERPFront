@@ -678,7 +678,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
     // if (this.checkPeriod == null) {
     //   this.alertsService.showError(
-    //     'يجب أن يكون السنة المالية مفتوحة و الفترة المحاسبية مفتوحة',
+    //     'يجب أن يكون السنة المالية مفتوحة و السنة المالية مفتوحة',
     //     "",
 
     //   )
@@ -786,7 +786,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
               if (Number(this.balance) + value > account.debitLimit) {
 
 
-                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 i++;
@@ -797,7 +797,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
               if (-(this.balance) + value > account.creditLimit) {
 
-                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 i++;
@@ -1063,7 +1063,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
                 if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit) {
 
 
-                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
                   this.errorClass = 'errorMessage';
                   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                   i++;
@@ -1074,7 +1074,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
                 if (-(this.balance) + value - oldElement.jeDetailCreditLocal > account.creditLimit) {
 
-                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
                   this.errorClass = 'errorMessage';
                   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                   i++;
@@ -1095,7 +1095,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
           if (Number(this.balance) + this.amountLocal - this.oldAmountLocal > account.debitLimit) {
 
 
-            this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+            this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;          
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
             i++;
@@ -1106,7 +1106,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
           if (-(this.balance) + this.amountLocal - this.oldAmountLocal > account.creditLimit) {
 
-            this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;;
+            this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;          
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
             i++;
