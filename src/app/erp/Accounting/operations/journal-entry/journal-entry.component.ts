@@ -322,11 +322,15 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			} : {
 				title: '   Type', width: 300, field: 'entryTypeEn'
-				//formatter: this.translateParentEnEnum
+				//,formatter: this.translateParentEnEnum
 				, cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
+			},
+			{
+				title: this.lang == 'ar' ? ' كود النوع' : 'Type Code',
+				field: 'parentTypeCode',
 			},
 		this.lang == 'ar'
 			? {
@@ -562,7 +566,18 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		return text;
 
 	}
-	translateParentArEnum(cell, formatterParams, onRendered) {
+	formatLink(cell, formatterParams, onRendered) {
+		  const status = cell.getValue();
+		// let text;
+		// if(status !='')
+		// {
+		// 	text='link'
+		// 	return text;
+		// }
+		//const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		//return iconHtml;
+	}
+    translateParentArEnum(cell, formatterParams, onRendered) {
 
 		const status = cell.getValue();
 		let text;

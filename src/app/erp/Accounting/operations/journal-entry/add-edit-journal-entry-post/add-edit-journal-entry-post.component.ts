@@ -36,6 +36,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   parentTypeId: number | undefined;
   settingId: number | undefined;
   showDetails: boolean = false;
+  parentTypeCode: string;
 
   public show: boolean = false;
   lang = localStorage.getItem("language")
@@ -932,6 +933,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
             this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
             this.parentType = res.response.data.result[0].parentType;
             this.parentTypeId = res.response.data.result[0].parentTypeId;
+            this.parentTypeCode = res.response.data.result[0].parentTypeCode;
             this.settingId = res.response.data.result[0].settingId;
 
 

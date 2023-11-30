@@ -11,7 +11,7 @@
 						<form [formGroup]="voucherForm" id="voucherSubmit" class="tabs-form">
 							<div class="main-branch ranoo">
 								<div class="wrapper-title">
-									<h3>{{lang=='ar'? nameAr: nameEn}}</h3>
+									<h3>{{voucherTypeName}}</h3>
 									<hr>
 									<div class="row ">
 										<div class="col-md-6 col-12 ">
@@ -226,9 +226,9 @@
 																	<th>#</th>
 																	<th>{{'general.beneficiary-type'|translate}}</th>
 																	<th>{{'general.beneficiary'|translate}}</th>
-																	<th *ngIf="voucherkindId==1">
-																		{{'general.debit'|translate}}</th>
 																	<th *ngIf="voucherkindId==2">
+																		{{'general.debit'|translate}}</th>
+																	<th *ngIf="voucherkindId==1">
 																		{{'general.credit'|translate}}</th>
 																	<th *ngIf="enableMultiCurrencies">
 																		{{'general.currency'|translate}}</th>
@@ -236,11 +236,11 @@
 																		{{'general.currency-conversion-factor'|translate}}
 																	</th>
 																	<th
-																		*ngIf="voucherkindId==1 && enableMultiCurrencies">
+																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
 																		{{'general.debit-after-conversion'|translate}}
 																	</th>
 																	<th
-																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
+																		*ngIf="voucherkindId==1 && enableMultiCurrencies">
 																		{{'general.credit-after-conversion'|translate}}
 																	</th>
 
@@ -268,14 +268,14 @@
 																			[ngModelOptions]="{standalone: true}"
 																			(keopenydown.Enter)="BeneficiarySearchDialog(i)">
 																	</td>
-																	<td *ngIf="voucherkindId==1">
+																	<td *ngIf="voucherkindId==2">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].debit"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
 																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
 																	</td>
-																	<td *ngIf="voucherkindId==2">
+																	<td *ngIf="voucherkindId==1">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].credit"
 																			[ngModelOptions]="{standalone: true}"
@@ -300,7 +300,7 @@
 																	</td>
 
 																	<td
-																		*ngIf="voucherkindId==1 && enableMultiCurrencies">
+																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].debitLocal"
 																			[ngModelOptions]="{standalone: true}"
@@ -308,7 +308,7 @@
 																			disabled="true">
 																	</td>
 																	<td
-																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
+																		*ngIf="voucherkindId==1 && enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="voucherDetail[i].creditLocal"
 																			[ngModelOptions]="{standalone: true}"
@@ -357,14 +357,14 @@
 																			[ngModelOptions]="{standalone: true}"
 																			(keydown.Enter)="openBeneficiarySearchDialog(-1)">
 																	</td>
-																	<td *ngIf="voucherkindId==1">
+																	<td *ngIf="voucherkindId==2">
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.debit"
 																			[ngModelOptions]="{standalone: true}"
 																			min="0" class="form-control"
 																			(change)="getValueAfterConversion()">
 																	</td>
-																	<td *ngIf="voucherkindId==2">
+																	<td *ngIf="voucherkindId==1">
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.credit"
 																			[ngModelOptions]="{standalone: true}"
@@ -391,7 +391,7 @@
 																	</td>
 
 																	<td
-																		*ngIf="voucherkindId==1 && enableMultiCurrencies">
+																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.debitLocal"
 																			[ngModelOptions]="{standalone: true}"
@@ -399,7 +399,7 @@
 																			disabled="true">
 																	</td>
 																	<td
-																		*ngIf="voucherkindId==2 && enableMultiCurrencies">
+																		*ngIf="voucherkindId==1 && enableMultiCurrencies">
 																		<input type="number"
 																			[(ngModel)]="selectedVoucherDetail.creditLocal"
 																			[ngModelOptions]="{standalone: true}"
