@@ -130,10 +130,11 @@
 												<label>{{status}}</label>
 											</div>
 										</div>
-										<div class="col-12 col-md-1" *ngIf="showDetails">
+										<div class="col-12 col-md-2" *ngIf="showDetails">
 											<label for="type" class="label-name">{{'general.type'|translate}} : </label>
 											<div class="form-group position-relative">
-												<a (click)="onViewClicked()"  class="link-style" >{{type}}</a>
+												<!-- <a (click)="onViewClicked()"  class="link-style" >{{type}}</a> -->
+												<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink" (click)="onViewClicked()">{{type}}</span>
 											</div>
 										</div>
 										<div class="col-12 col-md-1" *ngIf="showDetails">
