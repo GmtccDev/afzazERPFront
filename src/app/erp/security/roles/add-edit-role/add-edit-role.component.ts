@@ -14,80 +14,80 @@ import { RoleServiceProxy } from '../../services/role.servies'
 import { RoleDto } from '../../models/role';
 import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
 @Component({
-  selector: 'app-add-edit-role',
-  templateUrl: './add-edit-role.component.html',
-  styleUrls: ['./add-edit-role.component.scss']
+	selector: 'app-add-edit-role',
+	templateUrl: './add-edit-role.component.html',
+	styleUrls: ['./add-edit-role.component.scss']
 })
 export class AddEditRoleComponent implements OnInit {
-  //#region Main Declarations
-  roleForm!: FormGroup;
-  sub: any;
-  url: any;
-  id: any = 0;
-  currnetUrl;
-  role: RoleDto[] = [];
-  addUrl: string = '/security/role/add-role';
-  updateUrl: string = '/security/role/update-role/';
-  listUrl: string = '/security/role';
-  toolbarPathData: ToolbarPath = {
-    listPath: '',
-    updatePath: this.updateUrl,
-    addPath: this.addUrl,
-    componentList: this.translate.instant("component-names.roles-permissions"),
-    componentAdd: '',
+	//#region Main Declarations
+	roleForm!: FormGroup;
+	sub: any;
+	url: any;
+	id: any = 0;
+	currnetUrl;
+	role: RoleDto[] = [];
+	addUrl: string = '/security/role/add-role';
+	updateUrl: string = '/security/role/update-role/';
+	listUrl: string = '/security/role';
+	toolbarPathData: ToolbarPath = {
+		listPath: '',
+		updatePath: this.updateUrl,
+		addPath: this.addUrl,
+		componentList: this.translate.instant("component-names.roles-permissions"),
+		componentAdd: '',
 
-  };
-  response: any;
-  errorMessage = '';
-  errorClass = '';
-  submited: boolean = false;
-  modulesType: any;
-  screensList: any;
-  applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; link: string; }[];
+	};
+	response: any;
+	errorMessage = '';
+	errorClass = '';
+	submited: boolean = false;
+	modulesType: any;
+	screensList: any;
+	applications: { descriptionAr: string; descriptionEn: string; value: string; check: boolean; image: string; link: string; }[];
 	applicationsRoute: any[];
-  constructor(
-    private roleService: RoleServiceProxy,
-    private router: Router,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
-    private sharedServices: SharedService, private translate: TranslateService,public service: SubscriptionService,
-  ) {
-    this.defineRoleForm();
-  }
-  //#endregion
+	constructor(
+		private roleService: RoleServiceProxy,
+		private router: Router,
+		private fb: FormBuilder,
+		private route: ActivatedRoute,
+		private spinner: NgxSpinnerService,
+		private sharedServices: SharedService, private translate: TranslateService, public service: SubscriptionService,
+	) {
+		this.defineRoleForm();
+	}
+	//#endregion
 
-  //#region ngOnInit
-  ngOnInit(): void {
-    this.getLastSubscription();
-  //  this.getModulesType();
-    this.spinner.show();
-    this.getRouteData();
-    this.changePath();
-    this.listenToClickedButton();
-    this.currnetUrl = this.router.url;
-    if (this.currnetUrl == this.addUrl) {
-      this.getRoleCode();
-    }
-    this.spinner.hide();
+	//#region ngOnInit
+	ngOnInit(): void {
+		this.getLastSubscription();
+		//  this.getModulesType();
+		this.spinner.show();
+		this.getRouteData();
+		this.changePath();
+		this.listenToClickedButton();
+		this.currnetUrl = this.router.url;
+		if (this.currnetUrl == this.addUrl) {
+			this.getRoleCode();
+		}
+		this.spinner.hide();
 
-  }
+	}
 
-  //#endregion
+	//#endregion
 
-  //#region ngOnDestroy
-  ngOnDestroy() {
-    this.subsList.forEach((s) => {
-      if (s) {
-        s.unsubscribe();
-      }
-    });
-  }
-  //#endregion
-  getApplications() {
+	//#region ngOnDestroy
+	ngOnDestroy() {
+		this.subsList.forEach((s) => {
+			if (s) {
+				s.unsubscribe();
+			}
+		});
+	}
+	//#endregion
+	getApplications() {
 		this.applications = [
 			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
-			{ descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
+			{ descriptionAr: 'نقط البيع', descriptionEn: 'POS', value: '1', check: true, image: 'assets/images/applications/pos.png', link: '/dashboard/default' },
 			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
 			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
 			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
@@ -96,11 +96,11 @@ export class AddEditRoleComponent implements OnInit {
 
 		];
 	}
-  getLastSubscription() {
+	getLastSubscription() {
 
 		this.service.getLastSubscription().subscribe(
 			next => {
-				
+
 
 				if (next.success == true) {
 					this.getApplications();
@@ -121,7 +121,7 @@ export class AddEditRoleComponent implements OnInit {
 						}
 					}
 
-          this.modulesType = this.applications.filter(c => c.check == true)
+					this.modulesType = this.applications.filter(c => c.check == true)
 				}
 			},
 			error => {
@@ -133,320 +133,320 @@ export class AddEditRoleComponent implements OnInit {
 		)
 
 	}
-  getRouteData() {
-    let sub = this.route.params.subscribe((params) => {
-      if (params['id'] != null) {
-        this.id = params['id'];
+	getRouteData() {
+		let sub = this.route.params.subscribe((params) => {
+			if (params['id'] != null) {
+				this.id = params['id'];
 
-        if (this.id) {
-          this.getRoleById(this.id).then(a => {
+				if (this.id) {
+					this.getRoleById(this.id).then(a => {
 
-            this.spinner.hide();
+						this.spinner.hide();
 
-          }).catch(err => {
-            this.spinner.hide();
+					}).catch(err => {
+						this.spinner.hide();
 
-          });
-        }
-        else {
-          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
-          this.spinner.hide();
-        }
-      }
-      else {
-        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
-        this.spinner.hide();
-      }
-    });
-    this.subsList.push(sub);
-  }
-  //#region Authentications
+					});
+				}
+				else {
+					this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+					this.spinner.hide();
+				}
+			}
+			else {
+				this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+				this.spinner.hide();
+			}
+		});
+		this.subsList.push(sub);
+	}
+	//#region Authentications
 
-  //#endregion
+	//#endregion
 
-  //#region Permissions
+	//#region Permissions
 
-  //#endregion
+	//#endregion
 
-  //#region  State Management
-  //#endregion
+	//#region  State Management
+	//#endregion
 
-  //#region Basic Data
-  ///Geting form dropdown list data
-  defineRoleForm() {
-    this.roleForm = this.fb.group({
-      id: 0,
-      nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: NAME_REQUIRED_VALIDATORS,
-      code: CODE_REQUIRED_VALIDATORS,
-      isActive: true
-    });
-  }
+	//#region Basic Data
+	///Geting form dropdown list data
+	defineRoleForm() {
+		this.roleForm = this.fb.group({
+			id: 0,
+			nameAr: NAME_REQUIRED_VALIDATORS,
+			nameEn: NAME_REQUIRED_VALIDATORS,
+			code: CODE_REQUIRED_VALIDATORS,
+			isActive: true
+		});
+	}
 
-  //#endregion
+	//#endregion
 
-  //#region CRUD Operations
-  getRoleById(id: any) {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.getRole(id).subscribe({
-        next: (res: any) => {
-          resolve();
-          this.roleForm.setValue({
-            id: res.response?.id,
-            nameAr: res.response?.nameAr,
-            nameEn: res.response?.nameEn,
-            code: res.response?.code,
-            isActive: res.response?.isActive
-          });
-          console.log(
-            'this.roleForm.value set value',
-            this.roleForm.value
-          );
+	//#region CRUD Operations
+	getRoleById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.roleService.getRole(id).subscribe({
+				next: (res: any) => {
+					resolve();
+					this.roleForm.setValue({
+						id: res.response?.id,
+						nameAr: res.response?.nameAr,
+						nameEn: res.response?.nameEn,
+						code: res.response?.code,
+						isActive: res.response?.isActive
+					});
+					console.log(
+						'this.roleForm.value set value',
+						this.roleForm.value
+					);
 
-          this.permission = res.response?.permissions?.items;
-          this.screens = res.response?.screens;
-          this.screensList = res.response?.screens;
-          
-          const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
-          this.permission = res.response?.permissions?.items;
-          this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-          this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-        
+					this.permission = res.response?.permissions?.items;
+					this.screens = res.response?.screens;
+					this.screensList = res.response?.screens;
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          //console.log('complete');
-        },
-      });
-      this.subsList.push(sub);
-
-    });
-  }
-
-  getRoleCode() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.getLastCode().subscribe({
-
-        next: (res: any) => {
-
-          this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
-          this.roleForm.patchValue({
-            code: res.response.code
-          });
-
-          this.permission = res.response.permissions
-          this.screens = res.response.screens;
-          const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
-         // this.permission = res.response?.permissions?.items;
-          this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-        //  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-        
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          //console.log('complete');
-        },
-      });
-      this.subsList.push(sub);
-
-    });
-
-  }
-  //#endregion
-
-  //#region Helper Functions
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.roleForm.controls;
-  }
+					const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
+					this.permission = res.response?.permissions?.items;
+					this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+					this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
 
 
-  //#endregion
-  //#region Tabulator
-  subsList: Subscription[] = [];
-  currentBtnResult;
-  listenToClickedButton() {
-    let sub = this.sharedServices.getClickedbutton().subscribe({
-      next: (currentBtn: ToolbarData) => {
-        currentBtn;
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
 
-        if (currentBtn != null) {
-          if (currentBtn.action == ToolbarActions.List) {
-            this.sharedServices.changeToolbarPath({
-              listPath: this.listUrl,
-            } as ToolbarPath);
-            this.router.navigate([this.listUrl]);
-          } else if (currentBtn.action == ToolbarActions.Save) {
-            this.onSave();
-          } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-role");
-            this.defineRoleForm();
-            this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
-            this.onUpdate();
-          }
-          else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getRoleCode();
-          }
-        }
-      },
-    });
-    this.subsList.push(sub);
-  }
-  changePath() {
-    this.sharedServices.changeToolbarPath(this.toolbarPathData);
-  }
-  confirmSave() {
-    return new Promise<void>((resolve, reject) => {
-      this.roleForm.value.permissions = this.permission;
-      let sub = this.roleService.createRole(this.roleForm.value).subscribe({
-        next: (result: any) => {
-          this.spinner.show();
-          this.response = { ...result.response };
-          this.defineRoleForm();
+		});
+	}
 
-          this.submited = false;
-          this.spinner.hide();
+	getRoleCode() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.roleService.getLastCode().subscribe({
 
-          navigateUrl(this.listUrl, this.router);
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          //console.log('complete');
-        },
-      });
-      this.subsList.push(sub);
+				next: (res: any) => {
 
-    });
-  }
-  onSave() {
-    if (this.roleForm.valid) {
-      this.spinner.show();
-      this.confirmSave().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
-      });
+					this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
+					this.roleForm.patchValue({
+						code: res.response.code
+					});
 
-    } else {
+					this.permission = res.response.permissions
+					this.screens = res.response.screens;
+					const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
+					// this.permission = res.response?.permissions?.items;
+					this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+					//  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
 
-      return this.roleForm.markAllAsTouched();
-    }
-  }
-  confirmUpdate() {
-    
-    this.roleForm.value.id = this.id;
-    this.roleForm.value.permissions = this.permission;
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
-        next: (result: any) => {
-          this.response = { ...result.response };
-          this.defineRoleForm();
-          this.submited = false;
-          this.spinner.hide();
-          navigateUrl(this.listUrl, this.router);
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-          //console.log('complete');
-        },
-      });
-      this.subsList.push(sub);
 
-    });
-  }
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
 
-  onUpdate() {
-    if (this.roleForm.valid) {
-      this.spinner.show();
-      this.confirmUpdate().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
-      });
+		});
 
-    }
+	}
+	//#endregion
 
-    else {
+	//#region Helper Functions
 
-      return this.roleForm.markAllAsTouched();
-    }
-  }
+	get f(): { [key: string]: AbstractControl } {
+		return this.roleForm.controls;
+	}
 
-  //#endregion
-  //Permission region
-  permission: any = [];
-  screens: any = [];
-  lang = localStorage.getItem("language");
-  masterSelected = false;
-  searchText: string;
-  checkUncheckAll(evt) {
 
-    this.screens.forEach(
-      item => item.permissions.forEach(
-        (c) => {
+	//#endregion
+	//#region Tabulator
+	subsList: Subscription[] = [];
+	currentBtnResult;
+	listenToClickedButton() {
+		let sub = this.sharedServices.getClickedbutton().subscribe({
+			next: (currentBtn: ToolbarData) => {
+				currentBtn;
 
-          c.isChecked = evt.target.checked;
-          let entity = this.permission.find(x => x.id == c.id);
-          entity.isChecked = evt.target.checked;
-        }
-      )
+				if (currentBtn != null) {
+					if (currentBtn.action == ToolbarActions.List) {
+						this.sharedServices.changeToolbarPath({
+							listPath: this.listUrl,
+						} as ToolbarPath);
+						this.router.navigate([this.listUrl]);
+					} else if (currentBtn.action == ToolbarActions.Save) {
+						this.onSave();
+					} else if (currentBtn.action == ToolbarActions.New) {
+						this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-role");
+						this.defineRoleForm();
+						this.sharedServices.changeToolbarPath(this.toolbarPathData);
+					} else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
+						this.onUpdate();
+					}
+					else if (currentBtn.action == ToolbarActions.Copy) {
+						this.getRoleCode();
+					}
+				}
+			},
+		});
+		this.subsList.push(sub);
+	}
+	changePath() {
+		this.sharedServices.changeToolbarPath(this.toolbarPathData);
+	}
+	confirmSave() {
+		return new Promise<void>((resolve, reject) => {
+			this.roleForm.value.permissions = this.permission;
+			let sub = this.roleService.createRole(this.roleForm.value).subscribe({
+				next: (result: any) => {
+					this.spinner.show();
+					this.response = { ...result.response };
+					this.defineRoleForm();
 
-    )
-    // this.permission.forEach((c) => c.isChecked = evt.target.checked)
-  }
+					this.submited = false;
+					this.spinner.hide();
 
-  updateCheckedOptions(item, evt) {
+					navigateUrl(this.listUrl, this.router);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
 
-    // this.permission[item.id].isChecked = evt.target.checked
-    let entity = this.permission.find(c => c.id == item.id);
-    entity.isChecked = evt.target.checked;
-    //  this.masterSelected = this.permission.every((item) => item.isChecked == true);
-  }
-  updateCheckedOption(item, evt) {
+		});
+	}
+	onSave() {
+		if (this.roleForm.valid) {
+			this.spinner.show();
+			this.confirmSave().then(a => {
+				this.spinner.hide();
+			}).catch(e => {
+				this.spinner.hide();
+			});
 
-    // this.permission[item.id].isChecked = evt.target.checked
-    item.permissions.forEach(
-        (c) => {
+		} else {
 
-          c.isChecked = evt.target.checked;
-          let entity = this.permission.find(x => x.id == c.id);
-          entity.isChecked = evt.target.checked;
-        }
-      )
+			return this.roleForm.markAllAsTouched();
+		}
+	}
+	confirmUpdate() {
 
-    
-  }
+		this.roleForm.value.id = this.id;
+		this.roleForm.value.permissions = this.permission;
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
+				next: (result: any) => {
+					this.response = { ...result.response };
+					this.defineRoleForm();
+					this.submited = false;
+					this.spinner.hide();
+					navigateUrl(this.listUrl, this.router);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+					//console.log('complete');
+				},
+			});
+			this.subsList.push(sub);
 
-  getModulesType() {
-    this.modulesType = [
-      { descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0' },
-      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1' },
-      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2' },
-      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', },
-      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4' },
-      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5' }
-    ];
-  }
-  onChange(event) {
-    
-    if (this.screensList != undefined) {
+		});
+	}
 
-      this.screens = this.screensList.filter(x => x.moduleType == Number(event));
+	onUpdate() {
+		if (this.roleForm.valid) {
+			this.spinner.show();
+			this.confirmUpdate().then(a => {
+				this.spinner.hide();
+			}).catch(e => {
+				this.spinner.hide();
+			});
 
-    }
-  
-  }
+		}
+
+		else {
+
+			return this.roleForm.markAllAsTouched();
+		}
+	}
+
+	//#endregion
+	//Permission region
+	permission: any = [];
+	screens: any = [];
+	lang = localStorage.getItem("language");
+	masterSelected = false;
+	searchText: string;
+	checkUncheckAll(evt) {
+
+		this.screens.forEach(
+			item => item.permissions.forEach(
+				(c) => {
+
+					c.isChecked = evt.target.checked;
+					let entity = this.permission.find(x => x.id == c.id);
+					entity.isChecked = evt.target.checked;
+				}
+			)
+
+		)
+		// this.permission.forEach((c) => c.isChecked = evt.target.checked)
+	}
+
+	updateCheckedOptions(item, evt) {
+
+		// this.permission[item.id].isChecked = evt.target.checked
+		let entity = this.permission.find(c => c.id == item.id);
+		entity.isChecked = evt.target.checked;
+		//  this.masterSelected = this.permission.every((item) => item.isChecked == true);
+	}
+	updateCheckedOption(item, evt) {
+
+		// this.permission[item.id].isChecked = evt.target.checked
+		item.permissions.forEach(
+			(c) => {
+
+				c.isChecked = evt.target.checked;
+				let entity = this.permission.find(x => x.id == c.id);
+				entity.isChecked = evt.target.checked;
+			}
+		)
+
+
+	}
+
+	getModulesType() {
+		this.modulesType = [
+			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0' },
+			{ descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1' },
+			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2' },
+			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', },
+			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4' },
+			{ descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5' }
+		];
+	}
+	onChange(event) {
+
+		if (this.screensList != undefined) {
+
+			this.screens = this.screensList.filter(x => x.moduleType == Number(event));
+
+		}
+
+	}
 
 
 }

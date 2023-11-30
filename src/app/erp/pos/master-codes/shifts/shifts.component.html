@@ -46,6 +46,29 @@
 
 											</div>
 										</div>
+										<div class="col-md-6 col-12 mb-3">
+											<label for="account" class="label-name">
+												account
+
+											</label>
+											<div class=" d-flex">
+												<div class="flex-grow-1">
+													<ng-select [(ngModel)]="accountId" name="accountId">
+														<ng-option *ngFor="let account of accountList"
+															[value]="account.id">
+															<!-- Content goes here -->
+														</ng-option>
+													</ng-select>
+
+												</div>
+
+												<div class="">
+													<button class="btn btn-rounded btn-dark" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
+											</div>
+
+										</div>
 										<div class="col-md-6 col-12">
 											<div class="media">
 												<label class="label-name"> status

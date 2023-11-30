@@ -5,7 +5,7 @@ import { ShiftsComponent } from './shifts/shifts.component';
 
 const routes: Routes = [
 	{ path: 'pointOfSale', component: PointOfSaleComponent },
-	{ path: 'shifts', component: ShiftsComponent },
+	{ path: 'shifts', component: ShiftsComponent }
 
 ];
 
