@@ -1720,9 +1720,18 @@
   }
 }
 @media only screen and (max-width: 767.98px) {
+  .ant-btn {
+    height: 35px;
+  }
+  .ant-table.ant-table-rtl.ant-table-bordered {
+    overflow: scroll;
+  }
   .ant-table-cell {
     min-width: 116px !important;
     width: 10rem;
+  }
+  .ant-table-cell:nth-last-of-type(1), .ant-table-cell:nth-last-of-type(2), .ant-table-cell:nth-last-of-type(3) {
+    width: 4rem;
   }
   .k-button-md {
     padding: 4px 8px;

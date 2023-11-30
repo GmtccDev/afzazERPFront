@@ -15,7 +15,9 @@
 					<th> {{'general.code'|translate}}</th>
 					<th> {{'general.nameAr'|translate}}</th>
 					<th> {{'general.nameEn'|translate}}</th>
-					<th>{{'general.actions'|translate}}</th>
+					<th> {{'buttons.add'|translate}}</th>
+					<th> {{'buttons.edit'|translate}}</th>
+					<th> {{'buttons.delete'|translate}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,10 +39,15 @@
 									<!-- {{'toolbar.new'|translate}} -->
 									<i class="fa fa-file-o"></i>
 								</button>
+							</td>
+							<td>
+							<td>
 								<button nz-button (click)="onEdit(item.id)">
 									<!-- {{'buttons.edit'|translate}} -->
 									<i class="fa fa-edit"></i>
 								</button>
+							</td>
+							<td>
 								<button nz-button (click)="showConfirmDeleteMessage(item.id)">
 									<!-- {{'buttons.delete'|translate}} -->
 									<i class="fa fa-trash"></i>

@@ -1804,3 +1804,13 @@ p.ant-empty-description {
 }
 
 .customLink {}
+
+.ant-table-cell {
+    min-width: 116px !important;
+    width: 10rem;
+    &:nth-last-of-type(1),
+    &:nth-last-of-type(2),
+    &:nth-last-of-type(3) {
+        width: 4rem;
+    }
+}
