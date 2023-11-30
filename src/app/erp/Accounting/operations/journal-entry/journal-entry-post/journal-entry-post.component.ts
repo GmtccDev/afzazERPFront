@@ -57,15 +57,11 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		private sharedServices: SharedService,
 		private translate: TranslateService,
 		private spinner: NgxSpinnerService,
-		private datePipe: DatePipe,
 		private dateService: DateCalculation,
 		private generalConfigurationService: GeneralConfigurationServiceProxy,
 		private fiscalPeriodService: FiscalPeriodServiceProxy,
 		private companyService: CompanyServiceProxy,
 		private userService: UserService,
-
-
-
 	) {
 
 	}
@@ -89,9 +85,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	ngAfterViewInit(): void {
-
-
-
 
 	}
 
@@ -231,28 +224,19 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 			title: this.lang == 'ar' ? ' الكود' : 'code ',
 			field: 'code',
 		},
-		this.lang == 'ar'
-			? {
-				title: '  تاريخ  ', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
-					if (this.dateType == 2) {
-						return this.dateService.getHijriDate(new Date(cell.getValue()));
-					}
-					else {
-						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+		{
+			title: this.lang == 'ar' ? ' تاريخ' : 'date ',
+			field: 'date', formatter: (cell, formatterParams, onRendered) => {
 
-					}
+				if (this.dateType == 2) {
+					return this.dateService.getHijriDate(new Date(cell.getValue()));
 				}
-			} : {
-				title: 'Date', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
-					if (this.dateType == 2) {
-						return this.dateService.getHijriDate(new Date(cell.getValue()));
-					}
-					else {
-						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+				else {
+					return format(new Date(cell.getValue()), 'dd-MM-yyyy')
 
-					}
 				}
-			},
+			}
+		},
 		this.lang == 'ar'
 			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: 'Journal Name ', field: 'journalNameEn' },
 
@@ -267,16 +251,16 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 			},
 		this.lang == 'ar'
 			? {
-				title: '  النوع  ', width: 300, field: 'entryTypeAr',
-				//, formatter: this.translateParentArEnum,
+				title: '  النوع  ', width: 300, field: 'entryTypeAr'
+				, formatter: this.hyperLinkType
 
-				cellClick: (e, cell) => {
+				,cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			} : {
 				title: '   Type', width: 300, field: 'entryTypeEn'
-				//, formatter: this.translateParentEnEnum
+				, formatter: this.hyperLinkType
 				, cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
@@ -412,6 +396,11 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 			this.subsList.push(sub);
 		}
 
+	}
+	hyperLinkType(cell, formatterParams, onRendered) {
+		let text = cell.getValue();
+		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		return iconHtml;
 	}
 	translateArEnum(cell, formatterParams, onRendered) {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -16,7 +16,11 @@ export class SearchFormComponent implements OnInit {
 	@Input() colomnLables: string[] = [];
 	@Input() colomnNames: string[] = [];
 	@Output() OnSelect: EventEmitter<any> = new EventEmitter<any>();
+	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+		this.matDialogRef.close();
 
+	}
+	
 
 
 	constructor(private matDialogRef: MatDialogRef<SearchFormComponent>, private translate: TranslateService) { }
@@ -39,13 +43,6 @@ export class SearchFormComponent implements OnInit {
 		this.OnSelect.emit(this.dataList[value]);
 		this.matDialogRef.close();
 	}
-	escape()
-	{
-		debugger
-		this.matDialogRef.close();
-
-	}
-
 	Search() {
 		if (this.searchText) {
 			this.dataList = this.searchDataList.filter(a => {

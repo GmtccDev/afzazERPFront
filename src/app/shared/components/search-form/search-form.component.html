@@ -1,4 +1,4 @@
-<div class="align-items-baseline d-flex justify-content-between w-100" (keydown.esc)="escape()">
+<div class="align-items-baseline d-flex justify-content-between w-100">
 	<h2 mat-dialog-title>{{title}}</h2>
 	<button class="ml-auto close" nz-button nzType="danger" mat-dialog-close>
 		<span aria-hidden="true">&times;</span>
@@ -8,7 +8,7 @@
 <mat-dialog-content class="mat-typography" >
 	<div class="row">
 		<div class="col-md-12">
-			<input type="search" class="form-control" [(ngModel)]="searchText" (keyup)="Search()" (keydown.esc)="escape()"
+			<input type="search" class="form-control" [(ngModel)]="searchText" (keyup)="Search()" 
 				placeholder="{{'general.search'|translate}}" (keydown.Enter)="OnDataFirstSelect(0)">
 		</div>
 	</div>
