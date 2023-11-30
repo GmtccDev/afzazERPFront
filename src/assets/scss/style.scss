@@ -1634,7 +1634,8 @@ input.form-control.icon-branch {
 td>button.ant-btn {
     background: transparent;
     border: none;
-    color: #797979 !important;
+    color: #606060 !important;
+    font-size: 16px;
 }
 
 .mat-dialog-container {
@@ -1756,6 +1757,13 @@ html[dir=rtl] .table-tree {
         }
     }
     .item-children.level-3 {
+        .ant-table-cell-with-append.ant-table-cell nz-row-indent.ant-table-row-indent {
+            right: 43px;
+            width: 5%;
+            margin-left: 30px;
+        }
+    }
+    .item-children.level-4 {
         .ant-table-cell-with-append.ant-table-cell nz-row-indent.ant-table-row-indent {
             right: 43px;
             width: 5%;

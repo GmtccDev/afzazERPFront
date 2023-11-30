@@ -459,12 +459,10 @@ export class AddEditAccountComponent implements OnInit {
 
   //#region CRUD Operations
   getaccountById(id: any) {
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.accountService.getAccount(id).subscribe({
         next: (res: any) => {
           resolve();
-
           this.accountForm.setValue({
 
             id: res.response?.id,
@@ -491,16 +489,12 @@ export class AddEditAccountComponent implements OnInit {
 
           });
           this.isLeafAccount = res.response?.isLeafAccount;
-          console.log(
-            'this.accountForm.value set value',
-            this.accountForm.value
-          );
+        
         },
         error: (err: any) => {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
@@ -652,7 +646,7 @@ export class AddEditAccountComponent implements OnInit {
   confirmSave() {
     var entity = new AccountDto();
     entity = this.accountForm.getRawValue();
-    debugger
+          
     if (this.accountForm.value.isLeafAccount == true && this.accountForm.value.parentId == null) {
       this.notificationService.error("من فضلك ادخل الاب");
       this.spinner.hide();
@@ -810,7 +804,7 @@ export class AddEditAccountComponent implements OnInit {
     let sub = this.accountService.checkAccount(this.accountForm?.value?.parentId).subscribe({
 
       next: (result: any) => {
-debugger
+      
      
         if (result.response == false) {
         this.errorMessage=this.translate.instant('canChangeToParent');

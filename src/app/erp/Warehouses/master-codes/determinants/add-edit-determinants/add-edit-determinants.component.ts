@@ -309,7 +309,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 	onSave() {
 		debugger;
 	  if (this.determinantsForm.valid) {
-		if (this.determinantsMaster.determinantsDetails.length == 0) {
+		if (this.determinantsDetail.length == 0 &&  this.determinantsForm.controls["valueType"].value==1) {
 		  this.errorMessage = this.translate.instant("determinants.determinants-details-required");
 		  this.errorClass = 'errorMessage';
 		  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -354,7 +354,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
   
 	  if (this.determinantsForm.valid) {
 		debugger
-		if (this.determinantsDetail.length == 0) {
+		if (this.determinantsDetail.length == 0 && this.determinantsForm.controls["valueType"].value==1) {
 		  this.errorMessage = this.translate.instant("determinants.determinants-details-required");
 		  this.errorClass = 'errorMessage';
 		  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));

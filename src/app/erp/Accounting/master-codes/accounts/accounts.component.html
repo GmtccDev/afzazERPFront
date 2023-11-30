@@ -33,7 +33,12 @@
 					</th>
 
 					<th> {{'account.accountType'|translate}}</th>
-					<th>{{'general.actions'|translate}}</th>
+					<!-- <th>{{'general.actions'|translate}}</th> -->
+					<th> {{'buttons.add'|translate}}</th>
+					<th> {{'buttons.edit'|translate}}</th>
+					<th> {{'buttons.delete'|translate}}</th>
+
+
 				</tr>
 			</thead>
 			<tbody>
@@ -51,8 +56,6 @@
 								[(nzExpand)]="item.expanded"
 								(nzExpandChange)="collapse(mapOfExpandedData[data.treeId], item, $event)">
 								{{ item.code }}
-
-
 							</td>
 							<td>{{ item.nameAr }}</td>
 							<td>{{ item.nameEn }}</td>
@@ -67,22 +70,25 @@
 								<span *ngIf="item.accountType==1&&lang!=='ar'">Income Statement </span>
 								<span *ngIf="item.accountType==2&&lang!=='ar'">Budget</span>
 							</td>
-							<td class="d-flex gap-2">
+							<td>
 								<button nz-button (click)="addNode(item.id)">
 									<i class="fa fa-file-o"></i>
 									<!-- {{'toolbar.new'|translate}} -->
 								</button>
+							</td>
+							<td>
 								<button nz-button (click)="onEdit(item.id)">
 									<!-- {{'buttons.edit'|translate}} -->
 									<i class="fa fa-edit"></i>
 								</button>
+							</td>
+							<td>
 								<button nz-button (click)="showConfirmDeleteMessage(item.id)"
-								[disabled]="!!item.children">
+									[disabled]="!!item.children">
 									<!-- {{'buttons.delete'|translate}} -->
 									<i class="fa fa-trash"></i>
 								</button>
 							</td>
-
 						</tr>
 					</ng-container>
 				</ng-container>

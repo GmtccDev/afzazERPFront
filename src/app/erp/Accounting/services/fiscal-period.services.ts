@@ -83,6 +83,11 @@ export class FiscalPeriodServiceProxy {
 
         return this.http.get<any>(environment.apiUrl + "/api/FiscalPeriod/close", { params: params });
     }
+    openFiscalPeriod(fiscalPeriodId:any): Observable<any> {
+        let params = new HttpParams();
+        params = params.append('fiscalPeriodId', fiscalPeriodId);
+        return this.http.get<any>(environment.apiUrl + "/api/FiscalPeriod/open", { params: params });
+    }
     deleteEntity(entity: any): Observable<any> {
 
         return this.http.post<any>(environment.apiUrl + "/api/FiscalPeriod/deleteEntity?", entity);

@@ -107,7 +107,6 @@ export class AddEditRoleComponent implements OnInit {
 					//   this.router.navigate(['/dashboard/default']);
 					if (next.response != null) {
 						this.applicationsRoute = [...next.response?.applications?.split(",")]
-						console.log(this.applicationsRoute);
 						for (var i = 0; i < this.applications.length; i++) {
 
 							var find = this.applicationsRoute.includes(this.applications[i].value);
@@ -126,8 +125,6 @@ export class AddEditRoleComponent implements OnInit {
 			},
 			error => {
 
-				//this.showLoader = false;
-				console.log(error)
 
 			}
 		)
@@ -198,10 +195,7 @@ export class AddEditRoleComponent implements OnInit {
 						code: res.response?.code,
 						isActive: res.response?.isActive
 					});
-					console.log(
-						'this.roleForm.value set value',
-						this.roleForm.value
-					);
+
 
 					this.permission = res.response?.permissions?.items;
 					this.screens = res.response?.screens;
@@ -218,7 +212,6 @@ export class AddEditRoleComponent implements OnInit {
 					reject(err);
 				},
 				complete: () => {
-					//console.log('complete');
 				},
 			});
 			this.subsList.push(sub);
@@ -250,7 +243,6 @@ export class AddEditRoleComponent implements OnInit {
 					reject(err);
 				},
 				complete: () => {
-					//console.log('complete');
 				},
 			});
 			this.subsList.push(sub);
@@ -308,7 +300,6 @@ export class AddEditRoleComponent implements OnInit {
 			let sub = this.roleService.createRole(this.roleForm.value).subscribe({
 				next: (result: any) => {
 					this.spinner.show();
-					this.response = { ...result.response };
 					this.defineRoleForm();
 
 					this.submited = false;
@@ -320,7 +311,6 @@ export class AddEditRoleComponent implements OnInit {
 					reject(err);
 				},
 				complete: () => {
-					//console.log('complete');
 				},
 			});
 			this.subsList.push(sub);
@@ -348,7 +338,6 @@ export class AddEditRoleComponent implements OnInit {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
 				next: (result: any) => {
-					this.response = { ...result.response };
 					this.defineRoleForm();
 					this.submited = false;
 					this.spinner.hide();
@@ -358,7 +347,6 @@ export class AddEditRoleComponent implements OnInit {
 					reject(err);
 				},
 				complete: () => {
-					//console.log('complete');
 				},
 			});
 			this.subsList.push(sub);
@@ -391,18 +379,23 @@ export class AddEditRoleComponent implements OnInit {
 	masterSelected = false;
 	searchText: string;
 	checkUncheckAll(evt) {
+		// evt.isChecked = true;
+		if (this.screens != null) {
+			this.screens.forEach(
+				item => item.permissions.forEach(
+					(c) => {
 
-		this.screens.forEach(
-			item => item.permissions.forEach(
-				(c) => {
-
-					c.isChecked = evt.target.checked;
-					let entity = this.permission.find(x => x.id == c.id);
-					entity.isChecked = evt.target.checked;
-				}
+						c.isChecked = evt.target.checked;
+						let entity = this.permission.find(x => x.id == c.id);
+						entity.isChecked = evt.target.checked;
+					}
+				)
 			)
+			this.screens.forEach(item => {
+				item.isChecked = evt.target.checked
+			})
+		}
 
-		)
 		// this.permission.forEach((c) => c.isChecked = evt.target.checked)
 	}
 

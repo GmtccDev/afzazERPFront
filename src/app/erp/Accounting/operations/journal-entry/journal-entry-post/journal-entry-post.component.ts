@@ -20,6 +20,7 @@ import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.servic
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { UserService } from 'src/app/shared/common-services/user.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
 	selector: 'app-journal-entry-post',
 	templateUrl: './journal-entry-post.component.html',
@@ -122,25 +123,25 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	///Geting form dropdown list data
 	filteredData = [];
 	searchCode: any;
-	searchFromDate: any = undefined;
-	searchToDate: any = undefined;
+	searchFromDate!: DateModel;
+	searchToDate!: DateModel;
 	toggleButton: boolean = true;
 	// Function to filter the data based on code and date
 	filterData(code, fromDate, toDate) {
 
 		this.filteredData = this.journalEntry;
-		if (code != undefined) {
+		if (!stringIsNullOrEmpty(code)) {
 			this.filteredData = this.filteredData.filter(item =>
 				item.code === code
 			);
 		}
-		if (fromDate != undefined) {
+		if (!stringIsNullOrEmpty(fromDate)) {
 
 			this.filteredData = this.filteredData.filter(item =>
 
 				item.date >= (fromDate)
 			);
-			if (toDate != undefined) {
+			if (!stringIsNullOrEmpty(toDate)) {
 
 				this.filteredData = this.filteredData.filter(item =>
 
@@ -149,18 +150,20 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 			}
 		}
 	}
-	getDate(selectedDate: DateModel) {
+	getFromDate(selectedDate: DateModel) {
+		this.searchFromDate = selectedDate;
 
-		let checkDate = this.dateService.getDateForInsert(selectedDate)
-		const date = new Date(checkDate);
-		this.searchFromDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+		// let checkDate = this.dateService.getDateForInsert(selectedDate)
+		// const date = new Date(checkDate);
+		// this.searchFromDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
 
 	}
-	getDate2(selectedDate: DateModel) {
+	getToDate(selectedDate: DateModel) {
+		this.searchToDate = selectedDate;
 
-		let checkDate = this.dateService.getDateForInsert(selectedDate)
-		const date = new Date(checkDate);
-		this.searchToDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+		// let checkDate = this.dateService.getDateForInsert(selectedDate)
+		// const date = new Date(checkDate);
+		// this.searchToDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
 
 	}
 	getJournalEntryes() {
@@ -383,13 +386,9 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		this.subsList.push(sub);
 	}
 	onDelete() {
-
-
 		var ids = this.listIds.map(item => item.id);
 		let sub = this.journalEntryService.deleteListJournalEntry(ids).subscribe(
 			(resonse) => {
-
-				//reloadPage()
 				this.getJournalEntryes();
 				this.listIds = [];
 			});
@@ -402,8 +401,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		if (ids.length > 0) {
 			let sub = this.journalEntryService.updateList(ids).subscribe(
 				(resonse) => {
-
-					//reloadPage()
 					this.getJournalEntryes();
 					this.listUpdateIds = [];
 					this.listIds = []
@@ -502,10 +499,12 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		if (parentType == EntryTypesEnum.Voucher) {
 			window.open('accounting-operations/vouchers/update-voucher/' + settingId + '/' + id, "")
 		}
-		if (parentType == EntryTypesEnum.IncomingCheque) {
+		if (parentType == EntryTypesEnum.RegisterIncomingCheque || parentType == EntryTypesEnum.CollectIncomingCheque
+			|| parentType == EntryTypesEnum.RejectIncomingCheque
+		) {
 			window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
 		}
-		if (parentType == EntryTypesEnum.IssuingCheque) {
+		if (parentType == EntryTypesEnum.RegisterIssuingCheque || parentType == EntryTypesEnum.CollectIssuingCheque || parentType == EntryTypesEnum.RejectIssuingCheque) {
 			window.open('accounting-operations/issuingCheque/update-issuingCheque/' + id, "_blank")
 		}
 		if (parentType == EntryTypesEnum.SalesBill || parentType == EntryTypesEnum.SalesReturnBill
@@ -568,7 +567,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 
 			let sub = this.companyService.getCompany(id).subscribe({
 				next: (res: any) => {
-					debugger;
+					;
 
 					res?.response?.useHijri
 					if (res?.response?.useHijri) {

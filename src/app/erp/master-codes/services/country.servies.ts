@@ -38,7 +38,7 @@ export class CountryServiceProxy {
         return this.http.post<any>(environment.apiUrl + "/api/Country/deleteList?", country);
     }
     updateCountry(country: EditCountryCommand): Observable<CountryDto> {
-        return this.http.put<any>(environment.apiUrl + "/api/Country/edit?", country);
+        return this.http.post<any>(environment.apiUrl + "/api/Country/edit?", country);
     }
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Country/get-ddl?");

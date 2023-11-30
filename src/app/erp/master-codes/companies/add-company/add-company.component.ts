@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/common-services/shared-service';
 import { ToolbarPath } from '../../../../shared/interfaces/toolbar-path';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CODE_REQUIRED_VALIDATORS, NAME_REQUIRED_VALIDATORS } from '../../../../shared/constants/input-validators';
+import { CODE_REQUIRED_VALIDATORS, EMAIL_VALIDATORS, NAME_REQUIRED_VALIDATORS, PHONE_VALIDATORS } from '../../../../shared/constants/input-validators';
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
@@ -103,7 +103,7 @@ export class AddCompanyComponent implements OnInit {
 
         if (this.id) {
           this.getCompanyById(this.id).then(a => {
-
+            this.SharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
             this.spinner.hide();
 
           }).catch(err => {
@@ -154,14 +154,19 @@ export class AddCompanyComponent implements OnInit {
       nameEn: null,
       code: CODE_REQUIRED_VALIDATORS,
       isActive: true,
-      email: null,
-      phoneNumber: null,
+      email: EMAIL_VALIDATORS,
+      phoneNumber: PHONE_VALIDATORS,
       countryId: null,
       currencyId: null,
       motherCompany: false,
       useHijri: false,
       webSite: null,
-      address: null
+      address: null,
+      commercialRegistrationNo:null,
+      mailBox:null,
+      mobileNumber:PHONE_VALIDATORS,
+      taxNumber:null,
+      zipCode:null,
       // logo: null,
 
       // applications: ""
@@ -244,7 +249,12 @@ export class AddCompanyComponent implements OnInit {
             motherCompany: res.response?.motherCompany,
             useHijri: res.response?.useHijri,
             webSite: res.response?.webSite,
-            address: res.response?.address
+            address: res.response?.address,
+            commercialRegistrationNo:res.response?.commercialRegistrationNo,
+            mailBox:res.response?.mailBox,
+            mobileNumber:res.response?.mobileNumber,
+            taxNumber:res.response?.taxNumber,
+            zipCode:res.response?.zipCode,
             // logo: res.response?.logo,
 
 

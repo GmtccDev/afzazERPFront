@@ -6,7 +6,7 @@
     "editSuccessfully": "تم التعديل بنجاح",
     "deleteSuccessfully": "تم الحذف بنجاح",
     "SameCodeExistsBefore": "الكود معرف سابقا",
-    "emailNumberFoundBefore": "الميل معرف سابقا",
+    "emailNumberFoundBefore": "الأيميل معرف سابقا",
     "userNameFoundBefore": "الاسم معرف سابقا",
     "phoneNumberFoundBefore": "الموبايل معرف سابقا",
     "can't-delete-some-records": "لايمكن حذف بعض السجلات",
@@ -205,7 +205,9 @@
         "view": "عرض",
         "cancelDefaultReport": "الغاء التقرير الافتراضى",
         "post": "ترحيل",
-        "generate-entry": "توليد القيد"
+        "generate-entry": "توليد القيد",
+        "close": "اغلاق",
+        "open": "فتح"
     },
     "component-names": {
         "pointOfSale": "نقط البيع",
@@ -264,7 +266,7 @@
         "analytical-budget-report": "تقرير الميزانية التوزيعى",
         "income-statement-report": "تقرير قائمة الدخل",
         "vouchers-transactions-report": "تقرير حركة السندات",
-        "close-fiscal-period": "اغلاق الفترة المحاسبية",
+        "close-fiscal-period": "اغلاق / فتح الفترة المحاسبية",
         "incomingCheque": "الشيكات الواردة",
         "incomingCheque-information": "معلومات الشيك الوراد",
         "issuing-cheque": "الشيكات الصادرة",
@@ -400,7 +402,7 @@
         "leaf-account": "الحساب الفرعى",
         "type": "النوع",
         "level": "المستوى",
-        "setting": "نمط",
+        "setting": "النمط",
         "choose-template": "أختر النموذج",
         "template-name": "أسم النموذج",
         "report-options": "خيارات التقرير",
@@ -479,7 +481,22 @@
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
         "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
-        "unit-transaction-factor":"معامل تحويل الوحدة"
+        "unit-transaction-factor": "معامل تحويل الوحدة",
+        "company-name": "أسم الشركة",
+        "branch-name": "فرع",
+        "copy-right": "حق النشر",
+        "afzaz": "أفذاذ",
+        "commercial-registratio-no": "رقم السجل التجاري",
+        "zip-code": "الرمز البريدي",
+
+
+        "account-receivables-required": "من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required": "من فضلك أختر حساب أوراق الدفع من الاعدادات",
+        "debit-limit-exceed-account": "لقد تجاوز حد الائتمان المدين للحساب",
+        "credit-limit-exceed-account": "لقد تجاوز حد الائتمان الدائن للحساب"
+
+
+
 
     },
     "sales-person-commission": {
@@ -507,7 +524,9 @@
     "fiscal-period": {
         "fiscal-period-status": "الحالة",
         "add-fiscal-period": "اضافة الفترة المحاسبية",
-        "Intersection": "يوجد تداخل في التاريخ"
+        "Intersection": "يوجد تداخل في التاريخ",
+        "close-success": "تم الاغلاق بنجاح",
+        "open-success": "تم الفتح بنجاح"
     },
     "accounting-configration": {
         "multiCurrency": "عملات متعددة ",
@@ -616,7 +635,11 @@
         "totalDebitLocal": "اجمالي المدين محلي",
         "totalCreditLocal": "اجمالي الدائن محلي",
         "no-delete-entry": "لايمكن حذف هذا القيد (قيد حركات)",
-        "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة"
+        "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة",
+        "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة الفترة المحاسبية المغلقة",
+        "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
+        "no-update-entry-fiscal-period-closed": "لا يمكن تعديل هذا القيد لهذة الفترة المحاسبية المغلقة",
+        "entry-status": "حالة القيد"
 
 
     },
@@ -631,6 +654,8 @@
         "register": "تسجيل",
         "collect-cheque-done": "تم تحصيل الشيك بنجاح",
         "reject-cheque-done": "تم رفض الشيك بنجاح",
+        "cancel-collect-cheque-done": "تم الغاء تحصيل الشيك بنجاح",
+        "cancel-reject-cheque-done": "تم الغاء رفض الشيك بنجاح",
         "cannot-edit": "لا يمكنك تعديل الشيك",
         "registered": "تم التسجيل",
         "edit-registered": "تم تعديل التسجيل",
@@ -647,7 +672,19 @@
         "no-update-cheque-fiscal-period-closed": "لا يمكن تعديل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
         "no-delete-cheque-fiscal-period-closed": "لا يمكن حذف هذا الشيك لهذة الفترة المحاسبية المغلقة",
         "no-collect-cheque-fiscal-period-closed": "لا يمكن تحصيل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
-        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة"
+        "no-reject-cheque-fiscal-period-closed": "لا يمكن رفض هذا الشيك لهذة الفترة المحاسبية المغلقة",
+        "no-collect-cheque": "لا يمكنك تحصيل الشيك",
+        "no-reject-cheque": "لا يمكنك رفض الشيك",
+        "no-delete-cheque": "لا يمكنك حذف الشيك",
+        "no-cancel-collect-cheque-fiscal-period-closed": "لا يمكن الغاء تحصيل هذا الشيك لهذة الفترة المحاسبيةالمغلقة",
+        "no-cancel-reject-cheque-fiscal-period-closed": "لا يمكن الغاء رفض هذا الشيك لهذة الفترة المحاسبية المغلقة",
+        "no-cancel-reject-cheque": "لا يمكنك الغاء رفض الشيك",
+        "no-cancel-collect-cheque": "لا يمكنك الغاء تحصيل الشيك",
+        "confirm-cancel-collect": "هل أنت متأكد من الغاء تحصيل هذا الشيك؟",
+        "cancel-collect": "الغاء تحصيل",
+        "confirm-cancel-reject": "هل انت متأكد من الغاء رفض هذا الشيك ؟",
+        "cancel-reject": "الغاء رفض"
+
     },
     "account-groups": {
         "add-account-group": "اضافة مجموعة حساب"
@@ -675,7 +712,21 @@
         "tax-ratio": "نسبة الضريبة",
         "tax-details-required": "تفاصيل الضريبة مطلوب",
         "add-tax": "اضافة ضريبة",
-        "date-exist": "التاريخ مضاف من قبل"
+        "date-exist": "التاريخ مضاف من قبل",
+        "sub-tax-code": "الكود الضريبي",
+        "tax-reasonAr": " سبب الضريبة بالعربية",
+        "tax-reasonEn": " سبب الضريبة بالانجليزية",
+        "sub-tax-details": "تفاصيل الضرائب الفرعية",
+        "sub-code-tax-required": "كود الضريبة الفرعي مطلوب",
+        "sub-tax-ratio": "نسبة الضريبة ",
+        "sub-tax-reason": "سبب الضريبة ",
+        "sub-tax-nameAr": "الاسم العربي",
+        "sub-tax-nameEn": "الاسم الإنجليزي",
+        "add-ratio-details": "اضافة نسبة",
+        "add-reason-details": "اضافة سبب",
+        "sub-tax-ratio-detail": "تفاصيل نسبة الضريبة",
+        "sub-tax-reason-detail": "تفاصيل سبب الضريبة "
+
     },
     "item": {
         "item-group": "مجموعة الصنف",

@@ -44,7 +44,7 @@ export class LoginCompanyComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
     public router: Router, private userService: UserService, private translate: TranslateService) {
-    
+
     this.currentSystemLanguage = this.userService.getCurrentLanguage();
     this.translate.use(this.currentSystemLanguage);
     this.userService.setLanguage(this.currentSystemLanguage)
@@ -58,7 +58,7 @@ export class LoginCompanyComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     //   this.companiesList = this.companies;
     this.getCompanies();
     this.userService.removeToken();
@@ -80,10 +80,10 @@ export class LoginCompanyComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.authService.getDdl().subscribe({
         next: (res) => {
-          
+
           if (res.success) {
             this.companiesList = res.response;
-            console.log("companiesList",this.companiesList)
+            console.log("companiesList", this.companiesList)
 
           }
 
@@ -95,7 +95,7 @@ export class LoginCompanyComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-         
+
           //console.log('complete');
         },
       });
@@ -153,8 +153,8 @@ export class LoginCompanyComponent implements OnInit {
     let sub = this.authService.UserLoginCompany(this.loginForm.value).subscribe(
       next => {
 
-
-        console.log(next);
+   
+  debugger
 
         if (next.success == true) {
 
@@ -166,10 +166,37 @@ export class LoginCompanyComponent implements OnInit {
           this.userService.setToken(jwt.toString());
           let Role = decodedJwtData.role;
 
-          localStorage.setItem("userId", decodedJwtData.userLoginId)
-          this.userService.setUserName(decodedJwtData.fullName)
-          this.userService.setBranchId(this.loginForm.value.branchId)
-          this.userService.setCompanyId(this.loginForm.value.companyId)
+          localStorage.setItem("userId", decodedJwtData.userLoginId);
+          this.userService.setUserName(decodedJwtData.fullName);
+          this.userService.setBranchId(this.loginForm.value.branchId);
+          this.userService.setCompanyId(this.loginForm.value.companyId);
+          if (this.companiesList != null) {
+            this.companiesList.forEach(element => {
+              if (element.id == this.loginForm.value.companyId) {
+                var companyData = this.companiesList.find(x => x.id == this.loginForm.value.companyId);
+                if (companyData != null) {
+                  this.userService.setCompanyNameAr(companyData.nameAr);
+                  this.userService.setCompanyNameEn(companyData.nameEn);
+
+                }
+              }
+            });
+          }
+
+          if (this.branchesList != null) {
+            this.branchesList.forEach(element => {
+              if (element.id == this.loginForm.value.branchId) {
+                var branchData = this.branchesList.find(x => x.id == this.loginForm.value.branchId);
+                if (branchData != null) {
+                  this.userService.setBranchNameAr(branchData.nameAr);
+                  this.userService.setBranchNameEn(branchData.nameEn);
+
+                }
+              }
+            });
+          }
+
+
           // this.getGeneralConfigurationsOfAccountingPeriod()
           this.modelService.dismissAll();
           if (next.response.user.loginCount == null || next.response.user.loginCount == 0) {

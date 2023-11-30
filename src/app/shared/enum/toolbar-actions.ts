@@ -13,6 +13,10 @@ export enum ToolbarActions {
     CancelDefaultReport="CancelDefaultReport",
     View="View",
     Post="Post",
-    GenerateEntry="GenerateEntry"
+    GenerateEntry="GenerateEntry",
+    Close="Close",
+    Open="Open"
+
+
 
   }

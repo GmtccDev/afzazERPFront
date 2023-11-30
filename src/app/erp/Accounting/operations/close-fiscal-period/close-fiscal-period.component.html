@@ -15,30 +15,6 @@
                                     <h3>{{'component-names.close-fiscal-period'|translate}}</h3>
                                     <hr>
                                     <div class="align-items-center row">
-                                        <!-- <div class="col-md-6 col-12">
-											<label for="closeDate" class="label-name">
-												{{'general.date'|translate}}
-											</label>
-											<span class="text-danger">*</span>
-											<div class="form-group0 position-relative">
-
-												<app-full-date name="closeDate" formControlName="closeDate"
-													[(ngModel)]="closeDate" ngDefaultControl [selectedDate]="closeDate"
-													(OnDateSelect)="getCloseDate($event)"></app-full-date>
-
-
-												<div *ngIf="(f['closeDate'].touched || f['closeDate'].dirty ) && f['closeDate'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span
-														*ngIf="f['closeDate'].errors && f['closeDate'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
-														{{'error.required'|translate}}</span>
-												</div>
-
-											</div>
-										</div> -->
-
                                         <div class="col-md-4 col-12">
                                             <label for="fiscalPeriodId" class="label-name">{{'component-names.fiscalPeriod'|translate}}
 											</label>
@@ -56,11 +32,15 @@
                                                     <span *ngIf="f['fiscalPeriodId'].errors && f['fiscalPeriodId'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
                                                 </div>
-
-
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-12" *ngIf="showDates">
+                                        <div class="col-md-2 col-12" *ngIf="showDetails">
+                                            <label for="status" class="label-name">
+												{{'general.status'|translate}} :
+											</label>
+                                            <h6> {{status}} </h6>
+                                        </div>
+                                        <div class="col-md-2 col-12" *ngIf="showDetails">
                                             <label for="fromDate" class="label-name">
 												{{'general.fromDate'|translate}} :
 											</label>
@@ -68,12 +48,13 @@
                                             <h6> {{fromDate}} </h6>
 
                                         </div>
-                                        <div class="col-md-4 col-12" *ngIf="showDates">
+                                        <div class="col-md-2 col-12" *ngIf="showDetails">
                                             <label for="toDate" class="label-name">
 												{{'general.toDate'|translate}} :
 											</label>
                                             <h6> {{toDate}} </h6>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

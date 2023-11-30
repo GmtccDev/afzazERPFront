@@ -26,6 +26,7 @@ import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.servic
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 
 @Component({
   selector: 'app-add-edit-voucher',
@@ -128,6 +129,8 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private modalService: NgbModal,
+    private reportViewerService: ReportViewerService,
+
 
   ) {
     this.defineVoucherForm();
@@ -1369,14 +1372,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onViewReportClicked(id) {
-
-    let reportParams: string =
-      "reportParameter=id!" + id
-      + "&reportParameter=lang!" + this.lang
-    const modalRef = this.modalService.open(NgbdModalContent);
-    modalRef.componentInstance.reportParams = reportParams;
-    modalRef.componentInstance.reportType = 1;
-    modalRef.componentInstance.reportTypeID = 11;
+    localStorage.removeItem("itemId")
+    localStorage.setItem("itemId", id)
+    let reportType = 1;
+    let reportTypeId = 11;
+    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 
 }

@@ -3,11 +3,13 @@
 </ngx-spinner>
 <div class="card">
 	<div class="card-body">
-		<button nz-button nzType="primary" (click)="expandAllRows()">
-			{{ 'general.all' | translate }}
-		</button>
+		<div class="d-flex justify-content-between mb-3">
+			<button nz-button nzType="primary" (click)="expandAllRows()">
+				{{ 'general.all' | translate }}
+			</button>
+		</div>
 		<nz-table #expandTable [nzBordered]="true" [nzData]="listOfMapData" nzTableLayout="fixed"
-			class="table table-broder">
+			class="table table-broder table-tree">
 			<thead>
 				<tr>
 					<th> {{'general.code'|translate}}</th>
@@ -19,7 +21,9 @@
 			<tbody>
 				<ng-container *ngFor="let data of expandTable.data">
 					<ng-container *ngFor="let item of mapOfExpandedData[data.treeId]">
-						<tr *ngIf="(item.parent && item.parent.expanded) || !item.parent">
+						<tr *ngIf="(item.parent && item.parent.expanded) || !item.parent"
+							[class.item-children]="(item.parent && item.parent.expanded)"
+							[ngClass]="'level-' + item.levelId">
 							<td [nzIndentSize]="item.levelId! * 20"
 								[nzShowExpand]="!!item.children||(!!item.itemCards&&item.itemCards.length>0)"
 								[(nzExpand)]="item.expanded"
@@ -52,7 +56,7 @@
 								</button>
 							</td>
 						</tr>
-						
+
 					</ng-container>
 				</ng-container>
 			</tbody>

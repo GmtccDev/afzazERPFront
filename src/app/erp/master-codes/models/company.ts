@@ -10,7 +10,11 @@ export class CompanyDto {
     isActive: boolean | undefined;
     countryId: number | undefined;
     currencyId: number | undefined;
-
+    commercialRegistrationNo:any;
+    mailBox:any;
+    mobileNumber:any;
+    taxNumber:any;
+    zipCode:any;
     motherCompany: boolean | undefined;
     useHijri: boolean | undefined;
     logo: string | undefined;

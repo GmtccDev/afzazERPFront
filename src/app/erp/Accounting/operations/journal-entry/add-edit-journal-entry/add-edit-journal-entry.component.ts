@@ -14,7 +14,7 @@ import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
-import { AccountClassificationsEnum, EntryStatusArEnum, EntryStatusEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { EntryStatusArEnum, EntryStatusEnum, EntryTypesEnum, GeneralConfigurationEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { DateModel } from 'src/app/shared/model/date-model';
@@ -24,15 +24,13 @@ import { ModuleType } from '../../../models/general-configurations';
 import { JournalEntryDetail } from '../../../models/journal';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalContent } from 'src/app/shared/components/modal/modal-component';
-import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
-import { ReportFile } from 'src/app/shared/model/report-file';
-import { environment } from 'src/environments/environment';
-import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { DatePipe } from '@angular/common';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { SearchDialogService } from 'src/app/shared/services/search-dialog.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
+import { AccountServiceProxy } from '../../../services/account.services';
+import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -52,8 +50,17 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   currnetUrl;
   fromDate: any;
   toDate: any;
+  balance: number = 0;
   public show: boolean = false;
   journalEntry: [] = [];
+  status: string = '';
+  type: string = '';
+  setting: string = '';
+  parentType: number | undefined;
+  parentTypeId: number | undefined;
+  settingId: number | undefined;
+  costCenterName: any;
+
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
   listUrl: string = '/accounting-operations/journalEntry';
@@ -103,11 +110,15 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   showSearchCurrencyModal = false;
   showSearchCashAccountModal = false;
   listDetail: JournalEntryDetail[] = [];
+  tempListDetail: JournalEntryDetail[] = [];
+
   disableFlag: boolean = false;
   fiscalPeriodId: any;
   fiscalPeriodName: any;
   fiscalPeriodStatus: any;
   fiscalPeriodcheckDate: any;
+  showDetails: boolean = false;
+
   constructor(
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
     private router: Router,
@@ -120,13 +131,15 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     private publicService: PublicService,
     private reportViewerService: ReportViewerService,
     private dateService: DateCalculation,
-    private rptSrv: ReportServiceProxy,
     private alertsService: NotificationsAlertsService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private fiscalPeriodService: FiscalPeriodServiceProxy,
     private datePipe: DatePipe,
     private searchDialog: SearchDialogService,
     private modalService: NgbModal,
+    private accountService: AccountServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+
+
   ) {
     this.definejournalEntryForm();
 
@@ -144,7 +157,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       this.getCostCenter(),
       this.getCurrency(),
       this.getFiscalPeriod(),
-
       this.getAccount()
     ]).then(a => {
       this.getRouteData();
@@ -161,22 +173,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     }).catch(err => {
       this.spinner.hide();
     });
-
-
-
-
-
-
-
   }
   getRouteData() {
-
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
         if (this.id > 0) {
-
           this.getjournalEntryById(this.id).then(a => {
+            this.getJournalEntryAdditionalById(this.id);
             this.spinner.hide();
             this.sharedServices.changeButton({ action: 'Update', submitMode: false, disabledPrint: false } as ToolbarData);
 
@@ -302,19 +306,22 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           resolve();
 
           if (res.success) {
-            
+
             this.defaultCurrencyId = Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value)
             this.financialEntryCycle = Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.FinancialEntryCycle).value)
             if (!this.id) {
               this.journalEntryForm.controls.fiscalPeriodId.patchValue(Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value))
               this.journalEntryForm.controls.journalId.patchValue(Number(res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.DefaultJournal).value))
-            
+
             }
 
             this.isMultiCurrency = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
             this.serial = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            if (this.fiscalPeriodId != null) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
 
+            }
             if (this.currnetUrl == this.addUrl) {
               this.initGroup();
               this.onChangeJournal(this.journalEntryForm.controls.journalId.value);
@@ -458,17 +465,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   //#region CRUD operations
   postType: any;
   getjournalEntryById(id: any) {
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.journalEntryService.getJournalEntry(id).subscribe({
         next: (res: any) => {
           resolve();
-
           this.lang = localStorage.getItem("language")
-
           this.journalEntryForm = this.fb.group({
             id: res.response?.id,
-            date: formatDate(Date.parse(res.response.date)),
+            date: this.dateService.getDateForCalender(res.response.date),
             code: res.response?.code,
             isActive: res.response?.isActive,
             openBalance: res.response?.openBalance,
@@ -481,7 +485,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           });
 
           this.listDetail = res.response?.journalEntriesDetail;
-
+          this.tempListDetail = res.response?.journalEntriesDetail;
           this.journalEntriesDetailDTOList.clear();
           this.listDetail.forEach(element => {
 
@@ -520,7 +524,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.onChangeJournal(res.response?.journalId);
             this.onChangefiscalPeriod(res.response?.fiscalPeriodId);
             this.onChangeCode(null);
-            console.log(this.journalList)
             this.counter = element.jeDetailSerial;
           });
           this.totalCredit = 0;
@@ -661,6 +664,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.isSelectCurrency = false;
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
+
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
@@ -677,6 +681,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.sharedServices.changeToolbarPath(this.toolbarPathData);
   }
   confirmSave() {
+
     return new Promise<void>((resolve, reject) => {
       this.journalEntryForm.value.postType = this.financialEntryCycle == 3 ? 1 : 2;
       this.journalEntryForm.value.date = this.dateService.getDateForInsert(this.date)
@@ -704,14 +709,21 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
-    debugger
+
     this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
     if (this.fiscalPeriodId > 0) {
       this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
     }
 
     if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-      this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-open-fiscal-period");
+      if (this.fiscalPeriodStatus == null) {
+        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-choose-open-fiscal-period");
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+
+      }
       this.errorClass = 'errorMessage';
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
@@ -780,24 +792,114 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       return;
     }
 
-    //  var entity = new CreateJournalEntryCommand();
-    if (this.journalEntryForm.valid) {
-      this.spinner.show();
-      this.confirmSave().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
-      });
+    var journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
 
-    } else {
+    var i = 0;
+    if (journalEntriesDetail != null) {
 
-      return this.journalEntryForm.markAllAsTouched();
+      this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
+
+        if (element.accountId != null) {
+          var value = 0;
+          if (element.jEDetailDebitLocal > 0) {
+            value = element.jEDetailDebitLocal;
+          }
+          if (element.jEDetailCreditLocal > 0) {
+            value = element.jEDetailCreditLocal;
+
+          }
+
+          this.getAccountBalance(element.accountId).then(a => {
+            var account = this.accountList.find(x => x.id == element.accountId);
+
+            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+                              
+            if (Number(this.balance) > 0 && account.debitLimit >0) {
+
+              if (Number(this.balance) + value > account.debitLimit) {
+                                
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+            }
+
+
+            else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+              if (-(this.balance) + value > account.creditLimit) {
+                                 
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+
+            }
+
+
+          });
+
+
+        }
+
+
+      })
+
+      setTimeout(() => {
+        if (i == 0) {
+          var count = journalEntriesDetail.length;
+          var index = count - 1;
+          if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+            journalEntriesDetail.removeAt(index);
+          }
+          if (this.journalEntryForm.valid) {
+            this.spinner.show();
+            this.confirmSave().then(a => {
+              this.spinner.hide();
+            }).catch(e => {
+              this.spinner.hide();
+            });
+
+          } else {
+
+            return this.journalEntryForm.markAllAsTouched();
+          }
+        }
+      }, 1000);
+
+
+
     }
+  }
+
+  getAccountBalance(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.getAccountBalance(id).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          this.balance = res.response.data.result[0].balance;
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
 
   isSelectCurrency: boolean = false;
   onChangeGetDefaultCurrency(event, index) {
-    ;
     if (!this.isSelectCurrency) {
       let currencyId;
       var accountData = this.accountList.find(x => x.id == event.target.value) as AccountDto;
@@ -882,110 +984,237 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   }
   onUpdate() {
 
-    if (this.journalEntryForm.touched || this.journalEntriesDetailDTOList.touched) {
+    // if (this.journalEntryForm.touched || this.journalEntriesDetailDTOList.touched) {
 
-      this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
-      if (this.fiscalPeriodId > 0) {
-        this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
+    this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
+    if (this.fiscalPeriodId > 0) {
+      this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
+    }
+
+    // let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+    // var count = journalEntriesDetail.length;
+    // var index = count - 1;
+    // if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+    //   journalEntriesDetail.removeAt(index);
+    // }
+    if (this.journalEntryForm.valid) {
+      if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+        this.errorMessage = this.translate.instant("journalEntry.no-update-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
       }
-      if (this.journalEntryForm.valid) {
-        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-          this.errorMessage = this.translate.instant("general.no-edit-fiscal-period-choose-open-fiscal-period") + " : " + this.fiscalPeriodName;
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          return;
-        }
-        let entryDate = this.journalEntryForm.controls["date"].value;
-    let _date;
-    let month;
-    let day;
-    if (entryDate?.month + 1 > 9) {
-      month = entryDate?.month + 1
-    }
-    else {
-      month = '0' + entryDate.month + 1
-    }
-    if (entryDate.day < 10) {
-      day = '0' + entryDate?.day
-    }
-    else {
-      day = entryDate.day
-    }
-    _date = entryDate.year + '-' + month + '-' + day
-
-    if (_date >= this.fromDate && _date <= this.toDate) {
-
-
-    }
-    else {
-      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-
-    }
-        // let checkDate = this.dateService.getDateForInsert(this.date)
-        // const date = new Date(checkDate);
-        // const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
-        // this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
-
-        // if (this.fiscalPeriodcheckDate == undefined) {
-        //   this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
-        //   this.errorClass = 'errorMessage';
-        //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        //   return;
-        // }
+      let entryDate = this.journalEntryForm.controls["date"].value;
+      let _date;
+      let month;
+      let day;
+      if (entryDate?.month + 1 > 9) {
+        month = entryDate?.month + 1
       }
-      // if (this.counter < 2) {
-      //   this.alertsService.showError(
-      //     this.translate.instant('twoRows'),
-      //     ""
+      else {
+        month = '0' + entryDate.month + 1
+      }
+      if (entryDate.day < 10) {
+        day = '0' + entryDate?.day
+      }
+      else {
+        day = entryDate.day
+      }
+      _date = entryDate.year + '-' + month + '-' + day
 
-      //   )
+      if (_date >= this.fromDate && _date <= this.toDate) {
+
+
+      }
+      else {
+        this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+
+      }
+      // let checkDate = this.dateService.getDateForInsert(this.date)
+      // const date = new Date(checkDate);
+      // const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+      // this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+
+      // if (this.fiscalPeriodcheckDate == undefined) {
+      //   this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
+      //   this.errorClass = 'errorMessage';
+      //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       //   return;
       // }
-      if ((this.totalCredit == 0 || this.totalDebit == 0)) {
-        this.alertsService.showError(
-          this.translate.instant('debitCreditValues'),
-          ""
-        )
-        return;
-      }
-      if ((this.totalCredit !== this.totalDebit)) {
-        this.alertsService.showError(
-          this.translate.instant('totalValues'),
-          ""
-        )
-        return;
-      }
-      return new Promise<void>((resolve, reject) => {
-
-        var entity = this.journalEntryForm.value;
-        entity.branchId = this.branchId;
-        entity.companyId = this.companyId;
-        entity.date = this.dateService.getDateForInsert(this.date)
-        let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
-          next: (result: any) => {
-            this.spinner.show();
-            this.submited = false;
-            this.spinner.hide();
-            navigateUrl(this.listUrl, this.router);
-          },
-          error: (err: any) => {
-            reject(err);
-          },
-          complete: () => {
-
-          },
-        });
-        this.subsList.push(sub);
-
-      });
     }
-    this.spinner.hide();
+    // if (this.counter < 2) {
+    //   this.alertsService.showError(
+    //     this.translate.instant('twoRows'),
+    //     ""
+
+    //   )
+    //   return;
+    // }
+    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+      this.alertsService.showError(
+        this.translate.instant('debitCreditValues'),
+        ""
+      )
+      return;
+    }
+    if ((this.totalCredit !== this.totalDebit)) {
+      this.alertsService.showError(
+        this.translate.instant('totalValues'),
+        ""
+      )
+      return;
+    }
+
+    let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
+
+    ///////here
+                     
+    var i = 0;
+    if (journalEntriesDetail != null) {
+
+      this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
+                         
+        var oldElement = this.tempListDetail.find(x => x.accountId == element.accountId);
+                         
+        if (element.accountId != null) {
+          var value = 0;
+          if (element.jEDetailDebitLocal > 0) {
+            value = element.jEDetailDebitLocal;
+          }
+          if (element.jEDetailCreditLocal > 0) {
+            value = element.jEDetailCreditLocal;
+
+          }
+
+          this.getAccountBalance(element.accountId).then(a => {
+            var account = this.accountList.find(x => x.id == element.accountId);
+
+            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+            if (Number(this.balance) > 0) {
+                                
+              if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit && account.debitLimit>0) {
+                                 
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+            }
+            else if (Number(this.balance) < 0) {
+                               
+              if (-(this.balance) + value - oldElement.jeDetailCreditLocal > account.creditLimit && account.creditLimit > 0) {
+                                 
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+
+            }
+
+
+          });
+
+
+        }
+
+
+      })
+    }
+
+    ////////
+    setTimeout(() => {
+      if (i == 0) {
+        var count = journalEntriesDetail.length;
+        var index = count - 1;
+        if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+          journalEntriesDetail.removeAt(index);
+        }
+        return new Promise<void>((resolve, reject) => {
+
+          var entity = this.journalEntryForm.value;
+          entity.branchId = this.branchId;
+          entity.companyId = this.companyId;
+          entity.date = this.dateService.getDateForInsert(this.date)
+          let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
+            next: (result: any) => {
+              this.spinner.show();
+              this.submited = false;
+              this.spinner.hide();
+              navigateUrl(this.listUrl, this.router);
+            },
+            error: (err: any) => {
+              reject(err);
+            },
+            complete: () => {
+
+            },
+          });
+          this.subsList.push(sub);
+
+        });
+      }
+    }, 1000);
+
+    //}
+    //this.spinner.hide();
   }
 
+  getJournalEntryAdditionalById(id: number) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.journalEntryService.getJournalEntryAdditionalById(id).subscribe({
+        next: (res) => {
+          resolve();
+          if (res.success) {
+            this.showDetails = true;
+            this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
+            this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
+            this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
+            this.parentType = res.response.data.result[0].parentType;
+            this.parentTypeId = res.response.data.result[0].parentTypeId;
+            this.settingId = res.response.data.result[0].settingId;
 
+
+          }
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  onViewClicked() {
+    if (this.parentType == EntryTypesEnum.Voucher) {
+      window.open('accounting-operations/vouchers/update-voucher/' + this.settingId + '/' + this.parentTypeId, "")
+    }
+    if (this.parentType == EntryTypesEnum.RegisterIncomingCheque || this.parentType == EntryTypesEnum.CollectIncomingCheque
+      || this.parentType == EntryTypesEnum.RejectIncomingCheque
+    ) {
+      window.open('accounting-operations/incomingCheque/update-incomingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.RegisterIssuingCheque || this.parentType == EntryTypesEnum.CollectIssuingCheque
+      || this.parentType == EntryTypesEnum.RejectIssuingCheque) {
+      window.open('accounting-operations/issuingCheque/update-issuingCheque/' + this.parentTypeId, "_blank")
+    }
+    if (this.parentType == EntryTypesEnum.SalesBill || this.parentType == EntryTypesEnum.SalesReturnBill
+      || this.parentType == EntryTypesEnum.PurchasesBill || this.parentType == EntryTypesEnum.PurchasesReturnBill) {
+      window.open('warehouses-operations/bill/update-bill/' + this.settingId + '/' + this.parentTypeId, "_blank")
+    }
+  }
 
   getJournals() {
     return new Promise<void>((resolve, reject) => {
@@ -1002,7 +1231,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             //   else {
             //     element.nameAr = element.nameEn;
             //   }
-           // })
+            // })
           }
 
 
@@ -1115,6 +1344,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             //   // }
             // })
             this.checkPeriod = res.response.fiscalPeriodStatus;
+            this.fiscalPeriodName = this.lang == 'ar' ? res.response.nameAr : res.resonse.nameEn;
+
           }
 
 
@@ -1289,13 +1520,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
   }
 
-  openSearchCurrency(i) {
+  openSearchCurrency(i, currencyName: any) {
     this.index = i;
+    let searchTxt = currencyName;
     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
     let names = ['code', 'nameAr', 'nameEn'];
     let title = 'بحث عن العملة';
     let sub = this.searchDialog
-      .showDialog(lables, names, this.currencyList, title, '')
+      .showDialog(lables, names, this.currencyList, title, searchTxt)
       .subscribe((d) => {
         if (d) {
           this.onSelectCurrencyPopup(d);
@@ -1303,13 +1535,15 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       });
     this.subsList.push(sub);
   }
-  openSearchCostCenter(i) {
+  openSearchCostCenter(i, costCenterName: any) {
     this.index = i;
+    let searchTxt = '';
+    searchTxt = costCenterName ?? '';
     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
     let names = ['code', 'nameAr', 'nameEn'];
     let title = 'بحث عن مركز التكلفة';
     let sub = this.searchDialog
-      .showDialog(lables, names, this.costCenterList, title, '')
+      .showDialog(lables, names, this.costCenterList, title, searchTxt)
       .subscribe((d) => {
         if (d) {
           this.onSelectCostCenter(d);
@@ -1317,19 +1551,42 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       });
     this.subsList.push(sub);
   }
-  openSearchAccount(i) {
+  changeSearchAccountName() {
+
+  }
+  openSearchAccount(i, accountName: any) {
     this.index = i;
+    let searchTxt = accountName;
     let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
     let names = ['code', 'nameAr', 'nameEn'];
     let title = 'بحث عن  الحساب';
     let sub = this.searchDialog
-      .showDialog(lables, names, this.accountList, title, '')
+      .showDialog(lables, names, this.accountList, title, searchTxt)
       .subscribe((d) => {
         if (d) {
           this.onSelectCashAccount(d);
         }
       });
     this.subsList.push(sub);
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
 }
 

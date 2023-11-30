@@ -160,7 +160,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
       let sub = this.accountClassificationService.getAccountClassification(id).subscribe({
         next: (res: any) => {
           resolve();
-
           this.accountClassificationForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -176,7 +175,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
           reject(err);
         },
         complete: () => {
-          //console.log('complete');
         },
       });
       this.subsList.push(sub);
