@@ -2730,6 +2730,14 @@
 }
 
 @media only screen and (max-width: 767.98px) {
+    .ant-table-cell {
+        min-width: 116px !important;
+        width: 10rem;
+    }
+    .k-button-md {
+        padding: 4px 8px;
+        font-size: 13px;
+    }
     .left-header.col.horizontal-wrapper.ps-0 {
         display: none !important;
     }
