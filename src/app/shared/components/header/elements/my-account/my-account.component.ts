@@ -11,7 +11,7 @@ import { ModalComponent } from 'src/app/shared/modal/modal.component';
 	styleUrls: ['./my-account.component.scss']
 })
 export class MyAccountComponent implements OnInit {
-
+	isMenuOpen: boolean = false;
 	public userName: string;
 	public profileImg: 'assets/images/dashboard/profile.png';
 
@@ -26,7 +26,9 @@ export class MyAccountComponent implements OnInit {
 
 	}
 
-
+	toggleMenu() {
+		this.isMenuOpen = !this.isMenuOpen;
+	}
 	logoutFunc() {
 		//localStorage.clear();
 		this.router.navigate(['/auth/login']);

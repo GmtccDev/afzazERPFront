@@ -17,9 +17,9 @@
     "code": "كود التاكيد",
     "newPasswordM": "يجب أن تكون كلمة مرورك الجديدة مختلفة عن كلمات مرورك السابقة",
     "newPassword": "كلمة المرور الجديدة",
-    "canChangeToParent":"لا يمكن تغيير الحساب الفرعي الاب الي حساب رئيسي",
- 
-     "dateGreater":" تاريخ الانتهاء اقل من تاريخ البداية",
+    "canChangeToParent": "لا يمكن تغيير الحساب الفرعي الاب الي حساب رئيسي",
+
+    "dateGreater": " تاريخ الانتهاء اقل من تاريخ البداية",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"
@@ -173,7 +173,7 @@
         "faild-login": "بيانات اعتماد تسجيل الدخول غير صحيحة",
         "connection-error": "خطأ في الخادم !",
         "nameEn-not-Found": "لا يوجد اسم لاتيني  ",
-        "account-level-limit":"لا يمكن اختيار مستوى أقل من "
+        "account-level-limit": "لا يمكن اختيار مستوى أقل من "
     },
     "user-manager": {
         "add-user": "إضافة مستخدم",
@@ -206,10 +206,12 @@
         "cancelDefaultReport": "الغاء التقرير الافتراضى",
         "post": "ترحيل",
         "generate-entry": "توليد القيد",
-        "close":"اغلاق",
-        "open":"فتح"
+        "close": "اغلاق",
+        "open": "فتح"
     },
     "component-names": {
+        "pointOfSale": "نقط البيع",
+        "shifts": "الورديات",
         "determinants": "المحددات",
         "country-information": "معلومات الدولة",
         "modulesType": "حدد البرنامج",
@@ -479,19 +481,19 @@
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
         "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
-        "unit-transaction-factor":"معامل تحويل الوحدة",
-        "company-name":"أسم الشركة",
-        "branch-name":"أسم الفرع",
-        "copy-right":"حق النشر",
-        "afzaz":"أفذاذ",
-        "commercial-registratio-no":"رقم السجل التجاري",
-        "zip-code":"الرمز البريدي",
-    
-        
-        "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
-        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات",
-        "debit-limit-exceed-account":"لقد تجاوز حد الائتمان المدين للحساب",
-        "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب"
+        "unit-transaction-factor": "معامل تحويل الوحدة",
+        "company-name": "أسم الشركة",
+        "branch-name": "فرع",
+        "copy-right": "حق النشر",
+        "afzaz": "أفذاذ",
+        "commercial-registratio-no": "رقم السجل التجاري",
+        "zip-code": "الرمز البريدي",
+
+
+        "account-receivables-required": "من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required": "من فضلك أختر حساب أوراق الدفع من الاعدادات",
+        "debit-limit-exceed-account": "لقد تجاوز حد الائتمان المدين للحساب",
+        "credit-limit-exceed-account": "لقد تجاوز حد الائتمان الدائن للحساب"
 
 
 
@@ -523,8 +525,8 @@
         "fiscal-period-status": "الحالة",
         "add-fiscal-period": "اضافة الفترة المحاسبية",
         "Intersection": "يوجد تداخل في التاريخ",
-        "close-success":"تم الاغلاق بنجاح",
-        "open-success":"تم الفتح بنجاح"
+        "close-success": "تم الاغلاق بنجاح",
+        "open-success": "تم الفتح بنجاح"
     },
     "accounting-configration": {
         "multiCurrency": "عملات متعددة ",
@@ -598,7 +600,7 @@
     "message-title": {
         "done": "نجاح",
         "wrong": "خطأ",
-        "warning":"تنوية"
+        "warning": "تنوية"
 
     },
     "voucher": {
@@ -632,12 +634,12 @@
         "totalCredit": "اجمالي الدائن",
         "totalDebitLocal": "اجمالي المدين محلي",
         "totalCreditLocal": "اجمالي الدائن محلي",
-        "no-delete-entry":"لايمكن حذف هذا القيد (قيد حركات)",
+        "no-delete-entry": "لايمكن حذف هذا القيد (قيد حركات)",
         "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة الفترة المغلقة",
         "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة الفترة المحاسبية المغلقة",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
         "no-update-entry-fiscal-period-closed": "لا يمكن تعديل هذا القيد لهذة الفترة المحاسبية المغلقة",
-        "entry-status":"حالة القيد"
+        "entry-status": "حالة القيد"
 
 
     },
@@ -711,20 +713,20 @@
         "tax-details-required": "تفاصيل الضريبة مطلوب",
         "add-tax": "اضافة ضريبة",
         "date-exist": "التاريخ مضاف من قبل",
-        "sub-tax-code":"الكود الضريبي",
-        "tax-reasonAr":" سبب الضريبة بالعربية",
-        "tax-reasonEn":" سبب الضريبة بالانجليزية",
-        "sub-tax-details":"تفاصيل الضرائب الفرعية",
-        "sub-code-tax-required":"كود الضريبة الفرعي مطلوب",
-        "sub-tax-ratio":"نسبة الضريبة ",
-        "sub-tax-reason":"سبب الضريبة ",
-        "sub-tax-nameAr":"الاسم العربي",
-        "sub-tax-nameEn":"الاسم الإنجليزي",
-        "add-ratio-details":"اضافة نسبة",
-        "add-reason-details":"اضافة سبب",
-        "sub-tax-ratio-detail":"تفاصيل نسبة الضريبة",
-        "sub-tax-reason-detail":"تفاصيل سبب الضريبة "
-        
+        "sub-tax-code": "الكود الضريبي",
+        "tax-reasonAr": " سبب الضريبة بالعربية",
+        "tax-reasonEn": " سبب الضريبة بالانجليزية",
+        "sub-tax-details": "تفاصيل الضرائب الفرعية",
+        "sub-code-tax-required": "كود الضريبة الفرعي مطلوب",
+        "sub-tax-ratio": "نسبة الضريبة ",
+        "sub-tax-reason": "سبب الضريبة ",
+        "sub-tax-nameAr": "الاسم العربي",
+        "sub-tax-nameEn": "الاسم الإنجليزي",
+        "add-ratio-details": "اضافة نسبة",
+        "add-reason-details": "اضافة سبب",
+        "sub-tax-ratio-detail": "تفاصيل نسبة الضريبة",
+        "sub-tax-reason-detail": "تفاصيل سبب الضريبة "
+
     },
     "item": {
         "item-group": "مجموعة الصنف",

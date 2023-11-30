@@ -18,8 +18,8 @@
 
     "newPasswordM": "Your new password must be at least 8 Letters, Numbers or Symbols",
     "newPassword": "Add New password",
-    "canChangeToParent":"The sub account parent cannot be changed to a main account",
-    "dateGreater":"To date is small than from date", 
+    "canChangeToParent": "The sub account parent cannot be changed to a main account",
+    "dateGreater": "To date is small than from date",
     "general": {
         "searchFromDate": "From Date",
         "searchToDate": "To Date",
@@ -237,17 +237,17 @@
         "tax-account": "Tax Account",
         "close-account-required": "Please choose close account from the settings",
         "date-out-fiscal-period": "The date is out fiscal period date",
-        "unit-transaction-factor":"Unit Transaction Factor",
-        "company-name":"Company Name",
-        "branch-name":"Branch Name",
-        "copy-right":"Copy Right",
-        "afzaz":"Afzaz",
-        "commercial-registratio-no":"Commercial Registratio No",
-        "zip-code":"Zip Code",
-        "account-receivables-required":"Please choose receivables account from the settings",
-        "account-exchange-required":"Please choose Exchange account from the settings",
-        "debit-limit-exceed-account":"The debit limit has been exceeded for account",
-        "credit-limit-exceed-account":"The Credit limit has been exceeded for account"
+        "unit-transaction-factor": "Unit Transaction Factor",
+        "company-name": "Company Name",
+        "branch-name": "Branch",
+        "copy-right": "Copy Right",
+        "afzaz": "Afzaz",
+        "commercial-registratio-no": "Commercial Registratio No",
+        "zip-code": "Zip Code",
+        "account-receivables-required": "Please choose receivables account from the settings",
+        "account-exchange-required": "Please choose Exchange account from the settings",
+        "debit-limit-exceed-account": "The debit limit has been exceeded for account",
+        "credit-limit-exceed-account": "The Credit limit has been exceeded for account"
 
     },
     "sales-person-commission": {
@@ -391,7 +391,7 @@
         "faild-login": "Login credentials are not correct !",
         "connection-error": "Connection error !",
         "nameEn-not-Found": "Latin name not entered ",
-        "account-level-limit":"You can't choose account level less than"
+        "account-level-limit": "You can't choose account level less than"
     },
     "user-manager": {
         "add-user": "Add User",
@@ -424,10 +424,12 @@
         "cancelDefaultReport": "Cancel Default Report",
         "post": "Post",
         "generate-entry": "Generate Entry",
-        "close":"Close",
-        "open":"Open"
+        "close": "Close",
+        "open": "Open"
     },
     "component-names": {
+        "pointOfSale": "Point of sale",
+        "shifts": "Shifts",
         "determinants": "Determinants",
         "country-information": "Country information",
         "modulesType": "Modules Type",
@@ -581,8 +583,8 @@
         "fiscal-period-status": "status",
         "add-fiscal-period": "Add Fiscal Period",
         "Intersection": "There is an overlap in date",
-        "close-success":"Closed successfully",
-        "open-success":"opened successfully"
+        "close-success": "Closed successfully",
+        "open-success": "opened successfully"
 
     },
     "voucher-type": {
@@ -603,7 +605,7 @@
     "message-title": {
         "done": "Done",
         "wrong": "Wrong",
-        "warning":"Warning"
+        "warning": "Warning"
     },
     "voucher": {
         "voucher-information": "Voucher Information",
@@ -636,12 +638,12 @@
         "totalCredit": "Total Credit",
         "totalDebitLocal": "Total Debit Local",
         "totalCreditLocal": "Total Credit Local",
-        "no-delete-entry":"You can not delete this entry (Transaction entry)",
+        "no-delete-entry": "You can not delete this entry (Transaction entry)",
         "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal period",
         "no-add-entry-fiscal-period-closed": "You can not add an entry to this closed fiscal period",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "You can not add an entry.You Should choose a open fiscal period from the settings",
         "no-update-entry-fiscal-period-closed": "You can not update the entry to this closed fiscal period",
-        "entry-status":"Entry Status"
+        "entry-status": "Entry Status"
 
 
     },
@@ -715,19 +717,19 @@
         "tax-details-required": "Tax details is required",
         "add-tax": "Add Tax",
         "date-exist": "This date is added before",
-        "sub-tax-code":"Sub Tax Code",
-        "tax-reasonAr":"Tax Reason For In Arabic ",
-        "tax-reasonEn":"Tax Reason For In Engilsh",
-        "sub-tax-details":"Sub Tax Details",
-        "sub-code-tax-required":"Sub code tax is required",
-        "sub-tax-ratio-details":"Sub Tax Ratio Details",
-        "sub-tax-reason-details":"Sub Tax Reason Details",
-        "sub-tax-nameAr":"Name in Arabic",
-        "sub-tax-nameEn":"Name in English",
-        "add-ratio-details":"Add Ratio",
-        "add-reason-details":"Add Reason",
-        "sub-tax-ratio-detail":"Sub Tax Ratio Detail",
-        "sub-tax-reason-detail":"Sub Tax Reason Detail "
+        "sub-tax-code": "Sub Tax Code",
+        "tax-reasonAr": "Tax Reason For In Arabic ",
+        "tax-reasonEn": "Tax Reason For In Engilsh",
+        "sub-tax-details": "Sub Tax Details",
+        "sub-code-tax-required": "Sub code tax is required",
+        "sub-tax-ratio-details": "Sub Tax Ratio Details",
+        "sub-tax-reason-details": "Sub Tax Reason Details",
+        "sub-tax-nameAr": "Name in Arabic",
+        "sub-tax-nameEn": "Name in English",
+        "add-ratio-details": "Add Ratio",
+        "add-reason-details": "Add Reason",
+        "sub-tax-ratio-detail": "Sub Tax Ratio Detail",
+        "sub-tax-reason-detail": "Sub Tax Reason Detail "
     },
     "item": {
         "item-group": "Item Group",

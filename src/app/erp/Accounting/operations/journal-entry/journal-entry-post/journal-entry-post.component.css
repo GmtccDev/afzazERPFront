@@ -1,52 +1,49 @@
 td {
-    text-align: start;
+  text-align: start;
 }
 
 th {
-    text-align: center;
+  text-align: center;
 }
 
 .search-bar {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .input-field {
-    margin-right: 10px;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .search-button {
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 .table td:nth-of-type(1) {
-    min-width: 200px;
-    width: -moz-max-content;
-    width: max-content;
+  min-width: 200px;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 th.ant-table-cell:nth-of-type(4),
 td.ant-table-cell:nth-of-type(4),
 th.ant-table-cell:nth-of-type(5),
 td.ant-table-cell:nth-of-type(5) {
-    width: 75px;
-    min-width: 50px;
-    max-width: -moz-max-content;
-    max-width: max-content;
+  width: 75px;
+  min-width: 50px;
+  max-width: -moz-max-content;
+  max-width: max-content;
 }
 
 button.ant-btn.b-r-0.w-100.ant-btn-primary.ant-btn-rtl {
-    border-radius: 2px !important;
-    min-height: 35px;
-}
-
-
-/*# sourceMappingURL=journal-entry-post.component.css.map */
+  border-radius: 2px !important;
+  min-height: 35px;
+}/*# sourceMappingURL=journal-entry-post.component.css.map */
