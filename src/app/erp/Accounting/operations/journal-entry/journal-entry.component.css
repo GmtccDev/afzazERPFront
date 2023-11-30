@@ -1,1 +1,9 @@
-/*# sourceMappingURL=journal-entry.component.css.map */
+.icon-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.icon-link:hover {
+  text-decoration: none;
+}/*# sourceMappingURL=journal-entry.component.css.map */

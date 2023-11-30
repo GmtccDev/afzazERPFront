@@ -1,24 +1,32 @@
 <!-- footer start-->
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6 footer-copyright text-center">
-            <p  class="mb-0">{{'general.copy-right'|translate}} {{ today | date:'y'}} ©
-                <a href="#">{{'general.afzaz'|translate}}</a>
-            </p>
+	<div class="row">
+		<div class="align-items-center d-flex justify-content-between">
+			<div class=" footer-copyright ">
+				<p class="mb-0">{{'general.copy-right'|translate}} {{ today | date:'y'}} ©
+					<a href="#">{{'general.afzaz'|translate}}</a>
+				</p>
 
-        </div>
-        <div class="col-md-3 footer-copyright text-center">
-            <p>
-                <label>{{'general.company-name'|translate}} : {{this.lang == 'ar' ? this.companyNameAr :
-                    this.companyNameEn}}</label>
-            </p>
-        </div>
-        <div class="col-md-3 footer-copyright text-center">
-            <p>
-                <label>{{'general.branch-name'|translate}} : {{this.lang == 'ar' ? this.branchNameAr :
-                    this.branchNameEn}}</label>
-            </p>
-        </div>
+			</div>
+			<div class="d-flex">
+				<div class="footer-copyright ">
+					<p class="m-0">
+						<label>
+							<!-- {{'general.company-name'|translate}} : -->
+							{{this.lang == 'ar' ? this.companyNameAr :
+							this.companyNameEn}}</label> -
+					</p>
+				</div>
+				<div class=" footer-copyright ">
+					<p class="m-0">
+						<label class="px-1">
+							{{'general.branch-name'|translate}} :
+							{{this.lang == 'ar' ? this.branchNameAr :
+							this.branchNameEn}}</label>
+					</p>
+				</div>
+			</div>
+		</div>
 
-    </div>
+	</div>
 </div>

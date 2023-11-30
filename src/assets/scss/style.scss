@@ -1634,7 +1634,8 @@ input.form-control.icon-branch {
 td>button.ant-btn {
     background: transparent;
     border: none;
-    color: #797979 !important;
+    color: #606060 !important;
+    font-size: 16px;
 }
 
 .mat-dialog-container {
@@ -1762,6 +1763,13 @@ html[dir=rtl] .table-tree {
             margin-left: 30px;
         }
     }
+    .item-children.level-4 {
+        .ant-table-cell-with-append.ant-table-cell nz-row-indent.ant-table-row-indent {
+            right: 43px;
+            width: 5%;
+            margin-left: 30px;
+        }
+    }
 }
 
 .search-bar {
@@ -1796,3 +1804,13 @@ p.ant-empty-description {
 }
 
 .customLink {}
+
+.ant-table-cell {
+    min-width: 116px !important;
+    width: 10rem;
+    &:nth-last-of-type(1),
+    &:nth-last-of-type(2),
+    &:nth-last-of-type(3) {
+        width: 4rem;
+    }
+}
