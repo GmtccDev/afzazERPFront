@@ -13,13 +13,14 @@ import { NgbCalendarIslamicUmalqura } from '@ng-bootstrap/ng-bootstrap';
 import { DateConverterService } from '../../../shared/services/date-services/date-converter.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {BillComponent} from 'src/app/erp/Warehouses/operations/bill/bill.component'
-import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component'
+import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component';
+import { BillDynamicDeterminantComponent } from './bill-dynamic-determinant/bill-dynamic-determinant.component'
 
 
 
 @NgModule({
   declarations: [
-     BillComponent,AddEditBillComponent
+     BillComponent,AddEditBillComponent, BillDynamicDeterminantComponent
   ],
   imports: [
     CommonModule,
