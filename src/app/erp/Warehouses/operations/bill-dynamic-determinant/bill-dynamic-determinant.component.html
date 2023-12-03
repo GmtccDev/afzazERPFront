@@ -1,0 +1,35 @@
+<div class="table-wrapper">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
+                    {{ key.determinantsMaster.nameAr }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
+                <td>{{ i + 1 }}</td>
+                <!-- <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
+                  
+                        <input type="text" [(ngModel)]="item.value" class="custom-input" />
+                  
+                </td> -->
+                <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
+
+
+                    <input *ngIf="key.determinantsMaster.valueType === 1" type="select" [(ngModel)]="item.value" class="custom-input" />
+                    <input *ngIf="key.determinantsMaster.valueType === 2" type="number" [(ngModel)]="item.value" class="custom-input" />
+                    <input *ngIf="key.determinantsMaster.valueType === 3" type="text" [(ngModel)]="item.value" class="custom-input" />
+                    <input *ngIf="key.determinantsMaster.valueType === 4" type="date" [(ngModel)]="item.value" class="custom-input" />
+                    <select *ngIf="key.determinantsMaster.valueType === 5" [(ngModel)]="item.value" class="custom-input">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
