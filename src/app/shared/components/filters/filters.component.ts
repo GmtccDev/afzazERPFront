@@ -11,6 +11,7 @@ import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/service
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { BranchDto } from 'src/app/erp/master-codes/models/branch';
 import { AccountDto } from 'src/app/erp/Accounting/models/account';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 
 
 @Component({
@@ -111,6 +112,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private sharedServices: SharedService,
     private dateConverterService: DateConverterService,
+    private voucherTypeService: VoucherTypeServiceProxy,
     private publicService: PublicService,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
@@ -179,16 +181,12 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getVoucherTypes() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeVoucherTypespApi).subscribe({
+      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-             debugger
           if (res.success) {
-
-            this.VoucherTypesList = res.response;
+            this.VoucherTypesList = res.response.items
 
           }
-
-
           resolve();
 
         },
@@ -196,7 +194,6 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           reject(err);
         },
         complete: () => {
-          
         },
       });
 

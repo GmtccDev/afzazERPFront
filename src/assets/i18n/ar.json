@@ -310,7 +310,9 @@
         "chart-account": "دليل الحسابات",
         "generate-entry-vouchers": "توليد قيود السندات",
         "item-guide": " دليل اصناف",
-        "item-guide-information": "معلومات  دليل اصناف"
+        "item-guide-information": "معلومات  دليل اصناف",
+        "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
+        "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير"
     },
     "general": {
         "searchFromDate": "من تاريخ",
@@ -849,6 +851,34 @@
         "export-json": "تصدير Json",
         "save": "حفظ"
     },
+    "page-permission": {
+        "isUpdate": "تعديل",
+        "isSave": "حفظ",
+        "isDelete": "حذف",
+        "isCancel": "إلغاء",
+        "isClose": "اغلاق",
+        "isAdd": "إضافة",
+        "isShow": "عرض في القائمة",
+        "activate-user": "تنشيط المستخدم",
+        "disactive-user": "إلغاء تفعيل المستخدم",
+        "print": "طباعة",
+        "roles": "الدور",
+        "is-active": "تنشيط ",
+        "isCloseRequest": "اغلاق الطلب",
+        "isProductReceipt": "سند القبض",
+        "isRequestDetails": "تفاصيل الطلب",
+        "isApprove": "تفعيل وانشاء مستخدم",
+        "isActivateUser": "تفعيل المستخدم",
+        "isInActiveUser": "إلغاء تفعيل المستخدم",
+        "isCancelDefaultReport": "إلغاء التقرير الافتراضي",
+        "isView": "عرض",
+        "isNew": "جديد",
+        "isRenew":"تجديد العقد",
+        "isSettelment":"تسوية العقد",
+        "isIssue":"تعميد العقد",
+        "isDisplay":"فتح العقد",
+        "isPrint":"طباعة"
+      },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
     "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين"

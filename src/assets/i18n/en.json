@@ -532,7 +532,9 @@
         "chart-account": "Chart of Accounts",
         "generate-entry-vouchers": "Generate Entry Vouchers",
         "item-Guide": " Item Guide",
-        "item-Guide-information": " Item Guide Information"
+        "item-Guide-information": " Item Guide Information",
+        "vouchers-roles-permissions":"Vouchers Types Roles Permissions",
+        "bills-roles-permissions":"Bills Types Roles Permissions"
     },
     "language": {
         "ARABIC": "Ar",
@@ -860,6 +862,34 @@
         "export-json": "Export Json",
         "save": "Save"
     },
+    "page-permission": {
+        "isUpdate": "Edit",
+        "isSave": "Save",
+        "isDelete": "Delete",
+        "isCancel": "Cancel",
+        "isClose": "Close",
+        "isAdd": "Add",
+        "isShow": "Show",
+        "activate-user": "Activate user",
+        "disactive-user": "Deactivate user",
+        "print": "Print",
+        "roles": "Roles",
+        "is-active": "Is Active",
+        "isCloseRequest": "Close Request",
+        "isProductReceipt": "Product Receipt",
+        "isRequestDetails": "Request Details",
+        "isApprove": "Approve & Create User",
+        "isActivateUser": "Activate User",
+        "isInActiveUser": "InActive User",
+        "isCancelDefaultReport": "Cancel Default Report ",
+        "isView": "View",
+        "isNew": "New",
+        "isRenew": "Renew Contarct",
+        "isSettelment": "Contract Settelment",
+        "isIssue": "Issue Contract",
+        "isDisplay": "Display",
+        "isPrint": "Print"
+      },
     "twoRows": "There must be at least two rows",
     "debitCreditValues": "There must be values in both the debit and credit",
     "totalValues": "The total debit values in the debit column must be equal to the total credit values in the credit column"

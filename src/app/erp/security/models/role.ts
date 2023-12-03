@@ -31,3 +31,13 @@ export interface IRoleDtoPageList {
 export class DeleteListRoleCommand{
     ids: number[] | undefined;
 }
+export class VouchersRolePermissionsVm
+{
+    id:any;
+    voucherArName!:string;
+    voucherEnName!:string;
+    voucherTypeId:any;
+    roleId:any;
+    isUserChecked!:boolean;
+    permissionsJson!:any;
+}
