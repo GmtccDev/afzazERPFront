@@ -289,17 +289,37 @@ export enum ChequeStatusEnum {
   CancelRejected = 5
 }
 export enum EntryTypesEnum {
+  'Normal Entry' = 1000,
   Voucher = 1,
   RegisterIncomingCheque = 2,
+  CollectIncomingCheque = 8,
+  RejectIncomingCheque = 9,
   RegisterIssuingCheque = 3,
+  CollectIssuingCheque = 10,
+  RejectIssuingCheque = 11,
   SalesBill = 4,
   SalesReturnBill = 5,
   PurchasesBill = 6,
   PurchasesReturnBill = 7,
-  CollectIncomingCheque = 8,
-  RejectIncomingCheque = 9,
-  CollectIssuingCheque = 10,
-  RejectIssuingCheque = 11
+
+
+
+}
+export enum EntryTypesArEnum {
+  'قيد عادى'=1000,
+  سند = 1,
+  'تسجيل شيك صادر' = 2,
+  'تحصيل شيك صادر' = 8,
+  'رفض شيك صادر' = 9,
+  'تسجيل شيك وارد' = 3,
+  'تحصيل شيك وارد' = 10,
+  'رفض شيك وارد' = 11,
+  'فاتورة مبيعات' = 4,
+  'فاتورة مردودات مبيعات' = 5,
+  'فاتورة مشتريات' = 6,
+  'فاتورة مردودات مشتريات' = 7
+
+
 
 }
 

@@ -10,11 +10,19 @@
 					<div class="row">
 
 						<div class="row advanced_Search search-bar">
-							<div class="col-md-3 col-12 mb-3">
+							<div class="col-md-2 col-12 mb-3">
 								<label for="" class="label-name">
-									{{'general.number'|translate}}</label>
+									{{'general.code'|translate}}</label>
 								<input type="text" class="form-control icon-branch col-3" [(ngModel)]="searchCode"
-									placeholder=" {{'general.number'|translate}}">
+									placeholder=" {{'general.code'|translate}}">
+							</div>
+							<div class="col-md-3 col-12 mb-3">
+								<label for=" " class="label-name">
+									{{'general.entry-type'|translate}}
+								</label>
+									<ng-select class="custom" [(ngModel)]="entryType" [items]="entryTypesEnum"
+										bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+
 							</div>
 							<div class="col-md-3 col-12">
 								<label for="" class="label-name">
@@ -30,8 +38,8 @@
 							</div>
 
 
-							<div class="col-md-3 col-12"><button nz-button nzType="primary"
-									(click)="filterData(searchCode, searchFromDate, searchToDate)"
+							<div class="col-md-1 col-12"><button nz-button nzType="primary"
+									(click)="filterData(searchCode,entryType, searchFromDate, searchToDate)"
 									class=" b-r-0 w-100 ">{{'general.search'|translate}}</button></div>
 						</div>
 					</div>

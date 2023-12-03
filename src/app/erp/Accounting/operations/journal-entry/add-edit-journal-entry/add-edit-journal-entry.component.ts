@@ -9,7 +9,7 @@ import { CODE_REQUIRED_VALIDATORS } from '../../../../../shared/constants/input-
 import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
-import { formatDate, navigateUrl } from '../../../../../shared/helper/helper-url';
+import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import { PublicService } from 'src/app/shared/services/public.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
@@ -98,7 +98,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   totalDebitLocal: number;
   totalCreditLocal: number;
   checkPeriod: any;
-  isMultiCurrency: boolean;
+  isMultiCurrency: boolean = false;
   serial: any;
   date: any = this.dateService.getCurrentDate();
   serialList: { nameAr: string; nameEn: string; value: string; }[];
@@ -329,9 +329,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
               this.onChangefiscalPeriod(this.journalEntryForm.controls.fiscalPeriodId.value);
               this.onChangeCode(null);
             }
-            // if (this.isMultiCurrency) {
-            //   this.getCurrency();
-            // }
 
           }
 
@@ -707,155 +704,155 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
   onSave() {
+    if (this.journalEntryForm.valid) {
+      this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
+      if (this.fiscalPeriodId > 0) {
+        this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
+      }
 
-    this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
-    if (this.fiscalPeriodId > 0) {
-      this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
-    }
+      if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+        if (this.fiscalPeriodStatus == null) {
+          this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-choose-open-fiscal-period");
 
-    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-      if (this.fiscalPeriodStatus == null) {
-        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-choose-open-fiscal-period");
+        }
+        else {
+          this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+
+        }
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
+      let checkDate = this.dateService.getDateForInsert(this.date)
+      const date = new Date(checkDate);
+      const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+      this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+
+      if (this.fiscalPeriodcheckDate == undefined) {
+        this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
+
+      let entryDate = this.journalEntryForm.controls["date"].value;
+      let _date;
+      let month;
+      let day;
+      if (entryDate?.month + 1 > 9) {
+        month = entryDate?.month + 1
+      }
+      else {
+        month = '0' + entryDate.month + 1
+      }
+      if (entryDate.day < 10) {
+        day = '0' + entryDate?.day
+      }
+      else {
+        day = entryDate.day
+      }
+      _date = entryDate.year + '-' + month + '-' + day
+
+      if (_date >= this.fromDate && _date <= this.toDate) {
+
 
       }
       else {
-        this.errorMessage = this.translate.instant("journalEntry.no-add-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+        this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
 
       }
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
-    let checkDate = this.dateService.getDateForInsert(this.date)
-    const date = new Date(checkDate);
-    const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
-    this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+      if (this.counter < 2) {
+        this.alertsService.showError(
+          this.translate.instant('twoRows'),
+          ""
 
-    if (this.fiscalPeriodcheckDate == undefined) {
-      this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
+        )
+        return;
+      }
+      if ((this.totalCredit == 0 || this.totalDebit == 0)) {
+        this.alertsService.showError(
+          this.translate.instant('debitCreditValues'),
+          ""
+        )
+        return;
+      }
+      if ((this.totalCredit !== this.totalDebit)) {
+        this.alertsService.showError(
+          this.translate.instant('totalValues'),
+          ""
+        )
+        return;
+      }
 
-    let entryDate = this.journalEntryForm.controls["date"].value;
-    let _date;
-    let month;
-    let day;
-    if (entryDate?.month + 1 > 9) {
-      month = entryDate?.month + 1
-    }
-    else {
-      month = '0' + entryDate.month + 1
-    }
-    if (entryDate.day < 10) {
-      day = '0' + entryDate?.day
-    }
-    else {
-      day = entryDate.day
-    }
-    _date = entryDate.year + '-' + month + '-' + day
+      var journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
 
-    if (_date >= this.fromDate && _date <= this.toDate) {
+      var i = 0;
+      if (journalEntriesDetail != null) {
 
+        this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
 
-    }
-    else {
-      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-
-    }
-    if (this.counter < 2) {
-      this.alertsService.showError(
-        this.translate.instant('twoRows'),
-        ""
-
-      )
-      return;
-    }
-    if ((this.totalCredit == 0 || this.totalDebit == 0)) {
-      this.alertsService.showError(
-        this.translate.instant('debitCreditValues'),
-        ""
-      )
-      return;
-    }
-    if ((this.totalCredit !== this.totalDebit)) {
-      this.alertsService.showError(
-        this.translate.instant('totalValues'),
-        ""
-      )
-      return;
-    }
-
-    var journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
-
-    var i = 0;
-    if (journalEntriesDetail != null) {
-
-      this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
-
-        if (element.accountId != null) {
-          var value = 0;
-          if (element.jEDetailDebitLocal > 0) {
-            value = element.jEDetailDebitLocal;
-          }
-          if (element.jEDetailCreditLocal > 0) {
-            value = element.jEDetailCreditLocal;
-
-          }
-
-          this.getAccountBalance(element.accountId).then(a => {
-            var account = this.accountList.find(x => x.id == element.accountId);
-
-            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-
-            if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-              if (Number(this.balance) + value > account.debitLimit) {
-
-
-                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
-                this.errorClass = 'errorMessage';
-                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                i++;
-              }
+          if (element.accountId != null) {
+            var value = 0;
+            if (element.jEDetailDebitLocal > 0) {
+              value = element.jEDetailDebitLocal;
+            }
+            if (element.jEDetailCreditLocal > 0) {
+              value = element.jEDetailCreditLocal;
 
             }
 
+            this.getAccountBalance(element.accountId).then(a => {
+              var account = this.accountList.find(x => x.id == element.accountId);
 
-            else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+              var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
-              if (-(this.balance) + value > account.creditLimit) {
+              if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
-                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
-                this.errorClass = 'errorMessage';
-                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                i++;
+                if (Number(this.balance) + value > account.debitLimit) {
+
+
+                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+
               }
 
 
+              else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+                if (-(this.balance) + value > account.creditLimit) {
+
+                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+
+
+              }
+
+
+            });
+
+
+          }
+
+
+        })
+
+        setTimeout(() => {
+          if (i == 0) {
+            var count = journalEntriesDetail.length;
+            var index = count - 1;
+            if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+              journalEntriesDetail.removeAt(index);
             }
 
-
-          });
-
-
-        }
-
-
-      })
-
-      setTimeout(() => {
-        if (i == 0) {
-          var count = journalEntriesDetail.length;
-          var index = count - 1;
-          if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
-            journalEntriesDetail.removeAt(index);
-          }
-          if (this.journalEntryForm.valid) {
             this.spinner.show();
             this.confirmSave().then(a => {
               this.spinner.hide();
@@ -863,15 +860,17 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
               this.spinner.hide();
             });
 
-          } else {
-
-            return this.journalEntryForm.markAllAsTouched();
           }
-        }
-      }, 1000);
 
+        }, 1000);
 
-
+      }
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.journalEntryForm.markAllAsTouched();
     }
   }
 
@@ -984,10 +983,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
     // if (this.journalEntryForm.touched || this.journalEntriesDetailDTOList.touched) {
 
-    this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
-    if (this.fiscalPeriodId > 0) {
-      this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
-    }
+
 
     // let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
     // var count = journalEntriesDetail.length;
@@ -996,6 +992,10 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     //   journalEntriesDetail.removeAt(index);
     // }
     if (this.journalEntryForm.valid) {
+      this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
+      if (this.fiscalPeriodId > 0) {
+        this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;
+      }
       if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
         this.errorMessage = this.translate.instant("journalEntry.no-update-entry-fiscal-period-closed") + " : " + this.fiscalPeriodName;
         this.errorClass = 'errorMessage';
@@ -1043,6 +1043,13 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       //   return;
       // }
     }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.journalEntryForm.markAllAsTouched();
+
+    }
     // if (this.counter < 2) {
     //   this.alertsService.showError(
     //     this.translate.instant('twoRows'),
@@ -1068,7 +1075,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
 
-    ///////here
 
     var i = 0;
     if (journalEntriesDetail != null) {
