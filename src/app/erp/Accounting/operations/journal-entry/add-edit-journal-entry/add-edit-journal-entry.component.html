@@ -204,13 +204,13 @@
 																			</th>
 																			<th>{{ 'journalEntry.credit' | translate }}
 																			</th>
-																			<th>{{ 'journalEntry.currency' | translate
-																				}}
+																			<th *ngIf="isMultiCurrency">
+																				{{ 'journalEntry.currency' | translate }}
 																			</th>
-																			<th>{{ 'journalEntry.balance' | translate }}
+																			<th *ngIf="isMultiCurrency">
+																				{{ 'journalEntry.balance' | translate }}
 																			</th>
-																			<th>{{ 'journalEntry.localCredit' |
-																				translate }}
+																			<th>{{ 'journalEntry.localCredit' | translate }}
 																			</th>
 																			<th>{{ 'journalEntry.localDebit' | translate
 																				}}
@@ -297,7 +297,7 @@
 
 																			</td>
 
-																			<td>
+																			<td *ngIf="isMultiCurrency">
 
 																				<div class="input-group">
 
@@ -327,7 +327,7 @@
 
 
 																			</td>
-																			<td>
+																			<td *ngIf="isMultiCurrency">
 
 																				<div class="input-group ">
 																					<input type="number" required

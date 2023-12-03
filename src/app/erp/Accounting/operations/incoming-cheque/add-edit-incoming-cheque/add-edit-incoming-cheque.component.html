@@ -142,9 +142,9 @@
                                             </label>
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
-                                                <ng-select style="width:100%" [(ngModel)]="currencyId"
+                                                <ng-select  style="width:100%" [(ngModel)]="currencyId"
                                                     formControlName="currencyId" (change)="getAmount()"
-                                                    name='currencyId' class="" id="currencyId">
+                                                    name='currencyId' class="" id="currencyId" >
                                                     <ng-option *ngFor="let currency of currencyList"
                                                         [value]="currency.id">
                                                         {{lang=="ar"?currency.nameAr:currency.nameEn}}
@@ -196,8 +196,9 @@
                                                 <!-- <th style="width: 15%;">{{'general.account-number'|translate}}
                                                 </th> -->
                                                 <th style="width: 10%;">{{'general.amount'|translate}}</th>
-                                                <th style="width: 15%;">{{'general.currency'|translate}}</th>
-                                                <th style="width: 10%;">
+                                                <th style="width: 15%;" *ngIf="isMultiCurrency">
+                                                    {{'general.currency'|translate}}</th>
+                                                <th style="width: 10%;" *ngIf="isMultiCurrency">
                                                     {{'general.currency-conversion-factor'|translate}}</th>
                                                 <th style="width: 10%;">{{'general.balance'|translate}}</th>
                                                 <th style="width: 15%;">{{'general.description'|translate}}</th>
@@ -222,7 +223,8 @@
                                                 </td>
                                                 <td>
                                                     <select required class="form-control required" name="beneficiaryId"
-                                                        formControlName="beneficiaryId" (change)="getBeneficiaryAccount(row)">
+                                                        formControlName="beneficiaryId"
+                                                        (change)="getBeneficiaryAccount(row)">
                                                         <option *ngFor="let beneficiary of filterBeneficiaryList"
                                                             [value]="beneficiary.id">
                                                             {{lang=="ar"?beneficiary.nameAr:beneficiary.nameEn}}
@@ -243,24 +245,19 @@
 
                                                 </td> -->
                                                 <td>
-
                                                     <div class="input-group">
                                                         <input type="number" required class="form-control required"
-                                                            (keypress)="numberOnly($event,i)" 
+                                                            (keypress)="numberOnly($event,i)"
                                                             (input)="onInput($event.target.value,i)"
                                                             formControlName="amount" name="amount" style="width: 70px;">
                                                     </div>
 
                                                 </td>
-                                                <td>
-
-
+                                                <td *ngIf="isMultiCurrency">
                                                     <select class="form-control" name="currencyId"
                                                         (change)="onChangeCurrency($event,i)"
                                                         formControlName="currencyId"
                                                         [ngClass]="{ 'required': (row.get('currencyId')?.errors?.required)}">
-
-
                                                         <option *ngFor="let currency of currencyList"
                                                             [value]="currency.id">
                                                             {{lang=="ar"?currency.nameAr:currency.nameEn}}
@@ -269,7 +266,7 @@
 
 
                                                 </td>
-                                                <td>
+                                                <td *ngIf="isMultiCurrency">
 
                                                     <div class="input-group ">
                                                         <input type="number" required class="form-control required"
