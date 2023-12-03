@@ -11,8 +11,9 @@ import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../shared/helper/helper-url';
 import { RoleServiceProxy } from '../../services/role.servies'
-import { RoleDto } from '../../models/role';
+import { RoleDto, VouchersRolePermissionsVm } from '../../models/role';
 import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
+import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 @Component({
   selector: 'app-add-edit-role',
   templateUrl: './add-edit-role.component.html',
@@ -26,6 +27,7 @@ export class AddEditRoleComponent implements OnInit {
   id: any = 0;
   currnetUrl;
   role: RoleDto[] = [];
+  vouchersRolePermissions:VouchersRolePermissionsVm[]=[]
   addUrl: string = '/security/role/add-role';
   updateUrl: string = '/security/role/update-role/';
   listUrl: string = '/security/role';
@@ -49,6 +51,7 @@ export class AddEditRoleComponent implements OnInit {
     private roleService: RoleServiceProxy,
     private router: Router,
     private fb: FormBuilder,
+    private voucherTypeService: VoucherTypeServiceProxy,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService, public service: SubscriptionService,
@@ -59,17 +62,33 @@ export class AddEditRoleComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getLastSubscription();
-    //  this.getModulesType();
+    
     this.spinner.show();
-    this.getRouteData();
-    this.changePath();
-    this.listenToClickedButton();
     this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
       this.getRoleCode();
     }
-    this.spinner.hide();
+    this.getLastSubscription();
+    Promise.all([
+      this.getVoucherTypes()
+    ]).then(a => {
+      debugger
+      this.preparePermissions();
+
+      this.getRouteData();
+      this.changePath();
+      this.listenToClickedButton();
+    })
+      .catch(e => {
+  
+        this.spinner.hide();
+      });
+  
+
+
+   
+
+
 
   }
 
@@ -130,6 +149,31 @@ export class AddEditRoleComponent implements OnInit {
     )
 
   }
+    voucherTypes: any[] = [];
+  getVoucherTypes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          this.toolbarPathData.componentList = this.translate.instant("component-names.voucher-types");
+          if (res.success) {
+            debugger
+            this.voucherTypes = res.response.items
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
@@ -137,7 +181,7 @@ export class AddEditRoleComponent implements OnInit {
 
         if (this.id) {
           this.getRoleById(this.id).then(a => {
-
+            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
             this.spinner.hide();
 
           }).catch(err => {
@@ -229,7 +273,7 @@ export class AddEditRoleComponent implements OnInit {
           this.roleForm.patchValue({
             code: res.response.code
           });
-
+           
           this.permission = res.response.permissions
           this.screens = res.response.screens;
           const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
@@ -440,7 +484,41 @@ export class AddEditRoleComponent implements OnInit {
     }
 
   }
+  preparePermissions() {
+   debugger
+    this.voucherTypes.forEach(c => {
+      this.vouchersRolePermissions.push({
+        voucherTypeId: c.id,
+        isUserChecked: true,
+        id: c.id,
+        permissionsJson: JSON.parse(`{"isAdd":false, "isUpdate":false,"isDelete":false,"isIssue":false,"isSettelment":false, "isRenew":false,"isShow":false,"isDisplay":false,"isPrint":false}`),
+        roleId: 0,
+        voucherArName: c.nameAr,
+        voucherEnName: c.nameEn
 
+
+      });
+    });
+
+debugger
+
+    // this.entryTypes = this.managerService.getEntryTypes();
+    // this.entryTypes.forEach(c => {
+    //   this.entryTypesPermissions.push({
+    //     entryTypeId: c.id,
+    //     isUserChecked: true,
+    //     id: c.id,
+    //     permissionsJson: JSON.parse(`{"isAdd":false,"isUpdate":false,"isDelete":false,"isShow":false}`),
+    //     roleId: 0,
+    //     entryNameAr: c.entryNameAr,
+    //     entryNameEn: c.entryNameEn,
+    //   });
+    // });
+
+
+
+
+  }
 
 }
 

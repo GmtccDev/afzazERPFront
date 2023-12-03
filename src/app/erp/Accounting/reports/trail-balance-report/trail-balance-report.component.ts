@@ -150,14 +150,12 @@ export class TrailBalanceReportComponent  implements OnInit, OnDestroy, AfterVie
 		ShowFromDate: boolean;
 		ShowToDate: boolean;
 		ShowBranch: boolean;
-		ShowMainAccount: boolean;
 		ShowLevel: boolean;
 		ShowEntriesStatus: boolean;
 	} = {
 		ShowFromDate: true,
 		ShowToDate: true,
 		ShowLevel:true,
-		ShowMainAccount:true,
 		ShowBranch: true,
 		ShowEntriesStatus:true
 
