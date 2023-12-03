@@ -175,8 +175,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
+          this.spinner.hide();
         },
       });
       this.subsList.push(sub);
@@ -307,20 +309,20 @@ export class AddEditAccountClassificationComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       debugger
       var entity = this.accountClassificationForm.value;
-      var find = this.accountClassification.filter(c => (c.nameAr == entity.nameAr || c.nameEn == entity.nameEn) && c.type == entity.type)
-      if (find && find.length > 0) {
-        if (this.lang == "ar") {
-          this.errorMessage = "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم"
-        }
-        else {
-          this.errorMessage = "It is not possible to save because the name or type is repeated with the name."
+      // var find = this.accountClassification.filter(c => (c.nameAr == entity.nameAr || c.nameEn == entity.nameEn) && c.type == entity.type)
+      // if (find && find.length > 0) {
+      //   if (this.lang == "ar") {
+      //     this.errorMessage = "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم"
+      //   }
+      //   else {
+      //     this.errorMessage = "It is not possible to save because the name or type is repeated with the name."
 
-        }
-        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        this.spinner.hide();
-        return;
+      //   }
+      //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      //   this.spinner.hide();
+      //   return;
 
-      }
+      // }
       let sub = this.accountClassificationService.createAccountClassification(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -336,9 +338,11 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
           //console.log('complete');
+          this.spinner.hide();
         },
       });
       this.subsList.push(sub);
@@ -368,20 +372,20 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.accountClassificationForm.value.id = this.id;
     var entityDb = this.accountClassificationForm.value;
     entityDb.id = this.id;
-    var find = this.accountClassification.filter(c => (c.nameAr == entityDb.nameAr || c.nameEn == entityDb.nameEn) && c.type == entityDb.type && c.id != entityDb.id)
-    if (find && find.length > 0) {
-      if (this.lang == "ar") {
-        this.errorMessage = "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم"
-      }
-      else {
-        this.errorMessage = "It is not possible to save because the name or type is repeated with the name."
+    // var find = this.accountClassification.filter(c => (c.nameAr == entityDb.nameAr || c.nameEn == entityDb.nameEn) && c.type == entityDb.type && c.id != entityDb.id)
+    // if (find && find.length > 0) {
+    //   if (this.lang == "ar") {
+    //     this.errorMessage = "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم"
+    //   }
+    //   else {
+    //     this.errorMessage = "It is not possible to save because the name or type is repeated with the name."
 
-      }
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      this.spinner.hide();
-      return;
+    //   }
+    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //   this.spinner.hide();
+    //   return;
 
-    }
+    // }
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.accountClassificationService.updateAccountClassification(entityDb).subscribe({
@@ -396,8 +400,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
+          this.spinner.hide();
           //console.log('complete');
         },
       });

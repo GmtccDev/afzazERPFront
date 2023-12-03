@@ -1,6 +1,13 @@
 <div class="table-wrapper">
     <table class="custom-table">
         <thead>
+                
+            <tr>
+                <td colspan="2">
+                    <button (click)="insertBillDynamic()"
+                        style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+                </td>
+            </tr>
             <tr>
                 <th>#</th>
                 <th *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
@@ -9,16 +16,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
+            <!-- <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
                 <td>{{ i + 1 }}</td>
-                <!-- <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
-                  
-                        <input type="text" [(ngModel)]="item.value" class="custom-input" />
-                  
-                </td> -->
                 <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
-
-
                     <input *ngIf="key.determinantsMaster.valueType === 1" type="select" [(ngModel)]="item.value" class="custom-input" />
                     <input *ngIf="key.determinantsMaster.valueType === 2" type="number" [(ngModel)]="item.value" class="custom-input" />
                     <input *ngIf="key.determinantsMaster.valueType === 3" type="text" [(ngModel)]="item.value" class="custom-input" />
@@ -27,9 +27,42 @@
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
+                </td>
+            </tr> -->
+            <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
+                    <ng-container [ngSwitch]="key.determinantsMaster.valueType">
+                        <ng-container *ngSwitchCase="1">
+                            <select [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input">
+                                <option *ngFor="let determinantDetail of key.determinantsMaster.determinantsDetails"
+                                    [value]="determinantDetail.id">{{ determinantDetail.nameAr }}</option>
+                            </select>
+                        </ng-container>
 
+                        <ng-container *ngSwitchCase="2">
+                            <input type="number" [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input" />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="3">
+                            <input type="text" [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input" />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="4">
+                            <!-- <input type="date" [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input" /> -->
+                            <app-full-date name="date" [(ngModel)]="item[key.determinantsMaster.id]" ngDefaultControl
+                                [selectedDate]="item[key.determinantsMaster.id]"
+                                (OnDateSelect)="getDate($event)"></app-full-date>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="5">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="item[key.determinantsMaster.id]"
+                                    class="custom-input" />
+
+                            </label>
+                        </ng-container>
+                    </ng-container>
                 </td>
             </tr>
+        
         </tbody>
     </table>
 </div>
