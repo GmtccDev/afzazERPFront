@@ -303,16 +303,22 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				title: 'Status', width: 300, field: 'statusEn'
 				//, formatter: this.translateEnEnum
 			},
+			this.lang == 'ar'
+			? {
+				title: 'نوع المرجع', field: 'settingAr'
+			} : {
+				title: 'Reference Type', field: 'settingEn'
+			},
 		this.lang == 'ar'
 			? {
-				title: '  النوع  ', width: 300, field: 'entryTypeAr'
+				title: 'المرجع', width: 300, field: 'entryTypeAr'
 				, formatter: this.hyperLinkType
 				, cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			} : {
-				title: '   Type', width: 300, field: 'entryTypeEn'
+				title: 'Reference', width: 300, field: 'entryTypeEn'
 				, formatter: this.hyperLinkType
 				, cellClick: (e, cell) => {
 
@@ -320,15 +326,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			},
 		{
-			title: this.lang == 'ar' ? ' كود النوع' : 'Type Code',
+			title: this.lang == 'ar' ? ' رقم المرجع' : 'Reference Number',
 			field: 'parentTypeCode',
 		},
-		this.lang == 'ar'
-			? {
-				title: 'النمط', field: 'settingAr'
-			} : {
-				title: 'Setting', field: 'settingEn'
-			},
+		
 		{
 			title: this.lang == 'ar' ? ' عرض التقرير' : 'View Report ',
 			field: 'id', formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
