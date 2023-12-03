@@ -15,9 +15,9 @@ import { RoleDto, VouchersRolePermissionsVm } from '../../models/role';
 import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 @Component({
-  selector: 'app-add-edit-role',
-  templateUrl: './add-edit-role.component.html',
-  styleUrls: ['./add-edit-role.component.scss']
+	selector: 'app-add-edit-role',
+	templateUrl: './add-edit-role.component.html',
+	styleUrls: ['./add-edit-role.component.scss']
 })
 export class AddEditRoleComponent implements OnInit {
   //#region Main Declarations
@@ -90,63 +90,63 @@ export class AddEditRoleComponent implements OnInit {
 
 
 
-  }
+	}
 
-  //#endregion
+	//#endregion
 
-  //#region ngOnDestroy
-  ngOnDestroy() {
-    this.subsList.forEach((s) => {
-      if (s) {
-        s.unsubscribe();
-      }
-    });
-  }
-  //#endregion
-  getApplications() {
-    this.applications = [
-      { descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
-      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1', check: false, image: 'assets/images/applications/sales.png', link: '/dashboard/default' },
-      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
-      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
-      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
-      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
-      { descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: false, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
+	//#region ngOnDestroy
+	ngOnDestroy() {
+		this.subsList.forEach((s) => {
+			if (s) {
+				s.unsubscribe();
+			}
+		});
+	}
+	//#endregion
+	getApplications() {
+		this.applications = [
+			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
+			{ descriptionAr: 'نقط البيع', descriptionEn: 'POS', value: '1', check: true, image: 'assets/images/applications/pos.png', link: '/dashboard/default' },
+			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
+			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
+			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
+			{ descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5', check: false, image: 'assets/images/applications/account.png', link: '/dashboard/default' },
+			{ descriptionAr: "مستودعات", descriptionEn: 'Warehouses', value: '6', check: false, image: 'assets/images/applications/warehouses.png', link: '/dashboard/default' },
 
-    ];
-  }
-  getLastSubscription() {
+		];
+	}
+	getLastSubscription() {
 
-    this.service.getLastSubscription().subscribe(
-      next => {
-
-
-        if (next.success == true) {
-          this.getApplications();
-          //   this.router.navigate(['/dashboard/default']);
-          if (next.response != null) {
-            this.applicationsRoute = [...next.response?.applications?.split(",")]
-            for (var i = 0; i < this.applications.length; i++) {
-
-              var find = this.applicationsRoute.includes(this.applications[i].value);
-
-              if (find) {
-
-                this.applications[i].check = true;
-
-              }
-
-            }
-          }
-
-          this.modulesType = this.applications.filter(c => c.check == true)
-        }
-      },
-      error => {
+		this.service.getLastSubscription().subscribe(
+			next => {
 
 
-      }
-    )
+				if (next.success == true) {
+					this.getApplications();
+					//   this.router.navigate(['/dashboard/default']);
+					if (next.response != null) {
+						this.applicationsRoute = [...next.response?.applications?.split(",")]
+						for (var i = 0; i < this.applications.length; i++) {
+
+							var find = this.applicationsRoute.includes(this.applications[i].value);
+
+							if (find) {
+
+								this.applications[i].check = true;
+
+							}
+
+						}
+					}
+
+					this.modulesType = this.applications.filter(c => c.check == true)
+				}
+			},
+			error => {
+
+
+			}
+		)
 
   }
     voucherTypes: any[] = [];
@@ -184,90 +184,90 @@ export class AddEditRoleComponent implements OnInit {
             this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
             this.spinner.hide();
 
-          }).catch(err => {
-            this.spinner.hide();
+					}).catch(err => {
+						this.spinner.hide();
 
-          });
-        }
-        else {
-          this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
-          this.spinner.hide();
-        }
-      }
-      else {
-        this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
-        this.spinner.hide();
-      }
-    });
-    this.subsList.push(sub);
-  }
-  //#region Authentications
+					});
+				}
+				else {
+					this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+					this.spinner.hide();
+				}
+			}
+			else {
+				this.sharedServices.changeButton({ action: 'New' } as ToolbarData);
+				this.spinner.hide();
+			}
+		});
+		this.subsList.push(sub);
+	}
+	//#region Authentications
 
-  //#endregion
+	//#endregion
 
-  //#region Permissions
+	//#region Permissions
 
-  //#endregion
+	//#endregion
 
-  //#region  State Management
-  //#endregion
+	//#region  State Management
+	//#endregion
 
-  //#region Basic Data
-  ///Geting form dropdown list data
-  defineRoleForm() {
-    this.roleForm = this.fb.group({
-      id: 0,
-      nameAr: NAME_REQUIRED_VALIDATORS,
-      nameEn: NAME_REQUIRED_VALIDATORS,
-      code: CODE_REQUIRED_VALIDATORS,
-      isActive: true
-    });
-  }
+	//#region Basic Data
+	///Geting form dropdown list data
+	defineRoleForm() {
+		this.roleForm = this.fb.group({
+			id: 0,
+			nameAr: NAME_REQUIRED_VALIDATORS,
+			nameEn: NAME_REQUIRED_VALIDATORS,
+			code: CODE_REQUIRED_VALIDATORS,
+			isActive: true
+		});
+	}
 
-  //#endregion
+	//#endregion
 
-  //#region CRUD Operations
-  getRoleById(id: any) {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.getRole(id).subscribe({
-        next: (res: any) => {
-          resolve();
-          this.roleForm.setValue({
-            id: res.response?.id,
-            nameAr: res.response?.nameAr,
-            nameEn: res.response?.nameEn,
-            code: res.response?.code,
-            isActive: res.response?.isActive
-          });
-        
-
-          this.permission = res.response?.permissions?.items;
-          this.screens = res.response?.screens;
-          this.screensList = res.response?.screens;
-
-          const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
-          this.permission = res.response?.permissions?.items;
-          this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-          this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+	//#region CRUD Operations
+	getRoleById(id: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.roleService.getRole(id).subscribe({
+				next: (res: any) => {
+					resolve();
+					this.roleForm.setValue({
+						id: res.response?.id,
+						nameAr: res.response?.nameAr,
+						nameEn: res.response?.nameEn,
+						code: res.response?.code,
+						isActive: res.response?.isActive
+					});
 
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
-      this.subsList.push(sub);
+					this.permission = res.response?.permissions?.items;
+					this.screens = res.response?.screens;
+					this.screensList = res.response?.screens;
 
-    });
-  }
+					const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
+					this.permission = res.response?.permissions?.items;
+					this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+					this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
 
-  getRoleCode() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.getLastCode().subscribe({
 
-        next: (res: any) => {
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
+
+		});
+	}
+
+	getRoleCode() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.roleService.getLastCode().subscribe({
+
+				next: (res: any) => {
 
           this.toolbarPathData.componentList = this.translate.instant("component-names.roles-permissions");
           this.roleForm.patchValue({
@@ -282,206 +282,206 @@ export class AddEditRoleComponent implements OnInit {
           //  this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
 
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
-      this.subsList.push(sub);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
 
-    });
+		});
 
-  }
-  //#endregion
+	}
+	//#endregion
 
-  //#region Helper Functions
+	//#region Helper Functions
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.roleForm.controls;
-  }
-
-
-  //#endregion
-  //#region Tabulator
-  subsList: Subscription[] = [];
-  currentBtnResult;
-  listenToClickedButton() {
-    let sub = this.sharedServices.getClickedbutton().subscribe({
-      next: (currentBtn: ToolbarData) => {
-        currentBtn;
-
-        if (currentBtn != null) {
-          if (currentBtn.action == ToolbarActions.List) {
-            this.sharedServices.changeToolbarPath({
-              listPath: this.listUrl,
-            } as ToolbarPath);
-            this.router.navigate([this.listUrl]);
-          } else if (currentBtn.action == ToolbarActions.Save) {
-            this.onSave();
-          } else if (currentBtn.action == ToolbarActions.New) {
-            this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-role");
-            this.defineRoleForm();
-            this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
-            this.onUpdate();
-          }
-          else if (currentBtn.action == ToolbarActions.Copy) {
-            this.getRoleCode();
-          }
-        }
-      },
-    });
-    this.subsList.push(sub);
-  }
-  changePath() {
-    this.sharedServices.changeToolbarPath(this.toolbarPathData);
-  }
-  confirmSave() {
-    return new Promise<void>((resolve, reject) => {
-      this.roleForm.value.permissions = this.permission;
-      let sub = this.roleService.createRole(this.roleForm.value).subscribe({
-        next: (result: any) => {
-          this.spinner.show();
-          this.defineRoleForm();
-
-          this.submited = false;
-          this.spinner.hide();
-
-          navigateUrl(this.listUrl, this.router);
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
-      this.subsList.push(sub);
-
-    });
-  }
-  onSave() {
-    if (this.roleForm.valid) {
-      this.spinner.show();
-      this.confirmSave().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
-      });
-
-    } else {
-
-      return this.roleForm.markAllAsTouched();
-    }
-  }
-  confirmUpdate() {
-
-    this.roleForm.value.id = this.id;
-    this.roleForm.value.permissions = this.permission;
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
-        next: (result: any) => {
-          this.defineRoleForm();
-          this.submited = false;
-          this.spinner.hide();
-          navigateUrl(this.listUrl, this.router);
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
-      this.subsList.push(sub);
-
-    });
-  }
-
-  onUpdate() {
-    if (this.roleForm.valid) {
-      this.spinner.show();
-      this.confirmUpdate().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
-      });
-
-    }
-
-    else {
-
-      return this.roleForm.markAllAsTouched();
-    }
-  }
-
-  //#endregion
-  //Permission region
-  permission: any = [];
-  screens: any = [];
-  lang = localStorage.getItem("language");
-  masterSelected = false;
-  searchText: string;
-  checkUncheckAll(evt) {
-    // evt.isChecked = true;
-    if (this.screens != null) {
-      this.screens.forEach(
-        item => item.permissions.forEach(
-          (c) => {
-                         
-            c.isChecked = evt.target.checked;
-            let entity = this.permission.find(x => x.id == c.id);
-            entity.isChecked = evt.target.checked;
-          }
-        )
-      )
-      this.screens.forEach(item => {
-        item.isChecked = evt.target.checked
-      })
-    }
-
-    // this.permission.forEach((c) => c.isChecked = evt.target.checked)
-  }
-
-  updateCheckedOptions(item, evt) {
-
-    // this.permission[item.id].isChecked = evt.target.checked
-    let entity = this.permission.find(c => c.id == item.id);
-    entity.isChecked = evt.target.checked;
-    //  this.masterSelected = this.permission.every((item) => item.isChecked == true);
-  }
-  updateCheckedOption(item, evt) {
-
-    // this.permission[item.id].isChecked = evt.target.checked
-    item.permissions.forEach(
-      (c) => {
-
-        c.isChecked = evt.target.checked;
-        let entity = this.permission.find(x => x.id == c.id);
-        entity.isChecked = evt.target.checked;
-      }
-    )
+	get f(): { [key: string]: AbstractControl } {
+		return this.roleForm.controls;
+	}
 
 
-  }
+	//#endregion
+	//#region Tabulator
+	subsList: Subscription[] = [];
+	currentBtnResult;
+	listenToClickedButton() {
+		let sub = this.sharedServices.getClickedbutton().subscribe({
+			next: (currentBtn: ToolbarData) => {
+				currentBtn;
 
-  getModulesType() {
-    this.modulesType = [
-      { descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0' },
-      { descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1' },
-      { descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2' },
-      { descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', },
-      { descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4' },
-      { descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5' }
-    ];
-  }
-  onChange(event) {
+				if (currentBtn != null) {
+					if (currentBtn.action == ToolbarActions.List) {
+						this.sharedServices.changeToolbarPath({
+							listPath: this.listUrl,
+						} as ToolbarPath);
+						this.router.navigate([this.listUrl]);
+					} else if (currentBtn.action == ToolbarActions.Save) {
+						this.onSave();
+					} else if (currentBtn.action == ToolbarActions.New) {
+						this.toolbarPathData.componentAdd = this.translate.instant("user-manager.add-role");
+						this.defineRoleForm();
+						this.sharedServices.changeToolbarPath(this.toolbarPathData);
+					} else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
+						this.onUpdate();
+					}
+					else if (currentBtn.action == ToolbarActions.Copy) {
+						this.getRoleCode();
+					}
+				}
+			},
+		});
+		this.subsList.push(sub);
+	}
+	changePath() {
+		this.sharedServices.changeToolbarPath(this.toolbarPathData);
+	}
+	confirmSave() {
+		return new Promise<void>((resolve, reject) => {
+			this.roleForm.value.permissions = this.permission;
+			let sub = this.roleService.createRole(this.roleForm.value).subscribe({
+				next: (result: any) => {
+					this.spinner.show();
+					this.defineRoleForm();
 
-    if (this.screensList != undefined) {
+					this.submited = false;
+					this.spinner.hide();
 
-      this.screens = this.screensList.filter(x => x.moduleType == Number(event));
+					navigateUrl(this.listUrl, this.router);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
 
-    }
+		});
+	}
+	onSave() {
+		if (this.roleForm.valid) {
+			this.spinner.show();
+			this.confirmSave().then(a => {
+				this.spinner.hide();
+			}).catch(e => {
+				this.spinner.hide();
+			});
+
+		} else {
+
+			return this.roleForm.markAllAsTouched();
+		}
+	}
+	confirmUpdate() {
+
+		this.roleForm.value.id = this.id;
+		this.roleForm.value.permissions = this.permission;
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
+				next: (result: any) => {
+					this.defineRoleForm();
+					this.submited = false;
+					this.spinner.hide();
+					navigateUrl(this.listUrl, this.router);
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
+
+		});
+	}
+
+	onUpdate() {
+		if (this.roleForm.valid) {
+			this.spinner.show();
+			this.confirmUpdate().then(a => {
+				this.spinner.hide();
+			}).catch(e => {
+				this.spinner.hide();
+			});
+
+		}
+
+		else {
+
+			return this.roleForm.markAllAsTouched();
+		}
+	}
+
+	//#endregion
+	//Permission region
+	permission: any = [];
+	screens: any = [];
+	lang = localStorage.getItem("language");
+	masterSelected = false;
+	searchText: string;
+	checkUncheckAll(evt) {
+		// evt.isChecked = true;
+		if (this.screens != null) {
+			this.screens.forEach(
+				item => item.permissions.forEach(
+					(c) => {
+
+						c.isChecked = evt.target.checked;
+						let entity = this.permission.find(x => x.id == c.id);
+						entity.isChecked = evt.target.checked;
+					}
+				)
+			)
+			this.screens.forEach(item => {
+				item.isChecked = evt.target.checked
+			})
+		}
+
+		// this.permission.forEach((c) => c.isChecked = evt.target.checked)
+	}
+
+	updateCheckedOptions(item, evt) {
+
+		// this.permission[item.id].isChecked = evt.target.checked
+		let entity = this.permission.find(c => c.id == item.id);
+		entity.isChecked = evt.target.checked;
+		//  this.masterSelected = this.permission.every((item) => item.isChecked == true);
+	}
+	updateCheckedOption(item, evt) {
+
+		// this.permission[item.id].isChecked = evt.target.checked
+		item.permissions.forEach(
+			(c) => {
+
+				c.isChecked = evt.target.checked;
+				let entity = this.permission.find(x => x.id == c.id);
+				entity.isChecked = evt.target.checked;
+			}
+		)
+
+
+	}
+
+	getModulesType() {
+		this.modulesType = [
+			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0' },
+			{ descriptionAr: 'مبيعات', descriptionEn: 'Sales', value: '1' },
+			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2' },
+			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', },
+			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4' },
+			{ descriptionAr: "محاسبة", descriptionEn: 'Accounting', value: '5' }
+		];
+	}
+	onChange(event) {
+
+		if (this.screensList != undefined) {
+
+			this.screens = this.screensList.filter(x => x.moduleType == Number(event));
+
+		}
 
   }
   preparePermissions() {

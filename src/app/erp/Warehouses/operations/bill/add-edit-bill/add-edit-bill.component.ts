@@ -26,6 +26,8 @@ import { ItemCardServiceProxy } from '../../../Services/item-card.service';
 import { TaxServiceProxy } from '../../../Services/tax.service';
 import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
+import { MatDialog } from '@angular/material/dialog';
+import { BillDynamicDeterminantComponent } from '../../bill-dynamic-determinant/bill-dynamic-determinant.component';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -185,6 +187,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private itemCardService: ItemCardServiceProxy,
     private taxServiceProxy: TaxServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
+    public dialog: MatDialog,
   ) {
     this.defineBillForm();
     this.clearSelectedItemData();
@@ -406,28 +409,30 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getBillTypeById(id) {
+if(this.billTypesList.length>0){
+  this.billType = this.billTypesList.filter(x => x.id == id);
+  this.billTypeKind = this.billType[0].kind;
+  this.billTypeCalculatingTax = this.billType[0].calculatingTax;
+  this.billTypeCalculatingTaxManual = this.billType[0].calculatingTaxManual;
 
-    this.billType = this.billTypesList.filter(x => x.id == id);
-    this.billTypeKind = this.billType[0].kind;
-    this.billTypeCalculatingTax = this.billType[0].calculatingTax;
-    this.billTypeCalculatingTaxManual = this.billType[0].calculatingTaxManual;
+  if (this.id == 0) {
 
-    if (this.id == 0) {
-
-      if (this.billType[0].codingPolicy != 1) {
-        this.getBillCode();
-      }
-      this.currencyId = this.billType[0].defaultCurrencyId
-      if (this.currencyId > 0) {
-        this.getCurrencyFactor(this.currencyId)
-      }
-      this.salesPersonId = this.billType[0].salesPersonId
-      this.storeId = this.billType[0].storeId
-      this.costCenterId = this.billType[0].costCenterId
-
-
-
+    if (this.billType[0].codingPolicy != 1) {
+      this.getBillCode();
     }
+    this.currencyId = this.billType[0].defaultCurrencyId
+    if (this.currencyId > 0) {
+      this.getCurrencyFactor(this.currencyId)
+    }
+    this.salesPersonId = this.billType[0].salesPersonId
+    this.storeId = this.billType[0].storeId
+    this.costCenterId = this.billType[0].costCenterId
+
+
+
+  }
+}
+   
 
   }
   getPayWays() {
@@ -1154,7 +1159,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
-    debugger
+    
     if (this.billType[0].affectOnCostPrice == true && (this.billType[0].kind == BillKindEnum['Purchases Bill'] || this.billType[0].kind == BillKindEnum['Purchases Returns Bill'])) {
       totalQuantity = this.selectedBillItem.quantity * this.selectedBillItem.unitTransactionFactor;
       totalCostPrice = this.selectedBillItem.quantity * this.selectedBillItem.price;
@@ -1337,7 +1342,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
     };
-     debugger
+     
     this.bill.billItems = this.billItem;
     this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
@@ -2116,6 +2121,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     }
     return new Promise<void>((resolve, reject) => {
+      
       let sub = this.itemCardService.getItemCard(itemId).subscribe({
         next: (res: any) => {
           resolve();
@@ -2175,6 +2181,20 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
             this.onChangeQuantityOrPrice();
           }
+          let row ={
+            billItemId:this.id,
+            itemCardId:itemId
+          }
+          this.dialog.open(BillDynamicDeterminantComponent,
+            {
+              width: '1000px',
+              data: row
+            })
+            .afterClosed().subscribe(result => {
+              if (result) {
+                //this.getBills();
+              }
+            });
         },
         error: (err: any) => {
           reject(err);
@@ -2341,7 +2361,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   onChangeQuantityOrPriceAdded(i: any) {
-    debugger
+    
     var totalQuantity=0;
     var totalCostPrice=0;
     if (this.billItem[i].quantity > 0 && this.billItem[i].price > 0) {
@@ -2375,9 +2395,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.billItem[i].total = this.billItem[i].totalBeforeTax;
 
       }
-      debugger
+      
       if (this.billType[0].affectOnCostPrice == true && (this.billType[0].kind == BillKindEnum['Purchases Bill'] || this.billType[0].kind == BillKindEnum['Purchases Returns Bill'])) {
-       debugger
+       
         totalQuantity = this.billItem[i].quantity * this.billItem[i].unitTransactionFactor;
         totalCostPrice = this.billItem[i].quantity * this.billItem[i].price;
   

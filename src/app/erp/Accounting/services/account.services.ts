@@ -95,6 +95,14 @@ export class AccountServiceProxy {
         return this.http.get<any>(this.baseUrl + "/api/Account/getLastCodeTree", { params: params });
        // return this.http.get<any>(this.baseUrl + "/api/Account/getLastCode?");
     }
+    getAccountBalance(id): Observable<any> {
+        let params = new HttpParams();
+        if (id != undefined){
+            params = params.append('accountId', id);
+        }
+    
+        return this.http.get<any>(this.baseUrl + "/api/Account/getAccountBalalnce", { params: params });
+    }
     deleteAccount(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);

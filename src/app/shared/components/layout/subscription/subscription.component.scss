@@ -78,3 +78,12 @@ $secondary-color: #293176;
         }
     }
 }
+
+@media only screen and (max-width: 767.98px) {
+    .page-body-wrapper.subscription .container-subscription .item-subscription a span {
+        font-size: 1rem !important;
+    }
+    .page-body-wrapper.subscription .page-body {
+        padding: 6rem 2rem 6rem !important;
+    }
+}

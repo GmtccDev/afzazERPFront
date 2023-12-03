@@ -24,13 +24,13 @@ import { ModuleType } from '../../../models/general-configurations';
 import { JournalEntryDetail } from '../../../models/journal';
 import { MessageModalComponent } from 'src/app/shared/components/message-modal/message-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ReportServiceProxy } from 'src/app/shared/common-services/report.service';
-import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { DatePipe } from '@angular/common';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { SearchDialogService } from 'src/app/shared/services/search-dialog.service';
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
+import { AccountServiceProxy } from '../../../services/account.services';
+import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -50,6 +50,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   currnetUrl;
   fromDate: any;
   toDate: any;
+  balance: number = 0;
   public show: boolean = false;
   journalEntry: [] = [];
   status: string = '';
@@ -59,6 +60,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   parentTypeId: number | undefined;
   settingId: number | undefined;
   costCenterName: any;
+  parentTypeCode: string;
 
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
@@ -109,6 +111,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   showSearchCurrencyModal = false;
   showSearchCashAccountModal = false;
   listDetail: JournalEntryDetail[] = [];
+  tempListDetail: JournalEntryDetail[] = [];
+
   disableFlag: boolean = false;
   fiscalPeriodId: any;
   fiscalPeriodName: any;
@@ -133,6 +137,10 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private searchDialog: SearchDialogService,
     private modalService: NgbModal,
+    private accountService: AccountServiceProxy,
+    private fiscalPeriodService: FiscalPeriodServiceProxy,
+
+
   ) {
     this.definejournalEntryForm();
 
@@ -150,7 +158,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       this.getCostCenter(),
       this.getCurrency(),
       this.getFiscalPeriod(),
-
       this.getAccount()
     ]).then(a => {
       this.getRouteData();
@@ -167,13 +174,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     }).catch(err => {
       this.spinner.hide();
     });
-
-
-
-
-
-
-
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
@@ -319,7 +319,10 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.isMultiCurrency = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
             this.serial = res?.response?.result?.items?.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
+            if (this.fiscalPeriodId != null) {
+              this.getfiscalPeriodById(this.fiscalPeriodId);
 
+            }
             if (this.currnetUrl == this.addUrl) {
               this.initGroup();
               this.onChangeJournal(this.journalEntryForm.controls.journalId.value);
@@ -483,7 +486,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           });
 
           this.listDetail = res.response?.journalEntriesDetail;
-
+          this.tempListDetail = res.response?.journalEntriesDetail;
           this.journalEntriesDetailDTOList.clear();
           this.listDetail.forEach(element => {
 
@@ -605,11 +608,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
 
   getjournalEntryCode() {
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.journalEntryService.getLastCode().subscribe({
-
         next: (res: any) => {
-
           this.toolbarPathData.componentList = this.translate.instant("component-names.journalEntry");
           this.journalEntryForm.patchValue({
             code: res.response
@@ -790,25 +790,110 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       return;
     }
 
+    var journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
 
-    let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
-    var count = journalEntriesDetail.length;
-    var index = count - 1;
-    if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
-      journalEntriesDetail.removeAt(index);
+    var i = 0;
+    if (journalEntriesDetail != null) {
+
+      this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
+
+        if (element.accountId != null) {
+          var value = 0;
+          if (element.jEDetailDebitLocal > 0) {
+            value = element.jEDetailDebitLocal;
+          }
+          if (element.jEDetailCreditLocal > 0) {
+            value = element.jEDetailCreditLocal;
+
+          }
+
+          this.getAccountBalance(element.accountId).then(a => {
+            var account = this.accountList.find(x => x.id == element.accountId);
+
+            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+            if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+              if (Number(this.balance) + value > account.debitLimit) {
+
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+            }
+
+
+            else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+              if (-(this.balance) + value > account.creditLimit) {
+
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+
+            }
+
+
+          });
+
+
+        }
+
+
+      })
+
+      setTimeout(() => {
+        if (i == 0) {
+          var count = journalEntriesDetail.length;
+          var index = count - 1;
+          if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+            journalEntriesDetail.removeAt(index);
+          }
+          if (this.journalEntryForm.valid) {
+            this.spinner.show();
+            this.confirmSave().then(a => {
+              this.spinner.hide();
+            }).catch(e => {
+              this.spinner.hide();
+            });
+
+          } else {
+
+            return this.journalEntryForm.markAllAsTouched();
+          }
+        }
+      }, 1000);
+
+
+
     }
-    if (this.journalEntryForm.valid) {
-      this.spinner.show();
-      this.confirmSave().then(a => {
-        this.spinner.hide();
-      }).catch(e => {
-        this.spinner.hide();
+  }
+
+  getAccountBalance(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountService.getAccountBalance(id).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          this.balance = res.response.data.result[0].balance;
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
       });
+      this.subsList.push(sub);
 
-    } else {
-
-      return this.journalEntryForm.markAllAsTouched();
-    }
+    });
   }
 
   isSelectCurrency: boolean = false;
@@ -982,34 +1067,100 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     }
 
     let journalEntriesDetail = this.journalEntryForm.get('journalEntriesDetail') as FormArray;
-    var count = journalEntriesDetail.length;
-    var index = count - 1;
-    if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
-      journalEntriesDetail.removeAt(index);
+
+    ///////here
+
+    var i = 0;
+    if (journalEntriesDetail != null) {
+
+      this.journalEntryForm.value.journalEntriesDetail.forEach(element => {
+
+        var oldElement = this.tempListDetail.find(x => x.accountId == element.accountId);
+
+        if (element.accountId != null) {
+          var value = 0;
+          if (element.jEDetailDebitLocal > 0) {
+            value = element.jEDetailDebitLocal;
+          }
+          if (element.jEDetailCreditLocal > 0) {
+            value = element.jEDetailCreditLocal;
+
+          }
+
+          this.getAccountBalance(element.accountId).then(a => {
+            var account = this.accountList.find(x => x.id == element.accountId);
+
+            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+            if (Number(this.balance) > 0) {
+
+              if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit && account.debitLimit > 0) {
+
+
+                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+            }
+            else if (Number(this.balance) < 0) {
+
+              if (-(this.balance) + value - oldElement.jeDetailCreditLocal > account.creditLimit && account.creditLimit > 0) {
+
+                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                i++;
+              }
+
+
+            }
+
+
+          });
+
+
+        }
+
+
+      })
     }
-    return new Promise<void>((resolve, reject) => {
 
-      var entity = this.journalEntryForm.value;
-      entity.branchId = this.branchId;
-      entity.companyId = this.companyId;
-      entity.date = this.dateService.getDateForInsert(this.date)
-      let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
-        next: (result: any) => {
-          this.spinner.show();
-          this.submited = false;
-          this.spinner.hide();
-          navigateUrl(this.listUrl, this.router);
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
+    ////////
+    setTimeout(() => {
+      if (i == 0) {
+        var count = journalEntriesDetail.length;
+        var index = count - 1;
+        if (stringIsNullOrEmpty(journalEntriesDetail.value[index].accountName)) {
+          journalEntriesDetail.removeAt(index);
+        }
+        return new Promise<void>((resolve, reject) => {
 
-        },
-      });
-      this.subsList.push(sub);
+          var entity = this.journalEntryForm.value;
+          entity.branchId = this.branchId;
+          entity.companyId = this.companyId;
+          entity.date = this.dateService.getDateForInsert(this.date)
+          let sub = this.journalEntryService.updateJournalEntry(entity).subscribe({
+            next: (result: any) => {
+              this.spinner.show();
+              this.submited = false;
+              this.spinner.hide();
+              navigateUrl(this.listUrl, this.router);
+            },
+            error: (err: any) => {
+              reject(err);
+            },
+            complete: () => {
 
-    });
+            },
+          });
+          this.subsList.push(sub);
+
+        });
+      }
+    }, 1000);
+
     //}
     //this.spinner.hide();
   }
@@ -1021,13 +1172,14 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           resolve();
           if (res.success) {
             this.showDetails = true;
+            debugger
             this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
             this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
             this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;
             this.parentType = res.response.data.result[0].parentType;
             this.parentTypeId = res.response.data.result[0].parentTypeId;
             this.settingId = res.response.data.result[0].settingId;
-
+            this.parentTypeCode = res.response.data.result[0].parentTypeCode;
 
           }
 
@@ -1191,6 +1343,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             //   // }
             // })
             this.checkPeriod = res.response.fiscalPeriodStatus;
+            this.fiscalPeriodName = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn;
+
           }
 
 
@@ -1368,33 +1522,59 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   openSearchCurrency(i, currencyName: any) {
     this.index = i;
     let searchTxt = currencyName;
-    let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-    let names = ['code', 'nameAr', 'nameEn'];
-    let title = 'بحث عن العملة';
-    let sub = this.searchDialog
-      .showDialog(lables, names, this.currencyList, title, searchTxt)
-      .subscribe((d) => {
-        if (d) {
-          this.onSelectCurrencyPopup(d);
-        }
-      });
-    this.subsList.push(sub);
+    let data = this.currencyList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+    if (data.length == 1) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      faControl['controls'].currencyId.setValue(data[0].id);
+      faControl['controls'].currencyName.setValue(this.lang == "ar" ? data[0].nameAr : data[0].nameEn);
+    }
+    else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن العملة';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.currencyList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            this.onSelectCurrencyPopup(d);
+          }
+        });
+      this.subsList.push(sub);
+    }
   }
   openSearchCostCenter(i, costCenterName: any) {
     this.index = i;
     let searchTxt = '';
     searchTxt = costCenterName ?? '';
-    let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-    let names = ['code', 'nameAr', 'nameEn'];
-    let title = 'بحث عن مركز التكلفة';
-    let sub = this.searchDialog
-      .showDialog(lables, names, this.costCenterList, title, searchTxt)
-      .subscribe((d) => {
-        if (d) {
-          this.onSelectCostCenter(d);
-        }
-      });
-    this.subsList.push(sub);
+    let data = this.costCenterList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+    if (data.length == 1) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      faControl['controls'].costCenterId.setValue(data[0].id);
+      faControl['controls'].costCenterName.setValue(this.lang == "ar" ? data[0].nameAr : data[0].nameEn);
+    }
+    else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن مركز التكلفة';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.costCenterList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            this.onSelectCostCenter(d);
+          }
+        });
+      this.subsList.push(sub);
+    }
   }
   changeSearchAccountName() {
 
@@ -1402,17 +1582,50 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   openSearchAccount(i, accountName: any) {
     this.index = i;
     let searchTxt = accountName;
-    let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-    let names = ['code', 'nameAr', 'nameEn'];
-    let title = 'بحث عن  الحساب';
-    let sub = this.searchDialog
-      .showDialog(lables, names, this.accountList, title, searchTxt)
-      .subscribe((d) => {
-        if (d) {
-          this.onSelectCashAccount(d);
-        }
+
+    let data = this.accountList.filter((x) => {
+      return (
+        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
+        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
+      );
+    });
+    if (data.length == 1) {
+      const faControl = (<FormArray>this.journalEntryForm.controls['journalEntriesDetail']).at(this.index);
+      faControl['controls'].accountId.setValue(data[0].id);
+      faControl['controls'].accountName.setValue(this.lang == "ar" ? data[0].nameAr : data[0].nameEn);
+    }
+    else {
+      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
+      let names = ['code', 'nameAr', 'nameEn'];
+      let title = 'بحث عن  الحساب';
+      let sub = this.searchDialog
+        .showDialog(lables, names, this.accountList, title, searchTxt)
+        .subscribe((d) => {
+          if (d) {
+            this.onSelectCashAccount(d);
+          }
+        });
+      this.subsList.push(sub);
+    }
+  }
+  getfiscalPeriodById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
+          this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
       });
-    this.subsList.push(sub);
+      this.subsList.push(sub);
+
+    });
   }
 }
 

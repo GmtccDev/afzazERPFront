@@ -1,0 +1,20 @@
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table th, .custom-table td {
+    border: 1px solid #dddddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .custom-input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  .table-wrapper {
+    max-height: 560px; /* Specify the maximum height for the table */
+    overflow: auto; /* Enable vertical scrolling */
+  }

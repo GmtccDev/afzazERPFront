@@ -14,7 +14,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
-
+import {BillDynamicDeterminantList, InsertBillDynamicDeterminant} from '../models/bill-dynamic-determinant';
 @Injectable({
     providedIn: 'root'
 })
@@ -94,6 +94,24 @@ export class ItemCardServiceProxy {
     }
     uploadFile(formData ):Observable<any>{
         return this.http.post<any>(environment.apiUrl + "/api/UploadFile/FileUpload", formData);
+    }
+    getBillDynamicDeterminant(billId: number | undefined, billItemId: number | undefined, itemCardId: number | undefined): Observable<any> {
+     
+        let queryParams = new HttpParams();
+        if (billId != undefined)
+            queryParams = queryParams.append("billId", billId);
+        if (billItemId != undefined)
+            queryParams = queryParams.append("billItemId", billItemId);
+        if (itemCardId != undefined)
+            queryParams = queryParams.append("itemCardId", itemCardId);
+       
+
+        return this.http.get<any>(this.baseUrl + "/api/ItemCard/getBillDynamicDeterminant?", { params: queryParams });
+
+    }
+    insertBillDynamicDeterminant(entity: InsertBillDynamicDeterminant): Observable<any> {
+
+        return this.http.post<InsertBillDynamicDeterminant>(environment.apiUrl + "/api/ItemCard/insertBillDynamicDeterminant?", entity);
     }
 }
 

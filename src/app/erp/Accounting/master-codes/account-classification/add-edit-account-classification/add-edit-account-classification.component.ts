@@ -1,4 +1,4 @@
-import {  Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { navigateUrl } from '../../../../../shared/helper/helper-url';
 import { AccountClassificationServiceProxy } from '../../../services/account-classification';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { AccountClassificationsForIncomeStatementArEnum, AccountClassificationsForIncomeStatementEnum, VoucherTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
+import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
 @Component({
   selector: 'app-add-edit-account-classification',
   templateUrl: './add-edit-account-classification.component.html',
@@ -29,7 +30,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
-  accountClassification: [] = [];
+  accountClassification: any;
   addUrl: string = '/accounting-master-codes/accountClassification/add-accountClassification';
   updateUrl: string = '/accounting-master-codes/accountClassification/update-accountClassification/';
   listUrl: string = '/accounting-master-codes/accountClassification';
@@ -56,6 +57,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
+    private alertsService: NotificationsAlertsService,
 
   ) {
     this.defineaccountClassificationForm();
@@ -64,10 +66,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+    this.getAccountClassifications();
     this.getAccountClassificationsTypes();
     this.spinner.show();
-   
+
     this.getRouteData();
     this.currnetUrl = this.router.url;
     if (this.currnetUrl == this.addUrl) {
@@ -87,7 +89,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
         this.id = params['id'];
         if (this.id) {
           this.getaccountClassificationById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.sharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
 
             this.spinner.hide();
 
@@ -160,7 +162,6 @@ export class AddEditAccountClassificationComponent implements OnInit {
       let sub = this.accountClassificationService.getAccountClassification(id).subscribe({
         next: (res: any) => {
           resolve();
-
           this.accountClassificationForm.setValue({
             id: res.response?.id,
             nameAr: res.response?.nameAr,
@@ -174,9 +175,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
-          //console.log('complete');
+          this.spinner.hide();
         },
       });
       this.subsList.push(sub);
@@ -191,6 +193,34 @@ export class AddEditAccountClassificationComponent implements OnInit {
       this.accountClassificationsTypes = convertEnumToArray(AccountClassificationsForIncomeStatementArEnum);
 
     }
+  }
+  getAccountClassifications() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountClassificationService.allAccountClassificationes(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+
+
+          if (res.success) {
+            this.accountClassification = res.response.items
+
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          //console.log('complete');
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
   showPassword() {
     this.show = !this.show;
@@ -249,11 +279,11 @@ export class AddEditAccountClassificationComponent implements OnInit {
             }
             this.defineaccountClassificationForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
-          }else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
+          } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
           }
           else if (currentBtn.action == ToolbarActions.Copy) {
-           this.getaccountClassificationCode();
+            this.getaccountClassificationCode();
           }
         }
       },
@@ -277,8 +307,22 @@ export class AddEditAccountClassificationComponent implements OnInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
+      debugger
       var entity = this.accountClassificationForm.value;
+      // var find = this.accountClassification.filter(c => (c.nameAr == entity.nameAr || c.nameEn == entity.nameEn) && c.type == entity.type)
+      // if (find && find.length > 0) {
+      //   if (this.lang == "ar") {
+      //     this.errorMessage = "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم"
+      //   }
+      //   else {
+      //     this.errorMessage = "It is not possible to save because the name or type is repeated with the name."
 
+      //   }
+      //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      //   this.spinner.hide();
+      //   return;
+
+      // }
       let sub = this.accountClassificationService.createAccountClassification(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -294,9 +338,11 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
           //console.log('complete');
+          this.spinner.hide();
         },
       });
       this.subsList.push(sub);
@@ -326,7 +372,20 @@ export class AddEditAccountClassificationComponent implements OnInit {
     this.accountClassificationForm.value.id = this.id;
     var entityDb = this.accountClassificationForm.value;
     entityDb.id = this.id;
+    // var find = this.accountClassification.filter(c => (c.nameAr == entityDb.nameAr || c.nameEn == entityDb.nameEn) && c.type == entityDb.type && c.id != entityDb.id)
+    // if (find && find.length > 0) {
+    //   if (this.lang == "ar") {
+    //     this.errorMessage = "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم"
+    //   }
+    //   else {
+    //     this.errorMessage = "It is not possible to save because the name or type is repeated with the name."
 
+    //   }
+    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //   this.spinner.hide();
+    //   return;
+
+    // }
     return new Promise<void>((resolve, reject) => {
 
       let sub = this.accountClassificationService.updateAccountClassification(entityDb).subscribe({
@@ -341,8 +400,10 @@ export class AddEditAccountClassificationComponent implements OnInit {
         },
         error: (err: any) => {
           reject(err);
+          this.spinner.hide();
         },
         complete: () => {
+          this.spinner.hide();
           //console.log('complete');
         },
       });

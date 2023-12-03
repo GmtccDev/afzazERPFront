@@ -123,7 +123,7 @@
 											</div>
 										</div>
 
-										<div class="col-12 col-md-2" *ngIf="showDetails">
+										<div class="col-12 col-md-1" *ngIf="showDetails">
 											<label for="entry-status"
 												class="label-name">{{'journalEntry.entry-status'|translate}} : </label>
 											<div class="form-group position-relative">
@@ -133,7 +133,14 @@
 										<div class="col-12 col-md-2" *ngIf="showDetails">
 											<label for="type" class="label-name">{{'general.type'|translate}} : </label>
 											<div class="form-group position-relative">
-												<label (click)="onViewClicked()">{{type}}</label>
+												<!-- <a (click)="onViewClicked()"  class="link-style" >{{type}}</a> -->
+												<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink" (click)="onViewClicked()">{{type}}</span>
+											</div>
+										</div>
+										<div class="col-12 col-md-1" *ngIf="showDetails">
+											<label for="type" class="label-name">{{'general.type-code'|translate}} : </label>
+											<div class="form-group position-relative">
+												{{parentTypeCode}}
 											</div>
 										</div>
 										<div class="col-12 col-md-2" *ngIf="showDetails">
@@ -252,7 +259,7 @@
 																						[ngModelOptions]="{standalone: true}"
 																						placeholder="{{'general.search'|translate}}"
 																						[ngClass]="{ 'required': (row.get('accountName')?.errors?.required && row.get('accountName')?.touched) }"
-																						type="text" name="accountId" 
+																						type="text" name="accountId"
 																						(keydown.Enter)="openSearchAccount(i,row.value.accountName)">
 																					<div *ngIf="row.get('accountName')?.errors?.required && row.get('accountName')?.touched"
 																						class="invalid-feedback">

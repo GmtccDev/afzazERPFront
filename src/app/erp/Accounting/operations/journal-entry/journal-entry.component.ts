@@ -168,7 +168,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 			let sub = this.companyService.getCompany(id).subscribe({
 				next: (res: any) => {
-					 ;
+					;
 
 					res?.response?.useHijri
 					if (res?.response?.useHijri) {
@@ -279,29 +279,20 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			title: this.lang == 'ar' ? ' الكود' : 'code ',
 			field: 'code',
 		},
-		this.lang == 'ar'
-			? {
-				title: '  تاريخ  ', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
+		{
+			title: this.lang == 'ar' ? ' تاريخ' : 'date ',
+			field: 'date', formatter: (cell, formatterParams, onRendered) => {
 
-					if (this.dateType == 2) {
-						return this.dateCalculation.getHijriDate(new Date(cell.getValue()));
-					}
-					else {
-						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
-
-					}
+				if (this.dateType == 2) {
+					return this.dateCalculation.getHijriDate(new Date(cell.getValue()));
 				}
-			} : {
-				title: 'Date', width: 300, field: 'date', formatter: (cell, formatterParams, onRendered) => {
-					if (this.dateType == 2) {
-						return this.dateCalculation.getHijriDate(new Date(cell.getValue()));
-					}
-					else {
-						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+				else {
+					return format(new Date(cell.getValue()), 'dd-MM-yyyy')
 
-					}
 				}
-			},
+			}
+		},
+
 		this.lang == 'ar'
 			? { title: ' اسم اليومية', field: 'journalNameAr' } : { title: 'Journal Name', field: 'journalNameEn' },
 		this.lang == 'ar'
@@ -315,38 +306,36 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.lang == 'ar'
 			? {
 				title: '  النوع  ', width: 300, field: 'entryTypeAr'
-				//, formatter: this.translateParentArEnum
+				, formatter: this.hyperLinkType
 				, cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			} : {
 				title: '   Type', width: 300, field: 'entryTypeEn'
-				//formatter: this.translateParentEnEnum
+				, formatter: this.hyperLinkType
 				, cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			},
+		{
+			title: this.lang == 'ar' ? ' كود النوع' : 'Type Code',
+			field: 'parentTypeCode',
+		},
 		this.lang == 'ar'
 			? {
 				title: 'النمط', field: 'settingAr'
 			} : {
 				title: 'Setting', field: 'settingEn'
 			},
-		this.lang == "ar" ? {
-			title: "عرض التقرير",
-			field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
+		{
+			title: this.lang == 'ar' ? ' عرض التقرير' : 'View Report ',
+			field: 'id', formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
 				this.onViewReportClicked(cell.getRow().getData().id);
 			}
 		}
-			:
-			{
-				title: "View Report",
-				field: "id", formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
-					this.onViewReportClicked(cell.getRow().getData().id);
-				}
-			}
+
 	];
 
 	menuOptions: SettingMenuShowOptions = {
@@ -418,7 +407,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 		if (parentType == EntryTypesEnum.RegisterIncomingCheque || parentType == EntryTypesEnum.CollectIncomingCheque
 			|| parentType == EntryTypesEnum.RejectIncomingCheque
-			) {
+		) {
 			window.open('accounting-operations/incomingCheque/update-incomingCheque/' + id, "_blank")
 		}
 		if (parentType == EntryTypesEnum.RegisterIssuingCheque || parentType == EntryTypesEnum.CollectIssuingCheque || parentType == EntryTypesEnum.RejectIssuingCheque) {
@@ -459,7 +448,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 	onMenuActionSelected(event: ITabulatorActionsSelected) {
 		if (event != null) {
-			 
+
 			if (event.actionName == 'Edit') {
 				this.edit(event.item.id);
 				this.sharedServices.changeButton({
@@ -562,6 +551,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		return text;
 
 	}
+
 	translateParentArEnum(cell, formatterParams, onRendered) {
 
 		const status = cell.getValue();
@@ -608,6 +598,11 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'Journal Entry') {
 			return text;
 		}
+		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		return iconHtml;
+	}
+	hyperLinkType(cell, formatterParams, onRendered) {
+		let text = cell.getValue();
 		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
 		return iconHtml;
 	}
@@ -666,7 +661,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 	kuwaiticalendar(adjust: any) {
-		 
+
 		var today = new Date();
 		if (adjust) {
 			var adjustmili = 1000 * 60 * 60 * 24 * adjust;

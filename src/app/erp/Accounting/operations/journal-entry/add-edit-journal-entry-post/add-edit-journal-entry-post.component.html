@@ -116,10 +116,18 @@
 													style="width:100%"></ng-select>
 											</div>
 										</div>
-										<div class="col-12 col-md-2" *ngIf="showDetails">
+										<div class="col-12 col-md-1" *ngIf="showDetails">
 											<label for="type" class="label-name">{{'general.type'|translate}} : </label>
 											<div class="form-group position-relative">
-												<label (click)="onViewClicked()">{{type}}</label>
+												<!-- <a (click)="onViewClicked()" class="link-style">{{type}}</a> -->
+												<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink" (click)="onViewClicked()">{{type}}</span>
+
+											</div>
+										</div>
+										<div class="col-12 col-md-1" *ngIf="showDetails">
+											<label for="type" class="label-name">{{'general.type-code'|translate}} : </label>
+											<div class="form-group position-relative">
+												{{parentTypeCode}}
 											</div>
 										</div>
 										<div class="col-12 col-md-2" *ngIf="showDetails">
