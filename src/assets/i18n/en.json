@@ -20,6 +20,7 @@
     "newPassword": "Add New password",
     "canChangeToParent": "The sub account parent cannot be changed to a main account",
     "dateGreater": "To date is small than from date",
+    "repeated-name":"It is not possible to save because the name or type is repeated with the name.",
     "general": {
         "searchFromDate": "From Date",
         "searchToDate": "To Date",
