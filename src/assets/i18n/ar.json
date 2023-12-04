@@ -497,7 +497,9 @@
         "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب",
         "type-code":"كود النوع",
         "entry-type":"نوع القيد",
-        "generate-success":"تم التوليد بنجاح"
+        "generate-success":"تم التوليد بنجاح",
+        "reference-type":"نوع المرجع",
+        "reference-number":"رقم المرجع"
 
 
 

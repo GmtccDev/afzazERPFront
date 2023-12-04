@@ -251,7 +251,10 @@
         "credit-limit-exceed-account":"The Credit limit has been exceeded for account",
         "type-code":"Type Code",
         "entry-type":"Entry Type",
-        "generate-success":"Generated successfully"
+        "generate-success":"Generated successfully",
+        "reference-type":"Reference Type",
+        "reference-number":"Reference Number"
+
        
     
     },
