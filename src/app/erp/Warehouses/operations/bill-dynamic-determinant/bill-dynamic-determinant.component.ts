@@ -44,20 +44,23 @@ export class BillDynamicDeterminantComponent implements OnInit {
            
             if (this.insertBillDynamicDeterminant.dynamicDeterminantListDto) {
               for (let i = 0; i < 10; i++) {
-            
-                this.insertBillDynamicDeterminant.dynamicDeterminantListDto.push({
+                this.insertBillDynamicDeterminant.itemCardDeterminantListDto.forEach(element => {
+                  this.insertBillDynamicDeterminant.dynamicDeterminantListDto.push({
                     id: null, // Set appropriate default values for other properties if needed
                     billId: null,
                     billItemId: this.billItemId,
                     itemCardId: this.itemCardId,
-                    determinantId: null,
-                    determinantsMaster: new DeterminantsMasterDto(),
+                    determinantId: element.determinantId,
+                    determinantsMaster: element.determinantsMaster,
                     value: "",
-                    valueType: null
+                    valueType: element.determinantsMaster.valueType
                   });
+            });
+              
                 
               }
             }
+            debugger
             console.log(this.insertBillDynamicDeterminant)
             
        
@@ -80,29 +83,45 @@ export class BillDynamicDeterminantComponent implements OnInit {
   insertBillDynamic() {
     return new Promise<void>((resolve, reject) => {
       debugger
+      const restructuredData = [];
+      this.insertBillDynamicDeterminant.dynamicDeterminantListDto.forEach((item) => {
+        this.insertBillDynamicDeterminant.itemCardDeterminantListDto.forEach((key) => {
+          const newObj = {
+            billId: item.billId,
+            billItemId: item.billItemId,
+            determinantId: key.determinantsMaster.id,
+            determinantsMaster: item.determinantsMaster,
+            id: item.id,
+            itemCardId: item.itemCardId,
+            value: item[key.determinantsMaster.id],
+            valueType: item.valueType
+          };
+          restructuredData.push(newObj);
+        });
+      });
       this.insertBillDynamicDeterminant.dynamicDeterminantListDto = this.insertBillDynamicDeterminant.dynamicDeterminantListDto.filter(item => {
         return item.value !== "" && item.value !== null && item.value !== undefined;
     });
       let enity=this.insertBillDynamicDeterminant;
-      let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
-        next: (res) => {
-          if (res) {
-            debugger
-            this.dynamicDeterminant = res
+    //   let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
+    //     next: (res) => {
+    //       if (res) {
+    //         debugger
+    //         this.dynamicDeterminant = res
            
-          }
-          resolve();
+    //       }
+    //       resolve();
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
+    //     },
+    //     error: (err: any) => {
+    //       reject(err);
+    //     },
+    //     complete: () => {
+    //     },
+    //   });
 
-      this.subsList.push(sub);
-    });
+    //   this.subsList.push(sub);
+     });
 
   }
   getDate(selectedDate: DateModel) {

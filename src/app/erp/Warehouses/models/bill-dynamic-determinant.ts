@@ -51,6 +51,6 @@ export class  BillDynamicDeterminantDto {
     id: number;
     itemCardId: any;
     determinantId: any;
-    determinantsMasterDto:DeterminantsMasterDto;
+    determinantsMaster:DeterminantsMasterDto;
 
 }
