@@ -4,9 +4,13 @@ import { PointOfSaleComponent } from './point-of-sale/point-of-sale.component';
 import { ShiftsComponent } from './shifts/shifts.component';
 
 const routes: Routes = [
-	{ path: 'pointOfSale', component: PointOfSaleComponent },
-	{ path: 'shifts', component: ShiftsComponent }
-
+	{
+		path: '',
+		children: [
+			{ path: 'pointOfSale', component: PointOfSaleComponent },
+			{ path: 'shifts', component: ShiftsComponent }
+		]
+	}
 ];
 
 @NgModule({

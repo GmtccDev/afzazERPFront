@@ -5,6 +5,7 @@ import { MasterCodesRoutingModule } from './master-codes-routing.module';
 import { PointOfSaleComponent } from './point-of-sale/point-of-sale.component';
 import { ShiftsComponent } from './shifts/shifts.component';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 	],
 	imports: [
 		CommonModule,
-		MasterCodesRoutingModule, NgSelectModule, FormsModule
+		MasterCodesRoutingModule, NgSelectModule, FormsModule, TranslateModule
 	]
 })
 export class MasterCodesModule { }
