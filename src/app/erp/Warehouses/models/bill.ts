@@ -80,6 +80,7 @@ export class BillItem {
 export class BillItemTax {
     id: number;
     billItemId: number;
+    name: string | undefined;
     taxId: number;
     taxRatio: number;
     taxValue: number;

@@ -766,7 +766,9 @@
         "item-name": "أسم الصنف",
         "cost-price": "سعر التكلفة",
         "type": "النوع",
-        "current-balance": "الرصيد الحالى"
+        "current-balance": "الرصيد الحالى",
+        "item-taxes":"ضرائب الصنف"
+
     },
     "bill-type": {
         "bill-type-information": "معلومات نمط الفاتورة",
