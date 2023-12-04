@@ -495,7 +495,12 @@
         "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات",
         "debit-limit-exceed-account":"لقد تجاوز حد الائتمان المدين للحساب",
         "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب",
-        "type-code":"كود النوع"
+        "type-code":"كود النوع",
+        "entry-type":"نوع القيد",
+        "generate-success":"تم التوليد بنجاح",
+        "reference-type":"نوع المرجع",
+        "reference-number":"رقم المرجع"
+
 
 
 
