@@ -80,6 +80,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private cd:ChangeDetectorRef,
     private companyService: CompanyServiceProxy,
     private dateService: DateCalculation,
+    
 
   ) {
 
@@ -266,7 +267,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region CRUD Operations
   delete(id: any) {
-    this.voucherService.deleteVoucher(id).subscribe((resonse) => {
+    this.voucherService.deleteVoucher(this.voucherTypeId, id).subscribe((resonse) => {
       this.getVouchers();
       this.router.navigate([this.listUrl + this.voucherTypeId])
         .then(() => {
@@ -302,7 +303,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.spinner.show();
-        let sub = this.voucherService.deleteVoucher(id).subscribe(
+        let sub = this.voucherService.deleteVoucher(this.voucherTypeId, id).subscribe(
           (resonse) => {
             this.getVouchers();
             this.router.navigate([this.listUrl + this.voucherTypeId])
@@ -501,11 +502,41 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   onViewReportClicked(id) {
-    localStorage.removeItem("itemId")
-    localStorage.setItem("itemId", id)
-    let reportType = 1;
-    let reportTypeId = 11;
-    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+
+    this.checkPrintPermission().then(a=>{
+      if(a){
+        localStorage.removeItem("itemId")
+        localStorage.setItem("itemId", id)
+        let reportType = 1;
+        let reportTypeId = 11;
+        this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+      }
+    })
+    
+    
+  }
+
+  checkPrintPermission(){
+    return new Promise<boolean>((resolve, reject)=>{
+      let sub = this.voucherService.checkPrintPermission(this.voucherTypeId).subscribe({
+        next:(res)=>{
+          debugger
+          if(res.status == "Success")
+          {
+            resolve(true);
+          }
+          else{
+            resolve(false);
+          }
+
+        },
+        error:(err)=>{
+          resolve(false);
+        },
+        complete:()=>{}
+      });
+      this.subsList.push(sub);
+    })
   }
   printReportFormatIcon() { //plain text value
 

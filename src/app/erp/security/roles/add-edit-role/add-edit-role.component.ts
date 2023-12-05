@@ -76,7 +76,7 @@ export class AddEditRoleComponent implements OnInit {
       this.getVoucherTypes(),
 	  this.getBillTypes()
     ]).then(a => {
-      debugger
+      
       this.preparePermissions();
       this.getRouteData();
       this.changePath();
@@ -257,6 +257,7 @@ export class AddEditRoleComponent implements OnInit {
 			let sub = this.roleService.getRole(id).subscribe({
 				next: (res: any) => {
 					resolve();
+					debugger
 					this.roleForm.setValue({
 						id: res.response?.id,
 						nameAr: res.response?.nameAr,
@@ -264,18 +265,23 @@ export class AddEditRoleComponent implements OnInit {
 						code: res.response?.code,
 						isActive: res.response?.isActive
 					});
-					debugger
 					
-					this.permission = res.response?.permissions?.items;
-					this.screens = res.response?.screens;
-					this.screensList = res.response?.screens;
+
 					const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
 					this.permission = res.response?.permissions?.items;
-					this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
 					this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
+					this.screens = this.screensList.map(item => ({
+						...item,
+						isCheckedAllScreen: item.isChecked
+						
+					  }));
+				         this.screens.forEach(element => {
+							element.isCheckedAllScreen = element.permissions.every(item => item.isChecked )
+						 });
 					this.vouchersRolePermissionsList = res.response?.vouchersRolesPermissions;
 					this.billsPermissionsList = res.response?.billsRolesPermissions;
-
+					this.masterSelected= this.permission.every(item => item.isChecked )
+                   
 				},
 				error: (err: any) => {
 					reject(err);
@@ -367,7 +373,7 @@ export class AddEditRoleComponent implements OnInit {
 			this.roleForm.value.permissions = this.permission;
 			this.setBillsTypesPermissions();
 			this.setVouchersRolePermissions();
-			debugger
+			
 			let sub = this.roleService.createRole(this.roleForm.value).subscribe({
 				next: (result: any) => {
 					this.spinner.show();
@@ -452,6 +458,7 @@ export class AddEditRoleComponent implements OnInit {
 	masterSelected = false;
 	searchText: string;
 	checkUncheckAll(evt) {
+		debugger
 		// evt.isChecked = true;
 		if (this.screens != null) {
 			this.screens.forEach(
@@ -467,23 +474,30 @@ export class AddEditRoleComponent implements OnInit {
 			this.screens.forEach(item => {
 				item.isChecked = evt.target.checked
 			})
+			this.screens = this.screens.map(item => ({
+				...item,
+				isCheckedAllScreen: evt.target.checked
+				
+			  }));
 			this.onSelecetAllVoucherTypesPermissions(evt);
 			this.onSelecetAllBillsTypesPermissions(evt)
+			
 		}
 
 		// this.permission.forEach((c) => c.isChecked = evt.target.checked)
 	}
 
 	updateCheckedOptions(item, evt) {
-
+          debugger
 		// this.permission[item.id].isChecked = evt.target.checked
 		let entity = this.permission.find(c => c.id == item.id);
 		entity.isChecked = evt.target.checked;
 		//  this.masterSelected = this.permission.every((item) => item.isChecked == true);
 	}
 	updateCheckedOption(item, evt) {
-
+           debugger;
 		// this.permission[item.id].isChecked = evt.target.checked
+		debugger
 		item.permissions.forEach(
 			(c) => {
 
@@ -583,7 +597,7 @@ export class AddEditRoleComponent implements OnInit {
   }
   billsPermissionsList:BillsRolePermissionsVm[]=[];
   setBillsTypesPermissions(){
-	debugger;
+	;
 	this.roleForm.value.billsRolesPermissions=[];
 	this.billsPermissionsList=[];
     this.billsRolesPermissions.forEach(a => {
@@ -601,7 +615,7 @@ export class AddEditRoleComponent implements OnInit {
   }
   vouchersRolePermissionsList:VouchersRolePermissionsVm[]=[];
   setVouchersRolePermissions(){
-	debugger;
+	;
 	this.roleForm.value.vouchersRolePermissions=[];
 	this.vouchersRolePermissionsList=[];
     this.vouchersRolePermissions.forEach(a => {
@@ -700,10 +714,16 @@ export class AddEditRoleComponent implements OnInit {
 
 
     });
+	
 
   }
+  isCheckAllPermissionsValue:boolean=false
+  isCheckAllPermissions(permissions)
+  {
+	return  permissions.every(item => item.isChecked)
+  }
+
+
 
 }
-
-
 
