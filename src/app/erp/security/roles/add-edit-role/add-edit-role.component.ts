@@ -11,9 +11,10 @@ import { ToolbarData } from '../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../shared/enum/toolbar-actions';
 import { navigateUrl } from '../../../../shared/helper/helper-url';
 import { RoleServiceProxy } from '../../services/role.servies'
-import { RoleDto, VouchersRolePermissionsVm } from '../../models/role';
+import { BillsRolePermissionsVm, RoleDto, VouchersRolePermissionsVm } from '../../models/role';
 import { SubscriptionService } from 'src/app/shared/components/layout/subscription/services/subscription.services';
 import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
+import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
 @Component({
 	selector: 'app-add-edit-role',
 	templateUrl: './add-edit-role.component.html',
@@ -28,6 +29,7 @@ export class AddEditRoleComponent implements OnInit {
   currnetUrl;
   role: RoleDto[] = [];
   vouchersRolePermissions:VouchersRolePermissionsVm[]=[]
+  billsRolesPermissions:BillsRolePermissionsVm[]=[]
   addUrl: string = '/security/role/add-role';
   updateUrl: string = '/security/role/update-role/';
   listUrl: string = '/security/role';
@@ -50,6 +52,7 @@ export class AddEditRoleComponent implements OnInit {
   constructor(
     private roleService: RoleServiceProxy,
     private router: Router,
+	private billTypeService: BillTypeServiceProxy,
     private fb: FormBuilder,
     private voucherTypeService: VoucherTypeServiceProxy,
     private route: ActivatedRoute,
@@ -70,11 +73,11 @@ export class AddEditRoleComponent implements OnInit {
     }
     this.getLastSubscription();
     Promise.all([
-      this.getVoucherTypes()
+      this.getVoucherTypes(),
+	  this.getBillTypes()
     ]).then(a => {
       debugger
       this.preparePermissions();
-
       this.getRouteData();
       this.changePath();
       this.listenToClickedButton();
@@ -154,11 +157,32 @@ export class AddEditRoleComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
-          this.toolbarPathData.componentList = this.translate.instant("component-names.voucher-types");
           if (res.success) {
-            debugger
+         
             this.voucherTypes = res.response.items
 
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  billTypes: any[] = [];
+  getBillTypes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.billTypes = res.response.items
           }
           resolve();
 
@@ -178,15 +202,16 @@ export class AddEditRoleComponent implements OnInit {
     let sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         this.id = params['id'];
-
         if (this.id) {
           this.getRoleById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
-            this.spinner.hide();
+			this.getRoleVoucherPermissions();
+			this.getRoleBillssPermissions();
 
+
+			this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.spinner.hide();
 					}).catch(err => {
 						this.spinner.hide();
-
 					});
 				}
 				else {
@@ -239,17 +264,17 @@ export class AddEditRoleComponent implements OnInit {
 						code: res.response?.code,
 						isActive: res.response?.isActive
 					});
-
-
+					debugger
+					
 					this.permission = res.response?.permissions?.items;
 					this.screens = res.response?.screens;
 					this.screensList = res.response?.screens;
-
 					const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
 					this.permission = res.response?.permissions?.items;
 					this.screens = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
 					this.screensList = res.response?.screens.filter(screenDto => moduleTypeToFilter.includes(screenDto.moduleType));
-
+					this.vouchersRolePermissionsList = res.response?.vouchersRolesPermissions;
+					this.billsPermissionsList = res.response?.billsRolesPermissions;
 
 				},
 				error: (err: any) => {
@@ -273,7 +298,6 @@ export class AddEditRoleComponent implements OnInit {
           this.roleForm.patchValue({
             code: res.response.code
           });
-           
           this.permission = res.response.permissions
           this.screens = res.response.screens;
           const moduleTypeToFilter = this.modulesType.map(module => Number(module.value));
@@ -341,6 +365,9 @@ export class AddEditRoleComponent implements OnInit {
 	confirmSave() {
 		return new Promise<void>((resolve, reject) => {
 			this.roleForm.value.permissions = this.permission;
+			this.setBillsTypesPermissions();
+			this.setVouchersRolePermissions();
+			debugger
 			let sub = this.roleService.createRole(this.roleForm.value).subscribe({
 				next: (result: any) => {
 					this.spinner.show();
@@ -379,6 +406,8 @@ export class AddEditRoleComponent implements OnInit {
 
 		this.roleForm.value.id = this.id;
 		this.roleForm.value.permissions = this.permission;
+		this.setBillsTypesPermissions();
+		this.setVouchersRolePermissions();
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.roleService.updateRole(this.roleForm.value).subscribe({
 				next: (result: any) => {
@@ -438,6 +467,8 @@ export class AddEditRoleComponent implements OnInit {
 			this.screens.forEach(item => {
 				item.isChecked = evt.target.checked
 			})
+			this.onSelecetAllVoucherTypesPermissions(evt);
+			this.onSelecetAllBillsTypesPermissions(evt)
 		}
 
 		// this.permission.forEach((c) => c.isChecked = evt.target.checked)
@@ -465,6 +496,7 @@ export class AddEditRoleComponent implements OnInit {
 
 	}
 
+
 	getModulesType() {
 		this.modulesType = [
 			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0' },
@@ -485,13 +517,13 @@ export class AddEditRoleComponent implements OnInit {
 
   }
   preparePermissions() {
-   debugger
+ 
     this.voucherTypes.forEach(c => {
       this.vouchersRolePermissions.push({
         voucherTypeId: c.id,
-        isUserChecked: true,
+        isUserChecked: false,
         id: c.id,
-        permissionsJson: JSON.parse(`{"isAdd":false, "isUpdate":false,"isDelete":false,"isIssue":false,"isSettelment":false, "isRenew":false,"isShow":false,"isDisplay":false,"isPrint":false}`),
+        permissionsJson: JSON.parse(`{"isAdd":false, "isUpdate":false,"isDelete":false, "isShow":false,"isPrint":false}`),
         roleId: 0,
         voucherArName: c.nameAr,
         voucherEnName: c.nameEn
@@ -500,23 +532,174 @@ export class AddEditRoleComponent implements OnInit {
       });
     });
 
-debugger
 
-    // this.entryTypes = this.managerService.getEntryTypes();
-    // this.entryTypes.forEach(c => {
-    //   this.entryTypesPermissions.push({
-    //     entryTypeId: c.id,
-    //     isUserChecked: true,
-    //     id: c.id,
-    //     permissionsJson: JSON.parse(`{"isAdd":false,"isUpdate":false,"isDelete":false,"isShow":false}`),
-    //     roleId: 0,
-    //     entryNameAr: c.entryNameAr,
-    //     entryNameEn: c.entryNameEn,
-    //   });
-    // });
+    this.billTypes.forEach(c => {
+      this.billsRolesPermissions.push({
+        billTypeId: c.id,
+        isUserChecked: false,
+        id: c.id,
+        permissionsJson: JSON.parse(`{"isAdd":false,"isUpdate":false,"isDelete":false,"isShow":false}`),
+        roleId: 0,
+        billArName: c.nameAr,
+        billEnName: c.nameEn,
+      });
+    });
 
 
 
+
+  }
+  onCheckboxBillTypesChange(e: any, billsPermissions: BillsRolePermissionsVm, key) {
+    
+    billsPermissions.permissionsJson[key] = e.target.checked;
+
+  }
+  onSelecetPageAllBillsTypePermissions(event, billsPermissions: BillsRolePermissionsVm) {
+    
+    billsPermissions.isUserChecked = event.target.checked;
+    for (let [key, value] of Object.entries(billsPermissions.permissionsJson)) {
+    
+		billsPermissions.permissionsJson[key] = event.target.checked;
+    }
+
+
+
+  }
+  onCheckboxVouchersTypesChange(e: any, voucherPermissions: VouchersRolePermissionsVm, key) {
+    
+    voucherPermissions.permissionsJson[key] = e.target.checked;
+
+  }
+  onSelecetAllVouchersRolePermissions(event, voucherPermissions: VouchersRolePermissionsVm) {
+    
+    voucherPermissions.isUserChecked = event.target.checked;
+    for (let [key, value] of Object.entries(voucherPermissions.permissionsJson)) {
+    
+		voucherPermissions.permissionsJson[key] = event.target.checked;
+    }
+
+
+
+  }
+  billsPermissionsList:BillsRolePermissionsVm[]=[];
+  setBillsTypesPermissions(){
+	debugger;
+	this.roleForm.value.billsRolesPermissions=[];
+	this.billsPermissionsList=[];
+    this.billsRolesPermissions.forEach(a => {
+		this.billsPermissionsList.push({
+        billTypeId: a.billTypeId,
+		billArName:a.billArName,
+		billEnName:a.billEnName,
+		roleId:a.roleId,
+        id: 0,
+        isUserChecked: a.isUserChecked,
+        permissionsJson: JSON.stringify(a.permissionsJson),
+      });
+    });
+	this.roleForm.value.billsRolesPermissions = this.billsPermissionsList;
+  }
+  vouchersRolePermissionsList:VouchersRolePermissionsVm[]=[];
+  setVouchersRolePermissions(){
+	debugger;
+	this.roleForm.value.vouchersRolePermissions=[];
+	this.vouchersRolePermissionsList=[];
+    this.vouchersRolePermissions.forEach(a => {
+		this.vouchersRolePermissionsList.push({
+        voucherTypeId: a.voucherTypeId,
+		voucherArName:a.voucherArName,
+		voucherEnName:a.voucherEnName,
+		roleId:a.roleId,
+        id: 0,
+        isUserChecked: a.isUserChecked,
+        permissionsJson: JSON.stringify(a.permissionsJson),
+      });
+    });
+	this.roleForm.value.vouchersRolesPermissions = this.vouchersRolePermissionsList;
+  }
+  getRoleVoucherPermissions() {
+
+    if (this.role) {
+      if (this.vouchersRolePermissions) {
+        this.vouchersRolePermissionsList.forEach(x => {
+
+          let c = this.vouchersRolePermissions.find(a => a.voucherTypeId == x.voucherTypeId);
+
+          if (c) {
+            c.permissionsJson = JSON.parse(x.permissionsJson);
+			c.isUserChecked=x.isUserChecked;
+          }
+        })
+      }
+
+
+    }
+}
+
+	getRoleBillssPermissions() {
+	
+		if (this.role) {
+		  if (this.billsPermissionsList) {
+			this.billsPermissionsList.forEach(x => {
+	
+			  let c = this.billsRolesPermissions.find(a => a.billTypeId == x.billTypeId);
+	
+			  if (c) {
+				c.permissionsJson = JSON.parse(x.permissionsJson);
+				c.isUserChecked=x.isUserChecked;
+			  }
+			})
+		  }
+	
+	
+		}
+  }
+  onSelecetAllVoucherTypesPermissions(event) {
+    const checkAllPerPage = document.getElementsByClassName('choose-all-voucher-type') as HTMLCollectionOf<HTMLInputElement>;
+    if (event.target.checked) {
+      for (let i = 0; i < checkAllPerPage.length; i++) {
+        checkAllPerPage[i].checked = true
+      }
+    }
+
+    if (!event.target.checked) {
+      for (let i = 0; i < checkAllPerPage.length; i++) {
+        checkAllPerPage[i].checked = false
+      }
+    }
+
+    this.vouchersRolePermissions.forEach(c => {
+      for (let [key, value] of Object.entries(c.permissionsJson)) {
+        c.permissionsJson[key] = event.target.checked;
+        c.isUserChecked = event.target.checked;
+      }
+
+
+    });
+
+  }
+  onSelecetAllBillsTypesPermissions(event) {
+    const checkAllPerPage = document.getElementsByClassName('choose-all-bill-type') as HTMLCollectionOf<HTMLInputElement>;
+    if (event.target.checked) {
+      for (let i = 0; i < checkAllPerPage.length; i++) {
+        checkAllPerPage[i].checked = true
+      }
+    }
+
+    if (!event.target.checked) {
+      for (let i = 0; i < checkAllPerPage.length; i++) {
+        checkAllPerPage[i].checked = false
+      }
+    }
+
+    this.billsRolesPermissions.forEach(c => {
+      for (let [key, value] of Object.entries(c.permissionsJson)) {
+        c.permissionsJson[key] = event.target.checked;
+        c.isUserChecked = event.target.checked;
+      }
+
+
+    });
 
   }
 

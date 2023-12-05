@@ -777,7 +777,8 @@
         "height-factor": "Height Factor",
         "width-factor": "Width Factor",
         "length-factor": "Length Factor",
-        "tranaction-factor": "Transaction Factor"
+        "tranaction-factor": "Transaction Factor",
+        "item-taxes":"Item Taxes"
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",
@@ -892,10 +893,6 @@
         "isCancelDefaultReport": "Cancel Default Report ",
         "isView": "View",
         "isNew": "New",
-        "isRenew": "Renew Contarct",
-        "isSettelment": "Contract Settelment",
-        "isIssue": "Issue Contract",
-        "isDisplay": "Display",
         "isPrint": "Print"
     },
     "twoRows": "There must be at least two rows",

@@ -505,7 +505,8 @@
                                                                 <th>
                                                                     {{'general.unit'|translate}}
                                                                 </th>
-                                                                <th *ngIf="false">{{'general.unit-transaction-factor'|translate}}</th>
+                                                                <th *ngIf="false">
+                                                                    {{'general.unit-transaction-factor'|translate}}</th>
                                                                 <th>
                                                                     {{'general.quantity'|translate}}
                                                                 </th>
@@ -645,7 +646,7 @@
                                                                 <td
                                                                     *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual!=true">
                                                                     <input type="number" disabled
-                                                                        [(ngModel)]="billItem[i].totalTax"
+                                                                        [(ngModel)]="billItem[i].totalTax" (contextmenu)="openItemTax(i)"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 
@@ -783,6 +784,7 @@
                                                                     *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual!=true">
                                                                     <input type="number" disabled
                                                                         [(ngModel)]="selectedBillItem.totalTax"
+                                                                        (contextmenu)="openItemTax(-1)"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 
@@ -1299,3 +1301,50 @@
 <app-public-search-modal [isVisible]="showSearchProjectModal" [routeApi]="routeProjectApi"
     (emitClose)="showSearchProjectModal = false;" (emitSearch)="onSelectProject($event)">
 </app-public-search-modal>
+
+<dialog id="itemTaxDialog">
+    <div class="align-items-baseline d-flex justify-content-between w-100">
+        <h2 mat-dialog-title>{{'item.item-taxes' | translate}}</h2>
+        <button class="ml-auto close" nz-button nzType="danger" (click)="closeItemTaxDialog()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <input type="search" class="form-control" [(ngModel)]="searchText" (keyup)="Search()"
+                    placeholder="{{'general.search'|translate}}" >
+            </div>
+        </div> -->
+        <table class="table table-responsive text-center" style="overflow-y: scroll !important;">
+            <thead>
+                <th>#</th>
+                <th>{{'general.name'|translate}}</th>
+                <th>{{'general.tax-ratio'|translate}}</th>
+                <th>{{'general.tax-value'|translate}}</th>
+
+            </thead>
+            <tr *ngFor="let item of billItemTax; let i= index;">
+                <td>{{i+1}}</td>
+                <td>{{billItemTax[i].name}}</td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="billItemTax[i].taxRatio" (keyup)="getTotalTax(i)">
+
+                </td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="billItemTax[i].taxValue">
+
+                </td>
+
+
+
+            </tr>
+
+        </table>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button class="btn-secondary btn" (click)="closeItemTaxDialog()">{{'buttons.close'|translate}}</button>
+    </mat-dialog-actions>
+</dialog>
