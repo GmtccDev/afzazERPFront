@@ -140,8 +140,10 @@ export class BillDynamicDeterminantComponent implements OnInit {
         item.dateValue = null;
       }
     });
+    this.insertBillDynamicDeterminant.dynamicDeterminantListDto=restructuredData;
     let enity = this.insertBillDynamicDeterminant;
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
         next: (res) => {
           if (res) {
