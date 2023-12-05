@@ -497,7 +497,9 @@
         "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب",
         "type-code":"كود النوع",
         "entry-type":"نوع القيد",
-        "generate-success":"تم التوليد بنجاح"
+        "generate-success":"تم التوليد بنجاح",
+        "reference-type":"نوع المرجع",
+        "reference-number":"رقم المرجع"
 
 
 
@@ -764,7 +766,9 @@
         "item-name": "أسم الصنف",
         "cost-price": "سعر التكلفة",
         "type": "النوع",
-        "current-balance": "الرصيد الحالى"
+        "current-balance": "الرصيد الحالى",
+        "item-taxes":"ضرائب الصنف"
+
     },
     "bill-type": {
         "bill-type-information": "معلومات نمط الفاتورة",
@@ -861,7 +865,7 @@
         "isCancel": "إلغاء",
         "isClose": "اغلاق",
         "isAdd": "إضافة",
-        "isShow": "عرض في القائمة",
+        "isShow": "عرض  ",
         "activate-user": "تنشيط المستخدم",
         "disactive-user": "إلغاء تفعيل المستخدم",
         "print": "طباعة",
@@ -876,10 +880,6 @@
         "isCancelDefaultReport": "إلغاء التقرير الافتراضي",
         "isView": "عرض",
         "isNew": "جديد",
-        "isRenew":"تجديد العقد",
-        "isSettelment":"تسوية العقد",
-        "isIssue":"تعميد العقد",
-        "isDisplay":"فتح العقد",
         "isPrint":"طباعة"
       },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",

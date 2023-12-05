@@ -132,7 +132,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     private alertsService: NotificationsAlertsService,
     private currencyServiceProxy: CurrencyServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
-    private modalService: NgbModal,
     private reportViewerService: ReportViewerService,
     private accountService: AccountServiceProxy,
 

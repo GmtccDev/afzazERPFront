@@ -28,6 +28,7 @@ import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { MatDialog } from '@angular/material/dialog';
 import { BillDynamicDeterminantComponent } from '../../bill-dynamic-determinant/bill-dynamic-determinant.component';
+import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -55,6 +56,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   bill: Bill = new Bill();
   billItem: BillItem[] = [];
   billItemTax: BillItemTax[] = [];
+  selectedBillItemTax: BillItemTax[] = [];
+
   temporaryBillItemTax: BillItemTax[] = [];
 
   selectedBillItem: BillItem = new BillItem();
@@ -129,7 +132,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   billTypeKind: any;
   billTypeCalculatingTax: boolean;
   billTypeCalculatingTaxManual: boolean;
-
+  showItemTax: boolean = false;
   currency: any;
   mainCurrencyId: number;
   paidAccountId: number;
@@ -152,7 +155,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchSalesPersonModal = false;
   showSearchStoreModal = false;
   showSearchProjectModal = false;
-
+  billItemId: any = -1;
   fiscalPeriodId: number;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
@@ -188,6 +191,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private taxServiceProxy: TaxServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     public dialog: MatDialog,
+    private billTypeService: BillTypeServiceProxy,
+
   ) {
     this.defineBillForm();
     this.clearSelectedItemData();
@@ -409,30 +414,32 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#endregion
   getBillTypeById(id) {
-if(this.billTypesList.length>0){
-  this.billType = this.billTypesList.filter(x => x.id == id);
-  this.billTypeKind = this.billType[0].kind;
-  this.billTypeCalculatingTax = this.billType[0].calculatingTax;
-  this.billTypeCalculatingTaxManual = this.billType[0].calculatingTaxManual;
 
-  if (this.id == 0) {
+    if (this.billTypesList.length > 0) {
 
-    if (this.billType[0].codingPolicy != 1) {
-      this.getBillCode();
+      this.billType = this.billTypesList.filter(x => x.id == id);
+      this.billTypeKind = this.billType[0].kind;
+      this.billTypeCalculatingTax = this.billType[0].calculatingTax;
+      this.billTypeCalculatingTaxManual = this.billType[0].calculatingTaxManual;
+
+      if (this.id == 0) {
+
+        if (this.billType[0].codingPolicy != 1) {
+          this.getBillCode();
+        }
+        this.currencyId = this.billType[0].defaultCurrencyId
+        if (this.currencyId > 0) {
+          this.getCurrencyFactor(this.currencyId)
+        }
+        this.salesPersonId = this.billType[0].salesPersonId
+        this.storeId = this.billType[0].storeId
+        this.costCenterId = this.billType[0].costCenterId
+
+
+
+      }
     }
-    this.currencyId = this.billType[0].defaultCurrencyId
-    if (this.currencyId > 0) {
-      this.getCurrencyFactor(this.currencyId)
-    }
-    this.salesPersonId = this.billType[0].salesPersonId
-    this.storeId = this.billType[0].storeId
-    this.costCenterId = this.billType[0].costCenterId
 
-
-
-  }
-}
-   
 
   }
   getPayWays() {
@@ -562,7 +569,7 @@ if(this.billTypesList.length>0){
                   additionValue: element.additionValue,
                   discountRatio: element.discountRatio,
                   discountValue: element.discountValue,
-                  totalTax: element.totalTax,
+                  totalTax: Math.round(element.totalTax),
                   total: element.total,
                   storeId: element.storeId,
                   costCenterId: element.costCenterId,
@@ -906,10 +913,10 @@ if(this.billTypesList.length>0){
   }
   getBillTypes() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeBillTypeApi).subscribe({
+      let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            this.billTypesList = res.response;
+            this.billTypesList = res.response.items
 
           }
           resolve();
@@ -919,7 +926,6 @@ if(this.billTypesList.length>0){
           reject(err);
         },
         complete: () => {
-
         },
       });
 
@@ -1136,7 +1142,36 @@ if(this.billTypesList.length>0){
     this.billForm.controls.projectId.setValue(event.id);
     this.showSearchProjectModal = false;
   }
+  getTotalTax(i) {
+    //here
 
+
+    let a = this.billItemId;
+    if (this.billItemId == -1) {
+      this.billItemTax[i].taxValue = Math.round(Number(this.selectedBillItem.totalBeforeTax * this.billItemTax[i].taxRatio / 100));
+      this.selectedBillItem.totalTax = 0;
+      this.selectedBillItem.total = 0;
+      this.billItemTax.forEach(element => {
+        this.selectedBillItem.totalTax += Math.round(Number(element.taxValue));
+
+      });
+      this.selectedBillItem.total = Math.round(Number(this.selectedBillItem.totalBeforeTax) + Number(this.selectedBillItem.totalTax));
+
+    }
+    else {
+      this.billItemTax[i].taxValue = Math.round(Number(this.billItem[a].totalBeforeTax * this.billItemTax[i].taxRatio / 100));
+      this.billItem[a].totalTax = 0;
+      this.billItem[a].total = 0;
+      this.billItemTax.forEach(element => {
+        this.billItem[a].totalTax += Math.round(Number(element.taxValue));
+
+      });
+      this.billItem[a].total = Math.round(Number(this.billItem[a].totalBeforeTax) + Number(this.billItem[a].totalTax));
+
+    }
+
+
+  }
   addItem() {
     var totalQuantity = 0;
     var totalCostPrice = 0;
@@ -1159,7 +1194,7 @@ if(this.billTypesList.length>0){
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return;
     }
-    
+
     if (this.billType[0].affectOnCostPrice == true && (this.billType[0].kind == BillKindEnum['Purchases Bill'] || this.billType[0].kind == BillKindEnum['Purchases Returns Bill'])) {
       totalQuantity = this.selectedBillItem.quantity * this.selectedBillItem.unitTransactionFactor;
       totalCostPrice = this.selectedBillItem.quantity * this.selectedBillItem.price;
@@ -1177,6 +1212,8 @@ if(this.billTypesList.length>0){
       }
 
     }
+    debugger
+    this.billItemTax.find(x=>x.billItemId == -1).billItemId = this.billItem.length;
     this.billItem.push({
       id: 0,
       billId: this.selectedBillItem?.billId ?? 0,
@@ -1194,7 +1231,7 @@ if(this.billTypesList.length>0){
       discountRatio: this.selectedBillItem?.discountRatio ?? 0,
       discountValue: this.selectedBillItem?.discountValue ?? 0,
       totalTax: this.billType[0].calculatingTax == true && this.billType[0].calculatingTaxManual != true
-        ? this.selectedBillItem?.totalTax ?? 0 : null,
+        ? Math.round(this.selectedBillItem?.totalTax) ?? 0 : null,
       total: this.selectedBillItem?.total ?? 0,
       storeId: this.selectedBillItem?.storeId ?? null,
       costCenterId: this.selectedBillItem?.costCenterId ?? null,
@@ -1208,7 +1245,9 @@ if(this.billTypesList.length>0){
 
 
     });
+
     this.bill!.billItems = this.billItem;
+
 
 
     this.clearSelectedItemData();
@@ -1342,7 +1381,7 @@ if(this.billTypesList.length>0){
 
 
     };
-     
+
     this.bill.billItems = this.billItem;
     this.bill.billAdditionAndDiscounts = this.billAdditionAndDiscount;
 
@@ -2121,7 +2160,7 @@ if(this.billTypesList.length>0){
 
     }
     return new Promise<void>((resolve, reject) => {
-      
+
       let sub = this.itemCardService.getItemCard(itemId).subscribe({
         next: (res: any) => {
           resolve();
@@ -2181,9 +2220,9 @@ if(this.billTypesList.length>0){
           if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
             this.onChangeQuantityOrPrice();
           }
-          let row ={
-            billItemId:this.id,
-            itemCardId:itemId
+          let row = {
+            billItemId: this.id,
+            itemCardId: itemId
           }
           this.dialog.open(BillDynamicDeterminantComponent,
             {
@@ -2252,12 +2291,20 @@ if(this.billTypesList.length>0){
 
     });
   }
+  closeItemTaxDialog() {
+    let itemTaxDialog: any = <any>document.getElementById("itemTaxDialog");
+    itemTaxDialog.close();
+
+  }
   getTaxData(id, i) {
+
+    this.lang = localStorage.getItem("language");
     return new Promise<void>((resolve, reject) => {
       let sub = this.taxServiceProxy.getTax(id).subscribe({
         next: (res: any) => {
           resolve();
           if (res.response?.taxDetail != null) {
+
             res.response?.taxDetail.forEach(element => {
               let fromDate = element.fromDate;
               let toDate = element.toDate;
@@ -2281,24 +2328,25 @@ if(this.billTypesList.length>0){
               currentDate = now.getFullYear() + '-' + month + '-' + day
 
               if (currentDate >= fromDate && currentDate <= toDate) {
-
+                debugger
                 this.billItemTax.push(
                   {
                     id: 0,
-                    billItemId: 0,
+                    billItemId: i,
                     taxId: res.response?.id,
+                    name: this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn,
                     taxRatio: element.taxRatio,
-                    taxValue: this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100)
+                    taxValue: Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100))
                   }
                 )
                 if (i == -1) {
 
-                  this.selectedBillItem.totalTax += this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100);
+                  this.selectedBillItem.totalTax += Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100));
                   this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + this.selectedBillItem.totalTax;
 
                 }
                 else {
-                  this.billItem[i].totalTax += this.billItem[i].totalBeforeTax * (element.taxRatio / 100);
+                  this.billItem[i].totalTax += Math.round(this.billItem[i].totalBeforeTax * (element.taxRatio / 100));
                   this.billItem[i].total = Number(this.billItem[i].totalBeforeTax) + this.billItem[i].totalTax;
                   this.calculateValues();
 
@@ -2324,7 +2372,7 @@ if(this.billTypesList.length>0){
   }
   onChangeQuantityOrPrice() {
     if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
-      this.billItemTax = [];
+      //this.billItemTax = [];
       this.selectedBillItem.totalBeforeTax = Number(this.selectedBillItem.quantity) * Number(this.selectedBillItem.price);
       if (this.billType[0].calculatingTax == true) {
         this.selectedBillItem.totalTax = 0;
@@ -2361,11 +2409,10 @@ if(this.billTypesList.length>0){
     }
   }
   onChangeQuantityOrPriceAdded(i: any) {
-    
-    var totalQuantity=0;
-    var totalCostPrice=0;
+    var totalQuantity = 0;
+    var totalCostPrice = 0;
     if (this.billItem[i].quantity > 0 && this.billItem[i].price > 0) {
-      this.billItemTax = [];
+      //this.billItemTax = [];
       this.billItem[i].totalTax = 0;
       this.billItem[i].totalBeforeTax = Number(this.billItem[i].quantity) * Number(this.billItem[i].price);
       if (this.billType[0].calculatingTax == true) {
@@ -2395,27 +2442,27 @@ if(this.billTypesList.length>0){
         this.billItem[i].total = this.billItem[i].totalBeforeTax;
 
       }
-      
+
       if (this.billType[0].affectOnCostPrice == true && (this.billType[0].kind == BillKindEnum['Purchases Bill'] || this.billType[0].kind == BillKindEnum['Purchases Returns Bill'])) {
-       
+
         totalQuantity = this.billItem[i].quantity * this.billItem[i].unitTransactionFactor;
         totalCostPrice = this.billItem[i].quantity * this.billItem[i].price;
-  
+
         if (this.billType[0].additionAffectsCostPrice) {
           totalCostPrice = totalCostPrice + this.billItem[i]?.additionValue ?? 0
         }
         if (this.billType[0].discountAffectsCostPrice) {
           totalCostPrice = totalCostPrice - this.billItem[i]?.discountValue ?? 0
-  
+
         }
         if (this.billType[0].taxAffectsCostPrice) {
           totalCostPrice = totalCostPrice + this.billItem[i]?.totalTax ?? 0
-  
+
         }
         this.billItem[i].totalQuantity = Number(totalQuantity);
-        this.billItem[i].totalCostPrice=Number(totalCostPrice);
+        this.billItem[i].totalCostPrice = Number(totalCostPrice);
 
-  
+
       }
       this.billItem[i].additionRatio = 0;
       this.billItem[i].additionValue = 0;
@@ -2464,16 +2511,16 @@ if(this.billTypesList.length>0){
         this.billItemTax.forEach(element => {
           if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
 
-            this.selectedBillItem.totalTax += (Number(Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)) * (element.taxRatio / 100))
+            this.selectedBillItem.totalTax += Math.round((Number(Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)) * (element.taxRatio / 100)));
             element.taxValue = (Number(Number(this.selectedBillItem.quantity * this.selectedBillItem.price) + Number(this.selectedBillItem.additionValue) - Number(this.selectedBillItem.discountValue)) * (element.taxRatio / 100));
 
           }
           else {
 
-            this.selectedBillItem.totalTax += Number(this.selectedBillItem.quantity * this.selectedBillItem.price * (element.taxRatio / 100))
+            this.selectedBillItem.totalTax += Math.round((Number(this.selectedBillItem.quantity * this.selectedBillItem.price * (element.taxRatio / 100))));
 
             element.taxValue = Number(this.selectedBillItem.quantity * this.selectedBillItem.price * (element.taxRatio / 100));
-        
+
           }
         });
         if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
@@ -2487,7 +2534,7 @@ if(this.billTypesList.length>0){
             + this.selectedBillItem.totalTax;
         }
       }
-  
+
     }
     else {
       this.selectedBillItem.total =
@@ -2540,13 +2587,13 @@ if(this.billTypesList.length>0){
         this.billItemTax.forEach(element => {
           if (this.billType[0].calculatingTaxOnPriceAfterDeductionAndAddition == true) {
 
-            this.billItem[i].totalTax += (Number(Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)) * (element.taxRatio / 100))
+            this.billItem[i].totalTax += Math.round((Number(Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)) * (element.taxRatio / 100)));
             element.taxValue = (Number(Number(this.billItem[i].quantity * this.billItem[i].price) + Number(this.billItem[i].additionValue) - Number(this.billItem[i].discountValue)) * (element.taxRatio / 100));
 
           }
           else {
 
-            this.billItem[i].totalTax += Number(this.billItem[i].quantity * this.billItem[i].price * (element.taxRatio / 100))
+            this.billItem[i].totalTax += Math.round(Number(this.billItem[i].quantity * this.billItem[i].price * (element.taxRatio / 100)));
 
             element.taxValue = Number(this.billItem[i].quantity * this.billItem[i].price * (element.taxRatio / 100));
 
@@ -2587,7 +2634,7 @@ if(this.billTypesList.length>0){
 
       }
       this.billItem[i].totalQuantity = Number(totalQuantity);
-      this.billItem[i].totalCostPrice=Number(totalCostPrice);
+      this.billItem[i].totalCostPrice = Number(totalCostPrice);
 
     }
     this.calculateValues();
@@ -2716,6 +2763,17 @@ if(this.billTypesList.length>0){
     this.bill!.billAdditionAndDiscounts = this.billAdditionAndDiscount;
     this.clearSelectedBilladditionDiscountData();
     this.calculateValues();
+  }
+  openItemTax(i) {
+    debugger
+    // this.billItemId = this.billItem.length;
+
+    this.billItemTax = this.billItemTax.filter(x => x.billItemId == i);
+
+
+    let itemTaxDialog: any = <any>document.getElementById("itemTaxDialog");
+    itemTaxDialog.showModal();
+
   }
   clearValues() {
     this.totalBeforeTax = 0;
