@@ -884,10 +884,6 @@
         "isCancelDefaultReport": "Cancel Default Report ",
         "isView": "View",
         "isNew": "New",
-        "isRenew": "Renew Contarct",
-        "isSettelment": "Contract Settelment",
-        "isIssue": "Issue Contract",
-        "isDisplay": "Display",
         "isPrint": "Print"
       },
     "twoRows": "There must be at least two rows",
