@@ -49,7 +49,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   accountReceivablesId: any;
   balance: number = 0;
   tempListDetail: any[] = [];
-  oldAmountLocal:number=0;
+  oldAmountLocal: number = 0;
   public show: boolean = false;
   lang = localStorage.getItem("language")
   incomingCheque: [] = [];
@@ -99,7 +99,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   totalDebit: number;
   totalDebitLocal: number;
   checkPeriod: any;
-  isMultiCurrency: boolean;
+  isMultiCurrency: boolean = false;
   date!: DateModel;
   dueDate!: DateModel;
   currencyFactor: number;
@@ -123,9 +123,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private reportViewerService: ReportViewerService,
     private accountService: AccountServiceProxy,
-
-
-
 
   ) {
     this.defineIncomingChequeForm();
@@ -251,12 +248,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
         next: (res) => {
           resolve();
           if (res.success && res.response.result.items.length > 0) {
+
             this.isMultiCurrency = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MultiCurrency).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.JournalEntriesSerial).value;
             this.mainCurrencyId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.MainCurrency).value;
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
             this.accountReceivablesId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountReceivables).value;
-
+               
+           
             if (this.fiscalPeriodId > 0) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
             }
@@ -646,10 +645,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
-
       let sub = this.incomingChequeService.createIncomingCheque(entity).subscribe({
         next: (result: any) => {
           this.spinner.show();
@@ -693,206 +690,208 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
 
   onSave() {
+    if (this.incomingChequeForm.valid) {
+      // if (this.checkPeriod == null) {
 
-    // if (this.checkPeriod == null) {
+      //   this.alertsService.showError(
+      //     'يجب أن يكون السنة المالية مفتوحة و السنة المالية مفتوحة',
+      //     "",
 
-    //   this.alertsService.showError(
-    //     'يجب أن يكون السنة المالية مفتوحة و السنة المالية مفتوحة',
-    //     "",
+      //   )
+      //   return;
+      // }
 
-    //   )
-    //   return;
-    // }
+      if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+        if (this.fiscalPeriodStatus == null) {
+          this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-choose-open-fiscal-period");
 
-    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-      if (this.fiscalPeriodStatus == null) {
-        this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-choose-open-fiscal-period");
+        }
+        else {
+          this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+
+        }
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
+      if (stringIsNullOrEmpty(this.accountReceivablesId)) {
+        this.errorMessage = this.translate.instant("general.account-receivables-required");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+
+
+      }
+      let chequeDate = this.incomingChequeForm.controls["date"].value;
+      let date;
+      let month;
+      let day;
+      if (chequeDate?.month + 1 > 9) {
+        month = chequeDate?.month + 1
+      }
+      else {
+        month = '0' + chequeDate.month + 1
+      }
+      if (chequeDate.day < 10) {
+        day = '0' + chequeDate?.day
+      }
+      else {
+        day = chequeDate.day
+      }
+      date = chequeDate.year + '-' + month + '-' + day
+
+      if (date >= this.fromDate && date <= this.toDate) {
+
 
       }
       else {
-        this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+        this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
 
       }
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
-    if (stringIsNullOrEmpty(this.accountReceivablesId)) {
-      this.errorMessage = this.translate.instant("general.account-receivables-required");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
 
+      this.totalamount = 0;
+      const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
 
-    }
-    let chequeDate = this.incomingChequeForm.controls["date"].value;
-    let date;
-    let month;
-    let day;
-    if (chequeDate?.month + 1 > 9) {
-      month = chequeDate?.month + 1
-    }
-    else {
-      month = '0' + chequeDate.month + 1
-    }
-    if (chequeDate.day < 10) {
-      day = '0' + chequeDate?.day
-    }
-    else {
-      day = chequeDate.day
-    }
-    date = chequeDate.year + '-' + month + '-' + day
+      ctrl.controls.forEach(x => {
+        let parsed = parseInt(x.get('amount').value)
+        this.totalamount += parsed
 
-    if (date >= this.fromDate && date <= this.toDate) {
+        this.cd.detectChanges()
+      });
+      if ((this.totalamount == 0)) {
+        this.alertsService.showError(
+          this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
+          ""
+        )
+        return;
+      }
+      // if ((this.totalamount !== this.incomingChequeForm.value.amount)) {
+      //   this.alertsService.showError(
+      //     this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
+      //     ""
+      //   )
+      //   return;
+      // }
 
+      //  var entity = new CreateIncomingChequeCommand();
+      var incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
+      var i = 0;
 
-    }
-    else {
-      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
+      if (incomingChequeDetail != null) {
+        this.incomingChequeForm.value.incomingChequeDetail.forEach(element => {
 
-    }
-
-    this.totalamount = 0;
-    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
-
-    ctrl.controls.forEach(x => {
-      let parsed = parseInt(x.get('amount').value)
-      this.totalamount += parsed
-
-      this.cd.detectChanges()
-    });
-    if ((this.totalamount == 0)) {
-      this.alertsService.showError(
-        this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
-        ""
-      )
-      return;
-    }
-    // if ((this.totalamount !== this.incomingChequeForm.value.amount)) {
-    //   this.alertsService.showError(
-    //     this.translate.instant("incoming-cheque.sum-values-equal-to-cheque-details"),
-    //     ""
-    //   )
-    //   return;
-    // }
-
-    //  var entity = new CreateIncomingChequeCommand();
-    var incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
-    var i = 0;
-
-    if (incomingChequeDetail != null) {
-      this.incomingChequeForm.value.incomingChequeDetail.forEach(element => {
-
-        if (element.accountId != null) {
-          var value = 0;
-          if (element.jEDetailDebitLocal > 0) {
-            value = element.jEDetailDebitLocal;
-          }
-          if (element.jEDetailCreditLocal > 0) {
-            value = element.jEDetailCreditLocal;
-
-          }
-
-          this.getAccountBalance(element.accountId).then(a => {
-            var account = this.accountList.find(x => x.id == element.accountId);
-
-            var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-                              
-            if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-              if (Number(this.balance) + value > account.debitLimit) {
-                                  
-
-                this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
-                this.errorClass = 'errorMessage';
-                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                i++;
-              }
-
+          if (element.accountId != null) {
+            var value = 0;
+            if (element.jEDetailDebitLocal > 0) {
+              value = element.jEDetailDebitLocal;
             }
-            else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-
-              if (-(this.balance) + value > account.creditLimit) {
-                                  
-                this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
-                this.errorClass = 'errorMessage';
-                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                i++;
-              }
-
+            if (element.jEDetailCreditLocal > 0) {
+              value = element.jEDetailCreditLocal;
 
             }
 
+            this.getAccountBalance(element.accountId).then(a => {
+              var account = this.accountList.find(x => x.id == element.accountId);
 
-          });
+              var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+              if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+                if (Number(this.balance) + value > account.debitLimit) {
 
 
-        }
+                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
+
+              }
+              else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+                if (-(this.balance) + value > account.creditLimit) {
+
+                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  i++;
+                }
 
 
-      })
+              }
 
+
+            });
+
+
+          }
+
+
+        })
+        this.getAccountBalance(this.accountReceivablesId).then(a => {
+          var account = this.accountList.find(x => x.id == this.accountReceivablesId);
+
+          var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+          if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+            if (Number(this.balance) + this.amountLocal > account.debitLimit) {
+
+
+              this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
+
+          }
+          else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+            if (-(this.balance) + this.amountLocal > account.creditLimit) {
+
+              this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
+
+
+          }
+
+
+        });
+        setTimeout(() => {
+          if (i == 0) {
+
+            this.spinner.show();
+            this.confirmSave().then(a => {
+              this.spinner.hide();
+            }).catch(e => {
+              this.spinner.hide();
+            });
+
+          }
+
+
+        }, 1000);
+      }
     }
-    this.getAccountBalance(this.accountReceivablesId).then(a => {
-      var account = this.accountList.find(x => x.id == this.accountReceivablesId);
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.incomingChequeForm.markAllAsTouched();
+    }
 
-      var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-                        
-      if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-        if (Number(this.balance) + this.amountLocal > account.debitLimit) {
-                            
-
-          this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;          
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          i++;
-        }
-
-      }
-      else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-
-        if (-(this.balance) + this.amountLocal > account.creditLimit) {
-                            
-          this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;          
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          i++;
-        }
-
-
-      }
-
-
-    });
-    setTimeout(() => {
-      if (i == 0) {
-        if (this.incomingChequeForm.valid) {
-          this.spinner.show();
-          this.confirmSave().then(a => {
-            this.spinner.hide();
-          }).catch(e => {
-            this.spinner.hide();
-          });
-
-        } else {
-
-          return this.incomingChequeForm.markAllAsTouched();
-        }
-      }
-
-    }, 1000);
 
   }
 
 
   onChangeCurrency(event, index) {
-
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.currencyServiceProxy.getCurrency(event.target.value).subscribe({
         next: (res: any) => {
           resolve();
@@ -922,9 +921,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
           let incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
 
           if (incomingChequeDetail.length > 0) {
-            this.amountLocal =
-              // this.amountLocal + 
-              this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
+            this.amountLocal = this.incomingChequeForm.get('incomingChequeDetail').value[index].currencyLocal;
             if (event.target.value == this.mainCurrencyId) {
               this.amount = this.amountLocal;
 
@@ -937,7 +934,6 @@ export class AddEditIncomingChequeComponent implements OnInit {
             }
 
           }
-          // this.getAmount();
 
         },
         error: (err: any) => {
@@ -987,18 +983,17 @@ export class AddEditIncomingChequeComponent implements OnInit {
     });
   }
   onUpdate() {
-
-    this.totalamount = 0;
-    const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
-    ctrl.controls.forEach(x => {
-      let parsed = parseInt(x.get('amount').value)
-      this.totalamount += parsed
-
-      this.cd.detectChanges()
-    });
-
-
     if (this.incomingChequeForm.valid) {
+      this.totalamount = 0;
+      const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
+      ctrl.controls.forEach(x => {
+        let parsed = parseInt(x.get('amount').value)
+        this.totalamount += parsed
+
+        this.cd.detectChanges()
+      });
+
+
       if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
         this.errorMessage = this.translate.instant("incoming-cheque.no-update-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
         this.errorClass = 'errorMessage';
@@ -1064,13 +1059,13 @@ export class AddEditIncomingChequeComponent implements OnInit {
               var account = this.accountList.find(x => x.id == element.accountId);
 
               var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-                                
+
               if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
                 if (Number(this.balance) + value - oldElement.jeDetailDebitLocal > account.debitLimit) {
-                                    
 
-                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
+
+                  this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
                   this.errorClass = 'errorMessage';
                   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                   i++;
@@ -1080,8 +1075,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
               else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
                 if (-(this.balance) + value - oldElement.jeDetailCreditLocal > account.creditLimit) {
-                                    
-                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;          
+
+                  this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
                   this.errorClass = 'errorMessage';
                   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                   i++;
@@ -1096,13 +1091,13 @@ export class AddEditIncomingChequeComponent implements OnInit {
         var account = this.accountList.find(x => x.id == this.accountReceivablesId);
 
         var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-                          
+
         if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
-          if (Number(this.balance) + this.amountLocal - this.oldAmountLocal  > account.debitLimit) {
-                              
+          if (Number(this.balance) + this.amountLocal - this.oldAmountLocal > account.debitLimit) {
 
-            this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;          
+
+            this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
             i++;
@@ -1112,8 +1107,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
         else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
           if (-(this.balance) + this.amountLocal - this.oldAmountLocal > account.creditLimit) {
-                              
-            this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;          
+
+            this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.accountReceivables') + ")" + this.translate.instant('general.code') + " : " + account.code;
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
             i++;
@@ -1126,6 +1121,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
       });
       setTimeout(() => {
         if (i == 0) {
+
+
           this.spinner.show();
           this.confirmUpdate().then(a => {
             this.spinner.hide();
@@ -1133,10 +1130,14 @@ export class AddEditIncomingChequeComponent implements OnInit {
             this.spinner.hide();
           });
         }
+
+
       }, 1000);
-
-    } else {
-
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
       return this.incomingChequeForm.markAllAsTouched();
     }
   }
@@ -1324,20 +1325,32 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   onInput(event, i): boolean {
-
     this.index = i;
     // if (type == 'Credit') {
-    const faControl =
-      (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
+    const faControl = (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
     //   faControl['controls'].amount.setValue(0);
 
     let amount = faControl['controls'].amount.value;
     // let amount = faControl['controls'].amount.value;
+
     let transactionFactor = faControl['controls'].transactionFactor.value;
+    if (this.isMultiCurrency == false) {
+      faControl['controls'].transactionFactor.setValue(1);
+
+      faControl['controls'].currencyId.value = this.mainCurrencyId;
+    }
+
     if (transactionFactor != null) {
+
       faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
       // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
     }
+
+    this.amount = amount;
+    this.currencyFactor = faControl['controls'].transactionFactor.value;
+    this.amountLocal = faControl['controls'].currencyLocal.value;
+
+    this.getAmount();
 
 
 

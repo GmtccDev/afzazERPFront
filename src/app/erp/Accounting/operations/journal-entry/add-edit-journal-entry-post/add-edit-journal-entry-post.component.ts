@@ -77,7 +77,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
   totalDebitLocal: number;
   totalCreditLocal: number;
   checkPeriod: any;
-  isMultiCurrency: boolean;
+  isMultiCurrency: boolean = false;
   serial: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
   fiscalPeriod: any;
@@ -258,9 +258,7 @@ export class AddEditJournalEntryPostComponent implements OnInit {
 
             this.isMultiCurrency = res.response.result.items.find(c => c.id == 2).value == "true" ? true : false;
             this.serial = res.response.result.items.find(c => c.id == 3).value;
-            // if (this.isMultiCurrency) {
-            //   this.getCurrency();
-            // }
+           
 
           }
 

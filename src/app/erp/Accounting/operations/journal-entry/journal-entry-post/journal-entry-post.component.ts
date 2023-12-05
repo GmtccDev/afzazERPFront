@@ -11,16 +11,16 @@ import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { JournalEntryServiceProxy } from '../../../services/journal-entry'
 import format from 'date-fns/format';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DatePipe } from '@angular/common';
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
-import { EntryTypesEnum } from 'src/app/shared/constants/enumrators/enums';
+import { EntryTypesArEnum, EntryTypesEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
+import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 @Component({
 	selector: 'app-journal-entry-post',
 	templateUrl: './journal-entry-post.component.html',
@@ -46,7 +46,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	fiscalPeriodId: any;
 	dateType: any;
 	companyId: string = this.userService.getCompanyId();
-
+	entryType: any;
+	entryTypesEnum: ICustomEnum[] = [];
 
 	//#endregion
 
@@ -72,6 +73,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	//#region ngOnInit
 	ngOnInit(): void {
 		this.spinner.show();
+		this.getEntryTypes();
 		Promise.all([this.getCompanyById(this.companyId),
 		this.getJournalEntryes()])
 			.then(a => {
@@ -120,12 +122,19 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	searchToDate!: DateModel;
 	toggleButton: boolean = true;
 	// Function to filter the data based on code and date
-	filterData(code, fromDate, toDate) {
-
+	filterData(code, entryType, fromDate, toDate) {
 		this.filteredData = this.journalEntry;
 		if (!stringIsNullOrEmpty(code)) {
 			this.filteredData = this.filteredData.filter(item =>
 				item.code === code
+			);
+		}
+		if (!stringIsNullOrEmpty(entryType)) {
+			if (entryType == EntryTypesEnum['Normal Entry']) {
+				entryType = null;
+			}
+			this.filteredData = this.filteredData.filter(item =>
+				item.parentType === entryType
 			);
 		}
 		if (!stringIsNullOrEmpty(fromDate)) {
@@ -167,7 +176,6 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 					if (res.success) {
 
 						this.journalEntry = res.response.data.result;
-						//res.response.items.filter(x => x.isCloseFiscalPeriod != true);
 						this.filteredData = this.journalEntry;
 					}
 
@@ -251,15 +259,21 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 			},
 		this.lang == 'ar'
 			? {
-				title: '  النوع  ', width: 300, field: 'entryTypeAr'
+				title: 'نوع المرجع', width: 300, field: 'settingAr'
+			} : {
+				title: 'Reference Type', width: 300, field: 'settingEn'
+			},
+		this.lang == 'ar'
+			? {
+				title: 'المرجع', width: 300, field: 'entryTypeAr'
 				, formatter: this.hyperLinkType
 
-				,cellClick: (e, cell) => {
+				, cellClick: (e, cell) => {
 
 					this.onViewClicked(cell.getRow().getData().parentType, cell.getRow().getData().parentTypeId, cell.getRow().getData().settingId);
 				}
 			} : {
-				title: '   Type', width: 300, field: 'entryTypeEn'
+				title: 'Reference', width: 300, field: 'entryTypeEn'
 				, formatter: this.hyperLinkType
 				, cellClick: (e, cell) => {
 
@@ -267,16 +281,11 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 				}
 			},
 		{
-			title: this.lang == 'ar' ? ' كود النوع' : 'Type Code',
+			title: this.lang == 'ar' ? ' رقم المرجع' : 'Reference Number',
 			field: 'parentTypeCode',
 		},
 
-		this.lang == 'ar'
-			? {
-				title: '  النمط  ', width: 300, field: 'settingAr'
-			} : {
-				title: 'Setting', width: 300, field: 'settingEn'
-			},
+
 
 	];
 
@@ -481,6 +490,15 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 		}
 		return text;
 
+	}
+	getEntryTypes() {
+		if (this.lang == 'en') {
+			this.entryTypesEnum = convertEnumToArray(EntryTypesEnum);
+		}
+		else {
+			this.entryTypesEnum = convertEnumToArray(EntryTypesArEnum);
+
+		}
 	}
 	CheckBoxFormatIcon() { //plain text value
 

@@ -249,7 +249,12 @@
         "account-exchange-required":"Please choose Exchange account from the settings",
         "debit-limit-exceed-account":"The debit limit has been exceeded for account",
         "credit-limit-exceed-account":"The Credit limit has been exceeded for account",
-        "type-code":"Type Code"
+        "type-code":"Type Code",
+        "entry-type":"Entry Type",
+        "generate-success":"Generated successfully",
+        "reference-type":"Reference Type",
+        "reference-number":"Reference Number"
+
        
     
     },
@@ -769,7 +774,8 @@
         "height-factor": "Height Factor",
         "width-factor": "Width Factor",
         "length-factor": "Length Factor",
-        "tranaction-factor": "Transaction Factor"
+        "tranaction-factor": "Transaction Factor",
+        "item-taxes":"Item Taxes"
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",

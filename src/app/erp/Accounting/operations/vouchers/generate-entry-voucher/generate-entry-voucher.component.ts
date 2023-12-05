@@ -14,11 +14,16 @@ import { format } from 'date-fns';
 import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
-import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { GeneralConfigurationEnum, VoucherTypeArEnum, VoucherTypeEnum, convertEnumToArray } from 'src/app/shared/constants/enumrators/enums';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
-import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { DateCalculation, DateModel } from 'src/app/shared/services/date-services/date-calc.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
+import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
+import { VoucherDetail } from '../../../models/voucher';
+import { AccountServiceProxy } from '../../../services/account.services';
+import { PublicService } from 'src/app/shared/services/public.service';
 
 @Component({
 	selector: 'app-generate-entry-voucher',
@@ -36,6 +41,17 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	errorClass = '';
 	addUrl: string = '';
 	updateUrl: string = '';
+	filteredData = [];
+	searchCode: any;
+	searchFromDate!: DateModel;
+	searchToDate!: DateModel;
+	voucherType: any;
+	voucherTypesEnum: ICustomEnum[] = [];
+	voucherTotalLocal: any;
+	cashAccountId: any;
+	accountsList: any;
+	routeAccountApi = 'Account/GetLeafAccounts?'
+
 	listUrl: string = '/accounting-operations/generateEntryVoucher/';
 	toolbarPathData: ToolbarPath = {
 		listPath: '',
@@ -45,9 +61,12 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		componentAdd: '',
 
 	};
+	balance: number = 0;
+
 	listIds: any[] = [];
 	dateType: any;
 	companyId: string = this.userService.getCompanyId();
+	voucherDetail: VoucherDetail[] = [];
 
 	//#endregion
 
@@ -65,8 +84,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		private userService: UserService,
 		private companyService: CompanyServiceProxy,
 		private dateService: DateCalculation,
-
-
+		private accountService: AccountServiceProxy,
+		private publicService: PublicService,
 
 
 	) {
@@ -79,7 +98,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	//#region ngOnInit
 	ngOnInit(): void {
 		this.spinner.show();
-		Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId), this.getNotGenerateEntryVouchers()])
+		this.getVoucherTypes();
+		Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getCompanyById(this.companyId), this.getNotGenerateEntryVouchers(), this.getAccounts()])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'GenerateEntry' } as ToolbarData);
@@ -122,12 +142,21 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	///Geting form dropdown list data
 
 	//#endregion
+	getVoucherTypes() {
+		if (this.lang == 'en') {
+			this.voucherTypesEnum = convertEnumToArray(VoucherTypeEnum);
+		}
+		else {
+			this.voucherTypesEnum = convertEnumToArray(VoucherTypeArEnum);
+
+		}
+	}
 	getGeneralConfigurationsOfFiscalPeriod() {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
 				next: (res: any) => {
 					resolve();
-					  
+
 					if (res.response.value > 0) {
 						this.fiscalPeriodId = res.response.value;
 						this.getfiscalPeriodById(this.fiscalPeriodId);
@@ -151,9 +180,11 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
 					resolve();
-					  
-					this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn
-					this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString()
+
+					this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn;
+					this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString();
+					//this.searchFromDate = this.dateService.getDateForCalender(res.response?.fromDate);
+					//this.searchToDate == this.dateService.getDateForCalender(res.response?.toDate);
 
 				},
 				error: (err: any) => {
@@ -166,6 +197,29 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 
 		});
 	}
+	getAccounts() {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
+				next: (res) => {
+					if (res.success) {
+						debugger
+						this.accountsList = res.response;
+
+					}
+					resolve();
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+
+			this.subsList.push(sub);
+		});
+
+	}
 	getNotGenerateEntryVouchers() {
 		return new Promise<void>((resolve, reject) => {
 			let sub = this.voucherService.allNotGenerateEntryVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
@@ -174,6 +228,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 
 					if (res.success) {
 						this.generateEntryVouchers = res.response.data.result
+						this.filteredData = this.generateEntryVouchers;
 
 					}
 					resolve();
@@ -215,7 +270,12 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			let sub = this.voucherService.getVoucher(id).subscribe({
 				next: (res: any) => {
 					resolve();
-					this.voucherTypeId = res.response?.voucherTypeId
+					this.voucherTypeId = res.response?.voucherTypeId;
+					this.cashAccountId = res.response?.cashAccountId;
+					this.voucherTotalLocal = res.response?.voucherTotalLocal;
+
+					this.voucherDetail = res.response?.voucherDetail;
+
 				},
 				error: (err: any) => {
 					reject(err);
@@ -228,33 +288,188 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		});
 	}
 	//#endregion
+	getAccountBalance(id: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.accountService.getAccountBalance(id).subscribe({
+				next: (res: any) => {
+					resolve();
 
+					this.balance = res.response.data.result[0].balance;
+
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+				},
+			});
+			this.subsList.push(sub);
+
+		});
+	}
 	showConfirmGenerateEntryMessage(id) {
-		const modalRef = this.modalService.open(MessageModalComponent);
-		modalRef.componentInstance.message = this.translate.instant('voucher.confirm-generate-entry');
-		modalRef.componentInstance.title = this.translate.instant('messageTitle.generate-entry');
-		modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.generate-entry');
-		modalRef.componentInstance.isYesNo = true;
-		modalRef.result.then((rs) => {
-			if (rs == 'Confirm') {
-				this.spinner.show();
-				this.listIds = [];
-				const newItem = { id };
-				this.listIds.push(newItem);
-				var ids = this.listIds.map(item => item.id);
+		debugger
+		this.getVoucherById(id).then(a => {
+			debugger
+			var i = 0;
+			if (this.voucherDetail != null) {
+				debugger
+				this.voucherDetail.forEach(element => {
+					debugger
+					if (element.beneficiaryId != null) {
+						var value = 0;
+						if (element.debitLocal > 0) {
+							value = element.debitLocal;
+						}
+						if (element.creditLocal > 0) {
+							value = element.creditLocal;
 
-				let sub = this.voucherService.generateEntry(ids).subscribe(
-					(resonse) => {
-						this.getNotGenerateEntryVouchers();
-						this.router.navigate([this.listUrl])
-						this.listIds = [];
+						}
 
-					});
-				this.subsList.push(sub);
-				this.spinner.hide();
+						this.getAccountBalance(element.beneficiaryId).then(a => {
+							debugger
+							var account = this.accountsList.find(x => x.id == element.beneficiaryId);
+
+							var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+							if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+								if (Number(this.balance) + value > account.debitLimit) {
+
+
+									this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+									this.errorClass = 'errorMessage';
+									this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+									i++;
+								}
+
+							}
+							else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+								if (-(this.balance) + value > account.creditLimit) {
+
+									this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
+									this.errorClass = 'errorMessage';
+									this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+									i++;
+								}
+							}
+						});
+					}
+				})
 
 			}
+			
+			this.getAccountBalance(this.cashAccountId).then(a => {
+				debugger
+				var account = this.accountsList.find(x => x.id == this.cashAccountId);
+
+				var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+				if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+					if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
+
+
+						this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+						this.errorClass = 'errorMessage';
+						this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+						i++;
+					}
+
+				}
+				else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+					if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
+
+						this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+						this.errorClass = 'errorMessage';
+						this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+						i++;
+					}
+
+
+				}
+
+
+			});
+			setTimeout(() => {
+				if (i == 0) {
+					const modalRef = this.modalService.open(MessageModalComponent);
+					modalRef.componentInstance.message = this.translate.instant('voucher.confirm-generate-entry');
+					modalRef.componentInstance.title = this.translate.instant('messageTitle.generate-entry');
+					modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.generate-entry');
+					modalRef.componentInstance.isYesNo = true;
+					modalRef.result.then((rs) => {
+						if (rs == 'Confirm') {
+							this.spinner.show();
+							this.listIds = [];
+							const newItem = { id };
+							this.listIds.push(newItem);
+							var ids = this.listIds.map(item => item.id);
+
+							let sub = this.voucherService.generateEntry(ids).subscribe(
+								(resonse) => {
+									this.getNotGenerateEntryVouchers();
+									this.router.navigate([this.listUrl])
+									this.listIds = [];
+									this.alertsService.showSuccess(this.errorMessage, this.translate.instant("general.generate-success"));
+
+								});
+							this.subsList.push(sub);
+							this.spinner.hide();
+
+						}
+					});
+				}
+			}, 1000);
+
+			this.spinner.hide();
+
+		}).catch(err => {
+			this.spinner.hide();
+
 		});
+
+	}
+	// Function to filter the data based on code and date
+	filterData(code, voucherType, fromDate, toDate) {
+		debugger
+		this.filteredData = this.generateEntryVouchers;
+		if (!stringIsNullOrEmpty(code)) {
+			this.filteredData = this.filteredData.filter(item =>
+				item.code === code
+			);
+		}
+		if (!stringIsNullOrEmpty(voucherType)) {
+
+			this.filteredData = this.filteredData.filter(item =>
+				item.voucherKindId === voucherType
+			);
+		}
+		if (!stringIsNullOrEmpty(fromDate)) {
+
+			this.filteredData = this.filteredData.filter(item =>
+
+				item.date >= (fromDate)
+			);
+			if (!stringIsNullOrEmpty(toDate)) {
+
+				this.filteredData = this.filteredData.filter(item =>
+
+					(item.date) <= (toDate)
+				);
+			}
+		}
+	}
+	getFromDate(selectedDate: DateModel) {
+		this.searchFromDate = selectedDate;
+
+	}
+	getToDate(selectedDate: DateModel) {
+		this.searchToDate = selectedDate;
+
 	}
 	editFormatIcon() { //plain text value
 		return "<i class=' fa fa-edit'></i>";
@@ -276,7 +491,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		},
 		{
 			title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-			field: 'voucherDate', width: 300, formatter:  (cell, formatterParams, onRendered) =>{
+			field: 'voucherDate', width: 300, formatter: (cell, formatterParams, onRendered) => {
 				if (this.dateType == 2) {
 					return this.dateService.getHijriDate(new Date(cell.getValue()));
 				}
@@ -304,8 +519,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			title: this.lang == 'ar' ? ' الأجمالى محلى' : 'Total Local',
 			field: 'voucherTotalLocal'
 		},
-		this.lang == "ar" ? {
-			title: "توليد القيد",
+		{
+			title: this.lang == "ar" ? "توليد القيد" : "Generate Entry",
 			field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
 				if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 					this.errorMessage = this.translate.instant("voucher.no-generate-entry-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
@@ -318,21 +533,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 
 				}
 			}
-		} :
-			{
-				title: "Generate Entry",
-				field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
-					if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-						this.errorMessage = this.translate.instant("voucher.no-generate-entry-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-						this.errorClass = 'errorMessage';
-						this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-						return;
-					}
-					else {
-						this.showConfirmGenerateEntryMessage(cell.getRow().getData().id);
-					}
-				},
-			},
+		}
+
 
 	];
 
@@ -346,7 +548,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 				{ field: 'voucherKindAr', type: 'like', value: searchTxt },
 				{ field: 'voucherKindEn', type: 'like', value: searchTxt },
 				{ field: 'voucherTotalLocal', type: 'like', value: searchTxt },
-				,
+				
 			],
 		];
 	}
@@ -358,6 +560,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
 			return;
 		}
+		
 		else {
 
 			const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
@@ -446,6 +649,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 
 		});
 	}
+
+
 
 	//#endregion
 }

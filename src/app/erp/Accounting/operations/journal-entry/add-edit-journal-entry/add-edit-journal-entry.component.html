@@ -134,11 +134,13 @@
 											<label for="type" class="label-name">{{'general.type'|translate}} : </label>
 											<div class="form-group position-relative">
 												<!-- <a (click)="onViewClicked()"  class="link-style" >{{type}}</a> -->
-												<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink" (click)="onViewClicked()">{{type}}</span>
+												<span style="color: blue; text-decoration: underline; cursor: pointer;"
+													class="customLink" (click)="onViewClicked()">{{type}}</span>
 											</div>
 										</div>
 										<div class="col-12 col-md-1" *ngIf="showDetails">
-											<label for="type" class="label-name">{{'general.type-code'|translate}} : </label>
+											<label for="type" class="label-name">{{'general.type-code'|translate}} :
+											</label>
 											<div class="form-group position-relative">
 												{{parentTypeCode}}
 											</div>
@@ -204,17 +206,21 @@
 																			</th>
 																			<th>{{ 'journalEntry.credit' | translate }}
 																			</th>
-																			<th>{{ 'journalEntry.currency' | translate
+																			<th *ngIf="isMultiCurrency">
+																				{{ 'journalEntry.currency' | translate
 																				}}
 																			</th>
-																			<th>{{ 'journalEntry.balance' | translate }}
+																			<th *ngIf="isMultiCurrency">
+																				{{ 'journalEntry.balance' | translate }}
 																			</th>
+
+																			<th>{{ 'journalEntry.localDebit' |
+																				translate}}				
+																					</th>
 																			<th>{{ 'journalEntry.localCredit' |
 																				translate }}
 																			</th>
-																			<th>{{ 'journalEntry.localDebit' | translate
-																				}}
-																			</th>
+																			
 																			<th>{{ 'journalEntry.costCenter' | translate
 																				}}
 																			</th>
@@ -297,7 +303,7 @@
 
 																			</td>
 
-																			<td>
+																			<td *ngIf="isMultiCurrency">
 
 																				<div class="input-group">
 
@@ -327,7 +333,7 @@
 
 
 																			</td>
-																			<td>
+																			<td *ngIf="isMultiCurrency">
 
 																				<div class="input-group ">
 																					<input type="number" required
@@ -346,11 +352,10 @@
 																					<input type="number" required
 																						class="form-control required"
 																						disabled="disabled"
-																						formControlName="jEDetailCreditLocal"
-																						name="jEDetailCreditLocal"
+																						formControlName="jEDetailDebitLocal"
+																						name="jEDetailDebitLocal"
 																						style="width: 70px;">
 																				</div>
-
 
 																			</td>
 																			<td>
@@ -359,12 +364,14 @@
 																					<input type="number" required
 																						class="form-control required"
 																						disabled="disabled"
-																						formControlName="jEDetailDebitLocal"
-																						name="jEDetailDebitLocal"
+																						formControlName="jEDetailCreditLocal"
+																						name="jEDetailCreditLocal"
 																						style="width: 70px;">
 																				</div>
 
+
 																			</td>
+																			
 																			<td>
 
 																				<div class="input-group ">

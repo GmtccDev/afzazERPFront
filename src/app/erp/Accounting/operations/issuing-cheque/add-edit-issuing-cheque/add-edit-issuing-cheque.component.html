@@ -197,8 +197,8 @@
 
 													<th style="width: 10%;">{{'general.amount'|translate}}</th>
 
-													<th style="width: 15%;">{{'general.currency'|translate}}</th>
-													<th style="width: 10%;">
+													<th style="width: 15%;" *ngIf="isMultiCurrency">{{'general.currency'|translate}}</th>
+													<th style="width: 10%;" *ngIf="isMultiCurrency">
 														{{'general.currency-conversion-factor'|translate}}</th>
 
 													<th style="width: 10%;">{{'general.balance'|translate}}</th>
@@ -262,7 +262,7 @@
 														</div>
 
 													</td>
-													<td>
+													<td *ngIf="isMultiCurrency">
 														<select class="form-control" name="currencyId"
 															(change)="onChangeCurrency($event,i)"
 															formControlName="currencyId"
@@ -274,7 +274,7 @@
 														</select>
 
 													</td>
-													<td>
+													<td *ngIf="isMultiCurrency">
 														<div class="input-group">
 															<input type="number" required class="form-control required"
 																disabled="disabled" formControlName="transactionFactor"

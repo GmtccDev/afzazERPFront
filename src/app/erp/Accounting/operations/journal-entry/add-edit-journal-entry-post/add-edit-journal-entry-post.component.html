@@ -120,18 +120,21 @@
 											<label for="type" class="label-name">{{'general.type'|translate}} : </label>
 											<div class="form-group position-relative">
 												<!-- <a (click)="onViewClicked()" class="link-style">{{type}}</a> -->
-												<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink" (click)="onViewClicked()">{{type}}</span>
+												<span style="color: blue; text-decoration: underline; cursor: pointer;"
+													class="customLink" (click)="onViewClicked()">{{type}}</span>
 
 											</div>
 										</div>
 										<div class="col-12 col-md-1" *ngIf="showDetails">
-											<label for="type" class="label-name">{{'general.type-code'|translate}} : </label>
+											<label for="type" class="label-name">{{'general.type-code'|translate}} :
+											</label>
 											<div class="form-group position-relative">
 												{{parentTypeCode}}
 											</div>
 										</div>
 										<div class="col-12 col-md-2" *ngIf="showDetails">
-											<label for="setting" class="label-name">{{'general.setting'|translate}} :</label>
+											<label for="setting" class="label-name">{{'general.setting'|translate}}
+												:</label>
 											<div class="form-group position-relative">
 												<label>{{setting}}</label>
 											</div>
@@ -193,15 +196,17 @@
 													<th style="width: 15%;">{{ 'journalEntry.accountNumber' | translate
 														}}
 													</th>
-													<th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
 													<th style="width: 10%;">{{ 'journalEntry.debit' | translate }}</th>
-													<th style="width: 15%;">{{ 'journalEntry.currency' | translate }}
+													<th style="width: 10%;">{{ 'journalEntry.credit' | translate }}</th>
+													<th style="width: 15%;" *ngIf="isMultiCurrency">{{
+														'journalEntry.currency' | translate }}
 													</th>
-													<th style="width: 10%;">{{ 'journalEntry.balance' | translate }}
-													</th>
-													<th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}
+													<th style="width: 10%;" *ngIf="isMultiCurrency">{{
+														'journalEntry.balance' | translate }}
 													</th>
 													<th style="width: 10%;">{{ 'journalEntry.localDebit' | translate }}
+													</th>
+													<th style="width: 10%;">{{ 'journalEntry.localCredit' | translate }}
 													</th>
 													<th style="width: 15%;">{{ 'journalEntry.costCenter' | translate }}
 													</th>
@@ -247,18 +252,6 @@
 
 														<div class="input-group">
 															<input type="number" required class="form-control required"
-																(keypress)="numberOnly($event,i,'Credit')"
-																(input)="onInput($event.target.value,i,'Credit')"
-																formControlName="jEDetailCredit" name="jEDetailCredit"
-																style="width: 70px;">
-														</div>
-
-
-													</td>
-													<td>
-
-														<div class="input-group">
-															<input type="number" required class="form-control required"
 																(keypress)="numberOnly($event,i,'Debit')"
 																(input)="onInput($event.target.value,i,'Debit')"
 																formControlName="jEDetailDebit" name="jEDetailDebit"
@@ -267,7 +260,21 @@
 														</div>
 
 													</td>
+
 													<td>
+
+														<div class="input-group">
+															<input type="number" required class="form-control required"
+																(keypress)="numberOnly($event,i,'Credit')"
+																(input)="onInput($event.target.value,i,'Credit')"
+																formControlName="jEDetailCredit" name="jEDetailCredit"
+																style="width: 70px;">
+														</div>
+
+
+													</td>
+
+													<td *ngIf="isMultiCurrency">
 
 
 														<select class="form-control" name="currencyId"
@@ -290,7 +297,7 @@
                                                                         </div> -->
 
 													</td>
-													<td>
+													<td *ngIf="isMultiCurrency">
 
 														<div class="input-group">
 															<input type="number" required disabled="disabled"
@@ -301,6 +308,18 @@
 
 
 													</td>
+
+													<td>
+
+														<div class="input-group">
+															<input type="number" required class="form-control required"
+																disabled="disabled" formControlName="jEDetailDebitLocal"
+																name="jEDetailDebitLocal" style="width: 70px;">
+														</div>
+
+
+													</td>
+
 													<td>
 
 														<div class="input-group">
@@ -312,16 +331,7 @@
 														</div>
 
 													</td>
-													<td>
 
-														<div class="input-group">
-															<input type="number" required class="form-control required"
-																disabled="disabled" formControlName="jEDetailDebitLocal"
-																name="jEDetailDebitLocal" style="width: 70px;">
-														</div>
-
-
-													</td>
 													<td>
 
 
@@ -376,16 +386,17 @@
 						<table class="mt-4 total-table table table-borderless text-end w-100">
 							<tr>
 								<td>{{'journalEntry.totalDebit' | translate }}</td>
-								<td class="text-start">{{  totalDebit }}</td>
+								<td class="text-start">{{ totalDebit }}</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCredit' | translate }}</td>
-								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCredit }}</label>
+								<td class="text-start"><label for="totalDebitValue" class="p-0">{{ totalCredit
+										}}</label>
 								</td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalDebitLocal' | translate }}</td>
-								<td class="text-start"><label class="p-0">{{  totalDebitLocal }}</label></td>
+								<td class="text-start"><label class="p-0">{{ totalDebitLocal }}</label></td>
 							</tr>
 							<tr>
 								<td>{{'journalEntry.totalCreditLocal' | translate }}</td>
