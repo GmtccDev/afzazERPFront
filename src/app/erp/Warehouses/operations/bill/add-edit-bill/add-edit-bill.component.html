@@ -646,7 +646,8 @@
                                                                 <td
                                                                     *ngIf="billTypeCalculatingTax==true && billTypeCalculatingTaxManual!=true">
                                                                     <input type="number" disabled
-                                                                        [(ngModel)]="billItem[i].totalTax" (contextmenu)="openItemTax(i)"
+                                                                        [(ngModel)]="billItem[i].totalTax"
+                                                                        (contextmenu)="openItemTax(i)"
                                                                         [ngModelOptions]="{standalone: true}" min="0"
                                                                         class="form-control">
 
@@ -1313,32 +1314,51 @@
     <mat-dialog-content class="mat-typography">
         <!-- <div class="row">
             <div class="col-md-12">
-                <input type="search" class="form-control" [(ngModel)]="searchText" (keyup)="Search()"
+                <input type="search" class="form-control" [(ngModel)]="searchText" (keyup)="search()"
                     placeholder="{{'general.search'|translate}}" >
             </div>
         </div> -->
         <table class="table table-responsive text-center" style="overflow-y: scroll !important;">
             <thead>
                 <th>#</th>
+                <th *ngIf="useTaxDetail">{{'general.code'|translate}}</th>
                 <th>{{'general.name'|translate}}</th>
                 <th>{{'general.tax-ratio'|translate}}</th>
                 <th>{{'general.tax-value'|translate}}</th>
+                <th *ngIf="useTaxDetail">{{'general.reason'|translate}}</th>
+
 
             </thead>
-            <tr *ngFor="let item of billItemTax; let i= index;">
+            <tr *ngFor="let item of selectedBillItemTax; let i= index;">
                 <td>{{i+1}}</td>
-                <td>{{billItemTax[i].name}}</td>
-                <td>
-                    <input type="number" class="form-control" [(ngModel)]="billItemTax[i].taxRatio" (keyup)="getTotalTax(i)">
+                <td *ngIf="useTaxDetail">
+                    <select class="form-control" [(ngModel)]="item.subTaxCode">
+                        <option *ngFor="let detail of tempSubTaxDetail" [value]="detail.code">
+                            {{detail.code}}
+                        </option>
+
+                    </select>
 
                 </td>
                 <td>
-                    <input type="number" class="form-control" [(ngModel)]="billItemTax[i].taxValue">
+                    {{item.name}}
+                </td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="item.taxRatio" (keyup)="getTotalTax(i ,1)">
 
                 </td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="item.taxValue" (keyup)="getTotalTax(i ,2)">
 
+                </td>
+                <td *ngIf="useTaxDetail">
+                    <select class="form-control" [(ngModel)]="item.subTaxReason">
+                        <option *ngFor="let detail of tempSubTaxDetail" [value]="detail.subTaxReason">
+                            {{detail.subTaxReason}}
+                        </option>
 
-
+                    </select>
+                </td>
             </tr>
 
         </table>
