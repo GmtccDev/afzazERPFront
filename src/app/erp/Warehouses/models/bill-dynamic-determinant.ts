@@ -26,6 +26,17 @@ export class  BillDynamicDeterminantDto {
     determinantsMaster: DeterminantsMasterDto;
     value: string;
     valueType: number;
+    selectedValue: number;
+    numberValue: number;
+    textValue: string;
+    dateValue: Date;
+    checkedValue: false;
+    //
+    selectedValueId: number;
+    numberValueId: number;
+    textValueId: number;
+    dateValueId: number;
+    checkedValueId: number;
   }
   
   export class  BillDynamicDeterminantList {
