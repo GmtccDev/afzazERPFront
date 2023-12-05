@@ -20,8 +20,10 @@
     "newPassword": "Add New password",
     "canChangeToParent": "The sub account parent cannot be changed to a main account",
     "dateGreater": "To date is small than from date",
-    "repeated-name":"It is not possible to save because the name or type is repeated with the name.",
+    "repeated-name": "It is not possible to save because the name or type is repeated with the name.",
     "general": {
+        "fromTime": "From",
+        "toTime": "To",
         "searchFromDate": "From Date",
         "searchToDate": "To Date",
         "nameAr": "Name In Arabic",
@@ -238,25 +240,25 @@
         "tax-account": "Tax Account",
         "close-account-required": "Please choose close account from the settings",
         "date-out-fiscal-period": "The date is out fiscal year date",
-        "unit-transaction-factor":"Unit Transaction Factor",
-        "company-name":"Company Name",
-        "branch-name":"Branch Name",
-        "copy-right":"Copy Right",
-        "afzaz":"Afzaz",
-        "commercial-registratio-no":"Commercial Registratio No",
-        "zip-code":"Zip Code",
-        "account-receivables-required":"Please choose receivables account from the settings",
-        "account-exchange-required":"Please choose Exchange account from the settings",
-        "debit-limit-exceed-account":"The debit limit has been exceeded for account",
-        "credit-limit-exceed-account":"The Credit limit has been exceeded for account",
-        "type-code":"Type Code",
-        "entry-type":"Entry Type",
-        "generate-success":"Generated successfully",
-        "reference-type":"Reference Type",
-        "reference-number":"Reference Number"
+        "unit-transaction-factor": "Unit Transaction Factor",
+        "company-name": "Company Name",
+        "branch-name": "Branch Name",
+        "copy-right": "Copy Right",
+        "afzaz": "Afzaz",
+        "commercial-registratio-no": "Commercial Registratio No",
+        "zip-code": "Zip Code",
+        "account-receivables-required": "Please choose receivables account from the settings",
+        "account-exchange-required": "Please choose Exchange account from the settings",
+        "debit-limit-exceed-account": "The debit limit has been exceeded for account",
+        "credit-limit-exceed-account": "The Credit limit has been exceeded for account",
+        "type-code": "Type Code",
+        "entry-type": "Entry Type",
+        "generate-success": "Generated successfully",
+        "reference-type": "Reference Type",
+        "reference-number": "Reference Number"
 
-       
-    
+
+
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -436,6 +438,7 @@
         "open": "Open"
     },
     "component-names": {
+        "floors": "Floors",
         "pointOfSale": "Point of sale",
         "shifts": "Shifts",
         "determinants": "Determinants",
@@ -538,8 +541,8 @@
         "generate-entry-vouchers": "Generate Entry Vouchers",
         "item-Guide": " Item Guide",
         "item-Guide-information": " Item Guide Information",
-        "vouchers-roles-permissions":"Vouchers Types Roles Permissions",
-        "bills-roles-permissions":"Bills Types Roles Permissions"
+        "vouchers-roles-permissions": "Vouchers Types Roles Permissions",
+        "bills-roles-permissions": "Bills Types Roles Permissions"
     },
     "language": {
         "ARABIC": "Ar",
@@ -648,13 +651,13 @@
         "totalCredit": "Total Credit",
         "totalDebitLocal": "Total Debit Local",
         "totalCreditLocal": "Total Credit Local",
-        "no-delete-entry":"You can not delete this entry (Transaction entry)",
+        "no-delete-entry": "You can not delete this entry (Transaction entry)",
         "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal year",
         "no-add-entry-fiscal-period-closed": "You can not add an entry to this closed fiscal year",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "You can not add an entry.You Should choose a open fiscal year from the settings",
         "no-update-entry-fiscal-period-closed": "You can not update the entry to this closed fiscal year",
-        "entry-status":"Entry Status"
-       
+        "entry-status": "Entry Status"
+
 
     },
     "account-classification": {
@@ -894,7 +897,7 @@
         "isIssue": "Issue Contract",
         "isDisplay": "Display",
         "isPrint": "Print"
-      },
+    },
     "twoRows": "There must be at least two rows",
     "debitCreditValues": "There must be values in both the debit and credit",
     "totalValues": "The total debit values in the debit column must be equal to the total credit values in the credit column"
