@@ -111,26 +111,12 @@ export class BillDynamicDeterminantComponent implements OnInit {
   }
   insertBillDynamic() {
 
-    let enity = this.insertBillDynamicDeterminant;
-    //   let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
-    //     next: (res) => {
-    //       if (res) {
-    //         
-    //         this.dynamicDeterminant = res
 
-    //       }
-    //       resolve();
-
-    //     },
-    //     error: (err: any) => {
-    //       reject(err);
-    //     },
-    //     complete: () => {
-    //     },
-    //   });
-
-    //   this.subsList.push(sub);
     const restructuredData = [];
+    this.insertBillDynamicDeterminant.dynamicDeterminantListDto = this.insertBillDynamicDeterminant.dynamicDeterminantListDto.filter(item => {
+      return item.numberValue!==null||item.dateValue != null||item.checkedValue!=null||item.textValue!=null||item.selectedValue != null;
+    });
+    debugger
     this.insertBillDynamicDeterminant.dynamicDeterminantListDto.forEach((item) => {
       debugger
       if (item.checkedValue != null) {
@@ -154,9 +140,26 @@ export class BillDynamicDeterminantComponent implements OnInit {
         item.dateValue = null;
       }
     });
-    this.insertBillDynamicDeterminant.dynamicDeterminantListDto = this.insertBillDynamicDeterminant.dynamicDeterminantListDto.filter(item => {
-      return item.value !== "" && item.value !== null && item.value !== undefined;
-    });
+    let enity = this.insertBillDynamicDeterminant;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
+        next: (res) => {
+          if (res) {
+            
+            this.dynamicDeterminant = res
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);})
   }
   getDate(selectedDate: DateModel) {
     debugger
