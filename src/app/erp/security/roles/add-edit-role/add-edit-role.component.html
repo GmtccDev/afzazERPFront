@@ -182,71 +182,28 @@
 								<li [ngbNavItem]="2" [destroyOnHide]="false">
 								  <a ngbNavLink>{{'component-names.vouchers-roles-permissions'|translate}}</a>
 								  <ng-template ngbNavContent>
-									<!-- <div class="col gap-2 grid grid-cols-3 p-0">
-										<div class=" ">
-										  <label for="roleNameAr" class="label-name">
-											{{'page-form.page-search-contract'|translate}}</label>
-										  <div class="input-group form-group">
-											<div class="input-group">
-											  <input type="text" class="form-control icon-user tenant-icon"
-												[ngModelOptions]="{standalone: true}" [(ngModel)]="searchTextContract">
-											</div>
-										  </div>
-										</div>
-										<div class="form-group d-flex align-items-center gap-1">
-					
-										  <input id="checkAllPermissionsContracts" formControlName="checkAllPermissionsContracts" type="checkbox"
-											(change)="onSelecetAllContactsPermissions($event)" name="checkAllPermissionsContracts">
-										  <label for="checkAllPermissionsContracts" class="label-name m-0">{{'page-form.check-all'|translate}} </label>
-										</div>
-									  </div> -->
+								
 									  <br>
 										<div class="row">
-										  <!-- <div *ngFor="let voucherPerm of vouchersRolePermissions |filter:searchTextContract:'contractArName':'contractEnName'; let i= index;" class="col-md-4 col-sm-12 mb-1 ">
-											<div class="checkbox-wrapper">
-											  <ng-container *ngIf="lang=='ar'; else en">
-												<h6 class="title-permissions">{{voucherPerm.voucherArName}}</h6>
-											  </ng-container>
-											  <ng-template #en>
-												<h6 class="title-permissions">{{voucherPerm.voucherEnName}}</h6>
-											  </ng-template>
-											  <span class="title-permissions">{{'general.selectUnselect'|translate}}</span>
-											 
-											  <input    type="checkbox"  [ngModelOptions]="{standalone: true}"
-											   [(ngModel)]="voucherPerm.isUserChecked"  
-											   (change)="onSelecetPageAllvoucherPermissions($event,voucherPerm)"  
-											   class="choose-all-contract my-checkbox">
-											  <ul *ngFor="let permission of voucherPerm?.permissionsJson |keyvalue" 
-											  class="list-wrap">
-												<li>
-												  <input type="checkbox" [ngModelOptions]="{standalone: true}" 
-												  [(ngModel)]="permission.value"
-													(change)="onCheckboxContractSettingsChange($event,voucherPerm,permission.key)"
-													[attr.checked]="permission.value ? 'checked' : null" id="contract{{permission.key}}{{voucherPerm.id}}">
-												  <label for="contract{{permission.key}}{{voucherPerm.id}}"></label>
-												  <span> {{('page-permission.'+permission.key)|translate}} </span>
-												</li>
-											  </ul>
-											</div>
-											<hr>
-										  </div> -->
+										  
 
 										  
 											<div *ngFor="let permission of vouchersRolePermissions| filter:searchText;" class="col-md-4">
 												<div class="item-permissions">
 													<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
 														{{lang=="ar"?permission.voucherArName:permission.voucherAEnName}}
-														<label> <input type="checkbox" name="options" value="{{permission.id}}"
-																[(ngModel)]="permission.isUserChecked"
-																(change)="updateCheckedOption(option, $event)" />
+														<label> <input type="checkbox" class="choose-all-Voucher-Type" name="options" value="{{permission.id}}"
+															[(ngModel)]="permission.isUserChecked"  
+															(change)="onSelecetAllVouchersRolePermissions($event,permission,permission.key)"/>
 														</label>
 													</h6>
 													<div class="check-item" *ngFor="let perimissionItem of permission?.permissionsJson |keyvalue">
 														<label>
 														
-															<input type="checkbox" name="permission" value="{{perimissionItem.id}}"
-																[(ngModel)]="perimissionItem.value"
-																(change)="updateCheckedOptions(item, $event)" />
+															<input type="checkbox" name="permission"  value="{{perimissionItem.id}}"
+															[(ngModel)]="perimissionItem.value" class="choose-all-Voucher-Type" 
+															[attr.checked]="perimissionItem.value ? 'checked' : null" id="bill{{perimissionItem.key}}{{permission.id}}"
+															(change)="onCheckboxVouchersTypesChange($event,permission,perimissionItem.key)" />
 		
 																{{('page-permission.'+perimissionItem.key)|translate}}
 														</label>
@@ -266,7 +223,31 @@
 								<li [ngbNavItem]="3" [destroyOnHide]="false">
 								  <a ngbNavLink>{{'component-names.bills-roles-permissions'|translate}}</a>
 								  <ng-template ngbNavContent>
-								
+									<div *ngFor="let permission of billsRolesPermissions| filter:searchText;" class="col-md-4">
+										<div class="item-permissions">
+											<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+												{{lang=="ar"?permission.billArName:permission.billAEnName}}
+												<label> <input type="checkbox" name="permissions"  class="choose-all-bill-Type"  [ngModelOptions]="{standalone: true}" value="{{permission.id}}"
+													[(ngModel)]="permission.isUserChecked" 
+													
+														(change)="onSelecetPageAllBillsTypePermissions($event,permission,permission.key)" />
+												</label>
+											</h6>
+											<div class="check-item" *ngFor="let perimissionItem of permission?.permissionsJson |keyvalue">
+												<label>
+												
+													<input type="checkbox" name="permission"   [ngModelOptions]="{standalone: true}"value="{{perimissionItem.id}}"
+															[(ngModel)]="perimissionItem.value" class="choose-all-bill-Type"
+															[attr.checked]="perimissionItem.value ? 'checked' : null" id="bill{{perimissionItem.key}}{{permission.id}}"
+															(change)="onCheckboxBillTypesChange($event,permission,perimissionItem.key)" />
+		
+
+														{{('page-permission.'+perimissionItem.key)|translate}}
+												</label>
+											</div>
+										</div>
+
+									</div>
 								  </ng-template>
 								</li>
 								

@@ -41,3 +41,13 @@ export class VouchersRolePermissionsVm
     isUserChecked!:boolean;
     permissionsJson!:any;
 }
+export class BillsRolePermissionsVm
+{
+    id:any;
+    billArName!:string;
+    billEnName!:string;
+    billTypeId:any;
+    roleId:any;
+    isUserChecked!:boolean;
+    permissionsJson!:any;
+}
