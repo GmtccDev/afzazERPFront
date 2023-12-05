@@ -1007,7 +1007,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
 
-      let sub = this.voucherService.createVoucherAndRelations(this.voucher).subscribe({
+      let sub = this.voucherService.createVoucherAndRelations(this.voucher.voucherTypeId, this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
           this.clearSelectedItemData();
@@ -1202,7 +1202,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   confirmUpdate() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherService.updateVoucherAndRelations(this.voucher).subscribe({
+      let sub = this.voucherService.updateVoucherAndRelations(this.voucher.voucherTypeId,this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
           this.clearSelectedItemData();
