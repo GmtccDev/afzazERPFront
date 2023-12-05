@@ -4,12 +4,15 @@ export class CountryDto {
     nameEn: string | undefined;
     id: number;
     code: string | undefined;
+    useTaxDetail:boolean| undefined;
     isActive:boolean| undefined;
 }
 export class CreateCountryCommand {
     nameAr: string | undefined;
     nameEn: string | undefined;
     code: string | undefined;
+    useTaxDetail:boolean| undefined;
+
     isActive:boolean| undefined;
 }
 export class EditCountryCommand {
@@ -17,6 +20,8 @@ export class EditCountryCommand {
     nameEn: string | undefined;
     id: number;
     code: string | undefined;
+    useTaxDetail:boolean| undefined;
+
     isActive:boolean| undefined;
 }
 

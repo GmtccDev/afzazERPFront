@@ -130,6 +130,7 @@ export class AddCountryComponent implements OnInit {
       nameAr: NAME_REQUIRED_VALIDATORS,
       nameEn: NAME_REQUIRED_VALIDATORS,
       code: CODE_REQUIRED_VALIDATORS,
+      useTaxDetail:false,
       isActive: true
     });
   }
@@ -147,6 +148,8 @@ export class AddCountryComponent implements OnInit {
             nameAr: res.response?.nameAr,
             nameEn: res.response?.nameEn,
             code: res.response?.code,
+            useTaxDetail: res.response?.useTaxDetail,
+
             isActive: res.response?.isActive
           });
     

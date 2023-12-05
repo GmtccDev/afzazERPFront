@@ -84,6 +84,10 @@ export class BillItemTax {
     taxId: number;
     taxRatio: number;
     taxValue: number;
+    subTaxCode: string | undefined;
+    subTaxReason: string | undefined;
+
+
     
 
 

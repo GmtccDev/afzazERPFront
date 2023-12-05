@@ -226,6 +226,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.billService.allBills(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
             this.bills = res.response.items.filter(x => x.billTypeId == this.billTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
