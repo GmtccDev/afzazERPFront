@@ -29,6 +29,8 @@ import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { MatDialog } from '@angular/material/dialog';
 import { BillDynamicDeterminantComponent } from '../../bill-dynamic-determinant/bill-dynamic-determinant.component';
 import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
+import { CountryServiceProxy } from 'src/app/erp/master-codes/services/country.servies';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -40,12 +42,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   branchId: any = localStorage.getItem("branchId");
   companyId: any = localStorage.getItem("companyId");
   billForm: FormGroup = new FormGroup({});
+  searchText: any;
   currencyId: any;
   salesPersonId: any;
   storeId: any;
   costCenterId: any;
   cashAccountId: any;
   //supplierAccountId: any;
+  taxes: any[] = [];
+  useTaxDetail: boolean = false;
   salesAccountsList: any;
   salesReturnAccountsList: any;
   purchasesAccountsList: any;
@@ -59,6 +64,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   selectedBillItemTax: BillItemTax[] = [];
 
   temporaryBillItemTax: BillItemTax[] = [];
+  tempSubTaxCodeDetail: any[] = []
+  tempSubTaxNameDetail: any[] = []
+  tempSubTaxDetail: any[] = []
+
 
   selectedBillItem: BillItem = new BillItem();
   billAdditionAndDiscount: BillAdditionAndDiscount[] = [];
@@ -192,6 +201,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     public dialog: MatDialog,
     private billTypeService: BillTypeServiceProxy,
+    private companyService: CompanyServiceProxy,
+    private countryService: CountryServiceProxy,
+
 
   ) {
     this.defineBillForm();
@@ -203,6 +215,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+
+    this.lang = localStorage.getItem("language");
     this.spinner.show();
 
     this.getPayWays();
@@ -229,6 +243,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       // this.getProjects(),
       this.getItems(),
       this.getUnits(),
+      this.getTaxes(),
+      this.getCompanyById(this.companyId)
 
 
 
@@ -401,7 +417,54 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getCompanyById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.companyService.getCompany(id).subscribe({
+        next: (res: any) => {
+          if (res.response != null) {
+            if (res?.response?.countryId > 0) {
 
+              this.getCountryById(res?.response?.countryId);
+            }
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
+  getCountryById(id: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.countryService.getCountry(id).subscribe({
+        next: (res: any) => {
+          if (res.response != null) {
+
+            if (res?.response?.useTaxDetail == true) {
+              this.useTaxDetail = true;
+            }
+
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+  }
 
 
 
@@ -466,6 +529,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   getBillById(id: any, type: any) {
+    this.lang = localStorage.getItem("language");
     if (id > 0) {
       this.clearBillFormForReference();
       this.clearSelectedItemData();
@@ -536,7 +600,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           var currencyName;
           var costCenterName;
           if (res.response?.billItems != null) {
+            var c = 0;
             res.response?.billItems.forEach(element => {
+
               if (element.itemId > 0) {
                 itemName = this.itemsList?.find(c => c.id == element.itemId)
 
@@ -553,9 +619,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                 costCenterName = this.costCentersList?.find(c => c.id == element.costCenterId)
 
               }
+
               this.billItem.push(
                 {
-                  id: 0,
+                  id: c,
                   billId: element.billId,
                   itemId: element.itemId,
                   itemDescription: element.itemDescription,
@@ -584,12 +651,60 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
                 }
               )
+
+
+              if (res.response?.billItems[c]?.billItemTaxes.length > 0) {
+
+                var i = 0;
+                res.response?.billItems[c]?.billItemTaxes.forEach(_element => {
+                  if (_element.taxId != null) {
+                    var taxName = this.taxes.find(x => x.id == _element.taxId);
+                    // _element.subTaxCode = _element.subTaxCode;
+                    // _element.subTaxReason = _element.subTaxReason;
+                    // this.tempSubTaxDetail.push(_element);
+
+                    this.selectedBillItemTax.push(
+                      {
+                        id: i,
+                        billItemId: c,
+                        name: this.lang == 'ar' ? taxName.nameAr : taxName.nameEn,
+                        taxId: _element.taxId,
+                        taxRatio: _element.taxRatio,
+                        taxValue: _element.taxValue,
+                        subTaxCode: _element.subTaxCode,
+                        subTaxReason: _element.subTaxReason
+                      }
+                    )
+
+                    this.billItemTax.push(
+                      {
+                        id: i,
+                        billItemId: c,
+                        name: this.lang == 'ar' ? taxName.nameAr : taxName.nameEn,
+                        taxId: _element.taxId,
+                        taxRatio: _element.taxRatio,
+                        taxValue: _element.taxValue,
+                        subTaxCode: _element.subTaxCode,
+                        subTaxReason: _element.subTaxReason
+                      }
+                    )
+                    debugger
+
+                    this.subsList.push(sub);
+
+                  }
+                  i++;
+                });
+              }
+
+
+              c++;
             });
 
+
+
           }
-          if (res.response?.billItemTaxes != null) {
-            this.billItemTax = res.response?.billItemTaxes
-          }
+
           if (res.response?.billAdditionAndDiscounts != null) {
             res.response?.billAdditionAndDiscounts.forEach(element => {
               if (element.accountId > 0) {
@@ -638,7 +753,28 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
   }
+  getTaxes() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.taxServiceProxy.allTaxes(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.taxes = res.response.items;
 
+          }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
 
   getBillCode() {
     return new Promise<void>((resolve, reject) => {
@@ -1142,16 +1278,21 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.billForm.controls.projectId.setValue(event.id);
     this.showSearchProjectModal = false;
   }
-  getTotalTax(i) {
-    //here
-
+  getTotalTax(i, number) {
 
     let a = this.billItemId;
     if (this.billItemId == -1) {
-      this.billItemTax[i].taxValue = Math.round(Number(this.selectedBillItem.totalBeforeTax * this.billItemTax[i].taxRatio / 100));
+      if (number == 1) {
+        this.selectedBillItemTax[i].taxValue = Math.round(Number(this.selectedBillItem.totalBeforeTax * this.selectedBillItemTax[i].taxRatio / 100));
+
+      }
+      else {
+        this.selectedBillItemTax[i].taxRatio = Math.round(Number(this.selectedBillItemTax[i].taxValue / this.selectedBillItem.totalBeforeTax * 100));
+
+      }
       this.selectedBillItem.totalTax = 0;
       this.selectedBillItem.total = 0;
-      this.billItemTax.forEach(element => {
+      this.selectedBillItemTax.forEach(element => {
         this.selectedBillItem.totalTax += Math.round(Number(element.taxValue));
 
       });
@@ -1159,10 +1300,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     }
     else {
-      this.billItemTax[i].taxValue = Math.round(Number(this.billItem[a].totalBeforeTax * this.billItemTax[i].taxRatio / 100));
+      if (number == 1) {
+        this.selectedBillItemTax[i].taxValue = Math.round(Number(this.billItem[a].totalBeforeTax * this.selectedBillItemTax[i].taxRatio / 100));
+      }
+      else {
+        this.selectedBillItemTax[i].taxRatio = Math.round(Number(this.selectedBillItemTax[i].taxRatio / this.billItem[a].totalBeforeTax * 100));
+
+      }
       this.billItem[a].totalTax = 0;
       this.billItem[a].total = 0;
-      this.billItemTax.forEach(element => {
+      this.selectedBillItemTax.forEach(element => {
         this.billItem[a].totalTax += Math.round(Number(element.taxValue));
 
       });
@@ -1212,8 +1359,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       }
 
     }
-    debugger
-    this.billItemTax.find(x=>x.billItemId == -1).billItemId = this.billItem.length;
+
+    var billItemId;
+    this.billItemTax.forEach(element => {
+      if (element.billItemId == -1) {
+        element.billItemId = this.billItem.length;
+        billItemId = this.billItem.length;
+      }
+
+    });
+    this.selectedBillItemTax = this.billItemTax.filter(x => x.billItemId == billItemId);
     this.billItem.push({
       id: 0,
       billId: this.selectedBillItem?.billId ?? 0,
@@ -1223,7 +1378,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       unitTransactionFactor: this.selectedBillItem?.unitTransactionFactor ?? null,
       quantity: this.selectedBillItem?.quantity ?? 0,
       totalQuantity: Number(totalQuantity),
-
       price: this.selectedBillItem?.price ?? 0,
       totalBeforeTax: this.selectedBillItem?.totalBeforeTax ?? 0,
       additionRatio: this.selectedBillItem?.additionRatio ?? 0,
@@ -1241,13 +1395,13 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       unitName: this.selectedBillItem?.unitName,
       storeName: this.selectedBillItem?.storeName,
       costCenterName: this.selectedBillItem?.costCenterName,
-      billItemTaxes: this.billItemTax ?? [],
+      billItemTaxes: this.selectedBillItemTax ?? [],
 
 
     });
 
+    console.log("bill item", this.billItem)
     this.bill!.billItems = this.billItem;
-
 
 
     this.clearSelectedItemData();
@@ -2297,66 +2451,168 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   }
   getTaxData(id, i) {
-
     this.lang = localStorage.getItem("language");
     return new Promise<void>((resolve, reject) => {
       let sub = this.taxServiceProxy.getTax(id).subscribe({
         next: (res: any) => {
           resolve();
-          if (res.response?.taxDetail != null) {
-
-            res.response?.taxDetail.forEach(element => {
-              let fromDate = element.fromDate;
-              let toDate = element.toDate;
-              let currentDate;
-              const now = new Date()
-              let month;
-              let day;
-              if (now.getMonth() + 1 > 9) {
-                month = now.getMonth() + 1
-              }
-              else {
-                month = '0' + now.getMonth() + 1
-              }
-              if (now.getDate() < 10) {
-                day = '0' + now.getDate()
-              }
-              else {
-                day = now.getDate()
-              }
-
-              currentDate = now.getFullYear() + '-' + month + '-' + day
-
-              if (currentDate >= fromDate && currentDate <= toDate) {
-                debugger
-                this.billItemTax.push(
-                  {
-                    id: 0,
-                    billItemId: i,
-                    taxId: res.response?.id,
-                    name: this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn,
-                    taxRatio: element.taxRatio,
-                    taxValue: Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100))
-                  }
-                )
-                if (i == -1) {
-
-                  this.selectedBillItem.totalTax += Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100));
-                  this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + this.selectedBillItem.totalTax;
-
+          if (this.useTaxDetail == false) {
+            if (res.response?.taxDetail != null) {
+              res.response?.taxDetail.forEach(element => {
+                let fromDate = element.fromDate;
+                let toDate = element.toDate;
+                let currentDate;
+                const now = new Date()
+                let month;
+                let day;
+                if (now.getMonth() + 1 > 9) {
+                  month = now.getMonth() + 1
                 }
                 else {
-                  this.billItem[i].totalTax += Math.round(this.billItem[i].totalBeforeTax * (element.taxRatio / 100));
-                  this.billItem[i].total = Number(this.billItem[i].totalBeforeTax) + this.billItem[i].totalTax;
-                  this.calculateValues();
-
+                  month = '0' + now.getMonth() + 1
                 }
-                return;
-              }
+                if (now.getDate() < 10) {
+                  day = '0' + now.getDate()
+                }
+                else {
+                  day = now.getDate()
+                }
 
-            });
+                currentDate = now.getFullYear() + '-' + month + '-' + day
+
+                if (currentDate >= fromDate && currentDate <= toDate) {
+
+                  this.billItemTax.push(
+                    {
+                      id: 0,
+                      billItemId: i,
+                      taxId: res.response?.id,
+                      name: this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn,
+                      taxRatio: element.taxRatio,
+                      taxValue: Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100)),
+                      subTaxCode: '',
+                      subTaxReason: ''
+                    }
+                  )
+                  if (i == -1) {
+
+                    this.selectedBillItem.totalTax += Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100));
+                    this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + this.selectedBillItem.totalTax;
+
+                  }
+                  else {
+                    this.billItem[i].totalTax += Math.round(this.billItem[i].totalBeforeTax * (element.taxRatio / 100));
+                    this.billItem[i].total = Number(this.billItem[i].totalBeforeTax) + this.billItem[i].totalTax;
+                    this.calculateValues();
+
+                  }
+                  return;
+                }
+
+              });
+
+            }
+          }
+          else {
+
+            if (res.response?.subTaxDetail != null) {
+              res.response?.subTaxDetail[0].subTaxRatioDetail.forEach(element => {
+
+                let fromDate = element.fromDate;
+                let toDate = element.toDate;
+                let currentDate;
+                const now = new Date()
+                let month;
+                let day;
+                if (now.getMonth() + 1 > 9) {
+                  month = now.getMonth() + 1
+                }
+                else {
+                  month = '0' + now.getMonth() + 1
+                }
+                if (now.getDate() < 10) {
+                  day = '0' + now.getDate()
+                }
+                else {
+                  day = now.getDate()
+                }
+
+                currentDate = now.getFullYear() + '-' + month + '-' + day
+
+                if (currentDate >= fromDate && currentDate <= toDate) {
+
+                  if (res.response != null) {
+                    var name = '';
+                    if (this.lang == 'ar') {
+                      name = res.response.nameAr;
+                    }
+                    else {
+                      name = res.response.nameEn;
+                    }
+                  }
+
+                  if (res.response?.subTaxDetail[0] != null) {
+                    var subTaxDetail = res.response?.subTaxDetail[0];
+
+                  }
+
+                  if (res.response?.subTaxDetail[0].subTaxReasonsDetail[0] != null) {
+                    debugger
+                    var subTaxReasonsDetail = res.response?.subTaxDetail[0].subTaxReasonsDetail[0];
+                    var reason = '';
+                    if (this.lang == 'ar') {
+                      debugger
+                      reason = subTaxReasonsDetail.taxReasonAr;
+                    }
+                    else {
+                      reason = subTaxReasonsDetail.taxReasonEn;
+                    }
+                  }
+
+                  this.billItemTax.push(
+                    {
+                      id: 0,
+                      billItemId: i,
+                      taxId: id,
+                      name: name,
+                      taxRatio: element.taxRatio,
+                      taxValue: Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100)),
+                      subTaxCode: subTaxDetail.code,
+                      subTaxReason: reason
+                    }
+                  )
+                  debugger
+                  if (res.response?.subTaxDetail != null) {
+
+                    res.response?.subTaxDetail.forEach(element => {
+                      element.name = this.lang == 'ar' ? element.subTaxNameAr : element.subTaxNameEn;
+                      element.subTaxReason = this.lang == 'ar' ? element.taxReasonAr : element.taxReasonEn;
+                      this.tempSubTaxDetail.push(element)
+
+                    });
+                  }
+
+                  if (i == -1) {
+
+                    this.selectedBillItem.totalTax += Math.round(this.selectedBillItem.totalBeforeTax * (element.taxRatio / 100));
+                    this.selectedBillItem.total = Number(this.selectedBillItem.totalBeforeTax) + this.selectedBillItem.totalTax;
+
+                  }
+                  else {
+                    this.billItem[i].totalTax += Math.round(this.billItem[i].totalBeforeTax * (element.taxRatio / 100));
+                    this.billItem[i].total = Number(this.billItem[i].totalBeforeTax) + this.billItem[i].totalTax;
+                    this.calculateValues();
+
+                  }
+                  return;
+                }
+
+
+              })
+            }
 
           }
+
         },
         error: (err: any) => {
           reject(err);
@@ -2372,7 +2628,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   onChangeQuantityOrPrice() {
     if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
-      //this.billItemTax = [];
+      this.selectedBillItemTax = [];
       this.selectedBillItem.totalBeforeTax = Number(this.selectedBillItem.quantity) * Number(this.selectedBillItem.price);
       if (this.billType[0].calculatingTax == true) {
         this.selectedBillItem.totalTax = 0;
@@ -2412,7 +2668,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     var totalQuantity = 0;
     var totalCostPrice = 0;
     if (this.billItem[i].quantity > 0 && this.billItem[i].price > 0) {
-      //this.billItemTax = [];
+      this.selectedBillItemTax = [];
       this.billItem[i].totalTax = 0;
       this.billItem[i].totalBeforeTax = Number(this.billItem[i].quantity) * Number(this.billItem[i].price);
       if (this.billType[0].calculatingTax == true) {
@@ -2765,12 +3021,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.calculateValues();
   }
   openItemTax(i) {
-    debugger
-    // this.billItemId = this.billItem.length;
-
-    this.billItemTax = this.billItemTax.filter(x => x.billItemId == i);
-
-
+    this.selectedBillItemTax = this.billItemTax.filter(x => x.billItemId == i);
     let itemTaxDialog: any = <any>document.getElementById("itemTaxDialog");
     itemTaxDialog.showModal();
 
@@ -2806,6 +3057,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getNetAfterTax(1);
     }
   }
+
 
 }
 

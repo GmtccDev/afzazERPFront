@@ -253,7 +253,8 @@
         "entry-type":"Entry Type",
         "generate-success":"Generated successfully",
         "reference-type":"Reference Type",
-        "reference-number":"Reference Number"
+        "reference-number":"Reference Number",
+        "reason":"Reason"
 
        
     
@@ -713,7 +714,8 @@
         "add-business": "Add Business"
     },
     "country": {
-        "add-country": "Add Country"
+        "add-country": "Add Country",
+        "use-tax-detail":"Use Tax Detail"
     },
     "unit": {
         "transaction-factor": "Transaction Factor",
