@@ -698,6 +698,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   storeName: this.lang = "ar" ? storeName?.nameAr ?? '' : storeName?.nameEn ?? '',
                   costCenterName: this.lang = "ar" ? costCenterName?.nameAr ?? '' : costCenterName?.nameEn ?? '',
                   billItemTaxes: this.billItemTax ?? [],
+                  billDynamicDeterminants:this.selectedBillItem.billDynamicDeterminants,
+                  itemCardSerial:element.itemCardSerial
 
 
                 }
@@ -1447,6 +1449,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       storeName: this.selectedBillItem?.storeName,
       costCenterName: this.selectedBillItem?.costCenterName,
       billItemTaxes: this.selectedBillItemTax ?? [],
+      billDynamicDeterminants: this.selectedBillItem?.billDynamicDeterminants,
+      itemCardSerial:this.selectedBillItem.itemCardSerial
 
 
     });
@@ -1515,7 +1519,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       storeName: '',
       costCenterName: '',
       billItemTaxes: [],
-
+      billDynamicDeterminants:[],
+      itemCardSerial:''
 
     }
   }
@@ -2437,6 +2442,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             .afterClosed().subscribe(result => {
               if (result) {
                 //this.getBills();
+                this.selectedBillItem.billDynamicDeterminants=result;
+                this.selectedBillItem.billDynamicDeterminants.forEach(element => {
+                  element
+                });
               }
             });
         },

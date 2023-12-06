@@ -49,18 +49,15 @@ export class BillDynamicDeterminantComponent implements OnInit {
                 for (let i = 0; i < 10; i++) {
                  // this.insertBillDynamicDeterminant.itemCardDeterminantListDto.forEach(element => {
                     this.insertBillDynamicDeterminant.dynamicDeterminantListDto.push({
+                      itemCardSerial:"",
                       id: null,
                       billId: null,
                       billItemId: this.billItemId,
                       itemCardId: this.itemCardId,
                       determinantId: null,
-                      determinantsMaster: null,
-                    
-                     
+                   
                       valueType: null,
                       value: '',
-                   
-         
                       selectedValue : null,
                       selectedValueId : this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c=>c.determinantsMaster.valueType==1)?.determinantId,
          
@@ -142,26 +139,27 @@ export class BillDynamicDeterminantComponent implements OnInit {
     });
     this.insertBillDynamicDeterminant.dynamicDeterminantListDto=restructuredData;
     let enity = this.insertBillDynamicDeterminant;
-    return new Promise<void>((resolve, reject) => {
+    this.dialogRef.close(restructuredData);
+    // return new Promise<void>((resolve, reject) => {
       
-      let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
-        next: (res) => {
-          if (res) {
+    //   let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
+    //     next: (res) => {
+    //       if (res) {
             
-            this.dynamicDeterminant = res
+    //         this.dynamicDeterminant = res
 
-          }
-          resolve();
+    //       }
+    //       resolve();
 
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-        },
-      });
+    //     },
+    //     error: (err: any) => {
+    //       reject(err);
+    //     },
+    //     complete: () => {
+    //     },
+    //   });
 
-      this.subsList.push(sub);})
+    //   this.subsList.push(sub);})
   }
   getDate(selectedDate: DateModel) {
     

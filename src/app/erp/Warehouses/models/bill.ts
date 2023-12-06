@@ -1,3 +1,5 @@
+import { BillDynamicDeterminantDto } from "./bill-dynamic-determinant";
+
 export class Bill {
     id: number;
     code: string;
@@ -73,8 +75,8 @@ export class BillItem {
     storeName:string;
     costCenterName:string;
     billItemTaxes: BillItemTax[] = [];
-
-
+    billDynamicDeterminants:BillDynamicDeterminantDto [] = []||undefined;
+    itemCardSerial:string|undefined;
 
 }
 export class BillItemTax {

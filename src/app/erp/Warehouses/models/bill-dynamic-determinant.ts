@@ -23,7 +23,7 @@ export class  BillDynamicDeterminantDto {
     billItemId: number;
     itemCardId: number;
     determinantId: number;
-    determinantsMaster: DeterminantsMasterDto;
+   // determinantsMaster: DeterminantsMasterDto;
     value: string;
     valueType: number;
     selectedValue: number;
@@ -37,6 +37,7 @@ export class  BillDynamicDeterminantDto {
     textValueId: number;
     dateValueId: number;
     checkedValueId: number;
+    itemCardSerial:string|undefined;
   }
   
   export class  BillDynamicDeterminantList {
