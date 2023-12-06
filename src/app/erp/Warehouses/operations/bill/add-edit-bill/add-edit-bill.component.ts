@@ -1422,6 +1422,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
     this.selectedBillItemTax = this.billItemTax.filter(x => x.billItemId == billItemId);
+    debugger
     this.billItem.push({
       id: 0,
       billId: this.selectedBillItem?.billId ?? 0,
@@ -1450,7 +1451,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       costCenterName: this.selectedBillItem?.costCenterName,
       billItemTaxes: this.selectedBillItemTax ?? [],
       billDynamicDeterminants: this.selectedBillItem?.billDynamicDeterminants,
-      itemCardSerial:this.selectedBillItem.itemCardSerial
+      itemCardSerial: this.billItem.length.toString()
 
 
     });
@@ -2441,10 +2442,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             })
             .afterClosed().subscribe(result => {
               if (result) {
+                debugger
                 //this.getBills();
                 this.selectedBillItem.billDynamicDeterminants=result;
                 this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-                  element
+                  element.itemCardSerial=i
                 });
               }
             });

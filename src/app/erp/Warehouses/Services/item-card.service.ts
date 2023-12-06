@@ -106,12 +106,12 @@ export class ItemCardServiceProxy {
             queryParams = queryParams.append("itemCardId", itemCardId);
        
 
-        return this.http.get<any>(this.baseUrl + "/api/ItemCard/getBillDynamicDeterminant?", { params: queryParams });
+        return this.http.get<any>(this.baseUrl + "/api/Bill/getBillDynamicDeterminant?", { params: queryParams });
 
     }
     insertBillDynamicDeterminant(entity: InsertBillDynamicDeterminant): Observable<any> {
 
-        return this.http.post<InsertBillDynamicDeterminant>(environment.apiUrl + "/api/ItemCard/insertBillDynamicDeterminant?", entity);
+        return this.http.post<InsertBillDynamicDeterminant>(environment.apiUrl + "/api/Bill/insertBillDynamicDeterminant?", entity);
     }
 }
 

@@ -29,7 +29,7 @@ export class  BillDynamicDeterminantDto {
     selectedValue: number;
     numberValue: number;
     textValue: string;
-    dateValue: Date;
+    dateValue: any;
     checkedValue: false;
     //
     selectedValueId: number;
