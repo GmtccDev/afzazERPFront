@@ -116,9 +116,9 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.insertBillDynamicDeterminant.dynamicDeterminantListDto = this.insertBillDynamicDeterminant.dynamicDeterminantListDto.filter(item => {
       return item.numberValue!==null||item.dateValue != null||item.checkedValue!=null||item.textValue!=null||item.selectedValue != null;
     });
-    debugger
+    
     this.insertBillDynamicDeterminant.dynamicDeterminantListDto.forEach((item) => {
-      debugger
+      
       if (item.checkedValue != null) {
         restructuredData.push(this.createObject(item, item.checkedValue, 5,item.checkedValueId));
         item.checkedValue = null;
@@ -143,7 +143,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.insertBillDynamicDeterminant.dynamicDeterminantListDto=restructuredData;
     let enity = this.insertBillDynamicDeterminant;
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       let sub = this.itemCardService.insertBillDynamicDeterminant(enity).subscribe({
         next: (res) => {
           if (res) {
@@ -164,7 +164,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
       this.subsList.push(sub);})
   }
   getDate(selectedDate: DateModel) {
-    debugger
+    
     this.date = selectedDate;
   }
   addNewObject(item) {
