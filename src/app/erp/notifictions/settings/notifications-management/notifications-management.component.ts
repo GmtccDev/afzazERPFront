@@ -3,13 +3,12 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-
 @Component({
-	selector: 'app-point-of-sale',
-	templateUrl: './point-of-sale.component.html',
-	styleUrls: ['./point-of-sale.component.scss']
+	selector: 'app-notifications-management',
+	templateUrl: './notifications-management.component.html',
+	styleUrls: ['./notifications-management.component.scss']
 })
-export class PointOfSaleComponent implements OnInit {
+export class NotificationsManagementComponent implements OnInit {
 
 	constructor(
 		private router: Router,

@@ -140,6 +140,12 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/master-codes/companies/', title: this.translate.instant("component-names.companies"), type: 'link', active: true },
 				{ path: '/master-codes/branches/', title: this.translate.instant("component-names.branches"), type: 'link', active: true },
 			]
+		},
+		{
+			title: this.translate.instant("component-names.notifictions-settings"), type: 'sub', icon: 'bell', active: false, children: [
+				{ path: '/notifictions-settings/notificationsConfigurations', title: this.translate.instant("component-names.notifications-configurations"), type: 'link', active: true },
+				{ path: '/notifictions-settings/notifictionsManagement', title: this.translate.instant("component-names.notifictions-management"), type: 'link', active: true }
+			]
 		}
 
 
@@ -285,6 +291,7 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/pointOfSale-master-codes/pointOfSale', title: this.translate.instant("component-names.pointOfSale"), type: 'link', active: true },
 				{ path: '/warehouses-master-codes/paymentMethod', title: this.translate.instant("component-names.payment-method"), type: 'link', active: true },
 				{ path: '/pointOfSale-master-codes/shifts', title: this.translate.instant("component-names.shifts"), type: 'link', active: true },
+				{ path: '/pointOfSale-master-codes/floors', title: this.translate.instant("component-names.floors"), type: 'link', active: true },
 
 			]
 		},

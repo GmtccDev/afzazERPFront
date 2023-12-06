@@ -20,7 +20,7 @@
     "canChangeToParent": "لا يمكن تغيير الحساب الفرعي الاب الي حساب رئيسي",
 
     "dateGreater": " تاريخ الانتهاء اقل من تاريخ البداية",
-    "repeated-name":"لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم",
+    "repeated-name": "لا يمكن الحفظ لتكرار الاسم او النوع مع الاسم",
     "language": {
         "ARABIC": "ع",
         "ENGLISH": "EN"
@@ -211,6 +211,10 @@
         "open": "فتح"
     },
     "component-names": {
+        "notifictions-settings": "إعدادات التنبيهات",
+        "notifications-configurations": "إعدادات التنبيهات الإدارية",
+        "notifictions-management": "إدارة التنبيهات",
+        "floors": "الأدوار",
         "pointOfSale": "نقط البيع",
         "shifts": "الورديات",
         "determinants": "المحددات",
@@ -311,10 +315,12 @@
         "generate-entry-vouchers": "توليد قيود السندات",
         "item-guide": " دليل اصناف",
         "item-guide-information": "معلومات  دليل اصناف",
-        "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
-        "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير"
+        "vouchers-roles-permissions": "أدوار وصلاحيات أنماط السندات",
+        "bills-roles-permissions": "أدوار وصلاحيات أنماط الفواتير"
     },
     "general": {
+        "fromTime": "من الساعة",
+        "toTime": "الي الساعة",
         "searchFromDate": "من تاريخ",
         "searchToDate": "إلي تاريخ",
         "nameAr": "الاسم العربي",
@@ -484,23 +490,23 @@
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
         "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
-        "unit-transaction-factor":"معامل تحويل الوحدة",
-        "company-name":"أسم الشركة",
-        "branch-name":"أسم الفرع",
-        "copy-right":"حق النشر",
-        "afzaz":"أفذاذ",
-        "commercial-registratio-no":"رقم السجل التجاري",
-        "zip-code":"الرمز البريدي",
-        "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
-        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات",
-        "debit-limit-exceed-account":"لقد تجاوز حد الائتمان المدين للحساب",
-        "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب",
-        "type-code":"كود النوع",
-        "entry-type":"نوع القيد",
-        "generate-success":"تم التوليد بنجاح",
-        "reference-type":"نوع المرجع",
-        "reference-number":"رقم المرجع",
-        "reason":"السبب"
+        "unit-transaction-factor": "معامل تحويل الوحدة",
+        "company-name": "أسم الشركة",
+        "branch-name": "أسم الفرع",
+        "copy-right": "حق النشر",
+        "afzaz": "أفذاذ",
+        "commercial-registratio-no": "رقم السجل التجاري",
+        "zip-code": "الرمز البريدي",
+        "account-receivables-required": "من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required": "من فضلك أختر حساب أوراق الدفع من الاعدادات",
+        "debit-limit-exceed-account": "لقد تجاوز حد الائتمان المدين للحساب",
+        "credit-limit-exceed-account": "لقد تجاوز حد الائتمان الدائن للحساب",
+        "type-code": "كود النوع",
+        "entry-type": "نوع القيد",
+        "generate-success": "تم التوليد بنجاح",
+        "reference-type": "نوع المرجع",
+        "reference-number": "رقم المرجع",
+        "reason": "السبب"
 
 
 
@@ -515,6 +521,13 @@
         "target": "المستهدف",
         "achieved-rarget-ratio": "قيمة العمولة في حالة تحقيق المستهدف",
         "not-achieved-rarget-ratio": "قيمة العمولة في حالة عدم تحقيق المستهدف"
+    },
+    "notifictions": {
+        "repeat-after-every": "تكرار بعد كل",
+        "transmission-time": "وقت الإرسال",
+        "repetition-times": "مرات التكرار",
+        "E-mail": "البريد الإلكتروني",
+        "service-provider": "مزود خدمة الرسائل النصية"
     },
     "currency": {
         "transaction-date": "تاريخ المعامل ",
@@ -642,13 +655,13 @@
         "totalCredit": "اجمالي الدائن",
         "totalDebitLocal": "اجمالي المدين محلي",
         "totalCreditLocal": "اجمالي الدائن محلي",
-        "no-delete-entry":"لايمكن حذف هذا القيد (قيد حركات)",
+        "no-delete-entry": "لايمكن حذف هذا القيد (قيد حركات)",
         "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة السنة المالية المغلقة",
         "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة السنة المالية المغلقة",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
         "no-update-entry-fiscal-period-closed": "لا يمكن تعديل هذا القيد لهذة السنة المالية المغلقة",
-        "entry-status":"حالة القيد"
-       
+        "entry-status": "حالة القيد"
+
     },
     "account-classification": {
         "add-account-classification": "اضافة تصنيف الحساب",
@@ -707,7 +720,7 @@
     },
     "country": {
         "add-country": "اضافة بلد",
-        "use-tax-detail":"أستخدام تفاصيل الضريبة"
+        "use-tax-detail": "أستخدام تفاصيل الضريبة"
 
     },
     "unit": {
@@ -771,7 +784,7 @@
         "cost-price": "سعر التكلفة",
         "type": "النوع",
         "current-balance": "الرصيد الحالى",
-        "item-taxes":"ضرائب الصنف"
+        "item-taxes": "ضرائب الصنف"
 
     },
     "bill-type": {
@@ -884,8 +897,8 @@
         "isCancelDefaultReport": "إلغاء التقرير الافتراضي",
         "isView": "عرض",
         "isNew": "جديد",
-        "isPrint":"طباعة"
-      },
+        "isPrint": "طباعة"
+    },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
     "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين"
