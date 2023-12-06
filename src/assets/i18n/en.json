@@ -438,6 +438,9 @@
         "open": "Open"
     },
     "component-names": {
+        "notifictions-settings": "Notifictions settings",
+        "notifications-configurations": "Notifications configurations",
+        "notifictions-management": "Notifictions management",
         "floors": "Floors",
         "pointOfSale": "Point of sale",
         "shifts": "Shifts",
@@ -586,6 +589,13 @@
         "accountReceivables": "Account Receivables",
         "idleTime": "Idle Time",
         "account-exchange": "Account Exchange"
+    },
+    "notifictions": {
+        "repeat-after-every": "Repeat after every",
+        "transmission-time": "Transmission time",
+        "repetition-times": "Repetition times",
+        "E-mail": "E-mail",
+        "service-provider": "Service provider"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -778,7 +788,7 @@
         "width-factor": "Width Factor",
         "length-factor": "Length Factor",
         "tranaction-factor": "Transaction Factor",
-        "item-taxes":"Item Taxes"
+        "item-taxes": "Item Taxes"
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",
@@ -871,6 +881,7 @@
         "export-json": "Export Json",
         "save": "Save"
     },
+
     "page-permission": {
         "isUpdate": "Edit",
         "isSave": "Save",

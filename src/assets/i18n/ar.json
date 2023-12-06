@@ -211,6 +211,9 @@
         "open": "فتح"
     },
     "component-names": {
+        "notifictions-settings": "إعدادات التنبيهات",
+        "notifications-configurations": "إعدادات التنبيهات الإدارية",
+        "notifictions-management": "إدارة التنبيهات",
         "floors": "الأدوار",
         "pointOfSale": "نقط البيع",
         "shifts": "الورديات",
@@ -516,6 +519,13 @@
         "target": "المستهدف",
         "achieved-rarget-ratio": "قيمة العمولة في حالة تحقيق المستهدف",
         "not-achieved-rarget-ratio": "قيمة العمولة في حالة عدم تحقيق المستهدف"
+    },
+    "notifictions": {
+        "repeat-after-every": "تكرار بعد كل",
+        "transmission-time": "وقت الإرسال",
+        "repetition-times": "مرات التكرار",
+        "E-mail": "البريد الإلكتروني",
+        "service-provider": "مزود خدمة الرسائل النصية"
     },
     "currency": {
         "transaction-date": "تاريخ المعامل ",

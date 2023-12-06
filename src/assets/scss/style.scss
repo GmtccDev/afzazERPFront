@@ -1803,7 +1803,15 @@ p.ant-empty-description {
     display: none;
 }
 
-.customLink {}
+.customLink {
+    color: var(--theme-deafult);
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    min-width: 70px !important;
+    display: inline-block;
+    text-align: center;
+}
 
 .ant-table-cell {
     min-width: 116px !important;

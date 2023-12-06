@@ -154,6 +154,19 @@ const routes: Routes = [
 		]
 
 	},
+	{
+		path: 'notifictions-settings',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('./erp/notifictions/settings/notifictions-settings.module').then(m => m.NotifictionsSettingsModule)
+			}
+		]
+
+	},
 
 
 	{

@@ -140,6 +140,12 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/master-codes/companies/', title: this.translate.instant("component-names.companies"), type: 'link', active: true },
 				{ path: '/master-codes/branches/', title: this.translate.instant("component-names.branches"), type: 'link', active: true },
 			]
+		},
+		{
+			title: this.translate.instant("component-names.notifictions-settings"), type: 'sub', icon: 'bell', active: false, children: [
+				{ path: '/notifictions-settings/notificationsConfigurations', title: this.translate.instant("component-names.notifications-configurations"), type: 'link', active: true },
+				{ path: '/notifictions-settings/notifictionsManagement', title: this.translate.instant("component-names.notifictions-management"), type: 'link', active: true }
+			]
 		}
 
 
