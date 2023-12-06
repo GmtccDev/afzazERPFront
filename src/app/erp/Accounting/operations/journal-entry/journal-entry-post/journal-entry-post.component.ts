@@ -408,7 +408,7 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 	hyperLinkType(cell, formatterParams, onRendered) {
 		let text = cell.getValue();
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span class="customLink px-3 b-r-3 bg-light-primary" >${text}</span>`;
 		return iconHtml;
 	}
 	translateArEnum(cell, formatterParams, onRendered) {

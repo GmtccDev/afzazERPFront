@@ -303,7 +303,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				title: 'Status', width: 300, field: 'statusEn'
 				//, formatter: this.translateEnEnum
 			},
-			this.lang == 'ar'
+		this.lang == 'ar'
 			? {
 				title: 'نوع المرجع', field: 'settingAr'
 			} : {
@@ -329,7 +329,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			title: this.lang == 'ar' ? ' رقم المرجع' : 'Reference Number',
 			field: 'parentTypeCode',
 		},
-		
+
 		{
 			title: this.lang == 'ar' ? ' عرض التقرير' : 'View Report ',
 			field: 'id', formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
@@ -574,7 +574,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'قيد') {
 			return text;
 		}
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span  class="customLink px-3 b-r-3 bg-light-primary">${text}</span>`;
 		return iconHtml;
 
 	}
@@ -599,12 +599,12 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'Journal Entry') {
 			return text;
 		}
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span  class="customLink px-3 b-r-3 bg-light-primary">${text}</span>`;
 		return iconHtml;
 	}
 	hyperLinkType(cell, formatterParams, onRendered) {
 		let text = cell.getValue();
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span  class="customLink px-3 b-r-3 bg-light-primary">${text}</span>`;
 		return iconHtml;
 	}
 	CheckBoxFormatIcon() { //plain text value

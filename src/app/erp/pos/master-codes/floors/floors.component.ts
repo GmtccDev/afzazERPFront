@@ -5,11 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-	selector: 'app-point-of-sale',
-	templateUrl: './point-of-sale.component.html',
-	styleUrls: ['./point-of-sale.component.scss']
+	selector: 'app-floors',
+	templateUrl: './floors.component.html',
+	styleUrls: ['./floors.component.scss']
 })
-export class PointOfSaleComponent implements OnInit {
+export class FloorsComponent implements OnInit {
 
 	constructor(
 		private router: Router,

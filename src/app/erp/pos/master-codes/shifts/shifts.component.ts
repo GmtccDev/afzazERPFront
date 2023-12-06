@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-shifts',
@@ -6,15 +7,11 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./shifts.component.scss']
 })
 export class ShiftsComponent implements OnInit {
-	accountList: any[] = [
-		{ id: 1, name: 'Account 1' },
-		{ id: 2, name: 'Account 2' },
-		{ id: 3, name: 'Account 3' }
-	];
 
-	accountId: number; // Define the accountId property
 
-	constructor() { }
+	constructor(
+		private translate: TranslateService
+	) { }
 
 	ngOnInit(): void {
 	}

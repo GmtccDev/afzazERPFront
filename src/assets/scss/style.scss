@@ -1803,7 +1803,15 @@ p.ant-empty-description {
     display: none;
 }
 
-.customLink {}
+.customLink {
+    color: var(--theme-deafult);
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    min-width: 70px !important;
+    display: inline-block;
+    text-align: center;
+}
 
 .ant-table-cell {
     min-width: 116px !important;
@@ -1813,4 +1821,10 @@ p.ant-empty-description {
     &:nth-last-of-type(3) {
         width: 4rem;
     }
+}
+
+.page-wrapper .page-body-wrapper footer {
+    position: sticky;
+    bottom: 0;
+    box-shadow: 0px -4px 20px 0px #94949657;
 }
