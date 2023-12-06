@@ -32,13 +32,13 @@ export class VoucherServiceProxy {
 
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/add?", branch);
     }
-    createVoucherAndRelations(voucher: any): Observable<any> {
+    createVoucherAndRelations(voucherType:any, voucher: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/add?", voucher);
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/addWithPermission?id="+voucherType, voucher);
     }
-    updateVoucherAndRelations(voucher: any): Observable<any> {
+    updateVoucherAndRelations(voucherType:any,voucher: any): Observable<any> {
 
-        return this.http.post<any>(environment.apiUrl + "/api/Voucher/edit?", voucher);
+        return this.http.post<any>(environment.apiUrl + "/api/Voucher/editWithPerssion?id="+voucherType, voucher);
     }
     
     generateEntry(list: any): Observable<number> {
@@ -104,10 +104,11 @@ export class VoucherServiceProxy {
         params = params.append('typeId', typeId);
         return this.http.get<any>(this.baseUrl + "/api/Voucher/getLastCodeByTypeId", { params: params });
     }
-    deleteVoucher(id: any): Observable<any> {
+    deleteVoucher(voucherType:any, voucherId: any): Observable<any> {
         let params = new HttpParams();
-        params = params.append('id', id);
-        return this.http.get<any>(environment.apiUrl + "/api/Voucher/delete", { params: params });
+        params = params.append('voucherId', voucherId);
+        params = params.append('id', voucherType);
+        return this.http.get<any>(environment.apiUrl + "/api/Voucher/deleteWithPermission", { params: params });
     }
     deleteVoucherAndRelations(id: any): Observable<any> {
         let params = new HttpParams();
@@ -121,6 +122,10 @@ export class VoucherServiceProxy {
     deleteListEntity(entity: any): Observable<any> {
 
         return this.http.post<any>(environment.apiUrl + "/api/Voucher/deleteListEntity?", entity);
+    }
+
+    checkPrintPermission(voucherType:any): Observable<any> {
+        return this.http.get<any>(environment.apiUrl + "/api/Voucher/checkPrint?id="+voucherType);
     }
 }
 

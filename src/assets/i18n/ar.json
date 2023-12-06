@@ -505,7 +505,9 @@
         "entry-type": "نوع القيد",
         "generate-success": "تم التوليد بنجاح",
         "reference-type": "نوع المرجع",
-        "reference-number": "رقم المرجع"
+        "reference-number": "رقم المرجع",
+        "reason": "السبب"
+
 
 
 
@@ -717,7 +719,9 @@
         "add-business": "اضافة عمل"
     },
     "country": {
-        "add-country": "اضافة بلد"
+        "add-country": "اضافة بلد",
+        "use-tax-detail": "أستخدام تفاصيل الضريبة"
+
     },
     "unit": {
         "transaction-factor": " معامل التحويل ",
