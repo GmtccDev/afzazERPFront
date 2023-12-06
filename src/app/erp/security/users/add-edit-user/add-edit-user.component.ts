@@ -309,7 +309,7 @@ export class AddEditUserComponent implements OnInit {
       let sub = this.userService.getLastCode().subscribe({
         next: (res: any) => {
           this.toolbarPathData.componentList = this.translate.instant("component-names.user");
-          debugger
+          
           this.userForm.patchValue({
             code: res.response
           });
@@ -376,7 +376,7 @@ export class AddEditUserComponent implements OnInit {
       user.companiesUserDtos = this.companiesUserDto
       let sub = this.userService.createUser(user).subscribe({
         next: (result: any) => {
-          debugger
+          
           this.defineUserForm();
           this.submited = false;
           this.spinner.hide();

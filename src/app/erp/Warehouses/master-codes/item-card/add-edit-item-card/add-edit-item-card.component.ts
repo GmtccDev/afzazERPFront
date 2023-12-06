@@ -375,7 +375,7 @@ export class AddEditItemCardComponent implements OnInit {
           this.taxIds = '';
              
           if (res.response?.itemCardDeterminants != null) {
-            debugger
+            
             this.itemCardDeterminant = res.response?.itemCardDeterminants
            
 

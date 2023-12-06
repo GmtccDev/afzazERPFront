@@ -205,12 +205,12 @@ export class AddEditBillTypeComponent implements OnInit {
   //#region CRUD Operations
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      debugger
+      
       if (params['id'] != null) {
      
         this.id = params['id'];
         if (this.id > 0) {
-          debugger
+          
           this.getBillTypeById(this.id).then(a => {
             this.spinner.hide();
 
