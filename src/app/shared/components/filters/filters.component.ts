@@ -36,7 +36,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   VoucherTypesList:any[]=[];
   routeAccountGroupApi = "AccountGroup/get-ddl?"
   routeVoucherTypespApi = "VoucherType/get-ddl?"
-
+  routeJournalApi = 'Journal/get-ddl?'
   selectedLeafAccountId: any;
   selectedMainAccountId: any;
   mainAccountsList: any;
@@ -75,18 +75,20 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   costCenterId: any;
   @Output() OnFilter: EventEmitter<{
 
-    fromDate, toDate, accountGroupId,accountGroupName, mainAccountId, mainAccountName,leafAccountId,leafAccountName, entriesStatusId,entriesStatusName, currencyId, branchId,branchName
-    voucherKindId, voucherId, level, currencyName,costCenterName,voucherKindName, reportOptionId, fromEntryNo, toEntryNo, costCenterId
+    fromDate, toDate,journalName, accountGroupId,accountGroupName, mainAccountId, mainAccountName,leafAccountId,leafAccountName, entriesStatusId,entriesStatusName, currencyId, branchId,branchName
+    voucherKindId, voucherId, journalId,level, currencyName,costCenterName,voucherKindName, reportOptionId, fromEntryNo, toEntryNo, costCenterId
   }> = new EventEmitter();
 
   @Input() ShowOptions: {
     ShowFromDate: boolean,
+    ShowJournal: boolean,
     ShowToDate: boolean, ShowSearch: boolean, ShowAccountGroup: boolean, ShowMainAccount: boolean, ShowLeafAccount: boolean,
     ShowCostCenter: boolean, ShowEntriesStatus: boolean, ShowCurrency: boolean, ShowBranch: boolean, ShowVoucherKind: boolean, ShowVoucher: boolean, ShowLevel: boolean,
     ShowReportOptions: boolean, ShowFromEntryNo: boolean, ShowToEntryNo: boolean
   } = {
 
       ShowFromDate: false,
+      ShowJournal:false,
       ShowToDate: false,
       ShowSearch: false,
       ShowAccountGroup: false,
@@ -159,7 +161,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getCurrencies(),
       this.getBranches(),
       this.getVouchers(),
-      this.getVoucherTypes()
+      this.getVoucherTypes(),
+      this.getJournals()
 
 
     ]).then(a => {
@@ -228,7 +231,34 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
+  journalList:any[]=[];
+  getJournals() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
+        next: (res) => {
+          debugger
+          if (res.success) {
 
+            this.journalList = res.response.filter(x => x.isActive && (x.nameAr != null || x.nameEn != null));
+       
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   getAccounts() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
@@ -428,6 +458,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
+  selectedJournalId
   getGeneralConfigurationsOfAccountingPeriod() {
 
     return new Promise<void>((resolve, reject) => {
@@ -456,6 +487,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
+  
   getfiscalPeriodById(id: any) {
     
     return new Promise<void>((resolve, reject) => {
@@ -488,6 +520,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.selectedToDate) {
       //  this.selectedToDate = this.dateConverterService.getCurrentDate();
     }
+    debugger
     this.OnFilter.emit({
     
       fromDate: this.selectedFromDate,
@@ -512,13 +545,21 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       voucherKindName:this.selectedVoucherKindName,
       mainAccountName:this.selectedMainAccountName,
       accountGroupName:this.selectedAccountGroupName,
-      costCenterName:this.selectedCostCenterName
+      costCenterName:this.selectedCostCenterName,
+      journalId:this.selectedJournalId,
+      journalName:this.selectedJournalName
 
 
 
 
     })
   }
+  onSelectJournal() {
+
+    this.getJouranlName();
+    this.FireSearch()
+  }
+
   onSelectFromDate(e: DateModel) {
 
     this.selectedFromDate = e
@@ -720,5 +761,18 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   
   }
-  sele
+  selectedJournalName:any='';
+  getJouranlName()
+  {
+   debugger
+    if(this.selectedJournalId!=null && this.selectedJournalId!=undefined)
+    {
+      let item= this.journalList.find(x=>x.id==this.selectedJournalId)
+      this.selectedJournalName= this.lang=='ar'?item.nameAr:item.nameEn;
+    }else{
+      this.selectedJournalName=''
+    }
+  
+  }
+
 }

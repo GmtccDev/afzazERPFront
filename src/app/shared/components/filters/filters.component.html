@@ -142,6 +142,22 @@
 				</div>
 	
 			</div>
+			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowJournal">
+				<label for="0" class="label-name">{{'component-names.journal'|translate}} </label>
+				<div class="input-group  popup">
+
+
+					<ng-select class="custom" [(ngModel)]='selectedJournalId' 
+						         style="width:100%"
+						(ngModelChange)="onSelectJournal()">
+						<ng-option *ngFor="let journal of journalList" [value]="journal.id">
+							{{lang=="ar"?journal.nameAr:(journal.nameEn!=''?journal.nameEn:('validation-messages.nameEn-not-Found'|translate) +journal.nameAr)}}
+						</ng-option>
+					
+					</ng-select>
+
+				</div>
+			</div>
 
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowBranch">
 				<label for="0" class="label-name"> {{'component-names.branch'|translate}}</label>
@@ -176,6 +192,7 @@
 				</div>
 			</div>
 
+	
 			<div class="col-md-6 col-12" [hidden]="!ShowOptions.ShowVoucherKind">
 				<label for="0" class="label-name">{{'voucher-type.voucher-type'|translate}} </label>
 				<div class="input-group  popup">
