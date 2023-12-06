@@ -154,7 +154,7 @@ export class LoginCompanyComponent implements OnInit {
       next => {
 
    
-  debugger
+  
 
         if (next.success == true) {
 

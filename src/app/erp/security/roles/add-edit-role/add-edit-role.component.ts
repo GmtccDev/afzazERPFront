@@ -257,7 +257,7 @@ export class AddEditRoleComponent implements OnInit {
 			let sub = this.roleService.getRole(id).subscribe({
 				next: (res: any) => {
 					resolve();
-					debugger
+					
 					this.roleForm.setValue({
 						id: res.response?.id,
 						nameAr: res.response?.nameAr,
@@ -458,7 +458,7 @@ export class AddEditRoleComponent implements OnInit {
 	masterSelected = false;
 	searchText: string;
 	checkUncheckAll(evt) {
-		debugger
+		
 		// evt.isChecked = true;
 		if (this.screens != null) {
 			this.screens.forEach(
@@ -488,16 +488,16 @@ export class AddEditRoleComponent implements OnInit {
 	}
 
 	updateCheckedOptions(item, evt) {
-          debugger
+          
 		// this.permission[item.id].isChecked = evt.target.checked
 		let entity = this.permission.find(c => c.id == item.id);
 		entity.isChecked = evt.target.checked;
 		//  this.masterSelected = this.permission.every((item) => item.isChecked == true);
 	}
 	updateCheckedOption(item, evt) {
-           debugger;
+           ;
 		// this.permission[item.id].isChecked = evt.target.checked
-		debugger
+		
 		item.permissions.forEach(
 			(c) => {
 

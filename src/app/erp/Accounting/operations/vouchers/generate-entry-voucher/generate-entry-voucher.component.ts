@@ -202,7 +202,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
 				next: (res) => {
 					if (res.success) {
-						debugger
+						
 						this.accountsList = res.response;
 
 					}
@@ -309,14 +309,14 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		});
 	}
 	showConfirmGenerateEntryMessage(id) {
-		debugger
+		
 		this.getVoucherById(id).then(a => {
-			debugger
+			
 			var i = 0;
 			if (this.voucherDetail != null) {
-				debugger
+				
 				this.voucherDetail.forEach(element => {
-					debugger
+					
 					if (element.beneficiaryId != null) {
 						var value = 0;
 						if (element.debitLocal > 0) {
@@ -328,7 +328,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 						}
 
 						this.getAccountBalance(element.beneficiaryId).then(a => {
-							debugger
+							
 							var account = this.accountsList.find(x => x.id == element.beneficiaryId);
 
 							var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
@@ -362,7 +362,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			}
 			
 			this.getAccountBalance(this.cashAccountId).then(a => {
-				debugger
+				
 				var account = this.accountsList.find(x => x.id == this.cashAccountId);
 
 				var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
@@ -435,7 +435,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	}
 	// Function to filter the data based on code and date
 	filterData(code, voucherType, fromDate, toDate) {
-		debugger
+		
 		this.filteredData = this.generateEntryVouchers;
 		if (!stringIsNullOrEmpty(code)) {
 			this.filteredData = this.filteredData.filter(item =>
@@ -624,7 +624,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 
 			let sub = this.companyService.getCompany(id).subscribe({
 				next: (res: any) => {
-					debugger;
+					;
 
 					res?.response?.useHijri
 					if (res?.response?.useHijri) {

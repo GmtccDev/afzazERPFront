@@ -778,14 +778,14 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
   showConfirmCollectMessage(id: any) {
     // var i = 0;
     // this.getAccountBalance(obj.bankAccountId).then(a => {
-    //   debugger
+    //   
     //   var account = this.accountList.find(x => x.id == obj.bankAccountId);
     //   var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
     //   if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
     //     if (Number(this.balance) + obj.amountLocal > account.debitLimit) {
-    //       debugger
+    //       
 
     //       this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
     //       this.errorClass = 'errorMessage';
@@ -797,7 +797,7 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     //   else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
     //     if (-(this.balance) + obj.amountLocal > account.creditLimit) {
-    //       debugger
+    //       
     //       this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
     //       this.errorClass = 'errorMessage';
     //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -813,11 +813,11 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     // this.getAccountBalance(this.accountExchangeId).then(a => {
     //   var account = this.accountList.find(x => x.id == this.accountExchangeId);
     //   var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-    //   debugger
+    //   
     //   if (Number(this.balance) > 0 && account.debitLimit > 0) {
-    //     debugger
+    //     
     //     if (Number(this.balance) + obj.amountLocal > account.debitLimit) {
-    //       debugger
+    //       
 
     //       this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;          
     //       this.errorClass = 'errorMessage';
@@ -827,9 +827,9 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
     //   }
     //   else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-    //     debugger
+    //     
     //     if (-(this.balance) + obj.amountLocal > account.creditLimit) {
-    //       debugger
+    //       
     //       this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;          
     //       this.errorClass = 'errorMessage';
     //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -930,11 +930,11 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
     // this.getAccountBalance(this.accountExchangeId).then(a => {
     //   var account = this.accountList.find(x => x.id == this.accountExchangeId);
     //   var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-    //   debugger
+    //   
     //   if (Number(this.balance) > 0 && account.debitLimit > 0) {
-    //     debugger
+    //     
     //     if (Number(this.balance) + obj.amountLocal > account.debitLimit) {
-    //       debugger
+    //       
 
     //       this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;          
     //       this.errorClass = 'errorMessage';
@@ -944,9 +944,9 @@ export class IssuingChequeComponent implements OnInit, OnDestroy, AfterViewInit 
 
     //   }
     //   else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-    //     debugger
+    //     
     //     if (-(this.balance) + obj.amountLocal > account.creditLimit) {
-    //       debugger
+    //       
     //       this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('accounting-configration.account-exchange') + ")" + this.translate.instant('general.code') + " : " + account.code;          
     //       this.errorClass = 'errorMessage';
     //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));

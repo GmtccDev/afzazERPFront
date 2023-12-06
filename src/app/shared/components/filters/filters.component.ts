@@ -236,7 +236,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeJournalApi).subscribe({
         next: (res) => {
-          debugger
+          
           if (res.success) {
 
             this.journalList = res.response.filter(x => x.isActive && (x.nameAr != null || x.nameEn != null));
@@ -324,7 +324,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   levelLimit:number
   getAccountLevels()
   {
-    debugger;
+    ;
     this.setLevelLimit= true;
     let AccountItem:AccountDto= this.mainAccountsList.find(x=>x.id==this.selectedMainAccountId);
     if(AccountItem!=null)
@@ -520,7 +520,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.selectedToDate) {
       //  this.selectedToDate = this.dateConverterService.getCurrentDate();
     }
-    debugger
+    
     this.OnFilter.emit({
     
       fromDate: this.selectedFromDate,
@@ -581,7 +581,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onSelectMainAccount() {
-    debugger;
+    ;
     this.getMainAccounName();
     this.getAccountLevels();
     this.FireSearch()
@@ -711,7 +711,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   getSelectedVoucherKindName()
   {
 
-    debugger
+    
     if(this.selectedVoucherKindId!=null && this.selectedVoucherKindId!=undefined)
     {
       let item =this.VoucherTypesList.find(x=>x.id==this.selectedVoucherKindId);
@@ -764,7 +764,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedJournalName:any='';
   getJouranlName()
   {
-   debugger
+   
     if(this.selectedJournalId!=null && this.selectedJournalId!=undefined)
     {
       let item= this.journalList.find(x=>x.id==this.selectedJournalId)

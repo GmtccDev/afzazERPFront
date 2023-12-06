@@ -101,7 +101,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		let monthFrom;
 		let monthTo;
 
-		debugger
+		
 
 		if (this.fromDate == undefined || this.fromDate == null) {
 			//  this.fromDate = this.dateConverterService.getCurrentDate();
@@ -225,7 +225,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 
 
 		showLevels(mainAccount)
-		{  debugger
+		{  
 			if(mainAccount)
 			{
 				this.ShowOptions = {
@@ -260,7 +260,7 @@ export class AccountsBalanceReportComponent implements OnInit, OnDestroy, AfterV
 		}
 
 	OnFilter(e: { fromDate; toDate; currencyId;level; currencyName; branchId; branchName; fromEntryNo; toEntryNo; entriesStatusId; entriesStatusName; mainAccountId; mainAccountName; accountGroupName, accountGroupId }) {
-		debugger;
+		;
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;

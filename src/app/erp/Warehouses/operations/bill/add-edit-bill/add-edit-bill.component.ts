@@ -215,7 +215,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    debugger
+    
     this.spinner.show();
 
     this.getPayWays();
@@ -250,12 +250,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
     ]).then(a => {
-      debugger
+      
       this.getRouteData();
       this.changePath();
       this.listenToClickedButton();
     }).catch((err) => {
-      debugger
+      
 
       this.spinner.hide();
     })
@@ -264,7 +264,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      debugger
+      
 
       if (params['billTypeId'] != null) {
         this.billTypeId = params['billTypeId'];
@@ -739,7 +739,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                         subTaxReason: _element.subTaxReason
                       }
                     )
-                    debugger
+                    
 
                     this.subsList.push(sub);
 
@@ -2608,11 +2608,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   }
 
                   if (res.response?.subTaxDetail[0].subTaxReasonsDetail[0] != null) {
-                    debugger
+                    
                     var subTaxReasonsDetail = res.response?.subTaxDetail[0].subTaxReasonsDetail[0];
                     var reason = '';
                     if (this.lang == 'ar') {
-                      debugger
+                      
                       reason = subTaxReasonsDetail.taxReasonAr;
                     }
                     else {
@@ -2632,7 +2632,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                       subTaxReason: reason
                     }
                   )
-                  debugger
+                  
                   if (res.response?.subTaxDetail != null) {
 
                     res.response?.subTaxDetail.forEach(element => {

@@ -146,7 +146,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 			this.currencyId = 0;
 		}
 
-		debugger
+		
 
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
 		+"&reportParameter=toDate!" + this.toDate
@@ -200,7 +200,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 	};
      selectJournalId=0;
 	OnFilter(e: { branchName,currencyName;journalName;journalId;leafAccountName;entriesStatusName,fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
-		debugger
+		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
 		this.fromEntryNo = e.fromEntryNo;
@@ -264,7 +264,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					debugger
+					
 					if(res!=null)
 					{
 						
