@@ -75,12 +75,26 @@
                                         <div class="col-md-6 col-12">
                                             <label for="date" class="label-name">
 												{{'general.date'|translate}}</label><span class="text-danger">*</span>
+<<<<<<< HEAD
+											<div class="form-group0 position-relative" >
+												<!-- <app-full-date name="date" formControlName="date" [(ngModel)]="date"
+													ngDefaultControl [selectedDate]="date" disabled></app-full-date> -->
+
+												<input type="date" class="form-control " name="date"
+													formControlName="date" [(ngModel)]="date">
+												<div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['date'].errors && f['date'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+=======
                                             <div class="form-group0 position-relative">
 
                                                 <input type="date" class="form-control " name="date" formControlName="date">
                                                 <div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid" class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
                                                     <span *ngIf="f['date'].errors && f['date'].errors['required']" class="f-12 ng-star-inserted text-white">
+>>>>>>> 609ed7ac11e9d14669ecf10eeb51cc717b5c40cf
 														{{'error.required'|translate}}</span>
                                                 </div>
 

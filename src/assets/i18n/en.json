@@ -240,23 +240,25 @@
         "tax-account": "Tax Account",
         "close-account-required": "Please choose close account from the settings",
         "date-out-fiscal-period": "The date is out fiscal year date",
-        "unit-transaction-factor": "Unit Transaction Factor",
-        "company-name": "Company Name",
-        "branch-name": "Branch Name",
-        "copy-right": "Copy Right",
-        "afzaz": "Afzaz",
-        "commercial-registratio-no": "Commercial Registratio No",
-        "zip-code": "Zip Code",
-        "account-receivables-required": "Please choose receivables account from the settings",
-        "account-exchange-required": "Please choose Exchange account from the settings",
-        "debit-limit-exceed-account": "The debit limit has been exceeded for account",
-        "credit-limit-exceed-account": "The Credit limit has been exceeded for account",
-        "type-code": "Type Code",
-        "entry-type": "Entry Type",
-        "generate-success": "Generated successfully",
-        "reference-type": "Reference Type",
-        "reference-number": "Reference Number",
-        "reason": "Reason"
+        "unit-transaction-factor":"Unit Transaction Factor",
+        "company-name":"Company Name",
+        "branch-name":"Branch Name",
+        "copy-right":"Copy Right",
+        "afzaz":"Afzaz",
+        "commercial-registratio-no":"Commercial Registratio No",
+        "zip-code":"Zip Code",
+        "account-receivables-required":"Please choose receivables account from the settings",
+        "account-exchange-required":"Please choose Exchange account from the settings",
+        "debit-limit-exceed-account":"The debit limit has been exceeded for account",
+        "credit-limit-exceed-account":"The Credit limit has been exceeded for account",
+        "type-code":"Type Code",
+        "entry-type":"Entry Type",
+        "generate-success":"Generated successfully",
+        "reference-type":"Reference Type",
+        "reference-number":"Reference Number",
+        "reason":"Reason",
+        "date-in-closed-accounting-period":"The date is in closed accounting period to this fiscal year"
+        
 
     },
     "sales-person-commission": {
@@ -543,8 +545,11 @@
         "generate-entry-vouchers": "Generate Entry Vouchers",
         "item-Guide": " Item Guide",
         "item-Guide-information": " Item Guide Information",
-        "vouchers-roles-permissions": "Vouchers Types Roles Permissions",
-        "bills-roles-permissions": "Bills Types Roles Permissions"
+        "vouchers-roles-permissions":"Vouchers Types Roles Permissions",
+        "bills-roles-permissions":"Bills Types Roles Permissions",
+        "close-accounting-period":"Close Accounting Period",
+        "close-accounting-period-information":"Close Accounting Period Information"
+       
     },
     "language": {
         "ARABIC": "Ar",
@@ -908,5 +913,14 @@
     },
     "twoRows": "There must be at least two rows",
     "debitCreditValues": "There must be values in both the debit and credit",
-    "totalValues": "The total debit values in the debit column must be equal to the total credit values in the credit column"
+    "totalValues": "The total debit values in the debit column must be equal to the total credit values in the credit column",
+    "closed-accounting-period": {
+        "add": "Add closed accounting period",
+        "update": "Update the closed accounting period",
+        "Intersection": "There is an overlap in date",
+        "choose-opened-fiscal-year":"Please choose opened fiscal year from the configurations",
+        "date-range-out":"Date range of accounting period is out of date range of fiscal year"
+    
+    }
+
 }

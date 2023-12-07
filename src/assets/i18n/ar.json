@@ -315,8 +315,13 @@
         "generate-entry-vouchers": "توليد قيود السندات",
         "item-guide": " دليل اصناف",
         "item-guide-information": "معلومات  دليل اصناف",
-        "vouchers-roles-permissions": "أدوار وصلاحيات أنماط السندات",
-        "bills-roles-permissions": "أدوار وصلاحيات أنماط الفواتير"
+        "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
+        "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير",
+        "close-accounting-period":"أغلاق الفترة المحاسبية",
+        "close-accounting-period-information":"بيانات أغلاق الفترة المحاسبية"
+
+
+        
     },
     "general": {
         "fromTime": "من الساعة",
@@ -490,23 +495,26 @@
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
         "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
-        "unit-transaction-factor": "معامل تحويل الوحدة",
-        "company-name": "أسم الشركة",
-        "branch-name": "أسم الفرع",
-        "copy-right": "حق النشر",
-        "afzaz": "أفذاذ",
-        "commercial-registratio-no": "رقم السجل التجاري",
-        "zip-code": "الرمز البريدي",
-        "account-receivables-required": "من فضلك أختر حساب أوراق القبض من الاعدادات",
-        "account-exchange-required": "من فضلك أختر حساب أوراق الدفع من الاعدادات",
-        "debit-limit-exceed-account": "لقد تجاوز حد الائتمان المدين للحساب",
-        "credit-limit-exceed-account": "لقد تجاوز حد الائتمان الدائن للحساب",
-        "type-code": "كود النوع",
-        "entry-type": "نوع القيد",
-        "generate-success": "تم التوليد بنجاح",
-        "reference-type": "نوع المرجع",
-        "reference-number": "رقم المرجع",
-        "reason": "السبب"
+        "unit-transaction-factor":"معامل تحويل الوحدة",
+        "company-name":"أسم الشركة",
+        "branch-name":"أسم الفرع",
+        "copy-right":"حق النشر",
+        "afzaz":"أفذاذ",
+        "commercial-registratio-no":"رقم السجل التجاري",
+        "zip-code":"الرمز البريدي",
+        "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات",
+        "debit-limit-exceed-account":"لقد تجاوز حد الائتمان المدين للحساب",
+        "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب",
+        "type-code":"كود النوع",
+        "entry-type":"نوع القيد",
+        "generate-success":"تم التوليد بنجاح",
+        "reference-type":"نوع المرجع",
+        "reference-number":"رقم المرجع",
+        "reason":"السبب",
+        "date-in-closed-accounting-period":"التاريخ داخل فترة محاسبية مغلقة لهذة السنة المالية"
+
+       
 
 
 
@@ -901,5 +909,13 @@
     },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
-    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين"
+    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين",
+    "closed-accounting-period": {
+        "add": "اضافة فترة محاسبية مغلقة",
+        "update": "تحديث الفترة المحاسبية المغلقة",
+        "Intersection": "يوجد تداخل في التاريخ",
+        "choose-opened-fiscal-year":"من فضلك أختر فترة محاسبية مفتوحة من الاعدادات",
+        "date-range-out":"النطاق الزمني للفترة المحاسبية خارج النطاق الزمني للسنة المالية"
+    }
+
 }

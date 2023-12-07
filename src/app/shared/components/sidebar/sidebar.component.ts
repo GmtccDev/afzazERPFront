@@ -2,10 +2,8 @@ import { Component, ViewEncapsulation, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, NavService } from '../../services/nav.service';
 import { LayoutService } from '../../services/layout.service';
-import { VoucherTypeServiceProxy } from 'src/app/erp/Accounting/services/voucher-type.service';
 import { Subscription } from 'rxjs';
-import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
-import { refreshPaging } from '../../helper/helper';
+
 
 @Component({
 	selector: 'app-sidebar',
