@@ -299,8 +299,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.voucherService.getVoucher(id).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
-            let _date = res.response.date;
+            debugger
+            let _date = res.response.voucherDate;
             if (this.accountingPeriods != null) {
               this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
               if (this.accountingPeriodCheckDate != undefined) {
