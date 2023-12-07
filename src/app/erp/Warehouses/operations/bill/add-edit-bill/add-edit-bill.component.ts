@@ -137,7 +137,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   queryParams: any;
   billTypeId: any;
-  billType: BillType ;
+  billType: BillType;
   billTypeKind: any;
   billTypeCalculatingTax: boolean;
   billTypeCalculatingTaxManual: boolean;
@@ -215,7 +215,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+
     this.spinner.show();
 
     this.getPayWays();
@@ -250,12 +250,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
 
     ]).then(a => {
-      
+
       this.getRouteData();
       this.changePath();
       this.listenToClickedButton();
     }).catch((err) => {
-      
+
 
       this.spinner.hide();
     })
@@ -264,15 +264,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   getRouteData() {
     let sub = this.route.params.subscribe((params) => {
-      
+
 
       if (params['billTypeId'] != null) {
         this.billTypeId = params['billTypeId'];
         if (this.billTypeId) {
 
-          this.getBillTypeById(this.billTypeId).then(a=>{
+          this.getBillTypeById(this.billTypeId).then(a => {
             this.spinner.hide();
-          }).catch(e=>{
+          }).catch(e => {
             this.spinner.hide();
           });
 
@@ -310,15 +310,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       let sub = this.billTypeService.getBillType(id).subscribe({
         next: (res: any) => {
           resolve();
-          console.log("-----------------------------------------------------",res);
+          console.log("-----------------------------------------------------", res);
 
           this.billType = res.response;
           this.billTypeKind = this.billType.kind;
           this.billTypeCalculatingTax = this.billType.calculatingTax;
           this.billTypeCalculatingTaxManual = this.billType.calculatingTaxManual;
-    
+
           if (this.id == 0) {
-    
+
             if (this.billType.codingPolicy != 1) {
               this.getBillCode();
             }
@@ -329,9 +329,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             this.salesPersonId = this.billType.salesPersonId
             this.storeId = this.billType.storeId
             this.costCenterId = this.billType.costCenterId
-    
-    
-    
+
+
+
           }
 
 
@@ -673,7 +673,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
               this.billItem.push(
                 {
-                  id: c,
+                  id: element.id,
                   billId: element.billId,
                   itemId: element.itemId,
                   itemDescription: element.itemDescription,
@@ -698,8 +698,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   storeName: this.lang = "ar" ? storeName?.nameAr ?? '' : storeName?.nameEn ?? '',
                   costCenterName: this.lang = "ar" ? costCenterName?.nameAr ?? '' : costCenterName?.nameEn ?? '',
                   billItemTaxes: this.billItemTax ?? [],
-                  billDynamicDeterminants:this.selectedBillItem.billDynamicDeterminants,
-                  itemCardSerial:element.itemCardSerial
+                  billDynamicDeterminants: this.selectedBillItem.billDynamicDeterminants,
+                  itemCardSerial: element.itemCardSerial
 
 
                 }
@@ -741,7 +741,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                         subTaxReason: _element.subTaxReason
                       }
                     )
-                    
+
 
                     this.subsList.push(sub);
 
@@ -1422,9 +1422,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
     this.selectedBillItemTax = this.billItemTax.filter(x => x.billItemId == billItemId);
-    debugger
+    
     this.billItem.push({
-      id: 0,
+      id: this.selectedBillItem?.id ?? 0,
       billId: this.selectedBillItem?.billId ?? 0,
       itemId: this.selectedBillItem?.itemId ?? null,
       itemDescription: this.selectedBillItem?.itemDescription ?? '',
@@ -1520,8 +1520,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       storeName: '',
       costCenterName: '',
       billItemTaxes: [],
-      billDynamicDeterminants:[],
-      itemCardSerial:''
+      billDynamicDeterminants: [],
+      itemCardSerial: ''
 
     }
   }
@@ -1601,7 +1601,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.billService.createBill(this.billTypeId,this.bill).subscribe({
+      let sub = this.billService.createBill(this.billTypeId, this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
           this.clearSelectedItemData();
@@ -1768,7 +1768,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.billService.updateBill(this.billTypeId,this.bill).subscribe({
+      let sub = this.billService.updateBill(this.billTypeId, this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
           this.clearSelectedItemData();
@@ -2005,6 +2005,31 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   openItemSearchDialog(i) {
+    debugger
+    if(this.updateUrl.concat("/warehouses-operations/bill/update-bill")){
+      let row = {
+        billItemId: this.billItem[i].id,
+        itemCardId:  this.billItem[i].itemId,
+        billId: this.billItem[i].billId,
+        action:"Edit"
+      }
+      this.dialog.open(BillDynamicDeterminantComponent,
+        {
+          width: '1000px',
+          data: row
+        })
+        .afterClosed().subscribe(result => {
+          if (result) {
+            
+            //this.getBills();
+            this.selectedBillItem.billDynamicDeterminants = result;
+            this.selectedBillItem.billDynamicDeterminants.forEach(element => {
+              element.itemCardSerial = i
+            });
+          }
+        });
+    }
+   
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedBillItem?.itemName ?? '';
@@ -2018,6 +2043,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
       );
     });
+   
     if (data.length == 1) {
       if (i == -1) {
         this.selectedBillItem!.itemName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
@@ -2432,8 +2458,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             this.onChangeQuantityOrPrice();
           }
           let row = {
-            billItemId: this.id,
-            itemCardId: itemId
+            billItemId: this.selectedBillItem.id,
+            itemCardId: itemId,
+            billId: this.selectedBillItem.billId
           }
           this.dialog.open(BillDynamicDeterminantComponent,
             {
@@ -2442,11 +2469,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             })
             .afterClosed().subscribe(result => {
               if (result) {
-                debugger
+                
                 //this.getBills();
-                this.selectedBillItem.billDynamicDeterminants=result;
+                this.selectedBillItem.billDynamicDeterminants = result;
                 this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-                  element.itemCardSerial=i
+                  element.itemCardSerial = i
                 });
               }
             });
@@ -2619,11 +2646,11 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   }
 
                   if (res.response?.subTaxDetail[0].subTaxReasonsDetail[0] != null) {
-                    
+
                     var subTaxReasonsDetail = res.response?.subTaxDetail[0].subTaxReasonsDetail[0];
                     var reason = '';
                     if (this.lang == 'ar') {
-                      
+
                       reason = subTaxReasonsDetail.taxReasonAr;
                     }
                     else {
@@ -2643,7 +2670,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                       subTaxReason: reason
                     }
                   )
-                  
+
                   if (res.response?.subTaxDetail != null) {
 
                     res.response?.subTaxDetail.forEach(element => {

@@ -23,14 +23,17 @@ export class BillDynamicDeterminantComponent implements OnInit {
   date!: DateModel;
   form: FormGroup;
   billId: any;
+  action: any;
   constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private dateService: DateCalculation,) { }
 
   ngOnInit(): void {
-    this.date = this.dateService.getCurrentDate();
+    
+    // this.date = this.dateService.getCurrentDate();
     this.billItemId = this.data.billItemId;
     this.itemCardId = this.data.itemCardId;
     this.billId = this.data.billItemId;
+    this.action = this.data.action
     this.form = this.fb.group({});
 
     this.getDynamicDeterminant();
@@ -41,7 +44,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
       let sub = this.itemCardService.getBillDynamicDeterminant(this.billId, this.billItemId, this.itemCardId).subscribe({
         next: (res) => {
           if (res) {
-
+            
             this.dynamicDeterminant = res
             this.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
             this.dynamicDeterminantListDto = res.response.dynamicDeterminantListDto;
@@ -51,7 +54,8 @@ export class BillDynamicDeterminantComponent implements OnInit {
               for (let i = 0; i < 10; i++) {
                 // this.insertBillDynamicDeterminant.itemCardDeterminantListDto.forEach(element => {
                 this.insertBillDynamicDeterminant.dynamicDeterminantListDto.push({
-                  itemCardSerial: "",
+                  itemCardSerial: null,
+                  billDynamicDeterminantSerial: i.toString(),
                   id: null,
                   billId: null,
                   billItemId: this.billItemId,
@@ -76,8 +80,21 @@ export class BillDynamicDeterminantComponent implements OnInit {
                   checkedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId,
                 });
                 //  });
+
+              }
+              if (this.action == "Edit") {
+                for (let i = 0; i < this.insertBillDynamicDeterminant.dynamicDeterminantListDto.length; i++) {
+                  debugger
+                  this.insertBillDynamicDeterminant.dynamicDeterminantListDto[i].selectedValue = this.dynamicDeterminantListDto?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 1)?.value;
+                  this.insertBillDynamicDeterminant.dynamicDeterminantListDto[i].numberValue = this.dynamicDeterminantListDto?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 2)?.value;
+                  this.insertBillDynamicDeterminant.dynamicDeterminantListDto[i].textValue = this.dynamicDeterminantListDto?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 3)?.value;
+                  this.insertBillDynamicDeterminant.dynamicDeterminantListDto[i].dateValue = this.dateService.getDateForCalender(this.dynamicDeterminantListDto?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 4)?.value);
+                  this.insertBillDynamicDeterminant.dynamicDeterminantListDto[i].checkedValue = Boolean(this.dynamicDeterminantListDto?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 5)?.value);
+
+                }
               }
             }
+
             console.log(this.insertBillDynamicDeterminant)
 
 
@@ -106,7 +123,8 @@ export class BillDynamicDeterminantComponent implements OnInit {
       id: item.id,
       itemCardId: item.itemCardId,
       value: value,
-      valueType: valueType
+      valueType: valueType,
+      billDynamicDeterminantSerial: item.billDynamicDeterminantSerial
     };
   }
   insertBillDynamic() {
