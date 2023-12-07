@@ -307,7 +307,7 @@ export class AddEditAccountClassificationComponent implements OnInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+      
       var entity = this.accountClassificationForm.value;
       // var find = this.accountClassification.filter(c => (c.nameAr == entity.nameAr || c.nameEn == entity.nameEn) && c.type == entity.type)
       // if (find && find.length > 0) {

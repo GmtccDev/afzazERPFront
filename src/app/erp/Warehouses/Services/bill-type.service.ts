@@ -65,6 +65,7 @@ export class BillTypeServiceProxy {
     getBillType(id: any): Observable<any> {
         let params = new HttpParams();
         params = params.append('id', id);
+        
         return this.http.get<any>(this.baseUrl + "/api/BillType/getById", { params: params });
     }
     getLastCode(): Observable<any> {

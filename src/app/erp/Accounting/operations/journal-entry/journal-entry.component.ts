@@ -599,7 +599,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'قيد') {
 			return text;
 		}
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span  class="customLink px-3 b-r-3 bg-light-primary">${text}</span>`;
 		return iconHtml;
 
 	}
@@ -624,12 +624,12 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (text == 'Journal Entry') {
 			return text;
 		}
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span  class="customLink px-3 b-r-3 bg-light-primary">${text}</span>`;
 		return iconHtml;
 	}
 	hyperLinkType(cell, formatterParams, onRendered) {
 		let text = cell.getValue();
-		const iconHtml = `<span style="color: blue; text-decoration: underline; cursor: pointer;" class="customLink">${text}</span>`;
+		const iconHtml = `<span  class="customLink px-3 b-r-3 bg-light-primary">${text}</span>`;
 		return iconHtml;
 	}
 	CheckBoxFormatIcon() { //plain text value

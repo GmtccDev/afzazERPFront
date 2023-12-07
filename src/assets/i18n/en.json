@@ -20,8 +20,10 @@
     "newPassword": "Add New password",
     "canChangeToParent": "The sub account parent cannot be changed to a main account",
     "dateGreater": "To date is small than from date",
-    "repeated-name":"It is not possible to save because the name or type is repeated with the name.",
+    "repeated-name": "It is not possible to save because the name or type is repeated with the name.",
     "general": {
+        "fromTime": "From",
+        "toTime": "To",
         "searchFromDate": "From Date",
         "searchToDate": "To Date",
         "nameAr": "Name In Arabic",
@@ -256,9 +258,8 @@
         "reference-number":"Reference Number",
         "reason":"Reason",
         "date-in-closed-accounting-period":"The date is in closed accounting period to this fiscal year"
+        
 
-       
-    
     },
     "sales-person-commission": {
         "sales-person": "Sales Person",
@@ -438,6 +439,10 @@
         "open": "Open"
     },
     "component-names": {
+        "notifictions-settings": "Notifictions settings",
+        "notifications-configurations": "Notifications configurations",
+        "notifictions-management": "Notifictions management",
+        "floors": "Floors",
         "pointOfSale": "Point of sale",
         "shifts": "Shifts",
         "determinants": "Determinants",
@@ -544,6 +549,7 @@
         "bills-roles-permissions":"Bills Types Roles Permissions",
         "close-accounting-period":"Close Accounting Period",
         "close-accounting-period-information":"Close Accounting Period Information"
+       
     },
     "language": {
         "ARABIC": "Ar",
@@ -587,6 +593,13 @@
         "accountReceivables": "Account Receivables",
         "idleTime": "Idle Time",
         "account-exchange": "Account Exchange"
+    },
+    "notifictions": {
+        "repeat-after-every": "Repeat after every",
+        "transmission-time": "Transmission time",
+        "repetition-times": "Repetition times",
+        "E-mail": "E-mail",
+        "service-provider": "Service provider"
     },
     "fiscal-period-status": {
         "Opened": "Opened",
@@ -652,13 +665,13 @@
         "totalCredit": "Total Credit",
         "totalDebitLocal": "Total Debit Local",
         "totalCreditLocal": "Total Credit Local",
-        "no-delete-entry":"You can not delete this entry (Transaction entry)",
+        "no-delete-entry": "You can not delete this entry (Transaction entry)",
         "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal year",
         "no-add-entry-fiscal-period-closed": "You can not add an entry to this closed fiscal year",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "You can not add an entry.You Should choose a open fiscal year from the settings",
         "no-update-entry-fiscal-period-closed": "You can not update the entry to this closed fiscal year",
-        "entry-status":"Entry Status"
-       
+        "entry-status": "Entry Status"
+
 
     },
     "account-classification": {
@@ -718,7 +731,7 @@
     },
     "country": {
         "add-country": "Add Country",
-        "use-tax-detail":"Use Tax Detail"
+        "use-tax-detail": "Use Tax Detail"
     },
     "unit": {
         "transaction-factor": "Transaction Factor",
@@ -780,7 +793,7 @@
         "width-factor": "Width Factor",
         "length-factor": "Length Factor",
         "tranaction-factor": "Transaction Factor",
-        "item-taxes":"Item Taxes"
+        "item-taxes": "Item Taxes"
     },
     "bill-type": {
         "bill-type-information": "Bill Type Information",
@@ -873,6 +886,7 @@
         "export-json": "Export Json",
         "save": "Save"
     },
+
     "page-permission": {
         "isUpdate": "Edit",
         "isSave": "Save",
@@ -895,12 +909,8 @@
         "isCancelDefaultReport": "Cancel Default Report ",
         "isView": "View",
         "isNew": "New",
-        "isRenew": "Renew Contarct",
-        "isSettelment": "Contract Settelment",
-        "isIssue": "Issue Contract",
-        "isDisplay": "Display",
         "isPrint": "Print"
-      },
+    },
     "twoRows": "There must be at least two rows",
     "debitCreditValues": "There must be values in both the debit and credit",
     "totalValues": "The total debit values in the debit column must be equal to the total credit values in the credit column",
@@ -912,4 +922,5 @@
         "date-range-out":"Date range of accounting period is out of date range of fiscal year"
     
     }
+
 }

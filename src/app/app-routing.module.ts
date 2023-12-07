@@ -58,7 +58,7 @@ const routes: Routes = [
 			}
 		]
 
-	},{
+	}, {
 		path: 'accounting-master-codes',
 		component: ContentComponent,
 		canActivate: [AuthenticationGuard],
@@ -148,12 +148,26 @@ const routes: Routes = [
 
 			{
 				path: '',
-				loadChildren: () => import('././erp/pos/master-codes/master-codes.module').then(m => m.MasterCodesModule)
+				// loadChildren: () => import('././erp/pos/master-codes/master-codes.module').then(m => m.MasterCodesModule)
+				loadChildren: () => import('./erp/pos/master-codes/master-codes.module').then(m => m.MasterCodesModule)
 			}
 		]
 
 	},
-	
+	{
+		path: 'notifictions-settings',
+		component: ContentComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+
+			{
+				path: '',
+				loadChildren: () => import('./erp/notifictions/settings/notifictions-settings.module').then(m => m.NotifictionsSettingsModule)
+			}
+		]
+
+	},
+
 
 	{
 		path: '**',

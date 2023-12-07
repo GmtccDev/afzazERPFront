@@ -90,6 +90,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		selectedEntriesStatusName='';
 		selectedBranchName=''
 		selectedLeafAccountName=''
+		selectedJournalName=''
 	gotoViewer() {
 		
 		let monthFrom;
@@ -148,21 +149,22 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		
 
 		let reportParams: string = "reportParameter=fromDate!" + this.fromDate
-		+ "&reportParameter=toDate!" + this.toDate
-		+ "&reportParameter=branchId!" + this.branchId
-		+ "&reportParameter=companyId!" + this.companyId
-		+ "&reportParameter=currencyId!" + this.currencyId
-		+ "&reportParameter=entriesStatusId!" + this.entriesStatusId
+		+"&reportParameter=toDate!" + this.toDate
+		+"&reportParameter=branchId!" + this.branchId
+		+"&reportParameter=companyId!" + this.companyId
+		+"&reportParameter=currencyId!" + this.currencyId
+		+"&reportParameter=entriesStatusId!" + this.entriesStatusId
 		+"&reportParameter=selectedEntriesStatusName!" + this.selectedEntriesStatusName 
 		+"&reportParameter=selectedleafAccountName!" + this.selectedLeafAccountName 
 		+"&reportParameter=selectedBranchName!" + this.selectedBranchName
-		+"&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName 
-		+ "&reportParameter=JournalId!" + this.JournalId
-		+ "&reportParameter=fromEntryNo!" + this.fromEntryNo
-		+ "&reportParameter=toEntryNo!" + this.toEntryNo
-		+ "&reportParameter=accountId!" + this.accountId
-		+ "&reportParameter=lang!" + this.lang
-		+ "&reportParameter=userId!" + this.userId;
+		+"&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName
+		+"&reportParameter=selectedJournalName!" + this.selectedJournalName  
+		+"&reportParameter=JournalId!" + this.JournalId
+		+"&reportParameter=fromEntryNo!" + this.fromEntryNo
+		+"&reportParameter=toEntryNo!" + this.toEntryNo
+		+"&reportParameter=accountId!" + this.accountId
+		+"&reportParameter=lang!" + this.lang
+		+"&reportParameter=userId!" + this.userId;
 
 		const modalRef = this.modalService.open(NgbdModalContent);
 		modalRef.componentInstance.reportParams = reportParams;
@@ -178,6 +180,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowToDate: boolean;
 		ShowSearch: boolean;
 		ShowCurrency: boolean;
+		ShowJournal: boolean;
 		ShowBranch: boolean;
 		ShowEntriesStatus: boolean;
 		ShowFromEntryNo: boolean;
@@ -189,13 +192,14 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		ShowSearch: false,
 		ShowCurrency: true,
 		ShowBranch: true,
+		ShowToEntryNo: true,
+		ShowJournal:true,
 		ShowEntriesStatus: true,
 		ShowFromEntryNo: true,
-		ShowToEntryNo: true,
 		ShowLeafAccount:true
 	};
-
-	OnFilter(e: { branchName,currencyName,leafAccountName,entriesStatusName,fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
+     selectJournalId=0;
+	OnFilter(e: { branchName,currencyName;journalName;journalId;leafAccountName;entriesStatusName,fromDate; toDate; currencyId; branchId; fromEntryNo; toEntryNo; leafAccountId; entriesStatusId;mainAccountId }) {
 		
 		this.fromDate = e.fromDate;
 		this.toDate = e.toDate;
@@ -208,7 +212,10 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		this.selectedCurrencyName=e.currencyName,
 		this.selectedEntriesStatusName=e.entriesStatusName,
 		this.selectedLeafAccountName=e.leafAccountName
-		this.selectedBranchName = e.branchName
+		this.selectedBranchName = e.branchName,
+		this.JournalId = e.journalId,
+		this.selectedJournalName =e.journalName
+	
 	}
 
 	listenToClickedButton() {
@@ -257,7 +264,7 @@ export class JournalEntriesReportComponent implements OnInit, OnDestroy, AfterVi
 		const promise = new Promise<void>((resolve, reject) => {
 			this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
-					debugger
+					
 					if(res!=null)
 					{
 						

@@ -86,6 +86,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
 
 
+
   ) {
 
   }
@@ -95,7 +96,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    debugger
+
     this.vouchers = [];
 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -119,6 +120,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.subsList.push(sub);
     this.spinner.show();
+
 
     Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getCompanyById(this.companyId), this.getVouchers()])
       .then(a => {
@@ -272,7 +274,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region CRUD Operations
   delete(id: any) {
-    this.voucherService.deleteVoucher(id).subscribe((resonse) => {
+    this.voucherService.deleteVoucher(this.voucherTypeId, id).subscribe((resonse) => {
       this.getVouchers();
       this.router.navigate([this.listUrl + this.voucherTypeId])
         .then(() => {
@@ -298,12 +300,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (res: any) => {
           resolve();
           if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
-
             let _date = res.response.date;
             if (this.accountingPeriods != null) {
               this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
               if (this.accountingPeriodCheckDate != undefined) {
-
                 this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
                 this.errorClass = 'errorMessage';
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -324,23 +324,30 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
                 return;
               }
+              else {
 
-              this.spinner.show();
-              let sub = this.voucherService.deleteVoucher(id).subscribe(
-                (resonse) => {
-                  this.getVouchers();
-                  this.router.navigate([this.listUrl + this.voucherTypeId])
+                this.spinner.show();
+                let sub = this.voucherService.deleteVoucher(this.voucherTypeId,id).subscribe(
+                  (resonse) => {
+                    this.getVouchers();
+                    this.router.navigate([this.listUrl + this.voucherTypeId])
 
-                });
-              this.subsList.push(sub);
-              this.spinner.hide();
-
+                  });
+                this.subsList.push(sub);
+                this.spinner.hide();
+              }
             }
-          });
+
+
+
+
+
+          })
         }
-      })
-      this.subsList.push(sub);
-    })
+      }
+      )
+    }
+    )
   }
   //#endregion
   //#region Tabulator
@@ -529,11 +536,40 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   //#endregion
 
   onViewReportClicked(id) {
-    localStorage.removeItem("itemId")
-    localStorage.setItem("itemId", id)
-    let reportType = 1;
-    let reportTypeId = 11;
-    this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+
+    this.checkPrintPermission().then(a => {
+      if (a) {
+        localStorage.removeItem("itemId")
+        localStorage.setItem("itemId", id)
+        let reportType = 1;
+        let reportTypeId = 11;
+        this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
+      }
+    })
+
+
+  }
+
+  checkPrintPermission() {
+    return new Promise<boolean>((resolve, reject) => {
+      let sub = this.voucherService.checkPrintPermission(this.voucherTypeId).subscribe({
+        next: (res) => {
+
+          if (res.status == "Success") {
+            resolve(true);
+          }
+          else {
+            resolve(false);
+          }
+
+        },
+        error: (err) => {
+          resolve(false);
+        },
+        complete: () => { }
+      });
+      this.subsList.push(sub);
+    })
   }
   printReportFormatIcon() { //plain text value
 
@@ -541,11 +577,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   getCompanyById(id: any) {
     return new Promise<void>((resolve, reject) => {
-
       let sub = this.companyService.getCompany(id).subscribe({
         next: (res: any) => {
-          debugger;
-
           res?.response?.useHijri
           if (res?.response?.useHijri) {
             this.dateType = 2

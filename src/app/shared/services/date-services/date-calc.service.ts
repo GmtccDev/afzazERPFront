@@ -15,7 +15,7 @@ export class DateCalculation {
   calculateEndDateForHijri(period: number, rentMethodType: number,
     startDate: { year: number, month: number, day: number },
     daysBefore: number): { year: number, month: number, day: number } {
-      debugger
+      
     let endDate: { year: number, month: number, day: number } = { year: 0, month: 0, day: 0 };
     let addedYears;
     let addedMonth;

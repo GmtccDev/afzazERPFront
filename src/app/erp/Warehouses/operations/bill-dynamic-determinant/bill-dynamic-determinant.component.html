@@ -9,58 +9,55 @@
                 </td>
             </tr>
             <tr>
-                <th>#</th>
+                <th style="width: 10px;">#</th>
                 <th *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
                     {{ key.determinantsMaster.nameAr }}
                 </th>
+              
             </tr>
         </thead>
         <tbody>
-            <!-- <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
-                    <input *ngIf="key.determinantsMaster.valueType === 1" type="select" [(ngModel)]="item.value" class="custom-input" />
-                    <input *ngIf="key.determinantsMaster.valueType === 2" type="number" [(ngModel)]="item.value" class="custom-input" />
-                    <input *ngIf="key.determinantsMaster.valueType === 3" type="text" [(ngModel)]="item.value" class="custom-input" />
-                    <input *ngIf="key.determinantsMaster.valueType === 4" type="date" [(ngModel)]="item.value" class="custom-input" />
-                    <select *ngIf="key.determinantsMaster.valueType === 5" [(ngModel)]="item.value" class="custom-input">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </td>
-            </tr> -->
+           
             <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
-                <td>{{ i + 1 }}</td>
+                <td style="width: 10px;">{{ i + 1 }}</td>
                 <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
                     <ng-container [ngSwitch]="key.determinantsMaster.valueType">
                         <ng-container *ngSwitchCase="1">
-                            <select [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input">
+                            <select [(ngModel)]="item.selectedValue" class="custom-input">
                                 <option *ngFor="let determinantDetail of key.determinantsMaster.determinantsDetails"
                                     [value]="determinantDetail.id">{{ determinantDetail.nameAr }}</option>
                             </select>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="2">
-                            <input type="number" [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input" />
+                            <input type="number" [(ngModel)]="item.numberValue" class="custom-input" />
                         </ng-container>
                         <ng-container *ngSwitchCase="3">
-                            <input type="text" [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input" />
+                            <input type="text" [(ngModel)]="item.textValue" class="custom-input" />
                         </ng-container>
                         <ng-container *ngSwitchCase="4">
-                            <!-- <input type="date" [(ngModel)]="item[key.determinantsMaster.id]" class="custom-input" /> -->
-                            <app-full-date name="date" [(ngModel)]="item[key.determinantsMaster.id]" ngDefaultControl
-                                [selectedDate]="item[key.determinantsMaster.id]"
-                                (OnDateSelect)="getDate($event)"></app-full-date>
+                            <!-- <input type="date" [(ngModel)]="item.value" class="custom-input" /> -->
+                            <app-full-date name="date" [(ngModel)]="item.dateValue" ngDefaultControl
+                               
+                                (OnDateSelect)="getDate($event,item)"></app-full-date>
                         </ng-container>
                         <ng-container *ngSwitchCase="5">
                             <label>
-                                <input type="checkbox" [(ngModel)]="item[key.determinantsMaster.id]"
+                                <input type="checkbox" [(ngModel)]="item.checkedValue"
                                     class="custom-input" />
 
                             </label>
                         </ng-container>
+                        <!-- <ng-container *ngSwitchCase="5">
+                            <select [(ngModel)]="item.checkedValue" class="custom-input">
+                                <option [ngValue]="true">True</option>
+                                <option [ngValue]="false">False</option>
+                            </select>
+                        </ng-container> -->
                     </ng-container>
+                    <!-- <button (click)="addNewObject(item,key)" class="add-button">Add</button> -->
                 </td>
+            
             </tr>
         
         </tbody>

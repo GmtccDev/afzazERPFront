@@ -180,7 +180,7 @@ export class AddSalesPersonCommissionCardComponent  implements OnInit,OnDestroy 
     return new Promise<void>((resolve, reject) => {
       let sub = this.salesPersonCommissionServiceProxy.getSalesPersonCommission(id).subscribe({
         next: (res: any) => {
-       debugger
+       
           resolve();
           this.salesPersonCommissionCardForm.patchValue({
             id: res.response?.id,

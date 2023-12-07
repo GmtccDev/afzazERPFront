@@ -232,7 +232,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 
   
 	addItem() {
-	  debugger
+	  
 		
 		this.determinantsDetail.push({
 			id:0,
@@ -271,7 +271,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 	}
   
 	setInputData() {
-		debugger
+		
 	  this.determinantsMaster = {
 		id: this.determinantsForm.controls["id"].value,
 		code: this.determinantsForm.controls["code"].value,
@@ -286,9 +286,9 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
   
 	}
 	confirmSave() {
-		debugger
+		
 	  return new Promise<void>((resolve, reject) => {
-		debugger
+		
 		let sub = this.determinantsService.createDeterminant(this.determinantsMaster).subscribe({
 		  next: (result: any) => {
 			this.defineDeterminantForm();
@@ -307,7 +307,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 	  });
 	}
 	onSave() {
-		debugger;
+		;
 	  if (this.determinantsForm.valid) {
 		if (this.determinantsDetail.length == 0 &&  this.determinantsForm.controls["valueType"].value==1) {
 		  this.errorMessage = this.translate.instant("determinants.determinants-details-required");
@@ -353,7 +353,7 @@ export class AddEditDeterminantsComponent implements  OnInit, AfterViewInit {
 	onUpdate() {
   
 	  if (this.determinantsForm.valid) {
-		debugger
+		
 		if (this.determinantsDetail.length == 0 && this.determinantsForm.controls["valueType"].value==1) {
 		  this.errorMessage = this.translate.instant("determinants.determinants-details-required");
 		  this.errorClass = 'errorMessage';

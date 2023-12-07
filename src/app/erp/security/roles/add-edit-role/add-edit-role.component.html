@@ -1,134 +1,119 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
-	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
 </ngx-spinner>
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card mb-3">
-					<div class="card-body">
-						<form [formGroup]="roleForm" id="BusinessSubmit" class="tabs-form">
-							<div class="main-customer">
-								<div class="wrapper-title">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form [formGroup]="roleForm" id="BusinessSubmit" class="tabs-form">
+                            <div class="main-customer">
+                                <div class="wrapper-title">
 
-									<h3>{{'component-names.role-information'|translate}}</h3>
-									<hr>
-									<div class="row align-items-center">
+                                    <h3>{{'component-names.role-information'|translate}}</h3>
+                                    <hr>
+                                    <div class="row align-items-center">
 
-										<div class="col-12 col-md-6 offset-6">
-											<label for="code" class="label-name">
+                                        <div class="col-12 col-md-6 offset-6">
+                                            <label for="code" class="label-name">
 												{{'general.code'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            <div class="form-group position-relative">
 
-												<input type="text" class="form-control icon-user"
-													[ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
-													name="code" formControlName="code">
-												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['code'].errors && f['code'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control icon-user" [ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}" name="code" formControlName="code">
+                                                <div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['code'].errors && f['code'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}} </span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameAr" class="label-name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameAr" class="label-name">
 												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            <div class="form-group position-relative">
 
-												<input type="text" class="form-control icon-user"
-													[ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}"
-													name="nameAr" formControlName="nameAr">
-												<div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control icon-user" [ngClass]="{'is-invalid':f['nameAr'].errors || f['nameAr'].invalid}" name="nameAr" formControlName="nameAr">
+                                                <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameEn"
-												class="label-name">{{'general.nameEn'|translate}}</label><span
-												class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameEn" class="label-name">{{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
 
-												<input type="text" class="form-control icon-user" name="nameEn"
-													formControlName="nameEn">
-												<div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid"
-													class="validation alert-danger position-absolute">
-													<i class="fa fa-close "></i>
-													<span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']"
-														class="f-12 ng-star-inserted text-white">
+                                                <input type="text" class="form-control icon-user" name="nameEn" formControlName="nameEn">
+                                                <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
+                                                    <i class="fa fa-close "></i>
+                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
-												</div>
+                                                </div>
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<div class="media">
-												<label class="label-name"> {{'general.status'|translate}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="media">
+                                                <label class="label-name"> {{'general.status'|translate}}
 												</label>
-												<div class="icon-state media-body">
-													<label class="switch">
+                                                <div class="icon-state media-body">
+                                                    <label class="switch">
 														<input type="checkbox" class="form-control" name="isActive"
 															formControlName="isActive">
 														<span class="switch-state"></span>
 													</label>
-												</div>
-											</div>
-										</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-									</div>
-								</div>
-							</div>
-						</form>
-						<hr>
-						<div>
-							<div class="wrapper-title">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        <div>
+                            <div class="wrapper-title">
 
-								<h3>{{'component-names.roles-permissions'|translate}}</h3>
-								<hr>
-								
-							</div>
-							<div class="row g-2">
-								<div class="col-md-6 col-12">
-									<label for="" class="label-name">
+                                <h3>{{'component-names.roles-permissions'|translate}}</h3>
+                                <hr>
+
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-md-6 col-12">
+                                    <label for="" class="label-name">
 										{{'component-names.modulesType'|translate}}</label>
-									<ng-select style="width:100%" (change)="onChange($event)">
-										<ng-option *ngFor="let module of modulesType" [value]="module.value">
-											{{lang=="ar"?module.descriptionAr:module.descriptionEn}}
-										</ng-option>
-									</ng-select>
+                                    <ng-select style="width:100%" (change)="onChange($event)">
+                                        <ng-option *ngFor="let module of modulesType" [value]="module.value">
+                                            {{lang=="ar"?module.descriptionAr:module.descriptionEn}}
+                                        </ng-option>
+                                    </ng-select>
 
-								</div>
-								<div class="col-md-6 col-12">
-									<label for="" class="label-name">
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <label for="" class="label-name">
 										{{'component-names.search-roles'|translate}}</label>
-									<input class="form-control" autocomplete="off" type="text" placeholder=""
-										[(ngModel)]="searchText" />
-								</div>
+                                    <input class="form-control" autocomplete="off" type="text" placeholder="" [(ngModel)]="searchText" />
+                                </div>
 
-								<div class="col-md-12 col-12">
-									<div class="py-3">
-										<input type="checkbox" name="list_name" [checked]="masterSelected"
-											value="m1" (change)="checkUncheckAll($event)" /> &nbsp;&nbsp;
-										<strong> {{'general.selectUnselect'|translate}} </strong>
-									</div>
-								</div>
-							</div>
-							<nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
+                                <div class="col-md-12 col-12">
+                                    <div class="py-3">
+                                        <input type="checkbox" name="list_name" [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)" /> &nbsp;&nbsp;
+                                        <strong> {{'general.selectUnselect'|translate}} </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
 
-								<li [ngbNavItem]="1" [destroyOnHide]="false">
-									<a ngbNavLink>{{'component-names.roles-permissions'|translate}}</a>
-									<ng-template ngbNavContent>
-										<div class="row g-2">
-											<!-- <div class="col-md-6 col-12">
+                                <li [ngbNavItem]="1" [destroyOnHide]="false">
+                                    <a ngbNavLink>{{'component-names.roles-permissions'|translate}}</a>
+                                    <ng-template ngbNavContent>
+                                        <div class="row g-2">
+                                            <!-- <div class="col-md-6 col-12">
 												<label for="" class="label-name">
 													{{'component-names.modulesType'|translate}}</label>
 												<ng-select style="width:100%" (change)="onChange($event)">
@@ -136,7 +121,7 @@
 														{{lang=="ar"?module.descriptionAr:module.descriptionEn}}
 													</ng-option>
 												</ng-select>
-		
+
 											</div>
 											<div class="col-md-6 col-12">
 												<label for="" class="label-name">
@@ -144,7 +129,7 @@
 												<input class="form-control" autocomplete="off" type="text" placeholder=""
 													[(ngModel)]="searchText" />
 											</div>
-		
+
 											<div class="col-md-12 col-12">
 												<div class="py-3">
 													<input type="checkbox" name="list_name" [checked]="masterSelected"
@@ -152,136 +137,130 @@
 													<strong> {{'general.selectUnselect'|translate}} </strong>
 												</div>
 											</div> -->
-		
-		
-											<div *ngFor="let option of screens| filter:searchText;" class="col-md-4">
-												<div class="item-permissions">
-													<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
-														{{lang=="ar"?option.screenNameAr:option.screenNameEn}}
-														<label> <input type="checkbox" name="options" value="{{option.id}}"
-																[(ngModel)]="option.isChecked"
+
+
+                                            <div *ngFor="let option of screens| filter:searchText;" class="col-md-4">
+                                                <div class="item-permissions">
+                                                    <h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+                                                        {{lang=="ar"?option.screenNameAr:option.screenNameEn}}
+                                                        <label>
+															<input type="checkbox" name="options" value="{{option.id}}"
+																[(ngModel)]="option.isCheckedAllScreen"
 																(change)="updateCheckedOption(option, $event)" />
 														</label>
-													</h6>
-													<div class="check-item" *ngFor="let item of option.permissions;">
-														<label>
+
+
+                                                    </h6>
+                                                    <div class="check-item" *ngFor="let item of option.permissions;">
+                                                        <label>
 															<input type="checkbox" name="options" value="{{item.id}}"
 																[(ngModel)]="item.isChecked"
 																(change)="updateCheckedOptions(item, $event)" />
-		
+
 															{{lang=="ar"?item.actionNameAr:item.actionNameEn}}
 														</label>
-													</div>
-												</div>
-		
-											</div>
-										</div>
-									</ng-template>
-								</li>
-			
-								<li [ngbNavItem]="2" [destroyOnHide]="false">
-								  <a ngbNavLink>{{'component-names.vouchers-roles-permissions'|translate}}</a>
-								  <ng-template ngbNavContent>
-									<!-- <div class="col gap-2 grid grid-cols-3 p-0">
-										<div class=" ">
-										  <label for="roleNameAr" class="label-name">
-											{{'page-form.page-search-contract'|translate}}</label>
-										  <div class="input-group form-group">
-											<div class="input-group">
-											  <input type="text" class="form-control icon-user tenant-icon"
-												[ngModelOptions]="{standalone: true}" [(ngModel)]="searchTextContract">
-											</div>
-										  </div>
-										</div>
-										<div class="form-group d-flex align-items-center gap-1">
-					
-										  <input id="checkAllPermissionsContracts" formControlName="checkAllPermissionsContracts" type="checkbox"
-											(change)="onSelecetAllContactsPermissions($event)" name="checkAllPermissionsContracts">
-										  <label for="checkAllPermissionsContracts" class="label-name m-0">{{'page-form.check-all'|translate}} </label>
-										</div>
-									  </div> -->
-									  <br>
-										<div class="row">
-										  <!-- <div *ngFor="let voucherPerm of vouchersRolePermissions |filter:searchTextContract:'contractArName':'contractEnName'; let i= index;" class="col-md-4 col-sm-12 mb-1 ">
-											<div class="checkbox-wrapper">
-											  <ng-container *ngIf="lang=='ar'; else en">
-												<h6 class="title-permissions">{{voucherPerm.voucherArName}}</h6>
-											  </ng-container>
-											  <ng-template #en>
-												<h6 class="title-permissions">{{voucherPerm.voucherEnName}}</h6>
-											  </ng-template>
-											  <span class="title-permissions">{{'general.selectUnselect'|translate}}</span>
-											 
-											  <input    type="checkbox"  [ngModelOptions]="{standalone: true}"
-											   [(ngModel)]="voucherPerm.isUserChecked"  
-											   (change)="onSelecetPageAllvoucherPermissions($event,voucherPerm)"  
-											   class="choose-all-contract my-checkbox">
-											  <ul *ngFor="let permission of voucherPerm?.permissionsJson |keyvalue" 
-											  class="list-wrap">
-												<li>
-												  <input type="checkbox" [ngModelOptions]="{standalone: true}" 
-												  [(ngModel)]="permission.value"
-													(change)="onCheckboxContractSettingsChange($event,voucherPerm,permission.key)"
-													[attr.checked]="permission.value ? 'checked' : null" id="contract{{permission.key}}{{voucherPerm.id}}">
-												  <label for="contract{{permission.key}}{{voucherPerm.id}}"></label>
-												  <span> {{('page-permission.'+permission.key)|translate}} </span>
-												</li>
-											  </ul>
-											</div>
-											<hr>
-										  </div> -->
+                                                    </div>
+                                                </div>
 
-										  
-											<div *ngFor="let permission of vouchersRolePermissions| filter:searchText;" class="col-md-4">
-												<div class="item-permissions">
-													<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
-														{{lang=="ar"?permission.voucherArName:permission.voucherAEnName}}
-														<label> <input type="checkbox" name="options" value="{{permission.id}}"
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </li>
+
+                                <li [ngbNavItem]="2" [destroyOnHide]="false">
+                                    <a ngbNavLink>{{'component-names.vouchers-roles-permissions'|translate}}</a>
+                                    <ng-template ngbNavContent>
+
+                                        <br>
+                                        <div class="row g-2">
+
+                                            <div *ngFor="let permission of vouchersRolePermissions| filter:searchText;" class="col-md-4">
+                                                <div class="item-permissions">
+                                                    <h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+                                                        {{lang=="ar"?permission.voucherArName:permission.voucherAEnName}}
+                                                        <label> <input type="checkbox" class="choose-all-Voucher-Type"
+																name="options" value="{{permission.id}}"
 																[(ngModel)]="permission.isUserChecked"
-																(change)="updateCheckedOption(option, $event)" />
+																(change)="onSelecetAllVouchersRolePermissions($event,permission,permission.key)" />
 														</label>
-													</h6>
-													<div class="check-item" *ngFor="let perimissionItem of permission?.permissionsJson |keyvalue">
-														<label>
-														
-															<input type="checkbox" name="permission" value="{{perimissionItem.id}}"
+                                                    </h6>
+                                                    <div class="check-item" *ngFor="let perimissionItem of permission?.permissionsJson |keyvalue">
+                                                        <label>
+
+															<input type="checkbox" name="permission"
+																value="{{perimissionItem.id}}"
 																[(ngModel)]="perimissionItem.value"
-																(change)="updateCheckedOptions(item, $event)" />
-		
-																{{('page-permission.'+perimissionItem.key)|translate}}
+																class="choose-all-Voucher-Type"
+																[attr.checked]="perimissionItem.value ? 'checked' : null"
+																id="bill{{perimissionItem.key}}{{permission.id}}"
+																(change)="onCheckboxVouchersTypesChange($event,permission,perimissionItem.key)" />
+
+															{{('page-permission.'+perimissionItem.key)|translate}}
 														</label>
-													</div>
-												</div>
-		
-											</div>
-					  
-					  
-					  
-										</div>
-								
-								  </ng-template>
-								</li>
-			
-			
-								<li [ngbNavItem]="3" [destroyOnHide]="false">
-								  <a ngbNavLink>{{'component-names.bills-roles-permissions'|translate}}</a>
-								  <ng-template ngbNavContent>
-								
-								  </ng-template>
-								</li>
-								
-							  </nav>
-							  <div [ngbNavOutlet]="nav" class=""></div>
+                                                    </div>
+                                                </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                                            </div>
 
-		<!--
+
+
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+
+
+                                <li [ngbNavItem]="3" [destroyOnHide]="false">
+                                    <a ngbNavLink>{{'component-names.bills-roles-permissions'|translate}}</a>
+                                    <ng-template ngbNavContent>
+                                        <div class="row g-2">
+                                            <div *ngFor="let permission of billsRolesPermissions| filter:searchText;" class="col-md-4">
+                                                <div class="item-permissions">
+                                                    <h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+                                                        {{lang=="ar"?permission.billArName:permission.billAEnName}}
+                                                        <label> <input type="checkbox" name="permissions"
+																class="choose-all-bill-Type"
+																[ngModelOptions]="{standalone: true}"
+																value="{{permission.id}}"
+																[(ngModel)]="permission.isUserChecked"
+																(change)="onSelecetPageAllBillsTypePermissions($event,permission,permission.key)" />
+														</label>
+                                                    </h6>
+                                                    <div class="check-item" *ngFor="let perimissionItem of permission?.permissionsJson |keyvalue">
+                                                        <label>
+
+															<input type="checkbox" name="permission"
+																[ngModelOptions]="{standalone: true}"
+																value="{{perimissionItem.id}}"
+																[(ngModel)]="perimissionItem.value"
+																class="choose-all-bill-Type"
+																[attr.checked]="perimissionItem.value ? 'checked' : null"
+																id="bill{{perimissionItem.key}}{{permission.id}}"
+																(change)="onCheckboxBillTypesChange($event,permission,perimissionItem.key)" />
+
+
+															{{('page-permission.'+perimissionItem.key)|translate}}
+														</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </li>
+
+                            </nav>
+                            <div [ngbNavOutlet]="nav" class=""></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
         <div id="ex-table-div"></div> -->
 
-	</div>
+    </div>
 
 </section>

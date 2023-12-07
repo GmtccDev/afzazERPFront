@@ -1,95 +1,108 @@
 <section class="inner-page-wrapper inner-page-wrapper-units">
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-body">
-						<form id="" class="tabs-form">
-							<div class="main-customer">
-								<div class="wrapper-title">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="" class="tabs-form">
+                            <div class="main-customer">
+                                <div class="wrapper-title">
 
-									<h3>shifts</h3>
-									<hr>
-									<div class="row align-items-center">
+                                    <h3>{{'component-names.shifts'|translate}}</h3>
+                                    <hr>
+                                    <div class="row align-items-center">
 
-										<div class="col-md-6 col-12 offset-6">
-											<label for="code" class="label-name">
-												code</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                        <div class="col-md-6 col-12 offset-6">
+                                            <label for="code" class="label-name">
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
 
-												<input type="text" class="form-control icon-user" name="code"
-													formControlName="code">
-
-
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameAr" class="label-name">
-												nameAr</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
-
-												<input type="text" class="form-control icon-user" name="nameAr"
-													formControlName="nameAr">
+                                                <input type="text" class="form-control icon-user" name="code">
 
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12">
-											<label for="nameEn" class="label-name">
-												nameEn</label><span class="text-danger">*</span>
-											<div class="form-group position-relative">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameAr" class="label-name">
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
 
-												<input type="text" class="form-control icon-user" name="nameEn"
-													formControlName="nameEn">
+                                                <input type="text" class="form-control icon-user" name="nameAr">
 
 
-											</div>
-										</div>
-										<div class="col-md-6 col-12 mb-3">
-											<label for="account" class="label-name">
-												account
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <label for="nameEn" class="label-name">
+												{{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="form-group position-relative">
+
+                                                <input type="text" class="form-control icon-user" name="nameEn">
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label for="account" class="label-name">
+
+												{{'general.account'|translate}}
 
 											</label>
-											<div class=" d-flex">
-												<div class="flex-grow-1">
-													<ng-select [(ngModel)]="accountId" name="accountId">
-														<ng-option *ngFor="let account of accountList"
-															[value]="account.id">
-															<!-- Content goes here -->
-														</ng-option>
-													</ng-select>
+                                            <div class=" d-flex">
+                                                <div class="flex-grow-1">
+                                                    <ng-select name="accountId">
 
-												</div>
+                                                    </ng-select>
 
-												<div class="">
-													<button class="btn btn-rounded btn-dark" type="button"><i
+                                                </div>
+
+                                                <div class="">
+                                                    <button class="btn btn-rounded btn-dark" type="button"><i
 															class="fa fa-search"></i></button>
-												</div>
-											</div>
+                                                </div>
+                                            </div>
 
-										</div>
-										<div class="col-md-6 col-12">
-											<div class="media">
-												<label class="label-name"> status
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="d-flex gap-3">
+                                                <div class="w-50">
+                                                    <label for="" class="label-name">
+														{{'general.fromTime'|translate}}</label>
+                                                    <div class="form-group">
+                                                        <input type="time" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="w-50">
+                                                    <label for="" class="label-name">
+														{{'general.toTime'|translate}}</label>
+                                                    <div class="form-group">
+                                                        <input type="time" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="media">
+                                                <label class="label-name">{{'general.status'|translate}}
+
 												</label>
-												<div class="icon-state media-body ">
-													<label class="switch">
-														<input type="checkbox" class="form-control" name="isActive"
-															formControlName="isActive">
+                                                <div class="icon-state media-body ">
+                                                    <label class="switch">
+														<input type="checkbox" class="form-control" name="isActive">
 														<span class="switch-state"></span>
 													</label>
-												</div>
-											</div>
-										</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
