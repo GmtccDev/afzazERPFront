@@ -38,8 +38,8 @@
                         <ng-container *ngSwitchCase="4">
                             <!-- <input type="date" [(ngModel)]="item.value" class="custom-input" /> -->
                             <app-full-date name="date" [(ngModel)]="item.dateValue" ngDefaultControl
-                                [selectedDate]="item.dateValue"
-                                (OnDateSelect)="getDate($event)"></app-full-date>
+                               
+                                (OnDateSelect)="getDate($event,item)"></app-full-date>
                         </ng-container>
                         <ng-container *ngSwitchCase="5">
                             <label>
@@ -48,6 +48,12 @@
 
                             </label>
                         </ng-container>
+                        <!-- <ng-container *ngSwitchCase="5">
+                            <select [(ngModel)]="item.checkedValue" class="custom-input">
+                                <option [ngValue]="true">True</option>
+                                <option [ngValue]="false">False</option>
+                            </select>
+                        </ng-container> -->
                     </ng-container>
                     <!-- <button (click)="addNewObject(item,key)" class="add-button">Add</button> -->
                 </td>

@@ -23,20 +23,22 @@ export class  BillDynamicDeterminantDto {
     billItemId: number;
     itemCardId: number;
     determinantId: number;
-    determinantsMaster: DeterminantsMasterDto;
+   // determinantsMaster: DeterminantsMasterDto;
     value: string;
-    valueType: number;
-    selectedValue: number;
-    numberValue: number;
-    textValue: string;
-    dateValue: Date;
-    checkedValue: false;
+    valueType: any;
+    selectedValue: any;
+    numberValue: any;
+    textValue: any;
+    dateValue: any;
+    checkedValue: any;
     //
     selectedValueId: number;
     numberValueId: number;
     textValueId: number;
     dateValueId: number;
     checkedValueId: number;
+    itemCardSerial:string|undefined;
+    billDynamicDeterminantSerial:string|undefined;
   }
   
   export class  BillDynamicDeterminantList {
