@@ -2011,6 +2011,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         billItemId: this.billItem[i].id,
         itemCardId:  this.billItem[i].itemId,
         billId: this.billItem[i].billId,
+        itemCardSerial:i,
         action:"Edit"
       }
       this.dialog.open(BillDynamicDeterminantComponent,

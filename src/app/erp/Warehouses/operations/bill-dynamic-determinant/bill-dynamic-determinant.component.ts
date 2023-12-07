@@ -24,6 +24,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   form: FormGroup;
   billId: any;
   action: any;
+  itemCardSerial: any;
   constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private dateService: DateCalculation,) { }
 
@@ -33,7 +34,8 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.billItemId = this.data.billItemId;
     this.itemCardId = this.data.itemCardId;
     this.billId = this.data.billItemId;
-    this.action = this.data.action
+    this.action = this.data.action;
+    this.itemCardSerial=this.data.itemCardSerial;
     this.form = this.fb.group({});
 
     this.getDynamicDeterminant();
@@ -41,7 +43,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   getDynamicDeterminant() {
     return new Promise<void>((resolve, reject) => {
 
-      let sub = this.itemCardService.getBillDynamicDeterminant(this.billId, this.billItemId, this.itemCardId).subscribe({
+      let sub = this.itemCardService.getBillDynamicDeterminant(this.billId, this.billItemId, this.itemCardId,this.itemCardSerial).subscribe({
         next: (res) => {
           if (res) {
             
