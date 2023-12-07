@@ -12,6 +12,8 @@ import { AddEditIncomingChequeComponent } from './incoming-cheque/add-edit-incom
 import { IssuingChequeComponent } from './issuing-cheque/issuing-cheque.component';
 import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing-cheque/add-edit-issuing-cheque.component';
 import {GenerateEntryVoucherComponent} from  'src/app/erp/Accounting/operations/vouchers/generate-entry-voucher/generate-entry-voucher.component';
+import { ClosedAccountingPeriodComponent } from './closed-accounting-period/closed-accounting-period.component';
+import { AddClosedAccountingPeriodComponent } from './closed-accounting-period/add-closed-accounting-period/add-closed-accounting-period.component';
 
 
 const routes: Routes = [
@@ -35,6 +37,10 @@ const routes: Routes = [
 			{ path: 'issuingCheque', component: IssuingChequeComponent },
 			{ path: 'issuingCheque/add-issuingCheque', component: AddEditIssuingChequeComponent },
 			{ path: 'issuingCheque/update-issuingCheque/:id', component: AddEditIssuingChequeComponent },
+			{ path: 'closedAccountingPeriod', component: ClosedAccountingPeriodComponent },
+			{ path: 'closedAccountingPeriod/add-closedAccountingPeriod', component: AddClosedAccountingPeriodComponent },
+			{ path: 'closedAccountingPeriod/update-closedAccountingPeriod/:id', component: AddClosedAccountingPeriodComponent },
+
 		]
 	}
 ];

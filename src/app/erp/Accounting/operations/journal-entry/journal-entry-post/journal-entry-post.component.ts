@@ -74,8 +74,8 @@ export class JournalEntryPostComponent implements OnInit, OnDestroy, AfterViewIn
 	ngOnInit(): void {
 		this.spinner.show();
 		this.getEntryTypes();
-		Promise.all([this.getCompanyById(this.companyId),
-		this.getJournalEntryes()])
+		Promise.all([this.getCompanyById(this.companyId),this.getGeneralConfigurationsOfFiscalPeriod()
+		,this.getJournalEntryes()])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'Post' } as ToolbarData);

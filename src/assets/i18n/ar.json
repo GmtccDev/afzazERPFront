@@ -312,7 +312,11 @@
         "item-guide": " دليل اصناف",
         "item-guide-information": "معلومات  دليل اصناف",
         "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
-        "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير"
+        "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير",
+        "close-accounting-period":"أغلاق الفترة المحاسبية",
+        "close-accounting-period-information":"بيانات أغلاق الفترة المحاسبية"
+
+
     },
     "general": {
         "searchFromDate": "من تاريخ",
@@ -500,7 +504,9 @@
         "generate-success":"تم التوليد بنجاح",
         "reference-type":"نوع المرجع",
         "reference-number":"رقم المرجع",
-        "reason":"السبب"
+        "reason":"السبب",
+        "date-in-closed-accounting-period":"التاريخ داخل فترة محاسبية مغلقة لهذة السنة المالية"
+
 
 
 
@@ -892,5 +898,12 @@
       },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
-    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين"
+    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين",
+    "closed-accounting-period": {
+        "add": "اضافة فترة محاسبية مغلقة",
+        "update": "تحديث الفترة المحاسبية المغلقة",
+        "Intersection": "يوجد تداخل في التاريخ",
+        "choose-opened-fiscal-year":"من فضلك أختر فترة محاسبية مفتوحة من الاعدادات",
+        "date-range-out":"النطاق الزمني للفترة المحاسبية خارج النطاق الزمني للسنة المالية"
+    }
 }

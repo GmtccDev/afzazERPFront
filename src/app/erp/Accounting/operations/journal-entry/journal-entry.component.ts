@@ -23,6 +23,8 @@ import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.s
 import { UserService } from 'src/app/shared/common-services/user.service';
 import { FullDateComponent } from 'src/app/shared/date/full-date/full-date.component';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { AccountingPeriodServiceProxy } from '../../services/accounting-period.service';
 @Component({
 	selector: 'app-journal-entry',
 	templateUrl: './journal-entry.component.html',
@@ -55,6 +57,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 	fiscalPeriodName: any;
 	fiscalPeriodStatus: any;
 	refreshGrid: boolean = false;
+	accountingPeriodCheckDate: any;
+	accountingPeriods: any;
 
 	//#endregion
 
@@ -72,7 +76,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 		private reportViewerService: ReportViewerService,
 		private generalConfigurationService: GeneralConfigurationServiceProxy,
 		private fiscalPeriodService: FiscalPeriodServiceProxy,
-		private dateCalculation: DateCalculation
+		private dateCalculation: DateCalculation,
+		private dateConverterService: DateConverterService,
+		private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
+
 
 	) {
 
@@ -223,12 +230,36 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
 			return;
 		}
+
 		return new Promise<void>((resolve, reject) => {
 
 			let sub = this.journalEntryService.getJournalEntry(id).subscribe({
 				next: (res: any) => {
 					resolve();
-
+					      
+					if(res.response?.parentType != null) {
+						this.errorMessage = this.translate.instant("journalEntry.no-delete-entry");
+						this.errorClass = 'errorMessage';
+						this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+						return;
+					}
+					if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+						      
+						let _date = res.response.date;
+						if (this.accountingPeriods != null) {
+							this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+							if (this.accountingPeriodCheckDate != undefined) {
+								      
+								this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+								this.errorClass = 'errorMessage';
+								this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+								return;
+							}
+						}
+					}
+                          
+					
+					
 					if (res.response?.parentType == null) {
 						const modalRef = this.modalService.open(MessageModalComponent);
 						modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
@@ -250,12 +281,6 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 
 							}
 						});
-					}
-					else {
-						this.errorMessage = this.translate.instant("journalEntry.no-delete-entry");
-						this.errorClass = 'errorMessage';
-						this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-						return;
 					}
 				}
 			})
@@ -303,7 +328,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 				title: 'Status', width: 300, field: 'statusEn'
 				//, formatter: this.translateEnEnum
 			},
-			this.lang == 'ar'
+		this.lang == 'ar'
 			? {
 				title: 'نوع المرجع', field: 'settingAr'
 			} : {
@@ -329,7 +354,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			title: this.lang == 'ar' ? ' رقم المرجع' : 'Reference Number',
 			field: 'parentTypeCode',
 		},
-		
+
 		{
 			title: this.lang == 'ar' ? ' عرض التقرير' : 'View Report ',
 			field: 'id', formatter: this.printReportFormatIcon, cellClick: (e, cell) => {
@@ -625,6 +650,8 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 						this.fiscalPeriodId = res.response.value;
 						if (this.fiscalPeriodId != null) {
 							this.getfiscalPeriodById(this.fiscalPeriodId);
+							this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
+
 
 						}
 					}
@@ -639,6 +666,30 @@ export class JournalEntryComponent implements OnInit, OnDestroy, AfterViewInit {
 			});
 			this.subsList.push(sub);
 
+		});
+
+	}
+	getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+				next: (res) => {
+					if (res.success) {
+						this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+					}
+
+
+					resolve();
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+
+				},
+			});
+
+			this.subsList.push(sub);
 		});
 
 	}

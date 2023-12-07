@@ -83,10 +83,12 @@
 										<div class="col-md-6 col-12">
 											<label for="date" class="label-name">
 												{{'general.date'|translate}}</label><span class="text-danger">*</span>
-											<div class="form-group0 position-relative">
+											<div class="form-group0 position-relative" >
+												<!-- <app-full-date name="date" formControlName="date" [(ngModel)]="date"
+													ngDefaultControl [selectedDate]="date" disabled></app-full-date> -->
 
 												<input type="date" class="form-control " name="date"
-													formControlName="date">
+													formControlName="date" [(ngModel)]="date">
 												<div *ngIf="(f['date'].touched || f['date'].dirty ) && f['date'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
