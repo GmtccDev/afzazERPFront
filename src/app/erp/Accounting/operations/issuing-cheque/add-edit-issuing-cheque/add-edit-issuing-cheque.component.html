@@ -118,7 +118,7 @@
 													name="amountLocal" style="width: 70px;" disabled="true">
 											</div>
 										</div>
-										<div class="col-md-6 col-12">
+										<div class="col-md-6 col-12"  *ngIf="isMultiCurrency==true">
 											<label for="currencyFactor" class="label-name">
 												{{'currency.transaction-factor'|translate}}</label>
 											<div class="input-group ">
@@ -136,7 +136,7 @@
 													style="width: 70px;" disabled="true">
 											</div>
 										</div>
-										<div class="col-md-6 col-12">
+										<div class="col-md-6 col-12"  *ngIf="isMultiCurrency==true">
 											<label for="currencyId" class="label-name">
 												{{'component-names.currencies'|translate}}
 											</label>
@@ -190,7 +190,6 @@
 											<thead class="thead-light">
 												<tr>
 													<!-- <th># </th> -->
-													<!-- <th style="width: 15%;">{{'general.account-number'|translate}}</th> -->
 													<th style="width: 10%;">{{'general.beneficiary-type'|translate}}
 													</th>
 													<th style="width: 10%;"> {{'general.beneficiary'|translate}}</th>
@@ -201,7 +200,7 @@
 													<th style="width: 10%;" *ngIf="isMultiCurrency">
 														{{'general.currency-conversion-factor'|translate}}</th>
 
-													<th style="width: 10%;">{{'general.balance'|translate}}</th>
+													<th style="width: 10%;"  *ngIf="isMultiCurrency==true" >{{'general.balance'|translate}}</th>
 													<th style="width: 15%;">{{'general.description'|translate}}</th>
 													<th style="width: 1%;">{{'general.procedures'|translate}}</th>
 												</tr>
@@ -209,23 +208,7 @@
 											<tbody>
 												<tr *ngFor="let row of issuingChequeForm.get('issuingChequeDetail')['controls']; let i = index"
 													[formGroupName]="i">
-													<!-- <td> -->
-													<!-- {{ i+1 }} -->
-													<!-- <input type="text"
-                                                            style="border: none; border-color: transparent;" hidden
-                                                            formControlName="iCDetailSerial" name="iCDetailSerial"> -->
-													<!-- </td> -->
-													<!-- <td>
-														<select required class="form-control required" name="accountId"
-															formControlName="accountId">
-
-															<option *ngFor="let account of accountDetailsList"
-																[value]="account.id">
-																{{lang=="ar"?account.nameAr:account.nameEn}}
-															</option>
-
-														</select>
-													</td> -->
+													
 
 													<td>
 														<select class="form-control" name="beneficiaryTypeId"
@@ -281,7 +264,7 @@
 																name="transactionFactor" style="width: 70px;">
 														</div>
 													</td>
-													<td>
+													<td *ngIf="isMultiCurrency==true">
 														<div class="input-group">
 															<input type="number" required class="form-control required"
 																disabled="disabled" formControlName="currencyLocal"

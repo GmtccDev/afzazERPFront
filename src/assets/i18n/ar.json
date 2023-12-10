@@ -513,7 +513,9 @@
         "reference-number":"رقم المرجع",
         "reason":"السبب",
         "date-in-closed-accounting-period":"التاريخ داخل فترة محاسبية مغلقة لهذة السنة المالية",
-        "no-generate-entry-fiscal-period-closed": "لايمكنك توليد القيد لهذة السنة المالية المغلقة"
+        "no-generate-entry-fiscal-period-closed": "لايمكنك توليد القيد لهذة السنة المالية المغلقة",
+        "choose-currency-from-configuration":"من فضلك أختر العملة من الاعدادات"
+
 
 
        

@@ -258,7 +258,8 @@
         "reference-number":"Reference Number",
         "reason":"Reason",
         "date-in-closed-accounting-period":"The date is in closed accounting period to this fiscal year",
-        "no-generate-entry-fiscal-period-closed": "You can not generate entry to this closed fiscal year"
+        "no-generate-entry-fiscal-period-closed": "You can not generate entry to this closed fiscal year",
+        "choose-currency-from-configuration":"Please choose the currency from the configuration"
 
         
 

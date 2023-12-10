@@ -489,6 +489,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             journalEntriesDetail: this.fb.array([])
 
           });
+          this.date = this.dateService.getDateForCalender(res.response.date);
 
           this.listDetail = res.response?.journalEntriesDetail;
           this.tempListDetail = res.response?.journalEntriesDetail;
