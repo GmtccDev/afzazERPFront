@@ -14,13 +14,14 @@ import { DateConverterService } from '../../../shared/services/date-services/dat
 import { NgSelectModule } from '@ng-select/ng-select';
 import {BillComponent} from 'src/app/erp/Warehouses/operations/bill/bill.component'
 import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component';
-import { BillDynamicDeterminantComponent } from './bill-dynamic-determinant/bill-dynamic-determinant.component'
+import { BillDynamicDeterminantComponent } from './bill-dynamic-determinant/bill-dynamic-determinant.component';
+import { RightClickModalComponent } from './right-click-modal/right-click-modal.component'
 
 
 
 @NgModule({
   declarations: [
-     BillComponent,AddEditBillComponent, BillDynamicDeterminantComponent
+     BillComponent,AddEditBillComponent, BillDynamicDeterminantComponent, RightClickModalComponent
   ],
   imports: [
     CommonModule,

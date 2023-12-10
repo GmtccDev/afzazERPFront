@@ -31,6 +31,7 @@ import { BillDynamicDeterminantComponent } from '../../bill-dynamic-determinant/
 import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { CountryServiceProxy } from 'src/app/erp/master-codes/services/country.servies';
+import { RightClickModalComponent } from '../../right-click-modal/right-click-modal.component';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -282,7 +283,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         this.id = params['id'];
         if (this.id) {
           this.getBillById(this.id, 1).then(a => {
-
+            this.currnetUrl = this.updateUrl;
             this.spinner.hide();
 
           }).catch(err => {
@@ -1422,7 +1423,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
     this.selectedBillItemTax = this.billItemTax.filter(x => x.billItemId == billItemId);
-    
+
     this.billItem.push({
       id: this.selectedBillItem?.id ?? 0,
       billId: this.selectedBillItem?.billId ?? 0,
@@ -2005,32 +2006,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   openItemSearchDialog(i) {
-    debugger
-    if(this.updateUrl.concat("/warehouses-operations/bill/update-bill")){
-      let row = {
-        billItemId: this.billItem[i].id,
-        itemCardId:  this.billItem[i].itemId,
-        billId: this.billItem[i].billId,
-        itemCardSerial:i,
-        action:"Edit"
-      }
-      this.dialog.open(BillDynamicDeterminantComponent,
-        {
-          width: '1000px',
-          data: row
-        })
-        .afterClosed().subscribe(result => {
-          if (result) {
-            
-            //this.getBills();
-            this.selectedBillItem.billDynamicDeterminants = result;
-            this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-              element.itemCardSerial = i
-            });
-          }
-        });
-    }
-   
+  
+
     let searchTxt = '';
     if (i == -1) {
       searchTxt = this.selectedBillItem?.itemName ?? '';
@@ -2044,7 +2021,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
       );
     });
-   
+
     if (data.length == 1) {
       if (i == -1) {
         this.selectedBillItem!.itemName = this.lang = "ar" ? data[0].nameAr : data[0].nameEn;
@@ -2469,8 +2446,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               data: row
             })
             .afterClosed().subscribe(result => {
-              if (result) {
-                
+              if (result && result != null && result.length > 0) {
+
                 //this.getBills();
                 this.selectedBillItem.billDynamicDeterminants = result;
                 this.selectedBillItem.billDynamicDeterminants.forEach(element => {
@@ -3147,7 +3124,34 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getNetAfterTax(1);
     }
   }
-
+  onRightClick(event: MouseEvent,i) {
+    
+    if (this.router.url.includes("/warehouses-operations/bill/update-bill")) {
+      let row = {
+        billItemId: this.billItem[i].id,
+        itemCardId: this.billItem[i].itemId,
+        billId: this.billItem[i].billId,
+        itemCardSerial: i,
+        action: "Edit"
+      }
+      this.dialog.open(RightClickModalComponent,
+        {
+          width: '1000px',
+          data: row,
+          height:'100px'
+        })
+        .afterClosed().subscribe(result => {
+          if (result && result != null && result.length > 0) {
+debugger
+            this.selectedBillItem.billDynamicDeterminants = result;
+            this.selectedBillItem.billDynamicDeterminants.forEach(element => {
+              element.itemCardSerial = i
+            });
+            this.billItem[i].billDynamicDeterminants=this.selectedBillItem.billDynamicDeterminants;
+          }
+        });
+    }
+  }
 
 }
 

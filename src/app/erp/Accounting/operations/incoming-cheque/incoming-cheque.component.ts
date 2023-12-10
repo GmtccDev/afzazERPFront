@@ -426,7 +426,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
         }
         else {
-          debugger
+          
           this.showConfirmCollectMessage(cell.getRow().getData().id);
         }
       }

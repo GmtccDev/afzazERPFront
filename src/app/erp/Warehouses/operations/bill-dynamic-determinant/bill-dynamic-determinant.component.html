@@ -5,15 +5,21 @@
             <tr>
                 <td colspan="2">
                     <button (click)="insertBillDynamic()"
-                        style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+                        style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;"> {{'buttons.save'|translate}}</button>
                 </td>
+                <button  (click)="onClose()"
+                style="background-color: #af774c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;"
+                >
+                    X
+                  </button>
             </tr>
             <tr>
                 <th style="width: 10px;">#</th>
                 <th *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
-                    {{ key.determinantsMaster.nameAr }}
+                   
+                    {{lang=="ar"?key.determinantsMaster.nameAr:key.determinantsMaster.nameEn}}
                 </th>
-              
+                <th style="width: 10px;"></th>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +31,10 @@
                         <ng-container *ngSwitchCase="1">
                             <select [(ngModel)]="item.selectedValue" class="custom-input">
                                 <option *ngFor="let determinantDetail of key.determinantsMaster.determinantsDetails"
-                                    [value]="determinantDetail.id">{{ determinantDetail.nameAr }}</option>
+                                    [value]="determinantDetail.id">
+                                 
+                                    {{lang=="ar"?determinantDetail.nameAr:determinantDetail.nameEn}}
+                                </option>
                             </select>
                         </ng-container>
 
@@ -38,7 +47,7 @@
                         <ng-container *ngSwitchCase="4">
                             <!-- <input type="date" [(ngModel)]="item.value" class="custom-input" /> -->
                             <app-full-date name="date" [(ngModel)]="item.dateValue" ngDefaultControl
-                               
+                                [selectedDate]="item.dateValue"
                                 (OnDateSelect)="getDate($event,item)"></app-full-date>
                         </ng-container>
                         <ng-container *ngSwitchCase="5">
@@ -55,9 +64,17 @@
                             </select>
                         </ng-container> -->
                     </ng-container>
-                    <!-- <button (click)="addNewObject(item,key)" class="add-button">Add</button> -->
+                 
                 </td>
-            
+          
+                <td>
+
+                    <input type="button" *ngIf="insertBillDynamicDeterminant.dynamicDeterminantListDto.length-1==i||insertBillDynamicDeterminant.dynamicDeterminantListDto.length-1==0" class="btn btn-primary btn-table" (click)="addItem()" value="{{'general.add-new-row'|translate}}">
+
+                    <button class="btn btn-danger btn-table px-3" *ngIf="insertBillDynamicDeterminant.dynamicDeterminantListDto.length-1!==i" value="{{'buttons.delete'|translate}}" type="button" (click)="deleteItem(i)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
             </tr>
         
         </tbody>

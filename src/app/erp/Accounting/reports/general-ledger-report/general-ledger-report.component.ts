@@ -161,7 +161,7 @@ JournalId: any;
     if (this.toEntryNo == null || this.toEntryNo == undefined || this.toEntryNo == "") {
       this.toEntryNo = 0;
     }
-      debugger
+      
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate +
