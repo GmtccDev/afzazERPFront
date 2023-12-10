@@ -34,7 +34,6 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   billType: any[] = [];
   billTypeId: any;
   dateType: any;
-
   currnetUrl: any;
   queryParams: any;
   fiscalPeriodId: number;
@@ -81,6 +80,8 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+    
+    
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     if (!localStorage.getItem('foo')) {
       localStorage.setItem('foo', 'no reload')
@@ -244,6 +245,9 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
   }
+
+
+
 
   //#endregion
 

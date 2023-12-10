@@ -185,6 +185,7 @@ export class BudgetReportComponent implements OnInit, OnDestroy, AfterViewInit {
       "&reportParameter=toDate!" + this.toDate +
       "&reportParameter=entriesStatusId!" + this.entriesStatusId +
       "&reportParameter=level!" + this.level +
+      "&reportParameter=companyId!" + this.companyId +
       "&reportParameter=userId!" + this.userId +
       "&reportParameter=reportOptionId!" + this.reportOptionId +
       "&reportParameter=lang!" + this.lang +

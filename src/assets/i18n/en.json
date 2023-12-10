@@ -544,7 +544,8 @@
         "item-Guide": " Item Guide",
         "item-Guide-information": " Item Guide Information",
         "vouchers-roles-permissions": "Vouchers Types Roles Permissions",
-        "bills-roles-permissions": "Bills Types Roles Permissions"
+        "bills-roles-permissions": "Bills Types Roles Permissions",
+        "generate-bills-entry": "Post Bills"
     },
     "language": {
         "ARABIC": "Ar",
@@ -793,6 +794,7 @@
     "bill-type": {
         "bill-type-information": "Bill Type Information",
         "bill-type": "Bill Type",
+        "bill-kind": "Bill Kind",
         "add-bill-type": "Add Bill Type",
         "update-bill-type": "Update Bill Type",
         "basic-properties": "Basic Properties",
@@ -843,6 +845,7 @@
         "item": "Item",
         "item-description": "Item Description",
         "additions-and-discounts": "Additions And Discounts on Bill",
+        "confirm-generate-entry": "Are you sure to generate entry for this bill ?",
         "bill-items-required": "Please enter Items",
 
         "no-add-bill-fiscal-period-closed": "You can not add a bill to this closed fiscal year",

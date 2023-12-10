@@ -310,7 +310,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       let sub = this.billTypeService.getBillType(id).subscribe({
         next: (res: any) => {
           resolve();
-          console.log("-----------------------------------------------------", res);
 
           this.billType = res.response;
           this.billTypeKind = this.billType.kind;
