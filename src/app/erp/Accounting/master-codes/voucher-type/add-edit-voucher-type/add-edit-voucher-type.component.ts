@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { ToolbarActions } from '../../../../../shared/enum/toolbar-actions';
 import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
+
 import {
   AccountClassificationsEnum,
   BeneficiaryTypeArEnum,
@@ -17,6 +18,7 @@ import {
   convertEnumToArray,
   CreateFinancialEntryArEnum,
   CreateFinancialEntryEnum,
+  GeneralConfigurationEnum,
   SerialTypeArEnum,
   SerialTypeEnum,
   VoucherTypeArEnum,
@@ -27,6 +29,8 @@ import {
 import { PublicService } from 'src/app/shared/services/public.service';
 import { VoucherTypeServiceProxy } from '../../../services/voucher-type.service';
 import { NotificationsAlertsService } from 'src/app/shared/common-services/notifications-alerts.service';
+import { GeneralConfigurationServiceProxy } from '../../../services/general-configurations.services';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 @Component({
   selector: 'app-add-edit-voucher-type',
   templateUrl: './add-edit-voucher-type.component.html',
@@ -45,11 +49,11 @@ export class AddEditVoucherTypeComponent implements OnInit {
   fiscalPeriodList: any;
   cashAccountList: any;
   serialList: { nameAr: string; nameEn: string; value: string; }[];
-
   sub: any;
   url: any;
   id: any = 0;
-
+  enableMultiCurrencies: boolean = false;
+  mainCurrencyId: number = null;
   currnetUrl;
   public show: boolean = false;
   lang = localStorage.getItem("language")
@@ -90,6 +94,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+
 
   ) {
     this.defineVoucherTypeForm();
@@ -98,6 +104,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   //#region ngOnInit
   ngOnInit(): void {
+
     this.getVoucherType();
     this.getSerialType();
     this.getCreateFinancialEntry();
@@ -106,6 +113,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
     this.spinner.show();
     Promise.all([
+      this.getGeneralConfigurationsOfMultiCurrency(),
+      this.getGeneralConfigurationsOfMainCurrency(),
       this.getJournal(),
       this.getCashAccounts(),
       this.getCurrencies()
@@ -163,11 +172,14 @@ export class AddEditVoucherTypeComponent implements OnInit {
       serialTypeId: 1,
       serialId: null,
       defaultAccountId: REQUIRED_VALIDATORS,
-      defaultCurrencyId: REQUIRED_VALIDATORS,
+      defaultCurrencyId: this.enableMultiCurrencies == true ? ['', Validators.compose([Validators.required])] : this.mainCurrencyId,
       createFinancialEntryId: REQUIRED_VALIDATORS,
       defaultBeneficiaryId: REQUIRED_VALIDATORS,
       printAfterSave: false
     });
+
+
+
 
   }
 
@@ -181,7 +193,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
         this.id = params['id'];
         if (this.id > 0) {
           this.getVoucherTypeById(this.id).then(a => {
-            this.sharedServices.changeButton({ action: 'Update',submitMode:false } as ToolbarData);
+            this.sharedServices.changeButton({ action: 'Update', submitMode: false } as ToolbarData);
 
             this.spinner.hide();
 
@@ -205,6 +217,52 @@ export class AddEditVoucherTypeComponent implements OnInit {
     this.subsList.push(sub);
 
   }
+  getGeneralConfigurationsOfMultiCurrency() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.MultiCurrency).subscribe({
+        next: (res: any) => {
+          resolve();
+
+          if (res.response.value == 'true') {
+            this.enableMultiCurrencies = true;
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getGeneralConfigurationsOfMainCurrency() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.MainCurrency).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+            debugger
+            this.mainCurrencyId = res.response.value;
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
 
   getVoucherTypeById(id: any) {
     return new Promise<void>((resolve, reject) => {
@@ -223,7 +281,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
             serialTypeId: res.response?.serialTypeId,
             serialId: res.response?.serialId,
             defaultAccountId: res.response?.defaultAccountId + "",
-            defaultCurrencyId: res.response?.defaultCurrencyId,
+            defaultCurrencyId: this.enableMultiCurrencies ==true ? res.response?.defaultCurrencyId: this.mainCurrencyId,
             createFinancialEntryId: res.response?.createFinancialEntryId,
             defaultBeneficiaryId: res.response?.defaultBeneficiaryId,
             printAfterSave: res.response?.printAfterSave
@@ -470,8 +528,13 @@ export class AddEditVoucherTypeComponent implements OnInit {
     });
   }
   onSave() {
-
     if (this.voucherTypeForm.valid) {
+      if (stringIsNullOrEmpty(this.voucherTypeForm.value.defaultCurrencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
@@ -516,9 +579,14 @@ export class AddEditVoucherTypeComponent implements OnInit {
   }
 
   onUpdate() {
-
     if (this.voucherTypeForm.valid) {
-
+      debugger
+      if (stringIsNullOrEmpty(this.voucherTypeForm.value.defaultCurrencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();

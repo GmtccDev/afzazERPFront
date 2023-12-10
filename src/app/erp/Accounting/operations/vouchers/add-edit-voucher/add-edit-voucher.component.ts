@@ -28,6 +28,7 @@ import { ReportViewerService } from '../../../reports/services/report-viewer.ser
 import { AccountServiceProxy } from '../../../services/account.services';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { AccountingPeriodServiceProxy } from '../../../services/accounting-period.service';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   oldVoucherTotalLocal: number = 0;
   voucherTypeName: string;
   enableMultiCurrencies: boolean = false;
-  mainCurrencyId: number;
+  mainCurrencyId: number = null;
   fiscalPeriodId: number;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
@@ -156,6 +157,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getBeneficiaryTypes();
     this.spinner.show();
+            
     Promise.all([
       this.getGeneralConfigurationsOfMainCurrency(),
       this.getGeneralConfigurationsOfMultiCurrency(),
@@ -254,11 +256,11 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       voucherDate: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       cashAccountId: REQUIRED_VALIDATORS,
       costCenterId: '',
-      currencyId: REQUIRED_VALIDATORS,
+      currencyId: this.enableMultiCurrencies == true ? ['', Validators.compose([Validators.required])] : this.mainCurrencyId,
       description: '',
       voucherTotal: REQUIRED_VALIDATORS,
       voucherTotalLocal: REQUIRED_VALIDATORS,
-      currencyFactor: '',
+      currencyFactor: 1,
       fiscalPeriodId: this.fiscalPeriodId
 
 
@@ -334,13 +336,12 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getVoucherById(id: any) {
-
     this.lang = localStorage.getItem("language");
-
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.getVoucher(id).subscribe({
         next: (res: any) => {
           resolve();
+                  
           this.voucherForm.setValue({
             id: res.response?.id,
             companyId: res.response?.companyId,
@@ -350,7 +351,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
             voucherDate: this.dateService.getDateForCalender(res.response?.voucherDate),
             cashAccountId: res.response?.cashAccountId + "",
             costCenterId: res.response?.costCenterId,
-            currencyId: res.response?.currencyId,
+            currencyId: this.enableMultiCurrencies == true ? res.response?.currencyId : this.mainCurrencyId,
             description: res.response?.description,
             voucherTotal: res.response?.voucherTotal,
             voucherTotalLocal: res.response?.voucherTotalLocal,
@@ -358,6 +359,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
             fiscalPeriodId: res.response?.fiscalPeriodId
 
           });
+                  
           this.voucherTotal = res.response?.voucherTotal;
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
 
@@ -427,6 +429,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
         next: (res: any) => {
           resolve();
           if (res.response.value > 0) {
+                    
             this.mainCurrencyId = res.response.value;
           }
 
@@ -1021,9 +1024,10 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
           this.defineVoucherForm();
           this.clearSelectedItemData();
           this.voucherDetail = [];
+          navigateUrl(this.listUrl + this.voucherTypeId, this.router);
+
           this.spinner.hide();
 
-          navigateUrl(this.listUrl + this.voucherTypeId, this.router);
         },
         error: (err: any) => {
           reject(err);
@@ -1080,6 +1084,12 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onSave() {
+    if (stringIsNullOrEmpty(this.voucherForm.value.currencyId)) {
+      this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return;
+    }
     if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
       if (this.fiscalPeriodStatus == null) {
         this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-choose-open-fiscal-period");
@@ -1094,12 +1104,12 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
       return;
     }
     else {
-            
+
       let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.voucherDate);
       if (this.accountingPeriods != null) {
         this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
         if (this.accountingPeriodCheckDate != undefined) {
-              
+
           this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
           this.errorClass = 'errorMessage';
           this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -1229,13 +1239,16 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   confirmUpdate() {
     this.voucher.voucherDate = this.dateService.getDateForInsert(this.voucherForm.controls["voucherDate"].value);
     return new Promise<void>((resolve, reject) => {
-      let sub = this.voucherService.updateVoucherAndRelations(this.voucher.voucherTypeId,this.voucher).subscribe({
+      let sub = this.voucherService.updateVoucherAndRelations(this.voucher.voucherTypeId, this.voucher).subscribe({
         next: (result: any) => {
           this.defineVoucherForm();
           this.clearSelectedItemData();
           this.voucherDetail = [];
-          this.spinner.hide();
+                  
           navigateUrl(this.listUrl + this.voucherTypeId, this.router);
+
+          this.spinner.hide();
+          
         },
         error: (err: any) => {
           reject(err);
@@ -1248,7 +1261,14 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
+            
     if (this.voucherForm.valid) {
+      if (stringIsNullOrEmpty(this.voucherForm.value.currencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
         this.errorMessage = this.translate.instant("voucher.no-update-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
         this.errorClass = 'errorMessage';
@@ -1443,28 +1463,32 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getAmount() {
-    if (this.voucherForm.value.currencyId == this.mainCurrencyId) {
-      this.voucherTotal = this.voucherTotalLocal;
-      this.currencyFactor = 1;
-    }
-    else {
-      let sub = this.currencyServiceProxy.getCurrency(this.voucherForm.value.currencyId).subscribe({
-        next: (res: any) => {
+    debugger    
+    if (this.enableMultiCurrencies == true) {
+      if (this.voucherForm.value.currencyId == Number(this.mainCurrencyId)) {
+        this.voucherTotal = this.voucherTotalLocal;
+        this.currencyFactor = 1;
+      }
+      else {
+        let sub = this.currencyServiceProxy.getCurrency(this.voucherForm.value.currencyId).subscribe({
+          next: (res: any) => {
 
-          this.currency = res;
-          let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = currencyModel.transactionFactor;
-          this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
-        }
-      })
-      this.subsList.push(sub);
+            this.currency = res;
+            let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
+            this.currencyFactor = currencyModel.transactionFactor;
+            this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
+          }
+        })
+        this.subsList.push(sub);
 
+      }
     }
+
   }
   getCostCenterInDetails() {
-    //this.selectedVoucherDetail.costCenterId=
   }
   updateDetailData(item: VoucherDetail) {
+    debugger
     if (this.voucherDetail.length > 0) {
       this.deleteVoucherDetailForUpdate(item);
       this.addVoucherDetailForUpdate(item);

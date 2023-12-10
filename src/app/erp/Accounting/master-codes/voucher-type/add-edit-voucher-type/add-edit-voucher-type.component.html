@@ -26,8 +26,7 @@
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
@@ -179,7 +178,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12">
+                                                    <div class="col-md-6 col-12" *ngIf="enableMultiCurrencies==true">
                                                         <label for="defaultCurrencyId"
                                                             class="label-name">{{'general.default-currency'|translate}}</label>
                                                         <span class="text-danger">*</span>
@@ -214,20 +213,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-                                                    <!-- <div class="col gap-3 grid grid-cols-3 ">
-                                                        <label for="chooseAccountNature"
-                                                            class="label-name">{{'voucher-type.choose-account-nature'|translate}}</label>
-                                                        <div class="icon-state media-body">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="chooseAccountNature"
-                                                                    formControlName="chooseAccountNature">
-                                                                <span class="switch-state"></span>
-                                                            </label>
-                                                        </div>
-                                                    </div> -->
 
                                                     <div class="col-md-6 col-12 ">
                                                         <label for="createFinancialEntryId"

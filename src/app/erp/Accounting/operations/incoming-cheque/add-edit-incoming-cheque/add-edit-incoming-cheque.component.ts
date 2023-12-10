@@ -44,8 +44,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   amountLocal: number = 0;
   accountingPeriods: any;
   accountingPeriodCheckDate: any;
-
-  mainCurrencyId: number;
+  currencyLocal: number;
+  mainCurrencyId: number = null;
   currnetUrl;
   currencyId: any;
   showSearchBankAccountModal = false;
@@ -57,7 +57,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
   tempListDetail: any[] = [];
   oldAmountLocal: number = 0;
   public show: boolean = false;
-  lang = localStorage.getItem("language")
+  lang = localStorage.getItem("language");
+  enableMultiCurrencies: boolean = false;
   incomingCheque: [] = [];
   fromDate: any;
   toDate: any;
@@ -205,6 +206,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
     this.subsList.push(sub);
 
   }
+
   onSelectJournal(event) {
     this.incomingChequeForm.controls.accountId.setValue(event.id);
     this.showSearchModal = false;
@@ -297,8 +299,8 @@ export class AddEditIncomingChequeComponent implements OnInit {
       bankAccountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       amountLocal: ['', Validators.compose([Validators.required])],
-      currencyId: [null, Validators.compose([Validators.required])],
-      currencyFactor: '',
+      currencyId: this.isMultiCurrency == true ? ['', Validators.compose([Validators.required])] : this.mainCurrencyId,
+      currencyFactor: 1,
       companyId: this.companyId,
       branchId: this.branchId,
       fiscalPeriodId: this.fiscalPeriodId,
@@ -405,25 +407,26 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   }
   getAmount() {
-
-    if (this.currencyId == this.mainCurrencyId) {
-      this.amount = this.amountLocal;
-      this.currencyFactor = 1;
-    }
-    else {
-      let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
-        next: (res: any) => {
-
-
-          this.currency = res;
-          let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = currencyModel.transactionFactor;
-          this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
-        }
-      })
-      this.subsList.push(sub);
+    if (this.isMultiCurrency == true) {
+      if (this.currencyId == this.mainCurrencyId) {
+        this.amount = this.amountLocal;
+        this.currencyFactor = 1;
+      }
+      else {
+        let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
+          next: (res: any) => {
 
 
+            this.currency = res;
+            let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
+            this.currencyFactor = currencyModel.transactionFactor;
+            this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
+          }
+        })
+        this.subsList.push(sub);
+
+
+      }
     }
   }
   onDeleteRow(rowIndex) {
@@ -474,7 +477,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
             amountLocal: res.response?.amountLocal,
             status: res.response?.status,
             statusName: res.response?.status,
-            currencyId: res.response?.currencyId,
+            currencyId: this.isMultiCurrency == true ? res.response?.currencyId : this.mainCurrencyId,
             currencyFactor: res.response?.currencyFactor,
             fiscalPeriodId: res.response?.fiscalPeriodId,
             incomingChequeDetail: this.fb.array([]),
@@ -702,6 +705,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   onSave() {
     if (this.incomingChequeForm.valid) {
+      if (stringIsNullOrEmpty(this.incomingChequeForm.value.currencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       // if (this.checkPeriod == null) {
 
       //   this.alertsService.showError(
@@ -726,12 +735,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
         return;
       }
       else {
-            
+
         let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.date);
         if (this.accountingPeriods != null) {
           this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
           if (this.accountingPeriodCheckDate != undefined) {
-                
+
             this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -980,14 +989,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.incomingChequeForm.value;
-      if (entity.status == ChequeStatusEnum.Collected || entity.status == ChequeStatusEnum.Rejected) {
-        this.spinner.hide();
-        this.alertsService.showError(
-          this.translate.instant("incoming-cheque.cannot-edit"),
-          ""
-        )
-        return;
-      }
+      
       entity.status = ChequeStatusEnum.EditRegistered;
 
       entity.date = this.dateService.getDateForInsert(entity.date);
@@ -1014,6 +1016,20 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   onUpdate() {
     if (this.incomingChequeForm.valid) {
+      if (this.incomingChequeForm.value.status == ChequeStatusEnum.Collected || this.incomingChequeForm.value.status == ChequeStatusEnum.Rejected) {
+        this.spinner.hide();
+        this.alertsService.showError(
+          this.translate.instant("incoming-cheque.cannot-edit"),
+          ""
+        )
+        return;
+      }
+      if (stringIsNullOrEmpty(this.incomingChequeForm.value.currencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.totalamount = 0;
       const ctrl = <FormArray>this.incomingChequeForm.controls['incomingChequeDetail'];
       ctrl.controls.forEach(x => {
@@ -1062,7 +1078,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
-     
+
 
       var incomingChequeDetail = this.incomingChequeForm.get('incomingChequeDetail') as FormArray;
       var i = 0;
@@ -1352,12 +1368,9 @@ export class AddEditIncomingChequeComponent implements OnInit {
   }
   onInput(event, i): boolean {
     this.index = i;
-    // if (type == 'Credit') {
     const faControl = (<FormArray>this.incomingChequeForm.controls['incomingChequeDetail']).at(i);
-    //   faControl['controls'].amount.setValue(0);
 
     let amount = faControl['controls'].amount.value;
-    // let amount = faControl['controls'].amount.value;
 
     let transactionFactor = faControl['controls'].transactionFactor.value;
     if (this.isMultiCurrency == false) {
@@ -1369,12 +1382,12 @@ export class AddEditIncomingChequeComponent implements OnInit {
     if (transactionFactor != null) {
 
       faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
-      // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
     }
 
     this.amount = amount;
     this.currencyFactor = faControl['controls'].transactionFactor.value;
     this.amountLocal = faControl['controls'].currencyLocal.value;
+
 
     this.getAmount();
 

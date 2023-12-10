@@ -81,7 +81,7 @@
 
 											</div>
 										</div>
-										<div class="col-md-6 col-12">
+										<div class="col-md-6 col-12" *ngIf="enableMultiCurrencies==true">
 											<label for="currencyFactor" class="label-name">
 												{{'currency.transaction-factor'|translate}}</label>
 											<div class="input-group form-group">
@@ -90,12 +90,11 @@
 													name="currencyFactor" style="width: 70px;" disabled="true">
 											</div>
 										</div>
-										<div class="col-md-6 col-12">
+										<div class="col-md-6 col-12" *ngIf="enableMultiCurrencies==true">
 											<label for="currencyId" class="label-name">{{'general.currency'|translate}}
 											</label>
 											<span class="text-danger">*</span>
 											<div class="d-flex">
-												<!-- <div class="input-group  popup flex-grow-1"> -->
 												<ng-select class="flex-grow-1" formControlName="currencyId"
 													name='currencyId' id="currencyId" [(ngModel)]="currencyId"
 													(change)="getAmount()">
@@ -113,7 +112,6 @@
 														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
 												</div>
-												<!-- </div> -->
 												<div class="">
 													<button class="btn btn-rounded btn-dark"
 														(click)="showSearchCurrencyModal=true" type="button"><i
@@ -122,7 +120,7 @@
 											</div>
 
 										</div>
-										<div class="col-md-6 col-12">
+										<div class="col-md-6 col-12" *ngIf="enableMultiCurrencies==true">
 											<label for="voucherTotalLocal" class="label-name">
 												{{'voucher.voucher-total-local'|translate}}
 											</label>
@@ -244,7 +242,6 @@
 																		{{'general.credit-after-conversion'|translate}}
 																	</th>
 
-																	<!-- <th>{{'general.description'|translate}}</th> -->
 																	<th>{{'general.cost-center'|translate}}</th>
 
 
@@ -327,10 +324,6 @@
 																	</td>
 																	<td
 																		class="align-items-center border-0 d-flex justify-content-center gap-1">
-																		<!-- <button type="button"
-																			class="btn btn-secondary btn-table px-3"
-																			(click)="updateDetailData(item)"><i
-																				class="fa fa-edit"></i></button> -->
 																		<button class="btn btn-danger btn-table px-3"
 																			value="{{'buttons.delete'|translate}}"
 																			type="button" (click)="deleteItem(i)">
