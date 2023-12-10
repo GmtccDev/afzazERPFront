@@ -188,8 +188,9 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 				{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
 				{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
-				{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
-				{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
+				{ path: '/accounting-operations/closedAccountingPeriod', title: this.translate.instant("component-names.close-accounting-period"), type: 'link', active: true },
+				{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },
+				{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },
 				{
 					title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
 					children: this.WithdrawalVouchersNew

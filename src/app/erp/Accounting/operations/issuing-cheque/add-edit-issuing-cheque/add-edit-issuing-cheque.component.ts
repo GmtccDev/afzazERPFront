@@ -22,7 +22,8 @@ import { ModuleType } from '../../../models/general-configurations';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
 import { FiscalPeriodStatus } from 'src/app/shared/enum/fiscal-period-status';
 import { format } from 'date-fns';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+import { AccountingPeriodServiceProxy } from '../../../services/accounting-period.service';
 import { ReportViewerService } from '../../../reports/services/report-viewer.service';
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 import { AccountServiceProxy } from '../../../services/account.services';
@@ -39,6 +40,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
   issuingChequeForm!: FormGroup;
   id: any = 0;
   currnetUrl;
+  currencyLocal: number;
+  mainCurrencyId: number = null;
+  enableMultiCurrencies: boolean = false;
   fiscalPeriodId: number;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
@@ -46,6 +50,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
   balance: number = 0;
   tempListDetail: any[] = [];
   oldAmountLocal: number = 0;
+  accountingPeriods: any;
+  accountingPeriodCheckDate: any;
   lang = localStorage.getItem("language")
   issuingCheque: [] = [];
   addUrl: string = '/accounting-operations/issuingCheque/add-issuingCheque';
@@ -67,7 +73,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
   currencyId: any;
   amount: number = 0;
   amountLocal: number = 0;
-  mainCurrencyId: number;
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
@@ -127,6 +132,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private reportViewerService: ReportViewerService,
     private accountService: AccountServiceProxy,
+    private dateConverterService: DateConverterService,
+    private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
+
 
 
 
@@ -262,6 +270,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
             if (this.fiscalPeriodId > 0) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
+              this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
+
             }
 
 
@@ -293,8 +303,8 @@ export class AddEditIssuingChequeComponent implements OnInit {
       bankAccountId: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       amountLocal: ['', Validators.compose([Validators.required])],
-      currencyId: [null, Validators.compose([Validators.required])],
-      currencyFactor: '',
+      currencyId: this.isMultiCurrency == true ? ['', Validators.compose([Validators.required])] : this.mainCurrencyId,
+      currencyFactor: 1,
       companyId: this.companyId,
       branchId: this.branchId,
       status: 0,
@@ -398,22 +408,24 @@ export class AddEditIssuingChequeComponent implements OnInit {
     ));
   }
   getAmount() {
-    if (this.currencyId == this.mainCurrencyId) {
-      this.amount = this.amountLocal;
-      this.currencyFactor = 1;
-    }
-    else {
-      let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
-        next: (res: any) => {
+    if (this.isMultiCurrency == true) {
+      if (this.currencyId == this.mainCurrencyId) {
+        this.amount = this.amountLocal;
+        this.currencyFactor = 1;
+      }
+      else {
+        let sub = this.currencyServiceProxy.getCurrency(this.currencyId).subscribe({
+          next: (res: any) => {
 
-          this.currency = res;
-          let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-          this.currencyFactor = 1 / currencyModel.transactionFactor;
-          this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
-        }
-      })
-      this.subsList.push(sub);
+            this.currency = res;
+            let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
+            this.currencyFactor = 1 / currencyModel.transactionFactor;
+            this.amount = (1 / currencyModel.transactionFactor) * this.amountLocal;
+          }
+        })
+        this.subsList.push(sub);
 
+      }
     }
   }
   onDeleteRow(rowIndex) {
@@ -462,7 +474,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
             amountLocal: res.response?.amountLocal,
             status: res.response?.status,
             statusName: res.response?.status,
-            currencyId: res.response?.currencyId,
+            currencyId: this.isMultiCurrency == true ? res.response?.currencyId : this.mainCurrencyId,
             currencyFactor: res.response?.currencyFactor,
             fiscalPeriodId: res.response?.fiscalPeriodId,
 
@@ -685,6 +697,12 @@ export class AddEditIssuingChequeComponent implements OnInit {
     //   return;
     // }
     if (this.issuingChequeForm.valid) {
+      if (stringIsNullOrEmpty(this.issuingChequeForm.value.currencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
         if (this.fiscalPeriodStatus == null) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-add-cheque-fiscal-period-choose-open-fiscal-period");
@@ -698,6 +716,20 @@ export class AddEditIssuingChequeComponent implements OnInit {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
+      else {
+
+        let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.date);
+        if (this.accountingPeriods != null) {
+          this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+          if (this.accountingPeriodCheckDate != undefined) {
+
+            this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+      }
       if (stringIsNullOrEmpty(this.accountExchangeId)) {
         this.errorMessage = this.translate.instant("general.account-exchange-required");
         this.errorClass = 'errorMessage';
@@ -707,34 +739,18 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
       }
       let chequeDate = this.issuingChequeForm.controls["date"].value;
-      let date;
-      let month;
-      let day;
-      if (chequeDate?.month + 1 > 9) {
-        month = chequeDate?.month + 1
-      }
-      else {
-        month = '0' + chequeDate.month + 1
-      }
-      if (chequeDate.day < 10) {
-        day = '0' + chequeDate?.day
-      }
-      else {
-        day = chequeDate.day
-      }
-      date = chequeDate.year + '-' + month + '-' + day
-
-      if (date >= this.fromDate && date <= this.toDate) {
+      let date = this.dateConverterService.getDateTimeForInsertISO_Format(chequeDate);
 
 
-      }
-      else {
+
+      if (!(date >= this.fromDate && date <= this.toDate)) {
+
         this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
-
       }
+
 
       this.totalamount = 0;
       const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
@@ -889,6 +905,30 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
     });
   }
+  getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   onChangeCurrency(event, index) {
     // this.amount = 0;
     // this.amountLocal = 0;
@@ -947,14 +987,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
   confirmUpdate() {
     return new Promise<void>((resolve, reject) => {
       var entity = this.issuingChequeForm.value;
-      if (entity.status == ChequeStatusEnum.Collected || entity.status == ChequeStatusEnum.Rejected) {
-        this.spinner.hide();
-        this.alertsService.showError(
-          this.translate.instant("incoming-cheque.cannot-edit"),
-          ""
-        )
-        return;
-      }
+      
       entity.status = ChequeStatusEnum.EditRegistered;
       entity.date = this.dateService.getDateForInsert(entity.date);
       entity.dueDate = this.dateService.getDateForInsert(entity.dueDate);
@@ -979,6 +1012,20 @@ export class AddEditIssuingChequeComponent implements OnInit {
   }
   onUpdate() {
     if (this.issuingChequeForm.valid) {
+      if (this.issuingChequeForm.value.status == ChequeStatusEnum.Collected || this.issuingChequeForm.value.status == ChequeStatusEnum.Rejected) {
+        this.spinner.hide();
+        this.alertsService.showError(
+          this.translate.instant("incoming-cheque.cannot-edit"),
+          ""
+        )
+        return;
+      }
+      if (stringIsNullOrEmpty(this.issuingChequeForm.value.currencyId)) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.totalamount = 0;
       const ctrl = <FormArray>this.issuingChequeForm.controls['issuingChequeDetail'];
       ctrl.controls.forEach(x => {
@@ -1003,6 +1050,18 @@ export class AddEditIssuingChequeComponent implements OnInit {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
+      else {
+        let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.date);
+        if (this.accountingPeriods != null) {
+          this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+          if (this.accountingPeriodCheckDate != undefined) {
+            this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+      }
       if (stringIsNullOrEmpty(this.accountExchangeId)) {
         this.errorMessage = this.translate.instant("general.account-exchange-required");
         this.errorClass = 'errorMessage';
@@ -1012,33 +1071,14 @@ export class AddEditIssuingChequeComponent implements OnInit {
 
       }
       let chequeDate = this.issuingChequeForm.controls["date"].value;
-      let date;
-      let month;
-      let day;
-      if (chequeDate?.month + 1 > 9) {
-        month = chequeDate?.month + 1
-      }
-      else {
-        month = '0' + chequeDate.month + 1
-      }
-      if (chequeDate.day < 10) {
-        day = '0' + chequeDate?.day
-      }
-      else {
-        day = chequeDate.day
-      }
-      date = chequeDate.year + '-' + month + '-' + day
+      let date = this.dateConverterService.getDateTimeForInsertISO_Format(chequeDate);
 
-      if (date >= this.fromDate && date <= this.toDate) {
+      if (!(date >= this.fromDate && date <= this.toDate)) {
 
-
-      }
-      else {
         this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
-
       }
       var issuingChequeDetail = this.issuingChequeForm.get('issuingChequeDetail') as FormArray;
       var i = 0;
@@ -1295,12 +1335,9 @@ export class AddEditIssuingChequeComponent implements OnInit {
   onInput(event, i): boolean {
 
     this.index = i;
-    // if (type == 'Credit') {
     const faControl = (<FormArray>this.issuingChequeForm.controls['issuingChequeDetail']).at(i);
-    //   faControl['controls'].amount.setValue(0);
 
     let amount = faControl['controls'].amount.value;
-    // let amount = faControl['controls'].amount.value;
     let transactionFactor = faControl['controls'].transactionFactor.value;
     if (this.isMultiCurrency == false) {
       faControl['controls'].transactionFactor.setValue(1);
@@ -1309,7 +1346,6 @@ export class AddEditIssuingChequeComponent implements OnInit {
     }
     if (transactionFactor != null) {
       faControl['controls'].currencyLocal.setValue(amount * transactionFactor);
-      // faControl['controls'].amountLocal.setValue(amount * transactionFactor);
     }
 
     this.amount = amount;

@@ -41,7 +41,7 @@ export class CloseFiscalPeriodComponent implements OnInit {
   showDetails: boolean = false
   addUrl: string = '';
   updateUrl: string = '';
-  listUrl: string = '/accounting-operations/closeFiscalPeriod';
+  listUrl: string = '/accounting-operations/closedFiscalPeriod';
   toolbarPathData: ToolbarPath = {
     listPath: '',
     updatePath: this.updateUrl,

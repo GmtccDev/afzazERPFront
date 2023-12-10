@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import {SharedModule} from '../../../shared/shared.module'
+import { SharedModule } from '../../../shared/shared.module'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -23,15 +23,15 @@ import { IssuingChequeComponent } from './issuing-cheque/issuing-cheque.componen
 import { AddEditIssuingChequeComponent } from './issuing-cheque/add-edit-issuing-cheque/add-edit-issuing-cheque.component';
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {GenerateEntryVoucherComponent} from  'src/app/erp/Accounting/operations/vouchers/generate-entry-voucher/generate-entry-voucher.component';
-
-
+import { GenerateEntryVoucherComponent } from 'src/app/erp/Accounting/operations/vouchers/generate-entry-voucher/generate-entry-voucher.component';
+import { ClosedAccountingPeriodComponent } from './closed-accounting-period/closed-accounting-period.component'
+import { AddClosedAccountingPeriodComponent } from './closed-accounting-period/add-closed-accounting-period/add-closed-accounting-period.component'
 @NgModule({
   declarations: [
     AddEditVoucherComponent, VouchersComponent, JournalEntryComponent, AddEditJournalEntryComponent, IncomingChequeComponent, AddEditIncomingChequeComponent, JournalEntryPostComponent, AddEditJournalEntryPostComponent
-    ,CloseFiscalPeriodComponent
-    ,IssuingChequeComponent, AddEditIssuingChequeComponent,GenerateEntryVoucherComponent
-  ],
+    , CloseFiscalPeriodComponent
+    , IssuingChequeComponent, AddEditIssuingChequeComponent, GenerateEntryVoucherComponent, ClosedAccountingPeriodComponent
+    , AddClosedAccountingPeriodComponent],
   imports: [
     CommonModule,
     OperationsRoutingModule, SharedModule, NgxSpinnerModule, NzTableModule,
@@ -40,8 +40,8 @@ import {GenerateEntryVoucherComponent} from  'src/app/erp/Accounting/operations/
     MatDialogModule,
     NgSelectModule
 
-    
+
   ],
-  providers: [SearchDialogService,DateCalculation,DatePipe,DateConverterService,NgbCalendarIslamicUmalqura]
+  providers: [SearchDialogService, DateCalculation, DatePipe, DateConverterService, NgbCalendarIslamicUmalqura]
 })
 export class OperationsModule { }

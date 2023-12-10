@@ -23,12 +23,14 @@ import { ReportViewerService } from '../../reports/services/report-viewer.servic
 import { TabulatorComponent } from 'src/app/shared/components/tabulator/tabulator/tabulator.component';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
+import { AccountingPeriodServiceProxy } from '../../services/accounting-period.service';
+
 
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss'],
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -58,7 +60,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   listIds: any[] = [];
   tabular: any;
   dateType: any;
-
+  accountingPeriods: any;
+  accountingPeriodCheckDate: any;
 
   //#endregion
   @ViewChild(TabulatorComponent) child;
@@ -77,10 +80,12 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private alertsService: NotificationsAlertsService,
-    private cd:ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
     private companyService: CompanyServiceProxy,
     private dateService: DateCalculation,
-    
+    private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
+
+
 
   ) {
 
@@ -91,10 +96,10 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region ngOnInit
   ngOnInit(): void {
-    
+
     this.vouchers = [];
 
-   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     if (!localStorage.getItem('foo')) {
       localStorage.setItem('foo', 'no reload')
       location.reload()
@@ -116,7 +121,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subsList.push(sub);
     this.spinner.show();
 
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(),this.getCompanyById(this.companyId) ,this.getVouchers()])
+
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getCompanyById(this.companyId), this.getVouchers()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -198,6 +204,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
             this.fiscalPeriodId = res.response.value;
             if (this.fiscalPeriodId != null) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
+              this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
 
             }
           }
@@ -241,11 +248,11 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
       let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            
+
             this.vouchers = res.response.items.filter(x => x.voucherTypeId == this.voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
-            this.vouchers =[...this.vouchers];
+            this.vouchers = [...this.vouchers];
             this.cd.detectChanges();
-            
+
 
           }
           resolve();
@@ -288,32 +295,61 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   showConfirmDeleteMessage(id) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
-    modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
-    modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
-    modalRef.componentInstance.isYesNo = true;
-    modalRef.result.then((rs) => {
-      if (rs == 'Confirm') {
-        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-          this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          return;
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.voucherService.getVoucher(id).subscribe({
+        next: (res: any) => {
+          resolve();
+          debugger
+          if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+            debugger
+            let _date = res.response.voucherDate;
+            if (this.accountingPeriods != null) {
+              this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+              if (this.accountingPeriodCheckDate != undefined) {
+                this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                return;
+              }
+            }
+          }
+          const modalRef = this.modalService.open(MessageModalComponent);
+          modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+          modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+          modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+          modalRef.componentInstance.isYesNo = true;
+          modalRef.result.then((rs) => {
+            if (rs == 'Confirm') {
+              if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+                this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+                this.errorClass = 'errorMessage';
+                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                return;
+              }
+              else {
+
+                this.spinner.show();
+                let sub = this.voucherService.deleteVoucher(this.voucherTypeId,id).subscribe(
+                  (resonse) => {
+                    this.getVouchers();
+                    this.router.navigate([this.listUrl + this.voucherTypeId])
+
+                  });
+                this.subsList.push(sub);
+                this.spinner.hide();
+              }
+            }
+
+
+
+
+
+          })
         }
-
-        this.spinner.show();
-        let sub = this.voucherService.deleteVoucher(this.voucherTypeId, id).subscribe(
-          (resonse) => {
-            this.getVouchers();
-            this.router.navigate([this.listUrl + this.voucherTypeId])
-
-          });
-        this.subsList.push(sub);
-        this.spinner.hide();
-
       }
-    });
+      )
+    }
+    )
   }
   //#endregion
   //#region Tabulator
@@ -333,14 +369,14 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       title: this.lang == 'ar' ? ' تاريخ' : 'Date ',
-      field: 'voucherDate', width: 300, formatter:  (cell, formatterParams, onRendered) => {
-         if (this.dateType == 2) {
-						return this.dateService.getHijriDate(new Date(cell.getValue()));
-					}
-					else {
-						return format(new Date(cell.getValue()), 'dd-MM-yyyy')
+      field: 'voucherDate', width: 300, formatter: (cell, formatterParams, onRendered) => {
+        if (this.dateType == 2) {
+          return this.dateService.getHijriDate(new Date(cell.getValue()));
+        }
+        else {
+          return format(new Date(cell.getValue()), 'dd-MM-yyyy')
 
-					}
+        }
       }
 
     },
@@ -503,8 +539,8 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onViewReportClicked(id) {
 
-    this.checkPrintPermission().then(a=>{
-      if(a){
+    this.checkPrintPermission().then(a => {
+      if (a) {
         localStorage.removeItem("itemId")
         localStorage.setItem("itemId", id)
         let reportType = 1;
@@ -512,28 +548,27 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
         this.reportViewerService.gotoViewer(reportType, reportTypeId, id);
       }
     })
-    
-    
+
+
   }
 
-  checkPrintPermission(){
-    return new Promise<boolean>((resolve, reject)=>{
+  checkPrintPermission() {
+    return new Promise<boolean>((resolve, reject) => {
       let sub = this.voucherService.checkPrintPermission(this.voucherTypeId).subscribe({
-        next:(res)=>{
-          
-          if(res.status == "Success")
-          {
+        next: (res) => {
+
+          if (res.status == "Success") {
             resolve(true);
           }
-          else{
+          else {
             resolve(false);
           }
 
         },
-        error:(err)=>{
+        error: (err) => {
           resolve(false);
         },
-        complete:()=>{}
+        complete: () => { }
       });
       this.subsList.push(sub);
     })
@@ -543,32 +578,53 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
     return "<i class='fa fa-print' aria-hidden='true'></i>";
   };
   getCompanyById(id: any) {
-		return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.companyService.getCompany(id).subscribe({
+        next: (res: any) => {
+          res?.response?.useHijri
+          if (res?.response?.useHijri) {
+            this.dateType = 2
+          } else {
+            this.dateType = 1
+          }
 
-			let sub = this.companyService.getCompany(id).subscribe({
-				next: (res: any) => {
-					;
-
-					res?.response?.useHijri
-					if (res?.response?.useHijri) {
-						this.dateType = 2
-					} else {
-						this.dateType = 1
-					}
-
-					resolve();
+          resolve();
 
 
 
-				},
-				error: (err: any) => {
-					reject(err);
-				},
-				complete: () => {
-				},
-			});
-			this.subsList.push(sub);
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
 
-		});
-	}
+    });
+  }
+  getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
 }

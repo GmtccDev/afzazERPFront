@@ -16,12 +16,14 @@ import {BillComponent} from 'src/app/erp/Warehouses/operations/bill/bill.compone
 import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component';
 import { BillDynamicDeterminantComponent } from './bill-dynamic-determinant/bill-dynamic-determinant.component';
 import { GenerateBillEntryComponent } from './bill/generate-bill-entry/generate-bill-entry.component'
+import { RightClickModalComponent } from './right-click-modal/right-click-modal.component'
 
 
 
 @NgModule({
   declarations: [
      BillComponent,AddEditBillComponent, BillDynamicDeterminantComponent, GenerateBillEntryComponent
+     ,AddEditBillComponent, BillDynamicDeterminantComponent, RightClickModalComponent
   ],
   imports: [
     CommonModule,

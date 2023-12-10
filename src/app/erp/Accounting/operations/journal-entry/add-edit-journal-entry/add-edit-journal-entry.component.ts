@@ -31,6 +31,8 @@ import { SearchDialogService } from 'src/app/shared/services/search-dialog.servi
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 import { AccountServiceProxy } from '../../../services/account.services';
 import { FiscalPeriodServiceProxy } from '../../../services/fiscal-period.services';
+import { AccountingPeriodServiceProxy } from '../../../services/accounting-period.service';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 @Component({
   selector: 'app-add-edit-journal-entry',
   templateUrl: './add-edit-journal-entry.component.html',
@@ -61,7 +63,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   settingId: number | undefined;
   costCenterName: any;
   parentTypeCode: string;
-
+  accountingPeriods: any;
   addUrl: string = '/accounting-operations/journalEntry/add-journalEntry';
   updateUrl: string = '/accounting-operations/journalEntry/update-journalEntry/';
   listUrl: string = '/accounting-operations/journalEntry';
@@ -119,6 +121,8 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
   fiscalPeriodStatus: any;
   fiscalPeriodcheckDate: any;
   showDetails: boolean = false;
+  accountingPeriodCheckDate: any;
+
 
   constructor(
     private journalEntryService: JournalEntryServiceProxy, private userService: UserService,
@@ -139,6 +143,10 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private accountService: AccountServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
+    private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
+    private dateConverterService: DateConverterService,
+
+
 
 
   ) {
@@ -165,7 +173,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
       if (this.currnetUrl == this.addUrl) {
         this.getjournalEntryCode();
         this.getGeneralConfiguration()
-
         this.onChangeCode(null);
       }
 
@@ -321,6 +328,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             this.fiscalPeriodId = res.response.result.items.find(c => c.id == GeneralConfigurationEnum.AccountingPeriod).value;
             if (this.fiscalPeriodId != null) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
+              this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
 
             }
             if (this.currnetUrl == this.addUrl) {
@@ -481,6 +489,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             journalEntriesDetail: this.fb.array([])
 
           });
+          this.date = this.dateService.getDateForCalender(res.response.date);
 
           this.listDetail = res.response?.journalEntriesDetail;
           this.tempListDetail = res.response?.journalEntriesDetail;
@@ -723,47 +732,33 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
+      else {
+        
+        let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.date);
+        if (this.accountingPeriods != null) {
+          this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+          if (this.accountingPeriodCheckDate != undefined) {
+            
+            this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+      }
       let checkDate = this.dateService.getDateForInsert(this.date)
       const date = new Date(checkDate);
       const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
       this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
 
       if (this.fiscalPeriodcheckDate == undefined) {
-        this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
-        this.errorClass = 'errorMessage';
-        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        return;
-      }
-
-      let entryDate = this.journalEntryForm.controls["date"].value;
-      let _date;
-      let month;
-      let day;
-      if (entryDate?.month + 1 > 9) {
-        month = entryDate?.month + 1
-      }
-      else {
-        month = '0' + entryDate.month + 1
-      }
-      if (entryDate.day < 10) {
-        day = '0' + entryDate?.day
-      }
-      else {
-        day = entryDate.day
-      }
-      _date = entryDate.year + '-' + month + '-' + day
-
-      if (_date >= this.fromDate && _date <= this.toDate) {
-
-
-      }
-      else {
         this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
-
       }
+
+
       if (this.counter < 2) {
         this.alertsService.showError(
           this.translate.instant('twoRows'),
@@ -895,6 +890,31 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   isSelectCurrency: boolean = false;
   onChangeGetDefaultCurrency(event, index) {
     if (!this.isSelectCurrency) {
@@ -1002,46 +1022,31 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
       }
-      let entryDate = this.journalEntryForm.controls["date"].value;
-      let _date;
-      let month;
-      let day;
-      if (entryDate?.month + 1 > 9) {
-        month = entryDate?.month + 1
-      }
       else {
-        month = '0' + entryDate.month + 1
+        let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.date);
+        if (this.accountingPeriods != null) {
+          this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+          if (this.accountingPeriodCheckDate != undefined) {
+            
+            this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
       }
-      if (entryDate.day < 10) {
-        day = '0' + entryDate?.day
-      }
-      else {
-        day = entryDate.day
-      }
-      _date = entryDate.year + '-' + month + '-' + day
 
-      if (_date >= this.fromDate && _date <= this.toDate) {
+      let checkDate = this.dateService.getDateForInsert(this.date)
+      const date = new Date(checkDate);
+      const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+      this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
 
-
-      }
-      else {
+      if (this.fiscalPeriodcheckDate == undefined) {
         this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
         return;
-
       }
-      // let checkDate = this.dateService.getDateForInsert(this.date)
-      // const date = new Date(checkDate);
-      // const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
-      // this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
-
-      // if (this.fiscalPeriodcheckDate == undefined) {
-      //   this.errorMessage = this.translate.instant("general.no-add-fiscal-period-choose-date-open-fiscal-period");
-      //   this.errorClass = 'errorMessage';
-      //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //   return;
-      // }
     }
     else {
       this.errorMessage = this.translate.instant("validation-messages.invalid-data");
