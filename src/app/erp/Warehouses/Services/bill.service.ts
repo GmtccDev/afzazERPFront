@@ -41,6 +41,10 @@ export class BillServiceProxy {
     getDdl(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Bill/get-ddl?");
     }
+    getAllNotGeneratedEntryBills(): Observable<any> {
+        return this.http.get<any>(this.baseUrl + "/api/Bill/getNotGeneratedEntryBills?");
+    }
+  
   
     allBills(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
      
@@ -91,6 +95,9 @@ export class BillServiceProxy {
     
     checkPrintPermission(billType:any): Observable<any> {
         return this.http.get<any>(environment.apiUrl + "/api/Bill/checkPrint?id="+billType);
+    }
+    generateEntry(list: any): Observable<number> {
+        return this.http.post<any>(environment.apiUrl + "/api/Bill/generateEntry?", list);
     }
 
 }

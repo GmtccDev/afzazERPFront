@@ -315,6 +315,9 @@
         "generate-entry-vouchers": "توليد قيود السندات",
         "item-guide": " دليل اصناف",
         "item-guide-information": "معلومات  دليل اصناف",
+
+        "generate-bills-entry": "ترحيل الفواتير",
+        
         "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
         "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير",
         "close-accounting-period":"أغلاق الفترة المحاسبية",
@@ -802,6 +805,7 @@
     "bill-type": {
         "bill-type-information": "معلومات نمط الفاتورة",
         "bill-type": "نمط الفاتورة",
+        "bill-kind": "نوع الفاتورة",
         "add-bill-type": "اضافة نمط فاتورة",
         "update-bill-type": "تحديث نمط الفاتورة",
         "basic-properties": "خصائص أساسية",
@@ -852,6 +856,7 @@
         "items": "الأصناف",
         "item": "الصنف",
         "item-description": "وصف الصنف",
+        "confirm-generate-entry": "هل أنت متأكد من توليد القيد لهذا الفاتورة؟",
         "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
         "bill-items-required": "من فضلك أدخل الأصناف",
         "no-add-bill-fiscal-period-closed": "لا يمكن اضافة فاتورة لهذة السنة المالية المغلقة",
