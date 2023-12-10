@@ -732,12 +732,12 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         return;
       }
       else {
-        debugger
+        
         let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.date);
         if (this.accountingPeriods != null) {
           this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
           if (this.accountingPeriodCheckDate != undefined) {
-            debugger
+            
             this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -1026,7 +1026,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
         if (this.accountingPeriods != null) {
           this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
           if (this.accountingPeriodCheckDate != undefined) {
-            debugger
+            
             this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));

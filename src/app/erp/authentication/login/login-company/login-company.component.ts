@@ -225,12 +225,12 @@ export class LoginCompanyComponent implements OnInit {
   }
 
   getCompanyById(id: any) {
-    debugger
+    
     return new Promise<void>((resolve, reject) => {
       let sub = this.companyService.getCompany(id).subscribe({
         next: (res: any) => {
             res?.response?.useHijri
-           debugger
+           
           if (res?.response?.useHijri) {
             localStorage.setItem("userHijri",res?.response?.useHijri)
           

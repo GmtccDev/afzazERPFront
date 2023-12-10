@@ -219,6 +219,7 @@ export class DateCalculation {
   }
 
   getDateForCalender(date: any) {
+    
     let dateString: string | null = this.datePipe.transform(date, "dd/M/yyyy");
     let dateParts: string[] = [];
     let selectedDate: { year: number, month: number, day: number } = {
@@ -241,7 +242,39 @@ export class DateCalculation {
     return selectedDate;
   }
 
+  getDateTimeForCalender(date: any) {
+    let dateString: string = this.datePipe.transform(date, 'dd/M/yyyy') ?? '';
+    //alert(dateString);
+    let dateParts: string[] = [];
+    let selectedDate: {
+      year: number;
+      month: number;
+      day: number;
+      hour: number;
+      min: number;
+      sec: number;
+    } = {
+      year: 0,
+      month: 0,
+      day: 0,
+      hour: 0,
+      min: 0,
+      sec: 0,
+    };
+    if (dateString != undefined && dateString != null) {
+      dateParts = dateString.split('/');
+      selectedDate = {
+        year: parseInt(dateParts[2]),
+        month: parseInt(dateParts[1]) - 1,
+        day: parseInt(dateParts[0]),
+        hour: 0,
+        min: 0,
+        sec: 0,
+      };
+    }
 
+    return selectedDate;
+  }
 
   AddDaysToGregorian(periodPerDay: number, startDate: { year: number, month: number, day: number }): { year: number, month: number, day: number } {
 
