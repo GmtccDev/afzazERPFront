@@ -699,8 +699,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   costCenterName: this.lang = "ar" ? costCenterName?.nameAr ?? '' : costCenterName?.nameEn ?? '',
                   billItemTaxes: this.billItemTax ?? [],
                   billDynamicDeterminants: this.selectedBillItem.billDynamicDeterminants,
-                  itemCardSerial: element.itemCardSerial
-
 
                 }
               )
@@ -1451,7 +1449,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       costCenterName: this.selectedBillItem?.costCenterName,
       billItemTaxes: this.selectedBillItemTax ?? [],
       billDynamicDeterminants: this.selectedBillItem?.billDynamicDeterminants,
-      itemCardSerial: this.billItem.length.toString()
 
 
     });
@@ -1521,7 +1518,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       costCenterName: '',
       billItemTaxes: [],
       billDynamicDeterminants: [],
-      itemCardSerial: ''
 
     }
   }
@@ -2005,7 +2001,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   openItemSearchDialog(i) {
-  
+
 
     let searchTxt = '';
     if (i == -1) {
@@ -2446,12 +2442,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             })
             .afterClosed().subscribe(result => {
               if (result && result != null && result.length > 0) {
-
+                debugger
                 //this.getBills();
-                this.selectedBillItem.billDynamicDeterminants = result;
-                this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-                  element.itemCardSerial = i
-                });
+                
+                this.selectedBillItem.billDynamicDeterminants[i+1].determinantsData = result;
+
+
+                // this.billItem[i].billDynamicDeterminants=this.selectedBillItem.billDynamicDeterminants;
+
               }
             });
         },
@@ -3123,8 +3121,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getNetAfterTax(1);
     }
   }
-  onRightClick(event: MouseEvent,i) {
-    
+  onRightClick(event: MouseEvent, i) {
+
     if (this.router.url.includes("/warehouses-operations/bill/update-bill")) {
       let row = {
         billItemId: this.billItem[i].id,
@@ -3137,16 +3135,14 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
         {
           width: '1000px',
           data: row,
-          height:'100px'
+          height: '100px'
         })
         .afterClosed().subscribe(result => {
           if (result && result != null && result.length > 0) {
-debugger
+            debugger
             this.selectedBillItem.billDynamicDeterminants = result;
-            this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-              element.itemCardSerial = i
-            });
-            this.billItem[i].billDynamicDeterminants=this.selectedBillItem.billDynamicDeterminants;
+
+            this.billItem[i].billDynamicDeterminants = this.selectedBillItem.billDynamicDeterminants;
           }
         });
     }
