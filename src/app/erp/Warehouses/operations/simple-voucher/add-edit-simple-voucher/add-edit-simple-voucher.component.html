@@ -1,0 +1,605 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+	<p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+<section class="inner-page-wrapper inner-page-wrapper-vouchers">
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<form [formGroup]="simpleVoucherForm" id="voucherSubmit" class="tabs-form">
+							<div class="main-branch ranoo">
+								<div class="wrapper-title">
+									<h3>{{voucherTypeName}}</h3>
+									<hr>
+									<div class="row ">
+										<div class="col-md-4 col-12 ">
+											<label for="code" class="label-name">
+												{{'general.code'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="form-group position-relative">
+
+												<input type="text" class="form-control icon-branch"
+													[ngClass]="{'is-invalid':f['code'].errors || f['code'].invalid}"
+													name="code" formControlName="code">
+												<div *ngIf="(f['code'].touched || f['code'].dirty ) && f['code'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span *ngIf="f['code'].errors && f['code'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+
+											</div>
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="voucherDate" class="label-name">
+												{{'general.date'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="form-group0 position-relative">
+												<app-full-date name="voucherDate" formControlName="voucherDate"
+													[(ngModel)]="voucherDate" ngDefaultControl
+													[selectedDate]="voucherDate"
+													(OnDateSelect)="getVoucherDate($event)"></app-full-date>
+
+												<div *ngIf="(f['voucherDate'].touched || f['voucherDate'].dirty ) && f['voucherDate'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['voucherDate'].errors && f['voucherDate'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+
+											</div>
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="referenceId" class="label-name">
+												{{'general.reference'|translate}}
+											</label>
+											<div class="d-flex">
+												<ng-select class="flex-grow-1" formControlName="referenceId"
+													name='referenceId' id="referenceId"
+													(change)="getSimpleVouchersByReferenceId(simpleVoucherForm.value.referenceId)">
+													<ng-option *ngFor="let simpleVoucherType of simpleVoucherTypesList"
+														[value]="simpleVoucherType.id">
+														{{lang=="ar"?simpleVoucherType.nameAr:simpleVoucherType.nameEn}}
+													</ng-option>
+												</ng-select>
+
+
+											</div>
+
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="referenceId" class="label-name">
+												{{'general.reference-no'|translate}}
+											</label>
+											<div class="d-flex">
+												<ng-select class="flex-grow-1" formControlName="referenceId"
+													name='referenceId' id="referenceId">
+													<ng-option *ngFor="let voucher of filterSimpleVouchersList"
+														[value]="voucher.id">
+														{{voucher.code}}
+													</ng-option>
+												</ng-select>
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<label for="salesPersonId" class="label-name">
+												{{'general.sales-person'|translate}}
+											</label>
+											<div class="d-flex">
+												<ng-select class="flex-grow-1" formControlName="salesPersonId"
+													name='salesPersonId' id="salesPersonId">
+													<ng-option *ngFor="let salesPerson of salesPersonsList"
+														[value]="salesPerson.id">
+														{{lang=="ar"?salesPerson.nameAr:salesPerson.nameEn}}
+													</ng-option>
+												</ng-select>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchSalesPersonModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
+
+
+											</div>
+
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="paymentType" class="label-name">
+												{{'general.payment-type'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="input-group  popup">
+												<ng-select class="custom" formControlName="paymentType"
+													[items]="paymentTypesEnum" bindLabel="name" bindValue="id"
+													style="width:100%"></ng-select>
+												<div *ngIf="(f['paymentType'].touched || f['paymentType'].dirty ) && f['paymentType'].invalid"
+													class="alert alert-danger">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['paymentType'].errors && f['paymentType'].errors['required']">
+														{{'validation-messages.required-field'|translate}}</span>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="voucherTotal" class="label-name">
+												{{'voucher.voucher-total'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="form-group0 position-relative">
+
+												<input type="text" class="form-control icon-branch"
+													[ngClass]="{'is-invalid':f['voucherTotal'].errors || f['voucherTotal'].invalid}"
+													name="voucherTotal" formControlName="voucherTotal"
+													[(ngModel)]="voucherTotal" disabled="true">
+												<div *ngIf="(f['voucherTotal'].touched || f['voucherTotal'].dirty ) && f['voucherTotal'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['voucherTotal'].errors && f['voucherTotal'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+
+											</div>
+										</div>
+										<div class="col-md-4 col-12" *ngIf="enableMultiCurrencies==true">
+											<label for="currencyFactor" class="label-name">
+												{{'currency.transaction-factor'|translate}}</label>
+											<div class="input-group form-group">
+												<input type="number" [(ngModel)]="currencyFactor" required
+													class="form-control required" formControlName="currencyFactor"
+													name="currencyFactor" style="width: 70px;" disabled="true">
+											</div>
+										</div>
+										<div class="col-md-4 col-12" *ngIf="enableMultiCurrencies==true">
+											<label for="currencyId" class="label-name">{{'general.currency'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="d-flex">
+												<ng-select class="flex-grow-1" formControlName="currencyId"
+													name='currencyId' id="currencyId" [(ngModel)]="currencyId"
+													(change)="getAmount()">
+													<ng-option *ngFor="let currency of currenciesList"
+														[value]="currency.id">
+														{{lang=="en"?currency.nameEn:currency.nameAr}}
+													</ng-option>
+												</ng-select>
+
+												<div *ngIf="(f['currencyId'].touched || f['currencyId'].dirty ) && f['currencyId'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['currencyId'].errors && f['currencyId'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchCurrencyModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
+											</div>
+
+										</div>
+										<div class="col-md-4 col-12" *ngIf="enableMultiCurrencies==true">
+											<label for="voucherTotalLocal" class="label-name">
+												{{'voucher.voucher-total-local'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="form-group0 position-relative">
+
+												<input type="text" class="form-control icon-branch"
+													[ngClass]="{'is-invalid':f['voucherTotalLocal'].errors || f['voucherTotalLocal'].invalid}"
+													name="voucherTotalLocal" formControlName="voucherTotalLocal"
+													[(ngModel)]="voucherTotalLocal" disabled="true">
+												<div *ngIf="(f['voucherTotalLocal'].touched || f['voucherTotalLocal'].dirty ) && f['voucherTotalLocal'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['voucherTotalLocal'].errors && f['voucherTotalLocal'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+
+											</div>
+										</div>
+
+
+										<div class="col-md-4 col-12">
+											<label for="cashAccountId" class="label-name">
+												{{'general.cash-bank-account'|translate}}
+											</label>
+											<span class="text-danger">*</span>
+											<div class="d-flex">
+												<ng-select class="flex-grow-1" formControlName="cashAccountId"
+													name='cashAccountId' id="cashAccountId" [(ngModel)]="cashAccountId">
+													<ng-option *ngFor="let account of cashAndBankAccountsList"
+														[value]="account.id">
+														{{lang=="en"?account.nameEn:account.nameAr}}
+													</ng-option>
+												</ng-select>
+												<div *ngIf="(f['cashAccountId'].touched || f['cashAccountId'].dirty ) && f['cashAccountId'].invalid"
+													class="validation alert-danger position-absolute">
+													<i class="fa fa-close "></i>
+													<span
+														*ngIf="f['cashAccountId'].errors && f['cashAccountId'].errors['required']"
+														class="f-12 ng-star-inserted text-white">
+														{{'error.required'|translate}}</span>
+												</div>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchCashAccountModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="col-md-4 col-12 ">
+											<label for="cheque-number" class="label-name">
+												{{'general.cheque-number'|translate}}
+											</label>
+											<div class="form-group position-relative">
+												<input type="text" class="form-control icon-branch" name="chequeNumber"
+													formControlName="chequeNumber">
+											</div>
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="cheque-date" class="label-name">
+												{{'general.cheque-date'|translate}}
+											</label>
+											<div class="form-group0 position-relative">
+												<app-full-date name="chequeDate" formControlName="chequeDate"
+													[(ngModel)]="chequeDate" ngDefaultControl
+													[selectedDate]="chequeDate"
+													(OnDateSelect)="getChequeDate($event)"></app-full-date>
+											</div>
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="cheque-due-date" class="label-name">
+												{{'general.cheque-due-date'|translate}}
+											</label>
+											<div class="form-group0 position-relative">
+												<app-full-date name="chequeDueDate" formControlName="chequeDueDate"
+													[(ngModel)]="chequeDueDate" ngDefaultControl
+													[selectedDate]="chequeDueDate"
+													(OnDateSelect)="getChequeDueDate($event)"></app-full-date>
+											</div>
+										</div>
+
+
+										<div class="col-md-4 col-12">
+											<label for="costCenterId" class="label-name">
+												{{'general.cost-center'|translate}}
+											</label>
+											<div class="d-flex">
+												<ng-select class="flex-grow-1" formControlName="costCenterId"
+													name='costCenterId' id="costCenterId"
+													(change)="getCostCenterInDetails()">
+													<ng-option *ngFor="let costCenter of costCentersList"
+														[value]="costCenter.id">
+														{{lang=="ar"?costCenter.nameAr:costCenter.nameEn}}
+													</ng-option>
+												</ng-select>
+												<div class="">
+													<button class="btn btn-rounded btn-dark"
+														(click)="showSearchCostCenterModal=true" type="button"><i
+															class="fa fa-search"></i></button>
+												</div>
+
+											</div>
+
+										</div>
+
+										<div class="col-md-4 col-12">
+											<label for="description" class="label-name">
+												{{'general.description'|translate}}</label>
+											<div class="form-group position-relative w-100">
+												<textarea class="form-control icon-branch w-100" name="description"
+													formControlName="description">
+                                                </textarea>
+											</div>
+										</div>
+
+
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col gap-12 grid grid-cols-12 ">
+											<ul ngbNav #nav="ngbNav" class="nav-tabs">
+												<li ngbNavItem [destroyOnHide]="false">
+													<a ngbNavLink> {{'general.details' |translate}}</a>
+													<ng-template ngbNavContent>
+														<div class="overflow-auto0">
+															<table class="table table-responsive text-center"
+																style="overflow-y: scroll !important;">
+																<thead>
+																	<th>#</th>
+																	<th>{{'general.beneficiary-type'|translate}}</th>
+																	<th>{{'general.beneficiary'|translate}}</th>
+																	<th *ngIf="voucherkindId==4">
+																		{{'general.debit'|translate}}</th>
+																	<th *ngIf="voucherkindId==3">
+																		{{'general.credit'|translate}}</th>
+																	<th *ngIf="enableMultiCurrencies">
+																		{{'general.currency'|translate}}</th>
+																	<th *ngIf="enableMultiCurrencies">
+																		{{'general.currency-conversion-factor'|translate}}
+																	</th>
+																	<th
+																		*ngIf="voucherkindId==4 && enableMultiCurrencies">
+																		{{'general.debit-after-conversion'|translate}}
+																	</th>
+																	<th
+																		*ngIf="voucherkindId==3 && enableMultiCurrencies">
+																		{{'general.credit-after-conversion'|translate}}
+																	</th>
+
+																	<th>{{'general.cost-center'|translate}}</th>
+
+
+
+																	<th></th>
+																</thead>
+																<tr *ngFor="let item of voucherDetail; let i= index;">
+																	<td> {{i+1}}</td>
+																	<td>
+																		<ng-select class="custom p-0"
+																			[(ngModel)]="voucherDetail[i].beneficiaryTypeId"
+																			[ngModelOptions]="{standalone: true}"
+																			[items]="beneficiaryTypesEnum"
+																			bindLabel="name" bindValue="id"
+																			(change)="getBeneficaryByTypeId(voucherDetail[i].beneficiaryTypeId,i)"></ng-select>
+																	</td>
+																	<td>
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="voucherDetail[i].beneficiaryName"
+																			[ngModelOptions]="{standalone: true}"
+																			(keopenydown.Enter)="BeneficiarySearchDialog(i)">
+																	</td>
+																	<td *ngIf="voucherkindId==4">
+																		<input type="number"
+																			[(ngModel)]="voucherDetail[i].debit"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
+																	</td>
+																	<td *ngIf="voucherkindId==3">
+																		<input type="number"
+																			[(ngModel)]="voucherDetail[i].credit"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
+																	</td>
+																	<td style="width:100px;"
+																		*ngIf="enableMultiCurrencies">
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="voucherDetail[i].currencyName"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openCurrencySearchDialog(i);updateDetailData(item)">
+																	</td>
+																	<td *ngIf="enableMultiCurrencies">
+																		<input type="number"
+																			[(ngModel)]="voucherDetail[i].currencyConversionFactor"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			(change)="getAddedValueAfterConversion(i);updateDetailData(item)">
+
+																	</td>
+
+																	<td
+																		*ngIf="voucherkindId==4 && enableMultiCurrencies">
+																		<input type="number"
+																			[(ngModel)]="voucherDetail[i].debitLocal"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			disabled="true">
+																	</td>
+																	<td
+																		*ngIf="voucherkindId==3 && enableMultiCurrencies">
+																		<input type="number"
+																			[(ngModel)]="voucherDetail[i].creditLocal"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			disabled="true">
+																	</td>
+
+																	<td>
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="voucherDetail[i].costCenterName"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openCostCenterSearchDialog(i)">
+
+
+																	</td>
+																	<td
+																		class="align-items-center border-0 d-flex justify-content-center gap-1">
+																		<button class="btn btn-danger btn-table px-3"
+																			value="{{'buttons.delete'|translate}}"
+																			type="button" (click)="deleteItem(i)">
+																			<i class="fa fa-trash"></i>
+																		</button>
+																	</td>
+																</tr>
+
+																<tr>
+																	<td>{{voucherDetail.length + 1}}</td>
+																	<td>
+																		<ng-select class="custom"
+																			[(ngModel)]="selectedVoucherDetail.beneficiaryTypeId"
+																			[ngModelOptions]="{standalone: true}"
+																			[items]="beneficiaryTypesEnum"
+																			bindLabel="name" bindValue="id"
+																			style="width:100%"
+																			(change)="getBeneficaryByTypeId(selectedVoucherDetail.beneficiaryTypeId,-1)"></ng-select>
+																	</td>
+																	<td>
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="selectedVoucherDetail.beneficiaryName"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openBeneficiarySearchDialog(-1)">
+																	</td>
+																	<td *ngIf="voucherkindId==4">
+																		<input type="number"
+																			[(ngModel)]="selectedVoucherDetail.debit"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			(change)="getValueAfterConversion()">
+																	</td>
+																	<td *ngIf="voucherkindId==3">
+																		<input type="number"
+																			[(ngModel)]="selectedVoucherDetail.credit"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			(change)="getCreditAfterConversion()">
+																	</td>
+																	<td style="width:100px;"
+																		*ngIf="enableMultiCurrencies">
+																		<input type="text" class="form-control"
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="selectedVoucherDetail.currencyName"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openCurrencySearchDialog(-1)">
+
+
+																	</td>
+																	<td *ngIf="enableMultiCurrencies">
+																		<input type="number"
+																			[(ngModel)]="selectedVoucherDetail.currencyConversionFactor"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			(change)="getValueAfterConversion()">
+
+																	</td>
+
+																	<td
+																		*ngIf="voucherkindId==4 && enableMultiCurrencies">
+																		<input type="number"
+																			[(ngModel)]="selectedVoucherDetail.debitLocal"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			disabled="true">
+																	</td>
+																	<td
+																		*ngIf="voucherkindId==3 && enableMultiCurrencies">
+																		<input type="number"
+																			[(ngModel)]="selectedVoucherDetail.creditLocal"
+																			[ngModelOptions]="{standalone: true}"
+																			min="0" class="form-control"
+																			disabled="true">
+																	</td>
+
+																	<td>
+																		<input type="text" class="form-control "
+																			placeholder="{{'general.search'|translate}}"
+																			[(ngModel)]="selectedVoucherDetail.costCenterName"
+																			[ngModelOptions]="{standalone: true}"
+																			(keydown.Enter)="openCostCenterSearchDialog(-1)">
+
+
+																	</td>
+																	<td>
+
+																		<input type="button"
+																			class="btn btn-primary btn-table"
+																			(click)="addItem()"
+																			value="{{'buttons.add'|translate}}">
+
+																	</td>
+																</tr>
+															</table>
+														</div>
+													</ng-template>
+												</li>
+												<li ngbNavItem [destroyOnHide]="false">
+													<a ngbNavLink> {{'general.bill-payments' |translate}}</a>
+													<ng-template ngbNavContent>
+
+														<div class="overflow-auto0">
+															<table class="table table-responsive text-center"
+																style="overflow-y: scroll !important;">
+																<thead>
+																	<th>#</th>
+																	<td>{{'bill.bill-code' | translate}}</td>
+																	<td>{{'bill.bill-type' | translate}}</td>
+																	<td>{{'general.net' | translate}}</td>
+																	<!-- <td>{{'general.return' | translate}}</td> -->
+																	<td>{{'general.paid' | translate}}</td>
+																	<td>{{'general.remaining' | translate}}</td>
+
+																</thead>
+																<tr>
+																	<td>{{billPayment.length + 1}}</td>
+																	<td>
+																		{{billPayment.code}}
+
+																	</td>
+																	<td>
+																		{{billPayment.net}}
+																	</td>
+																	<td>
+																		{{billPayment.paid}}
+																	</td>
+																	<td>
+																		{{billPayment.remaining}}
+																	</td>
+																</tr>
+															</table>
+														</div>
+
+
+													</ng-template>
+												</li>
+
+
+											</ul>
+											<div [ngbNavOutlet]="nav" class=""></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<app-public-search-modal [isVisible]="showSearchCashAccountModal" [routeApi]="routeCashAccountApi"
+	(emitClose)="showSearchCashAccountModal = false;" (emitSearch)="onSelectCashAccount($event)">
+
+</app-public-search-modal>
+<app-public-search-modal [isVisible]="showSearchCostCenterModal" [routeApi]="routeCostCenterApi"
+	(emitClose)="showSearchCostCenterModal = false;" (emitSearch)="onSelectCostCenter($event)">
+</app-public-search-modal>
+
+
+<app-public-search-modal [isVisible]="showSearchCurrencyModal" [routeApi]="routeCurrencyApi"
+	(emitClose)="showSearchCurrencyModal = false;" (emitSearch)="onSelectCurrency($event)">
+</app-public-search-modal>
+
+<app-public-search-modal [isVisible]="showSearchSalesPersonModal" [routeApi]="routeSalesPersonApi"
+	(emitClose)="showSearchSalesPersonModal = false;" (emitSearch)="onSelectSalesPerson($event)">
+</app-public-search-modal>

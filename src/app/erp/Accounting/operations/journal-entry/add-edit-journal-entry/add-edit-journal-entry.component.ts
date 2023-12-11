@@ -489,6 +489,7 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
             journalEntriesDetail: this.fb.array([])
 
           });
+
           this.date = this.dateService.getDateForCalender(res.response.date);
 
           this.listDetail = res.response?.journalEntriesDetail;
@@ -1012,6 +1013,12 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
     //   journalEntriesDetail.removeAt(index);
     // }
     if (this.journalEntryForm.valid) {
+      if(this.parentType != null) {
+        this.errorMessage = this.translate.instant("journalEntry.no-edit-entry");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.fiscalPeriodId = this.journalEntryForm.get('fiscalPeriodId').value
       if (this.fiscalPeriodId > 0) {
         this.fiscalPeriodStatus = this.fiscalPeriodList.find(c => c.id == this.fiscalPeriodId).fiscalPeriodStatus;

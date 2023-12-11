@@ -315,16 +315,12 @@
         "generate-entry-vouchers": "توليد قيود السندات",
         "item-guide": " دليل اصناف",
         "item-guide-information": "معلومات  دليل اصناف",
-
         "generate-bills-entry": "ترحيل الفواتير",
-        
         "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
         "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير",
         "close-accounting-period":"أغلاق الفترة المحاسبية",
-        "close-accounting-period-information":"بيانات أغلاق الفترة المحاسبية"
-
-
-        
+        "close-accounting-period-information":"معلومات أغلاق الفترة المحاسبية",
+        "simple-vouchers":"السندات البسيطة"
     },
     "general": {
         "fromTime": "من الساعة",
@@ -394,6 +390,7 @@
         "print-after-save": "الطباعة بعد الحفظ",
         "operations": "العمليات",
         "cash-account": "حساب النقدية",
+        "cash-bank-account": "حساب النقدية أو البنك",
         "cost-center-account": "حساب مركز التكلفة",
         "cost-center": " مركز التكلفة",
         "description": "الوصف",
@@ -517,12 +514,14 @@
         "reason":"السبب",
         "date-in-closed-accounting-period":"التاريخ داخل فترة محاسبية مغلقة لهذة السنة المالية",
         "no-generate-entry-fiscal-period-closed": "لايمكنك توليد القيد لهذة السنة المالية المغلقة",
-        "choose-currency-from-configuration":"من فضلك أختر العملة من الاعدادات"
-
-
-
-       
-
+        "choose-currency-from-configuration":"من فضلك أختر العملة من الاعدادات",
+        "location":"الموقع",
+        "payment-type":"نوع الدفع",
+        "cheque-number":"رقم الشيك",
+        "cheque-date":"تاريخ الشيك",
+        "cheque-due-date":"تاريخ أستحقاق الشيك",
+        "bill-payments":"تسديدات الفواتير",
+        "return":"المرتجع"
 
 
 
@@ -631,7 +630,9 @@
         "add-voucher-type": "اضافة نمط سند",
         "update-voucher-type": "تحديث نمط السند",
         "deposit-vouchers": "سندات القبض",
-        "withdrawal-vouchers": "سندات الصرف"
+        "withdrawal-vouchers": "سندات الصرف",
+        "simple-deposit-vouchers": "سندات القبض البسيطة",
+        "simple-withdrawal-vouchers": "سندات الصرف البسيطة"
     },
     "message-title": {
         "done": "نجاح",
@@ -671,6 +672,7 @@
         "totalDebitLocal": "اجمالي المدين محلي",
         "totalCreditLocal": "اجمالي الدائن محلي",
         "no-delete-entry": "لايمكن حذف هذا القيد (قيد حركات)",
+        "no-edit-entry": "لايمكن تعديل هذا القيد (قيد حركات)",
         "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة السنة المالية المغلقة",
         "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة السنة المالية المغلقة",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
@@ -873,7 +875,10 @@
         "tax-account-required": "حساب الضريبة مطلوب",
         "account-required": "الحساب مطلوب",
         "customer-required": "العميل مطلوب",
-        "supplier-required": "المورد مطلوب"
+        "supplier-required": "المورد مطلوب",
+        "bill-code":"كود الفاتورة",
+        "bill-type":"نمط الفاتورة",
+        "bill-date":"تاريخ الفاتورة"
     },
     "determinants": {
         "type-value": "نوع القيمة",

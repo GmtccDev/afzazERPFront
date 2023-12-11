@@ -148,6 +148,7 @@
         "print-after-save": "Print After Save",
         "operations": "Operations",
         "cash-account": "Cash Account",
+        "cash-bank-account": "Cash or Bank Account",
         "cost-center-account": "Cost Center Account",
         "cost-center": "Cost Center",
         "details": "Details",
@@ -259,7 +260,14 @@
         "reason":"Reason",
         "date-in-closed-accounting-period":"The date is in closed accounting period to this fiscal year",
         "no-generate-entry-fiscal-period-closed": "You can not generate entry to this closed fiscal year",
-        "choose-currency-from-configuration":"Please choose the currency from the configuration"
+        "choose-currency-from-configuration":"Please choose the currency from the configuration",
+        "payment-type":"Payment Type",
+        "cheque-number":"Cheque Number",
+        "cheque-date":"Cheque Date",
+        "cheque-due-date":"Cheque Due Date",
+        "bill-payments":"Bill Payments",
+        "return":"Return"
+
 
         
 
@@ -552,7 +560,8 @@
         "vouchers-roles-permissions":"Vouchers Types Roles Permissions",
         "bills-roles-permissions":"Bills Types Roles Permissions",
         "close-accounting-period":"Close Accounting Period",
-        "close-accounting-period-information":"Close Accounting Period Information"
+        "close-accounting-period-information":"Close Accounting Period Information",
+        "simple-vouchers":"Simple Vouchers"
        
     },
     "language": {
@@ -631,7 +640,9 @@
         "add-voucher-type": "Add Voucher Type",
         "update-voucher-type": "Update Voucher Type",
         "deposit-vouchers": "Deposit Vouchers",
-        "withdrawal-vouchers": "Withdrawal Vouchers"
+        "withdrawal-vouchers": "Withdrawal Vouchers",
+        "simple-deposit-vouchers": "Simple Deposit Vouchers",
+        "simple-withdrawal-vouchers": "Simple Withdrawal Vouchers"
     },
     "message-title": {
         "done": "Done",
@@ -652,6 +663,8 @@
         "no-update-voucher-fiscal-period-closed": "You can not update the voucher to this closed fiscal year",
         "no-delete-voucher-fiscal-period-closed": "You can not delete the voucher to this closed fiscal year",
         "no-generate-entry-voucher-fiscal-period-closed": "You can not generate entry to this voucher to this closed fiscal year"
+      
+
     },
     "journalEntry": {
         "openBalance": "Openning Journal",
@@ -670,6 +683,7 @@
         "totalDebitLocal": "Total Debit Local",
         "totalCreditLocal": "Total Credit Local",
         "no-delete-entry": "You can not delete this entry (Transaction entry)",
+        "no-edit-entry": "You can not update this entry (Transaction entry)",
         "no-delete-entry-fiscal-period-closed": "You can not delete the entry to this closed fiscal year",
         "no-add-entry-fiscal-period-closed": "You can not add an entry to this closed fiscal year",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "You can not add an entry.You Should choose a open fiscal year from the settings",
@@ -855,10 +869,8 @@
         "additions-and-discounts": "Additions And Discounts on Bill",
         "confirm-generate-entry": "Are you sure to generate entry for this bill ?",
         "bill-items-required": "Please enter Items",
-
         "no-add-bill-fiscal-period-closed": "You can not add a bill to this closed fiscal year",
         "no-edit-fiscal-period-closed": "You can not edit the bill to this closed fiscal year",
-
         "no-add-bill-fiscal-period-choose-open-fiscal-period": "You can not add a bill.You Should choose a open fiscal year from the settings",
         "no-update-bill-fiscal-period-closed": "You can not update the bill to this closed fiscal year",
         "no-delete-bill-fiscal-period-closed": "You can not delete the bill to this closed fiscal year",
@@ -871,7 +883,11 @@
         "tax-account-required": "Tax account is required",
         "account-required": "Account is required",
         "customer-required": "Customer is required",
-        "supplier-required": "Supplier is required"
+        "supplier-required": "Supplier is required",
+        "bill-code":"Bill Code",
+        "bill-type":"Bill Type",
+        "bill-date":"Bill Date"
+
 
 
     },
