@@ -24,6 +24,7 @@ import { DateCalculation } from 'src/app/shared/services/date-services/date-calc
 import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 import { AccountServiceProxy } from '../../services/account.services';
 import { PublicService } from 'src/app/shared/services/public.service';
+import { AccountingPeriodServiceProxy } from '../../services/accounting-period.service';
 @Component({
   selector: 'app-incoming-cheque',
   templateUrl: './incoming-cheque.component.html',
@@ -64,6 +65,8 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     componentAdd: '',
 
   };
+  accountingPeriods: any;
+  accountingPeriodCheckDate: any;
   listDetail: any[] = [];
 
   listIds: any[] = [];
@@ -90,6 +93,8 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     private dateService: DateCalculation,
     private accountService: AccountServiceProxy,
     private publicService: PublicService,
+    private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
+
 
   ) {
 
@@ -101,7 +106,8 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
   //#region ngOnInit
   ngOnInit(): void {
     this.spinner.show();
-    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getGeneralConfigurationsOfAccountReceivables(), this.getCompanyById(this.companyId), this.getIncomingChequees(), this.getAccount()])
+    Promise.all([this.getGeneralConfigurationsOfFiscalPeriod(), this.getGeneralConfigurationsOfAccountReceivables(), this.getCompanyById(this.companyId),
+    this.getIncomingChequees(), this.getAccount()])
       .then(a => {
         this.spinner.hide();
         this.sharedServices.changeButton({ action: 'List' } as ToolbarData);
@@ -172,6 +178,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
             this.fiscalPeriodId = res.response.value;
             if (this.fiscalPeriodId != null) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
+              this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
 
             }
           }
@@ -301,27 +308,50 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
       return;
     }
     else {
-      const modalRef = this.modalService.open(MessageModalComponent);
-      modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
-      modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
-      modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
-      modalRef.componentInstance.isYesNo = true;
-      modalRef.result.then((rs) => {
-        if (rs == 'Confirm') {
+      return new Promise<void>((resolve, reject) => {
+        let sub = this.incomingChequeService.getIncomingCheque(id).subscribe({
+          next: (res: any) => {
+            resolve();
+            if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
 
-          this.spinner.show();
-          let sub = this.incomingChequeService.deleteIncomingCheque(id).subscribe(
-            (resonse) => {
+              let _date = res.response.date;
+              if (this.accountingPeriods != null) {
+                this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+                if (this.accountingPeriodCheckDate != undefined) {
 
-              this.getIncomingChequees();
+                  this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+                  this.errorClass = 'errorMessage';
+                  this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+                  return;
+                }
+              }
+            }
+            const modalRef = this.modalService.open(MessageModalComponent);
+            modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
+            modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
+            modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.delete');
+            modalRef.componentInstance.isYesNo = true;
+            modalRef.result.then((rs) => {
+              if (rs == 'Confirm') {
 
+                this.spinner.show();
+                let sub = this.incomingChequeService.deleteIncomingCheque(id).subscribe(
+                  (resonse) => {
+
+                    this.getIncomingChequees();
+
+                  });
+                this.subsList.push(sub);
+                this.spinner.hide();
+
+
+              }
             });
-          this.subsList.push(sub);
-          this.spinner.hide();
+          }
+        })
+        this.subsList.push(sub);
+      })
 
-
-        }
-      });
     }
 
   }
@@ -361,6 +391,19 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     {
       title: this.lang == 'ar' ? ' تحصيل' : 'Collect',
       field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+          let _date = cell.getRow().getData().date;
+          if (this.accountingPeriods != null) {
+            this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+            if (this.accountingPeriodCheckDate != undefined) {
+
+              this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+          }
+        }
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-collect-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
@@ -373,6 +416,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
           this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
           return;
         }
+
         else if (stringIsNullOrEmpty(this.accountReceivablesId)) {
           this.errorMessage = this.translate.instant("general.account-receivables-required");
           this.errorClass = 'errorMessage';
@@ -382,6 +426,7 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
 
         }
         else {
+          
           this.showConfirmCollectMessage(cell.getRow().getData().id);
         }
       }
@@ -390,6 +435,19 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     {
       title: this.lang == 'ar' ? ' الغاء تحصيل' : 'Cancel Collect ',
       field: '', formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+          let _date = cell.getRow().getData().date;
+          if (this.accountingPeriods != null) {
+            this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+            if (this.accountingPeriodCheckDate != undefined) {
+
+              this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+          }
+        }
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-cancel-collect-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
@@ -413,6 +471,19 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     {
       title: this.lang == 'ar' ? ' رفض' : 'Reject',
       field: '', formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+          let _date = cell.getRow().getData().date;
+          if (this.accountingPeriods != null) {
+            this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+            if (this.accountingPeriodCheckDate != undefined) {
+
+              this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+          }
+        }
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-reject-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
@@ -442,6 +513,19 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
     {
       title: this.lang == 'ar' ? ' الغاء رفض' : 'Cancel Reject ',
       field: '', formatter: this.editFormatIcon, cellClick: (e, cell) => {
+        if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+          let _date = cell.getRow().getData().date;
+          if (this.accountingPeriods != null) {
+            this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+            if (this.accountingPeriodCheckDate != undefined) {
+
+              this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              return;
+            }
+          }
+        }
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("incoming-cheque.no-cancel-reject-cheque-fiscal-period-closed") + " : " + this.fiscalPeriodName;
           this.errorClass = 'errorMessage';
@@ -1060,5 +1144,29 @@ export class IncomingChequeComponent implements OnInit, OnDestroy, AfterViewInit
       this.subsList.push(sub);
 
     });
+  }
+  getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
   }
 }

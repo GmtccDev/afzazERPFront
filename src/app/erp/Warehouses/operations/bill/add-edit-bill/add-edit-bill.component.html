@@ -560,7 +560,8 @@
                                                                         placeholder="{{'general.search'|translate}}"
                                                                         [(ngModel)]="billItem[i].itemName"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openItemSearchDialog(i)">
+                                                                        (keydown.Enter)="openItemSearchDialog(i)"
+                                                                        (contextmenu)="onRightClick($event,i)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
@@ -696,7 +697,8 @@
                                                                         placeholder="{{'general.search'|translate}}"
                                                                         [(ngModel)]="selectedBillItem.itemName"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        (keydown.Enter)="openItemSearchDialog(-1)">
+                                                                        
+                                                                        (keydown.Enter)="openItemSearchDialog(-1)"  (contextmenu)="onRightClick($event,i)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"

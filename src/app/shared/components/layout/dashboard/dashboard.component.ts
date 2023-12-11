@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 import { BillTypeServiceProxy } from 'src/app/erp/Warehouses/Services/bill-type.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BillKindEnum, VoucherTypeEnum } from 'src/app/shared/constants/enumrators/enums';
-import { Bill } from 'src/app/erp/Warehouses/models/bill';
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -41,7 +40,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 	disabled = true;
 	subsList: Subscription[] = [];
 	depositVouchers: any = [];
-	WithdrawalVouchers: any = [];
+	withdrawalVouchers: any = [];
+	simpleDepositVouchers: any = [];
+	simpleWithdrawalVouchers: any = [];
 	billTypes: any = [];
 	salesBills: any = [];
 	purchasesBills: any = [];
@@ -196,13 +197,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					if (res.success) {
 
 						this.depositVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum.Deposit);
-						this.WithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum.Withdrawal);
+						this.withdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum.Withdrawal);
+						this.simpleDepositVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum['Simple Deposit']);
+						this.simpleWithdrawalVouchers = res?.response?.items?.filter(x => x.voucherKindId == VoucherTypeEnum['Simple Withdrawal']);
 
 						if (this.depositVouchers.length > 0) {
 							this.depositVouchers.forEach(element => {
 								this.navServices.voucherTypesNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { voucherTypeId: element.id } })
-								
+
 								this.navServices.voucherTypesNew.filter((value, index, self) => {
 									return index === self.findIndex(obj => (
 										obj.path === value.path && obj.title === value.title
@@ -212,17 +215,47 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 							this.navServices.voucherTypesNew = this.navServices.voucherTypesNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 						}
-						if (this.WithdrawalVouchers.length > 0) {
-							this.WithdrawalVouchers.forEach(element => {
-								this.navServices.WithdrawalVouchersNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+						if (this.withdrawalVouchers.length > 0) {
+							this.withdrawalVouchers.forEach(element => {
+								this.navServices.withdrawalVouchersNew.push({ path: '/accounting-operations/vouchers/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
 									{ queryParams: { voucherTypeId: element.id } })
-								this.navServices.WithdrawalVouchersNew.filter((value, index, self) => {
+								this.navServices.withdrawalVouchersNew.filter((value, index, self) => {
 									return index === self.findIndex(obj => (
 										obj.path === value.path && obj.title === value.title
 									));
 								});
 							});
-							this.navServices.WithdrawalVouchersNew = this.navServices.WithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+							this.navServices.withdrawalVouchersNew = this.navServices.withdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+
+						}
+						  
+						if (this.simpleDepositVouchers.length > 0) {
+							  
+							this.simpleDepositVouchers.forEach(element => {
+								  
+								this.navServices.simpleDepositVouchersNew.push({ path: '/warehouses-operations/simpleVoucher/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+									{ queryParams: { voucherTypeId: element.id } })
+								this.navServices.simpleDepositVouchersNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
+							})
+							this.navServices.simpleDepositVouchersNew = this.navServices.simpleDepositVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
+
+						}
+						if (this.simpleWithdrawalVouchers.length > 0) {
+							this.simpleWithdrawalVouchers.forEach(element => {
+								this.navServices.simpleWithdrawalVouchersNew.push({ path: '/warehouses-operations/simpleVoucher/' + element.id, title: this.lang == "ar" ? element.nameAr : element.nameEn, type: 'link', active: true },
+									{ queryParams: { voucherTypeId: element.id } })
+								this.navServices.simpleWithdrawalVouchersNew.filter((value, index, self) => {
+									return index === self.findIndex(obj => (
+										obj.path === value.path && obj.title === value.title
+									));
+								});
+							});
+							this.navServices.simpleWithdrawalVouchersNew = this.navServices.simpleWithdrawalVouchersNew.filter((item, index, array) => array.findIndex((obj) => obj.title === item.title) === index);
 
 
 						}

@@ -315,8 +315,12 @@
         "generate-entry-vouchers": "توليد قيود السندات",
         "item-guide": " دليل اصناف",
         "item-guide-information": "معلومات  دليل اصناف",
-        "vouchers-roles-permissions": "أدوار وصلاحيات أنماط السندات",
-        "bills-roles-permissions": "أدوار وصلاحيات أنماط الفواتير"
+        "generate-bills-entry": "ترحيل الفواتير",
+        "vouchers-roles-permissions":"أدوار وصلاحيات أنماط السندات",
+        "bills-roles-permissions":"أدوار وصلاحيات أنماط الفواتير",
+        "close-accounting-period":"أغلاق الفترة المحاسبية",
+        "close-accounting-period-information":"معلومات أغلاق الفترة المحاسبية",
+        "simple-vouchers":"السندات البسيطة"
     },
     "general": {
         "fromTime": "من الساعة",
@@ -386,6 +390,7 @@
         "print-after-save": "الطباعة بعد الحفظ",
         "operations": "العمليات",
         "cash-account": "حساب النقدية",
+        "cash-bank-account": "حساب النقدية أو البنك",
         "cost-center-account": "حساب مركز التكلفة",
         "cost-center": " مركز التكلفة",
         "description": "الوصف",
@@ -490,24 +495,33 @@
         "discount-account": "حساب الخصم",
         "tax-account": "حساب الضريبة",
         "close-account-required": "من فضلك أختر حساب الأغلاق من الأعدادات",
-        "unit-transaction-factor": "معامل تحويل الوحدة",
-        "company-name": "أسم الشركة",
-        "branch-name": "أسم الفرع",
-        "copy-right": "حق النشر",
-        "afzaz": "أفذاذ",
-        "commercial-registratio-no": "رقم السجل التجاري",
-        "zip-code": "الرمز البريدي",
-        "account-receivables-required": "من فضلك أختر حساب أوراق القبض من الاعدادات",
-        "account-exchange-required": "من فضلك أختر حساب أوراق الدفع من الاعدادات",
-        "debit-limit-exceed-account": "لقد تجاوز حد الائتمان المدين للحساب",
-        "credit-limit-exceed-account": "لقد تجاوز حد الائتمان الدائن للحساب",
-        "type-code": "كود النوع",
-        "entry-type": "نوع القيد",
-        "generate-success": "تم التوليد بنجاح",
-        "reference-type": "نوع المرجع",
-        "reference-number": "رقم المرجع",
-        "reason": "السبب"
-
+        "unit-transaction-factor":"معامل تحويل الوحدة",
+        "company-name":"أسم الشركة",
+        "branch-name":"أسم الفرع",
+        "copy-right":"حق النشر",
+        "afzaz":"أفذاذ",
+        "commercial-registratio-no":"رقم السجل التجاري",
+        "zip-code":"الرمز البريدي",
+        "account-receivables-required":"من فضلك أختر حساب أوراق القبض من الاعدادات",
+        "account-exchange-required":"من فضلك أختر حساب أوراق الدفع من الاعدادات",
+        "debit-limit-exceed-account":"لقد تجاوز حد الائتمان المدين للحساب",
+        "credit-limit-exceed-account":"لقد تجاوز حد الائتمان الدائن للحساب",
+        "type-code":"كود النوع",
+        "entry-type":"نوع القيد",
+        "generate-success":"تم التوليد بنجاح",
+        "reference-type":"نوع المرجع",
+        "reference-number":"رقم المرجع",
+        "reason":"السبب",
+        "date-in-closed-accounting-period":"التاريخ داخل فترة محاسبية مغلقة لهذة السنة المالية",
+        "no-generate-entry-fiscal-period-closed": "لايمكنك توليد القيد لهذة السنة المالية المغلقة",
+        "choose-currency-from-configuration":"من فضلك أختر العملة من الاعدادات",
+        "location":"الموقع",
+        "payment-type":"نوع الدفع",
+        "cheque-number":"رقم الشيك",
+        "cheque-date":"تاريخ الشيك",
+        "cheque-due-date":"تاريخ أستحقاق الشيك",
+        "bill-payments":"تسديدات الفواتير",
+        "return":"المرتجع"
 
 
 
@@ -617,7 +631,9 @@
         "add-voucher-type": "اضافة نمط سند",
         "update-voucher-type": "تحديث نمط السند",
         "deposit-vouchers": "سندات القبض",
-        "withdrawal-vouchers": "سندات الصرف"
+        "withdrawal-vouchers": "سندات الصرف",
+        "simple-deposit-vouchers": "سندات القبض البسيطة",
+        "simple-withdrawal-vouchers": "سندات الصرف البسيطة"
     },
     "message-title": {
         "done": "نجاح",
@@ -657,6 +673,7 @@
         "totalDebitLocal": "اجمالي المدين محلي",
         "totalCreditLocal": "اجمالي الدائن محلي",
         "no-delete-entry": "لايمكن حذف هذا القيد (قيد حركات)",
+        "no-edit-entry": "لايمكن تعديل هذا القيد (قيد حركات)",
         "no-delete-entry-fiscal-period-closed": "لايمكن حذف هذا القيد لهذة السنة المالية المغلقة",
         "no-add-entry-fiscal-period-closed": "لا يمكن اضافة قيد لهذة السنة المالية المغلقة",
         "no-add-entry-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة قيد. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
@@ -791,6 +808,7 @@
     "bill-type": {
         "bill-type-information": "معلومات نمط الفاتورة",
         "bill-type": "نمط الفاتورة",
+        "bill-kind": "نوع الفاتورة",
         "add-bill-type": "اضافة نمط فاتورة",
         "update-bill-type": "تحديث نمط الفاتورة",
         "basic-properties": "خصائص أساسية",
@@ -841,6 +859,7 @@
         "items": "الأصناف",
         "item": "الصنف",
         "item-description": "وصف الصنف",
+        "confirm-generate-entry": "هل أنت متأكد من توليد القيد لهذا الفاتورة؟",
         "additions-and-discounts": "الأضافات و الخصومات على الفاتورة",
         "bill-items-required": "من فضلك أدخل الأصناف",
         "no-add-bill-fiscal-period-closed": "لا يمكن اضافة فاتورة لهذة السنة المالية المغلقة",
@@ -857,7 +876,11 @@
         "tax-account-required": "حساب الضريبة مطلوب",
         "account-required": "الحساب مطلوب",
         "customer-required": "العميل مطلوب",
-        "supplier-required": "المورد مطلوب"
+        "supplier-required": "المورد مطلوب",
+        "bill-code":"كود الفاتورة",
+        "bill-type":"نمط الفاتورة",
+        "bill-date":"تاريخ الفاتورة",
+        "check-bill-item":"تأكد من اختيار فاتورة لإنشاء القيد"
     },
     "determinants": {
         "type-value": "نوع القيمة",
@@ -902,5 +925,13 @@
     },
     "twoRows": "يجب أن يكون على الأقل اثنين من الصفوف",
     "debitCreditValues": "يجب أن يكون هناك قيم في الدائن والمدين",
-    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين"
+    "totalValues": "يجب أن يكون مجموع القيم الدائنة في عمود الدائن مساوياً لمجموع القيم المدينة في عمود المدين",
+    "closed-accounting-period": {
+        "add": "اضافة فترة محاسبية مغلقة",
+        "update": "تحديث الفترة المحاسبية المغلقة",
+        "Intersection": "يوجد تداخل في التاريخ",
+        "choose-opened-fiscal-year":"من فضلك أختر فترة محاسبية مفتوحة من الاعدادات",
+        "date-range-out":"النطاق الزمني للفترة المحاسبية خارج النطاق الزمني للسنة المالية"
+    }
+
 }

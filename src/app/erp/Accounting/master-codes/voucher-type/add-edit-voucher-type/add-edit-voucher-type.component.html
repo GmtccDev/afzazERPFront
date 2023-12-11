@@ -26,8 +26,7 @@
                                                 <div *ngIf="(f['nameAr'].touched || f['nameAr'].dirty ) && f['nameAr'].invalid"
                                                     class="validation alert-danger position-absolute">
                                                     <i class="fa fa-close "></i>
-                                                    <span
-                                                        *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
+                                                    <span *ngIf="f['nameAr'].errors && f['nameAr'].errors['required']"
                                                         class="f-12 ng-star-inserted text-white">
                                                         {{'error.required'|translate}}</span>
                                                 </div>
@@ -37,15 +36,10 @@
                                         <div class="col-md-6 col-12">
                                             <label for="nameEn"
                                                 class="label-name">{{'voucher-type.voucher-name-en'|translate}}</label>
-                                            <!-- <span class="text-danger">*</span> -->
                                             <div class="form-group position-relative">
                                                 <input type="text" class="form-control icon-branch" name="nameEn"
                                                     formControlName="nameEn">
-                                                <!-- <div *ngIf="(f['nameEn'].touched || f['nameEn'].dirty ) && f['nameEn'].invalid" class="validation alert-danger position-absolute">
-                                                    <i class="fa fa-close "></i>
-                                                    <span *ngIf="f['nameEn'].errors && f['nameEn'].errors['required']" class="f-12 ng-star-inserted text-white">
-														{{'error.required'|translate}}</span>
-                                                </div> -->
+
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
@@ -179,7 +173,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12">
+                                                    <div class="col-md-6 col-12" *ngIf="enableMultiCurrencies==true">
                                                         <label for="defaultCurrencyId"
                                                             class="label-name">{{'general.default-currency'|translate}}</label>
                                                         <span class="text-danger">*</span>
@@ -214,20 +208,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-                                                    <!-- <div class="col gap-3 grid grid-cols-3 ">
-                                                        <label for="chooseAccountNature"
-                                                            class="label-name">{{'voucher-type.choose-account-nature'|translate}}</label>
-                                                        <div class="icon-state media-body">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="chooseAccountNature"
-                                                                    formControlName="chooseAccountNature">
-                                                                <span class="switch-state"></span>
-                                                            </label>
-                                                        </div>
-                                                    </div> -->
 
                                                     <div class="col-md-6 col-12 ">
                                                         <label for="createFinancialEntryId"
@@ -270,17 +250,27 @@
                                                                 {{'error.required'|translate}}</span>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="col gap-3 grid grid-cols-3 ">
-                                                        <label for="needReview"
-                                                            class="label-name">{{'general.need-review'|translate}}</label>
-                                                        <div class="icon-state media-body">
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="form-control"
-                                                                    name="needReview" formControlName="needReview">
-                                                                <span class="switch-state"></span>
-                                                            </label>
+                                                    <div class="col-md-6 col-12 ">
+                                                        <label for="location"
+                                                            class="label-name">{{'general.location'|translate}}
+                                                        </label>
+                                                        <span class="text-danger">*</span>
+                                                        <div class="input-group  popup">
+                                                            <ng-select class="custom"
+                                                                formControlName="location"
+                                                                [items]="moduleLocation" bindLabel="name"
+                                                                bindValue="id" style="width:100%"></ng-select>
+                                                            <div *ngIf="(f['location'].touched || f['location'].dirty ) && f['location'].invalid"
+                                                                class="validation alert-danger position-absolute">
+                                                                <i class="fa fa-close "></i>
+                                                                <span
+                                                                    *ngIf="f['location'].errors && f['location'].errors['required']"
+                                                                    class="f-12 ng-star-inserted text-white">
+                                                                    {{'error.required'|translate}}</span>
+                                                            </div>
                                                         </div>
-                                                    </div> -->
+                                                    </div>
+
                                                 </div>
                                             </ng-template>
                                         </li>
@@ -288,11 +278,7 @@
                                             <a ngbNavLink>{{'general.print-options'|translate}}</a>
                                             <ng-template ngbNavContent>
                                                 <div class="row">
-                                                    <!-- <div class="col gap-3 grid grid-cols-3 " *ngShow="false">
-                                                        <label for="defaultLayoutId"
-                                                            class="label-name">{{'general.default-layout'|translate}}</label>
 
-                                                    </div> -->
                                                     <div class="col-md-6 col-12 ">
                                                         <div class="media">
                                                             <label for="printAfterSave"

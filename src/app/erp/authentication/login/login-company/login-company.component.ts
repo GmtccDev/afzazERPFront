@@ -10,6 +10,7 @@ import { FiscalPeriodServiceProxy } from 'src/app/erp/Accounting/services/fiscal
 import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
 import { Subscription } from 'rxjs';
 import { GeneralConfigurationEnum } from 'src/app/shared/constants/enumrators/enums';
+import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 
 @Component({
   selector: 'app-login-company',
@@ -40,6 +41,7 @@ export class LoginCompanyComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public authService: UserLoginService,
     private modelService: NgbModal,
+    private companyService: CompanyServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private dateConverterService: DateConverterService,
@@ -170,6 +172,7 @@ export class LoginCompanyComponent implements OnInit {
           this.userService.setUserName(decodedJwtData.fullName);
           this.userService.setBranchId(this.loginForm.value.branchId);
           this.userService.setCompanyId(this.loginForm.value.companyId);
+          this.getCompanyById(this.loginForm.value.companyId)
           if (this.companiesList != null) {
             this.companiesList.forEach(element => {
               if (element.id == this.loginForm.value.companyId) {
@@ -219,6 +222,37 @@ export class LoginCompanyComponent implements OnInit {
     this.subsList.push(sub);
 
 
+  }
+
+  getCompanyById(id: any) {
+    
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.companyService.getCompany(id).subscribe({
+        next: (res: any) => {
+            res?.response?.useHijri
+           
+          if (res?.response?.useHijri) {
+            localStorage.setItem("userHijri",res?.response?.useHijri)
+          
+          } else{
+               localStorage.setItem("userHijri",res?.response?.useHijri)
+          }
+
+          resolve();
+
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+          //console.log('complete');
+        },
+      });
+      this.subsList.push(sub);
+
+    });
   }
   logout() {
     this.userService.logout();

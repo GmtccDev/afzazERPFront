@@ -30,7 +30,9 @@ export class NavService implements OnInit, OnDestroy {
 	WithdrawalVouchers: any = [];
 	voucherTypesNew: any = [];
 	depositVouchersNew: any = [];
-	WithdrawalVouchersNew: any = [];
+	withdrawalVouchersNew: any = [];
+	simpleDepositVouchersNew: any = [];
+	simpleWithdrawalVouchersNew: any = [];
 	billTypes: any = [];
 	salesBillTypesNew: any = [];
 	purchasesBillTypesNew: any = [];
@@ -86,7 +88,6 @@ export class NavService implements OnInit, OnDestroy {
 				this.levelMenu = false;
 			});
 		}
-		;
 
 	}
 
@@ -188,16 +189,18 @@ export class NavService implements OnInit, OnDestroy {
 				{ path: '/accounting-operations/journalEntry', title: this.translate.instant("component-names.journalEntry"), type: 'link', active: true },
 				{ path: '/accounting-operations/journalEntryPost', title: this.translate.instant("component-names.journalEntryPost"), type: 'link', active: true },
 				{ path: '/accounting-operations/closeFiscalPeriod', title: this.translate.instant("component-names.close-fiscal-period"), type: 'link', active: true },
-				{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },//
-				{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },//
-				{
-					title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
-					children: this.WithdrawalVouchersNew
-				},
+				{ path: '/accounting-operations/closedAccountingPeriod', title: this.translate.instant("component-names.close-accounting-period"), type: 'link', active: true },
+				{ path: '/accounting-operations/incomingCheque', title: this.translate.instant("component-names.incomingCheque"), type: 'link', active: true },
+				{ path: '/accounting-operations/issuingCheque', title: this.translate.instant("component-names.issuing-cheque"), type: 'link', active: true },
 				{
 					title: this.translate.instant("voucher-type.deposit-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
 					children: this.voucherTypesNew
 				},
+				{
+					title: this.translate.instant("voucher-type.withdrawal-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
+					children: this.withdrawalVouchersNew
+				},
+
 				{ path: '/accounting-operations/generateEntryVoucher', title: this.translate.instant("component-names.generate-entry-vouchers"), type: 'link', active: true },
 
 			]
@@ -273,6 +276,17 @@ export class NavService implements OnInit, OnDestroy {
 						title: this.translate.instant("bill-type.first-period-goods-bills"), type: 'sub', icon: 'dollar-sign', active: false,
 						children: this.firstPeriodGoodsBillTypesNew
 					},
+					{ path: '/warehouses-operations/generate-entry-bills', title: this.translate.instant("component-names.generate-bills-entry"), type: 'link', active: true },
+					{
+						title: this.translate.instant("voucher-type.simple-deposit-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.simpleDepositVouchersNew
+					},
+					{
+						title: this.translate.instant("voucher-type.simple-withdrawal-vouchers"), type: 'sub', icon: 'dollar-sign', active: false,
+						children: this.simpleWithdrawalVouchersNew
+					},
+
+
 				]
 
 		}

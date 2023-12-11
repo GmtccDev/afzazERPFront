@@ -108,6 +108,8 @@ selectedCurrencyName:any='';
 selectedEntriesStatusName='';
 selectedBranchName=''
 selectedLeafAccountName=''
+selectedJournalName=''
+JournalId: any;
   gotoViewer() {
 
 
@@ -140,6 +142,9 @@ selectedLeafAccountName=''
     if (this.currencyId == null || this.currencyId == undefined || this.currencyId == "") {
       this.currencyId = 0;
     }
+    if (this.JournalId == null || this.JournalId == undefined || this.JournalId == "") {
+      this.JournalId = 0;
+    }
 
     if (this.branchId == null || this.branchId == undefined || this.branchId == "") {
       this.branchId = "";
@@ -156,7 +161,7 @@ selectedLeafAccountName=''
     if (this.toEntryNo == null || this.toEntryNo == undefined || this.toEntryNo == "") {
       this.toEntryNo = 0;
     }
-    
+      
     let reportParams: string =
       "reportParameter=fromDate!" + this.fromDate +
       "&reportParameter=toDate!" + this.toDate +
@@ -169,7 +174,8 @@ selectedLeafAccountName=''
       "&reportParameter=selectedBranchName!" + this.selectedBranchName+
       "&reportParameter=selectedCurrencyName!" + this.selectedCurrencyName +
       "&reportParameter=leafAccountId!" + this.leafAccountId +
-    
+      "&reportParameter=selectedJournalName!" + this.selectedJournalName+  
+      "&reportParameter=JournalId!" + this.JournalId+
       "&reportParameter=fromEntryNo!" + this.fromEntryNo +
       "&reportParameter=toEntryNo!" + this.toEntryNo +
       "&reportParameter=lang!" + this.lang;
@@ -186,13 +192,14 @@ selectedLeafAccountName=''
     });
   }
   ShowOptions: {
-    ShowFromDate: boolean, ShowToDate: boolean
+    ShowFromDate: boolean, ShowToDate: boolean,ShowJournal: boolean;
     ShowSearch: boolean, ShowCurrency: boolean, ShowBranch: boolean
     , ShowLeafAccount: boolean, ShowEntriesStatus: boolean, ShowFromEntryNo: boolean, ShowToEntryNo: boolean
   } = {
       ShowFromDate: true, ShowToDate: true,
       ShowSearch: false,
       ShowCurrency: true,
+      ShowJournal:true,
       ShowBranch: true,
       ShowLeafAccount: true,
       ShowEntriesStatus: true,
@@ -201,7 +208,7 @@ selectedLeafAccountName=''
     }
 
   OnFilter(e: {
-    fromDate, toDate, currencyId, branchId,branchName,currencyName,leafAccountName, fromEntryNo, toEntryNo, leafAccountId, entriesStatusId,
+    fromDate, toDate, currencyId,journalName;journalId; branchId,branchName,currencyName,leafAccountName, fromEntryNo, toEntryNo, leafAccountId, entriesStatusId,
     entriesStatusName
   }) {
 
@@ -216,7 +223,9 @@ selectedLeafAccountName=''
     this.branchId = e.branchId,
     this.selectedBranchName=e.branchName,
     this.leafAccountId = e.leafAccountId
-    this.entriesStatusId = e.entriesStatusId
+    this.entriesStatusId = e.entriesStatusId,
+    this.JournalId = e.journalId,
+		this.selectedJournalName =e.journalName
 
   }
 

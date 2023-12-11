@@ -24,6 +24,9 @@ import { ICustomEnum } from 'src/app/shared/interfaces/ICustom-enum';
 import { VoucherDetail } from '../../../models/voucher';
 import { AccountServiceProxy } from '../../../services/account.services';
 import { PublicService } from 'src/app/shared/services/public.service';
+import { AccountingPeriodServiceProxy } from '../../../services/accounting-period.service';
+import { DateConverterService } from 'src/app/shared/services/date-services/date-converter.service';
+
 
 @Component({
 	selector: 'app-generate-entry-voucher',
@@ -42,6 +45,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	addUrl: string = '';
 	updateUrl: string = '';
 	filteredData = [];
+	accountingPeriodCheckDate: any;
+	voucherDate: any;
 	searchCode: any;
 	searchFromDate!: DateModel;
 	searchToDate!: DateModel;
@@ -50,6 +55,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	voucherTotalLocal: any;
 	cashAccountId: any;
 	accountsList: any;
+	accountingPeriods: any;
+
 	routeAccountApi = 'Account/GetLeafAccounts?'
 
 	listUrl: string = '/accounting-operations/generateEntryVoucher/';
@@ -86,7 +93,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		private dateService: DateCalculation,
 		private accountService: AccountServiceProxy,
 		private publicService: PublicService,
-
+		private dateConverterService: DateConverterService,
+		private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
 
 	) {
 
@@ -160,6 +168,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 					if (res.response.value > 0) {
 						this.fiscalPeriodId = res.response.value;
 						this.getfiscalPeriodById(this.fiscalPeriodId);
+						this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
+
 					}
 
 
@@ -172,6 +182,30 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			});
 			this.subsList.push(sub);
 
+		});
+
+	}
+	getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+		return new Promise<void>((resolve, reject) => {
+			let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+				next: (res) => {
+					if (res.success) {
+						this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+					}
+
+
+					resolve();
+
+				},
+				error: (err: any) => {
+					reject(err);
+				},
+				complete: () => {
+
+				},
+			});
+
+			this.subsList.push(sub);
 		});
 
 	}
@@ -202,7 +236,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 			let sub = this.publicService.getDdl(this.routeAccountApi).subscribe({
 				next: (res) => {
 					if (res.success) {
-						
+
 						this.accountsList = res.response;
 
 					}
@@ -273,8 +307,8 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 					this.voucherTypeId = res.response?.voucherTypeId;
 					this.cashAccountId = res.response?.cashAccountId;
 					this.voucherTotalLocal = res.response?.voucherTotalLocal;
-
 					this.voucherDetail = res.response?.voucherDetail;
+					this.voucherDate = res.response?.voucherDate;
 
 				},
 				error: (err: any) => {
@@ -309,14 +343,14 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		});
 	}
 	showConfirmGenerateEntryMessage(id) {
-		
+
 		this.getVoucherById(id).then(a => {
-			
+
 			var i = 0;
 			if (this.voucherDetail != null) {
-				
+
 				this.voucherDetail.forEach(element => {
-					
+
 					if (element.beneficiaryId != null) {
 						var value = 0;
 						if (element.debitLocal > 0) {
@@ -328,10 +362,13 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 						}
 
 						this.getAccountBalance(element.beneficiaryId).then(a => {
-							
-							var account = this.accountsList.find(x => x.id == element.beneficiaryId);
 
-							var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+							var account = this.accountsList.find(x => x.id == element.beneficiaryId);
+							      
+							if (account != undefined) {
+								var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+							}
 
 							if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
@@ -360,12 +397,14 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 				})
 
 			}
-			
-			this.getAccountBalance(this.cashAccountId).then(a => {
-				
-				var account = this.accountsList.find(x => x.id == this.cashAccountId);
 
-				var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+			this.getAccountBalance(this.cashAccountId).then(a => {
+
+				var account = this.accountsList.find(x => x.id == this.cashAccountId);
+				if (account != undefined) {
+					var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+				}
 
 				if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
@@ -435,7 +474,7 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 	}
 	// Function to filter the data based on code and date
 	filterData(code, voucherType, fromDate, toDate) {
-		
+
 		this.filteredData = this.generateEntryVouchers;
 		if (!stringIsNullOrEmpty(code)) {
 			this.filteredData = this.filteredData.filter(item =>
@@ -522,6 +561,19 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 		{
 			title: this.lang == "ar" ? "توليد القيد" : "Generate Entry",
 			field: "", formatter: this.editFormatIcon, cellClick: (e, cell) => {
+				if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+					let _date = cell.getRow().getData().voucherDate;
+					if (this.accountingPeriods != null) {
+						this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+						if (this.accountingPeriodCheckDate != undefined) {
+
+							this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+							this.errorClass = 'errorMessage';
+							this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+							return;
+						}
+					}
+				}
 				if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 					this.errorMessage = this.translate.instant("voucher.no-generate-entry-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
 					this.errorClass = 'errorMessage';
@@ -548,29 +600,50 @@ export class GenerateEntryVoucherComponent implements OnInit, OnDestroy, AfterVi
 				{ field: 'voucherKindAr', type: 'like', value: searchTxt },
 				{ field: 'voucherKindEn', type: 'like', value: searchTxt },
 				{ field: 'voucherTotalLocal', type: 'like', value: searchTxt },
-				
+
 			],
 		];
 	}
 
 	onCheck(id) {
+		      
 		if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 			this.errorMessage = this.translate.instant("voucher.no-generate-entry-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
 			this.errorClass = 'errorMessage';
 			this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
 			return;
 		}
-		
-		else {
+		if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+			this.getVoucherById(id).then(a => {
+                      
+				let _date = this.voucherDate;
+				if (this.accountingPeriods != null) {
+					this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+					if (this.accountingPeriodCheckDate != undefined) {
+						      
+						this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+						this.errorClass = 'errorMessage';
+						this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+						return;
+					}
+					else{
+						      
+						const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
+						if (index !== -1) {
+							this.listIds.splice(index, 1);
+						} else {
+							const newItem = { id, isChecked: true };
+							this.listIds.push(newItem);
+						}
+					}
+				}
 
-			const index = this.listIds.findIndex(item => item.id === id && item.isChecked === true);
-			if (index !== -1) {
-				this.listIds.splice(index, 1);
-			} else {
-				const newItem = { id, isChecked: true };
-				this.listIds.push(newItem);
-			}
+			}).catch(err => {
+
+			});
 		}
+
+		
 
 	}
 	onEdit(id) {

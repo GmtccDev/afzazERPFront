@@ -14,13 +14,20 @@ import { DateConverterService } from '../../../shared/services/date-services/dat
 import { NgSelectModule } from '@ng-select/ng-select';
 import {BillComponent} from 'src/app/erp/Warehouses/operations/bill/bill.component'
 import {AddEditBillComponent} from 'src/app/erp/Warehouses/operations/bill/add-edit-bill/add-edit-bill.component';
-import { BillDynamicDeterminantComponent } from './bill-dynamic-determinant/bill-dynamic-determinant.component'
+import { BillDynamicDeterminantComponent } from './bill-dynamic-determinant/bill-dynamic-determinant.component';
+import { GenerateBillEntryComponent } from './bill/generate-bill-entry/generate-bill-entry.component';
+import { RightClickModalComponent } from './right-click-modal/right-click-modal.component';
+import { SimpleVoucherComponent } from './simple-voucher/simple-voucher.component';
+import { AddEditSimpleVoucherComponent } from './simple-voucher/add-edit-simple-voucher/add-edit-simpe-voucher.component';
+
 
 
 
 @NgModule({
   declarations: [
-     BillComponent,AddEditBillComponent, BillDynamicDeterminantComponent
+     BillComponent,AddEditBillComponent, BillDynamicDeterminantComponent, GenerateBillEntryComponent
+     ,AddEditBillComponent, BillDynamicDeterminantComponent, RightClickModalComponent,SimpleVoucherComponent,
+     AddEditSimpleVoucherComponent
   ],
   imports: [
     CommonModule,

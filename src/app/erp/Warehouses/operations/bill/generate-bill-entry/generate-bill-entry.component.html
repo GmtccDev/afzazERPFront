@@ -1,0 +1,59 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white ;font-size: 20px;"> {{'general.loading'|translate}}... </p>
+</ngx-spinner>
+
+<section class="inner-page-wrapper inner-page-auction">
+    <div class="container-fluid p-0">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="row advanced_Search search-bar">
+                            <div class="col-md-2 col-12 mb-3">
+                                <label for="" class="label-name">
+                                    {{'general.code'|translate}}</label>
+                                <input type="text" class="form-control icon-branch col-3" [(ngModel)]="searchCode"
+                                    placeholder=" {{'general.code'|translate}}">
+                            </div>
+                            <div class="col-md-3 col-12 mb-3">
+                                <label for=" " class="label-name">
+                                    {{'bill-type.bill-kind'|translate}}
+                                </label>
+                                <ng-select class="custom" [(ngModel)]="billType" [items]="billTypesEnum"
+                                    bindLabel="name" bindValue="id" style="width:100%"></ng-select>
+
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <label for="" class="label-name">
+                                    {{'general.searchFromDate'|translate}}</label>
+                                <app-full-date name="date" [(ngModel)]="searchFromDate" ngDefaultControl
+                                    [selectedDate]="searchFromDate"
+                                    (OnDateSelect)="getFromDate($event)"></app-full-date>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <label for="" class="label-name">
+                                    {{'general.searchToDate'|translate}}</label>
+                                <app-full-date name="date" [(ngModel)]="searchToDate" ngDefaultControl
+                                    [selectedDate]="searchToDate" (OnDateSelect)="getToDate($event)"></app-full-date>
+                            </div>
+
+
+                            <div class="col-md-1 col-12"><button nz-button nzType="primary"
+                                    (click)="filterData(searchCode,billType, searchFromDate, searchToDate)"
+                                    class=" b-r-0 w-100 ">{{'general.search'|translate}}</button></div>
+                        </div>
+                    </div>
+                </div>
+             
+                    <app-tabulator [idColName]="'id'" [childRowData]="filteredData" (onCheckItem)="onCheck($event)"
+                        (onEditItem)="onEdit($event)" [parentColName]="'groupId'" [divId]="'notGenerateEntryBills'"
+                        [columnSettings]="columnNames" [componentName]="'notGenerateEntryBills'" [direction]="direction"
+                        [sortByList]="sortByCols" [groupByList]="groupByCols" [panelId]="panelId"
+                        [searchFilters]="searchFilters" (onSearchTextChange)="onSearchTextChange($event)"
+                        [groupType]="1">
+                    </app-tabulator>
+           
+            </div>
+        </div>
+    </div>
+</section>
