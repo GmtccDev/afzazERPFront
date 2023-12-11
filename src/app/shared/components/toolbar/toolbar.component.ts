@@ -233,6 +233,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   doGenerateEntryEvent() {
 
     this.checkButtonClicked('GenerateEntry');
+    this.toolbarData.submitMode = true;
     (this.toolbarData.action = 'GenerateEntry'),
       this.SharedService.changeButton(this.toolbarData);
   }

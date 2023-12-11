@@ -886,8 +886,8 @@
         "supplier-required": "Supplier is required",
         "bill-code":"Bill Code",
         "bill-type":"Bill Type",
-        "bill-date":"Bill Date"
-
+        "bill-date":"Bill Date",
+        "check-bill-item":"You must check item to generate entry"
 
 
     },

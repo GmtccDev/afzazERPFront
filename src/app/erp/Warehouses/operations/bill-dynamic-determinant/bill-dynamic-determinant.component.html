@@ -24,7 +24,7 @@
         </thead>
         <tbody>
            
-            <tr *ngFor="let item of insertBillDynamicDeterminant.dynamicDeterminantListDto; let i = index">
+            <tr *ngFor="let item of insertBillDynamicDeterminant.determinantsData; let i = index">
                 <td style="width: 10px;">{{ i + 1 }}</td>
                 <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
                     <ng-container [ngSwitch]="key.determinantsMaster.valueType">
@@ -69,9 +69,9 @@
           
                 <td>
 
-                    <input type="button" *ngIf="insertBillDynamicDeterminant.dynamicDeterminantListDto.length-1==i||insertBillDynamicDeterminant.dynamicDeterminantListDto.length-1==0" class="btn btn-primary btn-table" (click)="addItem()" value="{{'general.add-new-row'|translate}}">
+                    <input type="button" *ngIf="insertBillDynamicDeterminant.determinantsData.length-1==i||insertBillDynamicDeterminant.determinantsData.length-1==0" class="btn btn-primary btn-table" (click)="addItem()" value="{{'general.add-new-row'|translate}}">
 
-                    <button class="btn btn-danger btn-table px-3" *ngIf="insertBillDynamicDeterminant.dynamicDeterminantListDto.length-1!==i" value="{{'buttons.delete'|translate}}" type="button" (click)="deleteItem(i)">
+                    <button class="btn btn-danger btn-table px-3" *ngIf="insertBillDynamicDeterminant.determinantsData.length-1!==i" value="{{'buttons.delete'|translate}}" type="button" (click)="deleteItem(i)">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>

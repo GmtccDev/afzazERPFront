@@ -878,7 +878,8 @@
         "supplier-required": "المورد مطلوب",
         "bill-code":"كود الفاتورة",
         "bill-type":"نمط الفاتورة",
-        "bill-date":"تاريخ الفاتورة"
+        "bill-date":"تاريخ الفاتورة",
+        "check-bill-item":"تأكد من اختيار فاتورة لإنشاء القيد"
     },
     "determinants": {
         "type-value": "نوع القيمة",

@@ -118,7 +118,7 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 	getApplications() {
 		this.applications = [
 			{ descriptionAr: 'اعددات', descriptionEn: 'Settings', value: '0', check: false, image: 'assets/images/applications/settings.png', link: '/dashboard/default' },
-			{ descriptionAr: 'نقط البيع', descriptionEn: 'POS', value: '1', check: true, image: 'assets/images/applications/pos.png', link: '/dashboard/default' },
+			{ descriptionAr: 'نقط البيع', descriptionEn: 'POS', value: '1', check: false, image: 'assets/images/applications/pos.png', link: '/dashboard/default' },
 			{ descriptionAr: "إدارة علاقات العملاء", descriptionEn: 'CRM', value: '2', check: false, image: 'assets/images/applications/crm.png', link: '/dashboard/default' },
 			{ descriptionAr: "رواتب", descriptionEn: 'Payroll', value: '3', check: false, image: 'assets/images/applications/payroll.png', link: '/dashboard/default' },
 			{ descriptionAr: "مشتريات", descriptionEn: 'Purchase', value: '4', check: false, image: 'assets/images/applications/purchase.png', link: '/dashboard/default' },
@@ -135,18 +135,14 @@ export class SubscriptionComponent implements OnInit, OnInit, AfterViewInit {
 
 	}
 	getLastSubscription() {
-
 		this.service.getLastSubscription().subscribe(
 			next => {
-
-
 				if (next.success == true) {
 					this.getApplications();
-					//   this.router.navigate(['/dashboard/default']);
 					if (next.response != null) {
 
 						this.applicationsRoute = [...next.response?.applications?.split(",")]
-						//console.log(this.applicationsRoute);
+
 						for (var i = 0; i < this.applications.length; i++) {
 
 							var find = this.applicationsRoute.includes(this.applications[i].value);
