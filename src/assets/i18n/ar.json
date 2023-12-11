@@ -873,7 +873,8 @@
         "tax-account-required": "حساب الضريبة مطلوب",
         "account-required": "الحساب مطلوب",
         "customer-required": "العميل مطلوب",
-        "supplier-required": "المورد مطلوب"
+        "supplier-required": "المورد مطلوب",
+        "check-bill-item":"تأكد من اختيار فاتورة لإنشاء القيد"
     },
     "determinants": {
         "type-value": "نوع القيمة",
