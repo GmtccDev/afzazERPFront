@@ -161,12 +161,8 @@ export class BillDynamicDeterminantComponent implements OnInit {
     debugger
     let i = this.insertBillDynamicDeterminant.dynamicDeterminantListDto.length + 1;
     this.insertBillDynamicDeterminant.dynamicDeterminantListDto.push({
-      itemCardSerial: null,
-      billDynamicDeterminantSerial: i.toString(),
+     
       id: null,
-      billId: null,
-      billItemId: this.billItemId,
-      itemCardId: this.itemCardId,
       determinantId: null,
 
       valueType: null,

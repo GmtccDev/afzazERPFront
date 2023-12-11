@@ -699,9 +699,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   costCenterName: this.lang = "ar" ? costCenterName?.nameAr ?? '' : costCenterName?.nameEn ?? '',
                   billItemTaxes: this.billItemTax ?? [],
                   billDynamicDeterminants: this.selectedBillItem.billDynamicDeterminants,
-                  itemCardSerial: element.itemCardSerial
-
-
+              
                 }
               )
 
@@ -1451,8 +1449,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       costCenterName: this.selectedBillItem?.costCenterName,
       billItemTaxes: this.selectedBillItemTax ?? [],
       billDynamicDeterminants: this.selectedBillItem?.billDynamicDeterminants,
-      itemCardSerial: this.billItem.length.toString()
-
+    
 
     });
 
@@ -1521,7 +1518,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       costCenterName: '',
       billItemTaxes: [],
       billDynamicDeterminants: [],
-      itemCardSerial: ''
 
     }
   }
@@ -2449,9 +2445,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
                 //this.getBills();
                 this.selectedBillItem.billDynamicDeterminants = result;
-                this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-                  element.itemCardSerial = i
-                });
+              
               }
             });
         },
@@ -3143,9 +3137,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           if (result && result != null && result.length > 0) {
 debugger
             this.selectedBillItem.billDynamicDeterminants = result;
-            this.selectedBillItem.billDynamicDeterminants.forEach(element => {
-              element.itemCardSerial = i
-            });
+            
             this.billItem[i].billDynamicDeterminants=this.selectedBillItem.billDynamicDeterminants;
           }
         });
