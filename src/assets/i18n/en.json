@@ -871,7 +871,8 @@
         "tax-account-required": "Tax account is required",
         "account-required": "Account is required",
         "customer-required": "Customer is required",
-        "supplier-required": "Supplier is required"
+        "supplier-required": "Supplier is required",
+        "check-bill-item":"You must check item to generate entry"
 
 
     },

@@ -49,13 +49,12 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 	searchToDate!: DateModel;
 	billType: any;
 	billTypesEnum: ICustomEnum[] = [];
-	voucherTotalLocal: any;
-	cashAccountId: any;
-	accountsList: any;
-	notGenerateEntryBills: NotGenerateEntryBillDto[] = []
-	routeAccountApi = 'Account/GetLeafAccounts?'
 
-	listUrl: string = '/accounting-operations/generateEntryVoucher/';
+
+	notGenerateEntryBills: NotGenerateEntryBillDto[] = []
+
+
+	listUrl: string = '/warehouses-operations/generate-entry-bills/';
 	toolbarPathData: ToolbarPath = {
 		listPath: '',
 		updatePath: this.updateUrl,
@@ -73,7 +72,6 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 
 	//#region Constructor
 	constructor(
-		private voucherService: VoucherServiceProxy,
 		private router: Router,
 		private sharedServices: SharedService,
 		private modalService: NgbModal,
@@ -99,9 +97,9 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 		this.spinner.show();
 		this.getBillTypes();
 		Promise.all([
-			 this.getGeneralConfigurationsOfFiscalPeriod(),
-			 this.getNotGeneratedEntryBills(),
-			])
+			this.getGeneralConfigurationsOfFiscalPeriod(),
+			this.getNotGeneratedEntryBills(),
+		])
 			.then(a => {
 				this.spinner.hide();
 				this.sharedServices.changeButton({ action: 'GenerateEntry' } as ToolbarData);
@@ -177,16 +175,15 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 		});
 
 	}
+
 	getNotGeneratedEntryBills() {
 		return new Promise<void>((resolve, reject) => {
-			debugger
-			let sub = this.billService.getAllNotGeneratedEntryBills().subscribe({
 
+			let sub = this.billService.getAllNotGeneratedEntryBills().subscribe({
 				next: (res) => {
-					debugger
 					if (res.success) {
-						this.notGenerateEntryBills = res?.response?.data
-						this.filteredData = this.notGenerateEntryBills
+						this.notGenerateEntryBills = res?.response?.data;
+						this.filteredData = this.notGenerateEntryBills;
 
 					}
 					resolve();
@@ -209,10 +206,8 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 			let sub = this.fiscalPeriodService.getFiscalPeriod(id).subscribe({
 				next: (res: any) => {
 					resolve();
-
 					this.fiscalPeriodName = this.lang == 'ar' ? res.response?.nameAr : res.response?.nameEn;
 					this.fiscalPeriodStatus = res.response?.fiscalPeriodStatus.toString();
-
 				},
 				error: (err: any) => {
 					reject(err);
@@ -268,6 +263,7 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 
 	showConfirmGenerateEntryMessage(id) {
 		setTimeout(() => {
+			debugger
 			const modalRef = this.modalService.open(MessageModalComponent);
 			modalRef.componentInstance.message = this.translate.instant('bill.confirm-generate-entry');
 			modalRef.componentInstance.title = this.translate.instant('messageTitle.generate-entry');
@@ -282,7 +278,7 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 					const newItem = { id };
 					this.listIds.push(newItem);
 					var ids = this.listIds.map(item => item.id)
-					let sub = this.voucherService.generateEntry(ids).subscribe(
+					let sub = this.billService.generateEntry(ids).subscribe(
 						(resonse) => {
 							this.getNotGeneratedEntryBills();
 							this.router.navigate([this.listUrl])
@@ -419,9 +415,10 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 			],
 		];
 	}
-
+	isCheckItme: boolean = false;
 	onCheck(id) {
 		debugger;
+		this.isCheckItme = true;
 		if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 			this.errorMessage = this.translate.instant("voucher.no-generate-entry-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
 			this.errorClass = 'errorMessage';
@@ -464,8 +461,14 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 		let sub = this.sharedServices.getClickedbutton().subscribe({
 			next: (currentBtn: ToolbarData) => {
 				if (currentBtn != null) {
-					if (currentBtn.action == ToolbarActions.GenerateEntry) {
-						this.onCheckGenerateEntry();
+					if (currentBtn.action == ToolbarActions.GenerateEntry && currentBtn.submitMode) {
+						if (this.isCheckItme) {
+							this.onCheckGenerateEntry();
+						} else {
+							this.alertsService.showError(this.translate.instant("bill.check-bill-item"), this.translate.instant("message-title.wrong"));
+
+						}
+
 					}
 				}
 			},
@@ -478,7 +481,9 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 			let sub = this.billService.generateEntry(ids).subscribe(
 				(resonse) => {
 					this.getNotGeneratedEntryBills();
-					this.listIds = []
+					this.listIds = [];
+					this.alertsService.showSuccess(this.errorMessage, this.translate.instant("general.generate-success"))
+
 				});
 			this.subsList.push(sub);
 		}
