@@ -42,21 +42,21 @@ export class BillDynamicDeterminantDto {
 }
 
 export class BillDynamicDeterminantList {
-  dynamicDeterminantListDto: BillDynamicDeterminantDto[];
+  determinantsData: BillDynamicDeterminantDto[];
   itemCardDeterminantListDto: ItemCardDeterminantDto[];
 }
 
 export class BillDynamicDeterminantInput {
   billId: number | null;
   billItemId: number | null;
-  itemCardId: number | null;
+ 
 }
 
 export class InsertBillDynamicDeterminant {
   billId: number | null;
   billItemId: number | null;
-  itemCardId: number | null;
-  dynamicDeterminantListDto: DeterminantDataDto[] = [];
+ 
+  determinantsData: DeterminantDataDto[] = [];
   itemCardDeterminantListDto: ItemCardDeterminantDto[] = [];
 }
 
