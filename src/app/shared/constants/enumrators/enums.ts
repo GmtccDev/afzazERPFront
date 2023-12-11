@@ -14,11 +14,17 @@ export function convertEnumToArray(enumarator: any) {
 
 export enum VoucherTypeEnum {
   Deposit = 1,
-  Withdrawal = 2
+  Withdrawal = 2,
+  'Simple Deposit'=3,
+  'Simple Withdrawal'=4
+
 }
 export enum VoucherTypeArEnum {
   قبض = 1,
-  صرف = 2
+  صرف = 2,
+  'قبض بسيط'=3,
+  'صرف بسيط'=4
+
 }
 
 export enum SerialTypeEnum {
@@ -323,4 +329,31 @@ export enum EntryTypesArEnum {
 
 }
 
+export enum ModuleLocationEnEnum {
+  Accounting = 1,
+  Warehouses = 2
+  
+
+
+
+}
+export enum ModuleLocationArEnum {
+  محاسبة = 1,
+  مستودعات = 2
+}
+
+export enum PaymentTypeEnEnum {
+
+  Cash = 1,
+  Check = 2,
+  Span = 3
+
+}
+export enum PaymentTypArEnum {
+
+  نقدي = 1,
+  شيك = 2,
+  شبكة = 3
+
+}
 

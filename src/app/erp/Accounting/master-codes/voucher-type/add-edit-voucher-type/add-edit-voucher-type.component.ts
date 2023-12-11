@@ -19,6 +19,8 @@ import {
   CreateFinancialEntryArEnum,
   CreateFinancialEntryEnum,
   GeneralConfigurationEnum,
+  ModuleLocationArEnum,
+  ModuleLocationEnEnum,
   SerialTypeArEnum,
   SerialTypeEnum,
   VoucherTypeArEnum,
@@ -43,6 +45,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   serialType: ICustomEnum[] = [];
   createFinancialEntry: ICustomEnum[] = [];
   defaultBeneficiaryType: ICustomEnum[] = [];
+  moduleLocation: ICustomEnum[] = [];
 
   journalList: any;
   currenciesList: any;
@@ -110,6 +113,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
     this.getCreateFinancialEntry();
     this.getBeneficiaryType();
     this.getSerial();
+    this.getModuleLocation();
+
 
     this.spinner.show();
     Promise.all([
@@ -175,11 +180,9 @@ export class AddEditVoucherTypeComponent implements OnInit {
       defaultCurrencyId: this.enableMultiCurrencies == true ? ['', Validators.compose([Validators.required])] : this.mainCurrencyId,
       createFinancialEntryId: REQUIRED_VALIDATORS,
       defaultBeneficiaryId: REQUIRED_VALIDATORS,
+      location:[ModuleLocationEnEnum.Accounting,Validators.compose([Validators.required])] ,
       printAfterSave: false
     });
-
-
-
 
   }
 
@@ -284,6 +287,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
             defaultCurrencyId: this.enableMultiCurrencies ==true ? res.response?.defaultCurrencyId: this.mainCurrencyId,
             createFinancialEntryId: res.response?.createFinancialEntryId,
             defaultBeneficiaryId: res.response?.defaultBeneficiaryId,
+            location: res.response?.location,
             printAfterSave: res.response?.printAfterSave
 
 
@@ -430,6 +434,15 @@ export class AddEditVoucherTypeComponent implements OnInit {
     }
     else {
       this.createFinancialEntry = convertEnumToArray(CreateFinancialEntryArEnum);
+
+    }
+  }
+  getModuleLocation() {
+    if (this.lang == 'en') {
+      this.moduleLocation = convertEnumToArray(ModuleLocationEnEnum);
+    }
+    else {
+      this.moduleLocation = convertEnumToArray(ModuleLocationArEnum);
 
     }
   }
