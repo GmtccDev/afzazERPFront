@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NotificationsConfigurationsComponent } from './notifications-configurations/notifications-configurations.component';
 import { NotificationsManagementComponent } from './notifications-management/notifications-management.component'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
 	declarations: [
@@ -16,7 +17,10 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 	],
 	imports: [
 		CommonModule,
-		NotifictionsSettingsRoutingModule, NgSelectModule, FormsModule, TranslateModule, NgbNavModule
+		NotifictionsSettingsRoutingModule, NgSelectModule, FormsModule, TranslateModule, NgbNavModule,
+		CKEditorModule,
+
+
 	]
 })
 export class NotifictionsSettingsModule { }

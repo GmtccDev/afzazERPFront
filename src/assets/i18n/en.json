@@ -594,7 +594,8 @@
         "transmission-time": "Transmission time",
         "repetition-times": "Repetition times",
         "E-mail": "E-mail",
-        "service-provider": "Service provider"
+        "service-provider": "Service provider",
+        "recurs-every": "Recurs every"
     },
     "fiscal-period-status": {
         "Opened": "Opened",

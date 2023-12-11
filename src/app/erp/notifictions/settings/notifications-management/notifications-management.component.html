@@ -1,1 +1,378 @@
-<p>notifications-management works!</p>
+<section class="inner-page-wrapper inner-page-wrapper-units">
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<form id="" class="tabs-form">
+							<div class="main-customer">
+								<div class="wrapper-title">
+
+									<h3>{{'component-names.notifictions-management'|translate}}</h3>
+									<hr>
+
+									<div class="row align-items-center mb-5">
+
+
+										<div class="col-md-6 col-12 ">
+											<label for="" class="label-name">
+												الحدث</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
+
+												<ng-select name="timeSelect" [(ngModel)]="selectedOption">
+													<ng-option *ngFor="let time of timeList" [value]="time">{{ time }}
+													</ng-option>
+												</ng-select>
+											</div>
+										</div>
+										<div class="col-md-6 col-12 " *ngIf="selectedOption === 'جدولة'">
+											<label for="" class="label-name">
+												يحدث</label>
+											<div class="form-group position-relative">
+												<ng-select name="occursSelect" [(ngModel)]="selectedOccurs">
+													<ng-option *ngFor="let occurs of occursList"
+														[value]="occurs">{{occurs}}</ng-option>
+
+												</ng-select>
+											</div>
+										</div>
+										<div class="col-md-6 col-12" *ngIf="selectedOccurs === 'يومي'">
+											<label for="" class="label-name">
+												{{'notifictions.recurs-every'|translate}}</label>
+											<div class="input-group">
+												<input type="number" class="form-control" name="">
+												<span class="px-2">ايام</span>
+
+											</div>
+
+										</div>
+										<div *ngIf="selectedOccurs === 'اسبوعي'">
+											<div class="col-md-6 col-12">
+												<label for="" class="label-name">
+													{{'notifictions.recurs-every'|translate}}</label>
+												<div class="input-group">
+													<input type="number" class="form-control" name="">
+													<span class="px-2">اسبوع</span>
+
+												</div>
+
+
+											</div>
+											<div class="item-permissions">
+												<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+													حدد ايام الاسبوع
+												</h6>
+												<div class="bg-light-gray d-flex justify-content-between">
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															السبت
+														</label>
+													</div>
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الاحد
+
+														</label>
+													</div>
+
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الاتنين
+														</label>
+													</div>
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الثلاثاء
+														</label>
+													</div>
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الاربعاء
+														</label>
+													</div>
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الخميس
+														</label>
+													</div>
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الجمعة
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
+										<div class="col-md-12 mt-4">
+											<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+												حدد قوائم المرسل اليهم
+											</h6>
+
+											<div
+												class="custom-radio-ml form-group m-checkbox-inline m-t-15 mb-0 p-0 row users-lists">
+												<div class="col-md-4 col-12 ">
+													<div class=" bg-light-gray">
+														<div class="radio radio-primary ">
+															<input id="radioinline1" type="radio" name="users"
+																value="option1" [(ngModel)]="selectedUserList">
+															<label class="mb-0" for="radioinline1">قائمة المستخدمين<span
+																	class="digits">1</span></label>
+														</div>
+														<div [ngClass]="{ 'disabled': selectedUserList !== 'option1' }"
+															class="b-t-secondary">
+
+															<label for="" class="label-name">اختار من قائمة
+																المستخدمين1</label>
+															<div class="d-flex">
+																<div class="flex-grow-1">
+																	<div class="input-group popup">
+																		<ng-select name="" class="w-100"
+																			id=""></ng-select>
+																	</div>
+																</div>
+																<div class="">
+																	<button class="btn btn-rounded btn-dark"
+																		type="button">
+																		<i class="fa fa-search"></i>
+																	</button>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+												<div class="col-md-4 col-12 ">
+													<div class=" bg-light-gray">
+														<div class="radio radio-primary">
+															<input id="radioinline2" type="radio" name="users"
+																value="option2" [(ngModel)]="selectedUserList">
+															<label class="mb-0" for="radioinline2">قائمة المستخدمين<span
+																	class="digits">2</span></label>
+														</div>
+														<div [ngClass]="{ 'disabled ': selectedUserList !== 'option2' }"
+															class="b-t-secondary">
+
+															<label for="" class="label-name">اختار من قائمة
+																المستخدمين2</label>
+															<div class="d-flex">
+																<div class="flex-grow-1">
+																	<div class="input-group popup">
+																		<ng-select name="" class="w-100"
+																			id=""></ng-select>
+																	</div>
+																</div>
+																<div class="">
+																	<button class="btn btn-rounded btn-dark"
+																		type="button">
+																		<i class="fa fa-search"></i>
+																	</button>
+																</div>
+															</div>
+
+														</div>
+													</div>
+												</div>
+
+												<div class="col-md-4 col-12 ">
+													<div class=" bg-light-gray">
+														<div class="radio radio-primary ">
+															<input id="radioinline3" type="radio" name="users"
+																value="option3" [(ngModel)]="selectedUserList">
+															<label class="mb-0" for="radioinline3">قائمة
+																المستخدمين<span class="digits">3</span></label>
+														</div>
+														<div [ngClass]="{ 'disabled': selectedUserList !== 'option3' }"
+															class="b-t-secondary">
+
+															<label for="" class="label-name">اختار من قائمة
+																المستخدمين3</label>
+															<div class="d-flex">
+																<div class="flex-grow-1">
+																	<div class="input-group popup">
+																		<ng-select name="" class="w-100"
+																			id=""></ng-select>
+																	</div>
+																</div>
+																<div class="">
+																	<button class="btn btn-rounded btn-dark"
+																		type="button">
+																		<i class="fa fa-search"></i>
+																	</button>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+										<div class="col-md-12 col-12 mb-4">
+											<div class="item-permissions">
+												<h6 class="b-b-secondary f-w-600 font-secondary pb-2">
+													انواع التنبيهات
+												</h6>
+												<div class="d-flex justify-content-between">
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															رسائل الواتساب
+
+														</label>
+													</div>
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															البريد الإلكتروني
+
+														</label>
+													</div>
+
+													<div class="check-item">
+														<label>
+															<input type="checkbox" name="options" value="" />
+															الرسائل النصية
+														</label>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+										<nav ngbNav #nav="ngbNav" class="nav-tabs m-0 ">
+											<li ngbNavItem>
+												<a ngbNavLink> بيانات الرسالة</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="col-12 col-md-6">
+															<label for="" class="label-name">عنوان الرسالة</label>
+															<div class="form-group position-relative">
+
+																<input type="text" class="form-control" name="">
+
+															</div>
+														</div>
+														<div class="col-12 col-md-6">
+															<label for="" class="label-name">المرسل</label>
+															<div class="form-group position-relative">
+
+																<input type="text" class="form-control " name="">
+
+															</div>
+														</div>
+														<div class="col-md-12 col-12">
+															<ckeditor [editor]="editor" [config]="config" [data]="data">
+															</ckeditor>
+														</div>
+														<div class="col-md-6 col-12">
+															<div
+																class="b-r-3 bg-light-primary box-notes-message p-3 mt-2">
+																<h6>تعليمات ارسال الرسالة</h6>
+																<ul>
+																	<li>عدد الاحرف للرسالة الواحدة50 حرف</li>
+																	<li> يتم احتساب رسالة ثانية من الحرف 51</li>
+																	<li>حجم النص الموصي به لا يتجاوز616-700 حرف</li>
+																</ul>
+															</div>
+
+														</div>
+													</div>
+												</ng-template>
+											</li>
+											<li ngbNavItem>
+												<a ngbNavLink>قائمة التنبيهات</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="table-responsive mb-3">
+															<table class="table">
+																<thead>
+																	<th>#</th>
+																	<th>الحدث</th>
+																	<th>المرسل</th>
+																	<th>المرسل اليه</th>
+																	<th>نوع الرسالة</th>
+																	<th>المعالجة</th>
+
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>1</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+
+																	</tr>
+																</tbody>
+
+
+															</table>
+														</div>
+													</div>
+												</ng-template>
+											</li>
+											<li ngbNavItem>
+												<a ngbNavLink>سجل التبيهات</a>
+												<ng-template ngbNavContent>
+													<div class="row">
+														<div class="table-responsive mb-3">
+															<table class="table">
+																<thead>
+																	<th>#</th>
+																	<th>الحدث</th>
+																	<th>نوع التنبيه</th>
+																	<th>المرسل</th>
+																	<th>المرسل اليه</th>
+																	<th>العنوان</th>
+																	<th>الجوال</th>
+																	<th>البريد الالكتروني</th>
+																	<th>نص الرسالة</th>
+
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>1</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+
+																	</tr>
+																</tbody>
+
+
+															</table>
+														</div>
+
+
+													</div>
+												</ng-template>
+											</li>
+										</nav>
+										<div [ngbNavOutlet]="nav" class=""></div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

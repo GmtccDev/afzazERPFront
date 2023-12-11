@@ -527,7 +527,8 @@
         "transmission-time": "وقت الإرسال",
         "repetition-times": "مرات التكرار",
         "E-mail": "البريد الإلكتروني",
-        "service-provider": "مزود خدمة الرسائل النصية"
+        "service-provider": "مزود خدمة الرسائل النصية",
+        "recurs-every": "يتكرر كل "
     },
     "currency": {
         "transaction-date": "تاريخ المعامل ",
