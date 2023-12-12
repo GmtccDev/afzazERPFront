@@ -287,7 +287,7 @@ export class SimpleVoucherComponent implements OnInit, OnDestroy, AfterViewInit 
   edit(id: string) {
 
     this.router.navigate([
-      '/warehouses-operations/simpleVouchers/update-simpleVoucher/',
+      '/warehouses-operations/simpleVoucher/update-simpleVoucher/',
       this.voucherTypeId, id,
     ]);
   }

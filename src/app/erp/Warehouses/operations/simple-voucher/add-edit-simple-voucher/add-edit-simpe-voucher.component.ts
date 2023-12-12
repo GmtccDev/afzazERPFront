@@ -12,9 +12,8 @@ import { VoucherServiceProxy } from '../../../../Accounting/services/voucher.ser
 import { VoucherTypeServiceProxy } from '../../../../Accounting/services/voucher-type.service';
 import { VoucherType } from '../../../../Accounting/models/voucher-type'
 import { GeneralConfigurationServiceProxy } from '../../../../Accounting/services/general-configurations.services';
-import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, CreateFinancialEntryEnum, GeneralConfigurationEnum, PayWayEnum, PaymentTypArEnum, PaymentTypeEnEnum, SerialTypeArEnum, SerialTypeEnum, VoucherTypeEnum, convertEnumToArray } from '../../../../../shared/constants/enumrators/enums';
+import { AccountClassificationsEnum, BeneficiaryTypeArEnum, BeneficiaryTypeEnum, BillKindEnum, CreateFinancialEntryEnum, GeneralConfigurationEnum, PayWayEnum, PaymentTypArEnum, PaymentTypeEnEnum, SerialTypeArEnum, SerialTypeEnum, VoucherTypeEnum, convertEnumToArray } from '../../../../../shared/constants/enumrators/enums';
 import { ICustomEnum } from '../../../../../shared/interfaces/ICustom-enum';
-import { SearchDialogService } from '../../../../../shared/services/search-dialog.service'
 import { ToolbarData } from '../../../../../shared/interfaces/toolbar-data';
 import { SharedService } from '../../../../../shared/common-services/shared-service';
 import { NotificationsAlertsService } from '../../../../../shared/common-services/notifications-alerts.service';
@@ -29,7 +28,8 @@ import { AccountServiceProxy } from '../../../../Accounting/services/account.ser
 import { DateConverterService } from '../../../../../shared/services/date-services/date-converter.service';
 import { AccountingPeriodServiceProxy } from '../../../../Accounting/services/accounting-period.service';
 import { stringIsNullOrEmpty } from '../../../../../shared/helper/helper';
-import { Bill, BillPayment } from '../../../models/bill';
+import { BillServiceProxy } from '../../../services/bill.service';
+import { BillPayment } from '../../../models/bill';
 
 
 @Component({
@@ -48,8 +48,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   showSearchSalesPersonModal = false;
   salesPersonsList: any;
   routeSalesPersonApi = 'SalesPersonCard/get-ddl?'
-  routeBillApi='Bill/get-ddl?'
-
   currencyId: any;
   cashAccountId: any;
   voucherkindId: any;
@@ -60,7 +58,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   voucherDate!: DateModel;
   chequeDate!: DateModel;
   chequeDueDate!: DateModel;
-
+  nameEn: any;
+  nameAr: any;
   defaultBeneficiaryId: any;
   showSearchCashAccountModal = false;
   showSearchCostCenterModal = false;
@@ -84,9 +83,9 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   paymentTypesEnum: ICustomEnum[] = [];
   billPay: BillPay[] = [];
   billInstallmentPay: BillInstallmentPay[] = [];
-  billPayment:BillPayment[]=[];
-
-
+  billPayment: any;
+  beneficiariesList: any;
+  beneficiaryTypeId: any;
   fromDate: any;
   toDate: any;
   sub: any;
@@ -106,14 +105,14 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   cashBankAccountsList: any;
   beneficiaryAccountsList: any;
   filterBeneficiaryList: any;
-
+  beneficiaryAccountId:any;
   currenciesList: any;
   currenciesListInDetail: any;
   costCentersList: any;
   costCentersInDetailsList: any;
   currencyTransactionList: any;
   filterCurrencyTransactionList: any;
-  cashAndBankAccountsList:any;
+  cashAndBankAccountsList: any;
   customersList: any;
   suppliersList: any;
   accountsList: any;
@@ -150,7 +149,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     private currencyService: CurrencyServiceProxy,
     private voucherTypeService: VoucherTypeServiceProxy,
     private generalConfigurationService: GeneralConfigurationServiceProxy,
-    private searchDialog: SearchDialogService,
     private sharedServices: SharedService,
     private alertsService: NotificationsAlertsService,
     private currencyServiceProxy: CurrencyServiceProxy,
@@ -159,9 +157,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     private accountService: AccountServiceProxy,
     private dateConverterService: DateConverterService,
     private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
-
-
-
+    private billService: BillServiceProxy,
 
   ) {
     this.defineSimpleVoucherForm();
@@ -175,6 +171,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getPaymentTypes();
     this.getBeneficiaryTypes();
+
     this.spinner.show();
 
     Promise.all([
@@ -188,7 +185,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       this.getCustomers(),
       this.getSuppliers(),
       this.getSalesPersons(),
-      this.getVouchers()
+      this.getVouchers(),
 
 
     ]).then(a => {
@@ -290,7 +287,10 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       chequeDate: this.dateService.getCurrentDate(),
       chequeDueDate: this.dateService.getCurrentDate(),
       invoicesNotes: '',
-      salesPersonId: ''
+      salesPersonId: '',
+      beneficiaryTypeId: REQUIRED_VALIDATORS,
+      beneficiaryId: REQUIRED_VALIDATORS
+
 
 
 
@@ -345,15 +345,31 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     });
 
   }
+  getBeneficiary(beneficiaryTypeId: any) {
+    this.beneficiariesList = [];
+    this.simpleVoucherForm.patchValue({
+      beneficiaryId: ''
+    });
+    if (beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
+      this.beneficiariesList = this.customersList;
+    }
+    if (beneficiaryTypeId == BeneficiaryTypeEnum.Supplier) {
+      this.beneficiariesList = this.suppliersList;
 
+    }
+    if (beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
+      this.beneficiariesList = this.accountsList;
+
+    }
+
+  }
   //#region Helper Functions
 
   get f(): { [key: string]: AbstractControl } {
     return this.simpleVoucherForm.controls;
   }
 
-  nameEn: any;
-  nameAr: any;
+
   //#endregion
   getSimpleVoucherTypes(id) {
     return new Promise<void>((resolve, reject) => {
@@ -369,9 +385,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
           this.voucherTypeName = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn;
           this.nameAr = res.response.nameAr;
           this.defaultBeneficiaryId = res.response.defaultBeneficiaryId;
-          this.selectedVoucherDetail.beneficiaryTypeId = this.defaultBeneficiaryId;
-          this.getBeneficaryByTypeId(this.selectedVoucherDetail.beneficiaryTypeId, -1);
-          this.getAmount();
+
           if (this.id == 0) {
             if (this.serialTypeId == SerialTypeEnum.Automatic) {
               this.getVoucherCode();
@@ -416,7 +430,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getSimpleVouchersByReferenceId(ReferenceId: any) {
-     this.filterSimpleVouchersList = this.vouchersList.filter(x => x.voucherTypeId == ReferenceId);
+    this.filterSimpleVouchersList = this.vouchersList.filter(x => x.voucherTypeId == ReferenceId);
   }
   getSimpleVoucherById(id: any) {
     this.lang = localStorage.getItem("language");
@@ -459,7 +473,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
           var costCenterName;
           if (res.response?.voucherDetail != null) {
             res.response.voucherDetail.forEach(element => {
-              this.getBeneficaryByTypeId(element.beneficiaryTypeId, -1);
 
               if (element.currencyId > 0) {
 
@@ -632,9 +645,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     });
 
   }
-  getBeneficiaryAccountByType() {
-    this.beneficiaryAccountsList = this.beneficiaryAccountsList.find(x => x.accountClassificationId == this.selectedVoucherDetail.beneficiaryTypeId)
-  }
+
   getCurrencies() {
     return new Promise<void>((resolve, reject) => {
       let sub = this.publicService.getDdl(this.routeCurrencyApi).subscribe({
@@ -706,211 +717,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     });
 
   }
-  openCurrencySearchDialog(i) {
-    this.lang = localStorage.getItem("language");
 
-    let searchTxt = '';
-    if (i == -1) {
-      searchTxt = this.selectedVoucherDetail?.currencyName ?? '';
-    } else {
-      searchTxt = ''
-    }
 
-    let data = this.currenciesListInDetail.filter((x) => {
-      return (
-        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
-        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
-      );
-    });
-
-    if (data.length == 1) {
-      if (i == -1) {
-        this.selectedVoucherDetail!.currencyName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
-        this.selectedVoucherDetail!.currencyId = data[0].id;
-
-        if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
-
-          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-          this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-          this.getValueAfterConversion();
-        } else {
-          this.selectedVoucherDetail!.currencyConversionFactor = 1;
-          this.getValueAfterConversion();
-        }
-      } else {
-        this.voucherDetail[i].currencyName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
-        this.voucherDetail[i].currencyId = data[0].id;
-        if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
-
-          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-          this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-          this.getAddedValueAfterConversion(i);
-        } else {
-          this.voucherDetail[i]!.currencyConversionFactor = 1;
-          this.getAddedValueAfterConversion(i);
-        }
-      }
-    } else {
-      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-      let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن العملة';
-      let sub = this.searchDialog
-        .showDialog(lables, names, this.currenciesListInDetail, title, searchTxt)
-        .subscribe((d) => {
-
-          if (d) {
-            if (i == -1) {
-              this.selectedVoucherDetail!.currencyName = this.lang == 'ar' ? d.nameAr : d.nameEn;
-              this.selectedVoucherDetail!.currencyId = d.id;
-              if (this.selectedVoucherDetail!.currencyId != this.mainCurrencyId) {
-
-                this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.selectedVoucherDetail!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-                this.selectedVoucherDetail!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-                this.getValueAfterConversion();
-
-              } else {
-                this.selectedVoucherDetail!.currencyConversionFactor = 1;
-                this.getValueAfterConversion();
-              }
-            } else {
-
-              this.voucherDetail[i].currencyName = this.lang == 'ar' ? d.nameAr : d.nameEn;
-              this.voucherDetail[i].currencyId = d.id;
-              if (this.voucherDetail[i]!.currencyId != this.mainCurrencyId) {
-
-                this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.voucherDetail[i]!.currencyId && x.currencyDetailId == this.mainCurrencyId)
-                this.voucherDetail[i]!.currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-                this.getAddedValueAfterConversion(i);
-              }
-            }
-          }
-        });
-      this.subsList.push(sub);
-    }
-
-  }
-  openBeneficiarySearchDialog(i) {
-
-    this.lang = localStorage.getItem("language");
-
-    let searchTxt = '';
-    if (i == -1) {
-      searchTxt = this.selectedVoucherDetail?.beneficiaryName ?? '';
-    } else {
-      searchTxt = ''
-    }
-
-    let data = this.filterBeneficiaryList.filter((x) => {
-      return (
-        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
-        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
-      );
-    });
-
-    if (data.length == 1) {
-      if (i == -1) {
-        this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
-        this.selectedVoucherDetail!.beneficiaryId = data[0].id;
-        this.getBeneficiaryAccount();
-      } else {
-        this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
-        this.voucherDetail[i].beneficiaryId = data[0].id;
-        this.getBeneficiaryAccountAdded(i);
-
-      }
-    } else {
-      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-      let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن الجهة';
-      let sub = this.searchDialog
-        .showDialog(lables, names, this.filterBeneficiaryList, title, searchTxt)
-        .subscribe((d) => {
-          if (d) {
-            if (i == -1) {
-
-              this.selectedVoucherDetail!.beneficiaryName = this.lang == 'ar' ? d.nameAr : d.nameEn;
-              this.selectedVoucherDetail!.beneficiaryId = d.id;
-              this.getBeneficiaryAccount();
-
-            } else {
-
-              this.voucherDetail[i].beneficiaryName = this.lang == 'ar' ? d.nameAr : d.nameEn;
-              this.voucherDetail[i].beneficiaryId = d.id;
-              this.getBeneficiaryAccountAdded(i);
-
-            }
-          }
-        });
-      this.subsList.push(sub);
-    }
-
-  }
-  getBeneficaryByTypeId(typeId: any, i: any) {
-    this.filterBeneficiaryList = [];
-    if (i == -1) {
-      this.selectedVoucherDetail.beneficiaryName = '';
-
-    }
-    else {
-      this.voucherDetail[i].beneficiaryName = '';
-
-    }
-    if (typeId == BeneficiaryTypeEnum.Client) {
-      this.filterBeneficiaryList = this.customersList;
-    }
-    else if (typeId == BeneficiaryTypeEnum.Supplier) {
-      this.filterBeneficiaryList = this.suppliersList;
-    }
-    else if (typeId == BeneficiaryTypeEnum.Account) {
-      this.filterBeneficiaryList = this.accountsList;
-    }
-  }
-  openCostCenterSearchDialog(i) {
-    this.lang = localStorage.getItem("language");
-
-    let searchTxt = '';
-    if (i == -1) {
-      searchTxt = this.selectedVoucherDetail?.costCenterName ?? '';
-    } else {
-      searchTxt = ''
-    }
-
-    let data = this.costCentersInDetailsList.filter((x) => {
-      return (
-        (x.nameAr + ' ' + x.nameEn).toLowerCase().includes(searchTxt) ||
-        (x.nameAr + ' ' + x.nameEn).toUpperCase().includes(searchTxt)
-      );
-    });
-
-    if (data.length == 1) {
-      if (i == -1) {
-        this.selectedVoucherDetail!.costCenterName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
-        this.selectedVoucherDetail!.costCenterId = data[0].id;
-      } else {
-        this.voucherDetail[i].costCenterName = this.lang == 'ar' ? data[0].nameAr : data[0].nameEn;
-        this.voucherDetail[i].costCenterId = data[0].id;
-      }
-    } else {
-      let lables = ['الكود', 'الاسم', 'الاسم الانجليزى'];
-      let names = ['code', 'nameAr', 'nameEn'];
-      let title = 'بحث عن مركز التكلفة';
-      let sub = this.searchDialog
-        .showDialog(lables, names, this.costCentersInDetailsList, title, searchTxt)
-        .subscribe((d) => {
-          if (d) {
-            if (i == -1) {
-              this.selectedVoucherDetail!.costCenterName = this.lang == 'ar' ? d.nameAr : d.nameEn;
-              this.selectedVoucherDetail!.costCenterId = d.id;
-            } else {
-              this.voucherDetail[i].costCenterName = this.lang == 'ar' ? d.nameAr : d.nameEn;
-              this.voucherDetail[i].costCenterId = d.id;
-            }
-          }
-        });
-      this.subsList.push(sub);
-    }
-
-  }
   onSelectCashAccount(event) {
     this.simpleVoucherForm.controls.cashAccountId.setValue(event.id);
     this.showSearchCashAccountModal = false;
@@ -941,123 +749,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
     }
   }
-  addItem() {
-    this.voucherDetail.push({
-      id: 0,
-      voucherId: this.selectedVoucherDetail?.voucherId ?? 0,
-      beneficiaryTypeId: this.selectedVoucherDetail?.beneficiaryTypeId ?? 0,
-      beneficiaryId: this.selectedVoucherDetail?.beneficiaryId ?? 0,
-      beneficiaryAccountId: this.selectedVoucherDetail?.beneficiaryAccountId ?? 0,
-      debit: this.selectedVoucherDetail?.debit ?? 0,
-      credit: this.selectedVoucherDetail?.credit ?? 0,
-      currencyId: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyId ?? 0 : this.mainCurrencyId,
-      currencyConversionFactor: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.currencyConversionFactor ?? 0 : 1,
-      debitLocal: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.debitLocal ?? 0 : this.selectedVoucherDetail?.debit ?? 0,
-      creditLocal: this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.creditLocal ?? 0 : this.selectedVoucherDetail?.credit ?? 0,
-      description: this.selectedVoucherDetail?.description ?? '',
-      costCenterId: this.selectedVoucherDetail?.costCenterId ?? 0,
-      currencyName: this.selectedVoucherDetail?.currencyName ?? '',
-      beneficiaryName: this.selectedVoucherDetail?.beneficiaryName ?? '',
-      costCenterName: this.selectedVoucherDetail?.costCenterName ?? '',
-    });
 
-    this.simpleVoucher!.voucherDetail = this.voucherDetail;
 
-    this.totalDebitLocal += this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.debitLocal ?? 0 : this.selectedVoucherDetail?.debit ?? 0;
-    this.totalCreditLocal += this.enableMultiCurrencies == true ? this.selectedVoucherDetail?.creditLocal ?? 0 : this.selectedVoucherDetail?.credit ?? 0;
-    this.calculateTotals();
-
-    this.clearSelectedItemData();
-
-  }
-  calculateTotals() {
-    let currencyConversionFactor;
-    if (this.voucherkindId == VoucherTypeEnum['Simple Withdrawal']) {
-
-      this.simpleVoucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
-
-      if (this.enableMultiCurrencies == true) {
-        if (this.currencyId != this.mainCurrencyId) {
-
-          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
-
-          currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-          this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal * currencyConversionFactor)
-        }
-        else {
-          this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal)
-        }
-      }
-      else {
-
-        this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal)
-      }
-
-    }
-    if (this.voucherkindId == VoucherTypeEnum['Simple Deposit']) {
-      this.simpleVoucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
-      if (this.enableMultiCurrencies == true) {
-
-        if (this.currencyId != this.mainCurrencyId) {
-
-          this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
-
-          currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-          this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal * currencyConversionFactor)
-        }
-        else {
-          this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
-        }
-      }
-      else {
-
-        this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
-      }
-    }
-  }
-  deleteItem(index) {
-
-    //this.totalDebitLocal = this.totalDebitLocal - this.voucherDetail[index]?.debitLocal ?? 0;
-    //this.totalCreditLocal = this.totalCreditLocal - this.voucherDetail[index]?.creditLocal ?? 0;
-    let currencyConversionFactor;
-    if (this.voucherkindId == VoucherTypeEnum['Simple Withdrawal']) {
-      this.simpleVoucherForm.controls["voucherTotalLocal"].setValue(this.totalDebitLocal)
-      if (this.currencyId != this.mainCurrencyId) {
-
-        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
-
-        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-        this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal * currencyConversionFactor)
-      }
-      else {
-        this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalDebitLocal)
-      }
-    }
-    if (this.voucherkindId == VoucherTypeEnum['Simple Deposit']) {
-      this.simpleVoucherForm.controls["voucherTotalLocal"].setValue(this.totalCreditLocal)
-      if (this.currencyId != this.mainCurrencyId) {
-
-        this.filterCurrencyTransactionList = this.currencyTransactionList.find(x => x.currencyMasterId == this.mainCurrencyId && x.currencyDetailId == this.currencyId)
-
-        currencyConversionFactor = this.filterCurrencyTransactionList.transactionFactor;
-        this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal * currencyConversionFactor)
-      }
-      else {
-        this.simpleVoucherForm.controls["voucherTotal"].setValue(this.totalCreditLocal)
-      }
-    }
-
-    if (this.voucherDetail.length) {
-      if (this.voucherDetail.length == 1) {
-        this.voucherDetail = [];
-      } else {
-        this.voucherDetail.splice(index, 1);
-      }
-    }
-
-    this.simpleVoucher.voucherDetail = this.voucherDetail;
-
-  }
   clearSelectedItemData() {
 
     this.selectedVoucherDetail = {
@@ -1081,6 +774,24 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   }
 
   setInputData() {
+    this.simpleVoucher.voucherDetail.push({
+      id: 0,
+      voucherId: 0,
+      beneficiaryTypeId: this.simpleVoucherForm.controls["beneficiaryTypeId"].value,
+      beneficiaryId: this.simpleVoucherForm.controls["beneficiaryId"].value,
+      beneficiaryAccountId: this.beneficiaryAccountId,
+      debit: this.voucherkindId == VoucherTypeEnum['Simple Deposit'] ? this.voucherTotal : 0,
+      credit: this.voucherkindId == VoucherTypeEnum['Simple Withdrawal']? this.voucherTotal : 0,
+      currencyId: this.simpleVoucherForm.controls["currencyId"].value,
+      currencyConversionFactor: this.simpleVoucherForm.controls["currencyFactor"].value,
+      debitLocal: this.voucherkindId == VoucherTypeEnum['Simple Deposit'] ? this.voucherTotalLocal : 0,
+      creditLocal:  this.voucherkindId == VoucherTypeEnum['Simple Withdrawal']? this.voucherTotalLocal : 0,
+      description: '',
+      costCenterId: 0,
+      currencyName: '',
+      beneficiaryName: '',
+      costCenterName: ''
+    })
     this.simpleVoucher = {
       id: this.simpleVoucherForm.controls["id"].value,
       companyId: this.simpleVoucherForm.controls["companyId"].value,
@@ -1112,18 +823,9 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
     };
 
-    this.simpleVoucher.voucherDetail = this.voucherDetail;
+  
 
-    this.voucherTotal = this.simpleVoucherForm.controls["voucherTotal"].value;
-    if (this.voucherkindId == VoucherTypeEnum['Simple Withdrawal']) {
-      this.totalDebitLocal = this.simpleVoucherForm.controls["voucherTotalLocal"].value
-    }
-    else {
-      this.totalCreditLocal = this.simpleVoucherForm.controls["voucherTotalLocal"].value
-
-    }
-    this.voucherTotalLocal = this.simpleVoucherForm.controls["voucherTotalLocal"].value;
-    this.currencyFactor = this.simpleVoucherForm.controls["currencyFactor"].value;
+   
 
 
   }
@@ -1199,138 +901,86 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onSave() {
-    if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId)) {
-      this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
-    if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-      if (this.fiscalPeriodStatus == null) {
-        this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-choose-open-fiscal-period");
+    // if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId)) {
+    //   this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+    //   this.errorClass = 'errorMessage';
+    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //   return;
+    // }
+    // if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+    //   if (this.fiscalPeriodStatus != null) {
+    
+    //     this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+    //     this.errorClass = 'errorMessage';
+    //     this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //     return;
+    //   }
+     
+    // }
+    // else {
 
-      }
-      else {
-        this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+    //   let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.voucherDate);
+    //   if (this.accountingPeriods != null) {
+    //     this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+    //     if (this.accountingPeriodCheckDate != undefined) {
 
-      }
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
-    else {
-
-      let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.voucherDate);
-      if (this.accountingPeriods != null) {
-        this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
-        if (this.accountingPeriodCheckDate != undefined) {
-
-          this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          return;
-        }
-      }
-    }
-    let voucherDate = this.simpleVoucherForm.controls["voucherDate"].value;
-    let date = this.dateConverterService.getDateTimeForInsertISO_Format(voucherDate);
+    //       this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+    //       this.errorClass = 'errorMessage';
+    //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //       return;
+    //     }
+    //   }
+    // }
+    // let voucherDate = this.simpleVoucherForm.controls["voucherDate"].value;
+    // let date = this.dateConverterService.getDateTimeForInsertISO_Format(voucherDate);
 
 
-    if (!(date >= this.fromDate && date <= this.toDate)) {
+    // if (!(date >= this.fromDate && date <= this.toDate)) {
 
-      this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-      this.errorClass = 'errorMessage';
-      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      return;
-    }
+    //   this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+    //   this.errorClass = 'errorMessage';
+    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+    //   return;
+    // }
 
     if (this.simpleVoucherForm.valid) {
-      if (this.simpleVoucher.voucherDetail.length == 0) {
-        this.errorMessage = this.translate.instant("voucher.voucher-details-required");
-        this.errorClass = 'errorMessage';
-        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        return;
-      }
+     
       var i = 0;
-      if (this.createFinancialEntryId == CreateFinancialEntryEnum['Create the entry automatically']) {
-        if (this.voucherDetail != null) {
-          this.voucherDetail.forEach(element => {
+      // if (this.createFinancialEntryId == CreateFinancialEntryEnum['Create the entry automatically']) {
+       
+      //   this.getAccountBalance(this.cashAccountId).then(a => {
+      //     var account = this.accountsList.find(x => x.id == this.cashAccountId);
 
-            if (element.beneficiaryId != null) {
-              var value = 0;
-              // if (element.debitLocal > 0) {
-              //   value = element.debitLocal;
-              // }
-              // if (element.creditLocal > 0) {
-              //   value = element.creditLocal;
+      //     var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
-              // }
+      //     if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
-              this.getAccountBalance(element.beneficiaryId).then(a => {
-                var account = this.accountsList.find(x => x.id == element.beneficiaryId);
-
-                var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-
-                if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-                  if (Number(this.balance) + value > account.debitLimit) {
+      //       if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
 
 
-                    this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
-                    this.errorClass = 'errorMessage';
-                    this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                    i++;
-                  }
+      //         this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+      //         this.errorClass = 'errorMessage';
+      //         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      //         i++;
+      //       }
 
-                }
-                else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+      //     }
+      //     else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
-                  if (-(this.balance) + value > account.creditLimit) {
+      //       if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
 
-                    this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
-                    this.errorClass = 'errorMessage';
-                    this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                    i++;
-                  }
-                }
-              });
-            }
-          })
-
-        }
-        this.getAccountBalance(this.cashAccountId).then(a => {
-          var account = this.accountsList.find(x => x.id == this.cashAccountId);
-
-          var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-
-          if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-            if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
+      //         this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+      //         this.errorClass = 'errorMessage';
+      //         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      //         i++;
+      //       }
 
 
-              this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
-              this.errorClass = 'errorMessage';
-              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-              i++;
-            }
-
-          }
-          else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-
-            if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
-
-              this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
-              this.errorClass = 'errorMessage';
-              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-              i++;
-            }
+      //     }
 
 
-          }
-
-
-        });
-      }
+      //   });
+      // }
       setTimeout(() => {
         if (i == 0) {
           this.setInputData();
@@ -1575,18 +1225,12 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   getChequeDueDate(selectedDate: DateModel) {
     this.chequeDueDate = selectedDate;
   }
-  getValueAfterConversion() {
-    this.selectedVoucherDetail.debitLocal = Number(this.selectedVoucherDetail.debit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
-    this.selectedVoucherDetail.creditLocal = Number(this.selectedVoucherDetail.credit) * Number(this.selectedVoucherDetail.currencyConversionFactor);
+  // changeCurrencyFactor() {
+  //   debugger
+  //   this.voucherTotal = (1 / this.currencyFactor) * this.voucherTotalLocal;
+  // }
 
-
-  }
-  getAddedValueAfterConversion(i: any) {
-    this.voucherDetail[i].debitLocal = Number(this.voucherDetail[i].debit) * Number(this.voucherDetail[i].currencyConversionFactor);
-    this.voucherDetail[i].creditLocal = Number(this.voucherDetail[i].credit) * Number(this.voucherDetail[i].currencyConversionFactor);
-
-  }
-  getAmount() {
+  getVoucherTotal() {
     debugger
     if (this.enableMultiCurrencies == true) {
       if (this.simpleVoucherForm.value.currencyId == Number(this.mainCurrencyId)) {
@@ -1609,58 +1253,29 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     }
 
   }
-  getCostCenterInDetails() {
-  }
-  updateDetailData(item: VoucherDetail) {
+
+  getVoucherTotalLocal() {
     debugger
-    if (this.voucherDetail.length > 0) {
-      this.deleteVoucherDetailForUpdate(item);
-      this.addVoucherDetailForUpdate(item);
-    }
-
-  }
-  addVoucherDetailForUpdate(item: VoucherDetail) {
-
-    this.voucherDetail.push(
-      {
-        id: 0,
-        voucherId: 0,
-        beneficiaryTypeId: item.beneficiaryTypeId,
-        beneficiaryId: item.beneficiaryId,
-        beneficiaryAccountId: item.beneficiaryAccountId,
-        debit: item.debit,
-        credit: item.credit,
-        currencyId: item.currencyId,
-        currencyConversionFactor: item.currencyConversionFactor,
-        debitLocal: item.debitLocal,
-        creditLocal: item.creditLocal,
-        description: item.description,
-        costCenterId: item.costCenterId,
-        currencyName: item.currencyName,
-        beneficiaryName: item.beneficiaryName,
-        costCenterName: item.costCenterName
+    if (this.enableMultiCurrencies == true) {
+      if (this.simpleVoucherForm.value.currencyId == Number(this.mainCurrencyId)) {
+        this.voucherTotalLocal = this.voucherTotal;
+        this.currencyFactor = 1;
       }
-    )
+      else {
+        let sub = this.currencyServiceProxy.getCurrency(this.simpleVoucherForm.value.currencyId).subscribe({
+          next: (res: any) => {
 
-    this.voucherDetail.forEach(item => {
+            this.currency = res;
+            let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
+            this.currencyFactor = currencyModel.transactionFactor;
+            this.voucherTotalLocal = currencyModel.transactionFactor * this.voucherTotal;
+          }
+        })
+        this.subsList.push(sub);
 
-      this.totalDebitLocal += this.enableMultiCurrencies == true ? item.debitLocal ?? 0 : item.debit ?? 0;
-      this.totalCreditLocal += this.enableMultiCurrencies == true ? item.creditLocal ?? 0 : item.credit ?? 0;
-    }
-    )
-    this.calculateTotals();
-
-  }
-  deleteVoucherDetailForUpdate(item: VoucherDetail) {
-    if (item != null) {
-      const index: number = this.voucherDetail.indexOf(item);
-      if (index !== -1) {
-        this.voucherDetail.splice(index, 1);
-
-        this.totalDebitLocal = 0;
-        this.totalCreditLocal = 0;
       }
     }
+
   }
   getCustomers() {
     return new Promise<void>((resolve, reject) => {
@@ -1729,27 +1344,37 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     });
 
   }
-  getBillPayments() {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeBillApi).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.billPayment = res.response.filter(x=>x.payWay == PayWayEnum.Credit || x.companyId == this.companyId || x.branchId ==this.branchId);
 
-          }
-          resolve();
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-
-        },
+  selectBillPayment(item: BillPayment, event) {
+    if (event.target.checked) {
+      this.billPay.push({
+        id: 0,
+        voucherId: 0,
+        billId: item.id,
+        net: item.net,
+        return: 0,
+        paid: item.paid,
+        remaining: item.remaining
       });
+      this.voucherTotalLocal += item.remaining;
 
-      this.subsList.push(sub);
-    });
+    }
+    else {
+      let removedItem = this.billPay.find(x => x.id == item.id);
+      const index = this.billPay.indexOf(removedItem!);
+      if (index > -1) {
+        this.billPay.splice(index, 1);
+
+      }
+      this.voucherTotalLocal -= item.remaining
+
+
+
+    }
+    this.getVoucherTotal();
+
+
+
 
   }
   getBeneficiaryAccount() {
@@ -1762,18 +1387,51 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     }
 
   }
-  getBeneficiaryAccountAdded(i) {
+  getBillPaymentsByBeneficiaryId(beneficiaryId: any) {
 
+    this.billPayment = [];
+    this.beneficiaryAccountId = this.beneficiariesList.find(x=>x.id==beneficiaryId).accountId;
+    if (this.voucherkindId == VoucherTypeEnum['Simple Deposit'] && this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
 
-    if (this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Client || this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Supplier) {
+      return new Promise<void>((resolve, reject) => {
 
-      this.voucherDetail[i].beneficiaryAccountId = this.filterBeneficiaryList.filter(x => x.id == Number(this.voucherDetail[i].beneficiaryId))[0].accountId
+        let sub = this.billService.getBillsByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], beneficiaryId, '').subscribe({
+          next: (res: any) => {
+            resolve();
+            this.billPayment = res.response.data
+          },
+          error: (err: any) => {
+            reject(err);
+          },
+          complete: () => {
+          },
+        });
+        this.subsList.push(sub);
+
+      });
     }
-    else if (this.voucherDetail[i].beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
-      this.voucherDetail[i].beneficiaryAccountId = this.voucherDetail[i].beneficiaryId;
+
+    if (this.voucherkindId == VoucherTypeEnum['Simple Withdrawal'] && this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Supplier) {
+      return new Promise<void>((resolve, reject) => {
+        let sub = this.billService.getBillsByParams(PayWayEnum.Credit, BillKindEnum['Purchases Bill'], '', beneficiaryId).subscribe({
+          next: (res: any) => {
+            resolve();
+            this.billPayment = res.response.data
+          },
+          error: (err: any) => {
+            reject(err);
+          },
+          complete: () => {
+          },
+        });
+        this.subsList.push(sub);
+
+      });
     }
+
 
   }
+
   onViewReportClicked(id) {
     localStorage.removeItem("itemId")
     localStorage.setItem("itemId", id)

@@ -332,10 +332,6 @@ export enum EntryTypesArEnum {
 export enum ModuleLocationEnEnum {
   Accounting = 1,
   Warehouses = 2
-  
-
-
-
 }
 export enum ModuleLocationArEnum {
   محاسبة = 1,
@@ -343,14 +339,12 @@ export enum ModuleLocationArEnum {
 }
 
 export enum PaymentTypeEnEnum {
-
   Cash = 1,
   Check = 2,
   Span = 3
 
 }
 export enum PaymentTypArEnum {
-
   نقدي = 1,
   شيك = 2,
   شبكة = 3
