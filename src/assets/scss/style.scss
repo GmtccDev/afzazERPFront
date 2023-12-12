@@ -1846,3 +1846,10 @@ p.ant-empty-description {
         direction: rtl !important;
     }
 }
+
+.table {
+    td:nth-child(1) {
+        text-align: center;
+        line-height: 35px;
+    }
+}

@@ -1,0 +1,87 @@
+<section class="inner-page-wrapper inner-page-wrapper-units">
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<form id="" class="tabs-form">
+							<div class="main-customer">
+								<div class="wrapper-title">
+
+									<h3>{{'component-names.recipient-groups'|translate}}</h3>
+									<hr>
+									<div class="row align-items-center">
+
+										<div class="col-md-6 col-12 offset-6">
+											<label for="code" class="label-name">
+												{{'general.code'|translate}}</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
+
+												<input type="text" class="form-control icon-user" name="code">
+
+
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="nameAr" class="label-name">
+												{{'general.nameAr'|translate}}</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
+
+												<input type="text" class="form-control icon-user" name="nameAr">
+
+
+											</div>
+										</div>
+										<div class="col-md-6 col-12">
+											<label for="nameEn" class="label-name">
+												{{'general.nameEn'|translate}}</label><span class="text-danger">*</span>
+											<div class="form-group position-relative">
+
+												<input type="text" class="form-control icon-user" name="nameEn">
+
+
+											</div>
+										</div>
+										<div class="col-md-6 col-12 mb-3">
+											<label for="beneficiary-type" class="label-name">
+												{{'general.beneficiary-type'|translate}}
+											</label>
+											<ng-select class="" name='' id="">
+												<ng-option *ngFor="let beneficiaryType of beneficiaryTypeList"
+													[value]="beneficiaryType">
+													{{beneficiaryType}}
+												</ng-option>
+											</ng-select>
+										</div>
+										<div class="col-md-6 col-12 mb-3">
+											<label for="beneficiary" class="label-name">
+												{{'general.beneficiary'|translate}}
+											</label>
+											<input type="text" class="form-control">
+										</div>
+
+										<div class="col-md-6 col-12">
+											<div class="media">
+												<label class="label-name">{{'general.status'|translate}}
+
+												</label>
+												<div class="icon-state media-body ">
+													<label class="switch">
+														<input type="checkbox" class="form-control" name="isActive">
+														<span class="switch-state"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

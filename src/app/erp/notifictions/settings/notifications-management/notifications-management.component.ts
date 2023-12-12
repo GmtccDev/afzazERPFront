@@ -11,10 +11,13 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class NotificationsManagementComponent implements OnInit {
 	selectedUserList: string;
+	selectedOccursTimeList: string;
+	selectedEndDateList: string;
 	editor = ClassicEditor;
 	data: any = `<p style=""></p></p>`;
 	timeList = ['إرسال الان', 'جدولة', 'قبل تاريخ ', 'قبل نهاية'];
 	occursList = ['يومي', 'اسبوعي', 'شهري'];
+	occursTimeList = ['ساعة', 'دقائق'];
 	selectedOccurs: string;
 	selectedOption: string = null;
 	selectedDate: string;
