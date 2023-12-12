@@ -55,9 +55,10 @@ export class BillDynamicDeterminantInput {
 export class InsertBillDynamicDeterminant {
   billId: number | null;
   billItemId: number | null;
- 
+  billDynamicDeterminantSerial: string | undefined;
   determinantsData: DeterminantDataDto[] = [];
   itemCardDeterminantListDto: ItemCardDeterminantDto[] = [];
+  quantity: number | null;
 }
 
 export class ItemCardDeterminantDto {
@@ -67,7 +68,7 @@ export class ItemCardDeterminantDto {
   determinantsMaster: DeterminantsMasterDto;
 
 }
-export interface DeterminantDataDto {
+export class DeterminantDataDto {
   id: number;
   determinantId: number | null;
   value: string | null;
@@ -83,4 +84,6 @@ export interface DeterminantDataDto {
   textValueId: number;
   dateValueId: number;
   checkedValueId: number;
+  billDynamicDeterminantSerial:any
+  quantity: number | null;
 }

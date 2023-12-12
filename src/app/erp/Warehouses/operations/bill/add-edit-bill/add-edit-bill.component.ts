@@ -32,6 +32,7 @@ import { BillTypeServiceProxy } from '../../../Services/bill-type.service';
 import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.service';
 import { CountryServiceProxy } from 'src/app/erp/master-codes/services/country.servies';
 import { RightClickModalComponent } from '../../right-click-modal/right-click-modal.component';
+import { InsertBillDynamicDeterminant } from '../../../models/bill-dynamic-determinant';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -1597,6 +1598,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
+      debugger
       let sub = this.billService.createBill(this.billTypeId, this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
@@ -2443,12 +2445,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             .afterClosed().subscribe(result => {
               if (result && result != null && result.length > 0) {
                 debugger
-                //this.getBills();
-                
-                this.selectedBillItem.billDynamicDeterminants[i+1].determinantsData = result;
-
-
-                // this.billItem[i].billDynamicDeterminants=this.selectedBillItem.billDynamicDeterminants;
+              
+                this.selectedBillItem.billDynamicDeterminants=result;
+           
 
               }
             });
