@@ -1463,7 +1463,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getAmount() {
-    debugger    
     if (this.enableMultiCurrencies == true) {
       if (this.voucherForm.value.currencyId == Number(this.mainCurrencyId)) {
         this.voucherTotal = this.voucherTotalLocal;
