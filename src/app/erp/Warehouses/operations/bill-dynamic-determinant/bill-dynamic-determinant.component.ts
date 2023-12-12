@@ -52,7 +52,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
             this.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
             this.determinantsData = res.response.dynamicDeterminantListDto;
             this.insertBillDynamicDeterminant.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
-            debugger
+            
             if (this.action == "Edit") {
               for (let i = 0; i < (this.determinantsData.length/this.itemCardDeterminantListDto.length); i++)
                {    this.addItem();
@@ -107,7 +107,8 @@ export class BillDynamicDeterminantComponent implements OnInit {
       itemCardId: item.itemCardId,
       value: value,
       valueType: valueType,
-      billDynamicDeterminantSerial: item.billDynamicDeterminantSerial
+      billDynamicDeterminantSerial: item.billDynamicDeterminantSerial,
+      quantity:item.quantity
     };
   }
   insertBillDynamic() {
@@ -117,9 +118,9 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.insertBillDynamicDeterminant.determinantsData = this.insertBillDynamicDeterminant.determinantsData.filter(item => {
       return item.numberValue !== null || item.dateValue != null || item.checkedValue != null || item.textValue != null || item.selectedValue != null;
     });
-
-    this.insertBillDynamicDeterminant.determinantsData.forEach((item) => {
 debugger
+    this.insertBillDynamicDeterminant.determinantsData.forEach((item) => {
+
       if (item.checkedValue != null) {
         restructuredData.push(this.createObject(item, item.checkedValue, 5, item.checkedValueId));
         item.checkedValue = null;
@@ -158,7 +159,7 @@ debugger
     this.dialog.closeAll();
   }
   addItem() {
-    debugger
+    
     let i = this.insertBillDynamicDeterminant.determinantsData.length + 1;
     this.insertBillDynamicDeterminant.determinantsData.push({
      
@@ -181,6 +182,8 @@ debugger
 
       checkedValue: null,
       checkedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId,
+      billDynamicDeterminantSerial:i,
+      quantity:0
     });
 
   }
