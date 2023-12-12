@@ -5,18 +5,25 @@ import { NotifictionsSettingsRoutingModule } from './notifictions-settings-routi
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationsConfigurationsComponent } from './notifications-configurations/notifications-configurations.component';
-import { NotificationsManagementComponent } from './notifications-management/notifications-management.component'
+import { NotificationsManagementComponent } from './notifications-management/notifications-management.component';
+import { RecipientGroupsComponent } from './recipient-groups/recipient-groups.component';
+import { BeneficiariesComponent } from './beneficiaries/beneficiaries.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
 	declarations: [
 		NotificationsConfigurationsComponent,
-		NotificationsManagementComponent
+		NotificationsManagementComponent,
+		RecipientGroupsComponent, BeneficiariesComponent
 
 	],
 	imports: [
 		CommonModule,
-		NotifictionsSettingsRoutingModule, NgSelectModule, FormsModule, TranslateModule, NgbNavModule
+		NotifictionsSettingsRoutingModule, NgSelectModule, FormsModule, TranslateModule, NgbNavModule,
+		CKEditorModule,
+
+
 	]
 })
 export class NotifictionsSettingsModule { }

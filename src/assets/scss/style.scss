@@ -1146,6 +1146,12 @@ html[dir=ltr] .tabulator .tabulator-header .tabulator-col .tabulator-col-content
     border-bottom: 1px solid #47484f36 !important;
 }
 
+.b-t-secondary {
+    border-top: 1px solid #47484f36 !important;
+    margin-top: 5px;
+    padding-top: 10px;
+}
+
 .check-item {
     padding: 3px 0;
 }
@@ -1827,4 +1833,23 @@ p.ant-empty-description {
     position: sticky;
     bottom: 0;
     box-shadow: 0px -4px 20px 0px #94949657;
+}
+
+.tab-content {
+    .ck.ck-toolbar,
+    .ck.ck-editor {
+        border: 1px solid rgb(206, 212, 218) !important;
+        direction: rtl !important;
+    }
+    .ck.ck-content {
+        text-align: start;
+        direction: rtl !important;
+    }
+}
+
+.table {
+    td:nth-child(1) {
+        text-align: center;
+        line-height: 35px;
+    }
 }
