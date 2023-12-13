@@ -167,7 +167,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   showSearchStoreModal = false;
   showSearchProjectModal = false;
   billItemId: any = -1;
-  fiscalPeriodId: number;
+  fiscalPeriodId: number = 0;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
   fromDate: any;
@@ -404,26 +404,21 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       notes: '',
       attachment: '',
       cashAccountId: null,
-      // supplierAccountId: null,
       salesAccountId: null,
       salesReturnAccountId: null,
       purchasesAccountId: null,
       purchasesReturnAccountId: null,
-      // discountAccountId: null,
       taxAccountId: null,
-      totalBeforeTax: '',
+      totalBeforeTax: null,
       taxRatio: null,
       taxValue: null,
-      total: '',
-      net: '',
+      total: null,
+      net: null,
       netAfterTax: null,
-      paid: '',
+      paid: null,
       paidAccountId: null,
-      remaining: '',
+      remaining: null,
       remainingAccountId: null
-
-
-
     });
     this.date = this.dateService.getCurrentDate();
     this.deliveryDate = this.dateService.getCurrentDate();
@@ -1610,9 +1605,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           this.clearSelectedBilladditionDiscountData();
           this.billAdditionAndDiscount = [];
           this.billItemTax = [];
+          navigateUrl(this.listUrl + this.billTypeId, this.router);
           this.spinner.hide();
 
-          navigateUrl(this.listUrl + this.billTypeId, this.router);
         },
         error: (err: any) => {
           reject(err);
@@ -1777,9 +1772,9 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           this.billItemTax = [];
           this.clearSelectedBilladditionDiscountData();
           this.billAdditionAndDiscount = [];
+          navigateUrl(this.listUrl + this.billTypeId, this.router);
           this.spinner.hide();
 
-          navigateUrl(this.listUrl + this.billTypeId, this.router);
         },
         error: (err: any) => {
           reject(err);
@@ -2471,7 +2466,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.AccountingPeriod).subscribe({
         next: (res: any) => {
           resolve();
-
           if (res.response.value > 0) {
             this.fiscalPeriodId = res.response.value;
             this.getfiscalPeriodById(this.fiscalPeriodId);

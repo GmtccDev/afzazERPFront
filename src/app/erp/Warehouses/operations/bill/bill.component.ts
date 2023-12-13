@@ -36,7 +36,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
   dateType: any;
   currnetUrl: any;
   queryParams: any;
-  fiscalPeriodId: number;
+  fiscalPeriodId: number = 0;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
   addUrl: string = '/warehouses-operations/bill/add-bill/';
@@ -202,11 +202,7 @@ export class BillComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve();
           if (res.response.value > 0) {
             this.fiscalPeriodId = res.response.value;
-            if (this.fiscalPeriodId != null) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
-
-            }
-
           }
 
 

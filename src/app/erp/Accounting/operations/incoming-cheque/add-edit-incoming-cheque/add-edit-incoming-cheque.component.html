@@ -16,7 +16,7 @@
                                     <h3>{{'component-names.incomingCheque-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}</label><span class="text-danger">*</span>
                                             <div class="position-relative">
@@ -32,7 +32,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12 ">
+                                        <div class="col-md-4 col-12 ">
                                             <label for="bankAccount" class="label-name">
                                                 {{'general.bank-account'|translate}}
                                             </label>
@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <label for="date" class="label-name">
                                                 {{'general.date'|translate}}</label><span class="text-danger">*</span>
                                             <div class=" position-relative">
@@ -80,7 +80,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-4">
                                             <label for="notes" class="label-name">{{'general.notes'|translate}}</label>
                                             <div class=" position-relative">
 
@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <label for="dueDate" class="label-name">
                                                 {{'general.dueDate'|translate}}</label><span
                                                 class="text-danger">*</span>
@@ -108,7 +108,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12" >
+                                        <div class="col-md-4 col-12">
                                             <label for="amountLocal" class="label-name">
                                                 {{'general.amount-local'|translate}}</label><span
                                                 class="text-danger">*</span>
@@ -118,33 +118,15 @@
                                                     name="amountLocal" style="width: 70px;" disabled="true">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12" *ngIf="isMultiCurrency==true">
-                                            <label for="currencyFactor" class="label-name">
-                                                {{'currency.transaction-factor'|translate}}</label>
-                                            <div class="input-group form-group">
-                                                <input type="number" [(ngModel)]="currencyFactor" required
-                                                    class="form-control required" formControlName="currencyFactor"
-                                                    name="currencyFactor" style="width: 70px;" disabled="true">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12" >
-                                            <label for="amount" class="label-name">
-                                                {{'general.amount'|translate}}</label><span class="text-danger">*</span>
-                                            <div class="input-group form-group">
-                                                <input type="number" [(ngModel)]="amount" required
-                                                    class="form-control required" formControlName="amount" name="amount"
-                                                    style="width: 70px;" disabled="true">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12" *ngIf="isMultiCurrency==true">
+                                        <div class="col-md-4 col-12" *ngIf="isMultiCurrency==true">
                                             <label for="currencyId" class="label-name">
                                                 {{'component-names.currencies'|translate}}
                                             </label>
                                             <span class="text-danger">*</span>
                                             <div class="input-group  popup">
-                                                <ng-select  style="width:100%" [(ngModel)]="currencyId"
+                                                <ng-select style="width:100%" [(ngModel)]="currencyId"
                                                     formControlName="currencyId" (change)="getAmount()"
-                                                    name='currencyId' class="" id="currencyId" >
+                                                    name='currencyId' class="" id="currencyId">
                                                     <ng-option *ngFor="let currency of currencyList"
                                                         [value]="currency.id">
                                                         {{lang=="ar"?currency.nameAr:currency.nameEn}}
@@ -162,7 +144,26 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-12 col-md-6 d-flex align-items-end">
+                                        <div class="col-md-2 col-12" *ngIf="isMultiCurrency==true">
+                                            <label for="currencyFactor" class="label-name">
+                                                {{'currency.transaction-factor'|translate}}</label>
+                                            <div class="input-group form-group">
+                                                <input type="number" [(ngModel)]="currencyFactor" required
+                                                    class="form-control required" formControlName="currencyFactor"
+                                                    name="currencyFactor" style="width: 70px;" disabled="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label for="amount" class="label-name">
+                                                {{'general.amount'|translate}}</label><span class="text-danger">*</span>
+                                            <div class="input-group form-group">
+                                                <input type="number" [(ngModel)]="amount" required
+                                                    class="form-control required" formControlName="amount" name="amount"
+                                                    style="width: 70px;" disabled="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 d-flex align-items-end">
                                             <div class="media">
                                                 <label class="label-name"> {{'general.status'|translate}}
                                                 </label>
@@ -175,10 +176,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
 
                                     </div>
 
@@ -199,7 +196,8 @@
                                                     {{'general.currency'|translate}}</th>
                                                 <th style="width: 10%;" *ngIf="isMultiCurrency">
                                                     {{'general.currency-conversion-factor'|translate}}</th>
-                                                <th style="width: 10%;" *ngIf="isMultiCurrency==true">{{'general.balance'|translate}}</th>
+                                                <th style="width: 10%;" *ngIf="isMultiCurrency==true">
+                                                    {{'general.balance'|translate}}</th>
                                                 <th style="width: 15%;">{{'general.description'|translate}}</th>
                                                 <th style="width: 1%;">{{'general.procedures'|translate}}</th>
                                             </tr>
@@ -231,7 +229,7 @@
 
                                                     </select>
                                                 </td>
-                                               
+
                                                 <td>
                                                     <div class="input-group">
                                                         <input type="number" required class="form-control required"
@@ -259,16 +257,17 @@
                                                     <div class="input-group ">
                                                         <input type="number" required class="form-control required"
                                                             disabled="disabled" formControlName="transactionFactor"
-                                                            name="transactionFactor"  style="width: 70px;">
+                                                            name="transactionFactor" style="width: 70px;">
                                                     </div>
 
                                                 </td>
                                                 <td *ngIf="isMultiCurrency==true">
 
-                                                    <div class="input-group " >
+                                                    <div class="input-group ">
                                                         <input type="number" required class="form-control required"
                                                             disabled="disabled" formControlName="currencyLocal"
-                                                            name="currencyLocal" [(ngModel)]="currencyLocal" style="width: 70px;">
+                                                            name="currencyLocal" [(ngModel)]="currencyLocal"
+                                                            style="width: 70px;">
                                                     </div>
 
                                                 </td>

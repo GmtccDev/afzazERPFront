@@ -385,6 +385,7 @@
 																	<td>{{'bill.bill-type' | translate}}</td>
 																	<td>{{'general.net' | translate}}</td>
 																	<td style="width:150px;">{{'general.paid' | translate}}</td>
+																	<!-- <td>{{'general.amount' | translate}}</td> -->
 																	<td>{{'general.remaining' | translate}}</td>
 
 																</thead>
@@ -407,10 +408,10 @@
 																	<td>
 																		{{item.net}}
 																	</td>
+																	<!-- <td>
+																		{{item.paid}}
+																	</td> -->
 																	<td>
-																		<!-- {{item.paid}} -->
-																		<!-- <input type="text" class="form-control" [(ngModel)]="item.remaining" > -->
-
 																		<input type="number" required
 																			class="form-control required"
 																			(keypress)="numberOnly($event,i)"

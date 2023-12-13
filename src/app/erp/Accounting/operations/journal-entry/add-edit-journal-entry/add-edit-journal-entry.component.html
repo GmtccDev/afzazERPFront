@@ -8,20 +8,14 @@
             <div class="col-md-12">
                 <div class="card card-absolute">
                     <div class="bg-primary card-header mb-1">
-
                         <div class="form-group position-relative">
-
                             {{codeSerial}}
-
-
                         </div>
                     </div>
                     <div class="card-body mt-4">
-
                         <form [formGroup]="journalEntryForm" id="journalEntrySubmit" class="tabs-form">
                             <div class="main-branch ranoo">
                                 <div class="wrapper-title">
-
                                     <h3>{{'component-names.journalEntry-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
@@ -118,26 +112,26 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-2" *ngIf="showDetails">
-                                            <label for="type" class="label-name">{{'general.type'|translate}} : </label>
-                                            <div class="form-group position-relative">
-                                                <!-- <a (click)="onViewClicked()"  class="link-style" >{{type}}</a> -->
-                                                <span class="customLink px-3 b-r-3 bg-light-primary" (click)="onViewClicked()">{{type}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-1" *ngIf="showDetails">
-                                            <label for="type" class="label-name">{{'general.type-code'|translate}} :
-											</label>
-                                            <div class="form-group position-relative">
-                                                {{parentTypeCode}}
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-2" *ngIf="showDetails">
-                                            <label for="setting" class="label-name">{{'general.setting'|translate}}
+                                            <label for="setting" class="label-name">{{'general.reference-type'|translate}}
 												:</label>
                                             <div class="form-group position-relative">
                                                 <label>{{setting}}</label>
                                             </div>
                                         </div>
+                                        <div class="col-12 col-md-2" *ngIf="showDetails">
+                                            <label for="type" class="label-name">{{'general.reference'|translate}} : </label>
+                                            <div class="form-group position-relative">
+                                                <span class="customLink px-3 b-r-3 bg-light-primary" (click)="onViewClicked()">{{type}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-1" *ngIf="showDetails">
+                                            <label for="type" class="label-name">{{'general.reference-no'|translate}} :
+											</label>
+                                            <div class="form-group position-relative">
+                                                {{parentTypeCode}}
+                                            </div>
+                                        </div>
+                                       
 
                                         <div class="align-items-center col-12 col-md-6 d-flex justify-content-start gap-5">
                                             <div class="media">

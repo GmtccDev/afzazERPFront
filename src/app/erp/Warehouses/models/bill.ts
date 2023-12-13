@@ -130,4 +130,5 @@ export class BillPayment
     netAfterTax: number;
     paid: number | undefined;
     remaining: number;
+    amount:number|undefined;
 }
