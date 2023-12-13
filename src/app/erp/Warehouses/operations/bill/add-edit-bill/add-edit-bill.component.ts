@@ -237,7 +237,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getPurchasesAccounts(),
       this.getAccounts(),
       this.getCostCenters(),
-      //this.getBillTypes(),
+      this.getBillTypes(),
       this.getBills(),
       this.getSalesPersons(),
       this.getStores(),
@@ -386,6 +386,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       code: REQUIRED_VALIDATORS,
       date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       deliveryDate: [this.dateService.getCurrentDate()],
+      delay:null,
       supplierId: null,
       supplierReference: '',
       customerId: null,
@@ -608,6 +609,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             fiscalPeriodId: res.response?.fiscalPeriodId,
             code: type == 1 ? res.response?.code : this.billForm.value.code,
             date: this.dateService.getDateForCalender(res.response?.date),
+            delay: res.response?.delay,
             supplierId: res.response?.supplierId,
             supplierReference: res.response?.supplierReference,
             customerId: res.response?.customerId,
@@ -1104,6 +1106,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
             this.billTypesList = res.response.items
 
           }
@@ -1454,7 +1457,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
 
-    console.log("bill item", this.billItem)
     this.bill!.billItems = this.billItem;
 
 
@@ -1551,6 +1553,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       code: this.billForm.controls["code"].value,
       fiscalPeriodId: this.billForm.controls["fiscalPeriodId"].value,
       date: this.dateService.getDateForInsert(this.billForm.controls["date"].value),
+      delay: this.billForm.controls["delay"].value,
       supplierId: this.billForm.controls["supplierId"].value,
       supplierReference: this.billForm.controls["supplierReference"].value,
       customerId: this.billForm.controls["customerId"].value,
@@ -2693,6 +2696,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
       this.selectedBillItemTax = [];
       this.selectedBillItem.totalBeforeTax = Number(this.selectedBillItem.quantity) * Number(this.selectedBillItem.price);
+      this.selectedBillItem.total = this.selectedBillItem.totalBeforeTax;
+
       if (this.billType.calculatingTax == true) {
         this.selectedBillItem.totalTax = 0;
 
@@ -2734,6 +2739,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.selectedBillItemTax = [];
       this.billItem[i].totalTax = 0;
       this.billItem[i].totalBeforeTax = Number(this.billItem[i].quantity) * Number(this.billItem[i].price);
+      this.billItem[i].total = Number(this.billItem[i].totalBeforeTax);
       if (this.billType.calculatingTax == true) {
         if (this.billType.calculatingTaxManual != true) {
 

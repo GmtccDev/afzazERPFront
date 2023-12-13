@@ -523,7 +523,8 @@
         "cheque-date": "تاريخ الشيك",
         "cheque-due-date": "تاريخ أستحقاق الشيك",
         "bill-payments": "تسديدات الفواتير",
-        "return": "المرتجع"
+        "return": "المرتجع",
+        "delay-days":"المهلة (أيام)"
 
 
 

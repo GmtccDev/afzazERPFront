@@ -8,6 +8,7 @@ export class Bill {
     billTypeId: number;
     fiscalPeriodId: number|undefined;
     date: any;
+    delay:number|undefined;
     supplierId: number | undefined;
     supplierReference: string | undefined;
     customerId: number | undefined;

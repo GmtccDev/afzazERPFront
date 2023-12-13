@@ -174,7 +174,7 @@
 											<div class="input-group form-group">
 												<input type="number" [(ngModel)]="currencyFactor" required
 													class="form-control required" formControlName="currencyFactor"
-													name="currencyFactor" style="width: 70px;" >
+													name="currencyFactor" style="width: 70px;">
 											</div>
 										</div>
 
@@ -188,7 +188,7 @@
 												<input type="text" class="form-control icon-branch"
 													[ngClass]="{'is-invalid':f['voucherTotalLocal'].errors || f['voucherTotalLocal'].invalid}"
 													name="voucherTotalLocal" formControlName="voucherTotalLocal"
-													[(ngModel)]="voucherTotalLocal" (keyup)="getVoucherTotal()" >
+													[(ngModel)]="voucherTotalLocal" (keyup)="getVoucherTotal()">
 												<div *ngIf="(f['voucherTotalLocal'].touched || f['voucherTotalLocal'].dirty ) && f['voucherTotalLocal'].invalid"
 													class="validation alert-danger position-absolute">
 													<i class="fa fa-close "></i>
@@ -229,7 +229,8 @@
 											<span class="text-danger">*</span>
 											<div class="d-flex">
 												<ng-select class="flex-grow-1" formControlName="beneficiaryId"
-													name='beneficiaryId' id="beneficiaryId" (change)="getBillPaymentsByBeneficiaryId(simpleVoucherForm.value.beneficiaryId)">
+													name='beneficiaryId' id="beneficiaryId"
+													(change)="getBillPaymentsByBeneficiaryId(simpleVoucherForm.value.beneficiaryId)">
 													<ng-option *ngFor="let beneficiary of beneficiariesList"
 														[value]="beneficiary.id">
 														{{lang=="en"?beneficiary.nameEn:beneficiary.nameAr}}
@@ -383,7 +384,7 @@
 																	<td>{{'bill.bill-code' | translate}}</td>
 																	<td>{{'bill.bill-type' | translate}}</td>
 																	<td>{{'general.net' | translate}}</td>
-																	<td>{{'general.paid' | translate}}</td>
+																	<td style="width:150px;">{{'general.paid' | translate}}</td>
 																	<td>{{'general.remaining' | translate}}</td>
 
 																</thead>
@@ -392,20 +393,31 @@
 																		{{i + 1}}
 																	</td>
 																	<td>
-																		<input type="checkbox" (change)="selectBillPayment(item,$event)">
+																		<input type="checkbox"
+																			(change)="selectBillPayment(item,$event)">
 																	</td>
 																	<td>
 																		{{item.code}}
 																	</td>
 																	<td>
-																		{{lang=='ar' ? item.billTypeAr : item.billTypeEn}}
+																		{{lang=='ar' ? item.billTypeAr :
+																		item.billTypeEn}}
 
 																	</td>
 																	<td>
 																		{{item.net}}
 																	</td>
 																	<td>
-																		{{item.paid}}
+																		<!-- {{item.paid}} -->
+																		<!-- <input type="text" class="form-control" [(ngModel)]="item.remaining" > -->
+
+																		<input type="number" required
+																			class="form-control required"
+																			(keypress)="numberOnly($event,i)"
+																			(change)="onInput($event.target.value,i)"
+																			[(ngModel)]="item.paid" name="item.paid"
+																			style="width: 150px;">
+
 																	</td>
 																	<td>
 																		{{item.remaining}}
