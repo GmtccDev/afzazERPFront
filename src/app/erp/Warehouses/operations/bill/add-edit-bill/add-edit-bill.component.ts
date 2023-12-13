@@ -237,7 +237,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.getPurchasesAccounts(),
       this.getAccounts(),
       this.getCostCenters(),
-      //this.getBillTypes(),
+      this.getBillTypes(),
       this.getBills(),
       this.getSalesPersons(),
       this.getStores(),
@@ -1106,6 +1106,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
+            debugger
             this.billTypesList = res.response.items
 
           }
@@ -1456,7 +1457,6 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
     });
 
-    console.log("bill item", this.billItem)
     this.bill!.billItems = this.billItem;
 
 
@@ -2696,6 +2696,8 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     if (this.selectedBillItem.quantity > 0 && this.selectedBillItem.price > 0) {
       this.selectedBillItemTax = [];
       this.selectedBillItem.totalBeforeTax = Number(this.selectedBillItem.quantity) * Number(this.selectedBillItem.price);
+      this.selectedBillItem.total = this.selectedBillItem.totalBeforeTax;
+
       if (this.billType.calculatingTax == true) {
         this.selectedBillItem.totalTax = 0;
 
@@ -2737,6 +2739,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.selectedBillItemTax = [];
       this.billItem[i].totalTax = 0;
       this.billItem[i].totalBeforeTax = Number(this.billItem[i].quantity) * Number(this.billItem[i].price);
+      this.billItem[i].total = Number(this.billItem[i].totalBeforeTax);
       if (this.billType.calculatingTax == true) {
         if (this.billType.calculatingTaxManual != true) {
 
