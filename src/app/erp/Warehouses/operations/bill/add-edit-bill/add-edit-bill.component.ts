@@ -3141,7 +3141,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
             debugger
             this.selectedBillItem.billDynamicDeterminants = result;
 
-            this.billItem[i].billDynamicDeterminants = this.selectedBillItem.billDynamicDeterminants;
+         
           }
         });
     }

@@ -87,3 +87,14 @@ export class DeterminantDataDto {
   billDynamicDeterminantSerial:any
   quantity: number | null;
 }
+export interface OriginalData {
+  key: number;
+  value: {
+    billId: number | null;
+    billItemId: number | null;
+    billDynamicDeterminantSerial: number;
+    determinantsData: DeterminantDataDto[];
+    quantity: number | null;
+    itemCardDeterminantListDto: any; // The type is not specified in your example
+  };
+}

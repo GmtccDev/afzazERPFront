@@ -52,10 +52,10 @@ export class BillDynamicDeterminantComponent implements OnInit {
             this.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
             this.determinantsData = res.response.dynamicDeterminantListDto;
             this.insertBillDynamicDeterminant.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
-            
+
             if (this.action == "Edit") {
-              for (let i = 0; i < (this.determinantsData.length/this.itemCardDeterminantListDto.length); i++)
-               {    this.addItem();
+              for (let i = 0; i < (this.determinantsData.length / this.itemCardDeterminantListDto.length); i++) {
+                this.addItem();
               }
             }
             else if (this.insertBillDynamicDeterminant.determinantsData.length == 0) {
@@ -98,17 +98,17 @@ export class BillDynamicDeterminantComponent implements OnInit {
 
   }
   createObject(item, value, valueType, determinantId) {
+
     return {
       billId: item.billId,
       billItemId: item.billItemId,
       determinantId: determinantId,
-      determinantsMaster: null,
       id: item.id,
       itemCardId: item.itemCardId,
       value: value,
       valueType: valueType,
       billDynamicDeterminantSerial: item.billDynamicDeterminantSerial,
-      quantity:item.quantity
+      quantity: item.quantity,
     };
   }
   insertBillDynamic() {
@@ -118,12 +118,13 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.insertBillDynamicDeterminant.determinantsData = this.insertBillDynamicDeterminant.determinantsData.filter(item => {
       return item.numberValue !== null || item.dateValue != null || item.checkedValue != null || item.textValue != null || item.selectedValue != null;
     });
-debugger
+    debugger
     this.insertBillDynamicDeterminant.determinantsData.forEach((item) => {
 
       if (item.checkedValue != null) {
         restructuredData.push(this.createObject(item, item.checkedValue, 5, item.checkedValueId));
         item.checkedValue = null;
+
       }
       if (item.textValue != null) {
         restructuredData.push(this.createObject(item, item.textValue, 3, item.textValueId));
@@ -145,7 +146,7 @@ debugger
       }
     });
 
-
+    console.log(restructuredData);
     this.dialogRef.close(restructuredData);
 
 
@@ -159,10 +160,10 @@ debugger
     this.dialog.closeAll();
   }
   addItem() {
-    
+
     let i = this.insertBillDynamicDeterminant.determinantsData.length + 1;
     this.insertBillDynamicDeterminant.determinantsData.push({
-     
+
       id: null,
       determinantId: null,
 
@@ -182,8 +183,8 @@ debugger
 
       checkedValue: null,
       checkedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId,
-      billDynamicDeterminantSerial:i,
-      quantity:0
+      billDynamicDeterminantSerial: i,
+      quantity: 0
     });
 
   }
