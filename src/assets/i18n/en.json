@@ -266,7 +266,8 @@
         "cheque-date": "Cheque Date",
         "cheque-due-date": "Cheque Due Date",
         "bill-payments": "Bill Payments",
-        "return": "Return"
+        "return": "Return",
+        "delay-days":"Delay (days)"
 
 
 

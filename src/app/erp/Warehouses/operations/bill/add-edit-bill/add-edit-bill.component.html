@@ -14,7 +14,7 @@
                                     <h3>{{'bill.bill-information'|translate}}</h3>
                                     <hr>
                                     <div class="row ">
-                                        <div class="col-md-6 col-12 ">
+                                        <div class="col-md-3 col-12 ">
                                             <label for="code" class="label-name">
                                                 {{'general.code'|translate}}
                                             </label>
@@ -35,7 +35,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="date" class="label-name">
                                                 {{'general.date'|translate}}
                                             </label>
@@ -57,7 +57,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="deliveryDate" class="label-name">
                                                 {{'general.delivery-date'|translate}}
                                             </label>
@@ -69,7 +69,18 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
+                                        <div class="col-md-3 col-12 ">
+                                            <label for="delay" class="label-name">
+                                                {{'general.delay-days'|translate}}
+                                            </label>
+                                          
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control icon-branch" name="delay"
+                                                    formControlName="delay">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
                                             <label for="supplierId" class="label-name">
                                                 {{'bill.supplier'|translate}}
                                             </label>
@@ -92,7 +103,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==2 || billTypeKind==4">
                                             <label for="supplierReference"
                                                 class="label-name">{{'bill.supplier-reference'|translate}}</label>
                                             <div class="form-group position-relative">
@@ -101,7 +112,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==1 || billTypeKind==3">
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==1 || billTypeKind==3">
                                             <label for="customerId" class="label-name">
                                                 {{'bill.customer'|translate}}
                                             </label>
@@ -124,7 +135,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="payWay" class="label-name">
                                                 {{'general.pay-way'|translate}}
                                             </label>
@@ -142,7 +153,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="shipMethod" class="label-name">
                                                 {{'general.ship-method'|translate}}
                                             </label>
@@ -155,7 +166,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="shipKind" class="label-name">
                                                 {{'general.ship-kind'|translate}}
                                             </label>
@@ -168,7 +179,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="referenceId" class="label-name">
                                                 {{'general.reference'|translate}}
                                             </label>
@@ -188,7 +199,7 @@
                                         </div>
 
 
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="referenceNo" class="label-name">
                                                 {{'general.reference-no'|translate}}
                                             </label>
@@ -213,7 +224,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="salesPersonId" class="label-name">
                                                 {{'general.sales-person'|translate}}
                                             </label>
@@ -235,7 +246,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="storeId" class="label-name">
                                                 {{'bill.store'|translate}}
                                             </label>
@@ -264,7 +275,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="currencyId" class="label-name">
                                                 {{'general.currency'|translate}}
                                             </label>
@@ -302,7 +313,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="projectId" class="label-name">{{'general.project'|translate}}
                                             </label>
                                             <div class="d-flex">
@@ -322,7 +333,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="costCenterId" class="label-name">
                                                 {{'general.cost-center'|translate}}
                                             </label>
@@ -344,7 +355,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="notes" class="label-name">
                                                 {{'general.notes'|translate}}
                                             </label>
@@ -352,7 +363,7 @@
                                                 name='notes'></textarea>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-3 col-12">
                                             <label for="cashAccountId" class="label-name">
                                                 {{'general.cash-account'|translate}}
                                             </label>
@@ -396,7 +407,7 @@
 
                                         </div> -->
 
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==1">
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==1">
                                             <label for="salesAccountId" class="label-name">
                                                 {{'general.sales-account'|translate}}
                                             </label>
@@ -417,7 +428,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==3">
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==3">
                                             <label for="salesReturnAccountId" class="label-name">
                                                 {{'general.sales-return-account'|translate}}
                                             </label>
@@ -439,7 +450,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==2">
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==2">
                                             <label for="purchasesAccountId" class="label-name">
                                                 {{'general.purchases-account'|translate}}
                                             </label>
@@ -460,7 +471,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6 col-12" *ngIf="billTypeKind==4">
+                                        <div class="col-md-3 col-12" *ngIf="billTypeKind==4">
                                             <label for="purchasesReturnAccountId" class="label-name">
                                                 {{'general.purchases-return-account'|translate}}
                                             </label>
@@ -697,8 +708,8 @@
                                                                         placeholder="{{'general.search'|translate}}"
                                                                         [(ngModel)]="selectedBillItem.itemName"
                                                                         [ngModelOptions]="{standalone: true}"
-                                                                        
-                                                                        (keydown.Enter)="openItemSearchDialog(-1)"  (contextmenu)="onRightClick($event,i)">
+                                                                        (keydown.Enter)="openItemSearchDialog(-1)"
+                                                                        (contextmenu)="onRightClick($event,i)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"

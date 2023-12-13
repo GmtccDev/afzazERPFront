@@ -44,7 +44,7 @@ export class BillServiceProxy {
     getAllNotGeneratedEntryBills(): Observable<any> {
         return this.http.get<any>(this.baseUrl + "/api/Bill/getNotGeneratedEntryBills?");
     }
-    getBillsByParams(payWay:any,billKind:any,customerId:any,supplierId:any): Observable<any> {
+    GetBillPaymentsByParams(payWay:any,billKind:any,customerId:any,supplierId:any): Observable<any> {
           
         let params = new HttpParams();
         params = params.append('PayWay', payWay);
@@ -52,7 +52,7 @@ export class BillServiceProxy {
         params = params.append('CustomerId', customerId);
         params = params.append('SupplierId', supplierId);
 
-        return this.http.get<any>(this.baseUrl + "/api/Bill/getBills?", { params: params });
+        return this.http.get<any>(this.baseUrl + "/api/Bill/GetBillPayments?", { params: params });
     }
   
     allBills(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
