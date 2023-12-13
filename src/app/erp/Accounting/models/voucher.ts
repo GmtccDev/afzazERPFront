@@ -76,6 +76,7 @@ export class BillPay {
     net: number;
     return: number | undefined;
     paid: number;
+    amount: number|undefined;
     remaining: number;
 
 

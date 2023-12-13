@@ -302,19 +302,19 @@ export class SimpleVoucherComponent implements OnInit, OnDestroy, AfterViewInit 
         next: (res: any) => {
           resolve();
 
-          if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
+          // if (this.fiscalPeriodStatus == FiscalPeriodStatus.Opened) {
 
-            let _date = res.response.voucherDate;
-            if (this.accountingPeriods != null) {
-              this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
-              if (this.accountingPeriodCheckDate != undefined) {
-                this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
-                this.errorClass = 'errorMessage';
-                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                return;
-              }
-            }
-          }
+          //   let _date = res.response.voucherDate;
+          //   if (this.accountingPeriods != null) {
+          //     this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+          //     if (this.accountingPeriodCheckDate != undefined) {
+          //       this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+          //       this.errorClass = 'errorMessage';
+          //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          //       return;
+          //     }
+          //   }
+          // }
           const modalRef = this.modalService.open(MessageModalComponent);
           modalRef.componentInstance.message = this.translate.instant('messages.confirm-delete');
           modalRef.componentInstance.title = this.translate.instant('messageTitle.delete');
@@ -322,13 +322,13 @@ export class SimpleVoucherComponent implements OnInit, OnDestroy, AfterViewInit 
           modalRef.componentInstance.isYesNo = true;
           modalRef.result.then((rs) => {
             if (rs == 'Confirm') {
-              if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-                this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-                this.errorClass = 'errorMessage';
-                this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-                return;
-              }
-              else {
+              // if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+              //   this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+              //   this.errorClass = 'errorMessage';
+              //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              //   return;
+              // }
+              // else {
 
                 this.spinner.show();
                 let sub = this.voucherService.deleteVoucher(this.voucherTypeId, id).subscribe(
@@ -339,9 +339,9 @@ export class SimpleVoucherComponent implements OnInit, OnDestroy, AfterViewInit 
                   });
                 this.subsList.push(sub);
                 this.spinner.hide();
-              }
-            }
-          })
+              //}
+             }
+           })
         }
       }
       )
@@ -457,15 +457,15 @@ export class SimpleVoucherComponent implements OnInit, OnDestroy, AfterViewInit 
         this.sharedServices.changeToolbarPath(this.toolbarPathData);
 
       } else if (event.actionName == 'Delete') {
-        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-          this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-          this.errorClass = 'errorMessage';
-          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-          return;
-        }
-        else {
+        // if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+        //   this.errorMessage = this.translate.instant("voucher.no-delete-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+        //   this.errorClass = 'errorMessage';
+        //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        //   return;
+        // }
+        // else {
           this.showConfirmDeleteMessage(event.item.id);
-        }
+       // }
       }
     }
   }
