@@ -176,6 +176,7 @@
         "report-options": "Report Options",
         "default-cash-account": "Default Cash Account",
         "amount": "amount",
+        "payment":"Payment",
         "dueDate": "Due date",
         "add-new-row": "Add New Row",
         "confirm": "Confirm",
@@ -666,7 +667,9 @@
         "no-add-voucher-fiscal-period-choose-open-fiscal-period": "You can not add a voucher.You Should choose a open fiscal year from the settings",
         "no-update-voucher-fiscal-period-closed": "You can not update the voucher to this closed fiscal year",
         "no-delete-voucher-fiscal-period-closed": "You can not delete the voucher to this closed fiscal year",
-        "no-generate-entry-voucher-fiscal-period-closed": "You can not generate entry to this voucher to this closed fiscal year"
+        "no-generate-entry-voucher-fiscal-period-closed": "You can not generate entry to this voucher to this closed fiscal year",
+        "show-paid-bills":"Show Paid Bills",
+        "bill-paid":"Paid Bills"
 
 
     },

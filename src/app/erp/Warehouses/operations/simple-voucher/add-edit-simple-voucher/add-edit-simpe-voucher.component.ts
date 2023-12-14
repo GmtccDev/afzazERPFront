@@ -30,6 +30,7 @@ import { AccountingPeriodServiceProxy } from '../../../../Accounting/services/ac
 import { stringIsNullOrEmpty } from '../../../../../shared/helper/helper';
 import { BillServiceProxy } from '../../../services/bill.service';
 import { BillPayment } from '../../../models/bill';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -44,16 +45,23 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   simpleVoucherForm: FormGroup = new FormGroup({});
   simpleVoucherTypesList: any;
   vouchersList: any;
+  fiscalPeriodList: any;
+
   filterSimpleVouchersList
   showSearchSalesPersonModal = false;
+  showPaidBills = false;
+  fiscalPeriodcheckDate: any;
+  showDetails: boolean = false;
+  accountingPeriodCheckDate: any;
   salesPersonsList: any;
   routeSalesPersonApi = 'SalesPersonCard/get-ddl?'
+  routeFiscalPeriodApi = "FiscalPeriod/get-ddl?"
+
   currencyId: any;
   cashAccountId: any;
   voucherkindId: any;
   serialTypeId: any;
   accountingPeriods: any;
-  accountingPeriodCheckDate: any;
   createFinancialEntryId: number;
   voucherDate!: DateModel;
   chequeDate!: DateModel;
@@ -84,6 +92,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   billPay: BillPay[] = [];
   billInstallmentPay: BillInstallmentPay[] = [];
   billPayment: any;
+  billPaid: any;
   beneficiariesList: any;
   beneficiaryTypeId: any;
   fromDate: any;
@@ -101,7 +110,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   routeCustomerApi = 'CustomerCard/get-ddl?'
   routeSupplierApi = 'SupplierCard/get-ddl?'
   routeAccountApi = 'Account/GetLeafAccounts?'
-  routeVoucherApi = 'voucher/get-ddl?'
+  routeVoucherApi = 'Voucher/get-ddl?'
   cashBankAccountsList: any;
   beneficiaryAccountsList: any;
   filterBeneficiaryList: any;
@@ -155,9 +164,11 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     private fiscalPeriodService: FiscalPeriodServiceProxy,
     private reportViewerService: ReportViewerService,
     private accountService: AccountServiceProxy,
-    private dateConverterService: DateConverterService,
     private accountingPeriodServiceProxy: AccountingPeriodServiceProxy,
     private billService: BillServiceProxy,
+    private dateConverterService: DateConverterService,
+    private datePipe: DatePipe,
+
 
   ) {
     this.defineSimpleVoucherForm();
@@ -184,7 +195,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       this.getCustomers(),
       this.getSuppliers(),
       this.getSalesPersons(),
-      this.getVouchers(),
+      this.getFiscalPeriod()
+
 
 
     ]).then(a => {
@@ -212,7 +224,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
         if (this.id) {
           localStorage.setItem("itemId", this.id)
-          this.getSimpleVoucherById(this.id).then(a => {
+          this.getSimpleVoucherById(this.id, 1).then(a => {
             this.getVoucherBillPay(this.id);
             this.sharedServices.changeButton({ action: 'Update', disabledPrint: false } as ToolbarData)
             this.spinner.hide();
@@ -321,14 +333,40 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
     });
   }
-  getVouchers() {
+  getVoucherData(referenceId: number) {
+    this.getSimpleVoucherById(referenceId, 2);
+  }
+  getSimpleVouchers(voucherTypeId: number) {
     return new Promise<void>((resolve, reject) => {
-      let sub = this.publicService.getDdl(this.routeVoucherApi).subscribe({
+      let sub = this.voucherService.allVouchers(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            this.vouchersList = res.response;
+            this.vouchersList = res.response.items.filter(x => x.voucherTypeId == voucherTypeId && x.branchId == this.branchId && x.companyId == this.companyId && x.fiscalPeriodId == this.fiscalPeriodId)
 
           }
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
+  getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+          }
+
+
           resolve();
 
         },
@@ -410,7 +448,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherTypeService.allVoucherTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            this.simpleVoucherTypesList = res.response.items.filter(x => x.voucherKindId == voucherkindId);
+            this.simpleVoucherTypesList = res.response.items.filter(x => x.voucherKindId == voucherkindId && x.companyId == this.companyId && this.branchId == this.branchId);
 
           }
           resolve();
@@ -428,9 +466,10 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getSimpleVouchersByReferenceId(ReferenceId: any) {
+    debugger
     this.filterSimpleVouchersList = this.vouchersList.filter(x => x.voucherTypeId == ReferenceId);
   }
-  getSimpleVoucherById(id: any) {
+  getSimpleVoucherById(id: any, type: number) {
     this.lang = localStorage.getItem("language");
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.getVoucher(id).subscribe({
@@ -438,11 +477,11 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
           resolve();
           this.getBeneficiary(res.response?.voucherDetail[0].beneficiaryTypeId);
           this.simpleVoucherForm.setValue({
-            id: res.response?.id,
+            id: type == 1 ? res.response?.id : this.id,
             companyId: res.response?.companyId,
             branchId: res.response?.branchId,
-            voucherTypeId: res.response?.voucherTypeId,
-            code: res.response?.code,
+            voucherTypeId: type == 1 ? res.response?.voucherTypeId : this.voucherTypeId,
+            code: type == 1 ? res.response?.code : this.simpleVoucherForm.value.code,
             voucherDate: this.dateService.getDateForCalender(res.response?.voucherDate),
             cashAccountId: res.response?.cashAccountId + "",
             costCenterId: res.response?.costCenterId,
@@ -452,8 +491,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
             voucherTotalLocal: res.response?.voucherTotalLocal,
             currencyFactor: res.response?.currencyFactor,
             fiscalPeriodId: res.response?.fiscalPeriodId,
-            referenceId: res.response?.referenceId,
-            referenceNo: res.response?.referenceNo,
+            referenceId: type == 1 ? res.response?.referenceId : this.simpleVoucherForm.value.referenceId,
+            referenceNo: type == 1 ? res.response?.referenceNo : this.simpleVoucherForm.value.referenceNo,
             paymentType: res.response?.paymentType,
             chequeNumber: res.response?.chequeNumber,
             chequeDate: this.dateService.getDateForCalender(res.response?.chequeDate),
@@ -462,7 +501,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
             salesPersonId: res.response?.salesPersonId,
             beneficiaryTypeId: res.response?.voucherDetail[0].beneficiaryTypeId,
             beneficiaryId: res.response?.voucherDetail[0].beneficiaryId,
-          //  beneficiaryAccountId: res.response?.voucherDetail[0].beneficiaryAccountId,
 
 
           });
@@ -717,13 +755,34 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onInput(event, i) {
+    debugger
+    this.billPayment[i].amount = Number(event);
+    this.billPayment[i].remaining = this.billPayment[i].remaining2 - Number(event);
 
-    this.billPayment[i].paid = Number(event);
+
   }
 
- 
+
 
   setInputData() {
+    if (this.id == 0) {
+      this.billPayment.forEach(element => {
+        var paid = 0;
+        var amount = 0;
+        var remainig = 0;
+        if (element.paid > 0) {
+          paid = element.paid;
+        }
+        if (element.amount > 0) {
+          amount = element.amount;
+        }
+        if (element.remainig > 0) {
+          remainig = element.remainig;
+        }
+        element.paid = paid + amount;
+
+      });
+    }
     this.simpleVoucher.voucherDetail.push({
       id: 0,
       voucherId: 0,
@@ -767,14 +826,13 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       salesPersonId: this.simpleVoucherForm.controls["salesPersonId"].value,
 
       voucherDetail: this.simpleVoucher.voucherDetail ?? [],
-      billPay: this.simpleVoucher.billPay ?? [],
+      // billPay: this.simpleVoucher.billPay ?? [],
+      billPay: this.billPayment ?? [],
+
       billInstallmentPay: this.simpleVoucher.billInstallmentPay ?? [],
 
 
     };
-
-
-
 
 
 
@@ -785,7 +843,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     this.simpleVoucher.chequeDueDate = this.dateService.getDateForInsert(this.simpleVoucherForm.controls["chequeDueDate"].value);
 
     return new Promise<void>((resolve, reject) => {
-
+      debugger
       let sub = this.voucherService.createVoucherAndRelations(this.simpleVoucher.voucherTypeId, this.simpleVoucher).subscribe({
         next: (result: any) => {
           this.defineSimpleVoucherForm();
@@ -825,111 +883,114 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
     });
   }
-  getClosedAccountingPeriodsByFiscalPeriodId(fiscalPeriodId: any) {
-    return new Promise<void>((resolve, reject) => {
-      let sub = this.accountingPeriodServiceProxy.allAccountingPeriods(undefined, undefined, undefined, undefined, undefined).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.accountingPeriods = res.response.items.filter(x => x.companyId == this.companyId && x.fiscalPeriodId == fiscalPeriodId);
+
+  onSave() {
+    if (this.simpleVoucherForm.valid) {
+      if (this.fiscalPeriodId > 0) {
+        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+          this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+        let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.voucherDate);
+        if (this.accountingPeriods != null) {
+          this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
+          if (this.accountingPeriodCheckDate != undefined) {
+
+            this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
+            this.errorClass = 'errorMessage';
+            this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+            return;
+          }
+        }
+
+        let checkDate = this.dateService.getDateForInsert(this.voucherDate)
+        const date = new Date(checkDate);
+        const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+        this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+
+        if (this.fiscalPeriodcheckDate == undefined) {
+          this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
+      }
+
+      var i = 0;
+      if (this.createFinancialEntryId == CreateFinancialEntryEnum['Create the entry automatically']) {
+
+        this.getAccountBalance(this.cashAccountId).then(a => {
+          var account = this.cashAndBankAccountsList.find(x => x.id == this.cashAccountId);
+
+          var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+          if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+            if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
+
+
+              this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
+
+          }
+          else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+            if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
+
+              this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
+
+
           }
 
 
-          resolve();
-
-        },
-        error: (err: any) => {
-          reject(err);
-        },
-        complete: () => {
-
-        },
-      });
-
-      this.subsList.push(sub);
-    });
-
-  }
-  onSave() {
-    // if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId)) {
-    //   this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
-    //   this.errorClass = 'errorMessage';
-    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-    //   return;
-    // }
-    // if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-    //   if (this.fiscalPeriodStatus != null) {
-
-    //     this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-    //     this.errorClass = 'errorMessage';
-    //     this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-    //     return;
-    //   }
-
-    // }
-    // else {
-
-    //   let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.voucherDate);
-    //   if (this.accountingPeriods != null) {
-    //     this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
-    //     if (this.accountingPeriodCheckDate != undefined) {
-
-    //       this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
-    //       this.errorClass = 'errorMessage';
-    //       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-    //       return;
-    //     }
-    //   }
-    // }
-    // let voucherDate = this.simpleVoucherForm.controls["voucherDate"].value;
-    // let date = this.dateConverterService.getDateTimeForInsertISO_Format(voucherDate);
+        });
 
 
-    // if (!(date >= this.fromDate && date <= this.toDate)) {
+        this.getAccountBalance(this.beneficiaryAccountId).then(a => {
+          var account = this.accountsList.find(x => x.id == this.beneficiaryAccountId);
 
-    //   this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-    //   this.errorClass = 'errorMessage';
-    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-    //   return;
-    // }
+          var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
-    if (this.simpleVoucherForm.valid) {
+          if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
-      var i = 0;
-      // if (this.createFinancialEntryId == CreateFinancialEntryEnum['Create the entry automatically']) {
+            if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
 
-      //   this.getAccountBalance(this.cashAccountId).then(a => {
-      //     var account = this.accountsList.find(x => x.id == this.cashAccountId);
+              this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
 
-      //     var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+          }
+          else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
-      //     if (Number(this.balance) > 0 && account.debitLimit > 0) {
+            if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
 
-      //       if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
-
-
-      //         this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
-      //         this.errorClass = 'errorMessage';
-      //         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //         i++;
-      //       }
-
-      //     }
-      //     else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-
-      //       if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
-
-      //         this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
-      //         this.errorClass = 'errorMessage';
-      //         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //         i++;
-      //       }
+              this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
 
 
-      //     }
+          }
 
 
-      //   });
-      // }
+        });
+
+
+      }
       setTimeout(() => {
         if (i == 0) {
           this.setInputData();
@@ -977,128 +1038,114 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-        
-    // if (this.simpleVoucherForm.valid) {
-     /*  if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId)) {
-        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
-        this.errorClass = 'errorMessage';
-        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        return;
-      }
-      if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
-        this.errorMessage = this.translate.instant("voucher.no-update-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
-        this.errorClass = 'errorMessage';
-        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        return;
-      }
-      else {
+
+    if (this.simpleVoucherForm.valid) {
+      
+      if (this.fiscalPeriodId > 0) {
+        if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
+          this.errorMessage = this.translate.instant("voucher.no-update-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
         let _date = this.dateConverterService.getDateTimeForInsertISO_Format(this.voucherDate);
         if (this.accountingPeriods != null) {
           this.accountingPeriodCheckDate = this.accountingPeriods.find(x => x.fromDate <= _date && x.toDate >= _date);
           if (this.accountingPeriodCheckDate != undefined) {
+
             this.errorMessage = this.translate.instant("general.date-in-closed-accounting-period");
             this.errorClass = 'errorMessage';
             this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
             return;
           }
         }
+
+        let checkDate = this.dateService.getDateForInsert(this.voucherDate)
+        const date = new Date(checkDate);
+        const formattedDate = this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00');
+        this.fiscalPeriodcheckDate = this.fiscalPeriodList.find(x => x.fromDate <= formattedDate && x.toDate >= formattedDate);
+
+        if (this.fiscalPeriodcheckDate == undefined) {
+          this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
+          this.errorClass = 'errorMessage';
+          this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+          return;
+        }
+
       }
-
-      let voucherDate = this.simpleVoucherForm.controls["voucherDate"].value;
-      let date = this.dateConverterService.getDateTimeForInsertISO_Format(voucherDate);
-
-
-      if (!(date >= this.fromDate && date <= this.toDate)) {
-
-        this.errorMessage = this.translate.instant("general.date-out-fiscal-period");
-        this.errorClass = 'errorMessage';
-        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-        return;
-      } */
-
-      
       var i = 0;
-      // if (this.createFinancialEntryId == CreateFinancialEntryEnum['Create the entry automatically']) {
+      if (this.createFinancialEntryId == CreateFinancialEntryEnum['Create the entry automatically']) {
 
-      //   if (this.voucherDetail != null) {
-      //     this.voucherDetail.forEach(element => {
-      //       var oldElement = this.tempVoucherDetail.find(x => x.accountId == element.beneficiaryAccountId);
+        this.getAccountBalance(this.cashAccountId).then(a => {
+          var account = this.cashAndBankAccountsList.find(x => x.id == this.cashAccountId);
 
-      //       if (element.beneficiaryAccountId != null) {
-      //         var value = 0;
-      //         // if (element.debitLocal > 0) {
-      //         //   value = element.debitLocal;
-      //         // }
-      //         // if (element.creditLocal > 0) {
-      //         //   value = element.creditLocal;
+          var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
 
-      //         // }
+          if (Number(this.balance) > 0 && account.debitLimit > 0) {
 
-      //         this.getAccountBalance(element.beneficiaryAccountId).then(a => {
-      //           var account = this.accountsList.find(x => x.id == element.beneficiaryAccountId);
-
-      //           var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-
-      //           if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-      //             if (Number(this.balance) + value - oldElement.debitLocal > account.debitLimit) {
+            if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
 
 
-      //               this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
-      //               this.errorClass = 'errorMessage';
-      //               this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //               i++;
-      //             }
+              this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
 
-      //           }
-      //           else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+          }
+          else if (Number(this.balance) < 0 && account.creditLimit > 0) {
 
-      //             if (-(this.balance) + value - oldElement.creditLocal > account.creditLimit) {
+            if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
 
-      //               this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + this.translate.instant('general.code') + " : " + account.code;
-      //               this.errorClass = 'errorMessage';
-      //               this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //               i++;
-      //             }
-      //           }
-      //         });
-      //       }
-      //     })
-
-      //   }
-      //   this.getAccountBalance(this.cashAccountId).then(a => {
-      //     var account = this.accountsList.find(x => x.id == this.cashAccountId);
-
-      //     var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
-
-      //     if (Number(this.balance) > 0 && account.debitLimit > 0) {
-
-      //       if (Number(this.balance) + this.voucherTotalLocal - this.oldVoucherTotalLocal > account.debitLimit) {
+              this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
 
 
-      //         this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
-      //         this.errorClass = 'errorMessage';
-      //         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //         i++;
-      //       }
-
-      //     }
-      //     else if (Number(this.balance) < 0 && account.creditLimit > 0) {
-
-      //       if (-(this.balance) + this.voucherTotalLocal - this.oldVoucherTotalLocal > account.creditLimit) {
-
-      //         this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
-      //         this.errorClass = 'errorMessage';
-      //         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-      //         i++;
-      //       }
+          }
 
 
-      //     }
+        });
 
 
-      //   });
-      // }
+        this.getAccountBalance(this.beneficiaryAccountId).then(a => {
+          var account = this.accountsList.find(x => x.id == this.beneficiaryAccountId);
+
+          var accountName = this.lang == 'ar' ? account.nameAr : account.nameEn;
+
+          if (Number(this.balance) > 0 && account.debitLimit > 0) {
+
+            if (Number(this.balance) + this.voucherTotalLocal > account.debitLimit) {
+
+              this.errorMessage = this.translate.instant('general.debit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
+
+          }
+          else if (Number(this.balance) < 0 && account.creditLimit > 0) {
+
+            if (-(this.balance) + this.voucherTotalLocal > account.creditLimit) {
+
+              this.errorMessage = this.translate.instant('general.credit-limit-exceed-account') + " : " + accountName + "(" + this.translate.instant('general.cash-account') + ")" + this.translate.instant('general.code') + " : " + account.code;
+              this.errorClass = 'errorMessage';
+              this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+              i++;
+            }
+
+
+          }
+
+
+        });
+
+
+      }
+      
       setTimeout(() => {
         if (i == 0) {
           this.setInputData();
@@ -1111,14 +1158,14 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         }
       }, 1000);
 
-    // }
-    // else {
-    //   this.errorMessage = this.translate.instant("validation-messages.invalid-data");
-    //   this.errorClass = 'errorMessage';
-    //   this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
-    //   return this.simpleVoucherForm.markAllAsTouched();
+    }
+    else {
+      this.errorMessage = this.translate.instant("validation-messages.invalid-data");
+      this.errorClass = 'errorMessage';
+      this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+      return this.simpleVoucherForm.markAllAsTouched();
 
-    // }
+    }
   }
   //#region Tabulator
   subsList: Subscription[] = [];
@@ -1293,8 +1340,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         net: item.net,
         return: 0,
         paid: item.paid,
-        amount:0,
-        remaining: item.remaining - item.paid   
+        amount: 0,
+        remaining: item.remaining - item.paid
       });
       this.voucherTotalLocal += item.paid;
 
@@ -1307,13 +1354,66 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         this.simpleVoucher.billPay.splice(index, 1);
 
       }
-      this.voucherTotalLocal -= item.paid   
+      this.voucherTotalLocal -= item.paid
     }
     this.getVoucherTotal();
   }
 
-  getBillPaymentsByBeneficiaryId(beneficiaryId: number) {
 
+  getBillPaid(event) {
+    debugger
+    this.billPaid = [];
+    if (event.target.checked) {
+      this.showPaidBills = true;
+
+      if (this.voucherkindId == VoucherTypeEnum['Simple Deposit'] && this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
+
+        return new Promise<void>((resolve, reject) => {
+          debugger
+          let sub = this.billService.GetBillPaidByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], this.simpleVoucherForm.value.beneficiaryId, '').subscribe({
+            next: (res: any) => {
+              resolve();
+              debugger
+              this.billPaid = res.response.data
+            },
+            error: (err: any) => {
+              reject(err);
+            },
+            complete: () => {
+            },
+          });
+          this.subsList.push(sub);
+
+        });
+      }
+
+      if (this.voucherkindId == VoucherTypeEnum['Simple Withdrawal'] && this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Supplier) {
+        return new Promise<void>((resolve, reject) => {
+          let sub = this.billService.GetBillPaidByParams(PayWayEnum.Credit, BillKindEnum['Purchases Bill'], '', this.simpleVoucherForm.value.beneficiaryId).subscribe({
+            next: (res: any) => {
+              resolve();
+              this.billPaid = res.response.data
+            },
+            error: (err: any) => {
+              reject(err);
+            },
+            complete: () => {
+            },
+          });
+          this.subsList.push(sub);
+
+        });
+      }
+    }
+    else {
+      this.showPaidBills = false;
+
+    }
+
+  }
+
+  getBillPaymentsByBeneficiaryId(beneficiaryId: number) {
+    debugger
     this.billPayment = [];
 
     if (this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
@@ -1329,7 +1429,19 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         let sub = this.billService.GetBillPaymentsByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], beneficiaryId, '').subscribe({
           next: (res: any) => {
             resolve();
-            this.billPayment = res.response.data
+            debugger
+            if (res.response.data != null) {
+              debugger
+              res.response.data.forEach(element => {
+                debugger
+                element.id = 0;
+                element.billId = element.billId;
+                element.remaining2 = element.remaining;
+                this.billPayment.push(element)
+
+              });
+            }
+            //this.billPayment = res.response.data
           },
           error: (err: any) => {
             reject(err);
@@ -1347,7 +1459,17 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         let sub = this.billService.GetBillPaymentsByParams(PayWayEnum.Credit, BillKindEnum['Purchases Bill'], '', beneficiaryId).subscribe({
           next: (res: any) => {
             resolve();
-            this.billPayment = res.response.data
+            //this.billPayment = res.response.data
+            if (res.response.data != null) {
+              res.response.data.forEach(element => {
+                element.id = 0;
+                element.billId = element.billId;
+                element.remaining2 = element.remaining;
+                this.billPayment.push(element)
+
+              });
+            }
+
           },
           error: (err: any) => {
             reject(err);
@@ -1362,30 +1484,30 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   }
 
   getVoucherBillPay(voucherId: number) {
-    this.billPayment=[];
+    this.billPayment = [];
     return new Promise<void>((resolve, reject) => {
       let sub = this.voucherService.getVouchersBillPays(voucherId).subscribe({
         next: (res: any) => {
           resolve();
+          debugger
           this.billPayment = res.response.data;
-          if(this.billPayment != null)
-          {
-            this.billPayment.forEach(element => {
-              this.simpleVoucher.billPay.push({
-                id: 0,
-                voucherId: 0,
-                billId: element.id,
-                net: element.net ?? 0,
-                return: 0,
-                paid: element.paid ?? 0,
-                amount:element.amount ?? 0,
-                remaining: element.remaining
-              });
-              
-            });
-          }
+          // if (this.billPayment != null) {
+          //   this.billPayment.forEach(element => {
+          //     this.simpleVoucher.billPay.push({
+          //       id: 0,
+          //       voucherId: 0,
+          //       billId: element.id,
+          //       net: element.net ?? 0,
+          //       return: 0,
+          //       paid: element.paid ?? 0,
+          //       amount: element.amount ?? 0,
+          //       remaining: element.remaining
+          //     });
 
-        
+          //   });
+          // }
+
+
         },
         error: (err: any) => {
           reject(err);
@@ -1397,7 +1519,36 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
     });
   }
+  getFiscalPeriod() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.publicService.getDdl(this.routeFiscalPeriodApi).subscribe({
+        next: (res) => {
 
+          if (res.success) {
+
+            this.fiscalPeriodList = res.response.filter(x => x.isActive);
+
+            // this.checkPeriod = res.response.fiscalPeriodStatus;
+            // this.fiscalPeriodName = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn;
+
+          }
+
+
+          resolve();
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+
+        },
+      });
+
+      this.subsList.push(sub);
+    });
+
+  }
   onViewReportClicked(id) {
     localStorage.removeItem("itemId")
     localStorage.setItem("itemId", id)
