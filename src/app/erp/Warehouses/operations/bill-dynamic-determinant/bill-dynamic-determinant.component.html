@@ -14,11 +14,12 @@
                   </button>
             </tr>
             <tr>
+                <th style="width: 10px;">#</th>
                 <th>
                    
                     {{'general.quantity'|translate}}
                 </th>
-                <th style="width: 10px;">#</th>
+              
                 <th *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
                    
                     {{lang=="ar"?key.determinantsMaster.nameAr:key.determinantsMaster.nameEn}}
@@ -30,10 +31,11 @@
         <tbody>
            
             <tr *ngFor="let item of insertBillDynamicDeterminant.determinantsData; let i = index">
+                <td style="width: 10px;">{{ i + 1 }}</td>
                 <ng-container>
                     <input type="number" [(ngModel)]="item.quantity" class="custom-input" />
                 </ng-container>
-                <td style="width: 10px;">{{ i + 1 }}</td>
+              
                 <td *ngFor="let key of insertBillDynamicDeterminant.itemCardDeterminantListDto">
                     <ng-container [ngSwitch]="key.determinantsMaster.valueType">
                         <ng-container *ngSwitchCase="1">

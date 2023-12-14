@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ItemCardServiceProxy } from '../../Services/item-card.service';
-import { BillDynamicDeterminantDto, BillDynamicDeterminantList, DeterminantsMasterDto, InsertBillDynamicDeterminant, ItemCardDeterminantDto } from '../../models/bill-dynamic-determinant';
+import { BillDynamicDeterminantDto, BillDynamicDeterminantList, DeterminantData, DeterminantDataDto, DeterminantsMasterDto, InsertBillDynamicDeterminant, InsertBillDynamicDeterminantDto, ItemCardDeterminantDto } from '../../models/bill-dynamic-determinant';
 import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DateModel } from 'src/app/shared/model/date-model';
@@ -52,29 +52,72 @@ export class BillDynamicDeterminantComponent implements OnInit {
             this.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
             this.determinantsData = res.response.dynamicDeterminantListDto;
             this.insertBillDynamicDeterminant.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
+            console.log(JSON.stringify(this.determinantsData));
 
             if (this.action == "Edit") {
-              for (let i = 0; i < (this.determinantsData.length / this.itemCardDeterminantListDto.length); i++) {
-                this.addItem();
-              }
+              this.insertBillDynamicDeterminant.determinantsData = []
+              //  this.addItem();
+              res.response.dynamicDeterminantListDto.forEach(item => {
+
+                item.determinantsData.forEach(determinant => {
+                  debugger
+                  const existingRow = item.determinantsData.find(row => row.billDynamicDeterminantSerial === determinant.billDynamicDeterminantSerial);
+                  if (existingRow) {
+                    debugger
+                    // Update existing row
+                    // You can decide how you want to handle updates. For now, I'm just updating the quantity.
+              
+                    existingRow.selectedValue = Number(determinant.valueType) === 1 ? determinant.value : null;
+                    existingRow.numberValue = Number(determinant.valueType) === 2 ? determinant.value : null;
+                    existingRow.textValue = Number(determinant.valueType) === 3 ? determinant.value : null;
+                    existingRow.dateValue = Number(determinant.valueType) === 4 ? determinant.value : null;
+                    existingRow.checkedValue = Number(determinant.valueType) === 5 ? determinant.value : null;
+
+                    existingRow.selectedValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 1)?.determinantId;
+
+
+                    existingRow.numberValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 2)?.determinantId;
+
+
+                    existingRow.textValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 3)?.determinantId;
+
+
+                    existingRow.dateValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 4)?.determinantId;
+
+
+                    existingRow.checkedValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId;
+
+
+                  }
+                  else {
+                    determinant.quantity = item.quantity;
+                    this.editItem(determinant);
+                  }
+
+                });
+              });
+              // for (let i = 0; i < this.insertBillDynamicDeterminant.determinantsData.length; i++) {
+              //   
+              //   var date = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 4);
+              //   this.insertBillDynamicDeterminant.determinantsData[i].selectedValue = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 1)?.value;
+              //   this.insertBillDynamicDeterminant.determinantsData[i].numberValue = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 2)?.value;
+              //   this.insertBillDynamicDeterminant.determinantsData[i].textValue = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 3)?.value;
+              //   this.insertBillDynamicDeterminant.determinantsData[i].dateValue = this.dateService.getDateForCalender(date?.value)
+              //   this.insertBillDynamicDeterminant.determinantsData[i].checkedValue = Boolean(this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 5)?.value);
+
+              // }
             }
             else if (this.insertBillDynamicDeterminant.determinantsData.length == 0) {
               this.addItem();
             }
+            if (this.action == "Edit" && this.insertBillDynamicDeterminant.determinantsData.length == 0) {
+              for (let i = 0; i < (this.determinantsData.length / this.itemCardDeterminantListDto.length); i++) {
+                this.addItem();
+              }
+            }
             if (this.insertBillDynamicDeterminant.determinantsData) {
 
-              if (this.action == "Edit") {
-                for (let i = 0; i < this.insertBillDynamicDeterminant.determinantsData.length; i++) {
 
-                  var date = this.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 4);
-                  this.insertBillDynamicDeterminant.determinantsData[i].selectedValue = this.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 1)?.value;
-                  this.insertBillDynamicDeterminant.determinantsData[i].numberValue = this.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 2)?.value;
-                  this.insertBillDynamicDeterminant.determinantsData[i].textValue = this.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 3)?.value;
-                  this.insertBillDynamicDeterminant.determinantsData[i].dateValue = this.dateService.getDateForCalender(date?.value)
-                  this.insertBillDynamicDeterminant.determinantsData[i].checkedValue = Boolean(this.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 5)?.value);
-
-                }
-              }
               console.log(this.insertBillDynamicDeterminant.determinantsData)
             }
 
@@ -118,7 +161,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.insertBillDynamicDeterminant.determinantsData = this.insertBillDynamicDeterminant.determinantsData.filter(item => {
       return item.numberValue !== null || item.dateValue != null || item.checkedValue != null || item.textValue != null || item.selectedValue != null;
     });
-    debugger
+
     this.insertBillDynamicDeterminant.determinantsData.forEach((item) => {
 
       if (item.checkedValue != null) {
@@ -145,9 +188,12 @@ export class BillDynamicDeterminantComponent implements OnInit {
         item.dateValue = null;
       }
     });
+    const resultArray = this.processInputData(restructuredData);
 
-    console.log(restructuredData);
-    this.dialogRef.close(restructuredData);
+    console.log(resultArray);
+    console.log(JSON.stringify(restructuredData));
+    console.log(JSON.stringify(resultArray));
+    this.dialogRef.close(resultArray);
 
 
   }
@@ -161,7 +207,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   }
   addItem() {
 
-    let i = this.insertBillDynamicDeterminant.determinantsData.length + 1;
+    let i = this.insertBillDynamicDeterminant.determinantsData.length;
     this.insertBillDynamicDeterminant.determinantsData.push({
 
       id: null,
@@ -188,8 +234,82 @@ export class BillDynamicDeterminantComponent implements OnInit {
     });
 
   }
+  editItem(determinant) {
+    debugger
+    let i = this.insertBillDynamicDeterminant.determinantsData.length;
+    debugger
+    this.insertBillDynamicDeterminant.determinantsData.push({
+      determinantId: determinant.determinantId,
+      id: determinant.id,
+      value: determinant.value,
+      valueType: Number(determinant.valueType),
+      billDynamicDeterminantSerial: this.insertBillDynamicDeterminant.determinantsData.length,
+      quantity: determinant.quantity,
+      selectedValue: Number(determinant.valueType) === 1 ? determinant.value : null,
+      numberValue: Number(determinant.valueType) === 2 ? determinant.value : null,
+      textValue: Number(determinant.valueType) === 3 ? determinant.value : null,
+      dateValue: Number(determinant.valueType) === 4 ? determinant.value : null,
+      checkedValue: Number(determinant.valueType) === 5 ? determinant.value : null,
+
+      selectedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 1)?.determinantId,
+
+
+      numberValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 2)?.determinantId,
+
+
+      textValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 3)?.determinantId,
+
+
+      dateValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 4)?.determinantId,
+
+
+      checkedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId,
+
+    });
+    console.log(this.insertBillDynamicDeterminant.determinantsData);
+    console.log(JSON.stringify(this.insertBillDynamicDeterminant.determinantsData));
+  }
   deleteItem(i) {
     this.insertBillDynamicDeterminant.determinantsData.splice(i);
     // this.insertBillDynamicDeterminant.determinantsData[i] = null;
   }
+  private addDeterminantDataToDto(dto: InsertBillDynamicDeterminantDto, item: any): void {
+    const determinantData = new DeterminantData();
+    determinantData.determinantId = item.determinantId;
+    determinantData.value = item.value.toString();
+    determinantData.valueType = item.valueType;
+    determinantData.billDynamicDeterminantSerial = item.billDynamicDeterminantSerial;
+    dto.determinantsData.push(determinantData);
+  }
+
+  private createInsertDto(item: any): InsertBillDynamicDeterminantDto {
+    const newInsertDto = new InsertBillDynamicDeterminantDto();
+    newInsertDto.billDynamicDeterminantSerial = item.billDynamicDeterminantSerial;
+    newInsertDto.quantity = item.quantity;
+    const determinantData = new DeterminantData();
+    determinantData.determinantId = item.determinantId;
+    determinantData.value = item.value.toString();
+    determinantData.valueType = item.valueType;
+    determinantData.billDynamicDeterminantSerial = item.billDynamicDeterminantSerial;
+    newInsertDto.determinantsData.push(determinantData);
+
+    return newInsertDto;
+  }
+  processInputData(inputData: any[]): InsertBillDynamicDeterminantDto[] {
+    const insertDtoArray: InsertBillDynamicDeterminantDto[] = [];
+
+    for (const item of inputData) {
+      const insertDto = insertDtoArray.find(dto => dto.billDynamicDeterminantSerial === item.billDynamicDeterminantSerial && dto.quantity === item.quantity);
+
+      if (insertDto) {
+        this.addDeterminantDataToDto(insertDto, item);
+      } else {
+        const newInsertDto = this.createInsertDto(item);
+        insertDtoArray.push(newInsertDto);
+      }
+    }
+
+    return insertDtoArray;
+  }
+  /////////
 }

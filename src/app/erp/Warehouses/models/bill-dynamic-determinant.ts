@@ -60,7 +60,13 @@ export class InsertBillDynamicDeterminant {
   itemCardDeterminantListDto: ItemCardDeterminantDto[] = [];
   quantity: number | null;
 }
-
+export class InsertBillDynamicDeterminantDto {
+  billId: number | null;
+  billItemId: number | null;
+  billDynamicDeterminantSerial: string | undefined;
+  determinantsData: DeterminantData[] = [];
+  quantity: number | null;
+}
 export class ItemCardDeterminantDto {
   id: number;
   itemCardId: any;
@@ -72,29 +78,26 @@ export class DeterminantDataDto {
   id: number;
   determinantId: number | null;
   value: string | null;
-  valueType: string | null;
-  selectedValue: any;
-  numberValue: any;
-  textValue: any;
-  dateValue: any;
-  checkedValue: any;
+  valueType: any | null;
+  selectedValue: any | null;
+  numberValue: any | null;
+  textValue: any | null;
+  dateValue: any | null;
+  checkedValue: any | null;
   //
-  selectedValueId: number;
-  numberValueId: number;
-  textValueId: number;
-  dateValueId: number;
-  checkedValueId: number;
+  selectedValueId: number | null;
+  numberValueId: number | null;
+  textValueId: number | null;
+  dateValueId: number | null;
+  checkedValueId: number | null;
   billDynamicDeterminantSerial:any
   quantity: number | null;
 }
-export interface OriginalData {
-  key: number;
-  value: {
-    billId: number | null;
-    billItemId: number | null;
-    billDynamicDeterminantSerial: number;
-    determinantsData: DeterminantDataDto[];
-    quantity: number | null;
-    itemCardDeterminantListDto: any; // The type is not specified in your example
-  };
+
+export class DeterminantData {
+
+  determinantId: number | null;
+  value: string | null;
+  valueType: string | null;
+  billDynamicDeterminantSerial:any;
 }
