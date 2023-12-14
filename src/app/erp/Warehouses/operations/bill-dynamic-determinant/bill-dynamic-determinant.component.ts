@@ -26,6 +26,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   action: any;
   itemCardSerial: any;
   lang = localStorage.getItem("language");
+  existingArray: DeterminantDataDto[] = [];
   constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private dateService: DateCalculation, public dialog: MatDialog) { }
 
@@ -60,32 +61,23 @@ export class BillDynamicDeterminantComponent implements OnInit {
               res.response.dynamicDeterminantListDto.forEach(item => {
 
                 item.determinantsData.forEach(determinant => {
-                  debugger
-                  const existingRow = item.determinantsData.find(row => row.billDynamicDeterminantSerial === determinant.billDynamicDeterminantSerial);
+                  
+                  const existingRow = this.existingArray.find(row => row.billDynamicDeterminantSerial === determinant.billDynamicDeterminantSerial);
                   if (existingRow) {
-                    debugger
+
                     // Update existing row
                     // You can decide how you want to handle updates. For now, I'm just updating the quantity.
-              
-                    existingRow.selectedValue = Number(determinant.valueType) === 1 ? determinant.value : null;
-                    existingRow.numberValue = Number(determinant.valueType) === 2 ? determinant.value : null;
-                    existingRow.textValue = Number(determinant.valueType) === 3 ? determinant.value : null;
-                    existingRow.dateValue = Number(determinant.valueType) === 4 ? determinant.value : null;
-                    existingRow.checkedValue = Number(determinant.valueType) === 5 ? determinant.value : null;
+                    if (!existingRow.selectedValue)
+                      existingRow.selectedValue = Number(determinant.valueType) === 1 ? determinant.value : null;
+                    if (!existingRow.numberValue)
+                      existingRow.numberValue = Number(determinant.valueType) === 2 ? determinant.value : null;
+                    if (!existingRow.textValue)
+                      existingRow.textValue = Number(determinant.valueType) === 3 ? determinant.value : null;
+                    if (!existingRow.dateValue)
+                      existingRow.dateValue = Number(determinant.valueType) === 4 ? determinant.value : null;
+                    if (!existingRow.checkedValue)
+                      existingRow.checkedValue = Number(determinant.valueType) === 5 ? determinant.value : null;
 
-                    existingRow.selectedValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 1)?.determinantId;
-
-
-                    existingRow.numberValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 2)?.determinantId;
-
-
-                    existingRow.textValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 3)?.determinantId;
-
-
-                    existingRow.dateValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 4)?.determinantId;
-
-
-                    existingRow.checkedValueId = this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId;
 
 
                   }
@@ -96,16 +88,9 @@ export class BillDynamicDeterminantComponent implements OnInit {
 
                 });
               });
-              // for (let i = 0; i < this.insertBillDynamicDeterminant.determinantsData.length; i++) {
-              //   
-              //   var date = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 4);
-              //   this.insertBillDynamicDeterminant.determinantsData[i].selectedValue = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 1)?.value;
-              //   this.insertBillDynamicDeterminant.determinantsData[i].numberValue = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 2)?.value;
-              //   this.insertBillDynamicDeterminant.determinantsData[i].textValue = this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 3)?.value;
-              //   this.insertBillDynamicDeterminant.determinantsData[i].dateValue = this.dateService.getDateForCalender(date?.value)
-              //   this.insertBillDynamicDeterminant.determinantsData[i].checkedValue = Boolean(this.insertBillDynamicDeterminant.determinantsData?.find(c => c.billDynamicDeterminantSerial == i.toString() && c.valueType == 5)?.value);
-
-              // }
+              
+              this.insertBillDynamicDeterminant.determinantsData = this.existingArray;
+             
             }
             else if (this.insertBillDynamicDeterminant.determinantsData.length == 0) {
               this.addItem();
@@ -235,15 +220,15 @@ export class BillDynamicDeterminantComponent implements OnInit {
 
   }
   editItem(determinant) {
-    debugger
+
     let i = this.insertBillDynamicDeterminant.determinantsData.length;
-    debugger
-    this.insertBillDynamicDeterminant.determinantsData.push({
+
+    this.existingArray.push({
       determinantId: determinant.determinantId,
       id: determinant.id,
       value: determinant.value,
       valueType: Number(determinant.valueType),
-      billDynamicDeterminantSerial: this.insertBillDynamicDeterminant.determinantsData.length,
+      billDynamicDeterminantSerial: this.existingArray.length,
       quantity: determinant.quantity,
       selectedValue: Number(determinant.valueType) === 1 ? determinant.value : null,
       numberValue: Number(determinant.valueType) === 2 ? determinant.value : null,
