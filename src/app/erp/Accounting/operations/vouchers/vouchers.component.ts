@@ -40,7 +40,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
   voucherTypeId: any;
   currnetUrl: any;
   queryParams: any;
-  fiscalPeriodId: number;
+  fiscalPeriodId: number = 0;
   fiscalPeriodName: string;
   fiscalPeriodStatus: number;
   errorMessage = '';
@@ -202,7 +202,7 @@ export class VouchersComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve();
           if (res.response.value > 0) {
             this.fiscalPeriodId = res.response.value;
-            if (this.fiscalPeriodId != null) {
+            if (this.fiscalPeriodId > 0 ) {
               this.getfiscalPeriodById(this.fiscalPeriodId);
               this.getClosedAccountingPeriodsByFiscalPeriodId(this.fiscalPeriodId);
 

@@ -423,7 +423,8 @@
         "template-name": "أسم النموذج",
         "report-options": "خيارات التقرير",
         "default-cash-account": "حساب النقدية الافتراضى",
-        "amount": "القيمة",
+        "amount": "الاجمالى",
+        "payment":"الدفعة",
         "dueDate": "تاريخ الاستحقاق",
         "account-number": "رقم الحساب",
         "add-new-row": "اضافة صف جديد",
@@ -451,7 +452,7 @@
         "net": "الصافى",
         "net-after-tax": "الصافى بعد الضريبة",
         "remaining": "المتبقى",
-        "paid": "المدفوع",
+        "paid": "المسدد",
         "sales-account": "حساب المبيعات",
         "sales-return-account": "حساب مرتجع المبيعات",
         "purchases-account": "حساب المشتريات",
@@ -657,7 +658,11 @@
         "no-add-voucher-fiscal-period-choose-open-fiscal-period": "لا يمكن اضافة سند. يجب اختيار فترة محاسبية مفتوحة من الإعدادات",
         "no-update-voucher-fiscal-period-closed": "لا يمكن تعديل هذا السند لهذة السنة المالية المغلقة",
         "no-delete-voucher-fiscal-period-closed": "لا يمكن حذف هذا السند لهذة السنة المالية المغلقة",
-        "no-generate-entry-voucher-fiscal-period-closed": "لا يمكن توليد القيد للسند لهذة السنة المالية المغلقة"
+        "no-generate-entry-voucher-fiscal-period-closed": "لا يمكن توليد القيد للسند لهذة السنة المالية المغلقة",
+        "show-paid-bills":"عرض الفواتير المسددة",
+        "bill-paid":"الفواتير المسددة"
+
+
     },
     "journalEntry": {
         "openBalance": "القيد الافتتاحي ",

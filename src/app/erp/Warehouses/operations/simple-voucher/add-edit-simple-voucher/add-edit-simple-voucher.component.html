@@ -65,7 +65,7 @@
 											<div class="d-flex">
 												<ng-select class="flex-grow-1" formControlName="referenceId"
 													name='referenceId' id="referenceId"
-													(change)="getSimpleVouchersByReferenceId(simpleVoucherForm.value.referenceId)">
+													(change)="getSimpleVouchers(simpleVoucherForm.value.referenceId)">
 													<ng-option *ngFor="let simpleVoucherType of simpleVoucherTypesList"
 														[value]="simpleVoucherType.id">
 														{{lang=="ar"?simpleVoucherType.nameAr:simpleVoucherType.nameEn}}
@@ -83,8 +83,9 @@
 											</label>
 											<div class="d-flex">
 												<ng-select class="flex-grow-1" formControlName="referenceId"
-													name='referenceId' id="referenceId">
-													<ng-option *ngFor="let voucher of filterSimpleVouchersList"
+													name='referenceId' id="referenceId"
+													(change)="getVoucherData(simpleVoucherForm.value.referenceId)">
+													<ng-option *ngFor="let voucher of vouchersList"
 														[value]="voucher.id">
 														{{voucher.code}}
 													</ng-option>
@@ -364,8 +365,13 @@
                                                 </textarea>
 											</div>
 										</div>
-
-
+										<div class="col-md-4 col-12">
+											<div class="py-3">
+												<input type="checkbox" name="list_name" value="m1"
+													(change)="getBillPaid($event)" /> &nbsp;&nbsp;
+												<strong> {{'voucher.show-paid-bills'|translate}} </strong>
+											</div>
+										</div>
 									</div>
 									<hr>
 									<div class="row">
@@ -380,12 +386,13 @@
 																style="overflow-y: scroll !important;">
 																<thead>
 																	<th>#</th>
-																	<th></th>
+																	<!-- <th></th> -->
 																	<td>{{'bill.bill-code' | translate}}</td>
 																	<td>{{'bill.bill-type' | translate}}</td>
 																	<td>{{'general.net' | translate}}</td>
-																	<td style="width:150px;">{{'general.paid' | translate}}</td>
-																	<!-- <td>{{'general.amount' | translate}}</td> -->
+																	<td>{{'general.paid' | translate}}</td>
+																	<td style="width:150px;">{{'general.payment' |
+																		translate}}</td>
 																	<td>{{'general.remaining' | translate}}</td>
 
 																</thead>
@@ -393,10 +400,14 @@
 																	<td>
 																		{{i + 1}}
 																	</td>
-																	<td>
+																	<!-- <td *ngIf="this.id==0">
 																		<input type="checkbox"
 																			(change)="selectBillPayment(item,$event)">
 																	</td>
+																	<td *ngIf="this.id > 0">
+																		<input type="checkbox" checked="true"
+																			(change)="selectBillPayment(item,$event)">
+																	</td> -->
 																	<td>
 																		{{item.code}}
 																	</td>
@@ -408,17 +419,61 @@
 																	<td>
 																		{{item.net}}
 																	</td>
-																	<!-- <td>
-																		{{item.paid}}
-																	</td> -->
 																	<td>
+																		{{ item.paid == null ? 0 : item.paid}}
+																	</td>
+																	<td style="width:150px;" *ngIf="this.id == 0">
 																		<input type="number" required
 																			class="form-control required"
 																			(keypress)="numberOnly($event,i)"
-																			(change)="onInput($event.target.value,i)"
-																			[(ngModel)]="item.paid" name="item.paid"
+																			(keyup)="onInput($event.target.value,i)"
+																			[(ngModel)]="item.amount" name="item.amount"
 																			style="width: 150px;">
 
+																	</td>
+																	<td *ngIf="this.id > 0">
+																		{{item.amount}}
+																	</td>
+																	<td>
+																		{{item.remaining}}
+																	</td>
+																</tr>
+															</table>
+														</div>
+													</ng-template>
+												</li>
+												<li ngbNavItem [destroyOnHide]="false" *ngIf="showPaidBills">
+													<a ngbNavLink> {{'voucher.bill-paid' |translate}}</a>
+													<ng-template ngbNavContent>
+														<div class="overflow-auto0">
+															<table class="table table-responsive text-center"
+																style="overflow-y: scroll !important;">
+																<thead>
+																	<th>#</th>
+																	<td>{{'bill.bill-code' | translate}}</td>
+																	<td>{{'bill.bill-type' | translate}}</td>
+																	<td>{{'general.net' | translate}}</td>
+																	<td>{{'general.paid' | translate}}</td>
+																	<td>{{'general.remaining' | translate}}</td>
+																</thead>
+																<tr *ngFor="let item of billPaid; let i= index;">
+																	<td>
+																		{{i + 1}}
+																	</td>
+
+																	<td>
+																		{{item.code}}
+																	</td>
+																	<td>
+																		{{lang=='ar' ? item.billTypeAr :
+																		item.billTypeEn}}
+
+																	</td>
+																	<td>
+																		{{item.net}}
+																	</td>
+																	<td>
+																		{{item.paid}}
 																	</td>
 																	<td>
 																		{{item.remaining}}

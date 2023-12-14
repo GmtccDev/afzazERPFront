@@ -54,6 +54,16 @@ export class BillServiceProxy {
 
         return this.http.get<any>(this.baseUrl + "/api/Bill/GetBillPayments?", { params: params });
     }
+    GetBillPaidByParams(payWay:any,billKind:any,customerId:any,supplierId:any): Observable<any> {
+          
+        let params = new HttpParams();
+        params = params.append('PayWay', payWay);
+        params = params.append('BillKind', billKind);
+        params = params.append('CustomerId', customerId);
+        params = params.append('SupplierId', supplierId);
+
+        return this.http.get<any>(this.baseUrl + "/api/Bill/GetBillPaid?", { params: params });
+    }
   
     allBills(pageIndex: number | undefined, pageSize: number | undefined, sortBy: string | undefined, sortOrder: string | undefined, filter: string | undefined): Observable<any> {
      
