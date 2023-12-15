@@ -6,7 +6,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {DataShareService} from '../../Services/share-data.service';
+import { DataShareService } from '../../Services/share-data.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-bill-dynamic-determinant',
   templateUrl: './bill-dynamic-determinant.component.html',
@@ -26,16 +27,16 @@ export class BillDynamicDeterminantComponent implements OnInit {
   sharedData: any;
   existingArray: DeterminantDataDto[] = [];
   itemCardId: any;
-  constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,private dataService: DataShareService,
+  constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,private datePipe: DatePipe, private dataService: DataShareService,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private dateService: DateCalculation, public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
     // this.date = this.dateService.getCurrentDate();
     this.billItemId = this.data.billItemId;
-   this.itemCardId= this.data.itemCardId;
+    this.itemCardId = this.data.itemCardId;
     this.action = this.data.action;
-  
+
     this.form = this.fb.group({});
 
     this.getDynamicDeterminant();
@@ -43,7 +44,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   getDynamicDeterminant() {
     return new Promise<void>((resolve, reject) => {
 
-      let sub = this.itemCardService.getBillDynamicDeterminant(this.billItemId,this.itemCardId).subscribe({
+      let sub = this.itemCardService.getBillDynamicDeterminant(this.billItemId, this.itemCardId).subscribe({
         next: (res) => {
           if (res) {
 
@@ -51,7 +52,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
             this.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
             this.determinantsData = res.response.dynamicDeterminantListDto;
             this.insertBillDynamicDeterminant.itemCardDeterminantListDto = res.response.itemCardDeterminantListDto;
-            console.log(JSON.stringify(this.determinantsData));
+
 
             if (this.action == "Edit") {
               this.insertBillDynamicDeterminant.determinantsData = []
@@ -59,7 +60,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
               res.response.dynamicDeterminantListDto.forEach(item => {
 
                 item.determinantsData.forEach(determinant => {
-                  
+
                   const existingRow = this.existingArray.find(row => row.billDynamicDeterminantSerial === determinant.billDynamicDeterminantSerial);
                   if (existingRow) {
 
@@ -72,9 +73,9 @@ export class BillDynamicDeterminantComponent implements OnInit {
                     if (!existingRow.textValue)
                       existingRow.textValue = Number(determinant.valueType) === 3 ? determinant.value : null;
                     if (!existingRow.dateValue)
-                      existingRow.dateValue = Number(determinant.valueType) === 4 ? determinant.value : null;
+                      existingRow.dateValue = Number(determinant.valueType) === 4 ? (determinant.value) : null;
                     if (!existingRow.checkedValue)
-                      existingRow.checkedValue = Number(determinant.valueType) === 5 ? determinant.value : null;
+                      existingRow.checkedValue = Number(determinant.valueType) === 5 ? (determinant.value) : null;
 
 
 
@@ -86,26 +87,27 @@ export class BillDynamicDeterminantComponent implements OnInit {
 
                 });
               });
-              
+              debugger
+              this.existingArray.forEach(obj => {
+                debugger
+                obj.checkedValue =obj.checkedValue === "true";
+               obj.dateValue = this.dateService.getDateForCalender(obj.dateValue);;
+              });
               this.insertBillDynamicDeterminant.determinantsData = this.existingArray;
-             
+
             }
             else if (this.insertBillDynamicDeterminant.determinantsData.length == 0) {
               this.addItem();
             }
-            
+
             if (this.action == "Edit" && this.insertBillDynamicDeterminant.determinantsData.length == 0) {
               for (let i = 0; i < 1; i++) {
                 this.addItem();
               }
             }
-            if (this.insertBillDynamicDeterminant.determinantsData) {
 
 
-              console.log(this.insertBillDynamicDeterminant.determinantsData)
-            }
-
-            console.log(this.insertBillDynamicDeterminant)
+            console.log(JSON.stringify(this.insertBillDynamicDeterminant.determinantsData))
 
 
 
@@ -174,14 +176,14 @@ export class BillDynamicDeterminantComponent implements OnInit {
     });
     const resultArray = this.processInputData(restructuredData);
 
-  
-  this.dataService.updateData(resultArray);
-  this.dialog.closeAll();
+
+    this.dataService.updateData(resultArray);
+    this.dialog.closeAll();
 
 
   }
   getDate(selectedDate: DateModel, item) {
-
+debugger
     this.date = selectedDate;
     item.dateValue = selectedDate;
   }
@@ -219,19 +221,19 @@ export class BillDynamicDeterminantComponent implements OnInit {
   }
   editItem(determinant) {
 
-  
+
     this.existingArray.push({
       determinantId: determinant.determinantId,
       id: determinant.id,
-      value: determinant.value,
-      valueType: Number(determinant.valueType),
+      value: null,
+      valueType: null,
       billDynamicDeterminantSerial: this.existingArray.length,
       quantity: determinant.quantity,
       selectedValue: Number(determinant.valueType) === 1 ? determinant.value : null,
       numberValue: Number(determinant.valueType) === 2 ? determinant.value : null,
       textValue: Number(determinant.valueType) === 3 ? determinant.value : null,
       dateValue: Number(determinant.valueType) === 4 ? determinant.value : null,
-      checkedValue: Number(determinant.valueType) === 5 ? determinant.value : null,
+      checkedValue: Number(determinant.valueType) === 5 ? (determinant.value) : null,
 
       selectedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 1)?.determinantId,
 
@@ -248,11 +250,11 @@ export class BillDynamicDeterminantComponent implements OnInit {
       checkedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId,
 
     });
- 
+
   }
   deleteItem(i) {
     this.insertBillDynamicDeterminant.determinantsData.splice(i);
-    
+
   }
   private addDeterminantDataToDto(dto: InsertBillDynamicDeterminantDto, item: any): void {
     const determinantData = new DeterminantData();
