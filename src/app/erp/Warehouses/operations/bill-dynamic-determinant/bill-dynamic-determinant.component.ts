@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { DateModel } from 'src/app/shared/model/date-model';
 import { DateCalculation } from 'src/app/shared/services/date-services/date-calc.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import {DataShareService} from '../../Services/share-data.service';
 @Component({
   selector: 'app-bill-dynamic-determinant',
   templateUrl: './bill-dynamic-determinant.component.html',
@@ -16,28 +16,26 @@ export class BillDynamicDeterminantComponent implements OnInit {
   dynamicDeterminant: BillDynamicDeterminantList;
   subsList: Subscription[] = [];
   billItemId: any;
-  itemCardId: any;
   determinantsData: BillDynamicDeterminantDto[];
   itemCardDeterminantListDto: ItemCardDeterminantDto[];
   insertBillDynamicDeterminant: InsertBillDynamicDeterminant = new InsertBillDynamicDeterminant();
   date!: DateModel;
   form: FormGroup;
-  billId: any;
   action: any;
-  itemCardSerial: any;
   lang = localStorage.getItem("language");
+  sharedData: any;
   existingArray: DeterminantDataDto[] = [];
-  constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,
+  itemCardId: any;
+  constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,private dataService: DataShareService,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private dateService: DateCalculation, public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
     // this.date = this.dateService.getCurrentDate();
     this.billItemId = this.data.billItemId;
-    this.itemCardId = this.data.itemCardId;
-    this.billId = this.data.billItemId;
+   this.itemCardId= this.data.itemCardId;
     this.action = this.data.action;
-    this.itemCardSerial = this.data.itemCardSerial;
+  
     this.form = this.fb.group({});
 
     this.getDynamicDeterminant();
@@ -45,7 +43,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   getDynamicDeterminant() {
     return new Promise<void>((resolve, reject) => {
 
-      let sub = this.itemCardService.getBillDynamicDeterminant(this.billId, this.billItemId, this.itemCardId, this.itemCardSerial).subscribe({
+      let sub = this.itemCardService.getBillDynamicDeterminant(this.billItemId,this.itemCardId).subscribe({
         next: (res) => {
           if (res) {
 
@@ -95,8 +93,9 @@ export class BillDynamicDeterminantComponent implements OnInit {
             else if (this.insertBillDynamicDeterminant.determinantsData.length == 0) {
               this.addItem();
             }
+            
             if (this.action == "Edit" && this.insertBillDynamicDeterminant.determinantsData.length == 0) {
-              for (let i = 0; i < (this.determinantsData.length / this.itemCardDeterminantListDto.length); i++) {
+              for (let i = 0; i < 1; i++) {
                 this.addItem();
               }
             }
@@ -175,10 +174,9 @@ export class BillDynamicDeterminantComponent implements OnInit {
     });
     const resultArray = this.processInputData(restructuredData);
 
-    console.log(resultArray);
-    console.log(JSON.stringify(restructuredData));
-    console.log(JSON.stringify(resultArray));
-    this.dialogRef.close(resultArray);
+  
+  this.dataService.updateData(resultArray);
+  this.dialog.closeAll();
 
 
   }
@@ -221,8 +219,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   }
   editItem(determinant) {
 
-    let i = this.insertBillDynamicDeterminant.determinantsData.length;
-
+  
     this.existingArray.push({
       determinantId: determinant.determinantId,
       id: determinant.id,
@@ -251,12 +248,11 @@ export class BillDynamicDeterminantComponent implements OnInit {
       checkedValueId: this.insertBillDynamicDeterminant.itemCardDeterminantListDto?.find(c => c.determinantsMaster.valueType == 5)?.determinantId,
 
     });
-    console.log(this.insertBillDynamicDeterminant.determinantsData);
-    console.log(JSON.stringify(this.insertBillDynamicDeterminant.determinantsData));
+ 
   }
   deleteItem(i) {
     this.insertBillDynamicDeterminant.determinantsData.splice(i);
-    // this.insertBillDynamicDeterminant.determinantsData[i] = null;
+    
   }
   private addDeterminantDataToDto(dto: InsertBillDynamicDeterminantDto, item: any): void {
     const determinantData = new DeterminantData();

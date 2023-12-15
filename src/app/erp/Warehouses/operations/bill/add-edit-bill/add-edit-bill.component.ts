@@ -33,6 +33,7 @@ import { CompanyServiceProxy } from 'src/app/erp/master-codes/services/company.s
 import { CountryServiceProxy } from 'src/app/erp/master-codes/services/country.servies';
 import { RightClickModalComponent } from '../../right-click-modal/right-click-modal.component';
 import { InsertBillDynamicDeterminant } from '../../../models/bill-dynamic-determinant';
+import { DataShareService } from '../../../Services/share-data.service';
 
 @Component({
   selector: 'app-add-edit-bill',
@@ -183,6 +184,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     componentAdd: '',
 
   };
+  index: any;
 
   constructor(
     private router: Router,
@@ -205,7 +207,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     private billTypeService: BillTypeServiceProxy,
     private companyService: CompanyServiceProxy,
     private countryService: CountryServiceProxy,
-
+    private dataService: DataShareService,
 
   ) {
     this.defineBillForm();
@@ -261,7 +263,10 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
 
       this.spinner.hide();
     })
-
+    this.dataService.data$.subscribe((data) => {
+      if (data)
+        this.billItem[this.index].billDynamicDeterminants = data;
+    });
 
   }
   getRouteData() {
@@ -386,7 +391,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       code: REQUIRED_VALIDATORS,
       date: [this.dateService.getCurrentDate(), Validators.compose([Validators.required])],
       deliveryDate: [this.dateService.getCurrentDate()],
-      delay:null,
+      delay: null,
       supplierId: null,
       supplierReference: '',
       customerId: null,
@@ -1101,7 +1106,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       let sub = this.billTypeService.allBillTypees(undefined, undefined, undefined, undefined, undefined).subscribe({
         next: (res) => {
           if (res.success) {
-            debugger
+
             this.billTypesList = res.response.items
 
           }
@@ -1596,7 +1601,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
   confirmSave() {
     return new Promise<void>((resolve, reject) => {
-      debugger
+
       let sub = this.billService.createBill(this.billTypeId, this.bill).subscribe({
         next: (result: any) => {
           this.defineBillForm();
@@ -2441,13 +2446,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               data: row
             })
             .afterClosed().subscribe(result => {
-              if (result && result != null && result.length > 0) {
-                debugger
-              
-                this.selectedBillItem.billDynamicDeterminants=result;
-           
-
-              }
+              this.dialog.closeAll();
             });
         },
         error: (err: any) => {
@@ -3121,7 +3120,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   onRightClick(event: MouseEvent, i) {
-
+    this.index = i;
     if (this.router.url.includes("/warehouses-operations/bill/update-bill")) {
       let row = {
         billItemId: this.billItem[i].id,
@@ -3136,14 +3135,15 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           data: row,
           height: '100px'
         })
-        .afterClosed().subscribe(result => {
-          if (result && result != null && result.length > 0) {
-            debugger
-            this.selectedBillItem.billDynamicDeterminants = result;
+      // .afterClosed().subscribe(result => {
+      //   
+      //   if (result && result != null && result.length > 0) {
 
-           
-          }
-        });
+      //     this.selectedBillItem.billDynamicDeterminants = result;
+
+
+      //   }
+      // });
     }
   }
 

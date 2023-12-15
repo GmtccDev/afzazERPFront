@@ -19,15 +19,15 @@ export class RightClickModalComponent implements OnInit {
       {
         width: '1000px',
         data: this.data,
-        disableClose: true
+        disableClose: false
       })
-      .afterClosed().subscribe(result => {
-        if (result && result != null && result.length > 0) {
-debugger
-          this.dialogRef.close(result);
+      // .afterClosed().subscribe(result => {
+      //   if (result && result != null && result.length > 0) {
+
+      //     this.dialogRef.close(result);
          
-        }
-      });
+      //   }
+      // });
 
   }
 }
