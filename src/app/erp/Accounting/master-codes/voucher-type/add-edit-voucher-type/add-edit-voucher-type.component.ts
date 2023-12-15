@@ -132,10 +132,6 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
       this.spinner.hide();
     })
-
-
-
-
   }
 
 
@@ -249,7 +245,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
         next: (res: any) => {
           resolve();
           if (res.response.value > 0) {
-            debugger
+             
             this.mainCurrencyId = res.response.value;
           }
 
@@ -542,7 +538,7 @@ export class AddEditVoucherTypeComponent implements OnInit {
   }
   onSave() {
     if (this.voucherTypeForm.valid) {
-      if (stringIsNullOrEmpty(this.voucherTypeForm.value.defaultCurrencyId)) {
+      if (stringIsNullOrEmpty(this.voucherTypeForm.value.defaultCurrencyId) &&  this.enableMultiCurrencies ==false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
         this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -593,8 +589,8 @@ export class AddEditVoucherTypeComponent implements OnInit {
 
   onUpdate() {
     if (this.voucherTypeForm.valid) {
-      debugger
-      if (stringIsNullOrEmpty(this.voucherTypeForm.value.defaultCurrencyId)) {
+       
+      if (stringIsNullOrEmpty(this.voucherTypeForm.value.defaultCurrencyId) && this.enableMultiCurrencies==false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
         this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));

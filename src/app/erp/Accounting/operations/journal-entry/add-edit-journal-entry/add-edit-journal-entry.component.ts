@@ -1190,7 +1190,6 @@ export class AddEditJournalEntryComponent implements OnInit, OnDestroy {
           resolve();
           if (res.success) {
             this.showDetails = true;
-            
             this.status = this.lang == 'ar' ? res.response.data.result[0].statusAr : res.response.data.result[0].statusEn;
             this.type = this.lang == 'ar' ? res.response.data.result[0].entryTypeAr : res.response.data.result[0].entryTypeEn;
             this.setting = this.lang == 'ar' ? res.response.data.result[0].settingAr : res.response.data.result[0].settingEn;

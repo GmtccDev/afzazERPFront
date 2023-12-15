@@ -17,10 +17,13 @@ import {
 
   BillKindArEnum,
   BillKindEnum,
+  GeneralConfigurationEnum,
   convertEnumToArray,
 
 } from '../../../../../shared/constants/enumrators/enums';
 import { navigateUrl } from 'src/app/shared/helper/helper-url';
+import { GeneralConfigurationServiceProxy } from 'src/app/erp/Accounting/services/general-configurations.services';
+import { stringIsNullOrEmpty } from 'src/app/shared/helper/helper';
 
 @Component({
   selector: 'app-add-edit-bill-type',
@@ -38,6 +41,7 @@ export class AddEditBillTypeComponent implements OnInit {
   id: any = 0;
   routeCurrencyApi = 'Currency/get-ddl?'
   currenciesList: any;
+  enableMultiCurrencies: boolean = false;
 
   routeUnitApi = 'Unit/get-ddl?'
   unitsList: any;
@@ -78,6 +82,7 @@ export class AddEditBillTypeComponent implements OnInit {
   errorMessage = '';
   errorClass = '';
   submited: boolean = false;
+  mainCurrencyId: number = null;
 
 
 
@@ -91,6 +96,8 @@ export class AddEditBillTypeComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedServices: SharedService, private translate: TranslateService,
+    private generalConfigurationService: GeneralConfigurationServiceProxy,
+
 
   ) {
     this.defineBillTypeForm();
@@ -107,6 +114,8 @@ export class AddEditBillTypeComponent implements OnInit {
 
     this.spinner.show();
     Promise.all([
+      this.getGeneralConfigurationsOfMultiCurrency(),
+      this.getGeneralConfigurationsOfMainCurrency(),
       this.getCurrencies(),
       this.getUnits(),
       this.getStores(),
@@ -183,7 +192,7 @@ export class AddEditBillTypeComponent implements OnInit {
       discountAffectsCostPrice: false,
       additionAffectsCostPrice: false,
       taxAffectsCostPrice: false,
-      defaultCurrencyId: '',
+      defaultCurrencyId: this.enableMultiCurrencies == true ? ['', Validators.compose([Validators.required])] : this.mainCurrencyId,
       defaultUnitId: '',
       storeId: '',
       costCenterId: '',
@@ -262,7 +271,7 @@ export class AddEditBillTypeComponent implements OnInit {
             discountAffectsCostPrice: res.response?.discountAffectsCostPrice,
             additionAffectsCostPrice: res.response?.additionAffectsCostPrice,
             taxAffectsCostPrice: res.response?.taxAffectsCostPrice,
-            defaultCurrencyId: res.response?.defaultCurrencyId,
+            defaultCurrencyId: this.enableMultiCurrencies ==true ? res.response?.defaultCurrencyId: this.mainCurrencyId,
             defaultUnitId: res.response?.defaultUnitId,
             storeId: res.response?.storeId,
             costCenterId: res.response?.costCenterId,
@@ -293,7 +302,52 @@ export class AddEditBillTypeComponent implements OnInit {
     });
   }
 
+  getGeneralConfigurationsOfMultiCurrency() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.MultiCurrency).subscribe({
+        next: (res: any) => {
+          resolve();
 
+          if (res.response.value == 'true') {
+            this.enableMultiCurrencies = true;
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
+  getGeneralConfigurationsOfMainCurrency() {
+    return new Promise<void>((resolve, reject) => {
+      let sub = this.generalConfigurationService.getGeneralConfiguration(GeneralConfigurationEnum.MainCurrency).subscribe({
+        next: (res: any) => {
+          resolve();
+          if (res.response.value > 0) {
+             
+            this.mainCurrencyId = res.response.value;
+          }
+
+
+        },
+        error: (err: any) => {
+          reject(err);
+        },
+        complete: () => {
+        },
+      });
+      this.subsList.push(sub);
+
+    });
+
+  }
 
   getBillKind() {
     if (this.lang == 'en') {
@@ -550,7 +604,6 @@ export class AddEditBillTypeComponent implements OnInit {
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("bill-type.add-bill-type");
             if (this.billTypeForm.value.code != null) {
-              // this.getbi()
             }
             this.defineBillTypeForm();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
@@ -590,8 +643,13 @@ export class AddEditBillTypeComponent implements OnInit {
     });
   }
   onSave() {
-
     if (this.billTypeForm.valid) {
+      if (stringIsNullOrEmpty(this.billTypeForm.value.defaultCurrencyId) &&  this.enableMultiCurrencies ==false) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.spinner.show();
       this.confirmSave().then(a => {
         this.spinner.hide();
@@ -634,9 +692,13 @@ export class AddEditBillTypeComponent implements OnInit {
   }
 
   onUpdate() {
-
     if (this.billTypeForm.valid) {
-
+      if (stringIsNullOrEmpty(this.billTypeForm.value.defaultCurrencyId) &&  this.enableMultiCurrencies ==false) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.AlertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       this.spinner.show();
       this.confirmUpdate().then(a => {
         this.spinner.hide();

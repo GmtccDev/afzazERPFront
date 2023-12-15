@@ -705,7 +705,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
 
   onSave() {
     if (this.incomingChequeForm.valid) {
-      if (stringIsNullOrEmpty(this.incomingChequeForm.value.currencyId)) {
+      if (stringIsNullOrEmpty(this.incomingChequeForm.value.currencyId) && this.enableMultiCurrencies ==false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -1024,7 +1024,7 @@ export class AddEditIncomingChequeComponent implements OnInit {
         )
         return;
       }
-      if (stringIsNullOrEmpty(this.incomingChequeForm.value.currencyId)) {
+      if (stringIsNullOrEmpty(this.incomingChequeForm.value.currencyId) && this.enableMultiCurrencies == false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
