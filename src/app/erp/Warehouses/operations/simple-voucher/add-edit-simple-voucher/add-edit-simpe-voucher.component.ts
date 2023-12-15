@@ -289,7 +289,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       description: '',
       voucherTotal: REQUIRED_VALIDATORS,
       voucherTotalLocal: REQUIRED_VALIDATORS,
-      currencyFactor: 1,
+      currencyFactor: '',
       fiscalPeriodId: this.fiscalPeriodId,
       referenceId: '',
       referenceNo: '',
@@ -466,7 +466,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getSimpleVouchersByReferenceId(ReferenceId: any) {
-    debugger
+        
     this.filterSimpleVouchersList = this.vouchersList.filter(x => x.voucherTypeId == ReferenceId);
   }
   getSimpleVoucherById(id: any, type: number) {
@@ -509,7 +509,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
           this.voucherTotal = res.response?.voucherTotal;
           this.voucherTotalLocal = res.response?.voucherTotalLocal;
 
-          this.setInputData();
         },
         error: (err: any) => {
           reject(err);
@@ -755,9 +754,16 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onInput(event, i) {
-    debugger
+        
+    this.voucherTotalLocal = 0;
     this.billPayment[i].amount = Number(event);
     this.billPayment[i].remaining = this.billPayment[i].remaining2 - Number(event);
+
+    this.billPayment.forEach(element => {
+      this.voucherTotalLocal += element.amount;
+
+    });
+    this.getVoucherTotal();
 
 
   }
@@ -783,6 +789,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
       });
     }
+        
+    this.simpleVoucher.voucherDetail=[];
     this.simpleVoucher.voucherDetail.push({
       id: 0,
       voucherId: 0,
@@ -843,7 +851,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     this.simpleVoucher.chequeDueDate = this.dateService.getDateForInsert(this.simpleVoucherForm.controls["chequeDueDate"].value);
 
     return new Promise<void>((resolve, reject) => {
-      debugger
+          
       let sub = this.voucherService.createVoucherAndRelations(this.simpleVoucher.voucherTypeId, this.simpleVoucher).subscribe({
         next: (result: any) => {
           this.defineSimpleVoucherForm();
@@ -885,7 +893,15 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   }
 
   onSave() {
+        
     if (this.simpleVoucherForm.valid) {
+          ;
+      if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId) && this.enableMultiCurrencies == false) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       if (this.fiscalPeriodId > 0) {
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("voucher.no-add-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
@@ -1038,9 +1054,13 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-
     if (this.simpleVoucherForm.valid) {
-      
+      if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId) && this.enableMultiCurrencies == false) {
+        this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
+        this.errorClass = 'errorMessage';
+        this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
+        return;
+      }
       if (this.fiscalPeriodId > 0) {
         if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
           this.errorMessage = this.translate.instant("voucher.no-update-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;
@@ -1145,7 +1165,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
 
       }
-      
+
       setTimeout(() => {
         if (i == 0) {
           this.setInputData();
@@ -1217,8 +1237,13 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
 
   getVoucherTotal() {
+        
+    this.voucherTotal = 0;
+    this.currencyFactor = 0;
     if (this.enableMultiCurrencies == true) {
-      if (this.simpleVoucherForm.value.currencyId == Number(this.mainCurrencyId)) {
+          
+      if (this.currencyId == Number(this.mainCurrencyId)) {
+            
         this.voucherTotal = this.voucherTotalLocal;
         this.currencyFactor = 1;
       }
@@ -1228,19 +1253,30 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
             this.currency = res;
             let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-            this.currencyFactor = currencyModel.transactionFactor;
-            this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
+            if (currencyModel != null) {
+              this.currencyFactor = currencyModel.transactionFactor;
+              this.voucherTotal = (1 / currencyModel.transactionFactor) * this.voucherTotalLocal;
+            }
+
           }
         })
         this.subsList.push(sub);
 
       }
     }
+    else {
+      this.voucherTotal = this.voucherTotalLocal;
+      this.simpleVoucherForm.patchValue({
+        voucherTotal: this.voucherTotalLocal,
+        currencyFactor: 1
+      });
+    }
 
   }
 
   getVoucherTotalLocal() {
-
+    this.voucherTotalLocal = 0;
+    this.currencyFactor = 0;
     if (this.enableMultiCurrencies == true) {
       if (this.simpleVoucherForm.value.currencyId == Number(this.mainCurrencyId)) {
         this.voucherTotalLocal = this.voucherTotal;
@@ -1252,13 +1288,19 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
             this.currency = res;
             let currencyModel = this.currency.response.currencyTransactionsDto.filter(x => x.currencyDetailId == this.mainCurrencyId)[0];
-            this.currencyFactor = currencyModel.transactionFactor;
-            this.voucherTotalLocal = currencyModel.transactionFactor * this.voucherTotal;
+            if (currencyModel != null) {
+              this.currencyFactor = currencyModel.transactionFactor;
+              this.voucherTotalLocal = currencyModel.transactionFactor * this.voucherTotal;
+            }
+
           }
         })
         this.subsList.push(sub);
 
       }
+    }
+    else {
+      this.voucherTotalLocal = this.voucherTotal;
     }
 
   }
@@ -1332,7 +1374,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   selectBillPayment(item: BillPayment, event) {
     if (event.target.checked) {
-      debugger
+          
       this.simpleVoucher.billPay.push({
         id: 0,
         voucherId: 0,
@@ -1361,7 +1403,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
 
   getBillPaid(event) {
-    debugger
+        
     this.billPaid = [];
     if (event.target.checked) {
       this.showPaidBills = true;
@@ -1369,11 +1411,11 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       if (this.voucherkindId == VoucherTypeEnum['Simple Deposit'] && this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
 
         return new Promise<void>((resolve, reject) => {
-          debugger
+              
           let sub = this.billService.GetBillPaidByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], this.simpleVoucherForm.value.beneficiaryId, '').subscribe({
             next: (res: any) => {
               resolve();
-              debugger
+                  
               this.billPaid = res.response.data
             },
             error: (err: any) => {
@@ -1413,7 +1455,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   }
 
   getBillPaymentsByBeneficiaryId(beneficiaryId: number) {
-    debugger
+        
     this.billPayment = [];
 
     if (this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
@@ -1429,11 +1471,11 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         let sub = this.billService.GetBillPaymentsByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], beneficiaryId, '').subscribe({
           next: (res: any) => {
             resolve();
-            debugger
+                
             if (res.response.data != null) {
-              debugger
+                  
               res.response.data.forEach(element => {
-                debugger
+                    
                 element.id = 0;
                 element.billId = element.billId;
                 element.remaining2 = element.remaining;
@@ -1489,7 +1531,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherService.getVouchersBillPays(voucherId).subscribe({
         next: (res: any) => {
           resolve();
-          debugger
+              
           this.billPayment = res.response.data;
           // if (this.billPayment != null) {
           //   this.billPayment.forEach(element => {

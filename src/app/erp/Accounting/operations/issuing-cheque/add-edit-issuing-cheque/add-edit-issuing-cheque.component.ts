@@ -697,7 +697,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
     //   return;
     // }
     if (this.issuingChequeForm.valid) {
-      if (stringIsNullOrEmpty(this.issuingChequeForm.value.currencyId)) {
+      if (stringIsNullOrEmpty(this.issuingChequeForm.value.currencyId) && this.enableMultiCurrencies == false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -1020,7 +1020,7 @@ export class AddEditIssuingChequeComponent implements OnInit {
         )
         return;
       }
-      if (stringIsNullOrEmpty(this.issuingChequeForm.value.currencyId)) {
+      if (stringIsNullOrEmpty(this.issuingChequeForm.value.currencyId) && this.enableMultiCurrencies == false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
         this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));

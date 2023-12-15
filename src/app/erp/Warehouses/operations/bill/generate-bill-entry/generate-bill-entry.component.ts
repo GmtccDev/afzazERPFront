@@ -263,16 +263,16 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 
 	showConfirmGenerateEntryMessage(id) {
 		setTimeout(() => {
-			debugger
+			    
 			const modalRef = this.modalService.open(MessageModalComponent);
 			modalRef.componentInstance.message = this.translate.instant('bill.confirm-generate-entry');
 			modalRef.componentInstance.title = this.translate.instant('messageTitle.generate-entry');
 			modalRef.componentInstance.btnConfirmTxt = this.translate.instant('messageTitle.generate-entry');
 			modalRef.componentInstance.isYesNo = true;
-			debugger
+			    
 			modalRef.result.then((rs) => {
 				if (rs == 'Confirm') {
-					debugger
+					    
 					this.spinner.show();
 					this.listIds = [];
 					const newItem = { id };
@@ -417,7 +417,7 @@ export class GenerateBillEntryComponent implements OnInit, OnDestroy, AfterViewI
 	}
 	isCheckItme: boolean = false;
 	onCheck(id) {
-		debugger;
+		    ;
 		this.isCheckItme = true;
 		if (this.fiscalPeriodStatus != FiscalPeriodStatus.Opened) {
 			this.errorMessage = this.translate.instant("voucher.no-generate-entry-voucher-fiscal-period-closed") + " : " + this.fiscalPeriodName;

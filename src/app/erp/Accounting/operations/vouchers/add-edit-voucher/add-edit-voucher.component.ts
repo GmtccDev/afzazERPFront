@@ -1084,7 +1084,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onSave() {
-    if (stringIsNullOrEmpty(this.voucherForm.value.currencyId)) {
+    if (stringIsNullOrEmpty(this.voucherForm.value.currencyId) && this.enableMultiCurrencies == false) {
       this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
       this.errorClass = 'errorMessage';
       this.alertsService.showError(this.errorMessage, this.translate.instant("message-title.wrong"));
@@ -1261,7 +1261,6 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
     });
   }
   onUpdate() {
-            
     if (this.voucherForm.valid) {
       if (stringIsNullOrEmpty(this.voucherForm.value.currencyId)) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
@@ -1487,7 +1486,7 @@ export class AddEditVoucherComponent implements OnInit, AfterViewInit {
   getCostCenterInDetails() {
   }
   updateDetailData(item: VoucherDetail) {
-    debugger
+       
     if (this.voucherDetail.length > 0) {
       this.deleteVoucherDetailForUpdate(item);
       this.addVoucherDetailForUpdate(item);

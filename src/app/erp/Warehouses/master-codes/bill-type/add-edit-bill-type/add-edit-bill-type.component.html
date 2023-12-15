@@ -364,7 +364,7 @@
 											<a ngbNavLink>{{'bill-type.default-values'|translate}}</a>
 											<ng-template ngbNavContent>
 												<div class="row ">
-													<div class="col-md-6 col-12">
+													<div class="col-md-6 col-12" *ngIf="enableMultiCurrencies==true">
 														<label for="defaultCurrencyId" class="label-name">
 															{{'general.default-currency'|translate}}
 
