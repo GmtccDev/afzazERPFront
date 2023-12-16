@@ -161,7 +161,7 @@
 														class="f-12 ng-star-inserted text-white">
 														{{'error.required'|translate}}</span>
 												</div>
-												<div class="">
+												<div class="" *ngIf="showSearchCurrency">
 													<button class="btn btn-rounded btn-dark"
 														(click)="showSearchCurrencyModal=true" type="button"><i
 															class="fa fa-search"></i></button>
@@ -179,7 +179,7 @@
 											</div>
 										</div>
 
-										<div class="col-md-3 col-12" >
+										<div class="col-md-3 col-12">
 											<label for="voucherTotalLocal" class="label-name">
 												{{'voucher.voucher-total-local'|translate}}
 											</label>
@@ -423,8 +423,8 @@
 																		{{ item.paid == null ? 0 : item.paid}}
 																	</td>
 																	<td style="width:150px;" *ngIf="this.id == 0">
-																		<input type="number" required
-																			class="form-control required"
+																		<input type="number"
+																			class="form-control"
 																			(keypress)="numberOnly($event,i)"
 																			(keyup)="onInput($event.target.value,i)"
 																			[(ngModel)]="item.amount" name="item.amount"

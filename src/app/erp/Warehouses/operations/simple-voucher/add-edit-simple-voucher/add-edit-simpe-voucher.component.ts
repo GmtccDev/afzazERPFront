@@ -56,7 +56,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   salesPersonsList: any;
   routeSalesPersonApi = 'SalesPersonCard/get-ddl?'
   routeFiscalPeriodApi = "FiscalPeriod/get-ddl?"
-
   currencyId: any;
   cashAccountId: any;
   voucherkindId: any;
@@ -74,6 +73,9 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   showSearchBeneficiaryAccountsModal = false;
   showSearhBeneficiaryAccountsModal = false;
   showSearchCurrencyModal = false;
+  showSearchCurrency = true;
+
+
   tempVoucherDetail: any[] = [];
   oldVoucherTotalLocal: number = 0;
   voucherTypeName: string;
@@ -466,7 +468,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   getSimpleVouchersByReferenceId(ReferenceId: any) {
-        
+
     this.filterSimpleVouchersList = this.vouchersList.filter(x => x.voucherTypeId == ReferenceId);
   }
   getSimpleVoucherById(id: any, type: number) {
@@ -476,6 +478,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         next: (res: any) => {
           resolve();
           this.getBeneficiary(res.response?.voucherDetail[0].beneficiaryTypeId);
+
           this.simpleVoucherForm.setValue({
             id: type == 1 ? res.response?.id : this.id,
             companyId: res.response?.companyId,
@@ -754,7 +757,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   }
   onInput(event, i) {
-        
     this.voucherTotalLocal = 0;
     this.billPayment[i].amount = Number(event);
     this.billPayment[i].remaining = this.billPayment[i].remaining2 - Number(event);
@@ -789,8 +791,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
       });
     }
-        
-    this.simpleVoucher.voucherDetail=[];
+
+    this.simpleVoucher.voucherDetail = [];
     this.simpleVoucher.voucherDetail.push({
       id: 0,
       voucherId: 0,
@@ -834,7 +836,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       salesPersonId: this.simpleVoucherForm.controls["salesPersonId"].value,
 
       voucherDetail: this.simpleVoucher.voucherDetail ?? [],
-      // billPay: this.simpleVoucher.billPay ?? [],
       billPay: this.billPayment ?? [],
 
       billInstallmentPay: this.simpleVoucher.billInstallmentPay ?? [],
@@ -851,11 +852,12 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
     this.simpleVoucher.chequeDueDate = this.dateService.getDateForInsert(this.simpleVoucherForm.controls["chequeDueDate"].value);
 
     return new Promise<void>((resolve, reject) => {
-          
+
       let sub = this.voucherService.createVoucherAndRelations(this.simpleVoucher.voucherTypeId, this.simpleVoucher).subscribe({
         next: (result: any) => {
           this.defineSimpleVoucherForm();
           this.voucherDetail = [];
+          this.billPayment = [];
           navigateUrl(this.listUrl + this.voucherTypeId, this.router);
 
           this.spinner.hide();
@@ -893,9 +895,8 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   }
 
   onSave() {
-        
+
     if (this.simpleVoucherForm.valid) {
-          ;
       if (stringIsNullOrEmpty(this.simpleVoucherForm.value.currencyId) && this.enableMultiCurrencies == false) {
         this.errorMessage = this.translate.instant("general.choose-currency-from-configuration");
         this.errorClass = 'errorMessage';
@@ -1037,6 +1038,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         next: (result: any) => {
           this.defineSimpleVoucherForm();
           this.voucherDetail = [];
+          this.billPayment = [];
 
           navigateUrl(this.listUrl + this.voucherTypeId, this.router);
 
@@ -1205,9 +1207,18 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
             this.onSave();
           } else if (currentBtn.action == ToolbarActions.New) {
             this.toolbarPathData.componentAdd = this.translate.instant("voucher.add-voucher");
+            this.simpleVoucherForm.get('beneficiaryTypeId').enable();
+            this.simpleVoucherForm.get('beneficiaryId').enable();
+            this.simpleVoucherForm.get('currencyId').enable();
+            this.simpleVoucherForm.get('currencyFactor').enable();
+            this.simpleVoucherForm.get('voucherTotal').enable();
+            this.simpleVoucherForm.get('voucherTotalLocal').enable();
+            this.showSearchCurrency = true;
+
             this.defineSimpleVoucherForm();
             this.voucherDetail = [];
-
+            this.billPayment = [];
+            this.getVoucherCode();
             this.sharedServices.changeToolbarPath(this.toolbarPathData);
           } else if (currentBtn.action == ToolbarActions.Update && currentBtn.submitMode) {
             this.onUpdate();
@@ -1237,13 +1248,13 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
 
   getVoucherTotal() {
-        
+
     this.voucherTotal = 0;
     this.currencyFactor = 0;
     if (this.enableMultiCurrencies == true) {
-          
+
       if (this.currencyId == Number(this.mainCurrencyId)) {
-            
+
         this.voucherTotal = this.voucherTotalLocal;
         this.currencyFactor = 1;
       }
@@ -1374,7 +1385,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
   selectBillPayment(item: BillPayment, event) {
     if (event.target.checked) {
-          
+
       this.simpleVoucher.billPay.push({
         id: 0,
         voucherId: 0,
@@ -1403,7 +1414,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
 
   getBillPaid(event) {
-        
+
     this.billPaid = [];
     if (event.target.checked) {
       this.showPaidBills = true;
@@ -1411,11 +1422,11 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       if (this.voucherkindId == VoucherTypeEnum['Simple Deposit'] && this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Client) {
 
         return new Promise<void>((resolve, reject) => {
-              
+
           let sub = this.billService.GetBillPaidByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], this.simpleVoucherForm.value.beneficiaryId, '').subscribe({
             next: (res: any) => {
               resolve();
-                  
+
               this.billPaid = res.response.data
             },
             error: (err: any) => {
@@ -1455,7 +1466,7 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
   }
 
   getBillPaymentsByBeneficiaryId(beneficiaryId: number) {
-        
+
     this.billPayment = [];
 
     if (this.simpleVoucherForm.value.beneficiaryTypeId == BeneficiaryTypeEnum.Account) {
@@ -1471,11 +1482,11 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         let sub = this.billService.GetBillPaymentsByParams(PayWayEnum.Credit, BillKindEnum['Sales Bill'], beneficiaryId, '').subscribe({
           next: (res: any) => {
             resolve();
-                
+
             if (res.response.data != null) {
-                  
+
               res.response.data.forEach(element => {
-                    
+
                 element.id = 0;
                 element.billId = element.billId;
                 element.remaining2 = element.remaining;
@@ -1483,7 +1494,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
               });
             }
-            //this.billPayment = res.response.data
           },
           error: (err: any) => {
             reject(err);
@@ -1501,7 +1511,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
         let sub = this.billService.GetBillPaymentsByParams(PayWayEnum.Credit, BillKindEnum['Purchases Bill'], '', beneficiaryId).subscribe({
           next: (res: any) => {
             resolve();
-            //this.billPayment = res.response.data
             if (res.response.data != null) {
               res.response.data.forEach(element => {
                 element.id = 0;
@@ -1531,25 +1540,17 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
       let sub = this.voucherService.getVouchersBillPays(voucherId).subscribe({
         next: (res: any) => {
           resolve();
-              
           this.billPayment = res.response.data;
-          // if (this.billPayment != null) {
-          //   this.billPayment.forEach(element => {
-          //     this.simpleVoucher.billPay.push({
-          //       id: 0,
-          //       voucherId: 0,
-          //       billId: element.id,
-          //       net: element.net ?? 0,
-          //       return: 0,
-          //       paid: element.paid ?? 0,
-          //       amount: element.amount ?? 0,
-          //       remaining: element.remaining
-          //     });
 
-          //   });
-          // }
-
-
+          if (this.id > 0 && this.billPayment.length > 0) {
+            this.simpleVoucherForm.get('beneficiaryTypeId').disable();
+            this.simpleVoucherForm.get('beneficiaryId').disable();
+            this.simpleVoucherForm.get('currencyId').disable();
+            this.simpleVoucherForm.get('currencyFactor').disable();
+            this.simpleVoucherForm.get('voucherTotal').disable();
+            this.simpleVoucherForm.get('voucherTotalLocal').disable();
+            this.showSearchCurrency = false;
+          }
         },
         error: (err: any) => {
           reject(err);
@@ -1570,8 +1571,6 @@ export class AddEditSimpleVoucherComponent implements OnInit, AfterViewInit {
 
             this.fiscalPeriodList = res.response.filter(x => x.isActive);
 
-            // this.checkPeriod = res.response.fiscalPeriodStatus;
-            // this.fiscalPeriodName = this.lang == 'ar' ? res.response.nameAr : res.response.nameEn;
 
           }
 
