@@ -7,11 +7,11 @@
                     <button (click)="insertBillDynamic()"
                         style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;"> {{'buttons.save'|translate}}</button>
                 </td>
-                <button  (click)="onClose()"
+                <!-- <button  (click)="onClose()"
                 style="background-color: #af774c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;"
                 >
                     X
-                  </button>
+                  </button> -->
             </tr>
             <tr>
                 <th style="width: 10px;">#</th>
@@ -55,10 +55,11 @@
                             <input type="text" [(ngModel)]="item.textValue" class="custom-input" />
                         </ng-container>
                         <ng-container *ngSwitchCase="4">
-                            <!-- <input type="date" [(ngModel)]="item.value" class="custom-input" /> -->
+                            <!-- <input type="date" [(ngModel)]="item.dateValue" class="custom-input" /> -->
                             <app-full-date name="date" [(ngModel)]="item.dateValue" ngDefaultControl
                                 [selectedDate]="item.dateValue"
                                 (OnDateSelect)="getDate($event,item)"></app-full-date>
+                             
                         </ng-container>
                         <ng-container *ngSwitchCase="5">
                             <label>

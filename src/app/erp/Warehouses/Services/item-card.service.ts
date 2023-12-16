@@ -95,18 +95,15 @@ export class ItemCardServiceProxy {
     uploadFile(formData ):Observable<any>{
         return this.http.post<any>(environment.apiUrl + "/api/UploadFile/FileUpload", formData);
     }
-    getBillDynamicDeterminant(billId: number | undefined, billItemId: number | undefined, itemCardId: number | undefined,itemCardSerial: string | undefined): Observable<any> {
+    getBillDynamicDeterminant( billItemId: number | undefined, itemCardId: number | undefined): Observable<any> {
      
         let queryParams = new HttpParams();
-        if (billId != undefined)
-            queryParams = queryParams.append("billId", billId);
+      
         if (billItemId != undefined)
             queryParams = queryParams.append("billItemId", billItemId);
         if (itemCardId != undefined)
             queryParams = queryParams.append("itemCardId", itemCardId);
-            if (itemCardSerial != undefined)
-            queryParams = queryParams.append("itemCardSerial", itemCardSerial);
-       
+           
 
         return this.http.get<any>(this.baseUrl + "/api/Bill/getBillDynamicDeterminant?", { params: queryParams });
 

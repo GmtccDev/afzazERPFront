@@ -38,7 +38,8 @@ export class BillDynamicDeterminantDto {
   dateValueId: number;
   checkedValueId: number;
   itemCardSerial: string | undefined;
-  billDynamicDeterminantSerial: string | undefined;
+  billDynamicDeterminantSerial: any | undefined;
+  quantity:any;
 }
 
 export class BillDynamicDeterminantList {
