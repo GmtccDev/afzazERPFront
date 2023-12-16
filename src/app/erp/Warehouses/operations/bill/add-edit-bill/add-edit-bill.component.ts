@@ -264,8 +264,16 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
       this.spinner.hide();
     })
     this.dataService.data$.subscribe((data) => {
-      if (data)
-        this.billItem[this.index].billDynamicDeterminants = data;
+      
+      if (data && this.index != undefined &&this.index>=0) {
+        this.billItem[this.index].billDynamicDeterminants = data.data1;
+        this.billItem[this.index].quantity += data.data2;
+      }
+      else if (data)  {
+        this.selectedBillItem.billDynamicDeterminants = data.data1;
+        this.selectedBillItem.quantity += data.data2;
+      }
+
     });
 
   }
@@ -2364,7 +2372,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
   }
 
   onChangeItem(itemId: any, i: any) {
-
+    this.index = i
     this.itemCardUnit = [];
     if (i == -1) {
       this.selectedBillItem.unitName = '';
@@ -2437,8 +2445,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           }
           let row = {
             billItemId: this.selectedBillItem.id,
-            itemCardId: itemId,
-            billId: this.selectedBillItem.billId
+            itemCardId: itemId
           }
           this.dialog.open(BillDynamicDeterminantComponent,
             {

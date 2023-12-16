@@ -55,11 +55,11 @@
                             <input type="text" [(ngModel)]="item.textValue" class="custom-input" />
                         </ng-container>
                         <ng-container *ngSwitchCase="4">
-                            <input type="date" [(ngModel)]="item.dateValue" class="custom-input" />
-                            <!-- <app-full-date name="date" [(ngModel)]="item.dateValue" ngDefaultControl
+                            <!-- <input type="date" [(ngModel)]="item.dateValue" class="custom-input" /> -->
+                            <app-full-date name="date" [(ngModel)]="item.dateValue" ngDefaultControl
                                 [selectedDate]="item.dateValue"
                                 (OnDateSelect)="getDate($event,item)"></app-full-date>
-                              -->
+                             
                         </ng-container>
                         <ng-container *ngSwitchCase="5">
                             <label>

@@ -27,6 +27,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
   sharedData: any;
   existingArray: DeterminantDataDto[] = [];
   itemCardId: any;
+  quantity: any=0;
   constructor(private itemCardService: ItemCardServiceProxy, private dialogRef: MatDialogRef<BillDynamicDeterminantComponent>,private datePipe: DatePipe, private dataService: DataShareService,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private dateService: DateCalculation, public dialog: MatDialog) { }
 
@@ -87,11 +88,12 @@ export class BillDynamicDeterminantComponent implements OnInit {
 
                 });
               });
-              debugger
+              
               this.existingArray.forEach(obj => {
-                debugger
+                
                 obj.checkedValue =obj.checkedValue === "true";
-               obj.dateValue = this.dateService.getDateForCalender(obj.dateValue);;
+               obj.dateValue = this.dateService.getDateForCalender(obj.dateValue);
+               this.quantity+=obj.quantity;
               });
               this.insertBillDynamicDeterminant.determinantsData = this.existingArray;
 
@@ -147,7 +149,7 @@ export class BillDynamicDeterminantComponent implements OnInit {
     this.insertBillDynamicDeterminant.determinantsData = this.insertBillDynamicDeterminant.determinantsData.filter(item => {
       return item.numberValue !== null || item.dateValue != null || item.checkedValue != null || item.textValue != null || item.selectedValue != null;
     });
-
+    this.quantity=0;
     this.insertBillDynamicDeterminant.determinantsData.forEach((item) => {
 
       if (item.checkedValue != null) {
@@ -173,17 +175,19 @@ export class BillDynamicDeterminantComponent implements OnInit {
         restructuredData.push(this.createObject(item, dateValue, 4, item.dateValueId));
         item.dateValue = null;
       }
+
+      this.quantity+=item.quantity
     });
     const resultArray = this.processInputData(restructuredData);
 
 
-    this.dataService.updateData(resultArray);
+    this.dataService.updateData(resultArray,this.quantity);
     this.dialog.closeAll();
 
 
   }
   getDate(selectedDate: DateModel, item) {
-debugger
+
     this.date = selectedDate;
     item.dateValue = selectedDate;
   }
