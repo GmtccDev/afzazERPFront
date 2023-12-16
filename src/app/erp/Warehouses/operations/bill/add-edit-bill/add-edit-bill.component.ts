@@ -266,12 +266,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     this.dataService.data$.subscribe((data) => {
       
       if (data && this.index != undefined &&this.index>=0) {
-        this.billItem[this.index].billDynamicDeterminants = data.data1;
-        this.billItem[this.index].quantity += data.data2;
+        this.billItem[this.index].billDynamicDeterminants = data.billDynamicDeterminants;
+        this.billItem[this.index].quantity += data.quantity;
       }
       else if (data)  {
-        this.selectedBillItem.billDynamicDeterminants = data.data1;
-        this.selectedBillItem.quantity += data.data2;
+        this.selectedBillItem.billDynamicDeterminants = data.billDynamicDeterminants;
+        this.selectedBillItem.quantity += data.quantity;
       }
 
     });
@@ -709,7 +709,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
                   storeName: this.lang = "ar" ? storeName?.nameAr ?? '' : storeName?.nameEn ?? '',
                   costCenterName: this.lang = "ar" ? costCenterName?.nameAr ?? '' : costCenterName?.nameEn ?? '',
                   billItemTaxes: this.billItemTax ?? [],
-                  billDynamicDeterminants: this.selectedBillItem.billDynamicDeterminants,
+                  billDynamicDeterminants: element.billDynamicDeterminants,
 
                 }
               )
@@ -2453,6 +2453,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
               data: row
             })
             .afterClosed().subscribe(result => {
+              
               this.dialog.closeAll();
             });
         },
@@ -3127,13 +3128,12 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
     }
   }
   onRightClick(event: MouseEvent, i) {
+    
     this.index = i;
-    if (this.router.url.includes("/warehouses-operations/bill/update-bill")) {
+    if (this.router.url.includes("/warehouses-operations/bill/update-bill")&&i>=0) {
       let row = {
         billItemId: this.billItem[i].id,
         itemCardId: this.billItem[i].itemId,
-        billId: this.billItem[i].billId,
-        itemCardSerial: i,
         action: "Edit"
       }
       this.dialog.open(RightClickModalComponent,
@@ -3142,15 +3142,7 @@ export class AddEditBillComponent implements OnInit, AfterViewInit {
           data: row,
           height: '100px'
         })
-      // .afterClosed().subscribe(result => {
-      //   
-      //   if (result && result != null && result.length > 0) {
-
-      //     this.selectedBillItem.billDynamicDeterminants = result;
-
-
-      //   }
-      // });
+      
     }
   }
 

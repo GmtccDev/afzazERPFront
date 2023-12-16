@@ -21,13 +21,10 @@ export class RightClickModalComponent implements OnInit {
         data: this.data,
         disableClose: false
       })
-      // .afterClosed().subscribe(result => {
-      //   if (result && result != null && result.length > 0) {
-
-      //     this.dialogRef.close(result);
-         
-      //   }
-      // });
+      .afterClosed().subscribe(result => {
+        debugger
+        this.dialog.closeAll();
+      });
 
   }
 }

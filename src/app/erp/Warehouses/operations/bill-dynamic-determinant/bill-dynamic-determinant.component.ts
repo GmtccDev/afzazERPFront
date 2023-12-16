@@ -90,9 +90,11 @@ export class BillDynamicDeterminantComponent implements OnInit {
               });
               
               this.existingArray.forEach(obj => {
-                
-                obj.checkedValue =obj.checkedValue === "true";
+              if(obj.checkedValue)  
+               obj.checkedValue =obj.checkedValue === "true";
+               if(obj.dateValue) 
                obj.dateValue = this.dateService.getDateForCalender(obj.dateValue);
+              if(obj.quantity)
                this.quantity+=obj.quantity;
               });
               this.insertBillDynamicDeterminant.determinantsData = this.existingArray;
